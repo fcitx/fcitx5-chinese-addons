@@ -63,7 +63,7 @@ public:
 private:
     fcitx::Instance *instance_;
     ChttransConfig config_;
-    fcitx::AddonInstance *notifications_;
+    fcitx::AddonInstance *notifications_ = nullptr;
     std::unique_ptr<fcitx::HandlerTableEntry<fcitx::EventHandler>> eventHandler_;
     std::unordered_map<ChttransEngine, std::unique_ptr<ChttransBackend>, fcitx::EnumHash> backends_;
     std::unordered_set<std::string> enabledIM_;
