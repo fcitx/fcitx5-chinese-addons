@@ -7,6 +7,7 @@ include(FeatureSummary)
 include(GNUInstallDirs)
 include(ECMSetupVersion)
 
+set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 set(CMAKE_CXX_STANDARD 14)
 
