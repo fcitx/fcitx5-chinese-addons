@@ -38,6 +38,7 @@ enum class ChttransIMType { Simp, Trad, Other };
 
 class ChttransBackend {
 public:
+    virtual ~ChttransBackend() {}
     virtual bool load() = 0;
     virtual std::string convertSimpToTrad(const std::string &) = 0;
     virtual std::string convertTradToSimp(const std::string &) = 0;
