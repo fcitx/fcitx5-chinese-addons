@@ -30,7 +30,8 @@ using namespace fcitx;
 typedef std::unique_ptr<FILE, decltype(&std::fclose)> ScopedFILE;
 
 bool NativeBackend::load() {
-    auto file = StandardPath::global().open(StandardPath::Type::Data, TABLE_GBKS2T, O_RDONLY);
+    auto file = StandardPath::global().open(StandardPath::Type::Data,
+                                            TABLE_GBKS2T, O_RDONLY);
     if (file.fd() < 0) {
         return false;
     }
@@ -51,19 +52,22 @@ bool NativeBackend::load() {
         tradStart = fcitx_utf8_get_char(strBuf, &simp);
         end = fcitx_utf8_get_char(tradStart, &trad);
         if (!s2tMap_.count(simp)) {
-            s2tMap_.emplace(std::piecewise_construct, std::forward_as_tuple(simp),
+            s2tMap_.emplace(std::piecewise_construct,
+                            std::forward_as_tuple(simp),
                             std::forward_as_tuple(tradStart, end - tradStart));
         }
         if (!t2sMap_.count(trad)) {
-            t2sMap_.emplace(std::piecewise_construct, std::forward_as_tuple(trad),
-                            std::forward_as_tuple(simpStart, tradStart - simpStart));
+            t2sMap_.emplace(
+                std::piecewise_construct, std::forward_as_tuple(trad),
+                std::forward_as_tuple(simpStart, tradStart - simpStart));
         }
     }
     free(strBuf);
     return true;
 }
 
-std::string convert(const std::unordered_map<uint32_t, std::string> &transMap, const std::string &strHZ) {
+std::string convert(const std::unordered_map<uint32_t, std::string> &transMap,
+                    const std::string &strHZ) {
     auto len = utf8::length(strHZ);
     std::string result;
     auto ps = strHZ.c_str();
@@ -85,6 +89,10 @@ std::string convert(const std::unordered_map<uint32_t, std::string> &transMap, c
     return result;
 }
 
-std::string NativeBackend::convertSimpToTrad(const std::string &strHZ) { return convert(s2tMap_, strHZ); }
+std::string NativeBackend::convertSimpToTrad(const std::string &strHZ) {
+    return convert(s2tMap_, strHZ);
+}
 
-std::string NativeBackend::convertTradToSimp(const std::string &strHZ) { return convert(t2sMap_, strHZ); }
+std::string NativeBackend::convertTradToSimp(const std::string &strHZ) {
+    return convert(t2sMap_, strHZ);
+}

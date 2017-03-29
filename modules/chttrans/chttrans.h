@@ -29,10 +29,14 @@
 
 FCITX_CONFIG_ENUM(ChttransEngine, Native, OpenCC);
 
-FCITX_CONFIGURATION(ChttransConfig,
-                    fcitx::Option<ChttransEngine> engine{this, "Engine", "Translate engine", ChttransEngine::OpenCC};
-                    fcitx::Option<fcitx::KeyList> hotkey{this, "Hotkey", "Toggle key", {fcitx::Key("Control+Shift+F")}};
-                    fcitx::Option<std::vector<std::string>> enabledIM{this, "EnabledIM", "Enabled Input Methods"};);
+FCITX_CONFIGURATION(
+    ChttransConfig,
+    fcitx::Option<ChttransEngine> engine{this, "Engine", "Translate engine",
+                                         ChttransEngine::OpenCC};
+    fcitx::Option<fcitx::KeyList> hotkey{
+        this, "Hotkey", "Toggle key", {fcitx::Key("Control+Shift+F")}};
+    fcitx::Option<std::vector<std::string>> enabledIM{
+        this, "EnabledIM", "Enabled Input Methods"};);
 
 enum class ChttransIMType { Simp, Trad, Other };
 
@@ -56,7 +60,8 @@ public:
 
     fcitx::AddonInstance *notifications() {
         if (!notifications_) {
-            notifications_ = instance_->addonManager().addon("notifications", true);
+            notifications_ =
+                instance_->addonManager().addon("notifications", true);
         }
         return notifications_;
     }
@@ -65,8 +70,11 @@ private:
     fcitx::Instance *instance_;
     ChttransConfig config_;
     fcitx::AddonInstance *notifications_ = nullptr;
-    std::unique_ptr<fcitx::HandlerTableEntry<fcitx::EventHandler>> eventHandler_;
-    std::unordered_map<ChttransEngine, std::unique_ptr<ChttransBackend>, fcitx::EnumHash> backends_;
+    std::unique_ptr<fcitx::HandlerTableEntry<fcitx::EventHandler>>
+        eventHandler_;
+    std::unordered_map<ChttransEngine, std::unique_ptr<ChttransBackend>,
+                       fcitx::EnumHash>
+        backends_;
     std::unordered_set<std::string> enabledIM_;
     fcitx::ScopedConnection outputFilterConn_;
     fcitx::ScopedConnection commitFilterConn_;

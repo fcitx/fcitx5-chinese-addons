@@ -20,8 +20,10 @@
 
 bool OpenCCBackend::load() {
     try {
-        s2t_ = std::make_unique<opencc::SimpleConverter>(OPENCC_DEFAULT_CONFIG_SIMP_TO_TRAD);
-        t2s_ = std::make_unique<opencc::SimpleConverter>(OPENCC_DEFAULT_CONFIG_TRAD_TO_SIMP);
+        s2t_ = std::make_unique<opencc::SimpleConverter>(
+            OPENCC_DEFAULT_CONFIG_SIMP_TO_TRAD);
+        t2s_ = std::make_unique<opencc::SimpleConverter>(
+            OPENCC_DEFAULT_CONFIG_TRAD_TO_SIMP);
     } catch (const std::exception &e) {
         return false;
     }

@@ -36,7 +36,8 @@ using namespace fcitx;
 static ChttransIMType inputMethodType(const InputMethodEntry &entry) {
     if (entry.languageCode() == "zh_CN") {
         return ChttransIMType::Simp;
-    } else if (entry.languageCode() == "zh_HK" || entry.languageCode() == "zh_TW") {
+    } else if (entry.languageCode() == "zh_HK" ||
+               entry.languageCode() == "zh_TW") {
         return ChttransIMType::Trad;
     }
     return ChttransIMType::Other;
@@ -45,12 +46,15 @@ static ChttransIMType inputMethodType(const InputMethodEntry &entry) {
 Chttrans::Chttrans(fcitx::Instance *instance) : instance_(instance) {
     reloadConfig();
 #ifdef ENABLE_OPENCC
-    backends_.emplace(ChttransEngine::OpenCC, std::make_unique<OpenCCBackend>());
+    backends_.emplace(ChttransEngine::OpenCC,
+                      std::make_unique<OpenCCBackend>());
 #endif
-    backends_.emplace(ChttransEngine::Native, std::make_unique<NativeBackend>());
+    backends_.emplace(ChttransEngine::Native,
+                      std::make_unique<NativeBackend>());
 
-    eventHandler_.reset(
-        instance_->watchEvent(EventType::InputContextKeyEvent, EventWatcherPhase::Default, [this](Event &event) {
+    eventHandler_.reset(instance_->watchEvent(
+        EventType::InputContextKeyEvent, EventWatcherPhase::Default,
+        [this](Event &event) {
             auto &keyEvent = static_cast<KeyEvent &>(event);
             if (keyEvent.isRelease()) {
                 return;
@@ -77,27 +81,32 @@ Chttrans::Chttrans(fcitx::Instance *instance) : instance_(instance) {
                 if (notifications()) {
                     notifications()->call<INotifications::showTip>(
                         "fcitx-chttrans-toggle", "fcitx",
-                        tradEnabled ? "fcitx-chttrans-active" : "fcitx-chttrans-inactive",
+                        tradEnabled ? "fcitx-chttrans-active"
+                                    : "fcitx-chttrans-inactive",
                         _("Simplified Chinese To Traditional Chinese"),
-                        tradEnabled ? _("Traditional Chinese is enabled.") : _("Simplified Chinese is enabled."), -1);
+                        tradEnabled ? _("Traditional Chinese is enabled.")
+                                    : _("Simplified Chinese is enabled."),
+                        -1);
                 }
                 keyEvent.filterAndAccept();
             }
         }));
-    outputFilterConn_ = instance_->connect<Instance::OutputFilter>([this](InputContext *inputContext, Text &text) {
-        auto type = convertType(inputContext);
-        if (type == ChttransIMType::Other) {
-            return;
-        }
-        Text newText;
-        newText.setCursor(text.cursor());
-        for (int i = 0; i < text.size(); i++) {
-            newText.append(convert(type, text.stringAt(i)), text.formatAt(i), text.roleAt(i));
-        }
-        text = newText;
-    });
-    commitFilterConn_ =
-        instance_->connect<Instance::CommitFilter>([this](InputContext *inputContext, std::string &str) {
+    outputFilterConn_ = instance_->connect<Instance::OutputFilter>(
+        [this](InputContext *inputContext, Text &text) {
+            auto type = convertType(inputContext);
+            if (type == ChttransIMType::Other) {
+                return;
+            }
+            Text newText;
+            newText.setCursor(text.cursor());
+            for (int i = 0; i < text.size(); i++) {
+                newText.append(convert(type, text.stringAt(i)),
+                               text.formatAt(i), text.roleAt(i));
+            }
+            text = newText;
+        });
+    commitFilterConn_ = instance_->connect<Instance::CommitFilter>(
+        [this](InputContext *inputContext, std::string &str) {
             auto type = convertType(inputContext);
             if (type == ChttransIMType::Other) {
                 return;
@@ -108,13 +117,15 @@ Chttrans::Chttrans(fcitx::Instance *instance) : instance_(instance) {
 
 void Chttrans::reloadConfig() {
     auto &standardPath = StandardPath::global();
-    auto file = standardPath.open(StandardPath::Type::Config, "fcitx5/conf/chttrans.conf", O_RDONLY);
+    auto file = standardPath.open(StandardPath::Type::Config,
+                                  "fcitx5/conf/chttrans.conf", O_RDONLY);
     RawConfig config;
     readFromIni(config, file.fd());
 
     config_.load(config);
     enabledIM_.clear();
-    enabledIM_.insert(config_.enabledIM.value().begin(), config_.enabledIM.value().end());
+    enabledIM_.insert(config_.enabledIM.value().begin(),
+                      config_.enabledIM.value().end());
 }
 
 void Chttrans::save() {
@@ -125,7 +136,8 @@ void Chttrans::save() {
     config_.enabledIM.setValue(std::move(values_));
 
     auto &standardPath = StandardPath::global();
-    auto file = standardPath.openUserTemp(StandardPath::Type::Config, "fcitx5/conf/chttrans.conf");
+    auto file = standardPath.openUserTemp(StandardPath::Type::Config,
+                                          "fcitx5/conf/chttrans.conf");
     RawConfig config;
 
     config_.save(config);
@@ -167,7 +179,9 @@ ChttransIMType Chttrans::convertType(fcitx::InputContext *inputContext) {
 }
 
 class ChttransModuleFactory : public AddonFactory {
-    AddonInstance *create(AddonManager *manager) override { return new Chttrans(manager->instance()); }
+    AddonInstance *create(AddonManager *manager) override {
+        return new Chttrans(manager->instance());
+    }
 };
 
 FCITX_ADDON_FACTORY(ChttransModuleFactory)
