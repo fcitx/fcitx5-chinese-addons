@@ -99,7 +99,7 @@ Chttrans::Chttrans(fcitx::Instance *instance) : instance_(instance) {
             }
             Text newText;
             newText.setCursor(text.cursor());
-            for (int i = 0; i < text.size(); i++) {
+            for (size_t i = 0; i < text.size(); i++) {
                 newText.append(convert(type, text.stringAt(i)),
                                text.formatAt(i), text.roleAt(i));
             }

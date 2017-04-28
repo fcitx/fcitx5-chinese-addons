@@ -71,7 +71,7 @@ std::string convert(const std::unordered_map<uint32_t, std::string> &transMap,
     auto len = utf8::length(strHZ);
     std::string result;
     auto ps = strHZ.c_str();
-    for (int i = 0; i < len; ++i) {
+    for (size_t i = 0; i < len; ++i) {
         uint32_t wc;
         char *nps;
         nps = fcitx_utf8_get_char(ps, &wc);
