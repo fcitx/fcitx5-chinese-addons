@@ -22,6 +22,7 @@
 #include "config.h"
 #include <fcitx-config/iniparser.h>
 #include <fcitx-utils/standardpath.h>
+#include <fcitx-utils/utf8.h>
 #include <fcitx/addonfactory.h>
 #include <fcitx/addonmanager.h>
 #include <fcitx/inputmethodentry.h>
@@ -98,12 +99,17 @@ Chttrans::Chttrans(fcitx::Instance *instance) : instance_(instance) {
                 return;
             }
             Text newText;
-            newText.setCursor(text.cursor());
             for (size_t i = 0; i < text.size(); i++) {
                 newText.append(convert(type, text.stringAt(i)),
                                text.formatAt(i), text.roleAt(i));
             }
-            text = newText;
+            if (text.cursor() >= 0) {
+                auto length = utf8::lengthN(text.toString(), text.cursor());
+                newText.setCursor(utf8::nthChar(newText.toString(), length));
+            } else {
+                newText.setCursor(text.cursor());
+            }
+            text = std::move(newText);
         });
     commitFilterConn_ = instance_->connect<Instance::CommitFilter>(
         [this](InputContext *inputContext, std::string &str) {
