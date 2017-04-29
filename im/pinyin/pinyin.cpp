@@ -20,6 +20,8 @@
 #include "pinyin.h"
 #include "../modules/common.h"
 #include "config.h"
+#include <boost/iostreams/device/file_descriptor.hpp>
+#include <boost/iostreams/stream.hpp>
 #include <fcitx-config/iniparser.h>
 #include <fcitx-utils/standardpath.h>
 #include <fcitx-utils/utf8.h>
@@ -28,12 +30,10 @@
 #include <fcitx/inputcontextproperty.h>
 #include <fcitx/inputpanel.h>
 #include <fcntl.h>
+#include <libime/historybigram.h>
 #include <libime/pinyincontext.h>
 #include <libime/pinyindictionary.h>
 #include <libime/userlanguagemodel.h>
-#include <libime/historybigram.h>
-#include <boost/iostreams/device/file_descriptor.hpp>
-#include <boost/iostreams/stream.hpp>
 
 namespace fcitx {
 
@@ -117,24 +117,30 @@ PinyinEngine::PinyinEngine(Instance *instance)
         }
 
         try {
-            boost::iostreams::stream_buffer<boost::iostreams::file_descriptor_source> buffer(file.fd(), boost::iostreams::file_descriptor_flags::never_close_handle);
+            boost::iostreams::stream_buffer<
+                boost::iostreams::file_descriptor_source>
+                buffer(file.fd(), boost::iostreams::file_descriptor_flags::
+                                      never_close_handle);
             std::istream in(&buffer);
-                ime_->dict()->load(libime::PinyinDictionary::UserDict, in,
-                        libime::PinyinDictFormat::Binary);
+            ime_->dict()->load(libime::PinyinDictionary::UserDict, in,
+                               libime::PinyinDictFormat::Binary);
         } catch (const std::exception &) {
         }
-    } while(0);
+    } while (0);
     do {
-        auto file = standardPath.openUser(StandardPath::Type::Data,
-                                            "fcitx5/pinyin/user.history", O_RDONLY);
+        auto file = standardPath.openUser(
+            StandardPath::Type::Data, "fcitx5/pinyin/user.history", O_RDONLY);
 
         try {
-            boost::iostreams::stream_buffer<boost::iostreams::file_descriptor_source> buffer(file.fd(), boost::iostreams::file_descriptor_flags::never_close_handle);
+            boost::iostreams::stream_buffer<
+                boost::iostreams::file_descriptor_source>
+                buffer(file.fd(), boost::iostreams::file_descriptor_flags::
+                                      never_close_handle);
             std::istream in(&buffer);
-            ime_->model()->history().load(in);
+            ime_->model()->load(in);
         } catch (const std::exception &) {
         }
-    } while(0);
+    } while (0);
 
     ime_->setScoreFilter(1);
     reloadConfig();
@@ -294,30 +300,26 @@ void PinyinEngine::reset(const InputMethodEntry &, InputContextEvent &event) {
 
 void PinyinEngine::save() {
     auto &standardPath = StandardPath::global();
-    do {
-        auto file = standardPath.openUserTemp(StandardPath::Type::Data,
-                                            "fcitx5/pinyin/user.dict");
-
-        if (file.fd() < 0) {
-            break;
-        }
-
-        boost::iostreams::stream_buffer<boost::iostreams::file_descriptor_sink> buffer(file.fd(), boost::iostreams::file_descriptor_flags::never_close_handle);
-        std::ostream out(&buffer);
-        ime_->dict()->save(libime::PinyinDictionary::UserDict, out);
-    } while(0);
-    do {
-        auto file = standardPath.openUserTemp(StandardPath::Type::Data,
-                                            "fcitx5/pinyin/user.history");
-
-        if (file.fd() < 0) {
-            break;
-        }
-
-        boost::iostreams::stream_buffer<boost::iostreams::file_descriptor_sink> buffer(file.fd(), boost::iostreams::file_descriptor_flags::never_close_handle);
-        std::ostream out(&buffer);
-        ime_->model()->history().save(out);
-    } while(0);
+    standardPath.safeSave(
+        StandardPath::Type::Data, "fcitx5/pinyin/user.dict", [this](int fd) {
+            boost::iostreams::stream_buffer<
+                boost::iostreams::file_descriptor_sink>
+                buffer(fd, boost::iostreams::file_descriptor_flags::
+                               never_close_handle);
+            std::ostream out(&buffer);
+            ime_->dict()->save(libime::PinyinDictionary::UserDict, out);
+            return true;
+        });
+    standardPath.safeSave(
+        StandardPath::Type::Data, "fcitx5/pinyin/user.history", [this](int fd) {
+            boost::iostreams::stream_buffer<
+                boost::iostreams::file_descriptor_sink>
+                buffer(fd, boost::iostreams::file_descriptor_flags::
+                               never_close_handle);
+            std::ostream out(&buffer);
+            ime_->model()->save(out);
+            return true;
+        });
 }
 }
 

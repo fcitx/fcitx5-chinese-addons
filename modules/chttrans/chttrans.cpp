@@ -141,13 +141,7 @@ void Chttrans::save() {
     }
     config_.enabledIM.setValue(std::move(values_));
 
-    auto &standardPath = StandardPath::global();
-    auto file = standardPath.openUserTemp(StandardPath::Type::Config,
-                                          "fcitx5/conf/chttrans.conf");
-    RawConfig config;
-
-    config_.save(config);
-    writeAsIni(config, file.fd());
+    safeSaveAsIni(config_, "fcitx5/conf/chttrans.conf");
 }
 
 std::string Chttrans::convert(ChttransIMType type, const std::string &str) {
