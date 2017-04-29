@@ -17,7 +17,10 @@
  * see <http://www.gnu.org/licenses/>.
  */
 #include "punctuation.h"
+#include <fcitx-utils/standardpath.h>
 
 Punctuation::Punctuation(fcitx::Instance *instance) : instance_(instance) {}
 
 Punctuation::~Punctuation() {}
+
+FCITX_ADDON_FACTORY(PunctuationFactory);

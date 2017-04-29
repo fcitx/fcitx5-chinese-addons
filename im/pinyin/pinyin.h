@@ -58,6 +58,7 @@ public:
     void reloadConfig() override;
     void reset(const InputMethodEntry &entry,
                InputContextEvent &event) override;
+    void save() override;
 
     libime::PinyinIME *ime() { return ime_.get(); }
 
