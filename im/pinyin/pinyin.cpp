@@ -129,7 +129,7 @@ PinyinEngine::PinyinEngine(Instance *instance)
     } while (0);
     do {
         auto file = standardPath.openUser(
-            StandardPath::Type::Data, "fcitx5/pinyin/user.history", O_RDONLY);
+            StandardPath::Type::PkgData, "pinyin/user.history", O_RDONLY);
 
         try {
             boost::iostreams::stream_buffer<
@@ -301,7 +301,7 @@ void PinyinEngine::reset(const InputMethodEntry &, InputContextEvent &event) {
 void PinyinEngine::save() {
     auto &standardPath = StandardPath::global();
     standardPath.safeSave(
-        StandardPath::Type::Data, "fcitx5/pinyin/user.dict", [this](int fd) {
+        StandardPath::Type::PkgData, "pinyin/user.dict", [this](int fd) {
             boost::iostreams::stream_buffer<
                 boost::iostreams::file_descriptor_sink>
                 buffer(fd, boost::iostreams::file_descriptor_flags::
@@ -311,7 +311,7 @@ void PinyinEngine::save() {
             return true;
         });
     standardPath.safeSave(
-        StandardPath::Type::Data, "fcitx5/pinyin/user.history", [this](int fd) {
+        StandardPath::Type::PkgData, "pinyin/user.history", [this](int fd) {
             boost::iostreams::stream_buffer<
                 boost::iostreams::file_descriptor_sink>
                 buffer(fd, boost::iostreams::file_descriptor_flags::

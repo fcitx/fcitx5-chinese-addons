@@ -19,7 +19,7 @@
 #ifndef _PUNCTUATION_PUNCTUATION_H_
 #define _PUNCTUATION_PUNCTUATION_H_
 
-#include "notifications_public.h"
+#include "punctuation_public.h"
 #include <fcitx-config/configuration.h>
 #include <fcitx-config/enum.h>
 #include <fcitx/addonfactory.h>
@@ -27,19 +27,42 @@
 #include <fcitx/addonmanager.h>
 #include <fcitx/instance.h>
 
-class Punctuation : public fcitx::AddonInstance {
+class PunctuationProfile {
 public:
-    Punctuation(fcitx::Instance *instance);
-    ~Punctuation();
+    PunctuationProfile() {}
+    PunctuationProfile(std::istream &in);
+
+    PunctuationProfile(PunctuationProfile &&) = default;
+    PunctuationProfile(const PunctuationProfile &) = default;
+
+    PunctuationProfile &operator=(PunctuationProfile &&) = default;
+    PunctuationProfile &operator=(const PunctuationProfile &) = default;
+
+    const std::string &getPunctuation(uint32_t unicode, const std::string &prev) const;
 
 private:
-    fcitx::Instance *instance_;
+    std::unordered_map<uint32_t, std::pair<std::string, std::string>> puncMap_;
+};
+
+class Punctuation : public fcitx::AddonInstance {
+public:
+    Punctuation();
+    ~Punctuation();
+
+    const std::string &getPunctuation(const std::string &language, uint32_t unicode, const std::string &prev);
+
+    void reloadConfig() override;
+
+    FCITX_ADDON_EXPORT_FUNCTION(Punctuation, getPunctuation);
+
+private:
+    std::unordered_map<std::string, PunctuationProfile> profiles_;
 };
 
 class PunctuationFactory : public fcitx::AddonFactory {
 public:
-    fcitx::AddonInstance *create(fcitx::AddonManager *manager) override {
-        return new Punctuation(manager->instance());
+    fcitx::AddonInstance *create(fcitx::AddonManager *) override {
+        return new Punctuation;
     }
 };
 

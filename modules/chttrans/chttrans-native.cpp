@@ -23,20 +23,20 @@
 #include <fcitx-utils/utf8.h>
 #include <fcntl.h>
 
-#define TABLE_GBKS2T "fcitx5/data/gbks2t.tab"
+#define TABLE_GBKS2T "data/gbks2t.tab"
 
 using namespace fcitx;
 
 typedef std::unique_ptr<FILE, decltype(&std::fclose)> ScopedFILE;
 
 bool NativeBackend::load() {
-    auto file = StandardPath::global().open(StandardPath::Type::Data,
+    auto file = StandardPath::global().open(StandardPath::Type::PkgData,
                                             TABLE_GBKS2T, O_RDONLY);
     if (file.fd() < 0) {
         return false;
     }
 
-    FILE *f = fdopen(file.fd(), "r");
+    FILE *f = fdopen(file.fd(), "rb");
     if (!f) {
         return false;
     }

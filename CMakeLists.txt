@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.4.0)
-project(fcitx5-chinese-addons)
+project(fcitx5-chinese-addons VERSION 0.0.1)
 
 find_package(ECM REQUIRED 1.0.0)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
@@ -7,20 +7,16 @@ include(FeatureSummary)
 include(GNUInstallDirs)
 include(ECMSetupVersion)
 include(ECMUninstallTarget)
-
-set(CMAKE_CXX_EXTENSIONS OFF)
-set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
-set(CMAKE_CXX_STANDARD 14)
-
-set(CMAKE_C_FLAGS "-Wall -Wextra -fvisibility=hidden ${CMAKE_C_FLAGS}")
-set(CMAKE_CXX_FLAGS "-Wall -Wextra -fvisibility=hidden ${CMAKE_CXX_FLAGS}")
-set(CMAKE_SHARED_LINKER_FLAGS "-Wl,--no-undefined -Wl,--as-needed ${CMAKE_SHARED_LINKER_FLAGS}")
-set(CMAKE_MODULE_LINKER_FLAGS "-Wl,--no-undefined -Wl,--as-needed ${CMAKE_MODULE_LINKER_FLAGS}")
+include(FcitxCompilerSettings)
 
 find_package(Fcitx5Core REQUIRED)
 find_package(Fcitx5Module REQUIRED COMPONENTS Notifications)
 find_package(LibIntl REQUIRED)
 
+#######################################################################
+# Options
+#######################################################################
+option(ENABLE_TEST "Build Test" On)
 option(ENABLE_OPENCC "Enable OpenCC for chttrans" On)
 
 if (ENABLE_OPENCC)
@@ -35,5 +31,18 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 add_subdirectory(modules)
 add_subdirectory(im)
+
+if (ENABLE_TEST)
+    enable_testing()
+    add_subdirectory(test)
+
+    if (ENABLE_COVERAGE)
+        add_custom_target(coverage
+                        COMMAND "${CMAKE_CTEST_COMMAND}"
+                        COMMAND lcov --capture --directory ./ --output-file coverage.info
+                        COMMAND genhtml coverage.info --output-directory "coverage_pages"
+                        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
+    endif()
+endif ()
 
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)

@@ -3,14 +3,16 @@ set(PUNCTUATION_SOURCES
 )
 
 set(PUNCTUATION_DATA_FILES
-  data/punc.mb.zh_CN
-  data/punc.mb.zh_HK
-  data/punc.mb.zh_TW
+  punc.mb.zh_CN
+  punc.mb.zh_HK
+  punc.mb.zh_TW
 )
 
 add_library(punctuation MODULE ${PUNCTUATION_SOURCES})
-target_link_libraries(punctuation Fcitx5::Core Fcitx5::Config Fcitx5::Module::Notifications)
+target_link_libraries(punctuation Fcitx5::Core Fcitx5::Config Boost::iostreams)
 set_target_properties(punctuation PROPERTIES PREFIX "")
 install(TARGETS punctuation DESTINATION "${CMAKE_INSTALL_LIBDIR}/fcitx5")
 install(FILES punctuation.conf DESTINATION "${CMAKE_INSTALL_DATADIR}/fcitx5/addon")
 install(FILES ${PUNCTUATION_DATA_FILES} DESTINATION "${CMAKE_INSTALL_DATADIR}/fcitx5/punctuation")
+
+fcitx5_export_module(Punctuation TARGET punctuation BUILD_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}" HEADERS punctuation_public.h INSTALL)
