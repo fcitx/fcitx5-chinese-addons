@@ -20,7 +20,20 @@
 #define _PUNCTUATION_PUNCTUATION_PUBLIC_H_
 
 #include <fcitx/addoninstance.h>
+namespace fcitx {
+class InputContext;
+}
 
-FCITX_ADDON_DECLARE_FUNCTION(Punctuation, getPunctuation, const std::string&(const std::string &language, uint32_t unicode, const std::string &prev));
+FCITX_ADDON_DECLARE_FUNCTION(Punctuation, getPunctuation,
+                             const std::string &(const std::string &language,
+                                                 uint32_t unicode,
+                                                 const std::string &prev));
+FCITX_ADDON_DECLARE_FUNCTION(Punctuation, cancelLast,
+                             const std::string &(const std::string &language,
+                                                 InputContext *ic));
+FCITX_ADDON_DECLARE_FUNCTION(Punctuation, pushPunctuation,
+                             const std::string &(const std::string &language,
+                                                 InputContext *ic,
+                                                 uint32_t unicode));
 
 #endif // _PUNCTUATION_PUNCTUATION_PUBLIC_H_

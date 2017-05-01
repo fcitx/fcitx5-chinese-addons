@@ -20,9 +20,11 @@
 #include "pinyin.h"
 #include "../modules/common.h"
 #include "config.h"
+#include "punctuation_public.h"
 #include <boost/iostreams/device/file_descriptor.hpp>
 #include <boost/iostreams/stream.hpp>
 #include <fcitx-config/iniparser.h>
+#include <fcitx-utils/charutils.h>
 #include <fcitx-utils/standardpath.h>
 #include <fcitx-utils/utf8.h>
 #include <fcitx/inputcontext.h>
@@ -42,6 +44,7 @@ public:
     PinyinState(PinyinEngine *engine) : context_(engine->ime()) {}
 
     libime::PinyinContext context_;
+    bool lastIsPunc_ = false;
 };
 
 class PinyinCandidateWord : public CandidateWord {
@@ -73,24 +76,26 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
         context.learn();
         context.clear();
     } else {
-        auto &candidates = context.candidates();
-        auto &inputPanel = inputContext->inputPanel();
-        if (context.candidates().size()) {
-            auto candidateList = new CommonCandidateList;
-            size_t idx = 0;
-            for (const auto &candidate : candidates) {
-                candidateList->append(new PinyinCandidateWord(
-                    this, Text(candidate.toString()), idx));
-                idx++;
+        if (context.userInput().size()) {
+            auto &candidates = context.candidates();
+            auto &inputPanel = inputContext->inputPanel();
+            if (context.candidates().size()) {
+                auto candidateList = new CommonCandidateList;
+                size_t idx = 0;
+                for (const auto &candidate : candidates) {
+                    candidateList->append(new PinyinCandidateWord(
+                        this, Text(candidate.toString()), idx));
+                    idx++;
+                }
+                candidateList->setSelectionKey(selectionKeys_);
+                inputPanel.setCandidateList(candidateList);
             }
-            candidateList->setSelectionKey(selectionKeys_);
-            inputPanel.setCandidateList(candidateList);
+            inputPanel.setClientPreedit(Text(context.sentence()));
+            auto preeditWithCursor = context.preeditWithCursor();
+            Text preedit(preeditWithCursor.first);
+            preedit.setCursor(preeditWithCursor.second);
+            inputPanel.setPreedit(Text(preedit));
         }
-        inputPanel.setClientPreedit(Text(context.sentence()));
-        auto preeditWithCursor = context.preeditWithCursor();
-        Text preedit(preeditWithCursor.first);
-        preedit.setCursor(preeditWithCursor.second);
-        inputPanel.setPreedit(Text(preedit));
     }
     inputContext->updatePreedit();
     inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
@@ -128,8 +133,8 @@ PinyinEngine::PinyinEngine(Instance *instance)
         }
     } while (0);
     do {
-        auto file = standardPath.openUser(
-            StandardPath::Type::PkgData, "pinyin/user.history", O_RDONLY);
+        auto file = standardPath.openUser(StandardPath::Type::PkgData,
+                                          "pinyin/user.history", O_RDONLY);
 
         try {
             boost::iostreams::stream_buffer<
@@ -146,7 +151,6 @@ PinyinEngine::PinyinEngine(Instance *instance)
     reloadConfig();
 
     instance_->inputContextManager().registerProperty("pinyinState", &factory_);
-
     KeySym syms[] = {
         FcitxKey_1, FcitxKey_2, FcitxKey_3, FcitxKey_4, FcitxKey_5,
         FcitxKey_6, FcitxKey_7, FcitxKey_8, FcitxKey_9, FcitxKey_0,
@@ -194,14 +198,20 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
     }
 
     auto inputContext = event.inputContext();
+    auto state = inputContext->propertyFor(&factory_);
+    bool lastIsPunc = state->lastIsPunc_;
+    state->lastIsPunc_ = false;
     // check if we can select candidate.
     if (inputContext->inputPanel().candidateList()) {
         int idx = event.key().keyListIndex(selectionKeys_);
-        if (idx >= 0 &&
-            idx < inputContext->inputPanel().candidateList()->size()) {
+        if (idx >= 0) {
             event.filterAndAccept();
-            inputContext->inputPanel().candidateList()->candidate(idx).select(
-                inputContext);
+            if (idx < inputContext->inputPanel().candidateList()->size()) {
+                inputContext->inputPanel()
+                    .candidateList()
+                    ->candidate(idx)
+                    .select(inputContext);
+            }
             return;
         }
     }
@@ -225,8 +235,6 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         }
         return;
     }
-
-    auto state = inputContext->propertyFor(&factory_);
 
     if (event.key().isLAZ() ||
         (event.key().check(FcitxKey_apostrophe) && state->context_.size())) {
@@ -274,12 +282,52 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
             state->context_.clear();
             event.filterAndAccept();
         } else if (event.key().check(FcitxKey_space)) {
-            if (inputContext->inputPanel().candidateList()->size()) {
+            if (inputContext->inputPanel().candidateList() &&
+                inputContext->inputPanel().candidateList()->size()) {
                 event.filterAndAccept();
                 inputContext->inputPanel().candidateList()->candidate(0).select(
                     inputContext);
                 return;
             }
+        }
+    } else {
+        if (event.key().check(FcitxKey_BackSpace)) {
+            auto punc = instance_->addonManager().addon("punctuation");
+            if (lastIsPunc) {
+                auto puncStr =
+                    punc->call<IPunctuation::cancelLast>("zh_CN", inputContext);
+                if (!puncStr.empty()) {
+                    // forward the original key is the best choice.
+                    inputContext->forwardKey(event.rawKey(), event.isRelease(),
+                                             event.keyCode(), event.time());
+                    inputContext->commitString(puncStr);
+                    event.filterAndAccept();
+                    return;
+                }
+            }
+        }
+    }
+    if (!event.filtered()) {
+        if (event.key().states().test(KeyState::SimpleMask)) {
+            return;
+        }
+        // if it gonna commit something
+        auto c = Key::keySymToUnicode(event.key().sym());
+        if (c) {
+            if (inputContext->inputPanel().candidateList() &&
+                inputContext->inputPanel().candidateList()->size()) {
+                inputContext->inputPanel().candidateList()->candidate(0).select(
+                    inputContext);
+            }
+            auto punc = instance_->addonManager()
+                            .addon("punctuation")
+                            ->call<IPunctuation::pushPunctuation>(
+                                "zh_CN", inputContext, c);
+            if (punc.size()) {
+                event.filterAndAccept();
+                inputContext->commitString(punc);
+            }
+            state->lastIsPunc_ = true;
         }
     }
 
@@ -296,6 +344,7 @@ void PinyinEngine::reset(const InputMethodEntry &, InputContextEvent &event) {
     inputContext->inputPanel().reset();
     inputContext->updatePreedit();
     inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
+    state->lastIsPunc_ = false;
 }
 
 void PinyinEngine::save() {

@@ -17,9 +17,9 @@
  * see <http://www.gnu.org/licenses/>.
  */
 #include "punctuation_public.h"
+#include <cassert>
 #include <fcitx/addonmanager.h>
 #include <iostream>
-#include <cassert>
 
 int main(int argc, char *argv[]) {
     if (argc < 3) {
@@ -32,9 +32,12 @@ int main(int argc, char *argv[]) {
     manager.load();
     auto punctuation = manager.addon("punctuation");
     assert(punctuation);
-    assert(punctuation->call<fcitx::IPunctuation::getPunctuation>("zh_CN", ',', "") == "，");
-    assert(punctuation->call<fcitx::IPunctuation::getPunctuation>("zh_CN", '"', "") == "“");
-    assert(punctuation->call<fcitx::IPunctuation::getPunctuation>("zh_CN", '"', "“") == "”");
+    assert(punctuation->call<fcitx::IPunctuation::getPunctuation>("zh_CN", ',',
+                                                                  "") == "，");
+    assert(punctuation->call<fcitx::IPunctuation::getPunctuation>("zh_CN", '"',
+                                                                  "") == "“");
+    assert(punctuation->call<fcitx::IPunctuation::getPunctuation>("zh_CN", '"',
+                                                                  "“") == "”");
 
     return 0;
 }
