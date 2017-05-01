@@ -25,16 +25,18 @@
 #include <fcitx/inputcontext.h>
 #include <fcitx/inputcontextmanager.h>
 #include <fcntl.h>
+#include <unordered_set>
 
 using namespace fcitx;
 
 namespace {
 static const std::string emptyString;
+static const std::pair<std::string, std::string> emptyStringPair;
 }
 
 class PunctuationState : public InputContextProperty {
 public:
-    std::string lastPunc_;
+    std::unordered_set<uint32_t> lastPuncStack_;
     bool lastIsEngOrDigit_ = false;
     uint32_t notConverted = 0;
 };
@@ -72,21 +74,13 @@ PunctuationProfile::PunctuationProfile(std::istream &in) {
     }
 }
 
-const std::string &
-PunctuationProfile::getPunctuation(uint32_t unicode,
-                                   const std::string &prev) const {
+const std::pair<std::string, std::string> &
+PunctuationProfile::getPunctuation(uint32_t unicode) const {
     auto iter = puncMap_.find(unicode);
     if (iter == puncMap_.end()) {
-        return emptyString;
+        return emptyStringPair;
     }
-    if (iter->second.second.empty()) {
-        return iter->second.first;
-    }
-    if (prev == iter->second.first) {
-        return iter->second.second;
-    } else {
-        return iter->second.first;
-    }
+    return iter->second;
 }
 
 Punctuation::Punctuation(Instance *instance)
@@ -129,7 +123,7 @@ Punctuation::Punctuation(Instance *instance)
                 auto state = icEvent.inputContext()->propertyFor(&factory_);
                 state->lastIsEngOrDigit_ = false;
                 state->notConverted = 0;
-                state->lastPunc_.clear();
+                state->lastPuncStack_.clear();
             }));
     }
 
@@ -179,35 +173,47 @@ const std::string &Punctuation::pushPunctuation(const std::string &language,
         state->notConverted = unicode;
         return emptyString;
     } else {
-        auto &result = getPunctuation(language, unicode, state->lastPunc_);
-        state->lastPunc_ = result;
+        auto iter = profiles_.find(language);
+        if (iter == profiles_.end()) {
+            return emptyString;
+        }
+        auto &result = getPunctuation(language, unicode);
         state->notConverted = 0;
-        return result;
+        if (result.second.empty()) {
+            return result.first;
+        } else {
+            auto iter = state->lastPuncStack_.find(unicode);
+            if (iter != state->lastPuncStack_.end()) {
+                state->lastPuncStack_.erase(iter);
+                return result.second;
+            } else {
+                state->lastPuncStack_.insert(unicode);
+                return result.first;
+            }
+        }
     }
 }
 
 const std::string &Punctuation::cancelLast(const std::string &language,
                                            InputContext *ic) {
     auto state = ic->propertyFor(&factory_);
-    if (state->notConverted) {
-        auto &result =
-            getPunctuation(language, state->notConverted, state->lastPunc_);
+    if (state->notConverted == '.' || state->notConverted == ',' ||
+        state->notConverted == ';') {
+        auto &result = getPunctuation(language, state->notConverted);
         state->notConverted = 0;
-        state->lastPunc_ = result;
-        return result;
+        return result.first;
     }
     return emptyString;
 }
 
-const std::string &Punctuation::getPunctuation(const std::string &language,
-                                               uint32_t unicode,
-                                               const std::string &prev) {
+const std::pair<std::string, std::string> &
+Punctuation::getPunctuation(const std::string &language, uint32_t unicode) {
     auto iter = profiles_.find(language);
     if (iter == profiles_.end()) {
-        return emptyString;
+        return emptyStringPair;
     }
 
-    return iter->second.getPunctuation(unicode, prev);
+    return iter->second.getPunctuation(unicode);
 }
 
 FCITX_ADDON_FACTORY(PunctuationFactory);

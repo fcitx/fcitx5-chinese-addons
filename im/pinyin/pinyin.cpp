@@ -20,6 +20,7 @@
 #include "pinyin.h"
 #include "../modules/common.h"
 #include "config.h"
+#include "fullwidth_public.h"
 #include "punctuation_public.h"
 #include <boost/iostreams/device/file_descriptor.hpp>
 #include <boost/iostreams/stream.hpp>
@@ -150,6 +151,11 @@ PinyinEngine::PinyinEngine(Instance *instance)
     ime_->setScoreFilter(1);
     reloadConfig();
 
+    auto fullwidth = instance_->addonManager().addon("fullwidth");
+    if (fullwidth) {
+        fullwidth->call<IFullwidth::enable>("pinyin");
+    }
+
     instance_->inputContextManager().registerProperty("pinyinState", &factory_);
     KeySym syms[] = {
         FcitxKey_1, FcitxKey_2, FcitxKey_3, FcitxKey_4, FcitxKey_5,
@@ -202,38 +208,40 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
     bool lastIsPunc = state->lastIsPunc_;
     state->lastIsPunc_ = false;
     // check if we can select candidate.
-    if (inputContext->inputPanel().candidateList()) {
+    auto candidateList = inputContext->inputPanel().candidateList();
+    if (candidateList) {
         int idx = event.key().keyListIndex(selectionKeys_);
         if (idx >= 0) {
             event.filterAndAccept();
-            if (idx < inputContext->inputPanel().candidateList()->size()) {
-                inputContext->inputPanel()
-                    .candidateList()
-                    ->candidate(idx)
-                    .select(inputContext);
+            if (idx < candidateList->size()) {
+                candidateList->candidate(idx).select(inputContext);
             }
             return;
         }
-    }
 
-    if (event.key().checkKeyList(config_.prevPage.value())) {
-        event.filterAndAccept();
-        if (inputContext->inputPanel().candidateList()) {
-            inputContext->inputPanel().candidateList()->toPageable()->prev();
+        if (event.key().checkKeyList(config_.prevPage.value())) {
+            auto pageable = candidateList->toPageable();
+            if (!pageable->hasPrev()) {
+                if (pageable->usedNextBefore()) {
+                    event.filterAndAccept();
+                    return;
+                }
+            } else {
+                event.filterAndAccept();
+                pageable->prev();
+                inputContext->updateUserInterface(
+                    UserInterfaceComponent::InputPanel);
+                return;
+            }
+        }
+
+        if (event.key().checkKeyList(config_.nextPage.value())) {
+            event.filterAndAccept();
+            candidateList->toPageable()->next();
             inputContext->updateUserInterface(
                 UserInterfaceComponent::InputPanel);
+            return;
         }
-        return;
-    }
-
-    if (event.key().checkKeyList(config_.nextPage.value())) {
-        event.filterAndAccept();
-        if (inputContext->inputPanel().candidateList()) {
-            inputContext->inputPanel().candidateList()->toPageable()->next();
-            inputContext->updateUserInterface(
-                UserInterfaceComponent::InputPanel);
-        }
-        return;
     }
 
     if (event.key().isLAZ() ||
@@ -308,7 +316,7 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         }
     }
     if (!event.filtered()) {
-        if (event.key().states().test(KeyState::SimpleMask)) {
+        if (event.key().states().testAny(KeyState::SimpleMask)) {
             return;
         }
         // if it gonna commit something

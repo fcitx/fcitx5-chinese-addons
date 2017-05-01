@@ -39,8 +39,8 @@ public:
     PunctuationProfile &operator=(PunctuationProfile &&) = default;
     PunctuationProfile &operator=(const PunctuationProfile &) = default;
 
-    const std::string &getPunctuation(uint32_t unicode,
-                                      const std::string &prev) const;
+    const std::pair<std::string, std::string> &
+    getPunctuation(uint32_t unicode) const;
 
 private:
     std::unordered_map<uint32_t, std::pair<std::string, std::string>> puncMap_;
@@ -53,9 +53,8 @@ public:
     Punctuation(fcitx::Instance *instance);
     ~Punctuation();
 
-    const std::string &getPunctuation(const std::string &language,
-                                      uint32_t unicode,
-                                      const std::string &prev);
+    const std::pair<std::string, std::string> &
+    getPunctuation(const std::string &language, uint32_t unicode);
     const std::string &pushPunctuation(const std::string &language,
                                        fcitx::InputContext *ic,
                                        uint32_t unicode);

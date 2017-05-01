@@ -32,12 +32,12 @@ int main(int argc, char *argv[]) {
     manager.load();
     auto punctuation = manager.addon("punctuation");
     assert(punctuation);
-    assert(punctuation->call<fcitx::IPunctuation::getPunctuation>("zh_CN", ',',
-                                                                  "") == "，");
-    assert(punctuation->call<fcitx::IPunctuation::getPunctuation>("zh_CN", '"',
-                                                                  "") == "“");
-    assert(punctuation->call<fcitx::IPunctuation::getPunctuation>("zh_CN", '"',
-                                                                  "“") == "”");
+    assert(punctuation->call<fcitx::IPunctuation::getPunctuation>("zh_CN", ',')
+               .first == "，");
+    assert(punctuation->call<fcitx::IPunctuation::getPunctuation>("zh_CN", '"')
+               .first == "“");
+    assert(punctuation->call<fcitx::IPunctuation::getPunctuation>("zh_CN", '"')
+               .second == "”");
 
     return 0;
 }

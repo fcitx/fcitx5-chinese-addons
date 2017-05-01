@@ -24,10 +24,10 @@ namespace fcitx {
 class InputContext;
 }
 
-FCITX_ADDON_DECLARE_FUNCTION(Punctuation, getPunctuation,
-                             const std::string &(const std::string &language,
-                                                 uint32_t unicode,
-                                                 const std::string &prev));
+FCITX_ADDON_DECLARE_FUNCTION(
+    Punctuation, getPunctuation,
+    const std::pair<std::string, std::string> &(const std::string &language,
+                                                uint32_t unicode));
 FCITX_ADDON_DECLARE_FUNCTION(Punctuation, cancelLast,
                              const std::string &(const std::string &language,
                                                  InputContext *ic));

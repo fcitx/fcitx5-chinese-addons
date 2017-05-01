@@ -173,7 +173,6 @@ ChttransIMType Chttrans::convertType(fcitx::InputContext *inputContext) {
 
     if (!enabledIM_.count(entry->name())) {
         return ChttransIMType::Other;
-        ;
     }
     return type;
 }
