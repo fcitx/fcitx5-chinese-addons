@@ -187,7 +187,6 @@ void PinyinEngine::reloadConfig() {
     readFromIni(config, file.fd());
     config_.load(config);
     ime_->setNBest(config_.nbest.value());
-    ime_->setFrameSize(0);
 }
 
 void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
