@@ -18,7 +18,6 @@
  */
 
 #include "pinyin.h"
-#include "../modules/common.h"
 #include "config.h"
 #include "fullwidth_public.h"
 #include "punctuation_public.h"
@@ -26,6 +25,7 @@
 #include <boost/iostreams/stream.hpp>
 #include <fcitx-config/iniparser.h>
 #include <fcitx-utils/charutils.h>
+#include <fcitx-utils/i18n.h>
 #include <fcitx-utils/standardpath.h>
 #include <fcitx-utils/utf8.h>
 #include <fcitx/inputcontext.h>

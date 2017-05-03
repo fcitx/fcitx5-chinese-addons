@@ -18,9 +18,9 @@
  */
 
 #include "chttrans.h"
-#include "../common.h"
 #include "config.h"
 #include <fcitx-config/iniparser.h>
+#include <fcitx-utils/i18n.h>
 #include <fcitx-utils/standardpath.h>
 #include <fcitx-utils/utf8.h>
 #include <fcitx/addonfactory.h>
