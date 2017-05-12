@@ -33,6 +33,7 @@
 #include <fcitx/inputcontextproperty.h>
 #include <fcitx/inputpanel.h>
 #include <fcntl.h>
+#include <iostream>
 #include <libime/historybigram.h>
 #include <libime/pinyincontext.h>
 #include <libime/pinyindictionary.h>
@@ -96,6 +97,24 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
             Text preedit(preeditWithCursor.first);
             preedit.setCursor(preeditWithCursor.second);
             inputPanel.setPreedit(Text(preedit));
+#if 0
+            {
+                size_t count = 1;
+                std::cout << "--------------------------" << std::endl;
+                for (auto &candidate : context.candidates()) {
+                    std::cout << (count % 10) << ": ";
+                    for (auto node : candidate.sentence()) {
+                        std::cout << node->word();
+                        std::cout << " ";
+                    }
+                    std::cout << " " << candidate.score() << std::endl;
+                    count++;
+                    if (count > 20) {
+                        break;
+                    }
+                }
+            }
+#endif
         }
     }
     inputContext->updatePreedit();
