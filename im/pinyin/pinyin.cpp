@@ -99,7 +99,7 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
         }
     }
     inputContext->updatePreedit();
-    inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
+    inputContext->updateUserInterface(UserInterfaceComponent::InputPanel, true);
 }
 
 PinyinEngine::PinyinEngine(Instance *instance)
@@ -351,7 +351,7 @@ void PinyinEngine::reset(const InputMethodEntry &, InputContextEvent &event) {
     state->context_.clear();
     inputContext->inputPanel().reset();
     inputContext->updatePreedit();
-    inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
+    inputContext->updateUserInterface(UserInterfaceComponent::InputPanel, true);
     state->lastIsPunc_ = false;
 }
 
