@@ -92,25 +92,24 @@ Chttrans::Chttrans(fcitx::Instance *instance) : instance_(instance) {
                 keyEvent.filterAndAccept();
             }
         }));
-    outputFilterConn_ = instance_->connect<Instance::OutputFilter>(
-        [this](InputContext *inputContext, Text &text) {
-            auto type = convertType(inputContext);
-            if (type == ChttransIMType::Other) {
-                return;
-            }
-            Text newText;
-            for (size_t i = 0; i < text.size(); i++) {
-                newText.append(convert(type, text.stringAt(i)),
-                               text.formatAt(i), text.roleAt(i));
-            }
-            if (text.cursor() >= 0) {
-                auto length = utf8::lengthN(text.toString(), text.cursor());
-                newText.setCursor(utf8::nthChar(newText.toString(), length));
-            } else {
-                newText.setCursor(text.cursor());
-            }
-            text = std::move(newText);
-        });
+    outputFilterConn_ = instance_->connect<Instance::OutputFilter>([this](
+        InputContext *inputContext, Text &text) {
+        auto type = convertType(inputContext);
+        if (type == ChttransIMType::Other) {
+            return;
+        }
+        Text newText;
+        for (size_t i = 0; i < text.size(); i++) {
+            newText.append(convert(type, text.stringAt(i)), text.formatAt(i));
+        }
+        if (text.cursor() >= 0) {
+            auto length = utf8::lengthN(text.toString(), text.cursor());
+            newText.setCursor(utf8::nthChar(newText.toString(), length));
+        } else {
+            newText.setCursor(text.cursor());
+        }
+        text = std::move(newText);
+    });
     commitFilterConn_ = instance_->connect<Instance::CommitFilter>(
         [this](InputContext *inputContext, std::string &str) {
             auto type = convertType(inputContext);

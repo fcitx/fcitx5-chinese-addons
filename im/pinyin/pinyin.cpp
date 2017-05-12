@@ -149,6 +149,7 @@ PinyinEngine::PinyinEngine(Instance *instance)
     } while (0);
 
     ime_->setScoreFilter(1);
+    ime_->setFuzzyFlags(libime::PinyinFuzzyFlag::Inner);
     reloadConfig();
 
     auto fullwidth = instance_->addonManager().addon("fullwidth");
