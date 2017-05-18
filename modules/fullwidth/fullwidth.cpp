@@ -122,8 +122,8 @@ Fullwidth::Fullwidth(Instance *instance) : instance_(instance) {
 
 void Fullwidth::reloadConfig() {
     auto &standardPath = StandardPath::global();
-    auto file = standardPath.open(StandardPath::Type::Config,
-                                  "fcitx5/conf/fullwidth.conf", O_RDONLY);
+    auto file = standardPath.open(StandardPath::Type::PkgConfig,
+                                  "conf/fullwidth.conf", O_RDONLY);
     RawConfig config;
     readFromIni(config, file.fd());
 

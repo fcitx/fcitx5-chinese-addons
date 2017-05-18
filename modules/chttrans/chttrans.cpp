@@ -122,8 +122,8 @@ Chttrans::Chttrans(fcitx::Instance *instance) : instance_(instance) {
 
 void Chttrans::reloadConfig() {
     auto &standardPath = StandardPath::global();
-    auto file = standardPath.open(StandardPath::Type::Config,
-                                  "fcitx5/conf/chttrans.conf", O_RDONLY);
+    auto file = standardPath.open(StandardPath::Type::PkgConfig,
+                                  "conf/chttrans.conf", O_RDONLY);
     RawConfig config;
     readFromIni(config, file.fd());
 
@@ -140,7 +140,7 @@ void Chttrans::save() {
     }
     config_.enabledIM.setValue(std::move(values_));
 
-    safeSaveAsIni(config_, "fcitx5/conf/chttrans.conf");
+    safeSaveAsIni(config_, "conf/chttrans.conf");
 }
 
 std::string Chttrans::convert(ChttransIMType type, const std::string &str) {

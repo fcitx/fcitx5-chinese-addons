@@ -52,7 +52,7 @@ public:
 class PinyinCandidateWord : public CandidateWord {
 public:
     PinyinCandidateWord(PinyinEngine *engine, Text text, size_t idx)
-        : CandidateWord(text), engine_(engine), idx_(idx) {}
+        : CandidateWord(std::move(text)), engine_(engine), idx_(idx) {}
 
     void select(InputContext *inputContext) const override {
         auto state = inputContext->propertyFor(engine_->state());
@@ -74,9 +74,13 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
     auto state = inputContext->propertyFor(&factory_);
     auto &context = state->context_;
     if (context.selected()) {
-        inputContext->commitString(context.sentence());
+        auto sentence = context.sentence();
         context.learn();
         context.clear();
+        inputContext->updatePreedit();
+        inputContext->updateUserInterface(UserInterfaceComponent::InputPanel,
+                                          true);
+        inputContext->commitString(sentence);
     } else {
         if (context.userInput().size()) {
             auto &candidates = context.candidates();
@@ -116,9 +120,10 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
             }
 #endif
         }
+        inputContext->updatePreedit();
+        inputContext->updateUserInterface(UserInterfaceComponent::InputPanel,
+                                          true);
     }
-    inputContext->updatePreedit();
-    inputContext->updateUserInterface(UserInterfaceComponent::InputPanel, true);
 }
 
 PinyinEngine::PinyinEngine(Instance *instance)
@@ -134,8 +139,8 @@ PinyinEngine::PinyinEngine(Instance *instance)
 
     auto &standardPath = StandardPath::global();
     do {
-        auto file = standardPath.openUser(StandardPath::Type::Data,
-                                          "fcitx5/pinyin/user.dict", O_RDONLY);
+        auto file = standardPath.openUser(StandardPath::Type::PkgData,
+                                          "pinyin/user.dict", O_RDONLY);
 
         if (file.fd() < 0) {
             break;
@@ -201,8 +206,8 @@ std::vector<InputMethodEntry> PinyinEngine::listInputMethods() {
 
 void PinyinEngine::reloadConfig() {
     auto &standardPath = StandardPath::global();
-    auto file = standardPath.open(StandardPath::Type::Config,
-                                  "fcitx5/conf/pinyin.conf", O_RDONLY);
+    auto file = standardPath.open(StandardPath::Type::PkgConfig,
+                                  "conf/pinyin.conf", O_RDONLY);
     RawConfig config;
     readFromIni(config, file.fd());
     config_.load(config);
@@ -233,7 +238,7 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         if (idx >= 0) {
             event.filterAndAccept();
             if (idx < candidateList->size()) {
-                candidateList->candidate(idx).select(inputContext);
+                candidateList->candidate(idx)->select(inputContext);
             }
             return;
         }
@@ -312,8 +317,10 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
             if (inputContext->inputPanel().candidateList() &&
                 inputContext->inputPanel().candidateList()->size()) {
                 event.filterAndAccept();
-                inputContext->inputPanel().candidateList()->candidate(0).select(
-                    inputContext);
+                inputContext->inputPanel()
+                    .candidateList()
+                    ->candidate(0)
+                    ->select(inputContext);
                 return;
             }
         }
@@ -343,8 +350,10 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         if (c) {
             if (inputContext->inputPanel().candidateList() &&
                 inputContext->inputPanel().candidateList()->size()) {
-                inputContext->inputPanel().candidateList()->candidate(0).select(
-                    inputContext);
+                inputContext->inputPanel()
+                    .candidateList()
+                    ->candidate(0)
+                    ->select(inputContext);
             }
             auto punc = instance_->addonManager()
                             .addon("punctuation")
