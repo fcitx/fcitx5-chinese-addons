@@ -71,6 +71,7 @@ private:
     std::unique_ptr<libime::PinyinIME> ime_;
     KeyList selectionKeys_;
     FactoryFor<PinyinState> factory_;
+    AddonInstance *quickphrase_;
 };
 
 class PinyinEngineFactory : public AddonFactory {

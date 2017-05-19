@@ -10,7 +10,7 @@ include(ECMUninstallTarget)
 include(FcitxCompilerSettings)
 
 find_package(Fcitx5Core REQUIRED)
-find_package(Fcitx5Module REQUIRED COMPONENTS Notifications)
+find_package(Fcitx5Module REQUIRED COMPONENTS Notifications QuickPhrase)
 find_package(LibIntl REQUIRED)
 
 #######################################################################

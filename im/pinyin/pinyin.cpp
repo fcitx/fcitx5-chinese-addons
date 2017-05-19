@@ -21,6 +21,7 @@
 #include "config.h"
 #include "fullwidth_public.h"
 #include "punctuation_public.h"
+#include <quickphrase_public.h>
 #include <boost/iostreams/device/file_descriptor.hpp>
 #include <boost/iostreams/stream.hpp>
 #include <fcitx-config/iniparser.h>
@@ -77,8 +78,7 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
         context.learn();
         context.clear();
         inputContext->updatePreedit();
-        inputContext->updateUserInterface(UserInterfaceComponent::InputPanel,
-                                          true);
+        inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
         inputContext->commitString(sentence);
     } else {
         if (context.userInput().size()) {
@@ -120,14 +120,14 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
 #endif
         }
         inputContext->updatePreedit();
-        inputContext->updateUserInterface(UserInterfaceComponent::InputPanel,
-                                          true);
+        inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
     }
 }
 
 PinyinEngine::PinyinEngine(Instance *instance)
     : instance_(instance),
       factory_([this](InputContext &) { return new PinyinState(this); }) {
+    quickphrase_ = instance_->addonManager().addon("quickphrase");
     ime_ = std::make_unique<libime::PinyinIME>(
         std::make_unique<libime::PinyinDictionary>(),
         std::make_unique<libime::UserLanguageModel>(LIBIME_INSTALL_PKGDATADIR
@@ -269,6 +269,13 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
 
     if (event.key().isLAZ() ||
         (event.key().check(FcitxKey_apostrophe) && state->context_.size())) {
+        // first v, use it to trigger quickphrase
+        if (quickphrase_ && event.key().check(FcitxKey_v) && !state->context_.size()) {
+
+            quickphrase_->call<IQuickPhrase::trigger>(inputContext, "", "v", "", "", Key(FcitxKey_None));
+            event.filterAndAccept();
+            return;
+        }
         state->context_.type(
             utf8::UCS4ToUTF8(Key::keySymToUnicode(event.key().sym())));
         event.filterAndAccept();
@@ -358,6 +365,21 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
                             .addon("punctuation")
                             ->call<IPunctuation::pushPunctuation>(
                                 "zh_CN", inputContext, c);
+            if (event.key().check(FcitxKey_semicolon) && quickphrase_) {
+                auto s = punc.size() ? punc : utf8::UCS4ToUTF8(c);
+                auto alt = punc.size() ? utf8::UCS4ToUTF8(c) : "";
+                std::string text;
+                if (s.size()) {
+                    text += alt + _(" for ") + s;
+                }
+                if (alt.size()) {
+                    text += _(" Return for ") + alt;
+                }
+                quickphrase_->call<IQuickPhrase::trigger>(inputContext, text, "", s, alt, Key(FcitxKey_semicolon));
+                event.filterAndAccept();
+                return;
+            }
+
             if (punc.size()) {
                 event.filterAndAccept();
                 inputContext->commitString(punc);
@@ -378,7 +400,7 @@ void PinyinEngine::reset(const InputMethodEntry &, InputContextEvent &event) {
     state->context_.clear();
     inputContext->inputPanel().reset();
     inputContext->updatePreedit();
-    inputContext->updateUserInterface(UserInterfaceComponent::InputPanel, true);
+    inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
     state->lastIsPunc_ = false;
 }
 

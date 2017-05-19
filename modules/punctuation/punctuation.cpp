@@ -34,6 +34,10 @@ static const std::string emptyString;
 static const std::pair<std::string, std::string> emptyStringPair;
 }
 
+bool dontConvertWhenEn(uint32_t c) {
+    return c == '.' || c == ',';
+}
+
 class PunctuationState : public InputContextProperty {
 public:
     std::unordered_set<uint32_t> lastPuncStack_;
@@ -169,7 +173,7 @@ const std::string &Punctuation::pushPunctuation(const std::string &language,
                                                 InputContext *ic,
                                                 uint32_t unicode) {
     auto state = ic->propertyFor(&factory_);
-    if (state->lastIsEngOrDigit_) {
+    if (state->lastIsEngOrDigit_ && dontConvertWhenEn(unicode)) {
         state->notConverted = unicode;
         return emptyString;
     } else {
@@ -197,8 +201,7 @@ const std::string &Punctuation::pushPunctuation(const std::string &language,
 const std::string &Punctuation::cancelLast(const std::string &language,
                                            InputContext *ic) {
     auto state = ic->propertyFor(&factory_);
-    if (state->notConverted == '.' || state->notConverted == ',' ||
-        state->notConverted == ';') {
+    if (dontConvertWhenEn(state->notConverted)) {
         auto &result = getPunctuation(language, state->notConverted);
         state->notConverted = 0;
         return result.first;
