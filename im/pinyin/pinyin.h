@@ -34,6 +34,11 @@ FCITX_CONFIGURATION(
     PinyinEngineConfig,
     fcitx::Option<int, IntConstrain> pageSize{this, "PageSize", "Page size", 5,
                                               IntConstrain(3, 10)};
+    fcitx::Option<bool> cloudPinyinEnabled{this, "CloudPinyin/Enabled",
+                                           "Cloud Pinyin Enabled", true};
+    fcitx::Option<int, IntConstrain> cloudPinyinIndex{this, "CloudPinyin/Index",
+                                                      "Cloud Pinyin Index", 2,
+                                                      IntConstrain(1, 10)};
     fcitx::Option<KeyList> prevPage{this,
                                     "Prev Page",
                                     "Prev Page",
@@ -59,11 +64,11 @@ public:
     void reset(const InputMethodEntry &entry,
                InputContextEvent &event) override;
     void save() override;
+    auto &factory() { return factory_; }
 
     libime::PinyinIME *ime() { return ime_.get(); }
 
     void updateUI(InputContext *inputContext);
-    auto state() { return &factory_; }
 
 private:
     Instance *instance_;
@@ -71,7 +76,9 @@ private:
     std::unique_ptr<libime::PinyinIME> ime_;
     KeyList selectionKeys_;
     FactoryFor<PinyinState> factory_;
-    AddonInstance *quickphrase_;
+    AddonInstance *quickphrase_ = nullptr;
+    AddonInstance *cloudpinyin_ = nullptr;
+    AddonInstance *punc_ = nullptr;
 };
 
 class PinyinEngineFactory : public AddonFactory {

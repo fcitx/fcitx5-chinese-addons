@@ -34,9 +34,7 @@ static const std::string emptyString;
 static const std::pair<std::string, std::string> emptyStringPair;
 }
 
-bool dontConvertWhenEn(uint32_t c) {
-    return c == '.' || c == ',';
-}
+bool dontConvertWhenEn(uint32_t c) { return c == '.' || c == ','; }
 
 class PunctuationState : public InputContextProperty {
 public:
