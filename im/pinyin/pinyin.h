@@ -58,6 +58,8 @@ public:
     PinyinEngine(Instance *instance);
     ~PinyinEngine();
     Instance *instance() { return instance_; }
+    void activate(const fcitx::InputMethodEntry &entry,
+                  fcitx::InputContextEvent &event) override;
     void keyEvent(const InputMethodEntry &entry, KeyEvent &keyEvent) override;
     std::vector<InputMethodEntry> listInputMethods() override;
     void reloadConfig() override;
@@ -76,9 +78,12 @@ private:
     std::unique_ptr<libime::PinyinIME> ime_;
     KeyList selectionKeys_;
     FactoryFor<PinyinState> factory_;
-    AddonInstance *quickphrase_ = nullptr;
-    AddonInstance *cloudpinyin_ = nullptr;
-    AddonInstance *punc_ = nullptr;
+    bool firstActivate_ = false;
+
+    FCITX_ADDON_DEPENDENCY_LOADER(quickphrase, instance_->addonManager());
+    FCITX_ADDON_DEPENDENCY_LOADER(cloudpinyin, instance_->addonManager());
+    FCITX_ADDON_DEPENDENCY_LOADER(punctuation, instance_->addonManager());
+    FCITX_ADDON_DEPENDENCY_LOADER(notifications, instance_->addonManager());
 };
 
 class PinyinEngineFactory : public AddonFactory {

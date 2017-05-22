@@ -39,6 +39,7 @@ typedef std::function<void(fcitx::InputContext *inputContext,
 FCITX_ADDON_DECLARE_FUNCTION(CloudPinyin, request,
                              void(const std::string &pinyin,
                                   CloudPinyinCallback));
+FCITX_ADDON_DECLARE_FUNCTION(CloudPinyin, toggleKey, const fcitx::KeyList &());
 
 class CloudPinyinCandidateWord
     : public fcitx::CandidateWord,

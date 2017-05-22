@@ -21,11 +21,13 @@
 #include "cloudpinyin_public.h"
 #include "config.h"
 #include "fullwidth_public.h"
+#include "notifications_public.h"
 #include "punctuation_public.h"
 #include <boost/iostreams/device/file_descriptor.hpp>
 #include <boost/iostreams/stream.hpp>
 #include <fcitx-config/iniparser.h>
 #include <fcitx-utils/charutils.h>
+#include <fcitx-utils/event.h>
 #include <fcitx-utils/i18n.h>
 #include <fcitx-utils/standardpath.h>
 #include <fcitx-utils/utf8.h>
@@ -34,6 +36,7 @@
 #include <fcitx/inputcontextproperty.h>
 #include <fcitx/inputpanel.h>
 #include <fcntl.h>
+#include <iostream>
 #include <libime/historybigram.h>
 #include <libime/pinyincontext.h>
 #include <libime/pinyindictionary.h>
@@ -90,9 +93,9 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
                 size_t idx = 0;
 
                 std::unique_ptr<CloudPinyinCandidateWord> cloud;
-                if (config_.cloudPinyinEnabled.value() && cloudpinyin_) {
+                if (config_.cloudPinyinEnabled.value() && cloudpinyin()) {
                     cloud = std::make_unique<CloudPinyinCandidateWord>(
-                        cloudpinyin_,
+                        cloudpinyin(),
                         context.userInput().substr(context.selectedLength()),
                         context.selectedSentence(), inputContext,
                         [this](InputContext *inputContext,
@@ -185,9 +188,6 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
 PinyinEngine::PinyinEngine(Instance *instance)
     : instance_(instance),
       factory_([this](InputContext &) { return new PinyinState(this); }) {
-    quickphrase_ = instance_->addonManager().addon("quickphrase");
-    cloudpinyin_ = instance_->addonManager().addon("cloudpinyin");
-    punc_ = instance_->addonManager().addon("punctuation");
     ime_ = std::make_unique<libime::PinyinIME>(
         std::make_unique<libime::PinyinDictionary>(),
         std::make_unique<libime::UserLanguageModel>(LIBIME_INSTALL_PKGDATADIR
@@ -234,12 +234,6 @@ PinyinEngine::PinyinEngine(Instance *instance)
     ime_->setScoreFilter(1);
     ime_->setFuzzyFlags(libime::PinyinFuzzyFlag::Inner);
     reloadConfig();
-
-    auto fullwidth = instance_->addonManager().addon("fullwidth");
-    if (fullwidth) {
-        fullwidth->call<IFullwidth::enable>("pinyin");
-    }
-
     instance_->inputContextManager().registerProperty("pinyinState", &factory_);
     KeySym syms[] = {
         FcitxKey_1, FcitxKey_2, FcitxKey_3, FcitxKey_4, FcitxKey_5,
@@ -272,7 +266,16 @@ void PinyinEngine::reloadConfig() {
     config_.load(config);
     ime_->setNBest(config_.nbest.value());
 }
-
+void PinyinEngine::activate(const fcitx::InputMethodEntry &entry,
+                            fcitx::InputContextEvent &) {
+    if (!firstActivate_) {
+        firstActivate_ = true;
+        auto fullwidth = instance_->addonManager().addon("fullwidth", true);
+        if (fullwidth) {
+            fullwidth->call<IFullwidth::enable>(entry.uniqueName());
+        }
+    }
+}
 void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
     FCITX_UNUSED(entry);
 
@@ -284,6 +287,20 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
     // and by pass all modifier
     if (event.key().isModifier()) {
         return;
+    }
+
+    if (cloudpinyin() &&
+        event.key().checkKeyList(
+            cloudpinyin()->call<ICloudPinyin::toggleKey>())) {
+        config_.cloudPinyinEnabled.setValue(
+            !config_.cloudPinyinEnabled.value());
+        safeSaveAsIni(config_, "conf/pinyin.conf");
+
+        notifications()->call<INotifications::showTip>(
+            "fcitx-cloudpinyin-toggle", "fcitx", "", _("Cloud Pinyin Status"),
+            config_.cloudPinyinEnabled.value() ? _("Cloud Pinyin is enabled.")
+                                               : _("Cloud Pinyin is enabled."),
+            -1);
     }
 
     auto inputContext = event.inputContext();
@@ -330,11 +347,11 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
     if (event.key().isLAZ() ||
         (event.key().check(FcitxKey_apostrophe) && state->context_.size())) {
         // first v, use it to trigger quickphrase
-        if (quickphrase_ && event.key().check(FcitxKey_v) &&
+        if (quickphrase() && event.key().check(FcitxKey_v) &&
             !state->context_.size()) {
 
-            quickphrase_->call<IQuickPhrase::trigger>(inputContext, "", "v", "",
-                                                      "", Key(FcitxKey_None));
+            quickphrase()->call<IQuickPhrase::trigger>(
+                inputContext, "", "v", "", "", Key(FcitxKey_None));
             event.filterAndAccept();
             return;
         }
@@ -395,7 +412,7 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
     } else {
         if (event.key().check(FcitxKey_BackSpace)) {
             if (lastIsPunc) {
-                auto puncStr = punc_->call<IPunctuation::cancelLast>(
+                auto puncStr = punctuation()->call<IPunctuation::cancelLast>(
                     "zh_CN", inputContext);
                 if (!puncStr.empty()) {
                     // forward the original key is the best choice.
@@ -422,11 +439,9 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
                     ->candidate(0)
                     ->select(inputContext);
             }
-            auto punc = instance_->addonManager()
-                            .addon("punctuation")
-                            ->call<IPunctuation::pushPunctuation>(
-                                "zh_CN", inputContext, c);
-            if (event.key().check(FcitxKey_semicolon) && quickphrase_) {
+            auto punc = punctuation()->call<IPunctuation::pushPunctuation>(
+                "zh_CN", inputContext, c);
+            if (event.key().check(FcitxKey_semicolon) && quickphrase()) {
                 auto s = punc.size() ? punc : utf8::UCS4ToUTF8(c);
                 auto alt = punc.size() ? utf8::UCS4ToUTF8(c) : "";
                 std::string text;
@@ -436,7 +451,7 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
                 if (alt.size()) {
                     text += _(" Return for ") + alt;
                 }
-                quickphrase_->call<IQuickPhrase::trigger>(
+                quickphrase()->call<IQuickPhrase::trigger>(
                     inputContext, text, "", s, alt, Key(FcitxKey_semicolon));
                 event.filterAndAccept();
                 return;

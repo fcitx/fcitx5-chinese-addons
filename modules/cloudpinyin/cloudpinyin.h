@@ -34,7 +34,7 @@ FCITX_CONFIG_ENUM(CloudPinyinBackend, Google, Baidu);
 FCITX_CONFIGURATION(
     CloudPinyinConfig,
     fcitx::Option<fcitx::KeyList> toggleKey{
-        this, "Toggle Key", "Toggle Key", {fcitx::Key("Control+Alt+Shift+c")}};
+        this, "Toggle Key", "Toggle Key", {fcitx::Key("Control+Alt+C")}};
     fcitx::Option<int> minimumLength{this, "MinimumPinyinLength",
                                      "MinimumPinyinLength", 4};
     fcitx::Option<CloudPinyinBackend> backend{this, "Backend", "Backend",
@@ -55,9 +55,11 @@ public:
     void reloadConfig() override;
 
     void request(const std::string &pinyin, CloudPinyinCallback callback);
+    const fcitx::KeyList &toggleKey() { return config_.toggleKey.value(); }
 
 private:
     FCITX_ADDON_EXPORT_FUNCTION(CloudPinyin, request);
+    FCITX_ADDON_EXPORT_FUNCTION(CloudPinyin, toggleKey);
     fcitx::UnixFD recvFd_, notifyFd_;
     std::unique_ptr<FetchThread> thread_;
     fcitx::EventLoop *eventLoop_;
