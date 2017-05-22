@@ -298,8 +298,10 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         notifications()->call<INotifications::showTip>(
             "fcitx-cloudpinyin-toggle", "fcitx", "", _("Cloud Pinyin Status"),
             config_.cloudPinyinEnabled.value() ? _("Cloud Pinyin is enabled.")
-                                               : _("Cloud Pinyin is enabled."),
+                                               : _("Cloud Pinyin is disabled."),
             -1);
+        event.filterAndAccept();
+        return;
     }
 
     auto inputContext = event.inputContext();

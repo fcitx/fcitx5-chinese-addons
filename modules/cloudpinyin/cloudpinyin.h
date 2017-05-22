@@ -34,7 +34,7 @@ FCITX_CONFIG_ENUM(CloudPinyinBackend, Google, Baidu);
 FCITX_CONFIGURATION(
     CloudPinyinConfig,
     fcitx::Option<fcitx::KeyList> toggleKey{
-        this, "Toggle Key", "Toggle Key", {fcitx::Key("Control+Alt+C")}};
+        this, "Toggle Key", "Toggle Key", {fcitx::Key("Control+Alt+Shift+C")}};
     fcitx::Option<int> minimumLength{this, "MinimumPinyinLength",
                                      "MinimumPinyinLength", 4};
     fcitx::Option<CloudPinyinBackend> backend{this, "Backend", "Backend",
