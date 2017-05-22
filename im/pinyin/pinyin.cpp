@@ -36,7 +36,6 @@
 #include <fcitx/inputcontextproperty.h>
 #include <fcitx/inputpanel.h>
 #include <fcntl.h>
-#include <iostream>
 #include <libime/historybigram.h>
 #include <libime/pinyincontext.h>
 #include <libime/pinyindictionary.h>

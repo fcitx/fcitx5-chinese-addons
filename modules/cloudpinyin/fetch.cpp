@@ -174,9 +174,10 @@ void FetchThread::curlTimer(long timeout_ms) {
                 } while (mcode == CURLM_CALL_MULTI_PERFORM);
                 return true;
             }));
+        timer_->setOneShot();
     } else {
         timer_->setNextInterval(timeout_ms * 1000);
-        timer_->setEnabled(true);
+        timer_->setOneShot();
     }
 }
 
