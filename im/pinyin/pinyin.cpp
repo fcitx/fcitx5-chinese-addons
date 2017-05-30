@@ -39,6 +39,7 @@
 #include <libime/historybigram.h>
 #include <libime/pinyincontext.h>
 #include <libime/pinyindictionary.h>
+#include <libime/shuangpinprofile.h>
 #include <libime/userlanguagemodel.h>
 #include <quickphrase_public.h>
 
@@ -95,7 +96,9 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
                 if (config_.cloudPinyinEnabled.value() && cloudpinyin()) {
                     cloud = std::make_unique<CloudPinyinCandidateWord>(
                         cloudpinyin(),
-                        context.userInput().substr(context.selectedLength()),
+                        context.useShuangpin() ? context.candidateFullPinyin(0)
+                                               : context.userInput().substr(
+                                                     context.selectedLength()),
                         context.selectedSentence(), inputContext,
                         [this](InputContext *inputContext,
                                const std::string &selected,
@@ -253,6 +256,11 @@ std::vector<InputMethodEntry> PinyinEngine::listInputMethods() {
         InputMethodEntry("pinyin", _("Pinyin Input Method"), "zh_CN", "pinyin")
             .setIcon("pinyin")
             .setLabel("拼")));
+    result.emplace_back(
+        std::move(InputMethodEntry("shuangpin", _("Shuangpin Input Method"),
+                                   "zh_CN", "pinyin")
+                      .setIcon("shuangpin")
+                      .setLabel("双")));
     return result;
 }
 
@@ -264,16 +272,54 @@ void PinyinEngine::reloadConfig() {
     readFromIni(config, file.fd());
     config_.load(config);
     ime_->setNBest(config_.nbest.value());
+    if (config_.shuangpinProfile.value() == ShuangpinProfileEnum::Custom) {
+        auto file = standardPath.open(StandardPath::Type::PkgConfig,
+                                      "pinyin/sp.dat", O_RDONLY);
+        try {
+            boost::iostreams::stream_buffer<
+                boost::iostreams::file_descriptor_source>
+                buffer(file.fd(), boost::iostreams::file_descriptor_flags::
+                                      never_close_handle);
+            std::istream in(&buffer);
+            ime_->setShuangpinProfile(
+                std::make_shared<libime::ShuangpinProfile>(in));
+        } catch (const std::exception &) {
+        }
+    } else {
+        libime::ShuangpinBuiltinProfile profile;
+#define TRANS_SP_PROFILE(PROFILE)                                              \
+    case ShuangpinProfileEnum::PROFILE:                                        \
+        profile = libime::ShuangpinBuiltinProfile::PROFILE;                    \
+        break;
+        switch (config_.shuangpinProfile.value()) {
+            TRANS_SP_PROFILE(Ziranma)
+            TRANS_SP_PROFILE(MS)
+            TRANS_SP_PROFILE(Ziguang)
+            TRANS_SP_PROFILE(ABC)
+            TRANS_SP_PROFILE(Zhongwenzhixing)
+            TRANS_SP_PROFILE(PinyinJiajia)
+            TRANS_SP_PROFILE(Xiaohe)
+        default:
+            profile = libime::ShuangpinBuiltinProfile::Ziranma;
+            break;
+        }
+        ime_->setShuangpinProfile(
+            std::make_shared<libime::ShuangpinProfile>(profile));
+    }
 }
 void PinyinEngine::activate(const fcitx::InputMethodEntry &entry,
-                            fcitx::InputContextEvent &) {
+                            fcitx::InputContextEvent &event) {
     if (!firstActivate_) {
         firstActivate_ = true;
         auto fullwidth = instance_->addonManager().addon("fullwidth", true);
         if (fullwidth) {
-            fullwidth->call<IFullwidth::enable>(entry.uniqueName());
+            fullwidth->call<IFullwidth::enable>("pinyin");
+            fullwidth->call<IFullwidth::enable>("shuangpin");
         }
     }
+    auto inputContext = event.inputContext();
+    auto state = inputContext->propertyFor(&factory_);
+    state->context_.setUseShuangpin(entry.uniqueName() == "shuangpin");
 }
 void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
     FCITX_UNUSED(entry);
@@ -345,11 +391,20 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         }
     }
 
+    auto checkSp = [this](const KeyEvent &event, PinyinState *state) {
+        auto shuangpinProfile = ime_->shuangpinProfile();
+        return state->context_.useShuangpin() && shuangpinProfile &&
+               event.key().isSimple() &&
+               shuangpinProfile->validInput().count(
+                   Key::keySymToUnicode(event.key().sym()));
+    };
+
     if (event.key().isLAZ() ||
-        (event.key().check(FcitxKey_apostrophe) && state->context_.size())) {
+        (event.key().check(FcitxKey_apostrophe) && state->context_.size()) ||
+        (state->context_.size() && checkSp(event, state))) {
         // first v, use it to trigger quickphrase
-        if (quickphrase() && event.key().check(FcitxKey_v) &&
-            !state->context_.size()) {
+        if (!state->context_.useShuangpin() && quickphrase() &&
+            event.key().check(FcitxKey_v) && !state->context_.size()) {
 
             quickphrase()->call<IQuickPhrase::trigger>(
                 inputContext, "", "v", "", "", Key(FcitxKey_None));

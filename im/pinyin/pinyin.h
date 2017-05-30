@@ -30,6 +30,9 @@
 
 namespace fcitx {
 
+FCITX_CONFIG_ENUM(ShuangpinProfileEnum, Ziranma, MS, Ziguang, ABC,
+                  Zhongwenzhixing, PinyinJiajia, Xiaohe, Custom)
+
 FCITX_CONFIGURATION(
     PinyinEngineConfig,
     fcitx::Option<int, IntConstrain> pageSize{this, "PageSize", "Page size", 5,
@@ -49,7 +52,10 @@ FCITX_CONFIGURATION(
                                     {Key(FcitxKey_equal), Key(FcitxKey_Down)}};
     fcitx::Option<int, IntConstrain> nbest{this, "Number of sentence",
                                            "Number of Sentence", 2,
-                                           IntConstrain(1, 3)};);
+                                           IntConstrain(1, 3)};
+    fcitx::Option<ShuangpinProfileEnum> shuangpinProfile{
+        this, "Shuangpin Profile", "Shuangpin Profile",
+        ShuangpinProfileEnum::Ziranma};);
 
 class PinyinState;
 
