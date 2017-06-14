@@ -29,6 +29,7 @@
 #include <fcitx-utils/charutils.h>
 #include <fcitx-utils/event.h>
 #include <fcitx-utils/i18n.h>
+#include <fcitx-utils/log.h>
 #include <fcitx-utils/standardpath.h>
 #include <fcitx-utils/utf8.h>
 #include <fcitx/inputcontext.h>
@@ -252,11 +253,11 @@ PinyinEngine::~PinyinEngine() {}
 
 std::vector<InputMethodEntry> PinyinEngine::listInputMethods() {
     std::vector<InputMethodEntry> result;
-    result.emplace_back(std::move(
+    result.push_back(std::move(
         InputMethodEntry("pinyin", _("Pinyin Input Method"), "zh_CN", "pinyin")
             .setIcon("pinyin")
             .setLabel("拼")));
-    result.emplace_back(
+    result.push_back(
         std::move(InputMethodEntry("shuangpin", _("Shuangpin Input Method"),
                                    "zh_CN", "pinyin")
                       .setIcon("shuangpin")
@@ -323,6 +324,8 @@ void PinyinEngine::activate(const fcitx::InputMethodEntry &entry,
 }
 void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
     FCITX_UNUSED(entry);
+    FCITX_LOG(Debug) << "Pinyin receive key: " << event.key() << " "
+                     << event.isRelease();
 
     // by pass all key release
     if (event.isRelease()) {
