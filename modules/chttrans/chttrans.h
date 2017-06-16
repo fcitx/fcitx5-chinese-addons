@@ -43,9 +43,22 @@ enum class ChttransIMType { Simp, Trad, Other };
 class ChttransBackend {
 public:
     virtual ~ChttransBackend() {}
-    virtual bool load() = 0;
+    bool load() {
+        if (!loaded_) {
+            loadResult_ = loadOnce();
+            loaded_ = true;
+        }
+        return loadResult_;
+    }
     virtual std::string convertSimpToTrad(const std::string &) = 0;
     virtual std::string convertTradToSimp(const std::string &) = 0;
+
+protected:
+    virtual bool loadOnce() = 0;
+
+private:
+    bool loaded_ = false;
+    bool loadResult_ = false;
 };
 
 class Chttrans : public fcitx::AddonInstance {

@@ -98,12 +98,17 @@ Chttrans::Chttrans(fcitx::Instance *instance) : instance_(instance) {
         if (type == ChttransIMType::Other) {
             return;
         }
+        auto oldString = text.toString();
+        auto newString = convert(type, oldString);
         Text newText;
+        size_t off = 0;
         for (size_t i = 0; i < text.size(); i++) {
-            newText.append(convert(type, text.stringAt(i)), text.formatAt(i));
+            size_t newOff = utf8::nthChar(newString, off, utf8::length(text.stringAt(i)));
+            newText.append(newString.substr(off, newOff - off), text.formatAt(i));
+            off = newOff;
         }
         if (text.cursor() >= 0) {
-            auto length = utf8::lengthN(text.toString(), text.cursor());
+            auto length = utf8::lengthN(oldString, text.cursor());
             newText.setCursor(utf8::nthChar(newText.toString(), length));
         } else {
             newText.setCursor(text.cursor());

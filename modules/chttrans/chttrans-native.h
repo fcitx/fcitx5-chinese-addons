@@ -27,7 +27,8 @@ public:
     std::string convertSimpToTrad(const std::string &) override;
     std::string convertTradToSimp(const std::string &) override;
 
-    bool load() override;
+protected:
+    bool loadOnce() override;
 
 private:
     std::unordered_map<uint32_t, std::string> s2tMap_;

@@ -29,7 +29,7 @@ using namespace fcitx;
 
 typedef std::unique_ptr<FILE, decltype(&std::fclose)> ScopedFILE;
 
-bool NativeBackend::load() {
+bool NativeBackend::loadOnce() {
     auto file = StandardPath::global().open(StandardPath::Type::PkgData,
                                             TABLE_GBKS2T, O_RDONLY);
     if (file.fd() < 0) {

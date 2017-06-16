@@ -27,7 +27,8 @@ public:
     std::string convertSimpToTrad(const std::string &) override;
     std::string convertTradToSimp(const std::string &) override;
 
-    bool load() override;
+protected:
+    bool loadOnce() override;
 
 private:
     std::unique_ptr<opencc::SimpleConverter> s2t_;

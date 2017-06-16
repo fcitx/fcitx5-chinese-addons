@@ -18,7 +18,7 @@
  */
 #include "chttrans-opencc.h"
 
-bool OpenCCBackend::load() {
+bool OpenCCBackend::loadOnce() {
     try {
         s2t_ = std::make_unique<opencc::SimpleConverter>(
             OPENCC_DEFAULT_CONFIG_SIMP_TO_TRAD);
