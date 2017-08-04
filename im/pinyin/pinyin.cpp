@@ -549,7 +549,7 @@ void PinyinEngine::save() {
                 buffer(fd, boost::iostreams::file_descriptor_flags::
                                never_close_handle);
             std::ostream out(&buffer);
-            ime_->dict()->save(libime::PinyinDictionary::UserDict, out);
+            ime_->dict()->save(libime::PinyinDictionary::UserDict, out, libime::PinyinDictFormat::Binary);
             return true;
         });
     standardPath.safeSave(
