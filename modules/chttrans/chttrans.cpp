@@ -99,17 +99,37 @@ Chttrans::Chttrans(fcitx::Instance *instance) : instance_(instance) {
             return;
         }
         auto oldString = text.toString();
+        auto oldLength = utf8::lengthValidated(oldString);
+        if (oldLength == utf8::INVALID_LENGTH) {
+            return;
+        }
         auto newString = convert(type, oldString);
+        auto newLength = utf8::lengthValidated(newString);
+        if (newLength == utf8::INVALID_LENGTH) {
+            return;
+        }
         Text newText;
         size_t off = 0;
+        size_t remainLength = newLength;
         for (size_t i = 0; i < text.size(); i++) {
-            size_t newOff = utf8::nthChar(newString, off, utf8::length(text.stringAt(i)));
-            newText.append(newString.substr(off, newOff - off), text.formatAt(i));
-            off = newOff;
+            auto segmentLength = utf8::length(text.stringAt(i));
+            if (remainLength < segmentLength) {
+                segmentLength = remainLength;
+            }
+            remainLength -= segmentLength;
+            size_t segmentByteLength =
+                utf8::ncharByteLength(newString.begin() + off, segmentLength);
+            newText.append(newString.substr(off, segmentByteLength),
+                           text.formatAt(i));
+            off = off + segmentByteLength;
         }
         if (text.cursor() >= 0) {
-            auto length = utf8::lengthN(oldString, text.cursor());
-            newText.setCursor(utf8::nthChar(newText.toString(), length));
+            auto length = utf8::length(oldString, 0, text.cursor());
+            if (length > newLength) {
+                length = newLength;
+            }
+            newText.setCursor(
+                utf8::ncharByteLength(newText.toString().begin(), length));
         } else {
             newText.setCursor(text.cursor());
         }

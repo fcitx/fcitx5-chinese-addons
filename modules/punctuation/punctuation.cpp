@@ -63,10 +63,10 @@ PunctuationProfile::PunctuationProfile(std::istream &in) {
             continue;
         }
         // we don't make # as comment here, # would be consider as a valid char
-        if (utf8::length(tokens[0]) != 1) {
+        if (utf8::lengthValidated(tokens[0]) != 1) {
             continue;
         }
-        auto c = utf8::getCharValidated(tokens[0]);
+        auto c = utf8::getChar(tokens[0]);
         decltype(puncMap_)::mapped_type p;
         p.first = tokens[1];
         if (tokens.size() > 2) {

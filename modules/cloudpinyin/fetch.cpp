@@ -127,15 +127,16 @@ void FetchThread::curl(curl_socket_t s, int action) {
         if (iter == events_.end()) {
             auto that_ = this;
             auto p = events_.emplace(
-                s, loop_->addIOEvent(
-                       s, IOEventFlags(0),
-                       [that_](EventSourceIO *, int fd, IOEventFlags flags) {
-                           auto that = that_;
-                           // make sure "that" is valid since io handler may
-                           // free itself.
-                           that->handleIO(fd, flags);
-                           return true;
-                       }));
+                s,
+                loop_->addIOEvent(
+                    s, IOEventFlags(0),
+                    [that_](EventSourceIO *, int fd, IOEventFlags flags) {
+                        auto that = that_;
+                        // make sure "that" is valid since io handler may
+                        // free itself.
+                        that->handleIO(fd, flags);
+                        return true;
+                    }));
             iter = p.first;
         }
         IOEventFlags flags(0);
