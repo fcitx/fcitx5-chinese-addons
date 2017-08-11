@@ -33,29 +33,47 @@ namespace fcitx {
 FCITX_CONFIG_ENUM(ShuangpinProfileEnum, Ziranma, MS, Ziguang, ABC,
                   Zhongwenzhixing, PinyinJiajia, Xiaohe, Custom)
 
+FCITX_CONFIGURATION(FuzzyConfig,
+                    Option<bool> ue{this, "VE_UE", "ue -> ve", true};
+                    Option<bool> ng{this, "NG_GN", "gn -> ng", true};
+                    Option<bool> inner{this, "Inner", "Inner Segment (xian -> xi'an)", true};
+                    Option<bool> v{this, "V_U", "u <-> v", false};
+                    Option<bool> an{this, "AN_ANG", "an <-> ang", false};
+                    Option<bool> en{this, "EN_ENG", "en <-> eng", false};
+                    Option<bool> ian{this, "IAN_IANG", "ian <-> iang", false};
+                    Option<bool> in{this, "IN_ING", "in <-> ing", false};
+                    Option<bool> ou{this, "U_OU", "ue -> ve", false};
+                    Option<bool> uan{this, "UAN_UANG", "ue -> ve", false};
+                    Option<bool> c{this, "C_CH", "ue -> ve", false};
+                    Option<bool> f{this, "F_H", "ue -> ve", false};
+                    Option<bool> l{this, "L_N", "ue -> ve", false};
+                    Option<bool> s{this, "S_SH", "ue -> ve", false};
+                    Option<bool> z{this, "Z_ZH", "ue -> ve", false};)
+
 FCITX_CONFIGURATION(
     PinyinEngineConfig,
-    fcitx::Option<int, IntConstrain> pageSize{this, "PageSize", "Page size", 5,
-                                              IntConstrain(3, 10)};
-    fcitx::Option<bool> cloudPinyinEnabled{this, "CloudPinyin/Enabled",
-                                           "Cloud Pinyin Enabled", true};
-    fcitx::Option<int, IntConstrain> cloudPinyinIndex{this, "CloudPinyin/Index",
-                                                      "Cloud Pinyin Index", 2,
-                                                      IntConstrain(1, 10)};
-    fcitx::Option<KeyList> prevPage{this,
-                                    "Prev Page",
-                                    "Prev Page",
-                                    {Key(FcitxKey_minus), Key(FcitxKey_Up)}};
-    fcitx::Option<KeyList> nextPage{this,
-                                    "Next Page",
-                                    "Next Page",
-                                    {Key(FcitxKey_equal), Key(FcitxKey_Down)}};
-    fcitx::Option<int, IntConstrain> nbest{this, "Number of sentence",
-                                           "Number of Sentence", 2,
-                                           IntConstrain(1, 3)};
-    fcitx::Option<ShuangpinProfileEnum> shuangpinProfile{
+    Option<int, IntConstrain> pageSize{this, "PageSize", "Page size", 5,
+                                       IntConstrain(3, 10)};
+    Option<bool> cloudPinyinEnabled{this, "CloudPinyin/Enabled",
+                                    "Cloud Pinyin Enabled", true};
+    Option<int, IntConstrain> cloudPinyinIndex{this, "CloudPinyin/Index",
+                                               "Cloud Pinyin Index", 2,
+                                               IntConstrain(1, 10)};
+    Option<KeyList> prevPage{this,
+                             "Prev Page",
+                             "Prev Page",
+                             {Key(FcitxKey_minus), Key(FcitxKey_Up)}};
+    Option<KeyList> nextPage{this,
+                             "Next Page",
+                             "Next Page",
+                             {Key(FcitxKey_equal), Key(FcitxKey_Down)}};
+    Option<int, IntConstrain> nbest{this, "Number of sentence",
+                                    "Number of Sentence", 2,
+                                    IntConstrain(1, 3)};
+    Option<ShuangpinProfileEnum> shuangpinProfile{
         this, "Shuangpin Profile", "Shuangpin Profile",
-        ShuangpinProfileEnum::Ziranma};);
+        ShuangpinProfileEnum::Ziranma};
+    Option<FuzzyConfig> fuzzyConfig{this, "Fuzzy", "Fuzzy Pinyin Settings"};);
 
 class PinyinState;
 
@@ -64,8 +82,8 @@ public:
     PinyinEngine(Instance *instance);
     ~PinyinEngine();
     Instance *instance() { return instance_; }
-    void activate(const fcitx::InputMethodEntry &entry,
-                  fcitx::InputContextEvent &event) override;
+    void activate(const InputMethodEntry &entry,
+                  InputContextEvent &event) override;
     void keyEvent(const InputMethodEntry &entry, KeyEvent &keyEvent) override;
     std::vector<InputMethodEntry> listInputMethods() override;
     void reloadConfig() override;
