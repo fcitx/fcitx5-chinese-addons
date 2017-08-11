@@ -36,7 +36,8 @@ FCITX_CONFIG_ENUM(ShuangpinProfileEnum, Ziranma, MS, Ziguang, ABC,
 FCITX_CONFIGURATION(FuzzyConfig,
                     Option<bool> ue{this, "VE_UE", "ue -> ve", true};
                     Option<bool> ng{this, "NG_GN", "gn -> ng", true};
-                    Option<bool> inner{this, "Inner", "Inner Segment (xian -> xi'an)", true};
+                    Option<bool> inner{this, "Inner",
+                                       "Inner Segment (xian -> xi'an)", true};
                     Option<bool> v{this, "V_U", "u <-> v", false};
                     Option<bool> an{this, "AN_ANG", "an <-> ang", false};
                     Option<bool> en{this, "EN_ENG", "en <-> eng", false};

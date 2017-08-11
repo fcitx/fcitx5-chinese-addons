@@ -309,10 +309,10 @@ void PinyinEngine::reloadConfig() {
     }
 
     libime::PinyinFuzzyFlags flags;
-    const auto& fuzzyConfig = config_.fuzzyConfig.value();
-#define SET_FUZZY_FLAG(VAR, ENUM) \
-    if (fuzzyConfig.VAR.value()) { \
-        flags |= libime::PinyinFuzzyFlag::ENUM; \
+    const auto &fuzzyConfig = config_.fuzzyConfig.value();
+#define SET_FUZZY_FLAG(VAR, ENUM)                                              \
+    if (fuzzyConfig.VAR.value()) {                                             \
+        flags |= libime::PinyinFuzzyFlag::ENUM;                                \
     }
     SET_FUZZY_FLAG(ue, VE_UE)
     SET_FUZZY_FLAG(ng, NG_GN)
