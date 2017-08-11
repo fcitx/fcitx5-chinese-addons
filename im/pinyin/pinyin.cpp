@@ -157,6 +157,7 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
                     candidateList->insert(index - 1, cloud.release());
                 }
                 candidateList->setSelectionKey(selectionKeys_);
+                candidateList->setPageSize(config_.pageSize.value());
                 inputPanel.setCandidateList(candidateList);
             }
             inputPanel.setClientPreedit(Text(context.sentence()));
