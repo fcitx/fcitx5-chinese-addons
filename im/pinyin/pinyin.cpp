@@ -23,6 +23,7 @@
 #include "fullwidth_public.h"
 #include "notifications_public.h"
 #include "punctuation_public.h"
+#include <boost/algorithm/string.hpp>
 #include <boost/iostreams/device/file_descriptor.hpp>
 #include <boost/iostreams/stream.hpp>
 #include <fcitx-config/iniparser.h>
@@ -39,12 +40,21 @@
 #include <fcntl.h>
 #include <libime/historybigram.h>
 #include <libime/pinyincontext.h>
+#include <libime/pinyindecoder.h>
 #include <libime/pinyindictionary.h>
 #include <libime/shuangpinprofile.h>
 #include <libime/userlanguagemodel.h>
 #include <quickphrase_public.h>
 
 namespace fcitx {
+
+bool consumePreifx(boost::string_view &view, boost::string_view prefix) {
+    if (boost::starts_with(view, prefix)) {
+        view.remove_prefix(prefix.size());
+        return true;
+    }
+    return false;
+}
 
 class PinyinState : public InputContextProperty {
 public:
@@ -97,46 +107,15 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
 
             std::unique_ptr<CloudPinyinCandidateWord> cloud;
             if (config_.cloudPinyinEnabled.value() && cloudpinyin()) {
-                cloud = std::make_unique<CloudPinyinCandidateWord>(
-                    cloudpinyin(),
+                using namespace std::placeholders;
+                auto fullPinyin =
                     context.useShuangpin()
                         ? context.candidateFullPinyin(0)
-                        : context.userInput().substr(context.selectedLength()),
-                    context.selectedSentence(), inputContext,
-                    [this](InputContext *inputContext,
-                           const std::string &selected,
-                           const std::string &word) {
-                        auto state = inputContext->propertyFor(&factory_);
-                        auto preedit = state->context_.preedit();
-                        bool wordAdded = true;
-                        if (stringutils::startsWith(preedit, selected)) {
-                            preedit = preedit.substr(selected.size());
-                            auto pinyins = stringutils::split(preedit, " '");
-                            if (pinyins.size() &&
-                                pinyins.size() == utf8::length(word)) {
-                                auto joined = stringutils::join(
-                                    pinyins.begin(), pinyins.end(), "'");
-                                try {
-                                    // if pinyin is not valid, it may throw
-                                    ime_->dict()->addWord(
-                                        libime::PinyinDictionary::UserDict,
-                                        joined, word);
-                                    wordAdded = true;
-                                } catch (const std::exception &e) {
-                                }
-                            }
-                        }
-                        if (wordAdded) {
-                            auto words = state->context_.selectedWords();
-                            words.push_back(word);
-                            ime_->model()->history().add(words);
-                        }
-                        state->context_.clear();
-                        inputContext->commitString(selected + word);
-                        inputContext->inputPanel().reset();
-                        inputContext->updateUserInterface(
-                            UserInterfaceComponent::InputPanel);
-                    });
+                        : context.userInput().substr(context.selectedLength());
+                cloud = std::make_unique<CloudPinyinCandidateWord>(
+                    cloudpinyin(), fullPinyin, context.selectedSentence(),
+                    inputContext, std::bind(&PinyinEngine::cloudPinyinSelected,
+                                            this, _1, _2, _3));
             }
             for (const auto &candidate : candidates) {
                 auto candidateString = candidate.toString();
@@ -587,6 +566,82 @@ void PinyinEngine::save() {
             ime_->model()->save(out);
             return true;
         });
+}
+
+void PinyinEngine::cloudPinyinSelected(InputContext *inputContext,
+                                       const std::string &selected,
+                                       const std::string &word) {
+    auto state = inputContext->propertyFor(&factory_);
+    auto preedit = state->context_.preedit();
+    do {
+        if (!stringutils::startsWith(preedit, selected)) {
+            break;
+        }
+        preedit = preedit.substr(selected.size());
+        auto pinyins = stringutils::split(preedit, " '");
+        boost::string_view wordView = word;
+        auto words = state->context_.selectedWords();
+        if (pinyins.empty() || pinyins.size() != utf8::length(word)) {
+            break;
+        }
+        const auto &candidates = state->context_.candidates();
+        auto pinyinsIter = pinyins.begin();
+        auto pinyinsEnd = pinyins.end();
+        if (candidates.size()) {
+            const auto &bestSentence = candidates[0].sentence();
+            auto iter = bestSentence.begin();
+            auto end = bestSentence.end();
+            while (iter != end) {
+                auto consumed = wordView;
+                if (!consumePreifx(consumed, (*iter)->word())) {
+                    break;
+                }
+                if ((*iter)->word().size()) {
+                    words.push_back((*iter)->word());
+                    FCITX_LOG(Debug)
+                        << "Cloud Pinyin can reuse segment " << (*iter)->word();
+                    auto pinyinNode =
+                        static_cast<const libime::PinyinLatticeNode *>(*iter);
+                    auto pinyinSize = pinyinNode->encodedPinyin().size() / 2;
+                    if (pinyinSize &&
+                        static_cast<size_t>(std::distance(
+                            pinyinsIter, pinyinsEnd)) >= pinyinSize) {
+                        pinyinsIter += pinyinSize;
+                    } else {
+                        break;
+                    }
+                }
+                wordView = consumed;
+                iter++;
+            }
+        }
+        // if pinyin is not valid, it may throw
+        try {
+            if (utf8::length(wordView) == 1 &&
+                std::all_of(words.begin(), words.end(),
+                            [](const std::string &w) {
+                                return utf8::length(w) == 1;
+                            })) {
+                words = state->context_.selectedWords();
+                auto joined =
+                    stringutils::join(pinyins.begin(), pinyins.end(), "'");
+                words.push_back(word);
+                ime_->dict()->addWord(libime::PinyinDictionary::UserDict,
+                                      joined, word);
+            } else {
+                auto joined = stringutils::join(pinyinsIter, pinyinsEnd, "'");
+                ime_->dict()->addWord(libime::PinyinDictionary::UserDict,
+                                      joined, wordView);
+                words.push_back(wordView.to_string());
+            }
+            ime_->model()->history().add(words);
+        } catch (const std::exception &e) {
+        }
+    } while (0);
+    state->context_.clear();
+    inputContext->commitString(selected + word);
+    inputContext->inputPanel().reset();
+    inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
 }
 }
 

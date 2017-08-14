@@ -98,6 +98,10 @@ public:
     void updateUI(InputContext *inputContext);
 
 private:
+    void cloudPinyinSelected(InputContext *inputContext,
+                             const std::string &selected,
+                             const std::string &word);
+
     Instance *instance_;
     PinyinEngineConfig config_;
     std::unique_ptr<libime::PinyinIME> ime_;
