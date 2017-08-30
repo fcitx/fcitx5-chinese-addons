@@ -25,7 +25,7 @@
 #include <fcitx/inputcontextproperty.h>
 #include <fcitx/inputmethodengine.h>
 #include <fcitx/instance.h>
-#include <libime/pinyinime.h>
+#include <libime/pinyin/pinyinime.h>
 #include <memory>
 
 namespace fcitx {
