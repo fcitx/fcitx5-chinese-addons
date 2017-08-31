@@ -48,7 +48,7 @@ private:
 
 class PunctuationState;
 
-class Punctuation : public fcitx::AddonInstance {
+class Punctuation final : public fcitx::AddonInstance {
 public:
     Punctuation(fcitx::Instance *instance);
     ~Punctuation();

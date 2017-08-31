@@ -39,11 +39,11 @@
 #include <fcitx/inputpanel.h>
 #include <fcntl.h>
 #include <libime/core/historybigram.h>
+#include <libime/core/userlanguagemodel.h>
 #include <libime/pinyin/pinyincontext.h>
 #include <libime/pinyin/pinyindecoder.h>
 #include <libime/pinyin/pinyindictionary.h>
 #include <libime/pinyin/shuangpinprofile.h>
-#include <libime/core/userlanguagemodel.h>
 #include <quickphrase_public.h>
 
 namespace fcitx {

@@ -61,7 +61,7 @@ private:
     bool loadResult_ = false;
 };
 
-class Chttrans : public fcitx::AddonInstance {
+class Chttrans final : public fcitx::AddonInstance {
 public:
     Chttrans(fcitx::Instance *instance);
 

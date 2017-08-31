@@ -78,7 +78,7 @@ FCITX_CONFIGURATION(
 
 class PinyinState;
 
-class PinyinEngine : public InputMethodEngine {
+class PinyinEngine final : public InputMethodEngine {
 public:
     PinyinEngine(Instance *instance);
     ~PinyinEngine();
