@@ -19,6 +19,7 @@
 #ifndef _CLOUDPINYIN_CLOUDPINYIN_PUBLIC_H_
 #define _CLOUDPINYIN_CLOUDPINYIN_PUBLIC_H_
 
+#include <chrono>
 #include <fcitx-utils/trackableobject.h>
 #include <fcitx/addoninstance.h>
 #include <fcitx/candidatelist.h>
@@ -53,26 +54,21 @@ public:
         : CandidateWord(fcitx::Text{}), selectedSentence_(selectedSentence),
           inputContext_(inputContext), callback_(callback) {
         // use cloud unicode char
-        text() = fcitx::Text("\xe2\x98\x81");
+        setText(fcitx::Text("\xe2\x98\x81"));
         auto ref = watch();
         cloudpinyin_->call<fcitx::ICloudPinyin::request>(
             pinyin, [ref](const std::string &pinyin, const std::string &hanzi) {
                 FCITX_UNUSED(pinyin);
                 auto self = ref.get();
                 if (self) {
-                    self->text() = fcitx::Text(hanzi);
-                    self->word_ = hanzi;
-                    self->filled_ = true;
-                    if (!self->constructor_) {
-                        self->update();
-                    }
+                    self->fill(hanzi);
                 }
             });
         constructor_ = false;
     }
 
     void select(fcitx::InputContext *inputContext) const override {
-        if (!filled_) {
+        if (!filled_ || word_.empty()) {
             // not filled, do nothing
             return;
         }
@@ -83,6 +79,17 @@ public:
     const std::string &word() { return word_; }
 
 private:
+    static constexpr long int LOADING_TIME_QUICK_THRESHOLD = 300;
+
+    void fill(const std::string &hanzi) {
+        setText(fcitx::Text(hanzi));
+        word_ = hanzi;
+        filled_ = true;
+        if (!constructor_) {
+            update();
+        }
+    }
+
     void update() {
         auto inputContext = inputContext_;
         auto candidateList = inputContext_->inputPanel().candidateList();
@@ -107,13 +114,24 @@ private:
             }
         }
         if (idx >= 0 && (dup || word_.empty())) {
-            modifiable->remove(idx);
+            auto ms =
+                std::chrono::duration_cast<std::chrono::milliseconds>(
+                    std::chrono::high_resolution_clock::now() - timestamp_)
+                    .count();
+            if (ms > LOADING_TIME_QUICK_THRESHOLD) {
+                setText(fcitx::Text("\xe2\x98\x81"));
+                word_ = std::string();
+            } else {
+                modifiable->remove(idx);
+            }
         }
         // use stack variable inputContext, because it may be removed already
         inputContext->updateUserInterface(
             fcitx::UserInterfaceComponent::InputPanel);
     }
 
+    std::chrono::high_resolution_clock::time_point timestamp_ =
+        std::chrono::high_resolution_clock::now();
     bool filled_ = false;
     std::string word_;
     std::string selectedSentence_;

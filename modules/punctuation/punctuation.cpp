@@ -20,6 +20,7 @@
 #include <boost/iostreams/device/file_descriptor.hpp>
 #include <boost/iostreams/stream_buffer.hpp>
 #include <fcitx-utils/charutils.h>
+#include <fcitx-utils/log.h>
 #include <fcitx-utils/standardpath.h>
 #include <fcitx-utils/utf8.h>
 #include <fcitx/inputcontext.h>
@@ -46,8 +47,8 @@ public:
 PunctuationProfile::PunctuationProfile(std::istream &in) {
     std::string strBuf;
     while (std::getline(in, strBuf)) {
-        std::string::size_type start, end;
-        std::tie(start, end) = stringutils::trimInplace(strBuf);
+        auto pair = stringutils::trimInplace(strBuf);
+        std::string::size_type start = pair.first, end = pair.second;
         if (start == end) {
             continue;
         }
@@ -162,7 +163,9 @@ void Punctuation::reloadConfig() {
             std::istream in(&buffer);
             PunctuationProfile newProfile(in);
             profiles_[lang] = std::move(newProfile);
-        } catch (const std::exception &) {
+        } catch (const std::exception &e) {
+            FCITX_LOG(Warn)
+                << "Error when load profile " << file.first << ": " << e.what();
         }
     }
 }
