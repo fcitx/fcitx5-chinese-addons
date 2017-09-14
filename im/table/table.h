@@ -41,7 +41,7 @@ public:
     void activate(const InputMethodEntry &entry,
                   InputContextEvent &event) override;
     void deactivate(const InputMethodEntry &entry,
-                            InputContextEvent &event) override;
+                    InputContextEvent &event) override;
     void keyEvent(const InputMethodEntry &entry, KeyEvent &keyEvent) override;
     std::vector<InputMethodEntry> listInputMethods() override;
     void reloadConfig() override;
@@ -56,8 +56,8 @@ public:
 
 private:
     void cloudTableSelected(InputContext *inputContext,
-                             const std::string &selected,
-                             const std::string &word);
+                            const std::string &selected,
+                            const std::string &word);
 
     Instance *instance_;
     std::unique_ptr<TableIME> ime_;

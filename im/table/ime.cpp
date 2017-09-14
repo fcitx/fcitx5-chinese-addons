@@ -17,19 +17,18 @@
 * see <http://www.gnu.org/licenses/>.
 */
 #include "ime.h"
-#include <fcitx-utils/standardpath.h>
-#include <fcitx-config/iniparser.h>
-#include <libime/table/tablebaseddictionary.h>
-#include <boost/range/adaptor/reversed.hpp>
-#include <fcntl.h>
-#include <boost/iostreams/stream_buffer.hpp>
-#include <boost/iostreams/device/file_descriptor.hpp>
 #include "config.h"
+#include <boost/iostreams/device/file_descriptor.hpp>
+#include <boost/iostreams/stream_buffer.hpp>
+#include <boost/range/adaptor/reversed.hpp>
+#include <fcitx-config/iniparser.h>
+#include <fcitx-utils/standardpath.h>
+#include <fcntl.h>
+#include <libime/table/tablebaseddictionary.h>
 
 namespace fcitx {
 
-TableIME::TableIME(libime::LanguageModelResolver* lm) : libime::TableIME(lm) {
-}
+TableIME::TableIME(libime::LanguageModelResolver *lm) : libime::TableIME(lm) {}
 
 const TableConfig &TableIME::config(boost::string_view name) {
     auto iter = tables_.find(name.to_string());
@@ -39,33 +38,39 @@ const TableConfig &TableIME::config(boost::string_view name) {
     return iter->second.config;
 }
 
-libime::TableBasedDictionary *TableIME::requestDictImpl(boost::string_view name) {
+libime::TableBasedDictionary *
+TableIME::requestDictImpl(boost::string_view name) {
     auto iter = tables_.find(name.to_string());
     if (iter == tables_.end()) {
         std::string filename = "inputmethod/";
         filename.append(name.begin(), name.end());
         filename += ".conf";
-        auto files = StandardPath::global().openAll(StandardPath::Type::PkgData, filename, O_RDONLY);
+        auto files = StandardPath::global().openAll(StandardPath::Type::PkgData,
+                                                    filename, O_RDONLY);
         RawConfig rawConfig;
         // reverse the order, so we end up parse user file at last.
         for (const auto &file : files | boost::adaptors::reversed) {
             readFromIni(rawConfig, file.fd());
         }
 
-        iter = tables_.emplace(std::piecewise_construct, std::make_tuple(name), std::make_tuple()).first;
+        iter = tables_
+                   .emplace(std::piecewise_construct, std::make_tuple(name),
+                            std::make_tuple())
+                   .first;
         auto &config = iter->second.config;
         config.load(rawConfig);
 
         try {
             auto table = std::make_unique<libime::TableBasedDictionary>();
-            auto dictFile = StandardPath::global().open(StandardPath::Type::PkgData, *config.file, O_RDONLY);
+            auto dictFile = StandardPath::global().open(
+                StandardPath::Type::PkgData, *config.file, O_RDONLY);
             if (dictFile.fd() < 0) {
                 throw std::runtime_error("Couldn't open file");
             }
             boost::iostreams::stream_buffer<
                 boost::iostreams::file_descriptor_source>
                 buffer(dictFile.fd(), boost::iostreams::file_descriptor_flags::
-                               never_close_handle);
+                                          never_close_handle);
             std::istream in(&buffer);
             table->load(in);
             iter->second.dict = table;
@@ -76,12 +81,13 @@ libime::TableBasedDictionary *TableIME::requestDictImpl(boost::string_view name)
             try {
                 auto dict = iter->second.dict.get();
                 std::string fileName = "table";
-                fileName
-                auto dictFile = StandardPath::global().openUser(StandardPath::Type::PkgData, , O_RDONLY);
+                fileName auto dictFile = StandardPath::global().openUser(
+                    StandardPath::Type::PkgData, , O_RDONLY);
                 boost::iostreams::stream_buffer<
                     boost::iostreams::file_descriptor_source>
-                    buffer(dictFile.fd(), boost::iostreams::file_descriptor_flags::
-                                never_close_handle);
+                    buffer(dictFile.fd(),
+                           boost::iostreams::file_descriptor_flags::
+                               never_close_handle);
                 std::istream in(&buffer);
                 table->loadUser(in);
             } catch (const std::exception &) {
@@ -99,5 +105,4 @@ void TableIME::saveDictImpl(libime::TableBasedDictionary *dict) {
     }
     auto &name = iter->second;
 }
-
 }

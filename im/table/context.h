@@ -19,21 +19,21 @@
 #ifndef _TABLE_CONTEXT_H_
 #define _TABLE_CONTEXT_H_
 
-#include <libime/table/tablecontext.h>
 #include "ime.h"
+#include <libime/table/tablecontext.h>
 
 namespace fcitx {
 
 class TableContext : public libime::TableContext {
 public:
-    TableContext( libime::TableBasedDictionary &dict, const TableConfig &config, libime::UserLanguageModel &model);
+    TableContext(libime::TableBasedDictionary &dict, const TableConfig &config,
+                 libime::UserLanguageModel &model);
 
     const TableConfig &config() { return config_; }
 
 private:
     const TableConfig &config_;
 };
-
 }
 
 #endif // _TABLE_CONTEXT_H_

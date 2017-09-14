@@ -20,7 +20,8 @@
 
 namespace fcitx {
 
-TableContext::
-    TableContext( libime::TableBasedDictionary &dict, const TableConfig &config, libime::UserLanguageModel &model) : libime::TableContext(dict, model), config_(config) {
-    }
+TableContext::TableContext(libime::TableBasedDictionary &dict,
+                           const TableConfig &config,
+                           libime::UserLanguageModel &model)
+    : libime::TableContext(dict, model), config_(config) {}
 }

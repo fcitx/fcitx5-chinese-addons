@@ -18,6 +18,7 @@
 */
 #include "table.h"
 #include "config.h"
+#include "context.h"
 #include "fullwidth_public.h"
 #include "punctuation_public.h"
 #include <boost/algorithm/string.hpp>
@@ -38,7 +39,6 @@
 #include <libime/core/historybigram.h>
 #include <libime/core/userlanguagemodel.h>
 #include <libime/table/tablebaseddictionary.h>
-#include "context.h"
 #include <quickphrase_public.h>
 
 namespace fcitx {
@@ -53,7 +53,8 @@ bool consumePreifx(boost::string_view &view, boost::string_view prefix) {
 
 class TableState : public InputContextProperty {
 public:
-    TableState(InputContext* ic, TableEngine *engine) : ic_(ic), engine_(engine) {}
+    TableState(InputContext *ic, TableEngine *engine)
+        : ic_(ic), engine_(engine) {}
 
     InputContext *ic_;
     TableEngine *engine_;
@@ -68,7 +69,7 @@ public:
             return context_.get();
         }
 
-        auto dict =engine_->ime()->requestDict(entry->name());
+        auto dict = engine_->ime()->requestDict(entry->name());
         if (!dict) {
             return nullptr;
         }
@@ -174,11 +175,10 @@ std::vector<InputMethodEntry> TableEngine::listInputMethods() {
     return result;
 }
 
-void TableEngine::reloadConfig() {
-}
+void TableEngine::reloadConfig() {}
 
 void TableEngine::activate(const fcitx::InputMethodEntry &entry,
-                            fcitx::InputContextEvent &event) {
+                           fcitx::InputContextEvent &event) {
     auto inputContext = event.inputContext();
     auto state = inputContext->propertyFor(&factory_);
     auto context = state->context();
@@ -188,7 +188,7 @@ void TableEngine::activate(const fcitx::InputMethodEntry &entry,
 }
 
 void TableEngine::deactivate(const fcitx::InputMethodEntry &entry,
-                            fcitx::InputContextEvent &event) {
+                             fcitx::InputContextEvent &event) {
     auto inputContext = event.inputContext();
     auto state = inputContext->propertyFor(&factory_);
     state->release();
@@ -368,9 +368,7 @@ void TableEngine::reset(const InputMethodEntry &, InputContextEvent &event) {
     state->lastIsPunc_ = false;
 }
 
-void TableEngine::save() {
-}
-
+void TableEngine::save() {}
 }
 
 FCITX_ADDON_FACTORY(fcitx::TableEngineFactory)

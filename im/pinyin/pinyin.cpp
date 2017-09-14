@@ -173,7 +173,9 @@ PinyinEngine::PinyinEngine(Instance *instance)
       factory_([this](InputContext &) { return new PinyinState(this); }) {
     ime_ = std::make_unique<libime::PinyinIME>(
         std::make_unique<libime::PinyinDictionary>(),
-        std::make_unique<libime::UserLanguageModel>(libime::DefaultLanguageModelResolver::instance().languageModelFileForLanguage("zh_CN")));
+        std::make_unique<libime::UserLanguageModel>(
+            libime::DefaultLanguageModelResolver::instance()
+                .languageModelFileForLanguage("zh_CN")));
     ime_->dict()->load(libime::PinyinDictionary::SystemDict,
                        LIBIME_INSTALL_PKGDATADIR "/sc.dict",
                        libime::PinyinDictFormat::Binary);
