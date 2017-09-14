@@ -28,6 +28,7 @@ endif()
 
 find_package(Boost 1.61 REQUIRED COMPONENTS iostreams)
 find_package(LibIMEPinyin REQUIRED)
+find_package(LibIMETable REQUIRED)
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.h.in ${CMAKE_CURRENT_BINARY_DIR}/config.h)
 include_directories(${CMAKE_CURRENT_BINARY_DIR})

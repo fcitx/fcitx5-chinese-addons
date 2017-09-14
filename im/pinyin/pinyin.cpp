@@ -4,7 +4,7 @@
  *
  * This library is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation; either version 2 of the
+ * published by the Free Software Foundation; either version 2.1 of the
  * License, or (at your option) any later version.
  *
  * This library is distributed in the hope that it will be useful,
@@ -144,7 +144,7 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
         auto preeditWithCursor = context.preeditWithCursor();
         Text preedit(preeditWithCursor.first);
         preedit.setCursor(preeditWithCursor.second);
-        inputPanel.setPreedit(Text(preedit));
+        inputPanel.setPreedit(preedit);
 #if 0
         {
             size_t count = 1;
@@ -173,8 +173,7 @@ PinyinEngine::PinyinEngine(Instance *instance)
       factory_([this](InputContext &) { return new PinyinState(this); }) {
     ime_ = std::make_unique<libime::PinyinIME>(
         std::make_unique<libime::PinyinDictionary>(),
-        std::make_unique<libime::UserLanguageModel>(LIBIME_INSTALL_PKGDATADIR
-                                                    "/sc.lm"));
+        std::make_unique<libime::UserLanguageModel>(libime::DefaultLanguageModelResolver::instance().languageModelFileForLanguage("zh_CN")));
     ime_->dict()->load(libime::PinyinDictionary::SystemDict,
                        LIBIME_INSTALL_PKGDATADIR "/sc.dict",
                        libime::PinyinDictFormat::Binary);
@@ -229,20 +228,6 @@ PinyinEngine::PinyinEngine(Instance *instance)
 }
 
 PinyinEngine::~PinyinEngine() {}
-
-std::vector<InputMethodEntry> PinyinEngine::listInputMethods() {
-    std::vector<InputMethodEntry> result;
-    result.push_back(std::move(
-        InputMethodEntry("pinyin", _("Pinyin Input Method"), "zh_CN", "pinyin")
-            .setIcon("pinyin")
-            .setLabel("拼")));
-    result.push_back(
-        std::move(InputMethodEntry("shuangpin", _("Shuangpin Input Method"),
-                                   "zh_CN", "pinyin")
-                      .setIcon("shuangpin")
-                      .setLabel("双")));
-    return result;
-}
 
 void PinyinEngine::reloadConfig() {
     auto &standardPath = StandardPath::global();
@@ -313,13 +298,8 @@ void PinyinEngine::reloadConfig() {
 }
 void PinyinEngine::activate(const fcitx::InputMethodEntry &entry,
                             fcitx::InputContextEvent &event) {
-    if (!firstActivate_) {
-        firstActivate_ = true;
-        auto fullwidth = instance_->addonManager().addon("fullwidth", true);
-        if (fullwidth) {
-            fullwidth->call<IFullwidth::enable>("pinyin");
-            fullwidth->call<IFullwidth::enable>("shuangpin");
-        }
+    if (fullwidth()) {
+        fullwidth()->call<IFullwidth::enable>(entry.uniqueName());
     }
     auto inputContext = event.inputContext();
     auto state = inputContext->propertyFor(&factory_);
@@ -479,7 +459,7 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
                 if (!puncStr.empty()) {
                     // forward the original key is the best choice.
                     inputContext->forwardKey(event.rawKey(), event.isRelease(),
-                                             event.keyCode(), event.time());
+                                             event.time());
                     inputContext->commitString(puncStr);
                     event.filterAndAccept();
                     return;
