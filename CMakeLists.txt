@@ -7,7 +7,6 @@ include(FeatureSummary)
 include(GNUInstallDirs)
 include(ECMSetupVersion)
 include(ECMUninstallTarget)
-include(FcitxCompilerSettings)
 
 find_package(Fcitx5Core REQUIRED)
 find_package(Fcitx5Module REQUIRED COMPONENTS Notifications QuickPhrase)
@@ -16,6 +15,8 @@ find_package(Pthread REQUIRED)
 find_package(PkgConfig REQUIRED)
 find_package(Gettext REQUIRED)
 pkg_check_modules(Curl REQUIRED IMPORTED_TARGET "libcurl")
+
+include("${FCITX_INSTALL_CMAKECONFIG_DIR}/Fcitx5Utils/Fcitx5CompilerSettings.cmake")
 
 #######################################################################
 # Options
