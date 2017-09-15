@@ -32,9 +32,9 @@ namespace {
 
 libime::OrderPolicy converOrderPolicy(fcitx::OrderPolicy policy) {
     switch (policy) {
-#define POLICY_CONVERT(NAME) \
-        case fcitx::OrderPolicy::NAME: \
-            return libime::OrderPolicy::NAME;
+#define POLICY_CONVERT(NAME)                                                   \
+    case fcitx::OrderPolicy::NAME:                                             \
+        return libime::OrderPolicy::NAME;
         POLICY_CONVERT(No)
         POLICY_CONVERT(Freq)
         POLICY_CONVERT(Fast)
@@ -42,7 +42,8 @@ libime::OrderPolicy converOrderPolicy(fcitx::OrderPolicy policy) {
     return libime::OrderPolicy::Freq;
 }
 
-void populateOptions(libime::TableBasedDictionary *dict, const TableConfig &config) {
+void populateOptions(libime::TableBasedDictionary *dict,
+                     const TableConfig &config) {
     libime::TableOptions options;
 
     options.setOrderPolicy(converOrderPolicy(*config.orderPolicy));
@@ -66,13 +67,12 @@ void populateOptions(libime::TableBasedDictionary *dict, const TableConfig &conf
     options.setAutoPhraseLength(*config.autoPhraseLength);
     options.setSaveAutoPhrase(*config.saveAutoPhrase);
     options.setFirstCandidateAsPreedit(*config.firstCandidateAsPreedit);
-    options.setAutoRuleSet(std::unordered_set<std::string>(config.autoRuleSet->begin(), config.autoRuleSet->end()));
+    options.setAutoRuleSet(std::unordered_set<std::string>(
+        config.autoRuleSet->begin(), config.autoRuleSet->end()));
     options.setLanguageCode(*config.languageCode);
 
     dict->setTableOptions(options);
 }
-
-
 }
 
 TableIME::TableIME(libime::LanguageModelResolver *lm) : libime::TableIME(lm) {}

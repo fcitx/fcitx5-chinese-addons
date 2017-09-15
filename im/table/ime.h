@@ -30,14 +30,23 @@ FCITX_CONFIG_ENUM(OrderPolicy, No, Freq, Fast);
 
 FCITX_CONFIGURATION(
     TableConfig, Option<std::string> file{this, "Table/File", _("File")};
-    Option<KeyList> prevPage{this, "Table/PrevPage", _("Prev page"), {Key(FcitxKey_Up)}};
-    Option<KeyList> nextPage{this, "Table/NextPage", _("Next page"), {Key(FcitxKey_Down)}};
-    Option<KeyList> selection{this, "Table/Selection", _("Selection"), {Key(FcitxKey_1), Key(FcitxKey_2), Key(FcitxKey_3), Key(FcitxKey_4), Key(FcitxKey_5), Key(FcitxKey_6), Key(FcitxKey_7), Key(FcitxKey_8), Key(FcitxKey_9), Key(FcitxKey_0)}};
+    Option<KeyList> prevPage{
+        this, "Table/PrevPage", _("Prev page"), {Key(FcitxKey_Up)}};
+    Option<KeyList> nextPage{
+        this, "Table/NextPage", _("Next page"), {Key(FcitxKey_Down)}};
+    Option<KeyList> selection{
+        this,
+        "Table/Selection",
+        _("Selection"),
+        {Key(FcitxKey_1), Key(FcitxKey_2), Key(FcitxKey_3), Key(FcitxKey_4),
+         Key(FcitxKey_5), Key(FcitxKey_6), Key(FcitxKey_7), Key(FcitxKey_8),
+         Key(FcitxKey_9), Key(FcitxKey_0)}};
     Option<int, IntConstrain> pageSize{this, "Table/PageSize", "Page size", 5,
                                        IntConstrain(3, 10)};
     Option<bool> useFullWidth{this, "Table/UseFullWidth", _("Use full width"),
                               true};
-    Option<Key> quickphrase{this, "Table/QuickPhraseKey", _("Key to trigger quickphrase")};
+    Option<Key> quickphrase{this, "Table/QuickPhraseKey",
+                            _("Key to trigger quickphrase")};
     Option<std::string> icon{this, "Table/Icon", _("Icon")};
     Option<int> noSortInputLength{this, "Table/NoSortLength",
                                   _("Don't sort word shorter")};
@@ -46,7 +55,7 @@ FCITX_CONFIGURATION(
     Option<bool> autoSelect{this, "Table/AutoSelect",
                             _("Auto select candidate")};
     Option<bool> autoSelectLength{this, "Table/AutoSelectLength",
-                            _("Auto select candidate Length")};
+                                  _("Auto select candidate Length")};
     Option<int> noMatchAutoSelectLength{
         this, "Table/NoMatchAutoSelectLength",
         _("Auto select last candidate when there is no new match")};
@@ -57,7 +66,7 @@ FCITX_CONFIGURATION(
                                     _("Order policy")};
     Option<KeyList> endKey{this, "Table/EndKey", _("End key")};
     Option<Key> matchingKey{this, "Table/MatchingKey",
-                                    _("Wildcard matching Key")};
+                            _("Wildcard matching Key")};
     Option<bool> exactMatch{this, "Table/ExactMatch", _("Exact Match")};
     Option<bool> autoLearning{this, "Table/AutoLearning", _("Auto learning")};
     Option<int> autoPhraseLength{this, "Table/AutoPhraseLength",
@@ -74,7 +83,7 @@ FCITX_CONFIGURATION(
     Option<std::vector<std::string>> autoRuleSet{this, "Table/AutoRuleSet",
                                                  _("Auto rule set")};
     Option<std::string> languageCode{this, "InputMethod/LangCode",
-                                            "Language Code"};);
+                                     "Language Code"};);
 
 struct TableData {
     TableConfig config;
