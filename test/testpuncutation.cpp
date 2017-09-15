@@ -22,15 +22,15 @@
 #include <iostream>
 
 int main(int argc, char *argv[]) {
-    if (argc < 3) {
+    if (argc < 2) {
         return 1;
     }
-    setenv("FCITX_ADDON_DIRS", argv[2], 1);
+    setenv("FCITX_ADDON_DIRS", argv[1], 1);
     setenv("FCITX_DATA_DIRS", (std::string(argv[1]) + "/..").c_str(), 1);
     fcitx::AddonManager manager(argv[1]);
     manager.registerDefaultLoader(nullptr);
     manager.load();
-    auto punctuation = manager.addon("punctuation");
+    auto punctuation = manager.addon("punctuation", true);
     FCITX_ASSERT(punctuation);
     FCITX_ASSERT(
         punctuation->call<fcitx::IPunctuation::getPunctuation>("zh_CN", ',')

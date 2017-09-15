@@ -37,6 +37,7 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 add_subdirectory(modules)
 add_subdirectory(im)
+add_subdirectory(po)
 
 if (ENABLE_TEST)
     enable_testing()
