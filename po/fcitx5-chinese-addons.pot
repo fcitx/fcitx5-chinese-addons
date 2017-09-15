@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-15 08:55-0700\n"
+"POT-Creation-Date: 2017-09-15 11:28-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,27 +25,27 @@ msgstr ""
 msgid " for "
 msgstr ""
 
-#: im/table/ime.h:62
+#: im/table/ime.h:71
 msgid "Auto learning"
 msgstr ""
 
-#: im/table/ime.h:64
+#: im/table/ime.h:73
 msgid "Auto phrase length"
 msgstr ""
 
-#: im/table/ime.h:75
+#: im/table/ime.h:84
 msgid "Auto rule set"
 msgstr ""
 
-#: im/table/ime.h:47
+#: im/table/ime.h:56
 msgid "Auto select candidate"
 msgstr ""
 
-#: im/table/ime.h:49
+#: im/table/ime.h:58
 msgid "Auto select candidate Length"
 msgstr ""
 
-#: im/table/ime.h:52
+#: im/table/ime.h:61
 msgid "Auto select last candidate when there is no new match"
 msgstr ""
 
@@ -61,31 +61,31 @@ msgstr ""
 msgid "Cloud Pinyin is enabled."
 msgstr ""
 
-#: im/table/ime.h:55
+#: im/table/ime.h:64
 msgid "Commit raw input when there is no candidate"
 msgstr ""
 
-#: im/table/ime.h:69
+#: im/table/ime.h:78
 msgid "Display Hint for word"
 msgstr ""
 
-#: im/table/ime.h:71
+#: im/table/ime.h:80
 msgid "Display custom hint"
 msgstr ""
 
-#: im/table/ime.h:68
+#: im/table/ime.h:77
 msgid "Do not commit when there is no match"
 msgstr ""
 
-#: im/table/ime.h:43
+#: im/table/ime.h:52
 msgid "Don't sort word shorter"
 msgstr ""
 
-#: im/table/ime.h:58
+#: im/table/ime.h:67
 msgid "End key"
 msgstr ""
 
-#: im/table/ime.h:61
+#: im/table/ime.h:70
 msgid "Exact Match"
 msgstr ""
 
@@ -93,7 +93,7 @@ msgstr ""
 msgid "File"
 msgstr ""
 
-#: im/table/ime.h:73
+#: im/table/ime.h:82
 msgid "First candidate as preedit"
 msgstr ""
 
@@ -109,35 +109,35 @@ msgstr ""
 msgid "Full width Character is enabled."
 msgstr ""
 
-#: im/table/ime.h:41
+#: im/table/ime.h:50
 msgid "Icon"
 msgstr ""
 
-#: im/table/ime.h:40
+#: im/table/ime.h:49
 msgid "Key to trigger quickphrase"
 msgstr ""
 
-#: im/table/ime.h:34
+#: im/table/ime.h:36
 msgid "Next page"
 msgstr ""
 
-#: im/table/ime.h:57
+#: im/table/ime.h:66
 msgid "Order policy"
 msgstr ""
 
-#: im/table/ime.h:45
+#: im/table/ime.h:54
 msgid "Prefix key to trigger Pinyin"
 msgstr ""
 
-#: im/table/ime.h:33
+#: im/table/ime.h:34
 msgid "Prev page"
 msgstr ""
 
-#: im/table/ime.h:66
+#: im/table/ime.h:75
 msgid "Save auto phrase"
 msgstr ""
 
-#: im/table/ime.h:35
+#: im/table/ime.h:40
 msgid "Selection"
 msgstr ""
 
@@ -157,10 +157,58 @@ msgstr ""
 msgid "Traditional Chinese is enabled."
 msgstr ""
 
-#: im/table/ime.h:38
+#: im/table/ime.h:46
 msgid "Use full width"
 msgstr ""
 
-#: im/table/ime.h:60
+#: im/table/ime.h:69
 msgid "Wildcard matching Key"
+msgstr ""
+
+#: modules/fullwidth/fullwidth.conf.in:3
+msgid "Full width character"
+msgstr ""
+
+#: modules/punctuation/punctuation.conf.in:3
+msgid "Punctuation"
+msgstr ""
+
+#: modules/chttrans/chttrans.conf.in:3
+msgid "Simplified and Traditional Chinese Translation"
+msgstr ""
+
+#: modules/cloudpinyin/cloudpinyin.conf.in:3
+msgid "Cloud Pinyin"
+msgstr ""
+
+#: im/pinyin/pinyin-addon.conf.in:3 im/pinyin/pinyin.conf.in:3
+msgid "Pinyin"
+msgstr ""
+
+#: im/pinyin/shuangpin.conf.in:3
+msgid "Shuangpin"
+msgstr ""
+
+#: im/pinyin/shuangpin.conf.in:4
+msgid "shuangpin"
+msgstr ""
+
+#: im/pinyin/pinyin.conf.in:4
+msgid "pinyin"
+msgstr ""
+
+#: im/table/table.conf.in:3
+msgid "Table"
+msgstr ""
+
+#: im/table/wbx.conf.in:3
+msgid "Wubi"
+msgstr ""
+
+#: im/table/wbx.conf.in:4 im/table/wbpy.conf.in:4
+msgid "wubi"
+msgstr ""
+
+#: im/table/wbpy.conf.in:3
+msgid "Wubi Pinyin"
 msgstr ""

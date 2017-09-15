@@ -1,5 +1,5 @@
 #!/bin/bash
-POT_FILE=po/fcitx.pot
+POT_FILE=po/fcitx5-chinese-addons.pot
 set -x
 source_files=$(find . -name \*.cpp -o -name \*.h)
 xgettext --keyword=_ --language=C++ --add-comments --sort-output -o ${POT_FILE} $source_files
