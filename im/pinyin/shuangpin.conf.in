@@ -1,6 +1,5 @@
 [InputMethod]
-UniqueName=shuangpin
-Name=Shuangpin Input Method
+Name=Shuangpin
 Icon=shuangpin
 Label=双
 LangCode=zh_CN

@@ -534,9 +534,13 @@ void PinyinEngine::save() {
                 buffer(fd, boost::iostreams::file_descriptor_flags::
                                never_close_handle);
             std::ostream out(&buffer);
-            ime_->dict()->save(libime::PinyinDictionary::UserDict, out,
-                               libime::PinyinDictFormat::Binary);
-            return true;
+            try {
+                ime_->dict()->save(libime::PinyinDictionary::UserDict, out,
+                                libime::PinyinDictFormat::Binary);
+                return true;
+            } catch (const std::exception &) {
+                return false;
+            }
         });
     standardPath.safeSave(
         StandardPath::Type::PkgData, "pinyin/user.history", [this](int fd) {
@@ -545,8 +549,14 @@ void PinyinEngine::save() {
                 buffer(fd, boost::iostreams::file_descriptor_flags::
                                never_close_handle);
             std::ostream out(&buffer);
-            ime_->model()->save(out);
-            return true;
+            try {
+                ime_->dict()->save(libime::PinyinDictionary::UserDict, out,
+                                libime::PinyinDictFormat::Binary);
+                return true;
+            } catch (const std::exception &) {
+                ime_->model()->save(out);
+                return false;
+            }
         });
 }
 

@@ -14,6 +14,7 @@ find_package(Fcitx5Module REQUIRED COMPONENTS Notifications QuickPhrase)
 find_package(LibIntl REQUIRED)
 find_package(Pthread REQUIRED)
 find_package(PkgConfig REQUIRED)
+find_package(Gettext REQUIRED)
 pkg_check_modules(Curl REQUIRED IMPORTED_TARGET "libcurl")
 
 #######################################################################

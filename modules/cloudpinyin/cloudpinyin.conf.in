@@ -1,5 +1,5 @@
 [Addon]
-Name=cloudpinyin
+Name=Cloud Pinyin
 Category=Module
 Library=cloudpinyin
 Type=SharedLibrary

@@ -1,6 +1,5 @@
 [InputMethod]
-UniqueName=pinyin
-Name=Pinyin Input Method
+Name=Pinyin
 Icon=pinyin
 Label=拼
 LangCode=zh_CN

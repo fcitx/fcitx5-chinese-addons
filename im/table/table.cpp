@@ -222,7 +222,7 @@ void TableEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
     // check if we can select candidate.
     auto candidateList = inputContext->inputPanel().candidateList();
     if (candidateList) {
-        int idx = event.key().keyListIndex(std::vector<Key>());
+        int idx = event.key().keyListIndex(*config.selection);
         if (idx >= 0) {
             event.filterAndAccept();
             if (idx < candidateList->size()) {
@@ -231,7 +231,7 @@ void TableEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
             return;
         }
 
-        if (event.key().checkKeyList(config.prevPage.value())) {
+        if (event.key().checkKeyList(*config.prevPage)) {
             auto pageable = candidateList->toPageable();
             if (!pageable->hasPrev()) {
                 if (pageable->usedNextBefore()) {
@@ -247,7 +247,7 @@ void TableEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
             }
         }
 
-        if (event.key().checkKeyList(config.nextPage.value())) {
+        if (event.key().checkKeyList(*config.nextPage)) {
             event.filterAndAccept();
             candidateList->toPageable()->next();
             inputContext->updateUserInterface(
@@ -256,9 +256,9 @@ void TableEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         }
     }
 
-    if (event.key().isLAZ()) {
-        context->type(
-            utf8::UCS4ToUTF8(Key::keySymToUnicode(event.key().sym())));
+    auto chr = Key::keySymToUnicode(event.key().sym());
+    if (!event.key().hasModifier() && context->isValidInput(chr)) {
+        context->type(utf8::UCS4ToUTF8(chr));
         event.filterAndAccept();
     } else if (context->size()) {
         // key to handle when it is not empty.
@@ -297,7 +297,7 @@ void TableEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         if (event.key().check(FcitxKey_BackSpace)) {
             if (lastIsPunc) {
                 auto puncStr = punctuation()->call<IPunctuation::cancelLast>(
-                    "zh_CN", inputContext);
+                    entry.languageCode(), inputContext);
                 if (!puncStr.empty()) {
                     // forward the original key is the best choice.
                     inputContext->forwardKey(event.rawKey(), event.isRelease(),
@@ -310,12 +310,11 @@ void TableEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         }
     }
     if (!event.filtered()) {
-        if (event.key().states().testAny(KeyState::SimpleMask)) {
+        if (event.key().hasModifier()) {
             return;
         }
         // if it gonna commit something
-        auto c = Key::keySymToUnicode(event.key().sym());
-        if (c) {
+        if (chr) {
             if (inputContext->inputPanel().candidateList() &&
                 inputContext->inputPanel().candidateList()->size()) {
                 inputContext->inputPanel()
@@ -324,10 +323,10 @@ void TableEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
                     ->select(inputContext);
             }
             auto punc = punctuation()->call<IPunctuation::pushPunctuation>(
-                "zh_CN", inputContext, c);
-            if (event.key().check(FcitxKey_semicolon) && quickphrase()) {
-                auto s = punc.size() ? punc : utf8::UCS4ToUTF8(c);
-                auto alt = punc.size() ? utf8::UCS4ToUTF8(c) : "";
+                entry.languageCode(), inputContext, chr);
+            if (event.key().check(*config.quickphrase) && quickphrase()) {
+                auto s = punc.size() ? punc : utf8::UCS4ToUTF8(chr);
+                auto alt = punc.size() ? utf8::UCS4ToUTF8(chr) : "";
                 std::string text;
                 if (s.size()) {
                     text += alt + _(" for ") + s;

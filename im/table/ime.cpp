@@ -28,6 +28,53 @@
 
 namespace fcitx {
 
+namespace {
+
+libime::OrderPolicy converOrderPolicy(fcitx::OrderPolicy policy) {
+    switch (policy) {
+#define POLICY_CONVERT(NAME) \
+        case fcitx::OrderPolicy::NAME: \
+            return libime::OrderPolicy::NAME;
+        POLICY_CONVERT(No)
+        POLICY_CONVERT(Freq)
+        POLICY_CONVERT(Fast)
+    }
+    return libime::OrderPolicy::Freq;
+}
+
+void populateOptions(libime::TableBasedDictionary *dict, const TableConfig &config) {
+    libime::TableOptions options;
+
+    options.setOrderPolicy(converOrderPolicy(*config.orderPolicy));
+    options.setNoSortInputLength(*config.noSortInputLength);
+    options.setAutoSelect(*config.autoSelect);
+    options.setAutoSelectLength(*config.autoSelectLength);
+    options.setNoMatchAutoSelectLength(*config.noMatchAutoSelectLength);
+    options.setCommitRawInput(*config.commitRawInput);
+    options.setMatchingKey(Key::keySymToUnicode(config.matchingKey->sym()));
+    std::set<uint32_t> endKeys;
+    for (auto &key : *config.endKey) {
+        auto chr = Key::keySymToUnicode(key.sym());
+        if (chr) {
+            endKeys.insert(chr);
+        }
+    }
+    options.setEndKey(endKeys);
+    options.setExactMatch(*config.exactMatch);
+    options.setAutoLearning(*config.autoLearning);
+    options.setNoMatchDontCommit(*config.noMatchDontCommit);
+    options.setAutoPhraseLength(*config.autoPhraseLength);
+    options.setSaveAutoPhrase(*config.saveAutoPhrase);
+    options.setFirstCandidateAsPreedit(*config.firstCandidateAsPreedit);
+    options.setAutoRuleSet(std::unordered_set<std::string>(config.autoRuleSet->begin(), config.autoRuleSet->end()));
+    options.setLanguageCode(*config.languageCode);
+
+    dict->setTableOptions(options);
+}
+
+
+}
+
 TableIME::TableIME(libime::LanguageModelResolver *lm) : libime::TableIME(lm) {}
 
 const TableConfig &TableIME::config(boost::string_view name) {
@@ -61,7 +108,7 @@ TableIME::requestDictImpl(boost::string_view name) {
         config.load(rawConfig);
 
         try {
-            auto table = std::make_unique<libime::TableBasedDictionary>();
+            auto dict = std::make_unique<libime::TableBasedDictionary>();
             auto dictFile = StandardPath::global().open(
                 StandardPath::Type::PkgData, *config.file, O_RDONLY);
             if (dictFile.fd() < 0) {
@@ -72,26 +119,27 @@ TableIME::requestDictImpl(boost::string_view name) {
                 buffer(dictFile.fd(), boost::iostreams::file_descriptor_flags::
                                           never_close_handle);
             std::istream in(&buffer);
-            table->load(in);
-            iter->second.dict = table;
+            dict->load(in);
+            iter->second.dict = std::move(dict);
         } catch (const std::exception &) {
         }
 
-        if (iter->second.dict) {
+        if (auto dict = iter->second.dict.get()) {
             try {
-                auto dict = iter->second.dict.get();
-                std::string fileName = "table";
-                fileName auto dictFile = StandardPath::global().openUser(
-                    StandardPath::Type::PkgData, , O_RDONLY);
+                auto dictFile = StandardPath::global().openUser(
+                    StandardPath::Type::PkgData,
+                    "table/" + name.to_string() + ".user.dict", O_RDONLY);
                 boost::iostreams::stream_buffer<
                     boost::iostreams::file_descriptor_source>
                     buffer(dictFile.fd(),
                            boost::iostreams::file_descriptor_flags::
                                never_close_handle);
                 std::istream in(&buffer);
-                table->loadUser(in);
+                dict->loadUser(in);
             } catch (const std::exception &) {
             }
+
+            populateOptions(dict, iter->second.config);
         }
     }
 
@@ -104,5 +152,21 @@ void TableIME::saveDictImpl(libime::TableBasedDictionary *dict) {
         return;
     }
     auto &name = iter->second;
+    auto fileName = "table/" + name + ".user.dict";
+
+    StandardPath::global().safeSave(
+        StandardPath::Type::PkgData, fileName, [dict](int fd) {
+            boost::iostreams::stream_buffer<
+                boost::iostreams::file_descriptor_sink>
+                buffer(fd, boost::iostreams::file_descriptor_flags::
+                               never_close_handle);
+            std::ostream out(&buffer);
+            try {
+                dict->saveUser(out);
+                return true;
+            } catch (const std::exception &) {
+                return false;
+            }
+        });
 }
 }

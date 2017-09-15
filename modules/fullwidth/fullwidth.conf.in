@@ -1,7 +1,9 @@
 [Addon]
-Name=fullwidth
+Name=Full width character
 Category=Module
 Library=fullwidth
 Type=SharedLibrary
-OptionalDependencies/0=notifications
 OnDemand=True
+
+[Addon/OptionalDependencies]
+0=notifications

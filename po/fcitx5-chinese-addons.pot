@@ -1,0 +1,166 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-09-15 08:55-0700\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: im/pinyin/pinyin.cpp:496 im/table/table.cpp:335
+msgid " Return for "
+msgstr ""
+
+#: im/pinyin/pinyin.cpp:493 im/table/table.cpp:332
+msgid " for "
+msgstr ""
+
+#: im/table/ime.h:62
+msgid "Auto learning"
+msgstr ""
+
+#: im/table/ime.h:64
+msgid "Auto phrase length"
+msgstr ""
+
+#: im/table/ime.h:75
+msgid "Auto rule set"
+msgstr ""
+
+#: im/table/ime.h:47
+msgid "Auto select candidate"
+msgstr ""
+
+#: im/table/ime.h:49
+msgid "Auto select candidate Length"
+msgstr ""
+
+#: im/table/ime.h:52
+msgid "Auto select last candidate when there is no new match"
+msgstr ""
+
+#: im/pinyin/pinyin.cpp:333
+msgid "Cloud Pinyin Status"
+msgstr ""
+
+#: im/pinyin/pinyin.cpp:335
+msgid "Cloud Pinyin is disabled."
+msgstr ""
+
+#: im/pinyin/pinyin.cpp:334
+msgid "Cloud Pinyin is enabled."
+msgstr ""
+
+#: im/table/ime.h:55
+msgid "Commit raw input when there is no candidate"
+msgstr ""
+
+#: im/table/ime.h:69
+msgid "Display Hint for word"
+msgstr ""
+
+#: im/table/ime.h:71
+msgid "Display custom hint"
+msgstr ""
+
+#: im/table/ime.h:68
+msgid "Do not commit when there is no match"
+msgstr ""
+
+#: im/table/ime.h:43
+msgid "Don't sort word shorter"
+msgstr ""
+
+#: im/table/ime.h:58
+msgid "End key"
+msgstr ""
+
+#: im/table/ime.h:61
+msgid "Exact Match"
+msgstr ""
+
+#: im/table/ime.h:32
+msgid "File"
+msgstr ""
+
+#: im/table/ime.h:73
+msgid "First candidate as preedit"
+msgstr ""
+
+#: modules/fullwidth/fullwidth.cpp:82
+msgid "Full width Character"
+msgstr ""
+
+#: modules/fullwidth/fullwidth.cpp:84
+msgid "Full width Character is disabled."
+msgstr ""
+
+#: modules/fullwidth/fullwidth.cpp:83
+msgid "Full width Character is enabled."
+msgstr ""
+
+#: im/table/ime.h:41
+msgid "Icon"
+msgstr ""
+
+#: im/table/ime.h:40
+msgid "Key to trigger quickphrase"
+msgstr ""
+
+#: im/table/ime.h:34
+msgid "Next page"
+msgstr ""
+
+#: im/table/ime.h:57
+msgid "Order policy"
+msgstr ""
+
+#: im/table/ime.h:45
+msgid "Prefix key to trigger Pinyin"
+msgstr ""
+
+#: im/table/ime.h:33
+msgid "Prev page"
+msgstr ""
+
+#: im/table/ime.h:66
+msgid "Save auto phrase"
+msgstr ""
+
+#: im/table/ime.h:35
+msgid "Selection"
+msgstr ""
+
+#: modules/chttrans/chttrans.cpp:87
+msgid "Simplified Chinese To Traditional Chinese"
+msgstr ""
+
+#: modules/chttrans/chttrans.cpp:89
+msgid "Simplified Chinese is enabled."
+msgstr ""
+
+#: im/table/table.cpp:172
+msgid "Table Input Method"
+msgstr ""
+
+#: modules/chttrans/chttrans.cpp:88
+msgid "Traditional Chinese is enabled."
+msgstr ""
+
+#: im/table/ime.h:38
+msgid "Use full width"
+msgstr ""
+
+#: im/table/ime.h:60
+msgid "Wildcard matching Key"
+msgstr ""

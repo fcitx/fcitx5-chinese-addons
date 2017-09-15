@@ -1,5 +1,5 @@
 [Addon]
-Name=punctuation
+Name=Punctuation
 Category=Module
 Library=punctuation
 Type=SharedLibrary

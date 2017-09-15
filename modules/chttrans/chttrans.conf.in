@@ -1,0 +1,8 @@
+[Addon]
+Name=Simplified and Traditional Chinese Translation
+Category=Module
+Library=chttrans
+Type=SharedLibrary
+
+[Addon/OptionalDependencies]
+0=notifications

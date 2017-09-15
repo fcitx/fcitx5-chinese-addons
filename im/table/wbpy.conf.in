@@ -1,6 +1,5 @@
 [InputMethod]
-UniqueName=wbx
-Name=Wubi
+Name=Wubi Pinyin
 Icon=wubi
 Label=五
 LangCode=zh_CN
