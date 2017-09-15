@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-15 11:28-0700\n"
+"POT-Creation-Date: 2017-09-15 12:05-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: im/pinyin/pinyin.cpp:496 im/table/table.cpp:335
+#: im/table/table.cpp:335
 msgid " Return for "
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:493 im/table/table.cpp:332
+#: im/table/table.cpp:332
 msgid " for "
 msgstr ""
 
@@ -49,15 +49,15 @@ msgstr ""
 msgid "Auto select last candidate when there is no new match"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:333
+#: im/pinyin/pinyin.cpp:334
 msgid "Cloud Pinyin Status"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:335
+#: im/pinyin/pinyin.cpp:336
 msgid "Cloud Pinyin is disabled."
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:334
+#: im/pinyin/pinyin.cpp:335
 msgid "Cloud Pinyin is enabled."
 msgstr ""
 
@@ -129,8 +129,22 @@ msgstr ""
 msgid "Prefix key to trigger Pinyin"
 msgstr ""
 
+#: im/pinyin/pinyin.cpp:502
+#, boost-format
+msgid "Press %1% for %2%"
+msgstr ""
+
+#: im/pinyin/pinyin.cpp:500
+#, boost-format
+msgid "Press %1% for %2% and %3% for %4%"
+msgstr ""
+
 #: im/table/ime.h:34
 msgid "Prev page"
+msgstr ""
+
+#: im/pinyin/pinyin.cpp:500
+msgid "Return"
 msgstr ""
 
 #: im/table/ime.h:75

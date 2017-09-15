@@ -24,6 +24,7 @@
 #include "notifications_public.h"
 #include "punctuation_public.h"
 #include <boost/algorithm/string.hpp>
+#include <boost/format.hpp>
 #include <boost/iostreams/device/file_descriptor.hpp>
 #include <boost/iostreams/stream.hpp>
 #include <fcitx-config/iniparser.h>
@@ -486,17 +487,23 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
             auto punc = punctuation()->call<IPunctuation::pushPunctuation>(
                 "zh_CN", inputContext, c);
             if (event.key().check(FcitxKey_semicolon) && quickphrase()) {
-                auto s = punc.size() ? punc : utf8::UCS4ToUTF8(c);
-                auto alt = punc.size() ? utf8::UCS4ToUTF8(c) : "";
+                auto keyString = utf8::UCS4ToUTF8(c);
+                // s is punc or key
+                auto output = punc.size() ? punc : keyString;
+                // alt is key or empty
+                auto altOutput = punc.size() ? keyString : "";
+                // if no punc: key -> key (s = key, alt = empty)
+                // if there's punc: key -> punc, return -> key (s = punc, alt = key)
                 std::string text;
-                if (s.size()) {
-                    text += alt + _(" for ") + s;
-                }
-                if (alt.size()) {
-                    text += _(" Return for ") + alt;
+                if (!output.empty()) {
+                    if (!altOutput.empty()) {
+                        text = boost::str(boost::format(_("Press %1% for %2% and %3% for %4%")) % keyString % output % _("Return") % altOutput);
+                    } else {
+                        text = boost::str(boost::format(_("Press %1% for %2%")) % keyString % altOutput);
+                    }
                 }
                 quickphrase()->call<IQuickPhrase::trigger>(
-                    inputContext, text, "", s, alt, Key(FcitxKey_semicolon));
+                    inputContext, text, "", output, altOutput, Key(FcitxKey_semicolon));
                 event.filterAndAccept();
                 return;
             }
