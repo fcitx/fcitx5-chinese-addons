@@ -557,11 +557,9 @@ void PinyinEngine::save() {
                                never_close_handle);
             std::ostream out(&buffer);
             try {
-                ime_->dict()->save(libime::PinyinDictionary::UserDict, out,
-                                   libime::PinyinDictFormat::Binary);
+                ime_->model()->save(out);
                 return true;
             } catch (const std::exception &) {
-                ime_->model()->save(out);
                 return false;
             }
         });
