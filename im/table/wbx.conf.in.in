@@ -4,3 +4,6 @@ Icon=wubi
 Label=五
 LangCode=zh_CN
 Addon=table
+
+[Table]
+File=@LIBIME_INSTALL_PKGDATADIR@/wbx.main.dict

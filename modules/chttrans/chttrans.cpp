@@ -72,11 +72,11 @@ Chttrans::Chttrans(fcitx::Instance *instance) : instance_(instance) {
             }
             if (keyEvent.key().checkKeyList(config_.hotkey.value())) {
                 bool tradEnabled;
-                if (enabledIM_.count(entry->name())) {
-                    enabledIM_.erase(entry->name());
+                if (enabledIM_.count(entry->uniqueName())) {
+                    enabledIM_.erase(entry->uniqueName());
                     tradEnabled = type == ChttransIMType::Simp ? false : true;
                 } else {
-                    enabledIM_.insert(entry->name());
+                    enabledIM_.insert(entry->uniqueName());
                     tradEnabled = type == ChttransIMType::Simp ? true : false;
                 }
                 if (notifications()) {
@@ -195,7 +195,7 @@ ChttransIMType Chttrans::convertType(fcitx::InputContext *inputContext) {
         return ChttransIMType::Other;
     }
 
-    if (!enabledIM_.count(entry->name())) {
+    if (!enabledIM_.count(entry->uniqueName())) {
         return ChttransIMType::Other;
     }
     return type;

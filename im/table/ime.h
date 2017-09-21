@@ -19,10 +19,12 @@
 #ifndef _TABLE_TABLEDICTRESOLVER_H_
 #define _TABLE_TABLEDICTRESOLVER_H_
 
+#include <tuple>
 #include <fcitx-config/configuration.h>
 #include <fcitx-config/enum.h>
 #include <fcitx-utils/i18n.h>
-#include <libime/table/tableime.h>
+#include <libime/table/tablebaseddictionary.h>
+#include <libime/core/userlanguagemodel.h>
 
 namespace fcitx {
 
@@ -88,23 +90,23 @@ FCITX_CONFIGURATION(
 struct TableData {
     TableConfig config;
     std::unique_ptr<libime::TableBasedDictionary> dict;
+    std::unique_ptr<libime::UserLanguageModel> model;
 };
 
-class TableIME : public libime::TableIME {
+class TableIME {
 public:
     TableIME(libime::LanguageModelResolver *lmResolver);
 
     const TableConfig &config(boost::string_view name);
 
-protected:
-    libime::TableBasedDictionary *
-    requestDictImpl(boost::string_view name) override;
-    void saveDictImpl(libime::TableBasedDictionary *dict) override;
+public:
+    std::tuple<libime::TableBasedDictionary *, libime::UserLanguageModel *, TableConfig *>
+    requestDict(boost::string_view name);
+    void saveDict(boost::string_view name);
 
 private:
+    libime::LanguageModelResolver *lm_;
     std::unordered_map<std::string, TableData> tables_;
-    std::unordered_map<libime::TableBasedDictionary *, std::string>
-        tableToName_;
 };
 }
 

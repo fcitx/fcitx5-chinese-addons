@@ -23,8 +23,10 @@
 #include <boost/range/adaptor/reversed.hpp>
 #include <fcitx-config/iniparser.h>
 #include <fcitx-utils/standardpath.h>
+#include <fcitx-utils/log.h>
 #include <fcntl.h>
 #include <libime/table/tablebaseddictionary.h>
+#include <libime/table/tableoptions.h>
 
 namespace fcitx {
 
@@ -75,20 +77,13 @@ void populateOptions(libime::TableBasedDictionary *dict,
 }
 }
 
-TableIME::TableIME(libime::LanguageModelResolver *lm) : libime::TableIME(lm) {}
+TableIME::TableIME(libime::LanguageModelResolver *lm) : lm_(lm) {}
 
-const TableConfig &TableIME::config(boost::string_view name) {
+std::tuple<libime::TableBasedDictionary *, libime::UserLanguageModel *, TableConfig *>
+TableIME::requestDict(boost::string_view name) {
     auto iter = tables_.find(name.to_string());
     if (iter == tables_.end()) {
-        throw std::runtime_error("Need to request dict first");
-    }
-    return iter->second.config;
-}
-
-libime::TableBasedDictionary *
-TableIME::requestDictImpl(boost::string_view name) {
-    auto iter = tables_.find(name.to_string());
-    if (iter == tables_.end()) {
+        FCITX_LOG(Debug) << "Load table config for: " << name;
         std::string filename = "inputmethod/";
         filename.append(name.begin(), name.end());
         filename += ".conf";
@@ -111,6 +106,7 @@ TableIME::requestDictImpl(boost::string_view name) {
             auto dict = std::make_unique<libime::TableBasedDictionary>();
             auto dictFile = StandardPath::global().open(
                 StandardPath::Type::PkgData, *config.file, O_RDONLY);
+            FCITX_LOG(Debug) << "Load table at: " << *config.file;
             if (dictFile.fd() < 0) {
                 throw std::runtime_error("Couldn't open file");
             }
@@ -140,22 +136,39 @@ TableIME::requestDictImpl(boost::string_view name) {
             }
 
             populateOptions(dict, iter->second.config);
+            auto lmFile = lm_->languageModelFileForLanguage(dict->tableOptions().languageCode());
+            iter->second.model = std::make_unique<libime::UserLanguageModel>(lmFile);
+
+            try {
+                auto dictFile = StandardPath::global().openUser(
+                    StandardPath::Type::PkgData,
+                    "table/" + name.to_string() + ".history", O_RDONLY);
+                boost::iostreams::stream_buffer<
+                    boost::iostreams::file_descriptor_source>
+                    buffer(dictFile.fd(),
+                           boost::iostreams::file_descriptor_flags::
+                               never_close_handle);
+                std::istream in(&buffer);
+                iter->second.model->load(in);
+            } catch (const std::exception &) {
+            }
         }
     }
 
-    return iter->second.dict.get();
+    return {iter->second.dict.get(), iter->second.model.get(), &iter->second.config};
 }
 
-void TableIME::saveDictImpl(libime::TableBasedDictionary *dict) {
-    auto iter = tableToName_.find(dict);
-    if (iter == tableToName_.end()) {
+void TableIME::saveDict(boost::string_view name) {
+    auto iter = tables_.find(name.to_string());
+    if (iter == tables_.end()) {
         return;
     }
-    auto &name = iter->second;
-    auto fileName = "table/" + name + ".user.dict";
+    libime::TableBasedDictionary *dict = iter->second.dict.get();
+    libime::UserLanguageModel *lm = iter->second.model.get();
+    auto fileName = "table/" + name.to_string();
 
     StandardPath::global().safeSave(
-        StandardPath::Type::PkgData, fileName, [dict](int fd) {
+        StandardPath::Type::PkgData, fileName + ".user.dict", [dict](int fd) {
             boost::iostreams::stream_buffer<
                 boost::iostreams::file_descriptor_sink>
                 buffer(fd, boost::iostreams::file_descriptor_flags::
@@ -163,6 +176,21 @@ void TableIME::saveDictImpl(libime::TableBasedDictionary *dict) {
             std::ostream out(&buffer);
             try {
                 dict->saveUser(out);
+                return true;
+            } catch (const std::exception &) {
+                return false;
+            }
+        });
+
+    StandardPath::global().safeSave(
+        StandardPath::Type::PkgData, fileName + ".history", [lm](int fd) {
+            boost::iostreams::stream_buffer<
+                boost::iostreams::file_descriptor_sink>
+                buffer(fd, boost::iostreams::file_descriptor_flags::
+                               never_close_handle);
+            std::ostream out(&buffer);
+            try {
+                lm->save(out);
                 return true;
             } catch (const std::exception &) {
                 return false;

@@ -26,7 +26,6 @@
 #include <fcitx/inputcontextproperty.h>
 #include <fcitx/inputmethodengine.h>
 #include <fcitx/instance.h>
-#include <libime/table/tableime.h>
 #include <memory>
 
 namespace fcitx {
@@ -43,7 +42,7 @@ public:
     void deactivate(const InputMethodEntry &entry,
                     InputContextEvent &event) override;
     void keyEvent(const InputMethodEntry &entry, KeyEvent &keyEvent) override;
-    std::vector<InputMethodEntry> listInputMethods() override;
+    std::string subMode(const InputMethodEntry &entry, InputContext &event) override;
     void reloadConfig() override;
     void reset(const InputMethodEntry &entry,
                InputContextEvent &event) override;

@@ -65,18 +65,16 @@ public:
         if (!entry) {
             return nullptr;
         }
-        if (lastContext_ == entry->name()) {
+        if (lastContext_ == entry->uniqueName()) {
             return context_.get();
         }
 
-        auto dict = engine_->ime()->requestDict(entry->name());
-        if (!dict) {
+        auto dict = engine_->ime()->requestDict(entry->uniqueName());
+        if (!std::get<0>(dict)) {
             return nullptr;
         }
-        auto lm = engine_->ime()->languageModelForDictionary(dict);
-        auto &config = engine_->ime()->config(entry->name());
-        context_ = std::make_unique<TableContext>(*dict, config, *lm);
-        lastContext_ = entry->name();
+        context_ = std::make_unique<TableContext>(*std::get<0>(dict), *std::get<2>(dict), *std::get<1>(dict));
+        lastContext_ = entry->uniqueName();
         return context_.get();
     }
 
@@ -117,6 +115,7 @@ void TableEngine::updateUI(InputContext *inputContext) {
     if (!context) {
         return;
     }
+    auto &config = context->config();
     if (context->selected()) {
         auto sentence = context->sentence();
         context->learn();
@@ -141,7 +140,8 @@ void TableEngine::updateUI(InputContext *inputContext) {
                 idx++;
             }
             // TODO: use real size
-            candidateList->setPageSize(*context->config().pageSize);
+            candidateList->setSelectionKey(*config.selection);
+            candidateList->setPageSize(*config.pageSize);
             inputPanel.setCandidateList(candidateList);
         }
         inputPanel.setClientPreedit(Text(context->sentence()));
@@ -166,15 +166,6 @@ TableEngine::TableEngine(Instance *instance)
 
 TableEngine::~TableEngine() {}
 
-std::vector<InputMethodEntry> TableEngine::listInputMethods() {
-    std::vector<InputMethodEntry> result;
-    result.push_back(std::move(
-        InputMethodEntry("wbx", _("Table Input Method"), "zh_CN", "wbx")
-            .setIcon("wbx")
-            .setLabel("五")));
-    return result;
-}
-
 void TableEngine::reloadConfig() {}
 
 void TableEngine::activate(const fcitx::InputMethodEntry &entry,
@@ -191,7 +182,20 @@ void TableEngine::deactivate(const fcitx::InputMethodEntry &entry,
                              fcitx::InputContextEvent &event) {
     auto inputContext = event.inputContext();
     auto state = inputContext->propertyFor(&factory_);
-    state->release();
+    if (auto context = state->context()) {
+        if (context->selected()) {
+        }
+        state->release();
+    }
+}
+
+std::string TableEngine::subMode(const fcitx::InputMethodEntry &,
+                             fcitx::InputContext& ic) {
+    auto state = ic.propertyFor(&factory_);
+    if (!state->context()) {
+        return _("Not available");
+    }
+    return {};
 }
 
 void TableEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
@@ -261,36 +265,50 @@ void TableEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         context->type(utf8::UCS4ToUTF8(chr));
         event.filterAndAccept();
     } else if (context->size()) {
-        // key to handle when it is not empty.
-        if (event.key().check(FcitxKey_BackSpace)) {
-            context->backspace();
-            event.filterAndAccept();
-        } else if (event.key().check(FcitxKey_Delete)) {
-            event.filterAndAccept();
-        } else if (event.key().check(FcitxKey_Home)) {
-            event.filterAndAccept();
-        } else if (event.key().check(FcitxKey_End)) {
-            event.filterAndAccept();
-        } else if (event.key().check(FcitxKey_Left)) {
-            event.filterAndAccept();
-        } else if (event.key().check(FcitxKey_Right)) {
-            event.filterAndAccept();
-        } else if (event.key().check(FcitxKey_Escape)) {
-            context->clear();
-            event.filterAndAccept();
-        } else if (event.key().check(FcitxKey_Return)) {
-            inputContext->commitString(context->userInput());
-            context->clear();
-            event.filterAndAccept();
-        } else if (event.key().check(FcitxKey_space)) {
-            if (inputContext->inputPanel().candidateList() &&
-                inputContext->inputPanel().candidateList()->size()) {
+        if (context->selected()) {
+            if (event.key().check(FcitxKey_BackSpace)) {
+                context->backspace();
                 event.filterAndAccept();
-                inputContext->inputPanel()
-                    .candidateList()
-                    ->candidate(0)
-                    ->select(inputContext);
-                return;
+            } else {
+                auto sentence = context->sentence();
+                context->learn();
+                context->clear();
+                inputContext->updatePreedit();
+                inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
+                inputContext->commitString(sentence);
+            }
+        } else {
+            // key to handle when it is not empty.
+            if (event.key().check(FcitxKey_BackSpace)) {
+                context->backspace();
+                event.filterAndAccept();
+            } else if (event.key().check(FcitxKey_Delete)) {
+                event.filterAndAccept();
+            } else if (event.key().check(FcitxKey_Home)) {
+                event.filterAndAccept();
+            } else if (event.key().check(FcitxKey_End)) {
+                event.filterAndAccept();
+            } else if (event.key().check(FcitxKey_Left)) {
+                event.filterAndAccept();
+            } else if (event.key().check(FcitxKey_Right)) {
+                event.filterAndAccept();
+            } else if (event.key().check(FcitxKey_Escape)) {
+                context->clear();
+                event.filterAndAccept();
+            } else if (event.key().check(FcitxKey_Return)) {
+                inputContext->commitString(context->userInput());
+                context->clear();
+                event.filterAndAccept();
+            } else if (event.key().check(FcitxKey_space)) {
+                if (inputContext->inputPanel().candidateList() &&
+                    inputContext->inputPanel().candidateList()->size()) {
+                    event.filterAndAccept();
+                    inputContext->inputPanel()
+                        .candidateList()
+                        ->candidate(0)
+                        ->select(inputContext);
+                    return;
+                }
             }
         }
     } else {
