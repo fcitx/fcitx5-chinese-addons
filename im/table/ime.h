@@ -19,12 +19,12 @@
 #ifndef _TABLE_TABLEDICTRESOLVER_H_
 #define _TABLE_TABLEDICTRESOLVER_H_
 
-#include <tuple>
 #include <fcitx-config/configuration.h>
 #include <fcitx-config/enum.h>
 #include <fcitx-utils/i18n.h>
-#include <libime/table/tablebaseddictionary.h>
 #include <libime/core/userlanguagemodel.h>
+#include <libime/table/tablebaseddictionary.h>
+#include <tuple>
 
 namespace fcitx {
 
@@ -100,7 +100,8 @@ public:
     const TableConfig &config(boost::string_view name);
 
 public:
-    std::tuple<libime::TableBasedDictionary *, libime::UserLanguageModel *, TableConfig *>
+    std::tuple<libime::TableBasedDictionary *, libime::UserLanguageModel *,
+               TableConfig *>
     requestDict(boost::string_view name);
     void saveDict(boost::string_view name);
 

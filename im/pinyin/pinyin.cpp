@@ -49,6 +49,10 @@
 
 namespace fcitx {
 
+FCITX_DEFINE_LOG_CATEGORY(pinyin, "pinyin");
+
+#define PINYIN_DEBUG() FCITX_LOGC(pinyin, Debug)
+
 bool consumePreifx(boost::string_view &view, boost::string_view prefix) {
     if (boost::starts_with(view, prefix)) {
         view.remove_prefix(prefix.size());
@@ -141,7 +145,8 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
             candidateList->setPageSize(config_.pageSize.value());
             inputPanel.setCandidateList(candidateList);
         }
-        inputPanel.setClientPreedit(Text(context.sentence()));
+        inputPanel.setClientPreedit(
+            Text(context.sentence(), TextFormatFlag::Underline));
         auto preeditWithCursor = context.preeditWithCursor();
         Text preedit(preeditWithCursor.first);
         preedit.setCursor(preeditWithCursor.second);
@@ -310,8 +315,8 @@ void PinyinEngine::activate(const fcitx::InputMethodEntry &entry,
 }
 void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
     FCITX_UNUSED(entry);
-    FCITX_LOG(Debug) << "Pinyin receive key: " << event.key() << " "
-                     << event.isRelease();
+    PINYIN_DEBUG() << "Pinyin receive key: " << event.key() << " "
+                   << event.isRelease();
 
     // by pass all key release
     if (event.isRelease()) {
@@ -461,10 +466,18 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
                     "zh_CN", inputContext);
                 if (!puncStr.empty()) {
                     // forward the original key is the best choice.
-                    inputContext->forwardKey(event.rawKey(), event.isRelease(),
-                                             event.time());
-                    inputContext->commitString(puncStr);
-                    event.filterAndAccept();
+                    // forward the original key is the best choice.
+                    auto ref = inputContext->watch();
+                    instance()->eventLoop().addTimeEvent(
+                        CLOCK_MONOTONIC, now(CLOCK_MONOTONIC) + 300, 0,
+                        [ref, puncStr](EventSourceTime *e, uint64_t) {
+                            if (auto inputContext = ref.get()) {
+                                inputContext->commitString(puncStr);
+                            }
+                            delete e;
+                            return true;
+                        });
+                    event.filter();
                     return;
                 }
             }
@@ -493,17 +506,24 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
                 // alt is key or empty
                 auto altOutput = punc.size() ? keyString : "";
                 // if no punc: key -> key (s = key, alt = empty)
-                // if there's punc: key -> punc, return -> key (s = punc, alt = key)
+                // if there's punc: key -> punc, return -> key (s = punc, alt =
+                // key)
                 std::string text;
                 if (!output.empty()) {
                     if (!altOutput.empty()) {
-                        text = boost::str(boost::format(_("Press %1% for %2% and %3% for %4%")) % keyString % output % _("Return") % altOutput);
+                        text = boost::str(
+                            boost::format(
+                                _("Press %1% for %2% and %3% for %4%")) %
+                            keyString % output % _("Return") % altOutput);
                     } else {
-                        text = boost::str(boost::format(_("Press %1% for %2%")) % keyString % altOutput);
+                        text =
+                            boost::str(boost::format(_("Press %1% for %2%")) %
+                                       keyString % altOutput);
                     }
                 }
                 quickphrase()->call<IQuickPhrase::trigger>(
-                    inputContext, text, "", output, altOutput, Key(FcitxKey_semicolon));
+                    inputContext, text, "", output, altOutput,
+                    Key(FcitxKey_semicolon));
                 event.filterAndAccept();
                 return;
             }
@@ -595,7 +615,7 @@ void PinyinEngine::cloudPinyinSelected(InputContext *inputContext,
                 }
                 if ((*iter)->word().size()) {
                     words.push_back((*iter)->word());
-                    FCITX_LOG(Debug)
+                    PINYIN_DEBUG()
                         << "Cloud Pinyin can reuse segment " << (*iter)->word();
                     auto pinyinNode =
                         static_cast<const libime::PinyinLatticeNode *>(*iter);

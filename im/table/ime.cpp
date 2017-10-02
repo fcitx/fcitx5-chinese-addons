@@ -22,8 +22,8 @@
 #include <boost/iostreams/stream_buffer.hpp>
 #include <boost/range/adaptor/reversed.hpp>
 #include <fcitx-config/iniparser.h>
-#include <fcitx-utils/standardpath.h>
 #include <fcitx-utils/log.h>
+#include <fcitx-utils/standardpath.h>
 #include <fcntl.h>
 #include <libime/table/tablebaseddictionary.h>
 #include <libime/table/tableoptions.h>
@@ -79,7 +79,8 @@ void populateOptions(libime::TableBasedDictionary *dict,
 
 TableIME::TableIME(libime::LanguageModelResolver *lm) : lm_(lm) {}
 
-std::tuple<libime::TableBasedDictionary *, libime::UserLanguageModel *, TableConfig *>
+std::tuple<libime::TableBasedDictionary *, libime::UserLanguageModel *,
+           TableConfig *>
 TableIME::requestDict(boost::string_view name) {
     auto iter = tables_.find(name.to_string());
     if (iter == tables_.end()) {
@@ -136,8 +137,10 @@ TableIME::requestDict(boost::string_view name) {
             }
 
             populateOptions(dict, iter->second.config);
-            auto lmFile = lm_->languageModelFileForLanguage(dict->tableOptions().languageCode());
-            iter->second.model = std::make_unique<libime::UserLanguageModel>(lmFile);
+            auto lmFile = lm_->languageModelFileForLanguage(
+                dict->tableOptions().languageCode());
+            iter->second.model =
+                std::make_unique<libime::UserLanguageModel>(lmFile);
 
             try {
                 auto dictFile = StandardPath::global().openUser(
@@ -155,7 +158,8 @@ TableIME::requestDict(boost::string_view name) {
         }
     }
 
-    return {iter->second.dict.get(), iter->second.model.get(), &iter->second.config};
+    return {iter->second.dict.get(), iter->second.model.get(),
+            &iter->second.config};
 }
 
 void TableIME::saveDict(boost::string_view name) {

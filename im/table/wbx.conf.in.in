@@ -7,3 +7,9 @@ Addon=table
 
 [Table]
 File=@LIBIME_INSTALL_PKGDATADIR@/wbx.main.dict
+AutoSelect=True
+AutoSelectLenght=-1
+NoMatchAutoSelectLength=-1
+NoSortInputLength=2
+Hint=True
+MatchingKey=z

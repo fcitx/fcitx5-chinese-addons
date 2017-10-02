@@ -42,7 +42,8 @@ public:
     void deactivate(const InputMethodEntry &entry,
                     InputContextEvent &event) override;
     void keyEvent(const InputMethodEntry &entry, KeyEvent &keyEvent) override;
-    std::string subMode(const InputMethodEntry &entry, InputContext &event) override;
+    std::string subMode(const InputMethodEntry &entry,
+                        InputContext &event) override;
     void reloadConfig() override;
     void reset(const InputMethodEntry &entry,
                InputContextEvent &event) override;
@@ -51,7 +52,7 @@ public:
 
     TableIME *ime() { return ime_.get(); }
 
-    void updateUI(InputContext *inputContext);
+    void updateUI(const InputMethodEntry *entry, InputContext *inputContext);
 
 private:
     void cloudTableSelected(InputContext *inputContext,

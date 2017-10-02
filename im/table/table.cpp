@@ -43,6 +43,10 @@
 
 namespace fcitx {
 
+FCITX_DEFINE_LOG_CATEGORY(table, "table")
+
+#define TABLE_LOG(LEVEL) FCITX_LOGC(table, LEVEL)
+
 bool consumePreifx(boost::string_view &view, boost::string_view prefix) {
     if (boost::starts_with(view, prefix)) {
         view.remove_prefix(prefix.size());
@@ -60,12 +64,8 @@ public:
     TableEngine *engine_;
     bool lastIsPunc_ = false;
 
-    TableContext *context() {
-        auto entry = engine_->instance()->inputMethodEntry(ic_);
-        if (!entry) {
-            return nullptr;
-        }
-        if (lastContext_ == entry->uniqueName()) {
+    TableContext *context(const InputMethodEntry *entry) {
+        if (!entry || lastContext_ == entry->uniqueName()) {
             return context_.get();
         }
 
@@ -73,7 +73,8 @@ public:
         if (!std::get<0>(dict)) {
             return nullptr;
         }
-        context_ = std::make_unique<TableContext>(*std::get<0>(dict), *std::get<2>(dict), *std::get<1>(dict));
+        context_ = std::make_unique<TableContext>(
+            *std::get<0>(dict), *std::get<2>(dict), *std::get<1>(dict));
         lastContext_ = entry->uniqueName();
         return context_.get();
     }
@@ -95,37 +96,29 @@ public:
 
     void select(InputContext *inputContext) const override {
         auto state = inputContext->propertyFor(&engine_->factory());
-        auto *context = state->context();
+        // nullptr means use the last requested entry.
+        auto *context = state->context(nullptr);
         if (!context || idx_ >= context->candidates().size()) {
             return;
         }
         context->select(idx_);
-        engine_->updateUI(inputContext);
+        engine_->updateUI(nullptr, inputContext);
     }
 
     TableEngine *engine_;
     size_t idx_;
 };
 
-void TableEngine::updateUI(InputContext *inputContext) {
+void TableEngine::updateUI(const InputMethodEntry *entry,
+                           InputContext *inputContext) {
     inputContext->inputPanel().reset();
 
     auto state = inputContext->propertyFor(&factory_);
-    auto *context = state->context();
+    auto *context = state->context(entry);
     if (!context) {
         return;
     }
     auto &config = context->config();
-    if (context->selected()) {
-        auto sentence = context->sentence();
-        context->learn();
-        context->clear();
-        inputContext->updatePreedit();
-        inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
-        inputContext->commitString(sentence);
-        return;
-    }
-
     if (context->userInput().size()) {
         auto &candidates = context->candidates();
         auto &inputPanel = inputContext->inputPanel();
@@ -135,8 +128,19 @@ void TableEngine::updateUI(InputContext *inputContext) {
 
             for (const auto &candidate : candidates) {
                 auto candidateString = candidate.toString();
-                candidateList->append(new TableCandidateWord(
-                    this, Text(std::move(candidateString)), idx));
+                Text text;
+                text.append(candidateString);
+                std::string hint;
+                if (*config.hint) {
+                    hint =
+                        context->candidateHint(idx, *config.displayCustomHint);
+                }
+                if (!hint.empty()) {
+                    text.append(" ");
+                    text.append(hint);
+                }
+                candidateList->append(
+                    new TableCandidateWord(this, std::move(text), idx));
                 idx++;
             }
             // TODO: use real size
@@ -144,11 +148,12 @@ void TableEngine::updateUI(InputContext *inputContext) {
             candidateList->setPageSize(*config.pageSize);
             inputPanel.setCandidateList(candidateList);
         }
-        inputPanel.setClientPreedit(Text(context->sentence()));
-        auto preedit = context->preedit();
-        Text preeditText(preedit);
-        preeditText.setCursor(preedit.size());
-        inputPanel.setPreedit(preeditText);
+        Text preeditText = context->preeditText();
+        if (inputContext->capabilityFlags().test(CapabilityFlag::Preedit)) {
+            inputPanel.setClientPreedit(preeditText);
+        } else {
+            inputPanel.setPreedit(preeditText);
+        }
     }
     inputContext->updatePreedit();
     inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
@@ -172,7 +177,7 @@ void TableEngine::activate(const fcitx::InputMethodEntry &entry,
                            fcitx::InputContextEvent &event) {
     auto inputContext = event.inputContext();
     auto state = inputContext->propertyFor(&factory_);
-    auto context = state->context();
+    auto context = state->context(&entry);
     if (context && *context->config().useFullWidth && fullwidth()) {
         fullwidth()->call<IFullwidth::enable>("pinyin");
     }
@@ -182,17 +187,20 @@ void TableEngine::deactivate(const fcitx::InputMethodEntry &entry,
                              fcitx::InputContextEvent &event) {
     auto inputContext = event.inputContext();
     auto state = inputContext->propertyFor(&factory_);
-    if (auto context = state->context()) {
+    if (auto context = state->context(&entry)) {
         if (context->selected()) {
         }
         state->release();
     }
+    inputContext->inputPanel().reset();
+    inputContext->updatePreedit();
+    inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
 }
 
-std::string TableEngine::subMode(const fcitx::InputMethodEntry &,
-                             fcitx::InputContext& ic) {
+std::string TableEngine::subMode(const fcitx::InputMethodEntry &entry,
+                                 fcitx::InputContext &ic) {
     auto state = ic.propertyFor(&factory_);
-    if (!state->context()) {
+    if (!state->context(&entry)) {
         return _("Not available");
     }
     return {};
@@ -200,7 +208,7 @@ std::string TableEngine::subMode(const fcitx::InputMethodEntry &,
 
 void TableEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
     FCITX_UNUSED(entry);
-    FCITX_LOG(Debug) << "Table receive key: " << event.key() << " "
+    TABLE_LOG(Debug) << "Table receive key: " << event.key() << " "
                      << event.isRelease();
 
     // by pass all key release
@@ -213,10 +221,11 @@ void TableEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         return;
     }
 
+    bool needUpdate = false;
     auto inputContext = event.inputContext();
     auto state = inputContext->propertyFor(&factory_);
     bool lastIsPunc = state->lastIsPunc_;
-    auto context = state->context();
+    auto context = state->context(&entry);
     if (!context) {
         return;
     }
@@ -265,39 +274,21 @@ void TableEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         context->type(utf8::UCS4ToUTF8(chr));
         event.filterAndAccept();
     } else if (context->size()) {
-        if (context->selected()) {
-            if (event.key().check(FcitxKey_BackSpace)) {
-                context->backspace();
-                event.filterAndAccept();
-            } else {
-                auto sentence = context->sentence();
-                context->learn();
-                context->clear();
-                inputContext->updatePreedit();
-                inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
-                inputContext->commitString(sentence);
-            }
-        } else {
+        if (event.key().check(FcitxKey_Return)) {
+            inputContext->commitString(context->userInput());
+            context->clear();
+            event.filterAndAccept();
+        } else if (event.key().check(FcitxKey_Escape)) {
+            context->clear();
+            event.filterAndAccept();
+        } else if (event.key().check(FcitxKey_BackSpace)) {
+            context->backspace();
+            event.filterAndAccept();
+        } else if (!context->selected()) {
             // key to handle when it is not empty.
-            if (event.key().check(FcitxKey_BackSpace)) {
-                context->backspace();
+            if (event.key().check(FcitxKey_Delete)) {
                 event.filterAndAccept();
-            } else if (event.key().check(FcitxKey_Delete)) {
-                event.filterAndAccept();
-            } else if (event.key().check(FcitxKey_Home)) {
-                event.filterAndAccept();
-            } else if (event.key().check(FcitxKey_End)) {
-                event.filterAndAccept();
-            } else if (event.key().check(FcitxKey_Left)) {
-                event.filterAndAccept();
-            } else if (event.key().check(FcitxKey_Right)) {
-                event.filterAndAccept();
-            } else if (event.key().check(FcitxKey_Escape)) {
-                context->clear();
-                event.filterAndAccept();
-            } else if (event.key().check(FcitxKey_Return)) {
-                inputContext->commitString(context->userInput());
-                context->clear();
+            } else if (event.key().isCursorMove()) {
                 event.filterAndAccept();
             } else if (event.key().check(FcitxKey_space)) {
                 if (inputContext->inputPanel().candidateList() &&
@@ -318,10 +309,17 @@ void TableEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
                     entry.languageCode(), inputContext);
                 if (!puncStr.empty()) {
                     // forward the original key is the best choice.
-                    inputContext->forwardKey(event.rawKey(), event.isRelease(),
-                                             event.time());
-                    inputContext->commitString(puncStr);
-                    event.filterAndAccept();
+                    auto ref = inputContext->watch();
+                    instance()->eventLoop().addTimeEvent(
+                        CLOCK_MONOTONIC, now(CLOCK_MONOTONIC) + 300, 0,
+                        [ref, puncStr](EventSourceTime *e, uint64_t) {
+                            if (auto inputContext = ref.get()) {
+                                inputContext->commitString(puncStr);
+                            }
+                            delete e;
+                            return true;
+                        });
+                    event.filter();
                     return;
                 }
             }
@@ -333,12 +331,12 @@ void TableEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         }
         // if it gonna commit something
         if (chr) {
-            if (inputContext->inputPanel().candidateList() &&
-                inputContext->inputPanel().candidateList()->size()) {
-                inputContext->inputPanel()
-                    .candidateList()
-                    ->candidate(0)
-                    ->select(inputContext);
+            context->autoSelect();
+            if (context->selected()) {
+                inputContext->commitString(context->selectedSentence());
+                context->learn();
+                context->clear();
+                needUpdate = true;
             }
             auto punc = punctuation()->call<IPunctuation::pushPunctuation>(
                 entry.languageCode(), inputContext, chr);
@@ -366,16 +364,18 @@ void TableEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         }
     }
 
-    if (event.filtered() && event.accepted()) {
-        updateUI(inputContext);
+    if ((event.filtered() && event.accepted()) || needUpdate) {
+        updateUI(&entry, inputContext);
     }
 }
 
-void TableEngine::reset(const InputMethodEntry &, InputContextEvent &event) {
+void TableEngine::reset(const InputMethodEntry &entry,
+                        InputContextEvent &event) {
+    TABLE_LOG(Debug) << "TableEngine::reset";
     auto inputContext = event.inputContext();
 
     auto state = inputContext->propertyFor(&factory_);
-    auto context = state->context();
+    auto context = state->context(&entry);
     if (context) {
         context->clear();
     }

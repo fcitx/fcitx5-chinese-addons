@@ -20,6 +20,7 @@
 #define _TABLE_CONTEXT_H_
 
 #include "ime.h"
+#include <fcitx/text.h>
 #include <libime/table/tablecontext.h>
 
 namespace fcitx {
@@ -30,6 +31,8 @@ public:
                  libime::UserLanguageModel &model);
 
     const TableConfig &config() { return config_; }
+
+    Text preeditText() const;
 
 private:
     const TableConfig &config_;

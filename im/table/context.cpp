@@ -24,4 +24,23 @@ TableContext::TableContext(libime::TableBasedDictionary &dict,
                            const TableConfig &config,
                            libime::UserLanguageModel &model)
     : libime::TableContext(dict, model), config_(config) {}
+
+Text TableContext::preeditText() const {
+    Text text;
+    for (size_t i = 0, e = selectedSize(); i < e; i++) {
+        auto seg = selectedSegment(i);
+        if (std::get<bool>(seg)) {
+            text.append(std::get<std::string>(seg),
+                        {TextFormatFlag::Underline, TextFormatFlag::HighLight});
+        } else {
+            text.append("(" + std::get<std::string>(seg) + ")",
+                        {TextFormatFlag::DontCommit, TextFormatFlag::Strike,
+                         TextFormatFlag::Underline, TextFormatFlag::HighLight});
+        }
+    }
+    text.append(currentCode(), {TextFormatFlag::Underline});
+
+    text.setCursor(text.textLength());
+    return text;
+}
 }
