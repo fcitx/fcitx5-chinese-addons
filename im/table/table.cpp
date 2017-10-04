@@ -171,7 +171,15 @@ TableEngine::TableEngine(Instance *instance)
 
 TableEngine::~TableEngine() {}
 
-void TableEngine::reloadConfig() {}
+void TableEngine::reloadConfig() {
+    auto &standardPath = StandardPath::global();
+    auto file = standardPath.open(StandardPath::Type::PkgConfig,
+                                  "conf/table.conf", O_RDONLY);
+    RawConfig config;
+    readFromIni(config, file.fd());
+
+    config_.load(config);
+}
 
 void TableEngine::activate(const fcitx::InputMethodEntry &entry,
                            fcitx::InputContextEvent &event) {
@@ -274,7 +282,7 @@ void TableEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         context->type(utf8::UCS4ToUTF8(chr));
         event.filterAndAccept();
     } else if (context->size()) {
-        if (event.key().check(FcitxKey_Return)) {
+        if (event.key().check(FcitxKey_Return, KeyState::Shift)) {
             inputContext->commitString(context->userInput());
             context->clear();
             event.filterAndAccept();
@@ -303,25 +311,23 @@ void TableEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
             }
         }
     } else {
-        if (event.key().check(FcitxKey_BackSpace)) {
-            if (lastIsPunc) {
-                auto puncStr = punctuation()->call<IPunctuation::cancelLast>(
-                    entry.languageCode(), inputContext);
-                if (!puncStr.empty()) {
-                    // forward the original key is the best choice.
-                    auto ref = inputContext->watch();
-                    instance()->eventLoop().addTimeEvent(
-                        CLOCK_MONOTONIC, now(CLOCK_MONOTONIC) + 300, 0,
-                        [ref, puncStr](EventSourceTime *e, uint64_t) {
-                            if (auto inputContext = ref.get()) {
-                                inputContext->commitString(puncStr);
-                            }
-                            delete e;
-                            return true;
-                        });
-                    event.filter();
-                    return;
-                }
+        if (event.key().check(FcitxKey_BackSpace) && lastIsPunc) {
+            auto puncStr = punctuation()->call<IPunctuation::cancelLast>(
+                entry.languageCode(), inputContext);
+            if (!puncStr.empty()) {
+                // forward the original key is the best choice.
+                auto ref = inputContext->watch();
+                instance()->eventLoop().addTimeEvent(
+                    CLOCK_MONOTONIC, now(CLOCK_MONOTONIC) + 300, 0,
+                    [ref, puncStr](EventSourceTime *e, uint64_t) {
+                        if (auto inputContext = ref.get()) {
+                            inputContext->commitString(puncStr);
+                        }
+                        delete e;
+                        return true;
+                    });
+                event.filter();
+                return;
             }
         }
     }

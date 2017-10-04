@@ -32,6 +32,18 @@ namespace fcitx {
 
 class TableState;
 
+FCITX_CONFIGURATION(
+    TableGlobalConfig,
+    Option<KeyList> addPhrase{
+        this, "Key/AddWord", _("Add word"), {Key("Control+8")}};
+    Option<KeyList> deletePhrase{
+        this, "Key/DeleteWord", _("Delete word"), {Key("Control+7")}};
+    Option<KeyList> lookupPinyin{
+        this, "Key/LookupPinyin", _("Lookup pinyin"), {Key("Control+Alt+E")}};
+    Option<KeyList> clearFreq{
+        this, "Key/ClearFreq", _("Clear frequency"), {Key("Control+6")}};
+);
+
 class TableEngine final : public InputMethodEngine {
 public:
     TableEngine(Instance *instance);
@@ -62,6 +74,8 @@ private:
     Instance *instance_;
     std::unique_ptr<TableIME> ime_;
     FactoryFor<TableState> factory_;
+
+    TableGlobalConfig config_;
 
     FCITX_ADDON_DEPENDENCY_LOADER(fullwidth, instance_->addonManager());
     FCITX_ADDON_DEPENDENCY_LOADER(punctuation, instance_->addonManager());
