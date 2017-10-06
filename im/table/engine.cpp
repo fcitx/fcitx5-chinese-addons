@@ -80,17 +80,6 @@ void TableEngine::activate(const fcitx::InputMethodEntry &entry,
     }
 }
 
-void TableEngine::deactivate(const fcitx::InputMethodEntry &entry,
-                             fcitx::InputContextEvent &event) {
-    auto inputContext = event.inputContext();
-    auto state = inputContext->propertyFor(&factory_);
-    if (auto context = state->context(&entry)) {
-        if (context->selected()) {
-        }
-        state->release();
-    }
-}
-
 std::string TableEngine::subMode(const fcitx::InputMethodEntry &entry,
                                  fcitx::InputContext &ic) {
     auto state = ic.propertyFor(&factory_);
@@ -121,6 +110,10 @@ void TableEngine::reset(const InputMethodEntry &entry,
     auto inputContext = event.inputContext();
 
     auto state = inputContext->propertyFor(&factory_);
+
+    // The reason that we do not commit here is we want to force the behavior.
+    // When client get unfocused, the framework will try to commit the string.
+    state->commitBuffer(true, event.type() == EventType::InputContextFocusOut);
     state->reset(&entry);
 }
 

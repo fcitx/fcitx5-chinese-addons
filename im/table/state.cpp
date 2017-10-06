@@ -519,11 +519,9 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
                 event.filterAndAccept();
             } else if (event.key().isCursorMove()) {
                 // if it gonna commit something
-                context->autoSelect();
-                if (context->selected()) {
-                    commitBuffer(false);
-                }
-                event.filterAndAccept();
+                commitBuffer(true);
+                needUpdate = true;
+                event.filter();
             } else if (event.key().check(FcitxKey_space)) {
                 if (inputContext->inputPanel().candidateList() &&
                     inputContext->inputPanel().candidateList()->size()) {
@@ -595,7 +593,7 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
     }
 }
 
-void TableState::commitBuffer(bool commitCode) {
+void TableState::commitBuffer(bool commitCode, bool noRealCommit) {
     auto context = context_.get();
     auto sentence = context->selectedSentence();
     std::string lastSegment;
@@ -612,7 +610,10 @@ void TableState::commitBuffer(bool commitCode) {
     if (commitCode) {
         sentence += context->currentCode();
     }
-    ic_->commitString(sentence);
+
+    if (!noRealCommit) {
+        ic_->commitString(sentence);
+    }
     context->learn();
     context->clear();
 }

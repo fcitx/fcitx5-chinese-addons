@@ -16,3 +16,11 @@ MatchingKey=z
 OrderPolicy=Freq
 UseFullWidth=True
 QuickPhraseKey=semicolon
+
+[Table/PrevPage]
+0=Up
+1=minus
+
+[Table/NextPage]
+0=Down
+1=equal

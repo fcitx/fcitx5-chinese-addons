@@ -47,7 +47,7 @@ public:
 
     void keyEvent(const InputMethodEntry &entry, KeyEvent &event);
 
-    void commitBuffer(bool commitCode);
+    void commitBuffer(bool commitCode, bool noRealCommit = false);
     void updateUI();
     void pushLastCommit(const std::string &lastCommit,
                         const std::string &lastSegment);
