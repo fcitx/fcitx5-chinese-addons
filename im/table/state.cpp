@@ -627,7 +627,7 @@ void TableState::updateUI() {
     }
     auto &config = context->config();
     if (context->userInput().size()) {
-        auto &candidates = context->candidates();
+        auto candidates = context->candidates();
         auto &inputPanel = ic_->inputPanel();
         if (context->candidates().size()) {
             auto candidateList = new CommonCandidateList;
