@@ -16,33 +16,10 @@
 * License along with this library; see the file COPYING. If not,
 * see <http://www.gnu.org/licenses/>.
 */
-#ifndef _TABLE_CONTEXT_H_
-#define _TABLE_CONTEXT_H_
+#ifndef _TEST_TESTDIR_H_
+#define _TEST_TESTDIR_H_
 
-#include "ime.h"
-#include <fcitx/text.h>
-#include <libime/table/tablecontext.h>
+#define TESTING_SOURCE_DIR "@CMAKE_SOURCE_DIR@"
+#define TESTING_BINARY_DIR "@CMAKE_BINARY_DIR@"
 
-namespace fcitx {
-
-class TableContext : public libime::TableContext {
-public:
-    TableContext(libime::TableBasedDictionary &dict, const TableConfig &config,
-                 libime::UserLanguageModel &model);
-
-    const TableConfig &config() { return config_; }
-    std::string customHint(const std::string &code) {
-        if (*config_.displayCustomHint) {
-            return dict().hint(code);
-        }
-        return code;
-    }
-
-    Text preeditText() const;
-
-private:
-    const TableConfig &config_;
-};
-}
-
-#endif // _TABLE_CONTEXT_H_
+#endif // _TEST_TESTDIR_H_

@@ -1,10 +1,11 @@
 set(TABLE_SOURCES
-    table.cpp
+    engine.cpp
+    state.cpp
     ime.cpp
     context.cpp
 )
 add_library(table MODULE ${TABLE_SOURCES})
-target_link_libraries(table Fcitx5::Core Fcitx5::Config LibIME::Table Boost::iostreams Fcitx5::Module::Punctuation Fcitx5::Module::Fullwidth Fcitx5::Module::QuickPhrase)
+target_link_libraries(table Fcitx5::Core Fcitx5::Config LibIME::Table Boost::iostreams Fcitx5::Module::Punctuation Fcitx5::Module::Fullwidth Fcitx5::Module::QuickPhrase Fcitx5::Module::PinyinHelper LibIME::Pinyin fmt::fmt-header-only)
 set_target_properties(table PROPERTIES PREFIX "")
 install(TARGETS table DESTINATION "${CMAKE_INSTALL_LIBDIR}/fcitx5")
 fcitx5_translate_desktop_file(table.conf.in table.conf)

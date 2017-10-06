@@ -52,8 +52,8 @@ FCITX_CONFIGURATION(
     Option<std::string> icon{this, "Table/Icon", _("Icon")};
     Option<int> noSortInputLength{this, "Table/NoSortLength",
                                   _("Don't sort word shorter")};
-    Option<std::string> pinyinKey{this, "Table/PinyinKey",
-                                  _("Prefix key to trigger Pinyin")};
+    Option<Key> pinyinKey{this, "Table/PinyinKey",
+                          _("Prefix key to trigger Pinyin")};
     Option<bool> autoSelect{this, "Table/AutoSelect",
                             _("Auto select candidate")};
     Option<bool> autoSelectLength{this, "Table/AutoSelectLength",

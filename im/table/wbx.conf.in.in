@@ -12,4 +12,6 @@ AutoSelectLength=-1
 NoMatchAutoSelectLength=-1
 NoSortInputLength=2
 Hint=True
-MatchingKey=z
+MatchingKey=*
+PinyinKey=z
+UseFullWidth=True

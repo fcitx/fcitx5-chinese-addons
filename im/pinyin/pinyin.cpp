@@ -405,8 +405,7 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
             event.filterAndAccept();
             return;
         }
-        state->context_.type(
-            utf8::UCS4ToUTF8(Key::keySymToUnicode(event.key().sym())));
+        state->context_.type(Key::keySymToUTF8(event.key().sym()));
         event.filterAndAccept();
     } else if (state->context_.size()) {
         // key to handle when it is not empty.

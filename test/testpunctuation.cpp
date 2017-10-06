@@ -17,17 +17,15 @@
  * see <http://www.gnu.org/licenses/>.
  */
 #include "punctuation_public.h"
+#include "testdir.h"
 #include <fcitx-utils/log.h>
 #include <fcitx/addonmanager.h>
 #include <iostream>
 
 int main(int argc, char *argv[]) {
-    if (argc < 2) {
-        return 1;
-    }
-    setenv("FCITX_ADDON_DIRS", argv[1], 1);
-    setenv("FCITX_DATA_DIRS", (std::string(argv[1]) + "/..").c_str(), 1);
-    fcitx::AddonManager manager(argv[1]);
+    setenv("FCITX_ADDON_DIRS", TESTING_BINARY_DIR "/modules/punctuation", 1);
+    setenv("FCITX_DATA_DIRS", TESTING_BINARY_DIR "/modules", 1);
+    fcitx::AddonManager manager(TESTING_BINARY_DIR "/modules/punctuation");
     manager.registerDefaultLoader(nullptr);
     manager.load();
     auto punctuation = manager.addon("punctuation", true);

@@ -1,0 +1,6 @@
+[Addon]
+Name=Extra Pinyin functionality
+Category=Module
+Library=pinyinhelper
+Type=SharedLibrary
+OnDemand=True

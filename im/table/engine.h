@@ -26,6 +26,7 @@
 #include <fcitx/inputcontextproperty.h>
 #include <fcitx/inputmethodengine.h>
 #include <fcitx/instance.h>
+#include <libime/pinyin/pinyindictionary.h>
 #include <memory>
 
 namespace fcitx {
@@ -33,16 +34,12 @@ namespace fcitx {
 class TableState;
 
 FCITX_CONFIGURATION(
-    TableGlobalConfig,
-    Option<KeyList> addPhrase{
-        this, "Key/AddWord", _("Add word"), {Key("Control+8")}};
-    Option<KeyList> deletePhrase{
-        this, "Key/DeleteWord", _("Delete word"), {Key("Control+7")}};
+    TableGlobalConfig, Option<KeyList> modifyDictionary{this,
+                                                        "Key/ModifyDictionary",
+                                                        _("Modify dictionary"),
+                                                        {Key("Control+8")}};
     Option<KeyList> lookupPinyin{
-        this, "Key/LookupPinyin", _("Lookup pinyin"), {Key("Control+Alt+E")}};
-    Option<KeyList> clearFreq{
-        this, "Key/ClearFreq", _("Clear frequency"), {Key("Control+6")}};
-);
+        this, "Key/LookupPinyin", _("Lookup pinyin"), {Key("Control+Alt+E")}};);
 
 class TableEngine final : public InputMethodEngine {
 public:
@@ -63,8 +60,15 @@ public:
     auto &factory() { return factory_; }
 
     TableIME *ime() { return ime_.get(); }
+    auto &config() { return config_; }
 
-    void updateUI(const InputMethodEntry *entry, InputContext *inputContext);
+    const libime::PinyinDictionary &pinyinDict();
+    const libime::LanguageModel &pinyinModel();
+
+    FCITX_ADDON_DEPENDENCY_LOADER(fullwidth, instance_->addonManager());
+    FCITX_ADDON_DEPENDENCY_LOADER(punctuation, instance_->addonManager());
+    FCITX_ADDON_DEPENDENCY_LOADER(quickphrase, instance_->addonManager());
+    FCITX_ADDON_DEPENDENCY_LOADER(pinyinhelper, instance_->addonManager());
 
 private:
     void cloudTableSelected(InputContext *inputContext,
@@ -76,10 +80,9 @@ private:
     FactoryFor<TableState> factory_;
 
     TableGlobalConfig config_;
-
-    FCITX_ADDON_DEPENDENCY_LOADER(fullwidth, instance_->addonManager());
-    FCITX_ADDON_DEPENDENCY_LOADER(punctuation, instance_->addonManager());
-    FCITX_ADDON_DEPENDENCY_LOADER(quickphrase, instance_->addonManager());
+    libime::PinyinDictionary pinyinDict_;
+    bool pinyinLoaded_ = false;
+    std::unique_ptr<libime::LanguageModel> pinyinLM_;
 };
 
 class TableEngineFactory : public AddonFactory {
