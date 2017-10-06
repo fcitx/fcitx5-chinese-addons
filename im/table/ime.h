@@ -50,7 +50,7 @@ FCITX_CONFIGURATION(
     Option<Key> quickphrase{this, "Table/QuickPhraseKey",
                             _("Key to trigger quickphrase")};
     Option<std::string> icon{this, "Table/Icon", _("Icon")};
-    Option<int> noSortInputLength{this, "Table/NoSortLength",
+    Option<int> noSortInputLength{this, "Table/NoSortInputLength",
                                   _("Don't sort word shorter")};
     Option<Key> pinyinKey{this, "Table/PinyinKey",
                           _("Prefix key to trigger Pinyin")};

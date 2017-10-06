@@ -13,15 +13,6 @@ NoMatchAutoSelectLength=-1
 NoSortInputLength=2
 Hint=True
 MatchingKey=z
-
 OrderPolicy=Freq
-UsePY=False
-PinyinKey=z
-AutoPhrase=True
-SaveAutoPhrase=3
-ExactMatch=False
-PromptTableCode=False
-Enabled=True
-LangCode=zh_CN
-NoMatchDontCommit=True
-SimpleCodeOrderLevel=2
+UseFullWidth=True
+QuickPhraseKey=semicolon
