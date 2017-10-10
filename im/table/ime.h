@@ -22,6 +22,7 @@
 #include <fcitx-config/configuration.h>
 #include <fcitx-config/enum.h>
 #include <fcitx-utils/i18n.h>
+#include <fcitx-utils/log.h>
 #include <libime/core/userlanguagemodel.h>
 #include <libime/table/tablebaseddictionary.h>
 #include <tuple>
@@ -70,18 +71,14 @@ FCITX_CONFIGURATION(
     Option<Key> matchingKey{this, "Table/MatchingKey",
                             _("Wildcard matching Key")};
     Option<bool> exactMatch{this, "Table/ExactMatch", _("Exact Match")};
-    Option<bool> autoLearning{this, "Table/AutoLearning", _("Auto learning")};
+    Option<bool> learning{this, "Table/Learning", _("Learning"), true};
     Option<int> autoPhraseLength{this, "Table/AutoPhraseLength",
-                                 _("Auto phrase length")};
-    Option<bool> saveAutoPhrase{this, "Table/SaveAutoPhrase",
-                                _("Save auto phrase")};
-    Option<bool> noMatchDontCommit{this, "Table/NoMatchDontCommit",
-                                   _("Do not commit when there is no match")};
+                                 _("Auto phrase length"), -1};
+    Option<int> saveAutoPhraseAfter{this, "Table/SaveAutoPhraseAfter",
+                                    _("Save auto phrase"), -1};
     Option<bool> hint{this, "Table/Hint", _("Display Hint for word")};
     Option<bool> displayCustomHint{this, "Table/DisplayCustomHint",
                                    _("Display custom hint")};
-    Option<bool> firstCandidateAsPreedit{this, "Table/FirstCandidateAsPreedit",
-                                         _("First candidate as preedit")};
     Option<std::vector<std::string>> autoRuleSet{this, "Table/AutoRuleSet",
                                                  _("Auto rule set")};
     Option<std::string> languageCode{this, "InputMethod/LangCode",
@@ -104,11 +101,16 @@ public:
                TableConfig *>
     requestDict(boost::string_view name);
     void saveDict(boost::string_view name);
+    void saveAll();
 
 private:
     libime::LanguageModelResolver *lm_;
     std::unordered_map<std::string, TableData> tables_;
 };
+
+FCITX_DECLARE_LOG_CATEGORY(table_logcategory);
+
+#define TABLE_DEBUG() FCITX_LOGC(::fcitx::table_logcategory, Debug)
 }
 
 #endif // _TABLE_TABLEDICTRESOLVER_H_

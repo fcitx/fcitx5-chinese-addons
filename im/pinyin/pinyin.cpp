@@ -451,7 +451,8 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
             event.filterAndAccept();
         } else if (event.key().check(FcitxKey_Right, KeyState::Ctrl)) {
             auto cursor = state->context_.pinyinAfterCursor();
-            if (cursor >= 0 && cursor <= state->context_.size()) {
+            if (cursor >= 0 &&
+                static_cast<size_t>(cursor) <= state->context_.size()) {
                 state->context_.setCursor(cursor);
             }
             event.filterAndAccept();
@@ -578,7 +579,7 @@ void PinyinEngine::save() {
             try {
                 ime_->dict()->save(libime::PinyinDictionary::UserDict, out,
                                    libime::PinyinDictFormat::Binary);
-                return true;
+                return static_cast<bool>(out);
             } catch (const std::exception &) {
                 return false;
             }

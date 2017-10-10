@@ -44,10 +44,6 @@
 
 namespace fcitx {
 
-FCITX_DEFINE_LOG_CATEGORY(table, "table")
-
-#define TABLE_LOG(LEVEL) FCITX_LOGC(table, LEVEL)
-
 TableEngine::TableEngine(Instance *instance)
     : instance_(instance),
       factory_([this](InputContext &ic) { return new TableState(&ic, this); }) {
@@ -91,8 +87,8 @@ std::string TableEngine::subMode(const fcitx::InputMethodEntry &entry,
 
 void TableEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
     FCITX_UNUSED(entry);
-    TABLE_LOG(Debug) << "Table receive key: " << event.key() << " "
-                     << event.isRelease();
+    TABLE_DEBUG() << "Table receive key: " << event.key() << " "
+                  << event.isRelease();
 
     // by pass all key release and by pass all modifier
     if (event.isRelease() || event.key().isModifier()) {
@@ -106,7 +102,7 @@ void TableEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
 
 void TableEngine::reset(const InputMethodEntry &entry,
                         InputContextEvent &event) {
-    TABLE_LOG(Debug) << "TableEngine::reset";
+    TABLE_DEBUG() << "TableEngine::reset";
     auto inputContext = event.inputContext();
 
     auto state = inputContext->propertyFor(&factory_);
@@ -117,7 +113,7 @@ void TableEngine::reset(const InputMethodEntry &entry,
     state->reset(&entry);
 }
 
-void TableEngine::save() {}
+void TableEngine::save() { ime_->saveAll(); }
 
 const libime::PinyinDictionary &TableEngine::pinyinDict() {
     if (!pinyinLoaded_) {

@@ -77,7 +77,7 @@ public:
     void select(InputContext *inputContext) const override {
         auto state = inputContext->propertyFor(&engine_->factory());
         inputContext->commitString(word_);
-        state->pushLastCommit(word_, word_);
+        state->pushLastCommit(word_);
         state->reset();
     }
 
@@ -107,15 +107,28 @@ void TableState::release() {
     context_.reset();
 }
 
-void TableState::pushLastCommit(const std::string &lastCommit,
-                                const std::string &lastSegment) {
-    if (lastCommit.empty() || lastSegment.empty()) {
+void TableState::pushLastCommit(const std::string &lastSegment) {
+    if (lastSegment.empty()) {
         return;
     }
 
-    lastCommit_ += lastCommit;
+    lastCommit_ += lastSegment;
     constexpr size_t limit = 10;
     auto length = utf8::length(lastCommit_);
+    TABLE_DEBUG() << "TableState::pushLastCommit " << lastSegment
+                  << " length: " << utf8::length(lastSegment);
+    if (utf8::length(lastSegment) == 1) {
+        lastSingleCharCommit_.push_back(lastSegment);
+        while (lastSingleCharCommit_.size() > 10) {
+            lastSingleCharCommit_.pop_front();
+        }
+        auto singleCharString = stringutils::join(lastSingleCharCommit_, "");
+        TABLE_DEBUG() << "learnAutoPhrase " << singleCharString;
+        context_->learnAutoPhrase(singleCharString);
+    } else {
+        lastSingleCharCommit_.clear();
+    }
+
     if (length > limit) {
         auto iter = lastCommit_.begin();
         while (length > limit) {
@@ -513,16 +526,15 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         } else if (event.key().check(FcitxKey_BackSpace)) {
             context->backspace();
             event.filterAndAccept();
+        } else if (event.key().isCursorMove() ||
+                   event.key().check(FcitxKey_Delete)) {
+            // if it gonna commit something
+            commitBuffer(true);
+            needUpdate = true;
+            event.filter();
         } else if (!context->selected()) {
             // key to handle when it is not empty.
-            if (event.key().check(FcitxKey_Delete)) {
-                event.filterAndAccept();
-            } else if (event.key().isCursorMove()) {
-                // if it gonna commit something
-                commitBuffer(true);
-                needUpdate = true;
-                event.filter();
-            } else if (event.key().check(FcitxKey_space)) {
+            if (event.key().check(FcitxKey_space)) {
                 if (inputContext->inputPanel().candidateList() &&
                     inputContext->inputPanel().candidateList()->size()) {
                     event.filterAndAccept();
@@ -596,16 +608,14 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
 void TableState::commitBuffer(bool commitCode, bool noRealCommit) {
     auto context = context_.get();
     auto sentence = context->selectedSentence();
-    std::string lastSegment;
-    for (size_t i = context->selectedSize(); i-- > 0;) {
+    TABLE_DEBUG() << "TableState::commitBuffer " << sentence << " "
+                  << context->selectedSize();
+    for (size_t i = 0; i < context->selectedSize(); i++) {
         auto seg = context->selectedSegment(i);
         if (std::get<bool>(seg)) {
-            lastSegment = std::get<std::string>(seg);
-            break;
+            pushLastCommit(std::get<std::string>(seg));
         }
     }
-
-    pushLastCommit(sentence, lastSegment);
 
     if (commitCode) {
         sentence += context->currentCode();

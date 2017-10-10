@@ -30,6 +30,8 @@
 
 namespace fcitx {
 
+FCITX_DEFINE_LOG_CATEGORY(table_logcategory, "table")
+
 namespace {
 
 libime::OrderPolicy converOrderPolicy(fcitx::OrderPolicy policy) {
@@ -64,11 +66,9 @@ void populateOptions(libime::TableBasedDictionary *dict,
     }
     options.setEndKey(endKeys);
     options.setExactMatch(*config.exactMatch);
-    options.setAutoLearning(*config.autoLearning);
-    options.setNoMatchDontCommit(*config.noMatchDontCommit);
+    options.setLearning(*config.learning);
     options.setAutoPhraseLength(*config.autoPhraseLength);
-    options.setSaveAutoPhrase(*config.saveAutoPhrase);
-    options.setFirstCandidateAsPreedit(*config.firstCandidateAsPreedit);
+    options.setSaveAutoPhraseAfter(*config.saveAutoPhraseAfter);
     options.setAutoRuleSet(std::unordered_set<std::string>(
         config.autoRuleSet->begin(), config.autoRuleSet->end()));
     options.setLanguageCode(*config.languageCode);
@@ -162,6 +162,12 @@ TableIME::requestDict(boost::string_view name) {
             &iter->second.config};
 }
 
+void TableIME::saveAll() {
+    for (auto &p : tables_) {
+        saveDict(p.first);
+    }
+}
+
 void TableIME::saveDict(boost::string_view name) {
     auto iter = tables_.find(name.to_string());
     if (iter == tables_.end()) {
@@ -180,7 +186,7 @@ void TableIME::saveDict(boost::string_view name) {
             std::ostream out(&buffer);
             try {
                 dict->saveUser(out);
-                return true;
+                return static_cast<bool>(out);
             } catch (const std::exception &) {
                 return false;
             }
@@ -195,7 +201,7 @@ void TableIME::saveDict(boost::string_view name) {
             std::ostream out(&buffer);
             try {
                 lm->save(out);
-                return true;
+                return static_cast<bool>(out);
             } catch (const std::exception &) {
                 return false;
             }

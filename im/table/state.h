@@ -49,8 +49,7 @@ public:
 
     void commitBuffer(bool commitCode, bool noRealCommit = false);
     void updateUI();
-    void pushLastCommit(const std::string &lastCommit,
-                        const std::string &lastSegment);
+    void pushLastCommit(const std::string &lastSegment);
 
 private:
     bool handleCandidateList(const TableConfig &config, KeyEvent &event);
@@ -67,6 +66,7 @@ private:
     std::string lastContext_;
     std::string lastCommit_;
     std::string lastSegment_;
+    std::list<std::string> lastSingleCharCommit_;
     std::unique_ptr<TableContext> context_;
 };
 }
