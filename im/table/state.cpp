@@ -524,7 +524,13 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
             commitBuffer(true);
             event.filterAndAccept();
         } else if (event.key().check(FcitxKey_BackSpace)) {
-            context->backspace();
+            // Discard the last segement if it is selected.
+            if (context->selected()) {
+                auto length = context->selectedSegmentLength(context->selectedSize() - 1);
+                context->erase(context->size() - length, context->size());
+            } else {
+                context->backspace();
+            }
             event.filterAndAccept();
         } else if (event.key().isCursorMove() ||
                    event.key().check(FcitxKey_Delete)) {
