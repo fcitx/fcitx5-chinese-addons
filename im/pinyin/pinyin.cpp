@@ -440,6 +440,21 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
                 state->context_.setCursor(cursor + 1);
             }
             event.filterAndAccept();
+        } else if (event.key().check(FcitxKey_Left, KeyState::Ctrl)) {
+            if (state->context_.cursor() == state->context_.selectedLength()) {
+                state->context_.cancel();
+            }
+            auto cursor = state->context_.pinyinBeforeCursor();
+            if (cursor >= 0) {
+                state->context_.setCursor(cursor);
+            }
+            event.filterAndAccept();
+        } else if (event.key().check(FcitxKey_Right, KeyState::Ctrl)) {
+            auto cursor = state->context_.pinyinAfterCursor();
+            if (cursor >= 0 && cursor <= state->context_.size()) {
+                state->context_.setCursor(cursor);
+            }
+            event.filterAndAccept();
         } else if (event.key().check(FcitxKey_Escape)) {
             state->context_.clear();
             event.filterAndAccept();
