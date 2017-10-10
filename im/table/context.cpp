@@ -31,16 +31,16 @@ Text TableContext::preeditText() const {
         auto seg = selectedSegment(i);
         if (std::get<bool>(seg)) {
             text.append(std::get<std::string>(seg),
-                        {TextFormatFlag::Underline, TextFormatFlag::HighLight});
+                        {TextFormatFlag::Underline});
         } else {
             text.append("(" + std::get<std::string>(seg) + ")",
                         {TextFormatFlag::DontCommit, TextFormatFlag::Strike,
-                         TextFormatFlag::Underline, TextFormatFlag::HighLight});
+                         TextFormatFlag::Underline});
         }
     }
-    text.append(currentCode(), {TextFormatFlag::Underline});
-
     text.setCursor(text.textLength());
+    text.append(currentCode(), {TextFormatFlag::Underline, TextFormatFlag::HighLight});
+
     return text;
 }
 }
