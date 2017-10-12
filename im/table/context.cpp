@@ -39,7 +39,8 @@ Text TableContext::preeditText() const {
         }
     }
     text.setCursor(text.textLength());
-    text.append(currentCode(), {TextFormatFlag::Underline, TextFormatFlag::HighLight});
+    text.append(currentCode(),
+                {TextFormatFlag::Underline, TextFormatFlag::HighLight});
 
     return text;
 }

@@ -68,6 +68,10 @@ FCITX_CONFIGURATION(
                              "Next Page",
                              "Next Page",
                              {Key(FcitxKey_equal), Key(FcitxKey_Down)}};
+    Option<KeyList> prevCandidate{
+        this, "Prev Candidate", "Prev Candidate", {Key("Shift+Tab")}};
+    Option<KeyList> nextCandidate{
+        this, "Next Candidate", "Next Candidate", {Key("Tab")}};
     Option<int, IntConstrain> nbest{this, "Number of sentence",
                                     "Number of Sentence", 2,
                                     IntConstrain(1, 3)};

@@ -526,7 +526,8 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         } else if (event.key().check(FcitxKey_BackSpace)) {
             // Discard the last segement if it is selected.
             if (context->selected()) {
-                auto length = context->selectedSegmentLength(context->selectedSize() - 1);
+                auto length =
+                    context->selectedSegmentLength(context->selectedSize() - 1);
                 context->erase(context->size() - length, context->size());
             } else {
                 context->backspace();

@@ -109,6 +109,10 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
         if (context.candidates().size()) {
             auto candidateList = new CommonCandidateList;
             size_t idx = 0;
+            candidateList->setCursorIncludeUnselected(false);
+            candidateList->setCursorKeepInSamePage(false);
+            candidateList->setCursorPositionAfterPaging(
+                CursorPositionAfterPaging::ResetToFirst);
 
             std::unique_ptr<CloudPinyinCandidateWord> cloud;
             if (config_.cloudPinyinEnabled.value() && cloudpinyin()) {
@@ -143,6 +147,7 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
             }
             candidateList->setSelectionKey(selectionKeys_);
             candidateList->setPageSize(config_.pageSize.value());
+            candidateList->setGlobalCursorIndex(0);
             inputPanel.setCandidateList(candidateList);
         }
         inputPanel.setClientPreedit(
@@ -383,6 +388,21 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
                 UserInterfaceComponent::InputPanel);
             return;
         }
+
+        auto movable = candidateList->toCursorMovable();
+        if (movable) {
+            if (event.key().checkKeyList(*config_.nextCandidate)) {
+                movable->nextCandidate();
+                inputContext->updateUserInterface(
+                    UserInterfaceComponent::InputPanel);
+                return event.filterAndAccept();
+            } else if (event.key().checkKeyList(*config_.prevCandidate)) {
+                movable->prevCandidate();
+                inputContext->updateUserInterface(
+                    UserInterfaceComponent::InputPanel);
+                return event.filterAndAccept();
+            }
+        }
     }
 
     auto checkSp = [this](const KeyEvent &event, PinyinState *state) {
@@ -464,12 +484,16 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
             state->context_.clear();
             event.filterAndAccept();
         } else if (event.key().check(FcitxKey_space)) {
-            if (inputContext->inputPanel().candidateList() &&
-                inputContext->inputPanel().candidateList()->size()) {
+            auto candidateList = inputContext->inputPanel().candidateList();
+            if (candidateList && candidateList->size()) {
                 event.filterAndAccept();
+                int idx = candidateList->cursorIndex();
+                if (idx < 0) {
+                    idx = 0;
+                }
                 inputContext->inputPanel()
                     .candidateList()
-                    ->candidate(0)
+                    ->candidate(idx)
                     ->select(inputContext);
                 return;
             }
