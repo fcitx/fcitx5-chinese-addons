@@ -22,7 +22,7 @@
 #include <fcitx/addonmanager.h>
 #include <iostream>
 
-int main(int argc, char *argv[]) {
+int main() {
     setenv("FCITX_ADDON_DIRS", TESTING_BINARY_DIR "/modules/punctuation", 1);
     setenv("FCITX_DATA_DIRS", TESTING_BINARY_DIR "/modules", 1);
     fcitx::AddonManager manager(TESTING_BINARY_DIR "/modules/punctuation");

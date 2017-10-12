@@ -109,8 +109,6 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
         if (context.candidates().size()) {
             auto candidateList = new CommonCandidateList;
             size_t idx = 0;
-            candidateList->setCursorIncludeUnselected(false);
-            candidateList->setCursorKeepInSamePage(false);
             candidateList->setCursorPositionAfterPaging(
                 CursorPositionAfterPaging::ResetToFirst);
 
@@ -389,8 +387,7 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
             return;
         }
 
-        auto movable = candidateList->toCursorMovable();
-        if (movable) {
+        if (auto movable = candidateList->toCursorMovable()) {
             if (event.key().checkKeyList(*config_.nextCandidate)) {
                 movable->nextCandidate();
                 inputContext->updateUserInterface(

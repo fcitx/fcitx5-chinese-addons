@@ -195,6 +195,21 @@ bool TableState::handleCandidateList(const TableConfig &config,
         inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
         return true;
     }
+    if (auto movable = candidateList->toCursorMovable()) {
+        if (event.key().checkKeyList(*config.nextCandidate)) {
+            movable->nextCandidate();
+            inputContext->updateUserInterface(
+                UserInterfaceComponent::InputPanel);
+            event.filterAndAccept();
+            return true;
+        } else if (event.key().checkKeyList(*config.prevCandidate)) {
+            movable->prevCandidate();
+            inputContext->updateUserInterface(
+                UserInterfaceComponent::InputPanel);
+            event.filterAndAccept();
+            return true;
+        }
+    }
 
     return false;
 }
@@ -233,9 +248,13 @@ bool TableState::handlePinyinMode(KeyEvent &event) {
                 return true;
             }
         } else if (event.key().check(FcitxKey_space)) {
-            if (ic_->inputPanel().candidateList() &&
-                ic_->inputPanel().candidateList()->size()) {
-                ic_->inputPanel().candidateList()->candidate(0)->select(ic_);
+            auto candidateList = ic_->inputPanel().candidateList();
+            if (candidateList && candidateList->size()) {
+                int idx = candidateList->cursorIndex();
+                if (idx < 0) {
+                    idx = 0;
+                }
+                candidateList->candidate(idx)->select(ic_);
                 return true;
             } else if (!pinyinModeBuffer_.size()) {
                 if (!lastSegment_.empty()) {
@@ -542,14 +561,14 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         } else if (!context->selected()) {
             // key to handle when it is not empty.
             if (event.key().check(FcitxKey_space)) {
-                if (inputContext->inputPanel().candidateList() &&
-                    inputContext->inputPanel().candidateList()->size()) {
-                    event.filterAndAccept();
-                    inputContext->inputPanel()
-                        .candidateList()
-                        ->candidate(0)
-                        ->select(inputContext);
-                    return;
+                auto candidateList = ic_->inputPanel().candidateList();
+                if (candidateList && candidateList->size()) {
+                    int idx = candidateList->cursorIndex();
+                    if (idx < 0) {
+                        idx = 0;
+                    }
+                    candidateList->candidate(idx)->select(ic_);
+                    return event.filterAndAccept();
                 }
             }
         }
@@ -649,6 +668,8 @@ void TableState::updateUI() {
         if (context->candidates().size()) {
             auto candidateList = new CommonCandidateList;
             size_t idx = 0;
+            candidateList->setCursorPositionAfterPaging(
+                CursorPositionAfterPaging::ResetToFirst);
 
             for (const auto &candidate : candidates) {
                 auto candidateString = candidate.toString();
@@ -669,6 +690,7 @@ void TableState::updateUI() {
             }
             candidateList->setSelectionKey(*config.selection);
             candidateList->setPageSize(*config.pageSize);
+            candidateList->setGlobalCursorIndex(0);
             inputPanel.setCandidateList(candidateList);
         }
         Text preeditText = context->preeditText();

@@ -37,6 +37,10 @@ FCITX_CONFIGURATION(
         this, "Table/PrevPage", _("Prev page"), {Key(FcitxKey_Up)}};
     Option<KeyList> nextPage{
         this, "Table/NextPage", _("Next page"), {Key(FcitxKey_Down)}};
+    Option<KeyList> prevCandidate{
+        this, "Table/PrevCandidate", "Prev Candidate", {Key("Left")}};
+    Option<KeyList> nextCandidate{
+        this, "Table/NextCandidate", "Next Candidate", {Key("Right")}};
     Option<KeyList> selection{
         this,
         "Table/Selection",
