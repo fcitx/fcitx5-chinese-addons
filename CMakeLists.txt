@@ -15,6 +15,13 @@ find_package(Pthread REQUIRED)
 find_package(PkgConfig REQUIRED)
 find_package(Gettext REQUIRED)
 find_package(fmt REQUIRED)
+
+if (TARGET fmt::fmt-header-only)
+  set(FMT_TARGET fmt::fmt-header-only)
+else()
+  set(FMT_TARGET fmt::fmt)
+endif ()
+
 pkg_check_modules(Curl REQUIRED IMPORTED_TARGET "libcurl")
 
 include("${FCITX_INSTALL_CMAKECONFIG_DIR}/Fcitx5Utils/Fcitx5CompilerSettings.cmake")
