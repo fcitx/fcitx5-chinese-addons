@@ -44,6 +44,7 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.h.in ${CMAKE_CURRENT_BINARY_DI
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 add_definitions(-DFCITX_GETTEXT_DOMAIN=\"fcitx5-chinese-addons\")
+add_definitions(-DFCITX_STRINGUTILS_ENABLE_BOOST_STRING_VIEW)
 
 add_subdirectory(modules)
 add_subdirectory(im)

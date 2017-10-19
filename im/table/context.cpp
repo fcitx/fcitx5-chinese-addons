@@ -33,7 +33,7 @@ Text TableContext::preeditText() const {
             text.append(std::get<std::string>(seg),
                         {TextFormatFlag::Underline});
         } else {
-            text.append("(" + std::get<std::string>(seg) + ")",
+            text.append(stringutils::concat("(", std::get<std::string>(seg), ")"),
                         {TextFormatFlag::DontCommit, TextFormatFlag::Strike,
                          TextFormatFlag::Underline});
         }

@@ -125,7 +125,7 @@ TableIME::requestDict(boost::string_view name) {
             try {
                 auto dictFile = StandardPath::global().openUser(
                     StandardPath::Type::PkgData,
-                    "table/" + name.to_string() + ".user.dict", O_RDONLY);
+                    stringutils::concat("table/", name.to_string(), ".user.dict"), O_RDONLY);
                 boost::iostreams::stream_buffer<
                     boost::iostreams::file_descriptor_source>
                     buffer(dictFile.fd(),
@@ -145,7 +145,7 @@ TableIME::requestDict(boost::string_view name) {
             try {
                 auto dictFile = StandardPath::global().openUser(
                     StandardPath::Type::PkgData,
-                    "table/" + name.to_string() + ".history", O_RDONLY);
+                    stringutils::concat("table/", name, ".history"), O_RDONLY);
                 boost::iostreams::stream_buffer<
                     boost::iostreams::file_descriptor_source>
                     buffer(dictFile.fd(),
@@ -175,7 +175,7 @@ void TableIME::saveDict(boost::string_view name) {
     }
     libime::TableBasedDictionary *dict = iter->second.dict.get();
     libime::UserLanguageModel *lm = iter->second.model.get();
-    auto fileName = "table/" + name.to_string();
+    auto fileName = stringutils::joinPath("table", name);
 
     StandardPath::global().safeSave(
         StandardPath::Type::PkgData, fileName + ".user.dict", [dict](int fd) {
