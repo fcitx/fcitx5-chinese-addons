@@ -1,6 +1,6 @@
 [InputMethod]
 Name=Wubi Pinyin
-Icon=wubi
+Icon=fcitx-wubi
 Label=五
 LangCode=zh_CN
 Addon=table

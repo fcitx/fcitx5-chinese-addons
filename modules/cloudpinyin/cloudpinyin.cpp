@@ -183,11 +183,7 @@ CloudPinyin::CloudPinyin(fcitx::AddonManager *manager)
 CloudPinyin::~CloudPinyin() {}
 
 void CloudPinyin::reloadConfig() {
-    auto configFile = StandardPath::global().open(
-        StandardPath::Type::PkgConfig, "conf/cloudpinyin.conf", O_RDONLY);
-    RawConfig config;
-    readFromIni(config, configFile.fd());
-    config_.load(config);
+    readAsIni(config_, "conf/cloudpinyin.conf");
 }
 
 void CloudPinyin::request(const std::string &pinyin,

@@ -2,7 +2,7 @@ set(PINYIN_SOURCES
     pinyin.cpp
 )
 add_library(pinyin MODULE ${PINYIN_SOURCES})
-target_link_libraries(pinyin Fcitx5::Core Fcitx5::Config LibIME::Pinyin Boost::iostreams Fcitx5::Module::Punctuation Fcitx5::Module::Fullwidth Fcitx5::Module::QuickPhrase Fcitx5::Module::CloudPinyin Fcitx5::Module::Notifications)
+target_link_libraries(pinyin Fcitx5::Core Fcitx5::Config LibIME::Pinyin Boost::iostreams Fcitx5::Module::Punctuation Fcitx5::Module::QuickPhrase Fcitx5::Module::CloudPinyin Fcitx5::Module::Notifications)
 set_target_properties(pinyin PROPERTIES PREFIX "")
 install(TARGETS pinyin DESTINATION "${CMAKE_INSTALL_LIBDIR}/fcitx5")
 fcitx5_translate_desktop_file(pinyin.conf.in pinyin.conf)

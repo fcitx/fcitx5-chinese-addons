@@ -19,8 +19,9 @@
 #ifndef _FULLWIDTH_FULLWIDTH_H_
 #define _FULLWIDTH_FULLWIDTH_H_
 
-#include "fullwidth_public.h"
 #include <fcitx-config/configuration.h>
+#include <fcitx-utils/i18n.h>
+#include <fcitx/action.h>
 #include <fcitx/addoninstance.h>
 #include <fcitx/addonmanager.h>
 #include <fcitx/instance.h>
@@ -28,27 +29,46 @@
 FCITX_CONFIGURATION(FullWidthConfig, fcitx::Option<fcitx::KeyList> hotkey{
                                          this, "Hotkey", "Toggle key"};)
 
+class ToggleAction;
+
 class Fullwidth final : public fcitx::AddonInstance {
+    class ToggleAction : public fcitx::Action {
+    public:
+        ToggleAction(Fullwidth *parent) : parent_(parent) {}
+
+        std::string shortText(fcitx::InputContext *) const override {
+            return parent_->enabled_ ? _("Full width Character")
+                                     : _("Half width Character");
+        }
+        std::string icon(fcitx::InputContext *) const override {
+            return parent_->enabled_ ? "fcitx-fullwidth-active"
+                                     : "fcitx-fullwidth-inactive";
+        }
+
+        void activate(fcitx::InputContext *ic) override {
+            return parent_->setEnabled(!parent_->enabled_, ic);
+        }
+
+    private:
+        Fullwidth *parent_;
+    };
+
 public:
     Fullwidth(fcitx::Instance *instance);
 
     void reloadConfig() override;
+    void save() override;
 
-    fcitx::AddonInstance *notifications() {
-        if (!notifications_) {
-            notifications_ =
-                instance_->addonManager().addon("notifications", true);
-        }
-        return notifications_;
-    }
-
-    void enable(const std::string &im) { whiteList_.insert(im); }
-    void disable(const std::string &im) { whiteList_.erase(im); }
+    FCITX_ADDON_DEPENDENCY_LOADER(notifications, instance_->addonManager());
 
     bool inWhiteList(fcitx::InputContext *inputContext) const;
 
-    FCITX_ADDON_EXPORT_FUNCTION(Fullwidth, enable);
-    FCITX_ADDON_EXPORT_FUNCTION(Fullwidth, disable);
+    void setEnabled(bool enabled, fcitx::InputContext *ic) {
+        if (enabled != enabled_) {
+            enabled_ = enabled;
+            toggleAction_.update(ic);
+        }
+    }
 
 private:
     bool enabled_ = false;
@@ -59,6 +79,7 @@ private:
         eventHandlers_;
     fcitx::ScopedConnection commitFilterConn_;
     std::unordered_set<std::string> whiteList_;
+    ToggleAction toggleAction_{this};
 };
 
 #endif // _FULLWIDTH_FULLWIDTH_H_

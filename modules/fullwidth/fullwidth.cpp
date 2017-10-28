@@ -26,6 +26,8 @@
 #include <fcitx/addonfactory.h>
 #include <fcitx/inputcontext.h>
 #include <fcitx/inputmethodentry.h>
+#include <fcitx/statusarea.h>
+#include <fcitx/userinterfacemanager.h>
 #include <fcntl.h>
 
 using namespace fcitx;
@@ -42,7 +44,8 @@ const char *sCornerTrans[] = {
 };
 
 Fullwidth::Fullwidth(Instance *instance) : instance_(instance) {
-
+    instance_->userInterfaceManager().registerAction("fullwidth",
+                                                     &toggleAction_);
     auto filterKey = [this](Event &event) {
         if (!enabled_) {
             return;
@@ -73,7 +76,7 @@ Fullwidth::Fullwidth(Instance *instance) : instance_(instance) {
             }
 
             if (keyEvent.key().checkKeyList(config_.hotkey.value())) {
-                enabled_ = !enabled_;
+                setEnabled(!enabled_, keyEvent.inputContext());
                 if (notifications()) {
                     notifications()->call<INotifications::showTip>(
                         "fcitx-fullwidth-toggle", "fcitx",
@@ -90,9 +93,6 @@ Fullwidth::Fullwidth(Instance *instance) : instance_(instance) {
 
             return filterKey(event);
         }));
-    eventHandlers_.emplace_back(
-        instance->watchEvent(EventType::InputContextForwardKey,
-                             EventWatcherPhase::Default, filterKey));
     commitFilterConn_ = instance_->connect<Instance::CommitFilter>(
         [this](InputContext *inputContext, std::string &str) {
             if (!enabled_ || !inWhiteList(inputContext)) {
@@ -120,23 +120,12 @@ Fullwidth::Fullwidth(Instance *instance) : instance_(instance) {
     reloadConfig();
 }
 
-void Fullwidth::reloadConfig() {
-    auto &standardPath = StandardPath::global();
-    auto file = standardPath.open(StandardPath::Type::PkgConfig,
-                                  "conf/fullwidth.conf", O_RDONLY);
-    RawConfig config;
-    readFromIni(config, file.fd());
+void Fullwidth::reloadConfig() { readAsIni(config_, "conf/fullwidth.conf"); }
 
-    config_.load(config);
-}
+void Fullwidth::save() { safeSaveAsIni(config_, "conf/fullwidth.conf"); }
 
 bool Fullwidth::inWhiteList(InputContext *inputContext) const {
-    auto engine = instance_->inputMethodEngine(inputContext);
-    auto entry = instance_->inputMethodEntry(inputContext);
-    if (!engine || !entry || !whiteList_.count(entry->uniqueName())) {
-        return false;
-    }
-    return true;
+    return toggleAction_.isParent(&inputContext->statusArea());
 }
 
 class FullwidthModuleFactory : public AddonFactory {

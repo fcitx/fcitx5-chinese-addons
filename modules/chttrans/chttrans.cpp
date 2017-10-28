@@ -31,6 +31,8 @@
 #include "chttrans-opencc.h"
 #endif
 #include "chttrans-native.h"
+#include <fcitx/inputcontext.h>
+#include <fcitx/userinterfacemanager.h>
 
 using namespace fcitx;
 
@@ -45,6 +47,8 @@ static ChttransIMType inputMethodType(const InputMethodEntry &entry) {
 }
 
 Chttrans::Chttrans(fcitx::Instance *instance) : instance_(instance) {
+    instance_->userInterfaceManager().registerAction("chttrans",
+                                                     &toggleAction_);
     reloadConfig();
 #ifdef ENABLE_OPENCC
     backends_.emplace(ChttransEngine::OpenCC,
@@ -63,7 +67,8 @@ Chttrans::Chttrans(fcitx::Instance *instance) : instance_(instance) {
             auto ic = keyEvent.inputContext();
             auto engine = instance_->inputMethodEngine(ic);
             auto entry = instance_->inputMethodEntry(ic);
-            if (!engine || !entry) {
+            if (!engine || !entry ||
+                !toggleAction_.isParent(&ic->statusArea())) {
                 return;
             }
             auto type = inputMethodType(*entry);
@@ -71,20 +76,20 @@ Chttrans::Chttrans(fcitx::Instance *instance) : instance_(instance) {
                 return;
             }
             if (keyEvent.key().checkKeyList(config_.hotkey.value())) {
+                toggle(ic);
                 bool tradEnabled;
                 if (enabledIM_.count(entry->uniqueName())) {
-                    enabledIM_.erase(entry->uniqueName());
-                    tradEnabled = type == ChttransIMType::Simp ? false : true;
+                    tradEnabled = type == ChttransIMType::Trad ? false : true;
                 } else {
-                    enabledIM_.insert(entry->uniqueName());
-                    tradEnabled = type == ChttransIMType::Simp ? true : false;
+                    tradEnabled = type == ChttransIMType::Trad ? true : false;
                 }
                 if (notifications()) {
                     notifications()->call<INotifications::showTip>(
                         "fcitx-chttrans-toggle", "fcitx",
                         tradEnabled ? "fcitx-chttrans-active"
                                     : "fcitx-chttrans-inactive",
-                        _("Simplified Chinese To Traditional Chinese"),
+                        tradEnabled ? _("Traditional Chinese")
+                                    : _("Simplified Chinese"),
                         tradEnabled ? _("Traditional Chinese is enabled.")
                                     : _("Simplified Chinese is enabled."),
                         -1);
@@ -145,14 +150,26 @@ Chttrans::Chttrans(fcitx::Instance *instance) : instance_(instance) {
         });
 }
 
-void Chttrans::reloadConfig() {
-    auto &standardPath = StandardPath::global();
-    auto file = standardPath.open(StandardPath::Type::PkgConfig,
-                                  "conf/chttrans.conf", O_RDONLY);
-    RawConfig config;
-    readFromIni(config, file.fd());
+void Chttrans::toggle(InputContext *ic) {
+    auto engine = instance_->inputMethodEngine(ic);
+    auto entry = instance_->inputMethodEntry(ic);
+    if (!engine || !entry || !toggleAction_.isParent(&ic->statusArea())) {
+        return;
+    }
+    auto type = inputMethodType(*entry);
+    if (type == ChttransIMType::Other) {
+        return;
+    }
+    if (enabledIM_.count(entry->uniqueName())) {
+        enabledIM_.erase(entry->uniqueName());
+    } else {
+        enabledIM_.insert(entry->uniqueName());
+    }
+    toggleAction_.update(ic);
+}
 
-    config_.load(config);
+void Chttrans::reloadConfig() {
+    readAsIni(config_, "conf/chttrans.conf");
     enabledIM_.clear();
     enabledIM_.insert(config_.enabledIM.value().begin(),
                       config_.enabledIM.value().end());
@@ -187,7 +204,8 @@ std::string Chttrans::convert(ChttransIMType type, const std::string &str) {
 ChttransIMType Chttrans::convertType(fcitx::InputContext *inputContext) {
     auto engine = instance_->inputMethodEngine(inputContext);
     auto entry = instance_->inputMethodEntry(inputContext);
-    if (!engine || !entry) {
+    if (!engine || !entry ||
+        !toggleAction_.isParent(&inputContext->statusArea())) {
         return ChttransIMType::Other;
     }
     auto type = inputMethodType(*entry);

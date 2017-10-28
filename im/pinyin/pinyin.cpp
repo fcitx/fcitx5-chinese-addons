@@ -20,7 +20,6 @@
 #include "pinyin.h"
 #include "cloudpinyin_public.h"
 #include "config.h"
-#include "fullwidth_public.h"
 #include "notifications_public.h"
 #include "punctuation_public.h"
 #include <boost/algorithm/string.hpp>
@@ -34,10 +33,12 @@
 #include <fcitx-utils/log.h>
 #include <fcitx-utils/standardpath.h>
 #include <fcitx-utils/utf8.h>
+#include <fcitx/action.h>
 #include <fcitx/inputcontext.h>
 #include <fcitx/inputcontextmanager.h>
 #include <fcitx/inputcontextproperty.h>
 #include <fcitx/inputpanel.h>
+#include <fcitx/userinterfacemanager.h>
 #include <fcntl.h>
 #include <libime/core/historybigram.h>
 #include <libime/core/userlanguagemodel.h>
@@ -241,16 +242,11 @@ PinyinEngine::PinyinEngine(Instance *instance)
 PinyinEngine::~PinyinEngine() {}
 
 void PinyinEngine::reloadConfig() {
-    auto &standardPath = StandardPath::global();
-    auto file = standardPath.open(StandardPath::Type::PkgConfig,
-                                  "conf/pinyin.conf", O_RDONLY);
-    RawConfig config;
-    readFromIni(config, file.fd());
-    config_.load(config);
+    readAsIni(config_, "conf/pinyin.conf");
     ime_->setNBest(config_.nbest.value());
     if (config_.shuangpinProfile.value() == ShuangpinProfileEnum::Custom) {
-        auto file = standardPath.open(StandardPath::Type::PkgConfig,
-                                      "pinyin/sp.dat", O_RDONLY);
+        auto file = StandardPath::global().open(StandardPath::Type::PkgConfig,
+                                                "pinyin/sp.dat", O_RDONLY);
         try {
             boost::iostreams::stream_buffer<
                 boost::iostreams::file_descriptor_source>
@@ -309,13 +305,27 @@ void PinyinEngine::reloadConfig() {
 }
 void PinyinEngine::activate(const fcitx::InputMethodEntry &entry,
                             fcitx::InputContextEvent &event) {
-    if (fullwidth()) {
-        fullwidth()->call<IFullwidth::enable>(entry.uniqueName());
-    }
     auto inputContext = event.inputContext();
+    // Request full width.
+    fullwidth();
+    for (auto actionName : {"chttrans", "punctuation", "fullwidth"}) {
+        if (auto action =
+                instance_->userInterfaceManager().lookupAction(actionName)) {
+            inputContext->statusArea().addAction(StatusGroup::InputMethod,
+                                                 action);
+        }
+    }
     auto state = inputContext->propertyFor(&factory_);
     state->context_.setUseShuangpin(entry.uniqueName() == "shuangpin");
 }
+
+void PinyinEngine::deactivate(const fcitx::InputMethodEntry &entry,
+                              fcitx::InputContextEvent &event) {
+    auto inputContext = event.inputContext();
+    inputContext->statusArea().clearGroup(StatusGroup::InputMethod);
+    reset(entry, event);
+}
+
 void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
     FCITX_UNUSED(entry);
     PINYIN_DEBUG() << "Pinyin receive key: " << event.key() << " "

@@ -89,6 +89,8 @@ public:
     Instance *instance() { return instance_; }
     void activate(const InputMethodEntry &entry,
                   InputContextEvent &event) override;
+    void deactivate(const InputMethodEntry &entry,
+                    InputContextEvent &event) override;
     void keyEvent(const InputMethodEntry &entry, KeyEvent &keyEvent) override;
     void reloadConfig() override;
     void reset(const InputMethodEntry &entry,

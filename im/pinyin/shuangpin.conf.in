@@ -1,6 +1,6 @@
 [InputMethod]
 Name=Shuangpin
-Icon=shuangpin
+Icon=fcitx-shuangpin
 Label=双
 LangCode=zh_CN
 Addon=pinyin

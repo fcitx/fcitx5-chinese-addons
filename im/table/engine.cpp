@@ -19,7 +19,6 @@
 #include "engine.h"
 #include "config.h"
 #include "context.h"
-#include "fullwidth_public.h"
 #include "punctuation_public.h"
 #include "state.h"
 #include <boost/algorithm/string.hpp>
@@ -36,6 +35,7 @@
 #include <fcitx/inputcontextmanager.h>
 #include <fcitx/inputcontextproperty.h>
 #include <fcitx/inputpanel.h>
+#include <fcitx/userinterfacemanager.h>
 #include <fcntl.h>
 #include <libime/core/historybigram.h>
 #include <libime/core/userlanguagemodel.h>
@@ -56,24 +56,36 @@ TableEngine::TableEngine(Instance *instance)
 
 TableEngine::~TableEngine() {}
 
-void TableEngine::reloadConfig() {
-    auto &standardPath = StandardPath::global();
-    auto file = standardPath.open(StandardPath::Type::PkgConfig,
-                                  "conf/table.conf", O_RDONLY);
-    RawConfig config;
-    readFromIni(config, file.fd());
-
-    config_.load(config);
-}
+void TableEngine::reloadConfig() { readAsIni(config_, "conf/table.conf"); }
 
 void TableEngine::activate(const fcitx::InputMethodEntry &entry,
                            fcitx::InputContextEvent &event) {
     auto inputContext = event.inputContext();
     auto state = inputContext->propertyFor(&factory_);
     auto context = state->context(&entry);
-    if (context && *context->config().useFullWidth && fullwidth()) {
-        fullwidth()->call<IFullwidth::enable>(entry.uniqueName());
+    if (stringutils::startsWith(entry.languageCode(), "zh_")) {
+        for (auto actionName : {"chttrans", "punctuation"}) {
+            if (auto action = instance_->userInterfaceManager().lookupAction(
+                    actionName)) {
+                inputContext->statusArea().addAction(StatusGroup::InputMethod,
+                                                     action);
+            }
+        }
     }
+    if (context && *context->config().useFullWidth && fullwidth()) {
+        if (auto action =
+                instance_->userInterfaceManager().lookupAction("fullwidth")) {
+            inputContext->statusArea().addAction(StatusGroup::InputMethod,
+                                                 action);
+        }
+    }
+}
+
+void TableEngine::deactivate(const fcitx::InputMethodEntry &entry,
+                             fcitx::InputContextEvent &event) {
+    auto inputContext = event.inputContext();
+    inputContext->statusArea().clearGroup(StatusGroup::InputMethod);
+    reset(entry, event);
 }
 
 std::string TableEngine::subMode(const fcitx::InputMethodEntry &entry,

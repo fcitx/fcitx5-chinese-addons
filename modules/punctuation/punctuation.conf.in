@@ -4,3 +4,5 @@ Category=Module
 Library=punctuation
 Type=SharedLibrary
 
+[Addon/OptionalDependencies]
+0=notifications

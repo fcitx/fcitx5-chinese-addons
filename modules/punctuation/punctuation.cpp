@@ -17,14 +17,20 @@
  * see <http://www.gnu.org/licenses/>.
  */
 #include "punctuation.h"
+#include "notifications_public.h"
 #include <boost/iostreams/device/file_descriptor.hpp>
 #include <boost/iostreams/stream_buffer.hpp>
+#include <fcitx-config/iniparser.h>
 #include <fcitx-utils/charutils.h>
 #include <fcitx-utils/log.h>
 #include <fcitx-utils/standardpath.h>
 #include <fcitx-utils/utf8.h>
 #include <fcitx/inputcontext.h>
 #include <fcitx/inputcontextmanager.h>
+#include <fcitx/inputmethodentry.h>
+#include <fcitx/inputmethodmanager.h>
+#include <fcitx/statusarea.h>
+#include <fcitx/userinterfacemanager.h>
 #include <fcntl.h>
 #include <unordered_set>
 
@@ -89,56 +95,81 @@ PunctuationProfile::getPunctuation(uint32_t unicode) const {
 Punctuation::Punctuation(Instance *instance)
     : instance_(instance),
       factory_([](InputContext &) { return new PunctuationState; }) {
-    if (instance_) {
-        instance_->inputContextManager().registerProperty("punctuationState",
-                                                          &factory_);
+    reloadConfig();
+    if (!instance_) {
+        return;
+    }
+    instance_->inputContextManager().registerProperty("punctuationState",
+                                                      &factory_);
+    instance_->userInterfaceManager().registerAction("punctuation",
+                                                     &toggleAction_);
 
-        commitConn_ = instance_->connect<Instance::CommitFilter>(
-            [this](InputContext *ic, const std::string &sentence) {
-                auto state = ic->propertyFor(&factory_);
-                if (sentence.size() && (charutils::isupper(sentence.back()) ||
-                                        charutils::islower(sentence.back()) ||
-                                        charutils::isdigit(sentence.back()))) {
+    commitConn_ = instance_->connect<Instance::CommitFilter>(
+        [this](InputContext *ic, const std::string &sentence) {
+            auto state = ic->propertyFor(&factory_);
+            if (sentence.size() && (charutils::isupper(sentence.back()) ||
+                                    charutils::islower(sentence.back()) ||
+                                    charutils::isdigit(sentence.back()))) {
+                state->lastIsEngOrDigit_ = true;
+            } else {
+                state->lastIsEngOrDigit_ = false;
+            }
+        });
+    keyEventConn_ = instance_->connect<Instance::KeyEventResult>(
+        [this](const KeyEvent &event) {
+            auto state = event.inputContext()->propertyFor(&factory_);
+            if (event.isRelease()) {
+                return;
+            }
+            if (!event.accepted()) {
+                if (event.key().isUAZ() || event.key().isLAZ() ||
+                    event.key().isDigit()) {
                     state->lastIsEngOrDigit_ = true;
                 } else {
                     state->lastIsEngOrDigit_ = false;
                 }
-            });
-        keyEventConn_ = instance_->connect<Instance::KeyEventResult>(
-            [this](const KeyEvent &event) {
-                auto state = event.inputContext()->propertyFor(&factory_);
-                if (event.isRelease()) {
-                    return;
+            }
+        });
+    eventWatchers_.emplace_back(instance_->watchEvent(
+        EventType::InputContextKeyEvent, EventWatcherPhase::PostInputMethod,
+        [this](Event &event) {
+            auto &keyEvent = static_cast<KeyEvent &>(event);
+            if (keyEvent.isRelease()) {
+                return;
+            }
+            if (keyEvent.key().checkKeyList(config_.hotkey.value())) {
+                setEnabled(!enabled(), keyEvent.inputContext());
+                if (notifications()) {
+                    notifications()->call<INotifications::showTip>(
+                        "fcitx-punc-toggle", "fcitx",
+                        enabled() ? "fcitx-punc-active" : "fcitx-punc-inactive",
+                        _("Punctuation"),
+                        enabled() ? _("Full width punctuation is enabled.")
+                                  : _("Full width punctuation is disabled."),
+                        -1);
                 }
-                if (!event.accepted()) {
-                    if (event.key().isUAZ() || event.key().isLAZ() ||
-                        event.key().isDigit()) {
-                        state->lastIsEngOrDigit_ = true;
-                    } else {
-                        state->lastIsEngOrDigit_ = false;
-                    }
-                }
-            });
-        eventWatchers_.emplace_back(instance_->watchEvent(
-            EventType::InputContextReset, EventWatcherPhase::PostInputMethod,
-            [this](Event &event) {
-                auto &icEvent = static_cast<InputContextEvent &>(event);
-                auto state = icEvent.inputContext()->propertyFor(&factory_);
-                state->lastIsEngOrDigit_ = false;
-                state->notConverted = 0;
-                state->lastPuncStack_.clear();
-            }));
-    }
-
-    reloadConfig();
+                return keyEvent.filterAndAccept();
+            }
+        }));
+    eventWatchers_.emplace_back(instance_->watchEvent(
+        EventType::InputContextReset, EventWatcherPhase::PostInputMethod,
+        [this](Event &event) {
+            auto &icEvent = static_cast<InputContextEvent &>(event);
+            auto state = icEvent.inputContext()->propertyFor(&factory_);
+            state->lastIsEngOrDigit_ = false;
+            state->notConverted = 0;
+            state->lastPuncStack_.clear();
+        }));
 }
 
 Punctuation::~Punctuation() {}
 
 void Punctuation::reloadConfig() {
-    const StandardPath &sp = StandardPath::global();
-    auto files = sp.multiOpen(StandardPath::Type::PkgData, "punctuation",
-                              O_RDONLY, filter::Prefix("punc.mb."));
+    readAsIni(config_, "conf/punctuation.conf");
+
+    auto files = StandardPath::global().multiOpen(StandardPath::Type::PkgData,
+                                                  "punctuation", O_RDONLY,
+                                                  filter::Prefix("punc.mb."));
     auto iter = profiles_.begin();
     while (iter != profiles_.end()) {
         if (!files.count("punc.mb." + iter->first)) {
@@ -173,6 +204,9 @@ void Punctuation::reloadConfig() {
 const std::string &Punctuation::pushPunctuation(const std::string &language,
                                                 InputContext *ic,
                                                 uint32_t unicode) {
+    if (!enabled()) {
+        return emptyString;
+    }
     auto state = ic->propertyFor(&factory_);
     if (state->lastIsEngOrDigit_ && dontConvertWhenEn(unicode)) {
         state->notConverted = unicode;
@@ -201,6 +235,9 @@ const std::string &Punctuation::pushPunctuation(const std::string &language,
 
 const std::string &Punctuation::cancelLast(const std::string &language,
                                            InputContext *ic) {
+    if (!enabled()) {
+        return emptyString;
+    }
     auto state = ic->propertyFor(&factory_);
     if (dontConvertWhenEn(state->notConverted)) {
         auto &result = getPunctuation(language, state->notConverted);
@@ -212,6 +249,10 @@ const std::string &Punctuation::cancelLast(const std::string &language,
 
 const std::pair<std::string, std::string> &
 Punctuation::getPunctuation(const std::string &language, uint32_t unicode) {
+    if (!*config_.enabled) {
+        return emptyStringPair;
+    }
+
     auto iter = profiles_.find(language);
     if (iter == profiles_.end()) {
         return emptyStringPair;

@@ -7,5 +7,3 @@ set_target_properties(fullwidth PROPERTIES PREFIX "")
 install(TARGETS fullwidth DESTINATION "${CMAKE_INSTALL_LIBDIR}/fcitx5")
 fcitx5_translate_desktop_file(fullwidth.conf.in fullwidth.conf)
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/fullwidth.conf" DESTINATION "${FCITX_INSTALL_PKGDATADIR}/addon")
-
-fcitx5_export_module(Fullwidth TARGET fullwidth BUILD_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}" HEADERS fullwidth_public.h INSTALL)

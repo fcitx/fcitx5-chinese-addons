@@ -125,7 +125,9 @@ TableIME::requestDict(boost::string_view name) {
             try {
                 auto dictFile = StandardPath::global().openUser(
                     StandardPath::Type::PkgData,
-                    stringutils::concat("table/", name.to_string(), ".user.dict"), O_RDONLY);
+                    stringutils::concat("table/", name.to_string(),
+                                        ".user.dict"),
+                    O_RDONLY);
                 boost::iostreams::stream_buffer<
                     boost::iostreams::file_descriptor_source>
                     buffer(dictFile.fd(),

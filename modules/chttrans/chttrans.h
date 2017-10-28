@@ -22,6 +22,8 @@
 #include "notifications_public.h"
 #include <fcitx-config/configuration.h>
 #include <fcitx-config/enum.h>
+#include <fcitx-utils/i18n.h>
+#include <fcitx/action.h>
 #include <fcitx/addoninstance.h>
 #include <fcitx/addonmanager.h>
 #include <fcitx/instance.h>
@@ -62,6 +64,29 @@ private:
 };
 
 class Chttrans final : public fcitx::AddonInstance {
+    class ToggleAction : public fcitx::Action {
+    public:
+        ToggleAction(Chttrans *parent) : parent_(parent) {}
+
+        std::string shortText(fcitx::InputContext *ic) const override {
+            return parent_->convertType(ic) == ChttransIMType::Simp
+                       ? _("Traditional Chinese")
+                       : _("Simplified Chinese");
+        }
+        std::string icon(fcitx::InputContext *ic) const override {
+            return parent_->convertType(ic) == ChttransIMType::Simp
+                       ? "fcitx-chttrans-active"
+                       : "fcitx-chttrans-inactive";
+        }
+
+        void activate(fcitx::InputContext *ic) override {
+            return parent_->toggle(ic);
+        }
+
+    private:
+        Chttrans *parent_;
+    };
+
 public:
     Chttrans(fcitx::Instance *instance);
 
@@ -70,6 +95,7 @@ public:
 
     ChttransIMType convertType(fcitx::InputContext *inputContext);
     std::string convert(ChttransIMType type, const std::string &str);
+    void toggle(fcitx::InputContext *inputContext);
 
     fcitx::AddonInstance *notifications() {
         if (!notifications_) {
@@ -91,6 +117,7 @@ private:
     std::unordered_set<std::string> enabledIM_;
     fcitx::ScopedConnection outputFilterConn_;
     fcitx::ScopedConnection commitFilterConn_;
+    ToggleAction toggleAction_{this};
 };
 
 #endif // _CHTTRANS_CHTTRANS_H_

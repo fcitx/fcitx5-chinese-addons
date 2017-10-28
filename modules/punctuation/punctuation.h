@@ -22,11 +22,19 @@
 #include "punctuation_public.h"
 #include <fcitx-config/configuration.h>
 #include <fcitx-config/enum.h>
+#include <fcitx-utils/i18n.h>
+#include <fcitx/action.h>
 #include <fcitx/addonfactory.h>
 #include <fcitx/addoninstance.h>
 #include <fcitx/addonmanager.h>
 #include <fcitx/inputcontextproperty.h>
 #include <fcitx/instance.h>
+
+FCITX_CONFIGURATION(
+    PunctuationConfig,
+    fcitx::Option<fcitx::KeyList> hotkey{
+        this, "Hotkey", "Toggle key", {fcitx::Key("Control+period")}};
+    fcitx::Option<bool> enabled{this, "Enabled", "Enabled", true};);
 
 class PunctuationProfile {
 public:
@@ -49,6 +57,27 @@ private:
 class PunctuationState;
 
 class Punctuation final : public fcitx::AddonInstance {
+    class ToggleAction : public fcitx::Action {
+    public:
+        ToggleAction(Punctuation *parent) : parent_(parent) {}
+
+        std::string shortText(fcitx::InputContext *) const override {
+            return parent_->enabled() ? _("Full width punctuation")
+                                      : _("Half width punctuation");
+        }
+        std::string icon(fcitx::InputContext *) const override {
+            return parent_->enabled() ? "fcitx-punc-active"
+                                      : "fcitx-punc-inactive";
+        }
+
+        void activate(fcitx::InputContext *ic) override {
+            return parent_->setEnabled(!parent_->enabled(), ic);
+        }
+
+    private:
+        Punctuation *parent_;
+    };
+
 public:
     Punctuation(fcitx::Instance *instance);
     ~Punctuation();
@@ -67,13 +96,25 @@ public:
     FCITX_ADDON_EXPORT_FUNCTION(Punctuation, pushPunctuation);
     FCITX_ADDON_EXPORT_FUNCTION(Punctuation, cancelLast);
 
+    bool enabled() const { return *config_.enabled; }
+    void setEnabled(bool enabled, fcitx::InputContext *ic) {
+        if (enabled != *config_.enabled) {
+            config_.enabled.setValue(enabled);
+            toggleAction_.update(ic);
+        }
+    }
+
 private:
+    FCITX_ADDON_DEPENDENCY_LOADER(notifications, instance_->addonManager());
+
     fcitx::Instance *instance_;
     fcitx::FactoryFor<PunctuationState> factory_;
     fcitx::ScopedConnection commitConn_, keyEventConn_;
     std::vector<std::unique_ptr<fcitx::HandlerTableEntry<fcitx::EventHandler>>>
         eventWatchers_;
     std::unordered_map<std::string, PunctuationProfile> profiles_;
+    PunctuationConfig config_;
+    ToggleAction toggleAction_{this};
 };
 
 class PunctuationFactory : public fcitx::AddonFactory {
