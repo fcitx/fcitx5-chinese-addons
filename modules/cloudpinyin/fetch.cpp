@@ -26,14 +26,12 @@ using namespace fcitx;
 
 FetchThread::FetchThread(fcitx::UnixFD notifyFd)
     : notifyFd_(std::move(notifyFd)) {
-    int pipe2[2];
-    if (pipe(pipe2) < 0) {
+    int pipefd[2];
+    if (pipe2(pipefd, O_NONBLOCK) < 0) {
         throw std::runtime_error("Failed to create pipe");
     }
-    fcntl(pipe2[0], F_SETFL, O_NONBLOCK);
-    fcntl(pipe2[1], F_SETFL, O_NONBLOCK);
-    selfPipeFd_[0].give(pipe2[0]);
-    selfPipeFd_[1].give(pipe2[1]);
+    selfPipeFd_[0].give(pipefd[0]);
+    selfPipeFd_[1].give(pipefd[1]);
 
     curlm_ = curl_multi_init();
     curl_multi_setopt(curlm_, CURLMOPT_MAXCONNECTS, MAX_HANDLE);

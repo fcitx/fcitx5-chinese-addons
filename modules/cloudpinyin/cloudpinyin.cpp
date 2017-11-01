@@ -131,16 +131,13 @@ CloudPinyin::CloudPinyin(fcitx::AddonManager *manager)
     UnixFD pipe1Fd[2];
 
     int pipe1[2];
-    if (pipe(pipe1) < 0) {
+    if (pipe2(pipe1, O_NONBLOCK) < 0) {
         throw std::runtime_error("Failed to create pipe");
     }
     pipe1Fd[0].give(pipe1[0]);
     pipe1Fd[1].give(pipe1[1]);
 
     recvFd_.give(pipe1Fd[0].release());
-
-    fcntl(pipe1[0], F_SETFL, O_NONBLOCK);
-    fcntl(pipe1[1], F_SETFL, O_NONBLOCK);
 
     backends_.emplace(CloudPinyinBackend::Google,
                       std::make_unique<GoogleBackend>());
