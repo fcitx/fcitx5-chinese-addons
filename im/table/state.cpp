@@ -578,15 +578,15 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         if (!puncStr.empty()) {
             // forward the original key is the best choice.
             auto ref = inputContext->watch();
-            engine_->instance()->eventLoop().addTimeEvent(
+            cancelLastEvent_.reset(engine_->instance()->eventLoop().addTimeEvent(
                 CLOCK_MONOTONIC, now(CLOCK_MONOTONIC) + 300, 0,
-                [ref, puncStr](EventSourceTime *e, uint64_t) {
+                [this, ref, puncStr](EventSourceTime *, uint64_t) {
                     if (auto inputContext = ref.get()) {
                         inputContext->commitString(puncStr);
                     }
-                    delete e;
+                    cancelLastEvent_.reset();
                     return true;
-                });
+                }));
             event.filter();
             return;
         }

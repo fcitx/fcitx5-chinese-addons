@@ -32,6 +32,8 @@ enum class TableMode {
     LookupPinyin,
 };
 
+class EventSourceTime;
+
 class TableState : public InputContextProperty {
 public:
     TableState(InputContext *ic, TableEngine *engine)
@@ -40,6 +42,7 @@ public:
     InputContext *ic_;
     TableEngine *engine_;
     bool lastIsPunc_ = false;
+    std::unique_ptr<EventSourceTime> cancelLastEvent_;
 
     TableContext *context(const InputMethodEntry *entry);
     void release();

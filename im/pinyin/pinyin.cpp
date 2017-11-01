@@ -68,6 +68,7 @@ public:
 
     libime::PinyinContext context_;
     bool lastIsPunc_ = false;
+    std::unique_ptr<EventSourceTime> cancelLastEvent_;
 };
 
 class PinyinCandidateWord : public CandidateWord {
@@ -514,15 +515,16 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
                     // forward the original key is the best choice.
                     // forward the original key is the best choice.
                     auto ref = inputContext->watch();
-                    instance()->eventLoop().addTimeEvent(
+                    state->cancelLastEvent_.reset(instance()->eventLoop().addTimeEvent(
                         CLOCK_MONOTONIC, now(CLOCK_MONOTONIC) + 300, 0,
-                        [ref, puncStr](EventSourceTime *e, uint64_t) {
+                        [this, ref, puncStr](EventSourceTime *, uint64_t) {
                             if (auto inputContext = ref.get()) {
                                 inputContext->commitString(puncStr);
+                                auto state = inputContext->propertyFor(&factory_);
+                                state->cancelLastEvent_.reset();
                             }
-                            delete e;
                             return true;
-                        });
+                        }));
                     event.filter();
                     return;
                 }

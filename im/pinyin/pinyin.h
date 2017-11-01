@@ -81,6 +81,7 @@ FCITX_CONFIGURATION(
     Option<FuzzyConfig> fuzzyConfig{this, "Fuzzy", "Fuzzy Pinyin Settings"};);
 
 class PinyinState;
+class EventSourceTime;
 
 class PinyinEngine final : public InputMethodEngine {
 public:
@@ -112,7 +113,6 @@ private:
     std::unique_ptr<libime::PinyinIME> ime_;
     KeyList selectionKeys_;
     FactoryFor<PinyinState> factory_;
-    bool firstActivate_ = false;
 
     FCITX_ADDON_DEPENDENCY_LOADER(quickphrase, instance_->addonManager());
     FCITX_ADDON_DEPENDENCY_LOADER(cloudpinyin, instance_->addonManager());
