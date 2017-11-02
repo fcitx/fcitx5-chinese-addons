@@ -57,7 +57,7 @@ Chttrans::Chttrans(fcitx::Instance *instance) : instance_(instance) {
     backends_.emplace(ChttransEngine::Native,
                       std::make_unique<NativeBackend>());
 
-    eventHandler_.reset(instance_->watchEvent(
+    eventHandler_ = instance_->watchEvent(
         EventType::InputContextKeyEvent, EventWatcherPhase::Default,
         [this](Event &event) {
             auto &keyEvent = static_cast<KeyEvent &>(event);
@@ -96,7 +96,7 @@ Chttrans::Chttrans(fcitx::Instance *instance) : instance_(instance) {
                 }
                 keyEvent.filterAndAccept();
             }
-        }));
+        });
     outputFilterConn_ = instance_->connect<Instance::OutputFilter>([this](
         InputContext *inputContext, Text &text) {
         auto type = convertType(inputContext);
