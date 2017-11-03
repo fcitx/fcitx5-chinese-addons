@@ -162,7 +162,7 @@ void FetchThread::curlTimer(long timeout_ms) {
         return;
     }
     if (!timer_) {
-        timer_.reset(loop_->addTimeEvent(
+        timer_ = loop_->addTimeEvent(
             CLOCK_MONOTONIC, now(CLOCK_MONOTONIC) + timeout_ms * 1000, 0,
             [this](EventSourceTime *, uint64_t) {
                 CURLMcode mcode;
@@ -172,7 +172,7 @@ void FetchThread::curlTimer(long timeout_ms) {
                         curlm_, CURL_SOCKET_TIMEOUT, 0, &still_running);
                 } while (mcode == CURLM_CALL_MULTI_PERFORM);
                 return true;
-            }));
+            });
         timer_->setOneShot();
     } else {
         timer_->setNextInterval(timeout_ms * 1000);

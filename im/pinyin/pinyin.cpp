@@ -620,7 +620,7 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
                     // forward the original key is the best choice.
                     // forward the original key is the best choice.
                     auto ref = inputContext->watch();
-                    state->cancelLastEvent_.reset(
+                    state->cancelLastEvent_ =
                         instance()->eventLoop().addTimeEvent(
                             CLOCK_MONOTONIC, now(CLOCK_MONOTONIC) + 300, 0,
                             [this, ref, puncStr](EventSourceTime *, uint64_t) {
@@ -631,7 +631,7 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
                                     state->cancelLastEvent_.reset();
                                 }
                                 return true;
-                            }));
+                            });
                     event.filter();
                     return;
                 }

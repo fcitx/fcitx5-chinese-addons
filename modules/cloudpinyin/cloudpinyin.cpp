@@ -144,7 +144,7 @@ CloudPinyin::CloudPinyin(fcitx::AddonManager *manager)
     backends_.emplace(CloudPinyinBackend::Baidu,
                       std::make_unique<BaiduBackend>());
 
-    event_.reset(eventLoop_->addIOEvent(
+    event_ = eventLoop_->addIOEvent(
         recvFd_.fd(), IOEventFlag::In,
         [this](EventSourceIO *, int, IOEventFlags) {
             char c;
@@ -172,7 +172,7 @@ CloudPinyin::CloudPinyin(fcitx::AddonManager *manager)
                 item->release();
             }
             return true;
-        }));
+        });
 
     thread_ = std::make_unique<FetchThread>(std::move(pipe1Fd[1]));
 }
