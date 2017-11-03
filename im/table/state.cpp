@@ -306,7 +306,7 @@ bool TableState::handlePinyinMode(KeyEvent &event) {
             }
 
             if (candidateList->size()) {
-                inputPanel.setCandidateList(candidateList.release());
+                inputPanel.setCandidateList(std::move(candidateList));
             }
         } else {
             if (!lastSegment_.empty()) {
@@ -578,15 +578,16 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         if (!puncStr.empty()) {
             // forward the original key is the best choice.
             auto ref = inputContext->watch();
-            cancelLastEvent_.reset(engine_->instance()->eventLoop().addTimeEvent(
-                CLOCK_MONOTONIC, now(CLOCK_MONOTONIC) + 300, 0,
-                [this, ref, puncStr](EventSourceTime *, uint64_t) {
-                    if (auto inputContext = ref.get()) {
-                        inputContext->commitString(puncStr);
-                    }
-                    cancelLastEvent_.reset();
-                    return true;
-                }));
+            cancelLastEvent_.reset(
+                engine_->instance()->eventLoop().addTimeEvent(
+                    CLOCK_MONOTONIC, now(CLOCK_MONOTONIC) + 300, 0,
+                    [this, ref, puncStr](EventSourceTime *, uint64_t) {
+                        if (auto inputContext = ref.get()) {
+                            inputContext->commitString(puncStr);
+                        }
+                        cancelLastEvent_.reset();
+                        return true;
+                    }));
             event.filter();
             return;
         }
@@ -666,7 +667,7 @@ void TableState::updateUI() {
         auto candidates = context->candidates();
         auto &inputPanel = ic_->inputPanel();
         if (context->candidates().size()) {
-            auto candidateList = new CommonCandidateList;
+            auto candidateList = std::make_unique<CommonCandidateList>();
             size_t idx = 0;
             candidateList->setCursorPositionAfterPaging(
                 CursorPositionAfterPaging::ResetToFirst);
@@ -691,7 +692,7 @@ void TableState::updateUI() {
             candidateList->setSelectionKey(*config.selection);
             candidateList->setPageSize(*config.pageSize);
             candidateList->setGlobalCursorIndex(0);
-            inputPanel.setCandidateList(candidateList);
+            inputPanel.setCandidateList(std::move(candidateList));
         }
         Text preeditText = context->preeditText();
         if (ic_->capabilityFlags().test(CapabilityFlag::Preedit)) {

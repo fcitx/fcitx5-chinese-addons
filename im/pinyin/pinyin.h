@@ -20,11 +20,13 @@
 #define _PINYIN_PINYIN_H_
 
 #include <fcitx-config/configuration.h>
+#include <fcitx/action.h>
 #include <fcitx/addonfactory.h>
 #include <fcitx/addonmanager.h>
 #include <fcitx/inputcontextproperty.h>
 #include <fcitx/inputmethodengine.h>
 #include <fcitx/instance.h>
+#include <libime/core/prediction.h>
 #include <libime/pinyin/pinyinime.h>
 #include <memory>
 
@@ -55,8 +57,12 @@ FCITX_CONFIGURATION(
     PinyinEngineConfig,
     Option<int, IntConstrain> pageSize{this, "PageSize", "Page size", 5,
                                        IntConstrain(3, 10)};
-    Option<bool> cloudPinyinEnabled{this, "CloudPinyin/Enabled",
-                                    "Cloud Pinyin Enabled", true};
+    Option<int, IntConstrain> predictionSize{
+        this, "PredictionSize", "Prediction Size", 10, IntConstrain(3, 20)};
+    Option<bool> predictionEnabled{this, "Prediction", "Enable Prediction ",
+                                   false};
+    Option<bool> cloudPinyinEnabled{this, "CloudPinyinEnabled",
+                                    "Enable Cloud Pinyin", true};
     Option<int, IntConstrain> cloudPinyinIndex{this, "CloudPinyin/Index",
                                                "Cloud Pinyin Index", 2,
                                                IntConstrain(1, 10)};
@@ -82,6 +88,7 @@ FCITX_CONFIGURATION(
 
 class PinyinState;
 class EventSourceTime;
+class CandidateList;
 
 class PinyinEngine final : public InputMethodEngine {
 public:
@@ -101,6 +108,10 @@ public:
 
     libime::PinyinIME *ime() { return ime_.get(); }
 
+    void initPredict(InputContext *ic);
+    void updatePredict(InputContext *ic);
+    std::unique_ptr<CandidateList>
+    predictCandidateList(const std::vector<std::string> &words);
     void updateUI(InputContext *inputContext);
 
 private:
@@ -113,6 +124,8 @@ private:
     std::unique_ptr<libime::PinyinIME> ime_;
     KeyList selectionKeys_;
     FactoryFor<PinyinState> factory_;
+    SimpleAction predictionAction_;
+    libime::Prediction prediction_;
 
     FCITX_ADDON_DEPENDENCY_LOADER(quickphrase, instance_->addonManager());
     FCITX_ADDON_DEPENDENCY_LOADER(cloudpinyin, instance_->addonManager());

@@ -41,6 +41,7 @@
 #include <fcitx/userinterfacemanager.h>
 #include <fcntl.h>
 #include <libime/core/historybigram.h>
+#include <libime/core/prediction.h>
 #include <libime/core/userlanguagemodel.h>
 #include <libime/pinyin/pinyincontext.h>
 #include <libime/pinyin/pinyindecoder.h>
@@ -69,6 +70,32 @@ public:
     libime::PinyinContext context_;
     bool lastIsPunc_ = false;
     std::unique_ptr<EventSourceTime> cancelLastEvent_;
+
+    std::vector<std::string> predictWords_;
+};
+
+class PinyinPredictCandidateWord : public CandidateWord {
+public:
+    PinyinPredictCandidateWord(PinyinEngine *engine, std::string word)
+        : CandidateWord(Text(word)), engine_(engine), word_(std::move(word)) {}
+
+    void select(InputContext *inputContext) const override {
+        inputContext->commitString(word_);
+        auto state = inputContext->propertyFor(&engine_->factory());
+        state->predictWords_.push_back(word_);
+        // Max history size.
+        constexpr size_t maxHistorySize = 5;
+        if (state->predictWords_.size() > maxHistorySize) {
+            state->predictWords_.erase(state->predictWords_.begin(),
+                                       state->predictWords_.begin() +
+                                           state->predictWords_.size() -
+                                           maxHistorySize);
+        }
+        engine_->updatePredict(inputContext);
+    }
+
+    PinyinEngine *engine_;
+    std::string word_;
 };
 
 class PinyinCandidateWord : public CandidateWord {
@@ -90,6 +117,52 @@ public:
     size_t idx_;
 };
 
+std::unique_ptr<CandidateList>
+PinyinEngine::predictCandidateList(const std::vector<std::string> &words) {
+    if (words.empty()) {
+        return nullptr;
+    }
+    auto candidateList = std::make_unique<CommonCandidateList>();
+    for (auto word : words) {
+        candidateList->append(new PinyinPredictCandidateWord(this, word));
+    }
+    candidateList->setSelectionKey(selectionKeys_);
+    candidateList->setPageSize(config_.pageSize.value());
+    candidateList->setGlobalCursorIndex(0);
+    return candidateList;
+}
+
+void PinyinEngine::initPredict(InputContext *inputContext) {
+    inputContext->inputPanel().reset();
+
+    auto state = inputContext->propertyFor(&factory_);
+    auto &context = state->context_;
+    auto lmState = context.state();
+    state->predictWords_ = context.selectedWords();
+    auto words = prediction_.predict(lmState, context.selectedWords(),
+                                     config_.predictionSize.value());
+    if (auto candidateList = predictCandidateList(words)) {
+        auto &inputPanel = inputContext->inputPanel();
+        inputPanel.setCandidateList(std::move(candidateList));
+    }
+    inputContext->updatePreedit();
+    inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
+}
+
+void PinyinEngine::updatePredict(InputContext *inputContext) {
+    inputContext->inputPanel().reset();
+
+    auto state = inputContext->propertyFor(&factory_);
+    auto words =
+        prediction_.predict(state->predictWords_, config_.pageSize.value());
+    if (auto candidateList = predictCandidateList(words)) {
+        auto &inputPanel = inputContext->inputPanel();
+        inputPanel.setCandidateList(std::move(candidateList));
+    }
+    inputContext->updatePreedit();
+    inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
+}
+
 void PinyinEngine::updateUI(InputContext *inputContext) {
     inputContext->inputPanel().reset();
 
@@ -98,10 +171,13 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
     if (context.selected()) {
         auto sentence = context.sentence();
         context.learn();
-        context.clear();
         inputContext->updatePreedit();
         inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
         inputContext->commitString(sentence);
+        if (*config_.predictionEnabled) {
+            initPredict(inputContext);
+        }
+        context.clear();
         return;
     }
 
@@ -109,7 +185,7 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
         auto &candidates = context.candidates();
         auto &inputPanel = inputContext->inputPanel();
         if (context.candidates().size()) {
-            auto candidateList = new CommonCandidateList;
+            auto candidateList = std::make_unique<CommonCandidateList>();
             size_t idx = 0;
             candidateList->setCursorPositionAfterPaging(
                 CursorPositionAfterPaging::ResetToFirst);
@@ -148,7 +224,7 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
             candidateList->setSelectionKey(selectionKeys_);
             candidateList->setPageSize(config_.pageSize.value());
             candidateList->setGlobalCursorIndex(0);
-            inputPanel.setCandidateList(candidateList);
+            inputPanel.setCandidateList(std::move(candidateList));
         }
         inputPanel.setClientPreedit(
             Text(context.sentence(), TextFormatFlag::Underline));
@@ -190,6 +266,7 @@ PinyinEngine::PinyinEngine(Instance *instance)
     ime_->dict()->load(libime::PinyinDictionary::SystemDict,
                        LIBIME_INSTALL_PKGDATADIR "/sc.dict",
                        libime::PinyinDictFormat::Binary);
+    prediction_.setUserLanguageModel(ime_->model());
 
     auto &standardPath = StandardPath::global();
     do {
@@ -238,6 +315,22 @@ PinyinEngine::PinyinEngine(Instance *instance)
     for (auto sym : syms) {
         selectionKeys_.emplace_back(sym, states);
     }
+
+    predictionAction_.setShortText(_("Prediction"));
+    predictionAction_.setLongText(_("Show prediction words"));
+    predictionAction_.setIcon(*config_.predictionEnabled
+                                  ? "fcitx-remind-active"
+                                  : "fcitx-remind-inactive");
+    predictionAction_.connect<SimpleAction::Activated>(
+        [this](InputContext *ic) {
+            config_.predictionEnabled.setValue(!(*config_.predictionEnabled));
+            predictionAction_.setIcon(*config_.predictionEnabled
+                                          ? "fcitx-remind-active"
+                                          : "fcitx-remind-inactive");
+            predictionAction_.update(ic);
+        });
+    instance_->userInterfaceManager().registerAction("pinyin-prediction",
+                                                     &predictionAction_);
 }
 
 PinyinEngine::~PinyinEngine() {}
@@ -316,6 +409,8 @@ void PinyinEngine::activate(const fcitx::InputMethodEntry &entry,
                                                  action);
         }
     }
+    inputContext->statusArea().addAction(StatusGroup::InputMethod,
+                                         &predictionAction_);
     auto state = inputContext->propertyFor(&factory_);
     state->context_.setUseShuangpin(entry.uniqueName() == "shuangpin");
 }
@@ -411,6 +506,16 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
                 return event.filterAndAccept();
             }
         }
+    }
+
+    // In prediction, as long as it's not candidate selection, clear, then
+    // fallback
+    // to remaining operation.
+    if (!state->predictWords_.empty()) {
+        state->predictWords_.clear();
+        inputContext->inputPanel().reset();
+        inputContext->updatePreedit();
+        inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
     }
 
     auto checkSp = [this](const KeyEvent &event, PinyinState *state) {
@@ -515,16 +620,18 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
                     // forward the original key is the best choice.
                     // forward the original key is the best choice.
                     auto ref = inputContext->watch();
-                    state->cancelLastEvent_.reset(instance()->eventLoop().addTimeEvent(
-                        CLOCK_MONOTONIC, now(CLOCK_MONOTONIC) + 300, 0,
-                        [this, ref, puncStr](EventSourceTime *, uint64_t) {
-                            if (auto inputContext = ref.get()) {
-                                inputContext->commitString(puncStr);
-                                auto state = inputContext->propertyFor(&factory_);
-                                state->cancelLastEvent_.reset();
-                            }
-                            return true;
-                        }));
+                    state->cancelLastEvent_.reset(
+                        instance()->eventLoop().addTimeEvent(
+                            CLOCK_MONOTONIC, now(CLOCK_MONOTONIC) + 300, 0,
+                            [this, ref, puncStr](EventSourceTime *, uint64_t) {
+                                if (auto inputContext = ref.get()) {
+                                    inputContext->commitString(puncStr);
+                                    auto state =
+                                        inputContext->propertyFor(&factory_);
+                                    state->cancelLastEvent_.reset();
+                                }
+                                return true;
+                            }));
                     event.filter();
                     return;
                 }
@@ -594,6 +701,7 @@ void PinyinEngine::reset(const InputMethodEntry &, InputContextEvent &event) {
 
     auto state = inputContext->propertyFor(&factory_);
     state->context_.clear();
+    state->predictWords_.clear();
     inputContext->inputPanel().reset();
     inputContext->updatePreedit();
     inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
@@ -601,6 +709,7 @@ void PinyinEngine::reset(const InputMethodEntry &, InputContextEvent &event) {
 }
 
 void PinyinEngine::save() {
+    safeSaveAsIni(config_, "conf/pinyin.conf");
     auto &standardPath = StandardPath::global();
     standardPath.safeSave(
         StandardPath::Type::PkgData, "pinyin/user.dict", [this](int fd) {
@@ -637,6 +746,7 @@ void PinyinEngine::cloudPinyinSelected(InputContext *inputContext,
                                        const std::string &selected,
                                        const std::string &word) {
     auto state = inputContext->propertyFor(&factory_);
+    auto words = state->context_.selectedWords();
     auto preedit = state->context_.preedit();
     do {
         if (!stringutils::startsWith(preedit, selected)) {
@@ -645,7 +755,6 @@ void PinyinEngine::cloudPinyinSelected(InputContext *inputContext,
         preedit = preedit.substr(selected.size());
         auto pinyins = stringutils::split(preedit, " '");
         boost::string_view wordView = word;
-        auto words = state->context_.selectedWords();
         if (pinyins.empty() || pinyins.size() != utf8::length(word)) {
             break;
         }
@@ -706,6 +815,11 @@ void PinyinEngine::cloudPinyinSelected(InputContext *inputContext,
     state->context_.clear();
     inputContext->commitString(selected + word);
     inputContext->inputPanel().reset();
+    if (*config_.predictionEnabled) {
+        state->predictWords_ = words;
+        updatePredict(inputContext);
+    }
+
     inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
 }
 }
