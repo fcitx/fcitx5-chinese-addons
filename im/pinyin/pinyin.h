@@ -63,26 +63,23 @@ FCITX_CONFIGURATION(
                                    false};
     Option<bool> cloudPinyinEnabled{this, "CloudPinyinEnabled",
                                     "Enable Cloud Pinyin", true};
-    Option<int, IntConstrain> cloudPinyinIndex{this, "CloudPinyin/Index",
-                                               "Cloud Pinyin Index", 2,
-                                               IntConstrain(1, 10)};
-    Option<KeyList> prevPage{this,
-                             "Prev Page",
-                             "Prev Page",
-                             {Key(FcitxKey_minus), Key(FcitxKey_Up)}};
+    Option<int, IntConstrain> cloudPinyinIndex{
+        this, "CloudPinyinIndex", "Cloud Pinyin Index", 2, IntConstrain(1, 10)};
+    Option<KeyList> prevPage{
+        this, "PrevPage", "Prev Page", {Key(FcitxKey_minus), Key(FcitxKey_Up)}};
     Option<KeyList> nextPage{this,
-                             "Next Page",
+                             "NextPage",
                              "Next Page",
                              {Key(FcitxKey_equal), Key(FcitxKey_Down)}};
     Option<KeyList> prevCandidate{
-        this, "Prev Candidate", "Prev Candidate", {Key("Shift+Tab")}};
+        this, "PrevCandidate", "Prev Candidate", {Key("Shift+Tab")}};
     Option<KeyList> nextCandidate{
-        this, "Next Candidate", "Next Candidate", {Key("Tab")}};
+        this, "NextCandidate", "Next Candidate", {Key("Tab")}};
     Option<int, IntConstrain> nbest{this, "Number of sentence",
                                     "Number of Sentence", 2,
                                     IntConstrain(1, 3)};
     Option<ShuangpinProfileEnum> shuangpinProfile{
-        this, "Shuangpin Profile", "Shuangpin Profile",
+        this, "ShuangpinProfile", "Shuangpin Profile",
         ShuangpinProfileEnum::Ziranma};
     Option<FuzzyConfig> fuzzyConfig{this, "Fuzzy", "Fuzzy Pinyin Settings"};);
 

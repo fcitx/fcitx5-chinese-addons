@@ -35,11 +35,11 @@ class TableState;
 
 FCITX_CONFIGURATION(
     TableGlobalConfig, Option<KeyList> modifyDictionary{this,
-                                                        "Key/ModifyDictionary",
+                                                        "ModifyDictionaryKey",
                                                         _("Modify dictionary"),
                                                         {Key("Control+8")}};
     Option<KeyList> lookupPinyin{
-        this, "Key/LookupPinyin", _("Lookup pinyin"), {Key("Control+Alt+E")}};);
+        this, "LookupPinyinKey", _("Lookup pinyin"), {Key("Control+Alt+E")}};);
 
 class TableEngine final : public InputMethodEngine {
 public:

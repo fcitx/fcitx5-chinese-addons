@@ -47,31 +47,32 @@ libime::OrderPolicy converOrderPolicy(fcitx::OrderPolicy policy) {
 }
 
 void populateOptions(libime::TableBasedDictionary *dict,
-                     const TableConfig &config) {
+                     const TableConfigRoot &root) {
     libime::TableOptions options;
 
-    options.setOrderPolicy(converOrderPolicy(*config.orderPolicy));
-    options.setNoSortInputLength(*config.noSortInputLength);
-    options.setAutoSelect(*config.autoSelect);
-    options.setAutoSelectLength(*config.autoSelectLength);
-    options.setNoMatchAutoSelectLength(*config.noMatchAutoSelectLength);
-    options.setCommitRawInput(*config.commitRawInput);
-    options.setMatchingKey(Key::keySymToUnicode(config.matchingKey->sym()));
+    options.setOrderPolicy(converOrderPolicy(*root.config->orderPolicy));
+    options.setNoSortInputLength(*root.config->noSortInputLength);
+    options.setAutoSelect(*root.config->autoSelect);
+    options.setAutoSelectLength(*root.config->autoSelectLength);
+    options.setNoMatchAutoSelectLength(*root.config->noMatchAutoSelectLength);
+    options.setCommitRawInput(*root.config->commitRawInput);
+    options.setMatchingKey(
+        Key::keySymToUnicode(root.config->matchingKey->sym()));
     std::set<uint32_t> endKeys;
-    for (auto &key : *config.endKey) {
+    for (auto &key : *root.config->endKey) {
         auto chr = Key::keySymToUnicode(key.sym());
         if (chr) {
             endKeys.insert(chr);
         }
     }
     options.setEndKey(endKeys);
-    options.setExactMatch(*config.exactMatch);
-    options.setLearning(*config.learning);
-    options.setAutoPhraseLength(*config.autoPhraseLength);
-    options.setSaveAutoPhraseAfter(*config.saveAutoPhraseAfter);
+    options.setExactMatch(*root.config->exactMatch);
+    options.setLearning(*root.config->learning);
+    options.setAutoPhraseLength(*root.config->autoPhraseLength);
+    options.setSaveAutoPhraseAfter(*root.config->saveAutoPhraseAfter);
     options.setAutoRuleSet(std::unordered_set<std::string>(
-        config.autoRuleSet->begin(), config.autoRuleSet->end()));
-    options.setLanguageCode(*config.languageCode);
+        root.config->autoRuleSet->begin(), root.config->autoRuleSet->end()));
+    options.setLanguageCode(*root.im->languageCode);
 
     dict->setTableOptions(options);
 }
@@ -80,7 +81,7 @@ void populateOptions(libime::TableBasedDictionary *dict,
 TableIME::TableIME(libime::LanguageModelResolver *lm) : lm_(lm) {}
 
 std::tuple<libime::TableBasedDictionary *, libime::UserLanguageModel *,
-           TableConfig *>
+           const TableConfig *>
 TableIME::requestDict(boost::string_view name) {
     auto iter = tables_.find(name.to_string());
     if (iter == tables_.end()) {
@@ -100,14 +101,14 @@ TableIME::requestDict(boost::string_view name) {
                    .emplace(std::piecewise_construct, std::make_tuple(name),
                             std::make_tuple())
                    .first;
-        auto &config = iter->second.config;
-        config.load(rawConfig);
+        auto &root = iter->second.root;
+        root.load(rawConfig);
 
         try {
             auto dict = std::make_unique<libime::TableBasedDictionary>();
             auto dictFile = StandardPath::global().open(
-                StandardPath::Type::PkgData, *config.file, O_RDONLY);
-            FCITX_LOG(Debug) << "Load table at: " << *config.file;
+                StandardPath::Type::PkgData, *root.config->file, O_RDONLY);
+            FCITX_LOG(Debug) << "Load table at: " << *root.config->file;
             if (dictFile.fd() < 0) {
                 throw std::runtime_error("Couldn't open file");
             }
@@ -138,7 +139,7 @@ TableIME::requestDict(boost::string_view name) {
             } catch (const std::exception &) {
             }
 
-            populateOptions(dict, iter->second.config);
+            populateOptions(dict, iter->second.root);
             auto lmFile = lm_->languageModelFileForLanguage(
                 dict->tableOptions().languageCode());
             iter->second.model =
@@ -161,7 +162,7 @@ TableIME::requestDict(boost::string_view name) {
     }
 
     return {iter->second.dict.get(), iter->second.model.get(),
-            &iter->second.config};
+            &(*iter->second.root.config)};
 }
 
 void TableIME::saveAll() {

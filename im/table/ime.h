@@ -32,64 +32,65 @@ namespace fcitx {
 FCITX_CONFIG_ENUM(OrderPolicy, No, Freq, Fast);
 
 FCITX_CONFIGURATION(
-    TableConfig, Option<std::string> file{this, "Table/File", _("File")};
+    TableConfig, Option<std::string> file{this, "File", _("File")};
     Option<KeyList> prevPage{
-        this, "Table/PrevPage", _("Prev page"), {Key(FcitxKey_Up)}};
+        this, "PrevPage", _("Prev page"), {Key(FcitxKey_Up)}};
     Option<KeyList> nextPage{
-        this, "Table/NextPage", _("Next page"), {Key(FcitxKey_Down)}};
+        this, "NextPage", _("Next page"), {Key(FcitxKey_Down)}};
     Option<KeyList> prevCandidate{
-        this, "Table/PrevCandidate", "Prev Candidate", {Key("Left")}};
+        this, "PrevCandidate", "Prev Candidate", {Key("Left")}};
     Option<KeyList> nextCandidate{
-        this, "Table/NextCandidate", "Next Candidate", {Key("Right")}};
+        this, "NextCandidate", "Next Candidate", {Key("Right")}};
     Option<KeyList> selection{
         this,
-        "Table/Selection",
+        "Selection",
         _("Selection"),
         {Key(FcitxKey_1), Key(FcitxKey_2), Key(FcitxKey_3), Key(FcitxKey_4),
          Key(FcitxKey_5), Key(FcitxKey_6), Key(FcitxKey_7), Key(FcitxKey_8),
          Key(FcitxKey_9), Key(FcitxKey_0)}};
-    Option<int, IntConstrain> pageSize{this, "Table/PageSize", "Page size", 5,
+    Option<int, IntConstrain> pageSize{this, "PageSize", "Page size", 5,
                                        IntConstrain(3, 10)};
-    Option<bool> useFullWidth{this, "Table/UseFullWidth", _("Use full width"),
-                              true};
-    Option<Key> quickphrase{this, "Table/QuickPhraseKey",
+    Option<bool> useFullWidth{this, "UseFullWidth", _("Use full width"), true};
+    Option<Key> quickphrase{this, "QuickPhraseKey",
                             _("Key to trigger quickphrase")};
-    Option<std::string> icon{this, "Table/Icon", _("Icon")};
-    Option<int> noSortInputLength{this, "Table/NoSortInputLength",
+    Option<std::string> icon{this, "Icon", _("Icon")};
+    Option<int> noSortInputLength{this, "NoSortInputLength",
                                   _("Don't sort word shorter")};
-    Option<Key> pinyinKey{this, "Table/PinyinKey",
-                          _("Prefix key to trigger Pinyin")};
-    Option<bool> autoSelect{this, "Table/AutoSelect",
-                            _("Auto select candidate")};
-    Option<bool> autoSelectLength{this, "Table/AutoSelectLength",
+    Option<Key> pinyinKey{this, "PinyinKey", _("Prefix key to trigger Pinyin")};
+    Option<bool> autoSelect{this, "AutoSelect", _("Auto select candidate")};
+    Option<bool> autoSelectLength{this, "AutoSelectLength",
                                   _("Auto select candidate Length")};
     Option<int> noMatchAutoSelectLength{
-        this, "Table/NoMatchAutoSelectLength",
+        this, "NoMatchAutoSelectLength",
         _("Auto select last candidate when there is no new match")};
     Option<int> commitRawInput{
-        this, "Table/CommitRawInput",
+        this, "CommitRawInput",
         _("Commit raw input when there is no candidate")};
-    Option<OrderPolicy> orderPolicy{this, "Table/OrderPolicy",
-                                    _("Order policy")};
-    Option<KeyList> endKey{this, "Table/EndKey", _("End key")};
-    Option<Key> matchingKey{this, "Table/MatchingKey",
-                            _("Wildcard matching Key")};
-    Option<bool> exactMatch{this, "Table/ExactMatch", _("Exact Match")};
-    Option<bool> learning{this, "Table/Learning", _("Learning"), true};
-    Option<int> autoPhraseLength{this, "Table/AutoPhraseLength",
+    Option<OrderPolicy> orderPolicy{this, "OrderPolicy", _("Order policy")};
+    Option<KeyList> endKey{this, "EndKey", _("End key")};
+    Option<Key> matchingKey{this, "MatchingKey", _("Wildcard matching Key")};
+    Option<bool> exactMatch{this, "ExactMatch", _("Exact Match")};
+    Option<bool> learning{this, "Learning", _("Learning"), true};
+    Option<int> autoPhraseLength{this, "AutoPhraseLength",
                                  _("Auto phrase length"), -1};
-    Option<int> saveAutoPhraseAfter{this, "Table/SaveAutoPhraseAfter",
+    Option<int> saveAutoPhraseAfter{this, "SaveAutoPhraseAfter",
                                     _("Save auto phrase"), -1};
-    Option<bool> hint{this, "Table/Hint", _("Display Hint for word")};
-    Option<bool> displayCustomHint{this, "Table/DisplayCustomHint",
+    Option<bool> hint{this, "Hint", _("Display Hint for word")};
+    Option<bool> displayCustomHint{this, "DisplayCustomHint",
                                    _("Display custom hint")};
-    Option<std::vector<std::string>> autoRuleSet{this, "Table/AutoRuleSet",
-                                                 _("Auto rule set")};
-    Option<std::string> languageCode{this, "InputMethod/LangCode",
-                                     "Language Code"};);
+    Option<std::vector<std::string>> autoRuleSet{this, "AutoRuleSet",
+                                                 _("Auto rule set")};);
+
+FCITX_CONFIGURATION(PartialIMInfo, Option<std::string> languageCode{
+                                       this, "LangCode", "Language Code"};);
+
+FCITX_CONFIGURATION(TableConfigRoot,
+                    Option<TableConfig> config{this, "Table", "Table"};
+                    Option<PartialIMInfo> im{this, "InputMethod",
+                                             "InputMethod"};);
 
 struct TableData {
-    TableConfig config;
+    TableConfigRoot root;
     std::unique_ptr<libime::TableBasedDictionary> dict;
     std::unique_ptr<libime::UserLanguageModel> model;
 };
@@ -102,7 +103,7 @@ public:
 
 public:
     std::tuple<libime::TableBasedDictionary *, libime::UserLanguageModel *,
-               TableConfig *>
+               const TableConfig *>
     requestDict(boost::string_view name);
     void saveDict(boost::string_view name);
     void saveAll();
