@@ -123,7 +123,7 @@ PinyinEngine::predictCandidateList(const std::vector<std::string> &words) {
         return nullptr;
     }
     auto candidateList = std::make_unique<CommonCandidateList>();
-    for (auto word : words) {
+    for (const auto &word : words) {
         candidateList->append(new PinyinPredictCandidateWord(this, word));
     }
     candidateList->setSelectionKey(selectionKeys_);
@@ -170,7 +170,10 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
     auto &context = state->context_;
     if (context.selected()) {
         auto sentence = context.sentence();
-        context.learn();
+        if (!inputContext->capabilityFlags().testAny(
+                CapabilityFlag::PasswordOrSensitive)) {
+            context.learn();
+        }
         inputContext->updatePreedit();
         inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
         inputContext->commitString(sentence);
@@ -191,7 +194,9 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
                 CursorPositionAfterPaging::ResetToFirst);
 
             std::unique_ptr<CloudPinyinCandidateWord> cloud;
-            if (config_.cloudPinyinEnabled.value() && cloudpinyin()) {
+            if (config_.cloudPinyinEnabled.value() && cloudpinyin() &&
+                inputContext->capabilityFlags().testAny(
+                    CapabilityFlag::PasswordOrSensitive)) {
                 using namespace std::placeholders;
                 auto fullPinyin =
                     context.useShuangpin()

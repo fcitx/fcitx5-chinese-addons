@@ -59,7 +59,7 @@ void populateOptions(libime::TableBasedDictionary *dict,
     options.setMatchingKey(
         Key::keySymToUnicode(root.config->matchingKey->sym()));
     std::set<uint32_t> endKeys;
-    for (auto &key : *root.config->endKey) {
+    for (const auto &key : *root.config->endKey) {
         auto chr = Key::keySymToUnicode(key.sym());
         if (chr) {
             endKeys.insert(chr);
@@ -166,7 +166,7 @@ TableIME::requestDict(boost::string_view name) {
 }
 
 void TableIME::saveAll() {
-    for (auto &p : tables_) {
+    for (const auto &p : tables_) {
         saveDict(p.first);
     }
 }

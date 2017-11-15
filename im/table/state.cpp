@@ -108,7 +108,8 @@ void TableState::release() {
 }
 
 void TableState::pushLastCommit(const std::string &lastSegment) {
-    if (lastSegment.empty()) {
+    if (lastSegment.empty() ||
+        ic_->capabilityFlags().testAny(CapabilityFlag::PasswordOrSensitive)) {
         return;
     }
 
@@ -650,7 +651,9 @@ void TableState::commitBuffer(bool commitCode, bool noRealCommit) {
     if (!noRealCommit) {
         ic_->commitString(sentence);
     }
-    context->learn();
+    if (!ic_->capabilityFlags().testAny(CapabilityFlag::PasswordOrSensitive)) {
+        context->learn();
+    }
     context->clear();
 }
 
