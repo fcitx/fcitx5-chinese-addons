@@ -148,6 +148,17 @@ const libime::LanguageModel &TableEngine::pinyinModel() {
     }
     return *pinyinLM_;
 }
+
+const Configuration *
+TableEngine::getConfigForInputMethod(const InputMethodEntry &entry) const {
+    auto dict = ime_->requestDict(entry.uniqueName());
+    return std::get<2>(dict);
+}
+
+void TableEngine::setConfigForInputMethod(const InputMethodEntry &entry,
+                                          const RawConfig &config) {
+    ime_->updateConfig(entry.uniqueName(), config);
+}
 }
 
 FCITX_ADDON_FACTORY(fcitx::TableEngineFactory)

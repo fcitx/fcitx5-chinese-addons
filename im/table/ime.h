@@ -32,7 +32,7 @@ namespace fcitx {
 FCITX_CONFIG_ENUM(OrderPolicy, No, Freq, Fast);
 
 FCITX_CONFIGURATION(
-    TableConfig, Option<std::string> file{this, "File", _("File")};
+    TableConfig, HiddenOption<std::string> file{this, "File", _("File")};
     Option<KeyList> prevPage{
         this, "PrevPage", _("Prev page"), {Key(FcitxKey_Up)}};
     Option<KeyList> nextPage{
@@ -41,7 +41,7 @@ FCITX_CONFIGURATION(
         this, "PrevCandidate", "Prev Candidate", {Key("Left")}};
     Option<KeyList> nextCandidate{
         this, "NextCandidate", "Next Candidate", {Key("Right")}};
-    Option<KeyList> selection{
+    HiddenOption<KeyList> selection{
         this,
         "Selection",
         _("Selection"),
@@ -53,7 +53,7 @@ FCITX_CONFIGURATION(
     Option<bool> useFullWidth{this, "UseFullWidth", _("Use full width"), true};
     Option<Key> quickphrase{this, "QuickPhraseKey",
                             _("Key to trigger quickphrase")};
-    Option<std::string> icon{this, "Icon", _("Icon")};
+    HiddenOption<std::string> icon{this, "Icon", _("Icon")};
     Option<int> noSortInputLength{this, "NoSortInputLength",
                                   _("Don't sort word shorter")};
     Option<Key> pinyinKey{this, "PinyinKey", _("Prefix key to trigger Pinyin")};
@@ -69,25 +69,32 @@ FCITX_CONFIGURATION(
     Option<OrderPolicy> orderPolicy{this, "OrderPolicy", _("Order policy")};
     Option<KeyList> endKey{this, "EndKey", _("End key")};
     Option<Key> matchingKey{this, "MatchingKey", _("Wildcard matching Key")};
-    Option<bool> exactMatch{this, "ExactMatch", _("Exact Match")};
-    Option<bool> learning{this, "Learning", _("Learning"), true};
     Option<int> autoPhraseLength{this, "AutoPhraseLength",
                                  _("Auto phrase length"), -1};
     Option<int> saveAutoPhraseAfter{this, "SaveAutoPhraseAfter",
                                     _("Save auto phrase"), -1};
+    Option<bool> exactMatch{this, "ExactMatch", _("Exact Match")};
+    Option<bool> learning{this, "Learning", _("Learning"), true};
     Option<bool> hint{this, "Hint", _("Display Hint for word")};
     Option<bool> displayCustomHint{this, "DisplayCustomHint",
                                    _("Display custom hint")};
-    Option<std::vector<std::string>> autoRuleSet{this, "AutoRuleSet",
-                                                 _("Auto rule set")};);
+    HiddenOption<std::vector<std::string>> autoRuleSet{this, "AutoRuleSet",
+                                                       _("Auto rule set")};);
 
-FCITX_CONFIGURATION(PartialIMInfo, Option<std::string> languageCode{
+FCITX_CONFIGURATION(PartialIMInfo, HiddenOption<std::string> languageCode{
                                        this, "LangCode", "Language Code"};);
+
+struct NoSaveAnnotation {
+    bool skipDescription() const { return true; }
+    bool skipSave() const { return true; }
+    void dumpDescription(RawConfig &) const {}
+};
 
 FCITX_CONFIGURATION(TableConfigRoot,
                     Option<TableConfig> config{this, "Table", "Table"};
-                    Option<PartialIMInfo> im{this, "InputMethod",
-                                             "InputMethod"};);
+                    Option<PartialIMInfo, NoConstrain<PartialIMInfo>,
+                           DefaultMarshaller<PartialIMInfo>, NoSaveAnnotation>
+                        im{this, "InputMethod", "InputMethod"};);
 
 struct TableData {
     TableConfigRoot root;
@@ -107,6 +114,7 @@ public:
     requestDict(boost::string_view name);
     void saveDict(boost::string_view name);
     void saveAll();
+    void updateConfig(boost::string_view name, const RawConfig &config);
 
 private:
     libime::LanguageModelResolver *lm_;

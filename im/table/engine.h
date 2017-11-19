@@ -21,6 +21,7 @@
 
 #include "ime.h"
 #include <fcitx-config/configuration.h>
+#include <fcitx-config/iniparser.h>
 #include <fcitx/addonfactory.h>
 #include <fcitx/addonmanager.h>
 #include <fcitx/inputcontextproperty.h>
@@ -61,6 +62,16 @@ public:
 
     TableIME *ime() { return ime_.get(); }
     auto &config() { return config_; }
+    const Configuration *getConfig() const override { return &config_; }
+    void setConfig(const RawConfig &config) override {
+        config_.load(config, true);
+        safeSaveAsIni(config_, "conf/table.conf");
+    }
+
+    const Configuration *
+    getConfigForInputMethod(const InputMethodEntry &) const override;
+    void setConfigForInputMethod(const InputMethodEntry &,
+                                 const RawConfig &) override;
 
     const libime::PinyinDictionary &pinyinDict();
     const libime::LanguageModel &pinyinModel();

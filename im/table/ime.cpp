@@ -85,7 +85,7 @@ std::tuple<libime::TableBasedDictionary *, libime::UserLanguageModel *,
 TableIME::requestDict(boost::string_view name) {
     auto iter = tables_.find(name.to_string());
     if (iter == tables_.end()) {
-        FCITX_LOG(Debug) << "Load table config for: " << name;
+        TABLE_DEBUG() << "Load table config for: " << name;
         std::string filename = "inputmethod/";
         filename.append(name.begin(), name.end());
         filename += ".conf";
@@ -169,6 +169,20 @@ void TableIME::saveAll() {
     for (const auto &p : tables_) {
         saveDict(p.first);
     }
+}
+
+void TableIME::updateConfig(boost::string_view name, const RawConfig &config) {
+    auto iter = tables_.find(name.to_string());
+    if (iter == tables_.end()) {
+        return;
+    }
+    iter->second.root.load(config, true);
+
+    if (iter->second.dict) {
+        populateOptions(iter->second.dict.get(), iter->second.root);
+    }
+    safeSaveAsIni(iter->second.root,
+                  stringutils::concat("inputmethod/", name, ".conf"));
 }
 
 void TableIME::saveDict(boost::string_view name) {
