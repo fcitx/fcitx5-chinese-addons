@@ -4,3 +4,4 @@ Icon=fcitx-pinyin
 Label=拼
 LangCode=zh_CN
 Addon=pinyin
+Configurable=True
