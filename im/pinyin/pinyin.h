@@ -20,6 +20,7 @@
 #define _PINYIN_PINYIN_H_
 
 #include <fcitx-config/configuration.h>
+#include <fcitx-config/iniparser.h>
 #include <fcitx/action.h>
 #include <fcitx/addonfactory.h>
 #include <fcitx/addonmanager.h>
@@ -102,6 +103,12 @@ public:
                InputContextEvent &event) override;
     void save() override;
     auto &factory() { return factory_; }
+
+    const Configuration *getConfig() const override { return &config_; }
+    void setConfig(const RawConfig &config) override {
+        config_.load(config, true);
+        safeSaveAsIni(config_, "conf/pinyin.conf");
+    }
 
     libime::PinyinIME *ime() { return ime_.get(); }
 
