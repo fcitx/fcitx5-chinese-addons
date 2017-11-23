@@ -1,68 +1,70 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# This file is distributed under the same license as the fcitx5-chinese-addons package.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-15 12:05-0700\n"
+"Project-Id-Version: fcitx5-chinese-addons\n"
+"Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
+"POT-Creation-Date: 2017-11-22 20:31-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language: LANG\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: im/table/table.cpp:335
+#: im/table/state.cpp:615
 msgid " Return for "
 msgstr ""
 
-#: im/table/table.cpp:332
+#: im/table/state.cpp:612
 msgid " for "
-msgstr ""
-
-#: im/table/ime.h:71
-msgid "Auto learning"
 msgstr ""
 
 #: im/table/ime.h:73
 msgid "Auto phrase length"
 msgstr ""
 
-#: im/table/ime.h:84
+#: im/table/ime.h:82
 msgid "Auto rule set"
 msgstr ""
 
-#: im/table/ime.h:56
+#: im/table/ime.h:60
 msgid "Auto select candidate"
 msgstr ""
 
-#: im/table/ime.h:58
+#: im/table/ime.h:62
 msgid "Auto select candidate Length"
 msgstr ""
 
-#: im/table/ime.h:61
+#: im/table/ime.h:65
 msgid "Auto select last candidate when there is no new match"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:334
+#: modules/cloudpinyin/cloudpinyin.conf.in:3
+msgid "Cloud Pinyin"
+msgstr ""
+
+#: im/pinyin/pinyin.cpp:453
 msgid "Cloud Pinyin Status"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:336
+#: im/pinyin/pinyin.cpp:455
 msgid "Cloud Pinyin is disabled."
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:335
+#: im/pinyin/pinyin.cpp:454
 msgid "Cloud Pinyin is enabled."
 msgstr ""
 
-#: im/table/ime.h:64
+#: im/table/ime.h:68
 msgid "Commit raw input when there is no candidate"
+msgstr ""
+
+#: im/table/state.cpp:449
+msgid "Could not find pinyin."
 msgstr ""
 
 #: im/table/ime.h:78
@@ -73,77 +75,140 @@ msgstr ""
 msgid "Display custom hint"
 msgstr ""
 
-#: im/table/ime.h:77
-msgid "Do not commit when there is no match"
-msgstr ""
-
-#: im/table/ime.h:52
+#: im/table/ime.h:58
 msgid "Don't sort word shorter"
 msgstr ""
 
-#: im/table/ime.h:67
+#: im/table/ime.h:70
 msgid "End key"
 msgstr ""
 
-#: im/table/ime.h:70
+#: im/table/ime.h:76
 msgid "Exact Match"
 msgstr ""
 
-#: im/table/ime.h:32
+#: modules/pinyinhelper/pinyinhelper.conf.in:3
+msgid "Extra Pinyin functionality"
+msgstr ""
+
+#: im/table/ime.h:35
 msgid "File"
 msgstr ""
 
-#: im/table/ime.h:82
-msgid "First candidate as preedit"
-msgstr ""
-
-#: modules/fullwidth/fullwidth.cpp:82
+#: modules/fullwidth/fullwidth.h:40 modules/fullwidth/fullwidth.cpp:85
 msgid "Full width Character"
 msgstr ""
 
-#: modules/fullwidth/fullwidth.cpp:84
+#: modules/fullwidth/fullwidth.cpp:87
 msgid "Full width Character is disabled."
 msgstr ""
 
-#: modules/fullwidth/fullwidth.cpp:83
+#: modules/fullwidth/fullwidth.cpp:86
 msgid "Full width Character is enabled."
 msgstr ""
 
-#: im/table/ime.h:50
+#: modules/fullwidth/fullwidth.conf.in:3
+msgid "Full width character"
+msgstr ""
+
+#: modules/punctuation/punctuation.h:65
+msgid "Full width punctuation"
+msgstr ""
+
+#: modules/punctuation/punctuation.cpp:148
+msgid "Full width punctuation is disabled."
+msgstr ""
+
+#: modules/punctuation/punctuation.cpp:147
+msgid "Full width punctuation is enabled."
+msgstr ""
+
+#: modules/fullwidth/fullwidth.h:41
+msgid "Half width Character"
+msgstr ""
+
+#: modules/punctuation/punctuation.h:66
+msgid "Half width punctuation"
+msgstr ""
+
+#: im/table/ime.h:56
 msgid "Icon"
 msgstr ""
 
-#: im/table/ime.h:49
+#: im/table/ime.h:55
 msgid "Key to trigger quickphrase"
 msgstr ""
 
-#: im/table/ime.h:36
+#: im/table/ime.h:77
+msgid "Learning"
+msgstr ""
+
+#: im/table/engine.h:43
+msgid "Lookup pinyin"
+msgstr ""
+
+#: im/table/engine.h:40
+msgid "Modify dictionary"
+msgstr ""
+
+#: im/table/ime.h:39
 msgid "Next page"
 msgstr ""
 
-#: im/table/ime.h:66
+#: im/table/engine.cpp:95
+msgid "Not available"
+msgstr ""
+
+#: im/table/ime.h:69
 msgid "Order policy"
 msgstr ""
 
-#: im/table/ime.h:54
+#: im/pinyin/pinyin-addon.conf.in:3 im/pinyin/pinyin.conf.in:3
+msgid "Pinyin"
+msgstr ""
+
+#: im/table/state.cpp:435
+msgid "Please use this functionality after typing some text."
+msgstr ""
+
+#: im/pinyin/pinyin.cpp:324
+msgid "Prediction"
+msgstr ""
+
+#: im/table/ime.h:59
 msgid "Prefix key to trigger Pinyin"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:502
-#, boost-format
+#: im/pinyin/pinyin.cpp:680
 msgid "Press %1% for %2%"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:500
-#, boost-format
+#: im/pinyin/pinyin.cpp:676
 msgid "Press %1% for %2% and %3% for %4%"
 msgstr ""
 
-#: im/table/ime.h:34
+#: im/table/state.cpp:466
+msgid "Press Backspace to forget."
+msgstr ""
+
+#: im/table/state.cpp:469
+msgid "Press Delete to remove."
+msgstr ""
+
+#: im/table/state.cpp:463
+msgid "Press space to insert."
+msgstr ""
+
+#: im/table/ime.h:37
 msgid "Prev page"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:500
+#: modules/punctuation/punctuation.cpp:146
+#: modules/punctuation/punctuation.conf.in:3
+msgid "Punctuation"
+msgstr ""
+
+#: im/pinyin/pinyin.cpp:677
 msgid "Return"
 msgstr ""
 
@@ -151,78 +216,86 @@ msgstr ""
 msgid "Save auto phrase"
 msgstr ""
 
-#: im/table/ime.h:40
+#: im/table/ime.h:47
 msgid "Selection"
 msgstr ""
 
-#: modules/chttrans/chttrans.cpp:87
-msgid "Simplified Chinese To Traditional Chinese"
-msgstr ""
-
-#: modules/chttrans/chttrans.cpp:89
-msgid "Simplified Chinese is enabled."
-msgstr ""
-
-#: im/table/table.cpp:172
-msgid "Table Input Method"
-msgstr ""
-
-#: modules/chttrans/chttrans.cpp:88
-msgid "Traditional Chinese is enabled."
-msgstr ""
-
-#: im/table/ime.h:46
-msgid "Use full width"
-msgstr ""
-
-#: im/table/ime.h:69
-msgid "Wildcard matching Key"
-msgstr ""
-
-#: modules/fullwidth/fullwidth.conf.in:3
-msgid "Full width character"
-msgstr ""
-
-#: modules/punctuation/punctuation.conf.in:3
-msgid "Punctuation"
-msgstr ""
-
-#: modules/chttrans/chttrans.conf.in:3
-msgid "Simplified and Traditional Chinese Translation"
-msgstr ""
-
-#: modules/cloudpinyin/cloudpinyin.conf.in:3
-msgid "Cloud Pinyin"
-msgstr ""
-
-#: im/pinyin/pinyin-addon.conf.in:3 im/pinyin/pinyin.conf.in:3
-msgid "Pinyin"
+#: im/pinyin/pinyin.cpp:325
+msgid "Show prediction words"
 msgstr ""
 
 #: im/pinyin/shuangpin.conf.in:3
 msgid "Shuangpin"
 msgstr ""
 
-#: im/pinyin/shuangpin.conf.in:4
-msgid "shuangpin"
+#: modules/chttrans/chttrans.cpp:92 modules/chttrans/chttrans.h:74
+msgid "Simplified Chinese"
 msgstr ""
 
-#: im/pinyin/pinyin.conf.in:4
-msgid "pinyin"
+#: modules/chttrans/chttrans.cpp:94
+msgid "Simplified Chinese is enabled."
+msgstr ""
+
+#: modules/chttrans/chttrans.conf.in:3
+msgid "Simplified and Traditional Chinese Translation"
 msgstr ""
 
 #: im/table/table.conf.in:3
 msgid "Table"
 msgstr ""
 
-#: im/table/wbx.conf.in:3
+#: modules/chttrans/chttrans.cpp:91 modules/chttrans/chttrans.h:73
+msgid "Traditional Chinese"
+msgstr ""
+
+#: modules/chttrans/chttrans.cpp:93
+msgid "Traditional Chinese is enabled."
+msgstr ""
+
+#: im/table/state.cpp:441
+msgid "Use Left and Right to select character: "
+msgstr ""
+
+#: im/table/state.cpp:452
+msgid "Use Left and Right to select text. "
+msgstr ""
+
+#: im/table/ime.h:53
+msgid "Use full width"
+msgstr ""
+
+#: im/table/ime.h:71
+msgid "Wildcard matching Key"
+msgstr ""
+
+#: im/table/wbx.conf.in.in:3
 msgid "Wubi"
 msgstr ""
 
-#: im/table/wbx.conf.in:4 im/table/wbpy.conf.in:4
-msgid "wubi"
+#: im/table/wbpy.conf.in.in:3
+msgid "Wubi Pinyin"
 msgstr ""
 
-#: im/table/wbpy.conf.in:3
-msgid "Wubi Pinyin"
+#: im/pinyin/pinyin.conf.in:4
+msgid "fcitx-pinyin"
+msgstr ""
+
+#: im/pinyin/shuangpin.conf.in:4
+msgid "fcitx-shuangpin"
+msgstr ""
+
+#: im/table/wbpy.conf.in.in:4 im/table/wbx.conf.in.in:4
+msgid "fcitx-wubi"
+msgstr ""
+
+#: im/table/state.cpp:484
+msgid "{0} is not in table."
+msgstr ""
+
+#: im/table/state.cpp:473
+msgid "{0}: No corresponding code."
+msgstr ""
+
+#: im/table/state.cpp:458 im/table/state.cpp:481
+msgid "{0}: {1}"
 msgstr ""
