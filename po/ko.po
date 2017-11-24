@@ -2,18 +2,21 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the fcitx5-chinese-addons package.
 #
+# Translators:
+# Bon Keun Seo <scobyseo@gmail.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
 "POT-Creation-Date: 2017-11-24 10:15-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: LANG\n"
+"Last-Translator: Bon Keun Seo <scobyseo@gmail.com>, 2017\n"
+"Language-Team: Korean (https://www.transifex.com/fcitx/teams/12005/ko/)\n"
+"Language: ko\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: im/table/state.cpp:615
 msgid " Return for "
@@ -25,7 +28,7 @@ msgstr ""
 
 #: im/table/ime.h:73
 msgid "Auto phrase length"
-msgstr ""
+msgstr "자동 문구 길이"
 
 #: im/table/ime.h:82
 msgid "Auto rule set"
@@ -33,47 +36,47 @@ msgstr ""
 
 #: im/table/ime.h:60
 msgid "Auto select candidate"
-msgstr ""
+msgstr "자동 후보 선택"
 
 #: im/table/ime.h:62
 msgid "Auto select candidate Length"
-msgstr ""
+msgstr "자동 후보 선택 길이"
 
 #: im/table/ime.h:65
 msgid "Auto select last candidate when there is no new match"
-msgstr ""
+msgstr "일치하는 것이 없으면 마지막 후보를 자동 선택"
 
 #: modules/cloudpinyin/cloudpinyin.conf.in:3
 msgid "Cloud Pinyin"
-msgstr ""
+msgstr "클라우드 Pinyin"
 
 #: im/pinyin/pinyin.cpp:453
 msgid "Cloud Pinyin Status"
-msgstr ""
+msgstr "클라우드 Pinyin 상태"
 
 #: im/pinyin/pinyin.cpp:455
 msgid "Cloud Pinyin is disabled."
-msgstr ""
+msgstr "클라우드 Pinyin이 비활성화됨."
 
 #: im/pinyin/pinyin.cpp:454
 msgid "Cloud Pinyin is enabled."
-msgstr ""
+msgstr "클라우드 Pinyin이 활성화됨."
 
 #: im/table/ime.h:68
 msgid "Commit raw input when there is no candidate"
-msgstr ""
+msgstr "후보가 없을 때엔 키입력을 그대로 사용"
 
 #: im/table/state.cpp:449
 msgid "Could not find pinyin."
-msgstr ""
+msgstr "Pinyin를 찾을 수 없음"
 
 #: im/table/ime.h:78
 msgid "Display Hint for word"
-msgstr ""
+msgstr "단어 후보 보이기"
 
 #: im/table/ime.h:80
 msgid "Display custom hint"
-msgstr ""
+msgstr "사용자 힌트 보이기"
 
 #: im/table/ime.h:58
 msgid "Don't sort word shorter"
@@ -81,188 +84,188 @@ msgstr ""
 
 #: im/table/ime.h:70
 msgid "End key"
-msgstr ""
+msgstr "중지  키"
 
 #: im/table/ime.h:76
 msgid "Exact Match"
-msgstr ""
+msgstr "정확한 일치"
 
 #: modules/pinyinhelper/pinyinhelper.conf.in:3
 msgid "Extra Pinyin functionality"
-msgstr ""
+msgstr "추가 병음 기능"
 
 #: im/table/ime.h:35
 msgid "File"
-msgstr ""
+msgstr "파일"
 
 #: modules/fullwidth/fullwidth.cpp:85 modules/fullwidth/fullwidth.h:40
 msgid "Full width Character"
-msgstr ""
+msgstr "전각 문자"
 
 #: modules/fullwidth/fullwidth.cpp:87
 msgid "Full width Character is disabled."
-msgstr ""
+msgstr "전각 문자 비활성화됨."
 
 #: modules/fullwidth/fullwidth.cpp:86
 msgid "Full width Character is enabled."
-msgstr ""
+msgstr "전각 문자 활성화됨."
 
 #: modules/fullwidth/fullwidth.conf.in:3
 msgid "Full width character"
-msgstr ""
+msgstr "전각 문자"
 
 #: modules/punctuation/punctuation.h:65
 msgid "Full width punctuation"
-msgstr ""
+msgstr "전각 부호"
 
 #: modules/punctuation/punctuation.cpp:148
 msgid "Full width punctuation is disabled."
-msgstr ""
+msgstr "전각 부호 비활성화됨."
 
 #: modules/punctuation/punctuation.cpp:147
 msgid "Full width punctuation is enabled."
-msgstr ""
+msgstr "전각 부호 활성화됨."
 
 #: modules/fullwidth/fullwidth.h:41
 msgid "Half width Character"
-msgstr ""
+msgstr "반각 문자"
 
 #: modules/punctuation/punctuation.h:66
 msgid "Half width punctuation"
-msgstr ""
+msgstr "반각 부호"
 
 #: im/table/ime.h:56
 msgid "Icon"
-msgstr ""
+msgstr "아이콘"
 
 #: im/table/ime.h:55
 msgid "Key to trigger quickphrase"
-msgstr ""
+msgstr "QuickPhrase 발동 키"
 
 #: im/table/ime.h:77
 msgid "Learning"
-msgstr ""
+msgstr "학습"
 
 #: im/table/engine.h:43
 msgid "Lookup pinyin"
-msgstr ""
+msgstr "병음 검색"
 
 #: im/table/engine.h:40
 msgid "Modify dictionary"
-msgstr ""
+msgstr "사전 수정"
 
 #: im/table/ime.h:39
 msgid "Next page"
-msgstr ""
+msgstr "다음 페이지"
 
 #: im/table/engine.cpp:95
 msgid "Not available"
-msgstr ""
+msgstr "사용할 수 없음"
 
 #: im/table/ime.h:69
 msgid "Order policy"
-msgstr ""
+msgstr "정렬 정책"
 
 #: im/pinyin/pinyin-addon.conf.in:3 im/pinyin/pinyin.conf.in:3
 msgid "Pinyin"
-msgstr ""
+msgstr "병음(Pinyin)"
 
 #: im/table/state.cpp:435
 msgid "Please use this functionality after typing some text."
-msgstr ""
+msgstr "글자를 입력한 후에 이 기능을 사용하세요."
 
 #: im/pinyin/pinyin.cpp:324
 msgid "Prediction"
-msgstr ""
+msgstr "예측"
 
 #: im/table/ime.h:59
 msgid "Prefix key to trigger Pinyin"
-msgstr ""
+msgstr "병음 발동을 위한 사전입력 키"
 
 #: im/pinyin/pinyin.cpp:680
 msgid "Press %1% for %2%"
-msgstr ""
+msgstr "%2%를 위해 %1%을 누르세요"
 
 #: im/pinyin/pinyin.cpp:676
 msgid "Press %1% for %2% and %3% for %4%"
-msgstr ""
+msgstr "%2%를 위해 %1%을, %4%를 위해 %3%을 누르세요"
 
 #: im/table/state.cpp:466
 msgid "Press Backspace to forget."
-msgstr ""
+msgstr "무시하기 위해 백스페이스를 누르세요."
 
 #: im/table/state.cpp:469
 msgid "Press Delete to remove."
-msgstr ""
+msgstr "제거하기 위해 Delete키를 누르세요."
 
 #: im/table/state.cpp:463
 msgid "Press space to insert."
-msgstr ""
+msgstr "입력하기 위해 스페이스를 누르세요"
 
 #: im/table/ime.h:37
 msgid "Prev page"
-msgstr ""
+msgstr "앞 페이지"
 
 #: modules/punctuation/punctuation.cpp:146
 #: modules/punctuation/punctuation.conf.in:3
 msgid "Punctuation"
-msgstr ""
+msgstr "문장부호"
 
 #: im/pinyin/pinyin.cpp:677
 msgid "Return"
-msgstr ""
+msgstr "돌아가기"
 
 #: im/table/ime.h:75
 msgid "Save auto phrase"
-msgstr ""
+msgstr "자동 문구 저장"
 
 #: im/table/ime.h:47
 msgid "Selection"
-msgstr ""
+msgstr "선택"
 
 #: im/pinyin/pinyin.cpp:325
 msgid "Show prediction words"
-msgstr ""
+msgstr "예상 단어 보이기"
 
 #: im/pinyin/shuangpin.conf.in:3
 msgid "Shuangpin"
-msgstr ""
+msgstr "Shuangpin"
 
 #: modules/chttrans/chttrans.cpp:92 modules/chttrans/chttrans.h:74
 msgid "Simplified Chinese"
-msgstr ""
+msgstr "간체 중국어"
 
 #: modules/chttrans/chttrans.cpp:94
 msgid "Simplified Chinese is enabled."
-msgstr ""
+msgstr "간체 중국어가 활성화됨."
 
 #: modules/chttrans/chttrans.conf.in:3
 msgid "Simplified and Traditional Chinese Translation"
-msgstr ""
+msgstr "간체 / 번체 중국어 번역"
 
 #: im/table/table.conf.in:3
 msgid "Table"
-msgstr ""
+msgstr "표"
 
 #: modules/chttrans/chttrans.cpp:91 modules/chttrans/chttrans.h:73
 msgid "Traditional Chinese"
-msgstr ""
+msgstr "번체 중국어"
 
 #: modules/chttrans/chttrans.cpp:93
 msgid "Traditional Chinese is enabled."
-msgstr ""
+msgstr "번체 중국어가 활성화됨."
 
 #: im/table/state.cpp:441
 msgid "Use Left and Right to select character: "
-msgstr ""
+msgstr "문자 선택을 위해 좌/우키 사용:"
 
 #: im/table/state.cpp:452
 msgid "Use Left and Right to select text. "
-msgstr ""
+msgstr "문장 선택을 위해 좌/우키 사용:"
 
 #: im/table/ime.h:53
 msgid "Use full width"
-msgstr ""
+msgstr "전각 문자 사용"
 
 #: im/table/ime.h:71
 msgid "Wildcard matching Key"
@@ -270,32 +273,32 @@ msgstr ""
 
 #: im/table/wbx.conf.in.in:3
 msgid "Wubi"
-msgstr ""
+msgstr "Wubi"
 
 #: im/table/wbpy.conf.in.in:3
 msgid "Wubi Pinyin"
-msgstr ""
+msgstr "Wubi 병음"
 
 #: im/pinyin/pinyin.conf.in:4
 msgid "fcitx-pinyin"
-msgstr ""
+msgstr "fcitx-pinyin"
 
 #: im/pinyin/shuangpin.conf.in:4
 msgid "fcitx-shuangpin"
-msgstr ""
+msgstr "fcitx-shuangpin"
 
 #: im/table/wbpy.conf.in.in:4 im/table/wbx.conf.in.in:4
 msgid "fcitx-wubi"
-msgstr ""
+msgstr "fcitx-wubi"
 
 #: im/table/state.cpp:484
 msgid "{0} is not in table."
-msgstr ""
+msgstr "{0}은 표에 없습니다."
 
 #: im/table/state.cpp:473
 msgid "{0}: No corresponding code."
-msgstr ""
+msgstr "{0}: 해당 코드가 없음"
 
 #: im/table/state.cpp:458 im/table/state.cpp:481
 msgid "{0}: {1}"
-msgstr ""
+msgstr "{0}: {1}"
