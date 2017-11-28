@@ -224,7 +224,6 @@ void CloudPinyin::request(const std::string &pinyin,
                 queue->setBusy();
                 queue->setCallback(callback);
             })) {
-            FCITX_INFO() << "FAiled to add request";
             callback(pinyin, "");
         };
     }
