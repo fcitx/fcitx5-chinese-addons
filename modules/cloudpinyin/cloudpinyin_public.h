@@ -41,6 +41,7 @@ FCITX_ADDON_DECLARE_FUNCTION(CloudPinyin, request,
                              void(const std::string &pinyin,
                                   CloudPinyinCallback));
 FCITX_ADDON_DECLARE_FUNCTION(CloudPinyin, toggleKey, const fcitx::KeyList &());
+FCITX_ADDON_DECLARE_FUNCTION(CloudPinyin, resetError, void());
 
 class CloudPinyinCandidateWord
     : public fcitx::CandidateWord,

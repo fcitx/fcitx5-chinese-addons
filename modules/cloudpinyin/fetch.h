@@ -30,7 +30,7 @@
 #include <thread>
 #include <unordered_map>
 #include <vector>
-#define MAX_HANDLE 10l
+#define MAX_HANDLE 100l
 #define MAX_BUFFER_SIZE 2048
 
 class CurlQueue : public fcitx::IntrusiveListNode {
@@ -40,6 +40,8 @@ public:
         curl_easy_setopt(curl_, CURLOPT_WRITEDATA, this);
         curl_easy_setopt(curl_, CURLOPT_WRITEFUNCTION,
                          &CurlQueue::curlWriteFunction);
+        curl_easy_setopt(curl_, CURLOPT_TIMEOUT, 10l);
+        curl_easy_setopt(curl_, CURLOPT_NOSIGNAL, 1);
     }
 
     ~CurlQueue() { curl_easy_cleanup(curl_); }
@@ -53,6 +55,7 @@ public:
             pinyin_.clear();
             // make sure lambda is free'd
             callback_ = CloudPinyinCallback();
+            httpCode_ = 0;
         }
     }
 
@@ -72,6 +75,8 @@ public:
 
     CloudPinyinCallback callback() { return callback_; }
     void setCallback(CloudPinyinCallback callback) { callback_ = callback; }
+
+    int httpCode() const { return httpCode_; }
 
 private:
     static size_t curlWriteFunction(char *ptr, size_t size, size_t nmemb,
@@ -124,7 +129,7 @@ public:
     FetchThread(fcitx::UnixFD notifyFd);
     ~FetchThread();
 
-    void addRequest(SetupRequestCallback);
+    bool addRequest(SetupRequestCallback);
     CurlQueue *popFinished();
 
 private:
@@ -143,6 +148,7 @@ private:
     void curlTimer(long timeout_ms);
 
     void handleIO(int fd, fcitx::IOEventFlags flags);
+    void processMessages();
 
     void run();
     void finished(CurlQueue *queue);

@@ -39,8 +39,6 @@ public:
             curl_escape(pinyin.c_str(), pinyin.size()), &curl_free);
         url += escaped.get();
         curl_easy_setopt(queue->curl(), CURLOPT_URL, url.c_str());
-        curl_easy_setopt(queue->curl(), CURLOPT_TIMEOUT, 20l);
-        curl_easy_setopt(queue->curl(), CURLOPT_NOSIGNAL, 1l);
     }
     std::string parseResult(CurlQueue *queue) override {
         std::string result(queue->result().begin(), queue->result().end());
@@ -65,8 +63,6 @@ public:
             curl_escape(pinyin.c_str(), pinyin.size()), &curl_free);
         url += escaped.get();
         curl_easy_setopt(queue->curl(), CURLOPT_URL, url.c_str());
-        curl_easy_setopt(queue->curl(), CURLOPT_TIMEOUT, 20l);
-        curl_easy_setopt(queue->curl(), CURLOPT_NOSIGNAL, 1l);
     }
 
     static inline bool ishex(char ch) {
@@ -125,6 +121,9 @@ public:
     }
 };
 
+constexpr int MAX_ERROR = 10;
+constexpr int minInUs = 60000000;
+
 CloudPinyin::CloudPinyin(fcitx::AddonManager *manager)
     : eventLoop_(manager->eventLoop()) {
     curl_global_init(CURL_GLOBAL_ALL);
@@ -159,6 +158,17 @@ CloudPinyin::CloudPinyin(fcitx::AddonManager *manager)
             }
 
             while ((item = thread_->popFinished())) {
+                if (item->httpCode() != 200) {
+                    errorCount_ += 1;
+
+                    if (errorCount_ == MAX_ERROR && resetError_) {
+                        FCITX_ERROR() << "Cloud pinyin reaches max error. "
+                                         "Retry in 5 minutes.";
+                        resetError_->setNextInterval(minInUs * 5);
+                        resetError_->setOneShot();
+                    }
+                }
+
                 std::string hanzi;
                 if (b) {
                     hanzi = b->parseResult(item);
@@ -174,6 +184,15 @@ CloudPinyin::CloudPinyin(fcitx::AddonManager *manager)
             return true;
         });
 
+    resetError_ =
+        eventLoop_->addTimeEvent(CLOCK_MONOTONIC, now(CLOCK_MONOTONIC), minInUs,
+                                 [this](EventSourceTime *, uint64_t) {
+                                     resetError();
+                                     return true;
+                                 });
+    if (resetError_) {
+        resetError_->setEnabled(false);
+    }
     thread_ = std::make_unique<FetchThread>(std::move(pipe1Fd[1]));
 }
 
@@ -194,17 +213,20 @@ void CloudPinyin::request(const std::string &pinyin,
     } else {
         auto backend = config_.backend.value();
         auto iter = backends_.find(backend);
-        if (iter == backends_.end()) {
+        if (iter == backends_.end() || errorCount_ >= MAX_ERROR) {
             callback(pinyin, "");
             return;
         }
         auto b = iter->second.get();
-        thread_->addRequest([b, &pinyin, &callback](CurlQueue *queue) {
-            b->prepareRequest(queue, pinyin);
-            queue->setPinyin(pinyin);
-            queue->setBusy();
-            queue->setCallback(callback);
-        });
+        if (!thread_->addRequest([b, &pinyin, &callback](CurlQueue *queue) {
+                b->prepareRequest(queue, pinyin);
+                queue->setPinyin(pinyin);
+                queue->setBusy();
+                queue->setCallback(callback);
+            })) {
+            FCITX_INFO() << "FAiled to add request";
+            callback(pinyin, "");
+        };
     }
 }
 

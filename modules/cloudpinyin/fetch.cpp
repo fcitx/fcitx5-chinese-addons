@@ -95,6 +95,10 @@ void FetchThread::handleIO(int fd, IOEventFlags flags) {
         mcode = curl_multi_socket_action(curlm_, fd, mask, &still_running);
     } while (mcode == CURLM_CALL_MULTI_PERFORM);
 
+    processMessages();
+}
+
+void FetchThread::processMessages() {
     int num_messages = 0;
     CURLMsg *curl_message = curl_multi_info_read(curlm_, &num_messages);
 
@@ -171,6 +175,7 @@ void FetchThread::curlTimer(long timeout_ms) {
                     mcode = curl_multi_socket_action(
                         curlm_, CURL_SOCKET_TIMEOUT, 0, &still_running);
                 } while (mcode == CURLM_CALL_MULTI_PERFORM);
+                processMessages();
                 return true;
             });
         timer_->setOneShot();
@@ -189,7 +194,7 @@ void FetchThread::finished(CurlQueue *queue) {
     fs::safeWrite(notifyFd_.fd(), &c, sizeof(char));
 }
 
-void FetchThread::addRequest(SetupRequestCallback callback) {
+bool FetchThread::addRequest(SetupRequestCallback callback) {
     CurlQueue *queue = nullptr;
     for (auto &handle : handles_) {
         if (!handle.busy()) {
@@ -198,7 +203,7 @@ void FetchThread::addRequest(SetupRequestCallback callback) {
         }
     }
     if (!queue) {
-        queue = new CurlQueue(false);
+        return false;
     }
     callback(queue);
 
@@ -207,6 +212,7 @@ void FetchThread::addRequest(SetupRequestCallback callback) {
 
     char c = 0;
     fs::safeWrite(selfPipeFd_[1].fd(), &c, sizeof(c));
+    return true;
 }
 
 void FetchThread::quit() {

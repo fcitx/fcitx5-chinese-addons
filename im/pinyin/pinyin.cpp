@@ -127,7 +127,7 @@ PinyinEngine::predictCandidateList(const std::vector<std::string> &words) {
         candidateList->append(new PinyinPredictCandidateWord(this, word));
     }
     candidateList->setSelectionKey(selectionKeys_);
-    candidateList->setPageSize(config_.pageSize.value());
+    candidateList->setPageSize(*config_.pageSize);
     candidateList->setGlobalCursorIndex(0);
     return candidateList;
 }
@@ -140,7 +140,7 @@ void PinyinEngine::initPredict(InputContext *inputContext) {
     auto lmState = context.state();
     state->predictWords_ = context.selectedWords();
     auto words = prediction_.predict(lmState, context.selectedWords(),
-                                     config_.predictionSize.value());
+                                     *config_.predictionSize);
     if (auto candidateList = predictCandidateList(words)) {
         auto &inputPanel = inputContext->inputPanel();
         inputPanel.setCandidateList(std::move(candidateList));
@@ -153,8 +153,7 @@ void PinyinEngine::updatePredict(InputContext *inputContext) {
     inputContext->inputPanel().reset();
 
     auto state = inputContext->propertyFor(&factory_);
-    auto words =
-        prediction_.predict(state->predictWords_, config_.pageSize.value());
+    auto words = prediction_.predict(state->predictWords_, *config_.pageSize);
     if (auto candidateList = predictCandidateList(words)) {
         auto &inputPanel = inputContext->inputPanel();
         inputPanel.setCandidateList(std::move(candidateList));
@@ -194,8 +193,8 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
                 CursorPositionAfterPaging::ResetToFirst);
 
             std::unique_ptr<CloudPinyinCandidateWord> cloud;
-            if (config_.cloudPinyinEnabled.value() && cloudpinyin() &&
-                inputContext->capabilityFlags().testAny(
+            if (*config_.cloudPinyinEnabled && cloudpinyin() &&
+                !inputContext->capabilityFlags().testAny(
                     CapabilityFlag::PasswordOrSensitive)) {
                 using namespace std::placeholders;
                 auto fullPinyin =
@@ -220,14 +219,14 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
             // if we didn't got it from cache or whatever, and not empty
             // otherwise we can throw it away.
             if (cloud && (!cloud->filled() || !cloud->word().empty())) {
-                auto index = config_.cloudPinyinIndex.value();
+                auto index = *config_.cloudPinyinIndex;
                 if (index >= candidateList->totalSize()) {
                     index = candidateList->totalSize();
                 }
                 candidateList->insert(index - 1, cloud.release());
             }
             candidateList->setSelectionKey(selectionKeys_);
-            candidateList->setPageSize(config_.pageSize.value());
+            candidateList->setPageSize(*config_.pageSize);
             candidateList->setGlobalCursorIndex(0);
             inputPanel.setCandidateList(std::move(candidateList));
         }
@@ -342,8 +341,8 @@ PinyinEngine::~PinyinEngine() {}
 
 void PinyinEngine::reloadConfig() {
     readAsIni(config_, "conf/pinyin.conf");
-    ime_->setNBest(config_.nbest.value());
-    if (config_.shuangpinProfile.value() == ShuangpinProfileEnum::Custom) {
+    ime_->setNBest(*config_.nbest);
+    if (*config_.shuangpinProfile == ShuangpinProfileEnum::Custom) {
         auto file = StandardPath::global().open(StandardPath::Type::PkgConfig,
                                                 "pinyin/sp.dat", O_RDONLY);
         try {
@@ -362,7 +361,7 @@ void PinyinEngine::reloadConfig() {
     case ShuangpinProfileEnum::PROFILE:                                        \
         profile = libime::ShuangpinBuiltinProfile::PROFILE;                    \
         break;
-        switch (config_.shuangpinProfile.value()) {
+        switch (*config_.shuangpinProfile) {
             TRANS_SP_PROFILE(Ziranma)
             TRANS_SP_PROFILE(MS)
             TRANS_SP_PROFILE(Ziguang)
@@ -379,9 +378,9 @@ void PinyinEngine::reloadConfig() {
     }
 
     libime::PinyinFuzzyFlags flags;
-    const auto &fuzzyConfig = config_.fuzzyConfig.value();
+    const auto &fuzzyConfig = *config_.fuzzyConfig;
 #define SET_FUZZY_FLAG(VAR, ENUM)                                              \
-    if (fuzzyConfig.VAR.value()) {                                             \
+    if (*fuzzyConfig.VAR) {                                                    \
         flags |= libime::PinyinFuzzyFlag::ENUM;                                \
     }
     SET_FUZZY_FLAG(ue, VE_UE)
@@ -445,15 +444,17 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
     if (cloudpinyin() &&
         event.key().checkKeyList(
             cloudpinyin()->call<ICloudPinyin::toggleKey>())) {
-        config_.cloudPinyinEnabled.setValue(
-            !config_.cloudPinyinEnabled.value());
+        config_.cloudPinyinEnabled.setValue(!*config_.cloudPinyinEnabled);
         safeSaveAsIni(config_, "conf/pinyin.conf");
 
         notifications()->call<INotifications::showTip>(
             "fcitx-cloudpinyin-toggle", "fcitx", "", _("Cloud Pinyin Status"),
-            config_.cloudPinyinEnabled.value() ? _("Cloud Pinyin is enabled.")
-                                               : _("Cloud Pinyin is disabled."),
+            *config_.cloudPinyinEnabled ? _("Cloud Pinyin is enabled.")
+                                        : _("Cloud Pinyin is disabled."),
             -1);
+        if (*config_.cloudPinyinEnabled) {
+            cloudpinyin()->call<ICloudPinyin::resetError>();
+        }
         event.filterAndAccept();
         return;
     }
@@ -474,7 +475,7 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
             return;
         }
 
-        if (event.key().checkKeyList(config_.prevPage.value())) {
+        if (event.key().checkKeyList(*config_.prevPage)) {
             auto pageable = candidateList->toPageable();
             if (!pageable->hasPrev()) {
                 if (pageable->usedNextBefore()) {
@@ -490,7 +491,7 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
             }
         }
 
-        if (event.key().checkKeyList(config_.nextPage.value())) {
+        if (event.key().checkKeyList(*config_.nextPage)) {
             event.filterAndAccept();
             candidateList->toPageable()->next();
             inputContext->updateUserInterface(

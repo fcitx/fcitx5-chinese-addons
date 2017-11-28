@@ -56,19 +56,26 @@ public:
 
     void request(const std::string &pinyin, CloudPinyinCallback callback);
     const fcitx::KeyList &toggleKey() { return config_.toggleKey.value(); }
+    void resetError() {
+        errorCount_ = 0;
+        resetError_->setEnabled(false);
+    }
 
 private:
     FCITX_ADDON_EXPORT_FUNCTION(CloudPinyin, request);
     FCITX_ADDON_EXPORT_FUNCTION(CloudPinyin, toggleKey);
+    FCITX_ADDON_EXPORT_FUNCTION(CloudPinyin, resetError);
     fcitx::UnixFD recvFd_, notifyFd_;
     std::unique_ptr<FetchThread> thread_;
     fcitx::EventLoop *eventLoop_;
     std::unique_ptr<fcitx::EventSourceIO> event_;
+    std::unique_ptr<fcitx::EventSourceTime> resetError_;
     LRUCache<std::string, std::string> cache_{2048};
     std::unordered_map<CloudPinyinBackend, std::unique_ptr<Backend>,
                        fcitx::EnumHash>
         backends_;
     CloudPinyinConfig config_;
+    int errorCount_ = 0;
 };
 
 class CloudPinyinFactory : public fcitx::AddonFactory {
