@@ -204,8 +204,7 @@ std::string Chttrans::convert(ChttransIMType type, const std::string &str) {
 ChttransIMType Chttrans::convertType(fcitx::InputContext *inputContext) {
     auto engine = instance_->inputMethodEngine(inputContext);
     auto entry = instance_->inputMethodEntry(inputContext);
-    if (!engine || !entry ||
-        !toggleAction_.isParent(&inputContext->statusArea())) {
+    if (!engine || !entry) {
         return ChttransIMType::Other;
     }
     auto type = inputMethodType(*entry);
