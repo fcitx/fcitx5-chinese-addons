@@ -100,7 +100,7 @@ Chttrans::Chttrans(fcitx::Instance *instance) : instance_(instance) {
     outputFilterConn_ = instance_->connect<Instance::OutputFilter>([this](
         InputContext *inputContext, Text &text) {
         auto type = convertType(inputContext);
-        if (type == ChttransIMType::Other) {
+        if (type == ChttransIMType::Other || !toggleAction_.isParent(&inputContext->statusArea())) {
             return;
         }
         auto oldString = text.toString();
@@ -143,7 +143,7 @@ Chttrans::Chttrans(fcitx::Instance *instance) : instance_(instance) {
     commitFilterConn_ = instance_->connect<Instance::CommitFilter>(
         [this](InputContext *inputContext, std::string &str) {
             auto type = convertType(inputContext);
-            if (type == ChttransIMType::Other) {
+            if (type == ChttransIMType::Other || !toggleAction_.isParent(&inputContext->statusArea())) {
                 return;
             }
             str = convert(type, str);
