@@ -16,8 +16,8 @@
  * License along with this library; see the file COPYING. If not,
  * see <http://www.gnu.org/licenses/>.
  */
-#include "config.h"
 #include "chttrans-native.h"
+#include "config.h"
 #include <cstdio>
 #include <cstdlib>
 #include <fcitx-utils/standardpath.h>

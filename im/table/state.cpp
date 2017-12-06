@@ -150,7 +150,7 @@ void TableState::reset(const InputMethodEntry *entry) {
     ic_->inputPanel().reset();
     ic_->updatePreedit();
     ic_->updateUserInterface(UserInterfaceComponent::InputPanel);
-    lastIsPunc_ = false;
+    // lastIsPunc_ = false;
     mode_ = TableMode::Normal;
     pinyinModePrefix_.clear();
     pinyinModeBuffer_.clear();

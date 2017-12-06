@@ -711,7 +711,7 @@ void PinyinEngine::reset(const InputMethodEntry &, InputContextEvent &event) {
     inputContext->inputPanel().reset();
     inputContext->updatePreedit();
     inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
-    state->lastIsPunc_ = false;
+    // state->lastIsPunc_ = false;
 }
 
 void PinyinEngine::save() {
