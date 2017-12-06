@@ -18,8 +18,8 @@
  */
 #include "chttrans-native.h"
 #include "config.h"
-#include <cstdio>
-#include <cstdlib>
+#include <boost/iostreams/device/file_descriptor.hpp>
+#include <boost/iostreams/stream_buffer.hpp>
 #include <fcitx-utils/standardpath.h>
 #include <fcitx-utils/utf8.h>
 #include <fcntl.h>
@@ -36,34 +36,33 @@ bool NativeBackend::loadOnce() {
     if (file.fd() < 0) {
         return false;
     }
+    boost::iostreams::stream_buffer<boost::iostreams::file_descriptor_source>
+        buffer(file.fd(),
+               boost::iostreams::file_descriptor_flags::never_close_handle);
+    std::istream in(&buffer);
 
-    FILE *f = fdopen(file.fd(), "rb");
-    if (!f) {
-        return false;
-    }
-    ScopedFILE fp{f, fclose};
-    file.release();
-
-    char *strBuf = nullptr;
-    size_t bufLen = 0;
-    while (getline(&strBuf, &bufLen, fp.get()) != -1) {
-        char *simpStart = strBuf, *tradStart, *end;
+    std::string strBuf;
+    while (std::getline(in, strBuf)) {
+        // Get two char.
+        auto simpStart = strBuf.begin();
         uint32_t simp, trad;
 
-        tradStart = fcitx_utf8_get_char(strBuf, &simp);
-        end = fcitx_utf8_get_char(tradStart, &trad);
+        auto tradStart = utf8::getNextChar(simpStart, strBuf.end(), &simp);
+        auto end = utf8::getNextChar(tradStart, strBuf.end(), &trad);
+        if (!utf8::isValidChar(simp) || !utf8::isValidChar(trad)) {
+            continue;
+        }
         if (!s2tMap_.count(simp)) {
             s2tMap_.emplace(std::piecewise_construct,
                             std::forward_as_tuple(simp),
-                            std::forward_as_tuple(tradStart, end - tradStart));
+                            std::forward_as_tuple(tradStart, end));
         }
         if (!t2sMap_.count(trad)) {
-            t2sMap_.emplace(
-                std::piecewise_construct, std::forward_as_tuple(trad),
-                std::forward_as_tuple(simpStart, tradStart - simpStart));
+            t2sMap_.emplace(std::piecewise_construct,
+                            std::forward_as_tuple(trad),
+                            std::forward_as_tuple(simpStart, tradStart));
         }
     }
-    free(strBuf);
     return true;
 }
 

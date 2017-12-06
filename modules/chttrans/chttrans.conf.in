@@ -3,6 +3,7 @@ Name=Simplified and Traditional Chinese Translation
 Category=Module
 Library=chttrans
 Type=SharedLibrary
+Configurable=True
 
 [Addon/OptionalDependencies]
 0=notifications

@@ -22,6 +22,7 @@
 #include "notifications_public.h"
 #include <fcitx-config/configuration.h>
 #include <fcitx-config/enum.h>
+#include <fcitx-config/iniparser.h>
 #include <fcitx-utils/i18n.h>
 #include <fcitx/action.h>
 #include <fcitx/addoninstance.h>
@@ -37,7 +38,7 @@ FCITX_CONFIGURATION(
                                          ChttransEngine::OpenCC};
     fcitx::Option<fcitx::KeyList> hotkey{
         this, "Hotkey", "Toggle key", {fcitx::Key("Control+Shift+F")}};
-    fcitx::Option<std::vector<std::string>> enabledIM{
+    fcitx::HiddenOption<std::vector<std::string>> enabledIM{
         this, "EnabledIM", "Enabled Input Methods"};);
 
 enum class ChttransIMType { Simp, Trad, Other };
@@ -92,6 +93,11 @@ public:
 
     void reloadConfig() override;
     void save() override;
+    const fcitx::Configuration *getConfig() const override { return &config_; }
+    void setConfig(const fcitx::RawConfig &config) override {
+        config_.load(config, true);
+        fcitx::safeSaveAsIni(config_, "conf/chttrans.conf");
+    }
 
     ChttransIMType convertType(fcitx::InputContext *inputContext);
     std::string convert(ChttransIMType type, const std::string &str);
