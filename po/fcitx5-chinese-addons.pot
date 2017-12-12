@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2017-11-24 10:15-0800\n"
+"POT-Creation-Date: 2017-12-12 09:51-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -47,15 +47,15 @@ msgstr ""
 msgid "Cloud Pinyin"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:453
+#: im/pinyin/pinyin.cpp:451
 msgid "Cloud Pinyin Status"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:455
+#: im/pinyin/pinyin.cpp:453
 msgid "Cloud Pinyin is disabled."
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:454
+#: im/pinyin/pinyin.cpp:452
 msgid "Cloud Pinyin is enabled."
 msgstr ""
 
@@ -115,11 +115,11 @@ msgstr ""
 msgid "Full width punctuation"
 msgstr ""
 
-#: modules/punctuation/punctuation.cpp:148
+#: modules/punctuation/punctuation.cpp:155
 msgid "Full width punctuation is disabled."
 msgstr ""
 
-#: modules/punctuation/punctuation.cpp:147
+#: modules/punctuation/punctuation.cpp:154
 msgid "Full width punctuation is enabled."
 msgstr ""
 
@@ -171,7 +171,7 @@ msgstr ""
 msgid "Please use this functionality after typing some text."
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:324
+#: im/pinyin/pinyin.cpp:323
 msgid "Prediction"
 msgstr ""
 
@@ -179,11 +179,11 @@ msgstr ""
 msgid "Prefix key to trigger Pinyin"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:680
+#: im/pinyin/pinyin.cpp:681
 msgid "Press %1% for %2%"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:676
+#: im/pinyin/pinyin.cpp:677
 msgid "Press %1% for %2% and %3% for %4%"
 msgstr ""
 
@@ -203,12 +203,12 @@ msgstr ""
 msgid "Prev page"
 msgstr ""
 
-#: modules/punctuation/punctuation.cpp:146
+#: modules/punctuation/punctuation.cpp:153
 #: modules/punctuation/punctuation.conf.in:3
 msgid "Punctuation"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:677
+#: im/pinyin/pinyin.cpp:678
 msgid "Return"
 msgstr ""
 
@@ -220,7 +220,7 @@ msgstr ""
 msgid "Selection"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:325
+#: im/pinyin/pinyin.cpp:324
 msgid "Show prediction words"
 msgstr ""
 
@@ -228,7 +228,7 @@ msgstr ""
 msgid "Shuangpin"
 msgstr ""
 
-#: modules/chttrans/chttrans.cpp:92 modules/chttrans/chttrans.h:74
+#: modules/chttrans/chttrans.cpp:92 modules/chttrans/chttrans.h:75
 msgid "Simplified Chinese"
 msgstr ""
 
@@ -244,7 +244,7 @@ msgstr ""
 msgid "Table"
 msgstr ""
 
-#: modules/chttrans/chttrans.cpp:91 modules/chttrans/chttrans.h:73
+#: modules/chttrans/chttrans.cpp:91 modules/chttrans/chttrans.h:74
 msgid "Traditional Chinese"
 msgstr ""
 

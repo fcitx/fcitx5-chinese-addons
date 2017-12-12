@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2017-11-24 10:15-0800\n"
+"POT-Creation-Date: 2017-12-12 09:51-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Bon Keun Seo <scobyseo@gmail.com>, 2017\n"
 "Language-Team: Korean (https://www.transifex.com/fcitx/teams/12005/ko/)\n"
@@ -50,15 +50,15 @@ msgstr "일치하는 것이 없으면 마지막 후보를 자동 선택"
 msgid "Cloud Pinyin"
 msgstr "클라우드 Pinyin"
 
-#: im/pinyin/pinyin.cpp:453
+#: im/pinyin/pinyin.cpp:451
 msgid "Cloud Pinyin Status"
 msgstr "클라우드 Pinyin 상태"
 
-#: im/pinyin/pinyin.cpp:455
+#: im/pinyin/pinyin.cpp:453
 msgid "Cloud Pinyin is disabled."
 msgstr "클라우드 Pinyin이 비활성화됨."
 
-#: im/pinyin/pinyin.cpp:454
+#: im/pinyin/pinyin.cpp:452
 msgid "Cloud Pinyin is enabled."
 msgstr "클라우드 Pinyin이 활성화됨."
 
@@ -118,11 +118,11 @@ msgstr "전각 문자"
 msgid "Full width punctuation"
 msgstr "전각 부호"
 
-#: modules/punctuation/punctuation.cpp:148
+#: modules/punctuation/punctuation.cpp:155
 msgid "Full width punctuation is disabled."
 msgstr "전각 부호 비활성화됨."
 
-#: modules/punctuation/punctuation.cpp:147
+#: modules/punctuation/punctuation.cpp:154
 msgid "Full width punctuation is enabled."
 msgstr "전각 부호 활성화됨."
 
@@ -174,7 +174,7 @@ msgstr "병음(Pinyin)"
 msgid "Please use this functionality after typing some text."
 msgstr "글자를 입력한 후에 이 기능을 사용하세요."
 
-#: im/pinyin/pinyin.cpp:324
+#: im/pinyin/pinyin.cpp:323
 msgid "Prediction"
 msgstr "예측"
 
@@ -182,11 +182,11 @@ msgstr "예측"
 msgid "Prefix key to trigger Pinyin"
 msgstr "병음 발동을 위한 사전입력 키"
 
-#: im/pinyin/pinyin.cpp:680
+#: im/pinyin/pinyin.cpp:681
 msgid "Press %1% for %2%"
 msgstr "%2%를 위해 %1%을 누르세요"
 
-#: im/pinyin/pinyin.cpp:676
+#: im/pinyin/pinyin.cpp:677
 msgid "Press %1% for %2% and %3% for %4%"
 msgstr "%2%를 위해 %1%을, %4%를 위해 %3%을 누르세요"
 
@@ -206,12 +206,12 @@ msgstr "입력하기 위해 스페이스를 누르세요"
 msgid "Prev page"
 msgstr "앞 페이지"
 
-#: modules/punctuation/punctuation.cpp:146
+#: modules/punctuation/punctuation.cpp:153
 #: modules/punctuation/punctuation.conf.in:3
 msgid "Punctuation"
 msgstr "문장부호"
 
-#: im/pinyin/pinyin.cpp:677
+#: im/pinyin/pinyin.cpp:678
 msgid "Return"
 msgstr "돌아가기"
 
@@ -223,7 +223,7 @@ msgstr "자동 문구 저장"
 msgid "Selection"
 msgstr "선택"
 
-#: im/pinyin/pinyin.cpp:325
+#: im/pinyin/pinyin.cpp:324
 msgid "Show prediction words"
 msgstr "예상 단어 보이기"
 
@@ -231,7 +231,7 @@ msgstr "예상 단어 보이기"
 msgid "Shuangpin"
 msgstr "Shuangpin"
 
-#: modules/chttrans/chttrans.cpp:92 modules/chttrans/chttrans.h:74
+#: modules/chttrans/chttrans.cpp:92 modules/chttrans/chttrans.h:75
 msgid "Simplified Chinese"
 msgstr "간체 중국어"
 
@@ -247,7 +247,7 @@ msgstr "간체 / 번체 중국어 번역"
 msgid "Table"
 msgstr "표"
 
-#: modules/chttrans/chttrans.cpp:91 modules/chttrans/chttrans.h:73
+#: modules/chttrans/chttrans.cpp:91 modules/chttrans/chttrans.h:74
 msgid "Traditional Chinese"
 msgstr "번체 중국어"
 
