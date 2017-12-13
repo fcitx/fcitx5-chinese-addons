@@ -116,6 +116,8 @@ public:
     void saveAll();
     void updateConfig(boost::string_view name, const RawConfig &config);
 
+    void releaseUnusedDict(const std::unordered_set<std::string> &names);
+
 private:
     libime::LanguageModelResolver *lm_;
     std::unordered_map<std::string, TableData> tables_;

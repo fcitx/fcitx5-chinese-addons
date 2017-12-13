@@ -88,6 +88,7 @@ private:
 
     Instance *instance_;
     std::unique_ptr<TableIME> ime_;
+    std::unique_ptr<HandlerTableEntry<EventHandler>> event_;
     FactoryFor<TableState> factory_;
 
     TableGlobalConfig config_;

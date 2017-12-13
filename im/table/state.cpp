@@ -634,6 +634,9 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
 
 void TableState::commitBuffer(bool commitCode, bool noRealCommit) {
     auto context = context_.get();
+    if (!context) {
+        return;
+    }
     auto sentence = context->selectedSentence();
     TABLE_DEBUG() << "TableState::commitBuffer " << sentence << " "
                   << context->selectedSize();

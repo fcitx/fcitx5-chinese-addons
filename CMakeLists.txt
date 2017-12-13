@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.4.0)
+cmake_minimum_required(VERSION 3.6.0)
 project(fcitx5-chinese-addons VERSION 0.0.1)
 
 find_package(ECM REQUIRED 1.0.0)

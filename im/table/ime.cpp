@@ -185,6 +185,18 @@ void TableIME::updateConfig(boost::string_view name, const RawConfig &config) {
                   stringutils::concat("inputmethod/", name, ".conf"));
 }
 
+void TableIME::releaseUnusedDict(const std::unordered_set<std::string> &names) {
+    for (auto iter = tables_.begin(); iter != tables_.end();) {
+        if (names.count(iter->first) == 0) {
+            TABLE_DEBUG() << "Release unused table: " << iter->first;
+            saveDict(iter->first);
+            iter = tables_.erase(iter);
+        } else {
+            ++iter;
+        }
+    }
+}
+
 void TableIME::saveDict(boost::string_view name) {
     auto iter = tables_.find(name.to_string());
     if (iter == tables_.end()) {

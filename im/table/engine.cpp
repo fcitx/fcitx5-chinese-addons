@@ -34,6 +34,7 @@
 #include <fcitx/inputcontext.h>
 #include <fcitx/inputcontextmanager.h>
 #include <fcitx/inputcontextproperty.h>
+#include <fcitx/inputmethodmanager.h>
 #include <fcitx/inputpanel.h>
 #include <fcitx/userinterfacemanager.h>
 #include <fcntl.h>
@@ -52,6 +53,22 @@ TableEngine::TableEngine(Instance *instance)
 
     reloadConfig();
     instance_->inputContextManager().registerProperty("tableState", &factory_);
+    event_ = instance_->watchEvent(
+        EventType::InputMethodGroupChanged, EventWatcherPhase::Default,
+        [this](Event &event) {
+            instance_->inputContextManager().foreach([this](InputContext *ic) {
+                auto state = ic->propertyFor(&factory_);
+                state->release();
+                return true;
+            });
+            std::unordered_set<std::string> names;
+            for (const auto &im : instance_->inputMethodManager()
+                                      .currentGroup()
+                                      .inputMethodList()) {
+                names.insert(im.name());
+            }
+            ime_->releaseUnusedDict(names);
+        });
 }
 
 TableEngine::~TableEngine() {}
@@ -118,7 +135,6 @@ void TableEngine::reset(const InputMethodEntry &entry,
     auto inputContext = event.inputContext();
 
     auto state = inputContext->propertyFor(&factory_);
-
     // The reason that we do not commit here is we want to force the behavior.
     // When client get unfocused, the framework will try to commit the string.
     state->commitBuffer(true, event.type() == EventType::InputContextFocusOut);
