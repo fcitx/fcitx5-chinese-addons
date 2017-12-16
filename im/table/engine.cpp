@@ -55,7 +55,7 @@ TableEngine::TableEngine(Instance *instance)
     instance_->inputContextManager().registerProperty("tableState", &factory_);
     event_ = instance_->watchEvent(
         EventType::InputMethodGroupChanged, EventWatcherPhase::Default,
-        [this](Event &event) {
+        [this](Event &) {
             instance_->inputContextManager().foreach([this](InputContext *ic) {
                 auto state = ic->propertyFor(&factory_);
                 state->release();

@@ -14,5 +14,7 @@ Configurable=True
 1=quickphrase
 2=cloudpinyin
 3=notifications
+4=spell
+5=pinyinhelper
 
 

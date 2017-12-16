@@ -34,13 +34,17 @@ namespace fcitx {
 
 class TableState;
 
-FCITX_CONFIGURATION(
-    TableGlobalConfig, Option<KeyList> modifyDictionary{this,
-                                                        "ModifyDictionaryKey",
-                                                        _("Modify dictionary"),
-                                                        {Key("Control+8")}};
-    Option<KeyList> lookupPinyin{
-        this, "LookupPinyinKey", _("Lookup pinyin"), {Key("Control+Alt+E")}};);
+FCITX_CONFIGURATION(TableGlobalConfig,
+                    KeyListOption modifyDictionary{this,
+                                                   "ModifyDictionaryKey",
+                                                   _("Modify dictionary"),
+                                                   {Key("Control+8")},
+                                                   KeyListConstrain()};
+                    KeyListOption lookupPinyin{this,
+                                               "LookupPinyinKey",
+                                               _("Lookup pinyin"),
+                                               {Key("Control+Alt+E")},
+                                               KeyListConstrain()};);
 
 class TableEngine final : public InputMethodEngine {
 public:

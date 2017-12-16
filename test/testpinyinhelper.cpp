@@ -35,13 +35,13 @@ int main() {
     auto result = pinyinhelper->call<fcitx::IPinyinHelper::lookup>(
         fcitx::utf8::getChar("你"));
     for (auto &s : result) {
-        FCITX_LOG(Info) << s << " ";
+        FCITX_INFO() << s << " ";
     }
     FCITX_ASSERT(result == expect);
     auto result2 =
         pinyinhelper->call<fcitx::IPinyinHelper::lookupStroke>("2511", 3);
     for (auto &s : result2) {
-        FCITX_LOG(Info)
+        FCITX_INFO()
             << s.first << " "
             << pinyinhelper->call<fcitx::IPinyinHelper::prettyStrokeString>(
                    s.second);

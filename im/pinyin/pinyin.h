@@ -66,16 +66,30 @@ FCITX_CONFIGURATION(
                                     "Enable Cloud Pinyin", true};
     Option<int, IntConstrain> cloudPinyinIndex{
         this, "CloudPinyinIndex", "Cloud Pinyin Index", 2, IntConstrain(1, 10)};
-    Option<KeyList> prevPage{
-        this, "PrevPage", "Prev Page", {Key(FcitxKey_minus), Key(FcitxKey_Up)}};
-    Option<KeyList> nextPage{this,
-                             "NextPage",
-                             "Next Page",
-                             {Key(FcitxKey_equal), Key(FcitxKey_Down)}};
-    Option<KeyList> prevCandidate{
-        this, "PrevCandidate", "Prev Candidate", {Key("Shift+Tab")}};
-    Option<KeyList> nextCandidate{
-        this, "NextCandidate", "Next Candidate", {Key("Tab")}};
+    KeyListOption prevPage{
+        this,
+        "PrevPage",
+        "Prev Page",
+        {Key(FcitxKey_minus), Key(FcitxKey_Up)},
+        KeyListConstrain({KeyConstrainFlag::AllowModifierLess})};
+    KeyListOption nextPage{
+        this,
+        "NextPage",
+        "Next Page",
+        {Key(FcitxKey_equal), Key(FcitxKey_Down)},
+        KeyListConstrain({KeyConstrainFlag::AllowModifierLess})};
+    KeyListOption prevCandidate{
+        this,
+        "PrevCandidate",
+        "Prev Candidate",
+        {Key("Shift+Tab")},
+        KeyListConstrain({KeyConstrainFlag::AllowModifierLess})};
+    KeyListOption nextCandidate{
+        this,
+        "NextCandidate",
+        "Next Candidate",
+        {Key("Tab")},
+        KeyListConstrain({KeyConstrainFlag::AllowModifierLess})};
     Option<int, IntConstrain> nbest{this, "Number of sentence",
                                     "Number of Sentence", 2,
                                     IntConstrain(1, 3)};
@@ -101,6 +115,7 @@ public:
     void reloadConfig() override;
     void reset(const InputMethodEntry &entry,
                InputContextEvent &event) override;
+    void doReset(InputContext *ic);
     void save() override;
     auto &factory() { return factory_; }
 
@@ -108,6 +123,7 @@ public:
     void setConfig(const RawConfig &config) override {
         config_.load(config, true);
         safeSaveAsIni(config_, "conf/pinyin.conf");
+        reloadConfig();
     }
 
     libime::PinyinIME *ime() { return ime_.get(); }
@@ -136,6 +152,8 @@ private:
     FCITX_ADDON_DEPENDENCY_LOADER(fullwidth, instance_->addonManager());
     FCITX_ADDON_DEPENDENCY_LOADER(punctuation, instance_->addonManager());
     FCITX_ADDON_DEPENDENCY_LOADER(notifications, instance_->addonManager());
+    FCITX_ADDON_DEPENDENCY_LOADER(pinyinhelper, instance_->addonManager());
+    FCITX_ADDON_DEPENDENCY_LOADER(spell, instance_->addonManager());
 };
 
 class PinyinEngineFactory : public AddonFactory {

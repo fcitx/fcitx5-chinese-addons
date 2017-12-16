@@ -21,7 +21,9 @@
 #include "cloudpinyin_public.h"
 #include "config.h"
 #include "notifications_public.h"
+#include "pinyinhelper_public.h"
 #include "punctuation_public.h"
+#include "spell_public.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/format.hpp>
 #include <boost/iostreams/device/file_descriptor.hpp>
@@ -40,6 +42,7 @@
 #include <fcitx/inputpanel.h>
 #include <fcitx/userinterfacemanager.h>
 #include <fcntl.h>
+#include <fmt/format.h>
 #include <libime/core/historybigram.h>
 #include <libime/core/prediction.h>
 #include <libime/core/userlanguagemodel.h>
@@ -94,6 +97,47 @@ public:
         engine_->updatePredict(inputContext);
     }
 
+    PinyinEngine *engine_;
+    std::string word_;
+};
+
+class StrokeCandidateWord : public CandidateWord {
+public:
+    StrokeCandidateWord(PinyinEngine *engine, const std::string &hz,
+                        const std::string &py)
+        : CandidateWord(), engine_(engine), hz_(std::move(hz)) {
+        if (py.empty()) {
+            setText(Text(hz_));
+        } else {
+            setText(Text(fmt::format(_("{0} ({1})"), hz_, py)));
+        }
+    }
+
+    void select(InputContext *inputContext) const override {
+        inputContext->commitString(hz_);
+        engine_->doReset(inputContext);
+    }
+
+private:
+    PinyinEngine *engine_;
+    std::string hz_;
+};
+
+class SpellCandidateWord : public CandidateWord {
+public:
+    SpellCandidateWord(PinyinEngine *engine, const std::string &word)
+        : CandidateWord(), engine_(engine), word_(std::move(word)) {
+        setText(Text(word_));
+    }
+
+    void select(InputContext *inputContext) const override {
+        auto state = inputContext->propertyFor(&engine_->factory());
+        auto &context = state->context_;
+        inputContext->commitString(context.selectedSentence() + word_);
+        engine_->doReset(inputContext);
+    }
+
+private:
     PinyinEngine *engine_;
     std::string word_;
 };
@@ -162,6 +206,54 @@ void PinyinEngine::updatePredict(InputContext *inputContext) {
     inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
 }
 
+int englishNess(const std::string &input, bool sp) {
+    auto pys = stringutils::split(input, " ");
+    constexpr int fullWeight = -2, shortWeight = 3, invalidWeight = 6;
+    int weight = 0;
+    for (auto iter = pys.begin(), end = pys.end(); iter != end; ++iter) {
+        if (sp) {
+            if (iter->size() == 2) {
+                weight += fullWeight;
+            } else {
+                if (std::next(iter) == end) {
+                    weight += shortWeight;
+                } else {
+                    weight += invalidWeight;
+                }
+            }
+        } else {
+            if (*iter == "ng") {
+                weight += fullWeight;
+            } else {
+                auto firstChr = (*iter)[0];
+                if (firstChr == '\'') {
+                    return 0;
+                } else if (firstChr == 'i' || firstChr == 'u' ||
+                           firstChr == 'v') {
+                    weight += invalidWeight;
+                } else if (iter->size() <= 2) {
+                    weight += shortWeight;
+                } else if (iter->find_first_of("aeiou") != std::string::npos) {
+                    weight += fullWeight;
+                } else {
+                    weight += shortWeight;
+                }
+            }
+        }
+    }
+
+    if (weight < 0) {
+        return 0;
+    }
+    return (weight + 3) / 10;
+}
+
+bool isStroke(const std::string &input) {
+    static const std::unordered_set<char> py{'h', 'p', 's', 'z', 'n'};
+    return std::all_of(input.begin(), input.end(),
+                       [](char c) { return py.count(c); });
+}
+
 void PinyinEngine::updateUI(InputContext *inputContext) {
     inputContext->inputPanel().reset();
 
@@ -189,6 +281,7 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
         if (context.candidates().size()) {
             auto candidateList = std::make_unique<CommonCandidateList>();
             size_t idx = 0;
+            candidateList->setPageSize(*config_.pageSize);
             candidateList->setCursorPositionAfterPaging(
                 CursorPositionAfterPaging::ResetToFirst);
 
@@ -216,6 +309,29 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
                     this, Text(std::move(candidateString)), idx));
                 idx++;
             }
+            int engNess;
+            auto parsedPy =
+                context.preedit().substr(context.selectedSentence().size());
+            if (spell() &&
+                (engNess = englishNess(parsedPy, context.useShuangpin()))) {
+                auto py = context.userInput().substr(context.selectedLength());
+                auto results = spell()->call<ISpell::hintWithProvider>(
+                    "en", SpellProvider::Custom, py, engNess);
+                int idx = 1;
+                for (auto &result : results) {
+                    auto actualIdx = idx;
+                    if (actualIdx > candidateList->totalSize()) {
+                        actualIdx = candidateList->totalSize();
+                    }
+                    if (cloud && cloud->filled() && cloud->word() == result) {
+                        cloud.reset();
+                    }
+
+                    candidateList->insert(actualIdx,
+                                          new SpellCandidateWord(this, result));
+                    idx++;
+                }
+            }
             // if we didn't got it from cache or whatever, and not empty
             // otherwise we can throw it away.
             if (cloud && (!cloud->filled() || !cloud->word().empty())) {
@@ -225,8 +341,35 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
                 }
                 candidateList->insert(index - 1, cloud.release());
             }
+            if (pinyinhelper() && context.selectedLength() == 0 &&
+                isStroke(context.userInput())) {
+                int limit = (context.userInput().size() + 4) / 5;
+                if (limit > 3) {
+                    limit = 3;
+                }
+                auto results =
+                    pinyinhelper()->call<IPinyinHelper::lookupStroke>(
+                        context.userInput(), limit);
+                int desiredPos =
+                    *config_.pageSize - static_cast<int>(results.size());
+                if (desiredPos < 0) {
+                    desiredPos = 0;
+                }
+                for (auto &result : results) {
+                    utf8::getChar(result.first);
+                    auto py = pinyinhelper()->call<IPinyinHelper::lookup>(
+                        utf8::getChar(result.first));
+                    auto pystr = stringutils::join(py, " ");
+
+                    if (desiredPos > candidateList->size()) {
+                        desiredPos = candidateList->size();
+                    }
+                    candidateList->insert(
+                        desiredPos,
+                        new StrokeCandidateWord(this, result.first, pystr));
+                }
+            }
             candidateList->setSelectionKey(selectionKeys_);
-            candidateList->setPageSize(*config_.pageSize);
             candidateList->setGlobalCursorIndex(0);
             inputPanel.setCandidateList(std::move(candidateList));
         }
@@ -704,7 +847,10 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
 
 void PinyinEngine::reset(const InputMethodEntry &, InputContextEvent &event) {
     auto inputContext = event.inputContext();
+    doReset(inputContext);
+}
 
+void PinyinEngine::doReset(InputContext *inputContext) {
     auto state = inputContext->propertyFor(&factory_);
     state->context_.clear();
     state->predictWords_.clear();
