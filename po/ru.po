@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2017-12-12 09:51-0800\n"
+"POT-Creation-Date: 2017-12-16 10:32-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: TotalCaesar659 <x24cm5b8c54q6szxw@yandex.ru>, 2017\n"
 "Language-Team: Russian (https://www.transifex.com/fcitx/teams/12005/ru/)\n"
@@ -53,15 +53,15 @@ msgstr ""
 msgid "Cloud Pinyin"
 msgstr "Cloud Pinyin"
 
-#: im/pinyin/pinyin.cpp:451
+#: im/pinyin/pinyin.cpp:594
 msgid "Cloud Pinyin Status"
 msgstr "Статус Cloud Pinyin"
 
-#: im/pinyin/pinyin.cpp:453
+#: im/pinyin/pinyin.cpp:596
 msgid "Cloud Pinyin is disabled."
 msgstr "Cloud Pinyin отключен."
 
-#: im/pinyin/pinyin.cpp:452
+#: im/pinyin/pinyin.cpp:595
 msgid "Cloud Pinyin is enabled."
 msgstr "Cloud Pinyin включен."
 
@@ -101,7 +101,7 @@ msgstr "Дополнительная функциональность пиньи
 msgid "File"
 msgstr "Файл"
 
-#: modules/fullwidth/fullwidth.cpp:85 modules/fullwidth/fullwidth.h:40
+#: modules/fullwidth/fullwidth.h:40 modules/fullwidth/fullwidth.cpp:85
 msgid "Full width Character"
 msgstr "Полноширинный символ"
 
@@ -149,7 +149,7 @@ msgstr "Клавиша для активации быстрой фразы"
 msgid "Learning"
 msgstr "Обучение"
 
-#: im/table/engine.h:43
+#: im/table/engine.h:45
 msgid "Lookup pinyin"
 msgstr "Изучение пиньинь"
 
@@ -161,7 +161,7 @@ msgstr "Изменить словарь"
 msgid "Next page"
 msgstr "Следующая страница"
 
-#: im/table/engine.cpp:95
+#: im/table/engine.cpp:112
 msgid "Not available"
 msgstr "Недоступно"
 
@@ -177,7 +177,7 @@ msgstr "Пиньинь"
 msgid "Please use this functionality after typing some text."
 msgstr "Пожалуйста, используйте эту функцию после набора текста."
 
-#: im/pinyin/pinyin.cpp:323
+#: im/pinyin/pinyin.cpp:466
 msgid "Prediction"
 msgstr "Предсказание"
 
@@ -185,11 +185,11 @@ msgstr "Предсказание"
 msgid "Prefix key to trigger Pinyin"
 msgstr "Клавиша-префикс для активации пиньинь"
 
-#: im/pinyin/pinyin.cpp:681
+#: im/pinyin/pinyin.cpp:824
 msgid "Press %1% for %2%"
 msgstr "Нажмите %1% для %2%"
 
-#: im/pinyin/pinyin.cpp:677
+#: im/pinyin/pinyin.cpp:820
 msgid "Press %1% for %2% and %3% for %4%"
 msgstr "Нажмите %1% для %2% и %3% для %4%"
 
@@ -214,7 +214,7 @@ msgstr "Предыдущая страница"
 msgid "Punctuation"
 msgstr "Пунктуация"
 
-#: im/pinyin/pinyin.cpp:678
+#: im/pinyin/pinyin.cpp:821
 msgid "Return"
 msgstr "Return"
 
@@ -226,7 +226,7 @@ msgstr "Сохранить автоматическую фразу"
 msgid "Selection"
 msgstr "Выбор"
 
-#: im/pinyin/pinyin.cpp:324
+#: im/pinyin/pinyin.cpp:467
 msgid "Show prediction words"
 msgstr "Показать слова-предсказания"
 
@@ -282,17 +282,9 @@ msgstr "Wubi"
 msgid "Wubi Pinyin"
 msgstr "Wubi Pinyin"
 
-#: im/pinyin/pinyin.conf.in:4
-msgid "fcitx-pinyin"
-msgstr "fcitx-pinyin"
-
-#: im/pinyin/shuangpin.conf.in:4
-msgid "fcitx-shuangpin"
-msgstr "fcitx-shuangpin"
-
-#: im/table/wbpy.conf.in.in:4 im/table/wbx.conf.in.in:4
-msgid "fcitx-wubi"
-msgstr "fcitx-wubi"
+#: im/pinyin/pinyin.cpp:112
+msgid "{0} ({1})"
+msgstr ""
 
 #: im/table/state.cpp:484
 msgid "{0} is not in table."

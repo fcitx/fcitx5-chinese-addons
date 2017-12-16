@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2017-12-12 09:51-0800\n"
+"POT-Creation-Date: 2017-12-16 10:32-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: scootergrisen <scootergrisen@gmail.com>, 2017\n"
 "Language-Team: Danish (https://www.transifex.com/fcitx/teams/12005/da/)\n"
@@ -50,15 +50,15 @@ msgstr "Automatisk valg af sidste kandidat når der ikke er noget nyt match"
 msgid "Cloud Pinyin"
 msgstr "Sky-Pinyin"
 
-#: im/pinyin/pinyin.cpp:451
+#: im/pinyin/pinyin.cpp:594
 msgid "Cloud Pinyin Status"
 msgstr "Status for sky-Pinyin"
 
-#: im/pinyin/pinyin.cpp:453
+#: im/pinyin/pinyin.cpp:596
 msgid "Cloud Pinyin is disabled."
 msgstr "Sky-Pinyin er deaktiveret."
 
-#: im/pinyin/pinyin.cpp:452
+#: im/pinyin/pinyin.cpp:595
 msgid "Cloud Pinyin is enabled."
 msgstr "Sky-Pinyin er aktiveret."
 
@@ -98,7 +98,7 @@ msgstr "Ekstra Pinyin-funktionalitet"
 msgid "File"
 msgstr "Fil"
 
-#: modules/fullwidth/fullwidth.cpp:85 modules/fullwidth/fullwidth.h:40
+#: modules/fullwidth/fullwidth.h:40 modules/fullwidth/fullwidth.cpp:85
 msgid "Full width Character"
 msgstr "Fuld tegnbredde"
 
@@ -146,7 +146,7 @@ msgstr "Tast til at udløse hurtigfrase"
 msgid "Learning"
 msgstr "Læring"
 
-#: im/table/engine.h:43
+#: im/table/engine.h:45
 msgid "Lookup pinyin"
 msgstr "Pinyin-opslag"
 
@@ -158,7 +158,7 @@ msgstr "Rediger ordbog"
 msgid "Next page"
 msgstr "Næste side"
 
-#: im/table/engine.cpp:95
+#: im/table/engine.cpp:112
 msgid "Not available"
 msgstr "Ikke tilgængelig"
 
@@ -174,7 +174,7 @@ msgstr "Pinyin"
 msgid "Please use this functionality after typing some text."
 msgstr "Brug venligst denne funktionalitet efter du har skrevet noget tekst."
 
-#: im/pinyin/pinyin.cpp:323
+#: im/pinyin/pinyin.cpp:466
 msgid "Prediction"
 msgstr "Forudsigelse"
 
@@ -182,11 +182,11 @@ msgstr "Forudsigelse"
 msgid "Prefix key to trigger Pinyin"
 msgstr "Præfikstast til at udløse Pinyin"
 
-#: im/pinyin/pinyin.cpp:681
+#: im/pinyin/pinyin.cpp:824
 msgid "Press %1% for %2%"
 msgstr "Tryk på %1% for %2%"
 
-#: im/pinyin/pinyin.cpp:677
+#: im/pinyin/pinyin.cpp:820
 msgid "Press %1% for %2% and %3% for %4%"
 msgstr "Tryk på %1% for %2% og %3% for %4%"
 
@@ -211,7 +211,7 @@ msgstr "Forrige side"
 msgid "Punctuation"
 msgstr "Tegnsætning"
 
-#: im/pinyin/pinyin.cpp:678
+#: im/pinyin/pinyin.cpp:821
 msgid "Return"
 msgstr "Retur"
 
@@ -223,7 +223,7 @@ msgstr "Gem automatisk frase"
 msgid "Selection"
 msgstr "Valg"
 
-#: im/pinyin/pinyin.cpp:324
+#: im/pinyin/pinyin.cpp:467
 msgid "Show prediction words"
 msgstr "Vis forudsigelsesord"
 
@@ -279,17 +279,9 @@ msgstr "Wubi"
 msgid "Wubi Pinyin"
 msgstr "Wubi Pinyin"
 
-#: im/pinyin/pinyin.conf.in:4
-msgid "fcitx-pinyin"
-msgstr "fcitx-pinyin"
-
-#: im/pinyin/shuangpin.conf.in:4
-msgid "fcitx-shuangpin"
-msgstr "fcitx-shuangpin"
-
-#: im/table/wbpy.conf.in.in:4 im/table/wbx.conf.in.in:4
-msgid "fcitx-wubi"
-msgstr "fcitx-wubi"
+#: im/pinyin/pinyin.cpp:112
+msgid "{0} ({1})"
+msgstr ""
 
 #: im/table/state.cpp:484
 msgid "{0} is not in table."
