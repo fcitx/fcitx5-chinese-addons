@@ -2,12 +2,15 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the fcitx5-chinese-addons package.
 #
+# Translators:
+# csslayer <wengxt@gmail.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2017-12-16 10:30-0800\n"
+"POT-Creation-Date: 2017-12-17 00:00-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: csslayer <wengxt@gmail.com>, 2017\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/fcitx/teams/12005/"
 "zh_CN/)\n"
 "Language: zh_CN\n"
@@ -46,7 +49,7 @@ msgstr ""
 
 #: modules/cloudpinyin/cloudpinyin.conf.in:3
 msgid "Cloud Pinyin"
-msgstr ""
+msgstr "云拼音"
 
 #: im/pinyin/pinyin.cpp:594
 msgid "Cloud Pinyin Status"
@@ -96,7 +99,7 @@ msgstr ""
 msgid "File"
 msgstr ""
 
-#: modules/fullwidth/fullwidth.h:40 modules/fullwidth/fullwidth.cpp:85
+#: modules/fullwidth/fullwidth.cpp:85 modules/fullwidth/fullwidth.h:40
 msgid "Full width Character"
 msgstr ""
 
