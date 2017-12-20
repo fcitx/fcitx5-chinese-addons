@@ -566,6 +566,12 @@ void PinyinEngine::deactivate(const fcitx::InputMethodEntry &entry,
                               fcitx::InputContextEvent &event) {
     auto inputContext = event.inputContext();
     inputContext->statusArea().clearGroup(StatusGroup::InputMethod);
+    if (event.type() == EventType::InputContextSwitchInputMethod) {
+        auto state = inputContext->propertyFor(&factory_);
+        if (state->context_.size()) {
+            inputContext->commitString(state->context_.userInput());
+        }
+    }
     reset(entry, event);
 }
 
