@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2017-12-16 10:32-0800\n"
+"POT-Creation-Date: 2017-12-20 00:00-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Robert Antoni Buj Gelonch <rbuj@fedoraproject.org>, 2017\n"
 "Language-Team: Catalan (https://www.transifex.com/fcitx/teams/12005/ca/)\n"
@@ -50,15 +50,15 @@ msgstr ""
 msgid "Cloud Pinyin"
 msgstr "Pinyin al núvol"
 
-#: im/pinyin/pinyin.cpp:594
+#: im/pinyin/pinyin.cpp:600
 msgid "Cloud Pinyin Status"
 msgstr "Estat de pinyin al núvol"
 
-#: im/pinyin/pinyin.cpp:596
+#: im/pinyin/pinyin.cpp:602
 msgid "Cloud Pinyin is disabled."
 msgstr "El pinyin al núvol està inhabilitat."
 
-#: im/pinyin/pinyin.cpp:595
+#: im/pinyin/pinyin.cpp:601
 msgid "Cloud Pinyin is enabled."
 msgstr "El pinyin al núvol està habilitat."
 
@@ -84,11 +84,11 @@ msgstr ""
 
 #: im/table/ime.h:70
 msgid "End key"
-msgstr ""
+msgstr "Tecla Fi"
 
 #: im/table/ime.h:76
 msgid "Exact Match"
-msgstr ""
+msgstr "Coincidència exacta"
 
 #: modules/pinyinhelper/pinyinhelper.conf.in:3
 msgid "Extra Pinyin functionality"
@@ -98,7 +98,7 @@ msgstr ""
 msgid "File"
 msgstr "Fitxer"
 
-#: modules/fullwidth/fullwidth.h:40 modules/fullwidth/fullwidth.cpp:85
+#: modules/fullwidth/fullwidth.cpp:85 modules/fullwidth/fullwidth.h:40
 msgid "Full width Character"
 msgstr ""
 
@@ -182,13 +182,13 @@ msgstr "Predicció"
 msgid "Prefix key to trigger Pinyin"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:824
+#: im/pinyin/pinyin.cpp:830
 msgid "Press %1% for %2%"
-msgstr ""
+msgstr "Premeu %1% per %2%"
 
-#: im/pinyin/pinyin.cpp:820
+#: im/pinyin/pinyin.cpp:826
 msgid "Press %1% for %2% and %3% for %4%"
-msgstr ""
+msgstr "Premeu %1% per %2% i %3% per %4%"
 
 #: im/table/state.cpp:466
 msgid "Press Backspace to forget."
@@ -211,9 +211,9 @@ msgstr "Re Pàg"
 msgid "Punctuation"
 msgstr "Puntuació"
 
-#: im/pinyin/pinyin.cpp:821
+#: im/pinyin/pinyin.cpp:827
 msgid "Return"
-msgstr ""
+msgstr "Retorn"
 
 #: im/table/ime.h:75
 msgid "Save auto phrase"
@@ -257,11 +257,11 @@ msgstr "El xinès tradicional està habilitat."
 
 #: im/table/state.cpp:441
 msgid "Use Left and Right to select character: "
-msgstr ""
+msgstr "Utilitza dret i esquerre per seleccionar el caràcter:"
 
 #: im/table/state.cpp:452
 msgid "Use Left and Right to select text. "
-msgstr ""
+msgstr "Utilitza dret i esquerre per seleccionar el text:"
 
 #: im/table/ime.h:53
 msgid "Use full width"
@@ -281,7 +281,7 @@ msgstr "Wubi Pinyin"
 
 #: im/pinyin/pinyin.cpp:112
 msgid "{0} ({1})"
-msgstr ""
+msgstr "{0} ({1})"
 
 #: im/table/state.cpp:484
 msgid "{0} is not in table."
