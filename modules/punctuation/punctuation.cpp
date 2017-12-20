@@ -221,9 +221,11 @@ Punctuation::Punctuation(Instance *instance)
                 lastCharBeforeCursor == utf8::NOT_ENOUGH_SPACE) {
                 return;
             }
-            if (charutils::isupper(lastCharBeforeCursor) ||
-                charutils::islower(lastCharBeforeCursor) ||
-                charutils::isdigit(lastCharBeforeCursor)) {
+            // Need to make sure we have ascii.
+            if (std::distance(start, end) == 1 &&
+                (charutils::isupper(lastCharBeforeCursor) ||
+                 charutils::islower(lastCharBeforeCursor) ||
+                 charutils::isdigit(lastCharBeforeCursor))) {
                 state->lastIsEngOrDigit_ = lastCharBeforeCursor;
             }
             // Restore the not converted state if we still after the same chr.
