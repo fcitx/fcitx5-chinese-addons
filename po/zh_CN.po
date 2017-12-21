@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2017-12-17 00:00-0800\n"
+"POT-Creation-Date: 2017-12-21 00:01-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: csslayer <wengxt@gmail.com>, 2017\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/fcitx/teams/12005/"
@@ -21,277 +21,277 @@ msgstr ""
 
 #: im/table/state.cpp:615
 msgid " Return for "
-msgstr ""
+msgstr "回车以"
 
 #: im/table/state.cpp:612
 msgid " for "
-msgstr ""
+msgstr "以"
 
 #: im/table/ime.h:73
 msgid "Auto phrase length"
-msgstr ""
+msgstr "自动词组长度"
 
 #: im/table/ime.h:82
 msgid "Auto rule set"
-msgstr ""
+msgstr "自动组词使用规则"
 
 #: im/table/ime.h:60
 msgid "Auto select candidate"
-msgstr ""
+msgstr "自动选择候选词"
 
 #: im/table/ime.h:62
 msgid "Auto select candidate Length"
-msgstr ""
+msgstr "自动选择候选词长度"
 
 #: im/table/ime.h:65
 msgid "Auto select last candidate when there is no new match"
-msgstr ""
+msgstr "没有新匹配时自动选择最后的候选词"
 
 #: modules/cloudpinyin/cloudpinyin.conf.in:3
 msgid "Cloud Pinyin"
 msgstr "云拼音"
 
-#: im/pinyin/pinyin.cpp:594
+#: im/pinyin/pinyin.cpp:600
 msgid "Cloud Pinyin Status"
-msgstr ""
+msgstr "云拼音状态"
 
-#: im/pinyin/pinyin.cpp:596
+#: im/pinyin/pinyin.cpp:602
 msgid "Cloud Pinyin is disabled."
-msgstr ""
+msgstr "云拼音已禁用。"
 
-#: im/pinyin/pinyin.cpp:595
+#: im/pinyin/pinyin.cpp:601
 msgid "Cloud Pinyin is enabled."
-msgstr ""
+msgstr "云拼音已启用。"
 
 #: im/table/ime.h:68
 msgid "Commit raw input when there is no candidate"
-msgstr ""
+msgstr "没有候选词时提交原始输入"
 
 #: im/table/state.cpp:449
 msgid "Could not find pinyin."
-msgstr ""
+msgstr "无法找到拼音。"
 
 #: im/table/ime.h:78
 msgid "Display Hint for word"
-msgstr ""
+msgstr "显示词的提示"
 
 #: im/table/ime.h:80
 msgid "Display custom hint"
-msgstr ""
+msgstr "显示自定义提示"
 
 #: im/table/ime.h:58
 msgid "Don't sort word shorter"
-msgstr ""
+msgstr "不对短于长度的词排序"
 
 #: im/table/ime.h:70
 msgid "End key"
-msgstr ""
+msgstr "中止键"
 
 #: im/table/ime.h:76
 msgid "Exact Match"
-msgstr ""
+msgstr "精确匹配"
 
 #: modules/pinyinhelper/pinyinhelper.conf.in:3
 msgid "Extra Pinyin functionality"
-msgstr ""
+msgstr "额外拼音功能"
 
 #: im/table/ime.h:35
 msgid "File"
-msgstr ""
+msgstr "文件"
 
 #: modules/fullwidth/fullwidth.cpp:85 modules/fullwidth/fullwidth.h:40
 msgid "Full width Character"
-msgstr ""
+msgstr "全角字符"
 
 #: modules/fullwidth/fullwidth.cpp:87
 msgid "Full width Character is disabled."
-msgstr ""
+msgstr "全角字符已禁用。"
 
 #: modules/fullwidth/fullwidth.cpp:86
 msgid "Full width Character is enabled."
-msgstr ""
+msgstr "全角字符已启用。"
 
 #: modules/fullwidth/fullwidth.conf.in:3
 msgid "Full width character"
-msgstr ""
+msgstr "全角字符"
 
 #: modules/punctuation/punctuation.h:65
 msgid "Full width punctuation"
-msgstr ""
+msgstr "全角标点"
 
 #: modules/punctuation/punctuation.cpp:155
 msgid "Full width punctuation is disabled."
-msgstr ""
+msgstr "全角标点已禁用。"
 
 #: modules/punctuation/punctuation.cpp:154
 msgid "Full width punctuation is enabled."
-msgstr ""
+msgstr "全角标点已启用。"
 
 #: modules/fullwidth/fullwidth.h:41
 msgid "Half width Character"
-msgstr ""
+msgstr "半角字符"
 
 #: modules/punctuation/punctuation.h:66
 msgid "Half width punctuation"
-msgstr ""
+msgstr "半角标点"
 
 #: im/table/ime.h:56
 msgid "Icon"
-msgstr ""
+msgstr "图标"
 
 #: im/table/ime.h:55
 msgid "Key to trigger quickphrase"
-msgstr ""
+msgstr "快速输入的触发键"
 
 #: im/table/ime.h:77
 msgid "Learning"
-msgstr ""
+msgstr "学习"
 
 #: im/table/engine.h:45
 msgid "Lookup pinyin"
-msgstr ""
+msgstr "查找拼音"
 
 #: im/table/engine.h:40
 msgid "Modify dictionary"
-msgstr ""
+msgstr "修改词典"
 
 #: im/table/ime.h:39
 msgid "Next page"
-msgstr ""
+msgstr "下一页"
 
 #: im/table/engine.cpp:112
 msgid "Not available"
-msgstr ""
+msgstr "不可用"
 
 #: im/table/ime.h:69
 msgid "Order policy"
-msgstr ""
+msgstr "排序规则"
 
 #: im/pinyin/pinyin-addon.conf.in:3 im/pinyin/pinyin.conf.in:3
 msgid "Pinyin"
-msgstr ""
+msgstr "拼音"
 
 #: im/table/state.cpp:435
 msgid "Please use this functionality after typing some text."
-msgstr ""
+msgstr "请在输入一些文字之后再使用这个功能。"
 
 #: im/pinyin/pinyin.cpp:466
 msgid "Prediction"
-msgstr ""
+msgstr "预测"
 
 #: im/table/ime.h:59
 msgid "Prefix key to trigger Pinyin"
-msgstr ""
+msgstr "触发拼音的前缀键"
 
-#: im/pinyin/pinyin.cpp:824
+#: im/pinyin/pinyin.cpp:830
 msgid "Press %1% for %2%"
-msgstr ""
+msgstr "按下%1%输入%2%"
 
-#: im/pinyin/pinyin.cpp:820
+#: im/pinyin/pinyin.cpp:826
 msgid "Press %1% for %2% and %3% for %4%"
-msgstr ""
+msgstr "按下%1%输入%2%，按下%3%输入%4%"
 
 #: im/table/state.cpp:466
 msgid "Press Backspace to forget."
-msgstr ""
+msgstr "按下退格键以忘记。"
 
 #: im/table/state.cpp:469
 msgid "Press Delete to remove."
-msgstr ""
+msgstr "按下删除键来移除。"
 
 #: im/table/state.cpp:463
 msgid "Press space to insert."
-msgstr ""
+msgstr "按下空格键来插入。"
 
 #: im/table/ime.h:37
 msgid "Prev page"
-msgstr ""
+msgstr "上一页"
 
 #: modules/punctuation/punctuation.cpp:153
 #: modules/punctuation/punctuation.conf.in:3
 msgid "Punctuation"
-msgstr ""
+msgstr "标点"
 
-#: im/pinyin/pinyin.cpp:821
+#: im/pinyin/pinyin.cpp:827
 msgid "Return"
-msgstr ""
+msgstr "返回"
 
 #: im/table/ime.h:75
 msgid "Save auto phrase"
-msgstr ""
+msgstr "保存自动组词"
 
 #: im/table/ime.h:47
 msgid "Selection"
-msgstr ""
+msgstr "选择"
 
 #: im/pinyin/pinyin.cpp:467
 msgid "Show prediction words"
-msgstr ""
+msgstr "显示联想词组"
 
 #: im/pinyin/shuangpin.conf.in:3
 msgid "Shuangpin"
-msgstr ""
+msgstr "双拼"
 
 #: modules/chttrans/chttrans.cpp:92 modules/chttrans/chttrans.h:75
 msgid "Simplified Chinese"
-msgstr ""
+msgstr "简体中文"
 
 #: modules/chttrans/chttrans.cpp:94
 msgid "Simplified Chinese is enabled."
-msgstr ""
+msgstr "简体中文已启用。"
 
 #: modules/chttrans/chttrans.conf.in:3
 msgid "Simplified and Traditional Chinese Translation"
-msgstr ""
+msgstr "简繁转换"
 
 #: im/table/table.conf.in:3
 msgid "Table"
-msgstr ""
+msgstr "码表"
 
 #: modules/chttrans/chttrans.cpp:91 modules/chttrans/chttrans.h:74
 msgid "Traditional Chinese"
-msgstr ""
+msgstr "繁体中文"
 
 #: modules/chttrans/chttrans.cpp:93
 msgid "Traditional Chinese is enabled."
-msgstr ""
+msgstr "繁体中文已启用。"
 
 #: im/table/state.cpp:441
 msgid "Use Left and Right to select character: "
-msgstr ""
+msgstr "使用左右键来选择字符："
 
 #: im/table/state.cpp:452
 msgid "Use Left and Right to select text. "
-msgstr ""
+msgstr "使用左右键来选择字符。"
 
 #: im/table/ime.h:53
 msgid "Use full width"
-msgstr ""
+msgstr "使用全角字符"
 
 #: im/table/ime.h:71
 msgid "Wildcard matching Key"
-msgstr ""
+msgstr "模糊键"
 
 #: im/table/wbx.conf.in.in:3
 msgid "Wubi"
-msgstr ""
+msgstr "五笔字型"
 
 #: im/table/wbpy.conf.in.in:3
 msgid "Wubi Pinyin"
-msgstr ""
+msgstr "五笔拼音"
 
 #: im/pinyin/pinyin.cpp:112
 msgid "{0} ({1})"
-msgstr ""
+msgstr "{0} ({1})"
 
 #: im/table/state.cpp:484
 msgid "{0} is not in table."
-msgstr ""
+msgstr "{0} 不在码表中。"
 
 #: im/table/state.cpp:473
 msgid "{0}: No corresponding code."
-msgstr ""
+msgstr "{0}：没有对应的码。"
 
 #: im/table/state.cpp:458 im/table/state.cpp:481
 msgid "{0}: {1}"
-msgstr ""
+msgstr "{0}：{1}"
