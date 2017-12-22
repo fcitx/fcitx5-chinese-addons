@@ -525,9 +525,15 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
     }
 
     auto chr = Key::keySymToUnicode(event.key().sym());
-    if (!event.key().hasModifier() && context->isValidInput(chr)) {
-        context->type(utf8::UCS4ToUTF8(chr));
-        event.filterAndAccept();
+    if (!event.key().hasModifier() && chr && context->isValidInput(chr)) {
+        auto str = utf8::UCS4ToUTF8(chr);
+        context->type(str);
+        if (context->candidates().empty() && context->currentCode() == str) {
+            // This means it is not a valid start, make it go through the punc.
+            context->backspace();
+        } else {
+            event.filterAndAccept();
+        }
     } else if (context->size()) {
         if (event.key().check(FcitxKey_Return, KeyState::Shift)) {
             inputContext->commitString(context->userInput());

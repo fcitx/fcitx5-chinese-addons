@@ -1,1 +1,26 @@
+[InputMethod]
+Name=Cangjie
+Icon=fcitx-cangjie
+Label=仓
+LangCode=zh_CN
+Addon=table
+Configurable=True
 
+[Table]
+File=@LIBIME_INSTALL_PKGDATADIR@/cj.main.dict
+AutoSelect=True
+AutoSelectLength=-1
+NoMatchAutoSelectLength=0
+Hint=False
+MatchingKey=?
+OrderPolicy=No
+UseFullWidth=True
+QuickPhraseKey=semicolon
+
+[Table/PrevPage]
+0=Up
+1=minus
+
+[Table/NextPage]
+0=Down
+1=equal

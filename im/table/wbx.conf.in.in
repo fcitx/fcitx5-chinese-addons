@@ -20,7 +20,9 @@ UseFullWidth=True
 QuickPhraseKey=semicolon
 AutoPhraseLength=4
 SaveAutoPhraseAfter=3
-AutoRuleSet=e2
+
+[Table/AutoRuleSet]
+0=e2
 
 [Table/PrevPage]
 0=Up

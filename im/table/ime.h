@@ -58,7 +58,7 @@ FCITX_CONFIGURATION(
                                   _("Don't sort word shorter")};
     Option<Key> pinyinKey{this, "PinyinKey", _("Prefix key to trigger Pinyin")};
     Option<bool> autoSelect{this, "AutoSelect", _("Auto select candidate")};
-    Option<bool> autoSelectLength{this, "AutoSelectLength",
+    Option<int> autoSelectLength{this, "AutoSelectLength",
                                   _("Auto select candidate Length")};
     Option<int> noMatchAutoSelectLength{
         this, "NoMatchAutoSelectLength",
@@ -67,7 +67,7 @@ FCITX_CONFIGURATION(
         this, "CommitRawInput",
         _("Commit raw input when there is no candidate")};
     Option<OrderPolicy> orderPolicy{this, "OrderPolicy", _("Order policy")};
-    Option<KeyList> endKey{this, "EndKey", _("End key")};
+    HiddenOption<KeyList> endKey{this, "EndKey", _("End key")};
     Option<Key> matchingKey{this, "MatchingKey", _("Wildcard matching Key")};
     Option<int> autoPhraseLength{this, "AutoPhraseLength",
                                  _("Auto phrase length"), -1};

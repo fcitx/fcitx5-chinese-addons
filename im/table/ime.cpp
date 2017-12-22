@@ -59,6 +59,7 @@ void populateOptions(libime::TableBasedDictionary *dict,
     options.setMatchingKey(
         Key::keySymToUnicode(root.config->matchingKey->sym()));
     std::set<uint32_t> endKeys;
+    TABLE_DEBUG() << "End key" << *root.config->endKey;
     for (const auto &key : *root.config->endKey) {
         auto chr = Key::keySymToUnicode(key.sym());
         if (chr) {

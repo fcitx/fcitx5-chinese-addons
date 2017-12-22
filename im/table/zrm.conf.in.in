@@ -1,1 +1,26 @@
+[InputMethod]
+Name=Ziranma
+Icon=fcitx-ziranma
+Label=自
+LangCode=zh_CN
+Addon=table
+Configurable=True
+
+[Table]
+File=@LIBIME_INSTALL_PKGDATADIR@/zrm.main.dict
+AutoSelect=True
+AutoSelectLength=-1
+NoMatchAutoSelectLength=-1
+Hint=True
+OrderPolicy=Fast
+UseFullWidth=True
+QuickPhraseKey=semicolon
+
+[Table/PrevPage]
+0=Up
+1=minus
+
+[Table/NextPage]
+0=Down
+1=equal
 
