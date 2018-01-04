@@ -59,7 +59,7 @@ FCITX_CONFIGURATION(
     Option<Key> pinyinKey{this, "PinyinKey", _("Prefix key to trigger Pinyin")};
     Option<bool> autoSelect{this, "AutoSelect", _("Auto select candidate")};
     Option<int> autoSelectLength{this, "AutoSelectLength",
-                                  _("Auto select candidate Length")};
+                                 _("Auto select candidate Length")};
     Option<int> noMatchAutoSelectLength{
         this, "NoMatchAutoSelectLength",
         _("Auto select last candidate when there is no new match")};

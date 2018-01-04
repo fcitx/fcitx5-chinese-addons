@@ -81,6 +81,7 @@ void TableEngine::activate(const fcitx::InputMethodEntry &entry,
     auto state = inputContext->propertyFor(&factory_);
     auto context = state->context(&entry);
     if (stringutils::startsWith(entry.languageCode(), "zh_")) {
+        chttrans();
         for (auto actionName : {"chttrans", "punctuation"}) {
             if (auto action = instance_->userInterfaceManager().lookupAction(
                     actionName)) {

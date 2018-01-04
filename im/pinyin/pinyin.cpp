@@ -549,6 +549,7 @@ void PinyinEngine::activate(const fcitx::InputMethodEntry &entry,
     auto inputContext = event.inputContext();
     // Request full width.
     fullwidth();
+    chttrans();
     for (auto actionName : {"chttrans", "punctuation", "fullwidth"}) {
         if (auto action =
                 instance_->userInterfaceManager().lookupAction(actionName)) {

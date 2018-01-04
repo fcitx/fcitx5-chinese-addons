@@ -215,9 +215,10 @@ ChttransIMType Chttrans::convertType(fcitx::InputContext *inputContext) {
     }
 
     if (!enabledIM_.count(entry->uniqueName())) {
-        return ChttransIMType::Other;
+        return type;
     }
-    return type;
+    return type == ChttransIMType::Simp ? ChttransIMType::Trad
+                                        : ChttransIMType::Simp;
 }
 
 class ChttransModuleFactory : public AddonFactory {

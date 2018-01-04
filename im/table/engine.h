@@ -84,6 +84,7 @@ public:
     FCITX_ADDON_DEPENDENCY_LOADER(punctuation, instance_->addonManager());
     FCITX_ADDON_DEPENDENCY_LOADER(quickphrase, instance_->addonManager());
     FCITX_ADDON_DEPENDENCY_LOADER(pinyinhelper, instance_->addonManager());
+    FCITX_ADDON_DEPENDENCY_LOADER(chttrans, instance_->addonManager());
 
 private:
     void cloudTableSelected(InputContext *inputContext,
