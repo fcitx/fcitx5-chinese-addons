@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2017-12-21 00:01-0800\n"
+"POT-Creation-Date: 2018-01-04 00:01-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: csslayer <wengxt@gmail.com>, 2017\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/fcitx/teams/12005/"
@@ -19,11 +19,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: im/table/state.cpp:615
+#: im/table/state.cpp:621
 msgid " Return for "
 msgstr "回车以"
 
-#: im/table/state.cpp:612
+#: im/table/state.cpp:618
 msgid " for "
 msgstr "以"
 
@@ -47,19 +47,27 @@ msgstr "自动选择候选词长度"
 msgid "Auto select last candidate when there is no new match"
 msgstr "没有新匹配时自动选择最后的候选词"
 
+#: im/table/qxm.conf.in.in:3
+msgid "Bingchan"
+msgstr ""
+
+#: im/table/cangjie.conf.in.in:3
+msgid "Cangjie"
+msgstr ""
+
 #: modules/cloudpinyin/cloudpinyin.conf.in:3
 msgid "Cloud Pinyin"
 msgstr "云拼音"
 
-#: im/pinyin/pinyin.cpp:600
+#: im/pinyin/pinyin.cpp:601
 msgid "Cloud Pinyin Status"
 msgstr "云拼音状态"
 
-#: im/pinyin/pinyin.cpp:602
+#: im/pinyin/pinyin.cpp:603
 msgid "Cloud Pinyin is disabled."
 msgstr "云拼音已禁用。"
 
-#: im/pinyin/pinyin.cpp:601
+#: im/pinyin/pinyin.cpp:602
 msgid "Cloud Pinyin is enabled."
 msgstr "云拼音已启用。"
 
@@ -70,6 +78,10 @@ msgstr "没有候选词时提交原始输入"
 #: im/table/state.cpp:449
 msgid "Could not find pinyin."
 msgstr "无法找到拼音。"
+
+#: im/table/db.conf.in.in:3
+msgid "Dianbaoma"
+msgstr ""
 
 #: im/table/ime.h:78
 msgid "Display Hint for word"
@@ -86,6 +98,10 @@ msgstr "不对短于长度的词排序"
 #: im/table/ime.h:70
 msgid "End key"
 msgstr "中止键"
+
+#: im/table/erbi.conf.in.in:3
+msgid "Erbi"
+msgstr ""
 
 #: im/table/ime.h:76
 msgid "Exact Match"
@@ -159,7 +175,7 @@ msgstr "修改词典"
 msgid "Next page"
 msgstr "下一页"
 
-#: im/table/engine.cpp:112
+#: im/table/engine.cpp:113
 msgid "Not available"
 msgstr "不可用"
 
@@ -183,11 +199,11 @@ msgstr "预测"
 msgid "Prefix key to trigger Pinyin"
 msgstr "触发拼音的前缀键"
 
-#: im/pinyin/pinyin.cpp:830
+#: im/pinyin/pinyin.cpp:831
 msgid "Press %1% for %2%"
 msgstr "按下%1%输入%2%"
 
-#: im/pinyin/pinyin.cpp:826
+#: im/pinyin/pinyin.cpp:827
 msgid "Press %1% for %2% and %3% for %4%"
 msgstr "按下%1%输入%2%，按下%3%输入%4%"
 
@@ -212,7 +228,7 @@ msgstr "上一页"
 msgid "Punctuation"
 msgstr "标点"
 
-#: im/pinyin/pinyin.cpp:827
+#: im/pinyin/pinyin.cpp:828
 msgid "Return"
 msgstr "返回"
 
@@ -268,6 +284,10 @@ msgstr "使用左右键来选择字符。"
 msgid "Use full width"
 msgstr "使用全角字符"
 
+#: im/table/wanfeng.conf.in.in:3
+msgid "Wanfeng"
+msgstr ""
+
 #: im/table/ime.h:71
 msgid "Wildcard matching Key"
 msgstr "模糊键"
@@ -279,6 +299,10 @@ msgstr "五笔字型"
 #: im/table/wbpy.conf.in.in:3
 msgid "Wubi Pinyin"
 msgstr "五笔拼音"
+
+#: im/table/zrm.conf.in.in:3
+msgid "Ziranma"
+msgstr ""
 
 #: im/pinyin/pinyin.cpp:112
 msgid "{0} ({1})"

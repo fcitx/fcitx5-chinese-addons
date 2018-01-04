@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2017-12-16 10:32-0800\n"
+"POT-Creation-Date: 2018-01-04 00:01-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: TotalCaesar659 <x24cm5b8c54q6szxw@yandex.ru>, 2017\n"
 "Language-Team: Russian (https://www.transifex.com/fcitx/teams/12005/ru/)\n"
@@ -20,11 +20,11 @@ msgstr ""
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
 "%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: im/table/state.cpp:615
+#: im/table/state.cpp:621
 msgid " Return for "
 msgstr " Return for "
 
-#: im/table/state.cpp:612
+#: im/table/state.cpp:618
 msgid " for "
 msgstr " for "
 
@@ -49,19 +49,27 @@ msgid "Auto select last candidate when there is no new match"
 msgstr ""
 "Автоматически выбирать последний кандидат при отсутствии новых совпадений"
 
+#: im/table/qxm.conf.in.in:3
+msgid "Bingchan"
+msgstr ""
+
+#: im/table/cangjie.conf.in.in:3
+msgid "Cangjie"
+msgstr ""
+
 #: modules/cloudpinyin/cloudpinyin.conf.in:3
 msgid "Cloud Pinyin"
 msgstr "Cloud Pinyin"
 
-#: im/pinyin/pinyin.cpp:594
+#: im/pinyin/pinyin.cpp:601
 msgid "Cloud Pinyin Status"
 msgstr "Статус Cloud Pinyin"
 
-#: im/pinyin/pinyin.cpp:596
+#: im/pinyin/pinyin.cpp:603
 msgid "Cloud Pinyin is disabled."
 msgstr "Cloud Pinyin отключен."
 
-#: im/pinyin/pinyin.cpp:595
+#: im/pinyin/pinyin.cpp:602
 msgid "Cloud Pinyin is enabled."
 msgstr "Cloud Pinyin включен."
 
@@ -72,6 +80,10 @@ msgstr "Передать прямой ввод при отсутствии ка�
 #: im/table/state.cpp:449
 msgid "Could not find pinyin."
 msgstr "Не удается найти пиньинь."
+
+#: im/table/db.conf.in.in:3
+msgid "Dianbaoma"
+msgstr ""
 
 #: im/table/ime.h:78
 msgid "Display Hint for word"
@@ -89,6 +101,10 @@ msgstr "Не сортировать слова короче"
 msgid "End key"
 msgstr "Клавиша End"
 
+#: im/table/erbi.conf.in.in:3
+msgid "Erbi"
+msgstr ""
+
 #: im/table/ime.h:76
 msgid "Exact Match"
 msgstr "Точное совпадение"
@@ -101,7 +117,7 @@ msgstr "Дополнительная функциональность пиньи
 msgid "File"
 msgstr "Файл"
 
-#: modules/fullwidth/fullwidth.h:40 modules/fullwidth/fullwidth.cpp:85
+#: modules/fullwidth/fullwidth.cpp:85 modules/fullwidth/fullwidth.h:40
 msgid "Full width Character"
 msgstr "Полноширинный символ"
 
@@ -161,7 +177,7 @@ msgstr "Изменить словарь"
 msgid "Next page"
 msgstr "Следующая страница"
 
-#: im/table/engine.cpp:112
+#: im/table/engine.cpp:113
 msgid "Not available"
 msgstr "Недоступно"
 
@@ -185,11 +201,11 @@ msgstr "Предсказание"
 msgid "Prefix key to trigger Pinyin"
 msgstr "Клавиша-префикс для активации пиньинь"
 
-#: im/pinyin/pinyin.cpp:824
+#: im/pinyin/pinyin.cpp:831
 msgid "Press %1% for %2%"
 msgstr "Нажмите %1% для %2%"
 
-#: im/pinyin/pinyin.cpp:820
+#: im/pinyin/pinyin.cpp:827
 msgid "Press %1% for %2% and %3% for %4%"
 msgstr "Нажмите %1% для %2% и %3% для %4%"
 
@@ -214,7 +230,7 @@ msgstr "Предыдущая страница"
 msgid "Punctuation"
 msgstr "Пунктуация"
 
-#: im/pinyin/pinyin.cpp:821
+#: im/pinyin/pinyin.cpp:828
 msgid "Return"
 msgstr "Return"
 
@@ -270,6 +286,10 @@ msgstr "Используйте влево и вправо для выбора т
 msgid "Use full width"
 msgstr "Использовать полную ширину"
 
+#: im/table/wanfeng.conf.in.in:3
+msgid "Wanfeng"
+msgstr ""
+
 #: im/table/ime.h:71
 msgid "Wildcard matching Key"
 msgstr "Клавиша, соответствующая карточке"
@@ -281,6 +301,10 @@ msgstr "Wubi"
 #: im/table/wbpy.conf.in.in:3
 msgid "Wubi Pinyin"
 msgstr "Wubi Pinyin"
+
+#: im/table/zrm.conf.in.in:3
+msgid "Ziranma"
+msgstr ""
 
 #: im/pinyin/pinyin.cpp:112
 msgid "{0} ({1})"

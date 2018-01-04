@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2017-12-21 00:01-0800\n"
+"POT-Creation-Date: 2018-01-04 00:01-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: scootergrisen <scootergrisen@gmail.com>, 2017\n"
 "Language-Team: Danish (https://www.transifex.com/fcitx/teams/12005/da/)\n"
@@ -18,11 +18,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: im/table/state.cpp:615
+#: im/table/state.cpp:621
 msgid " Return for "
 msgstr " Retur for "
 
-#: im/table/state.cpp:612
+#: im/table/state.cpp:618
 msgid " for "
 msgstr " for "
 
@@ -46,19 +46,27 @@ msgstr "Automatisk valg af kandidatlængde"
 msgid "Auto select last candidate when there is no new match"
 msgstr "Automatisk valg af sidste kandidat når der ikke er noget nyt match"
 
+#: im/table/qxm.conf.in.in:3
+msgid "Bingchan"
+msgstr ""
+
+#: im/table/cangjie.conf.in.in:3
+msgid "Cangjie"
+msgstr ""
+
 #: modules/cloudpinyin/cloudpinyin.conf.in:3
 msgid "Cloud Pinyin"
 msgstr "Sky-Pinyin"
 
-#: im/pinyin/pinyin.cpp:600
+#: im/pinyin/pinyin.cpp:601
 msgid "Cloud Pinyin Status"
 msgstr "Status for sky-Pinyin"
 
-#: im/pinyin/pinyin.cpp:602
+#: im/pinyin/pinyin.cpp:603
 msgid "Cloud Pinyin is disabled."
 msgstr "Sky-Pinyin er deaktiveret."
 
-#: im/pinyin/pinyin.cpp:601
+#: im/pinyin/pinyin.cpp:602
 msgid "Cloud Pinyin is enabled."
 msgstr "Sky-Pinyin er aktiveret."
 
@@ -69,6 +77,10 @@ msgstr "Udfør rå input når der ikke er nogen kandidat"
 #: im/table/state.cpp:449
 msgid "Could not find pinyin."
 msgstr "Kunne ikke finde pinyin."
+
+#: im/table/db.conf.in.in:3
+msgid "Dianbaoma"
+msgstr ""
 
 #: im/table/ime.h:78
 msgid "Display Hint for word"
@@ -85,6 +97,10 @@ msgstr "Sortér ikke ord kortere"
 #: im/table/ime.h:70
 msgid "End key"
 msgstr "Slut-tast"
+
+#: im/table/erbi.conf.in.in:3
+msgid "Erbi"
+msgstr ""
 
 #: im/table/ime.h:76
 msgid "Exact Match"
@@ -158,7 +174,7 @@ msgstr "Rediger ordbog"
 msgid "Next page"
 msgstr "Næste side"
 
-#: im/table/engine.cpp:112
+#: im/table/engine.cpp:113
 msgid "Not available"
 msgstr "Ikke tilgængelig"
 
@@ -182,11 +198,11 @@ msgstr "Forudsigelse"
 msgid "Prefix key to trigger Pinyin"
 msgstr "Præfikstast til at udløse Pinyin"
 
-#: im/pinyin/pinyin.cpp:830
+#: im/pinyin/pinyin.cpp:831
 msgid "Press %1% for %2%"
 msgstr "Tryk på %1% for %2%"
 
-#: im/pinyin/pinyin.cpp:826
+#: im/pinyin/pinyin.cpp:827
 msgid "Press %1% for %2% and %3% for %4%"
 msgstr "Tryk på %1% for %2% og %3% for %4%"
 
@@ -211,7 +227,7 @@ msgstr "Forrige side"
 msgid "Punctuation"
 msgstr "Tegnsætning"
 
-#: im/pinyin/pinyin.cpp:827
+#: im/pinyin/pinyin.cpp:828
 msgid "Return"
 msgstr "Retur"
 
@@ -267,6 +283,10 @@ msgstr "Brug venstre og højre til at vælge tekst. "
 msgid "Use full width"
 msgstr "Brug fuld bredde"
 
+#: im/table/wanfeng.conf.in.in:3
+msgid "Wanfeng"
+msgstr ""
+
 #: im/table/ime.h:71
 msgid "Wildcard matching Key"
 msgstr "Jokertegn matcher tast"
@@ -278,6 +298,10 @@ msgstr "Wubi"
 #: im/table/wbpy.conf.in.in:3
 msgid "Wubi Pinyin"
 msgstr "Wubi Pinyin"
+
+#: im/table/zrm.conf.in.in:3
+msgid "Ziranma"
+msgstr ""
 
 #: im/pinyin/pinyin.cpp:112
 msgid "{0} ({1})"

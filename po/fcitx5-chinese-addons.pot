@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2017-12-16 10:32-0800\n"
+"POT-Creation-Date: 2018-01-04 00:01-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,11 +15,11 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: im/table/state.cpp:615
+#: im/table/state.cpp:621
 msgid " Return for "
 msgstr ""
 
-#: im/table/state.cpp:612
+#: im/table/state.cpp:618
 msgid " for "
 msgstr ""
 
@@ -43,19 +43,27 @@ msgstr ""
 msgid "Auto select last candidate when there is no new match"
 msgstr ""
 
+#: im/table/qxm.conf.in.in:3
+msgid "Bingchan"
+msgstr ""
+
+#: im/table/cangjie.conf.in.in:3
+msgid "Cangjie"
+msgstr ""
+
 #: modules/cloudpinyin/cloudpinyin.conf.in:3
 msgid "Cloud Pinyin"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:594
+#: im/pinyin/pinyin.cpp:601
 msgid "Cloud Pinyin Status"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:596
+#: im/pinyin/pinyin.cpp:603
 msgid "Cloud Pinyin is disabled."
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:595
+#: im/pinyin/pinyin.cpp:602
 msgid "Cloud Pinyin is enabled."
 msgstr ""
 
@@ -65,6 +73,10 @@ msgstr ""
 
 #: im/table/state.cpp:449
 msgid "Could not find pinyin."
+msgstr ""
+
+#: im/table/db.conf.in.in:3
+msgid "Dianbaoma"
 msgstr ""
 
 #: im/table/ime.h:78
@@ -83,6 +95,10 @@ msgstr ""
 msgid "End key"
 msgstr ""
 
+#: im/table/erbi.conf.in.in:3
+msgid "Erbi"
+msgstr ""
+
 #: im/table/ime.h:76
 msgid "Exact Match"
 msgstr ""
@@ -95,7 +111,7 @@ msgstr ""
 msgid "File"
 msgstr ""
 
-#: modules/fullwidth/fullwidth.h:40 modules/fullwidth/fullwidth.cpp:85
+#: modules/fullwidth/fullwidth.cpp:85 modules/fullwidth/fullwidth.h:40
 msgid "Full width Character"
 msgstr ""
 
@@ -155,7 +171,7 @@ msgstr ""
 msgid "Next page"
 msgstr ""
 
-#: im/table/engine.cpp:112
+#: im/table/engine.cpp:113
 msgid "Not available"
 msgstr ""
 
@@ -179,11 +195,11 @@ msgstr ""
 msgid "Prefix key to trigger Pinyin"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:824
+#: im/pinyin/pinyin.cpp:831
 msgid "Press %1% for %2%"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:820
+#: im/pinyin/pinyin.cpp:827
 msgid "Press %1% for %2% and %3% for %4%"
 msgstr ""
 
@@ -208,7 +224,7 @@ msgstr ""
 msgid "Punctuation"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:821
+#: im/pinyin/pinyin.cpp:828
 msgid "Return"
 msgstr ""
 
@@ -264,6 +280,10 @@ msgstr ""
 msgid "Use full width"
 msgstr ""
 
+#: im/table/wanfeng.conf.in.in:3
+msgid "Wanfeng"
+msgstr ""
+
 #: im/table/ime.h:71
 msgid "Wildcard matching Key"
 msgstr ""
@@ -274,6 +294,10 @@ msgstr ""
 
 #: im/table/wbpy.conf.in.in:3
 msgid "Wubi Pinyin"
+msgstr ""
+
+#: im/table/zrm.conf.in.in:3
+msgid "Ziranma"
 msgstr ""
 
 #: im/pinyin/pinyin.cpp:112
