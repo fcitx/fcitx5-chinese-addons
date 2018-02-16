@@ -1,21 +1,21 @@
-/*
- * Copyright (C) 2017~2017 by CSSlayer
- * wengxt@gmail.com
- *
- * This library is free software; you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation; either version 2.1 of the
- * License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; see the file COPYING. If not,
- * see <http://www.gnu.org/licenses/>.
- */
+//
+// Copyright (C) 2017~2017 by CSSlayer
+// wengxt@gmail.com
+//
+// This library is free software; you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as
+// published by the Free Software Foundation; either version 2.1 of the
+// License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; see the file COPYING. If not,
+// see <http://www.gnu.org/licenses/>.
+//
 #ifndef _CLOUDPINYIN_FETCH_H_
 #define _CLOUDPINYIN_FETCH_H_
 
@@ -88,10 +88,10 @@ private:
     size_t curlWrite(char *ptr, size_t size, size_t nmemb) {
         size_t realsize = size * nmemb;
         /*
-        * We know that it isn't possible to overflow during multiplication if
-        * neither operand uses any of the most significant half of the bits in
-        * a size_t.
-        */
+         * We know that it isn't possible to overflow during multiplication if
+         * neither operand uses any of the most significant half of the bits in
+         * a size_t.
+         */
 
         if ((unsigned long long)((nmemb | size) & ((unsigned long long)SIZE_MAX
                                                    << (sizeof(size_t) << 2))) &&

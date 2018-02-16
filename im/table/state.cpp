@@ -1,21 +1,21 @@
-/*
-* Copyright (C) 2017~2017 by CSSlayer
-* wengxt@gmail.com
-*
-* This library is free software; you can redistribute it and/or modify
-* it under the terms of the GNU Lesser General Public License as
-* published by the Free Software Foundation; either version 2.1 of the
-* License, or (at your option) any later version.
-*
-* This library is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-* Lesser General Public License for more details.
-*
-* You should have received a copy of the GNU Lesser General Public
-* License along with this library; see the file COPYING. If not,
-* see <http://www.gnu.org/licenses/>.
-*/
+//
+// Copyright (C) 2017~2017 by CSSlayer
+// wengxt@gmail.com
+//
+// This library is free software; you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as
+// published by the Free Software Foundation; either version 2.1 of the
+// License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; see the file COPYING. If not,
+// see <http://www.gnu.org/licenses/>.
+//
 #include "state.h"
 #include "pinyinhelper_public.h"
 #include "punctuation_public.h"
@@ -84,7 +84,7 @@ public:
     TableEngine *engine_;
     std::string word_;
 };
-}
+} // namespace
 
 TableContext *TableState::context(const InputMethodEntry *entry) {
     if (!entry || lastContext_ == entry->uniqueName()) {
@@ -288,8 +288,8 @@ bool TableState::handlePinyinMode(KeyEvent &event) {
 
             dict.matchWords(
                 pinyin.data(), pinyin.size(),
-                [this, &pinyinWords, &lm](boost::string_view,
-                                          boost::string_view hanzi, float) {
+                [&pinyinWords, &lm](boost::string_view,
+                                    boost::string_view hanzi, float) {
                     pinyinWords.emplace_back(hanzi.to_string(),
                                              lm.singleWordScore(hanzi));
                     return true;
@@ -317,10 +317,11 @@ bool TableState::handlePinyinMode(KeyEvent &event) {
         Text preeditText;
         preeditText.append(pinyinModePrefix_);
         preeditText.append(pinyinModeBuffer_.userInput());
-        preeditText.setCursor(preeditText.textLength());
         if (ic_->capabilityFlags().test(CapabilityFlag::Preedit)) {
+            preeditText.setCursor(0);
             inputPanel.setClientPreedit(preeditText);
         } else {
+            preeditText.setCursor(preeditText.textLength());
             inputPanel.setPreedit(preeditText);
         }
         ic_->updatePreedit();
@@ -715,4 +716,4 @@ void TableState::updateUI() {
     ic_->updatePreedit();
     ic_->updateUserInterface(UserInterfaceComponent::InputPanel);
 }
-}
+} // namespace fcitx

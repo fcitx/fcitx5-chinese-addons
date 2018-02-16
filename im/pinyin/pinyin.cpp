@@ -1,21 +1,21 @@
-/*
- * Copyright (C) 2017~2017 by CSSlayer
- * wengxt@gmail.com
- *
- * This library is free software; you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation; either version 2.1 of the
- * License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; see the file COPYING. If not,
- * see <http://www.gnu.org/licenses/>.
- */
+//
+// Copyright (C) 2017~2017 by CSSlayer
+// wengxt@gmail.com
+//
+// This library is free software; you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as
+// published by the Free Software Foundation; either version 2.1 of the
+// License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; see the file COPYING. If not,
+// see <http://www.gnu.org/licenses/>.
+//
 
 #include "pinyin.h"
 #include "cloudpinyin_public.h"
@@ -296,8 +296,9 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
                         : context.userInput().substr(context.selectedLength());
                 cloud = std::make_unique<CloudPinyinCandidateWord>(
                     cloudpinyin(), fullPinyin, context.selectedSentence(),
-                    inputContext, std::bind(&PinyinEngine::cloudPinyinSelected,
-                                            this, _1, _2, _3));
+                    inputContext,
+                    std::bind(&PinyinEngine::cloudPinyinSelected, this, _1, _2,
+                              _3));
             }
             for (const auto &candidate : candidates) {
                 auto candidateString = candidate.toString();
@@ -591,9 +592,8 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         return;
     }
 
-    if (cloudpinyin() &&
-        event.key().checkKeyList(
-            cloudpinyin()->call<ICloudPinyin::toggleKey>())) {
+    if (cloudpinyin() && event.key().checkKeyList(
+                             cloudpinyin()->call<ICloudPinyin::toggleKey>())) {
         config_.cloudPinyinEnabled.setValue(!*config_.cloudPinyinEnabled);
         safeSaveAsIni(config_, "conf/pinyin.conf");
 
@@ -981,6 +981,6 @@ void PinyinEngine::cloudPinyinSelected(InputContext *inputContext,
 
     inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
 }
-}
+} // namespace fcitx
 
 FCITX_ADDON_FACTORY(fcitx::PinyinEngineFactory)
