@@ -31,9 +31,16 @@ include("${FCITX_INSTALL_CMAKECONFIG_DIR}/Fcitx5Utils/Fcitx5CompilerSettings.cma
 #######################################################################
 option(ENABLE_TEST "Build Test" On)
 option(ENABLE_OPENCC "Enable OpenCC for chttrans" On)
+option(ENABLE_GUI "Enable Configure Gui" On)
 
 if (ENABLE_OPENCC)
     find_package(OpenCC REQUIRED)
+endif()
+
+if (ENABLE_GUI)
+    find_package(Qt5 REQUIRED COMPONENTS DBus WebEngineWidgets Concurrent)
+    find_package(Fcitx5Qt5WidgetsAddons REQUIRED)
+    find_package(Fcitx5Qt5DBusAddons REQUIRED)
 endif()
 
 find_package(Boost 1.61 REQUIRED COMPONENTS iostreams)
@@ -48,6 +55,11 @@ add_definitions(-DFCITX_GETTEXT_DOMAIN=\"fcitx5-chinese-addons\")
 add_subdirectory(modules)
 add_subdirectory(im)
 add_subdirectory(po)
+add_subdirectory(tools)
+
+if (ENABLE_GUI)
+    add_subdirectory(gui)
+endif()
 
 if (ENABLE_TEST)
     enable_testing()

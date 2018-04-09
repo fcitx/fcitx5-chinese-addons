@@ -21,6 +21,7 @@
 
 #include <fcitx-config/configuration.h>
 #include <fcitx-config/iniparser.h>
+#include <fcitx-utils/i18n.h>
 #include <fcitx/action.h>
 #include <fcitx/addonfactory.h>
 #include <fcitx/addonmanager.h>
@@ -96,7 +97,9 @@ FCITX_CONFIGURATION(
     Option<ShuangpinProfileEnum> shuangpinProfile{
         this, "ShuangpinProfile", "Shuangpin Profile",
         ShuangpinProfileEnum::Ziranma};
-    Option<FuzzyConfig> fuzzyConfig{this, "Fuzzy", "Fuzzy Pinyin Settings"};);
+    Option<FuzzyConfig> fuzzyConfig{this, "Fuzzy", "Fuzzy Pinyin Settings"};
+    ExternalOption dictmanager{this, "DictManager", _("Dictionaries"),
+                               "fcitx://gui/pinyin/dictmanager"};);
 
 class PinyinState;
 class EventSourceTime;
@@ -115,6 +118,8 @@ public:
     void reloadConfig() override;
     void reset(const InputMethodEntry &entry,
                InputContextEvent &event) override;
+    void setSubConfig(const std::string &path,
+                      const fcitx::RawConfig &) override;
     void doReset(InputContext *ic);
     void save() override;
     auto &factory() { return factory_; }
@@ -138,6 +143,7 @@ private:
     void cloudPinyinSelected(InputContext *inputContext,
                              const std::string &selected,
                              const std::string &word);
+    void loadExtraDict();
 
     Instance *instance_;
     PinyinEngineConfig config_;

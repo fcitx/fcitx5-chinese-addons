@@ -483,6 +483,32 @@ PinyinEngine::PinyinEngine(Instance *instance)
 
 PinyinEngine::~PinyinEngine() {}
 
+void PinyinEngine::loadExtraDict() {
+    auto &standardPath = StandardPath::global();
+    auto files = standardPath.multiOpen(StandardPath::Type::PkgData,
+                                        "pinyin/dictionaries", O_RDONLY,
+                                        filter::Suffix(".dict"));
+    ime_->dict()->removeAll();
+    for (const auto &file : files) {
+        try {
+            if (file.second.fd() < 0) {
+                continue;
+            }
+            PINYIN_DEBUG() << "Loading extra dictionary: " << file.first;
+            boost::iostreams::stream_buffer<
+                boost::iostreams::file_descriptor_source>
+                buffer(file.second.fd(),
+                       boost::iostreams::file_descriptor_flags::
+                           never_close_handle);
+            std::istream in(&buffer);
+            ime_->dict()->addEmptyDict();
+            ime_->dict()->load(ime_->dict()->dictSize() - 1, in,
+                               libime::PinyinDictFormat::Binary);
+        } catch (const std::exception &) {
+        }
+    }
+}
+
 void PinyinEngine::reloadConfig() {
     readAsIni(config_, "conf/pinyin.conf");
     ime_->setNBest(*config_.nbest);
@@ -544,6 +570,8 @@ void PinyinEngine::reloadConfig() {
     SET_FUZZY_FLAG(z, Z_ZH)
 
     ime_->setFuzzyFlags(flags);
+
+    loadExtraDict();
 }
 void PinyinEngine::activate(const fcitx::InputMethodEntry &entry,
                             fcitx::InputContextEvent &event) {
@@ -849,6 +877,18 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
 
     if (event.filtered() && event.accepted()) {
         updateUI(inputContext);
+    }
+}
+
+void PinyinEngine::setSubConfig(const std::string &path, const RawConfig &) {
+    if (path == "dictmanager") {
+        loadExtraDict();
+    } else if (path == "clearuserdict") {
+        ime_->dict()->clear(libime::PinyinDictionary::UserDict);
+    } else if (path == "clearalldict") {
+        ime_->dict()->clear(libime::PinyinDictionary::UserDict);
+        ime_->model()->history().clear();
+        ;
     }
 }
 
