@@ -70,12 +70,12 @@ class Chttrans final : public fcitx::AddonInstance {
         ToggleAction(Chttrans *parent) : parent_(parent) {}
 
         std::string shortText(fcitx::InputContext *ic) const override {
-            return parent_->convertType(ic) == ChttransIMType::Simp
+            return parent_->convertType(ic) == ChttransIMType::Trad
                        ? _("Traditional Chinese")
                        : _("Simplified Chinese");
         }
         std::string icon(fcitx::InputContext *ic) const override {
-            return parent_->convertType(ic) == ChttransIMType::Simp
+            return parent_->convertType(ic) == ChttransIMType::Trad
                        ? "fcitx-chttrans-active"
                        : "fcitx-chttrans-inactive";
         }
@@ -100,6 +100,7 @@ public:
         reloadConfig();
     }
 
+    bool needConvert(fcitx::InputContext *inputContext);
     ChttransIMType convertType(fcitx::InputContext *inputContext);
     std::string convert(ChttransIMType type, const std::string &str);
     void toggle(fcitx::InputContext *inputContext);

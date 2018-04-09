@@ -77,12 +77,7 @@ Chttrans::Chttrans(fcitx::Instance *instance) : instance_(instance) {
             }
             if (keyEvent.key().checkKeyList(config_.hotkey.value())) {
                 toggle(ic);
-                bool tradEnabled;
-                if (enabledIM_.count(entry->uniqueName())) {
-                    tradEnabled = type == ChttransIMType::Trad ? false : true;
-                } else {
-                    tradEnabled = type == ChttransIMType::Trad ? true : false;
-                }
+                bool tradEnabled = convertType(ic) == ChttransIMType::Trad;
                 if (notifications()) {
                     notifications()->call<INotifications::showTip>(
                         "fcitx-chttrans-toggle", "fcitx",
@@ -95,15 +90,16 @@ Chttrans::Chttrans(fcitx::Instance *instance) : instance_(instance) {
                         -1);
                 }
                 keyEvent.filterAndAccept();
+                ic->updateUserInterface(UserInterfaceComponent::InputPanel);
             }
         });
     outputFilterConn_ = instance_->connect<Instance::OutputFilter>(
         [this](InputContext *inputContext, Text &text) {
-            auto type = convertType(inputContext);
-            if (type == ChttransIMType::Other ||
-                !toggleAction_.isParent(&inputContext->statusArea())) {
+            if (!toggleAction_.isParent(&inputContext->statusArea()) ||
+                !needConvert(inputContext)) {
                 return;
             }
+            auto type = convertType(inputContext);
             auto oldString = text.toString();
             auto oldLength = utf8::lengthValidated(oldString);
             if (oldLength == utf8::INVALID_LENGTH) {
@@ -143,11 +139,11 @@ Chttrans::Chttrans(fcitx::Instance *instance) : instance_(instance) {
         });
     commitFilterConn_ = instance_->connect<Instance::CommitFilter>(
         [this](InputContext *inputContext, std::string &str) {
-            auto type = convertType(inputContext);
-            if (type == ChttransIMType::Other ||
-                !toggleAction_.isParent(&inputContext->statusArea())) {
+            if (!toggleAction_.isParent(&inputContext->statusArea()) ||
+                !needConvert(inputContext)) {
                 return;
             }
+            auto type = convertType(inputContext);
             str = convert(type, str);
         });
 }
@@ -196,11 +192,25 @@ std::string Chttrans::convert(ChttransIMType type, const std::string &str) {
         return str;
     }
 
-    if (type == ChttransIMType::Simp) {
+    if (type == ChttransIMType::Trad) {
         return iter->second->convertSimpToTrad(str);
     } else {
         return iter->second->convertTradToSimp(str);
     }
+}
+
+bool Chttrans::needConvert(fcitx::InputContext *inputContext) {
+    auto engine = instance_->inputMethodEngine(inputContext);
+    auto entry = instance_->inputMethodEntry(inputContext);
+    if (!engine || !entry) {
+        return false;
+    }
+    auto type = inputMethodType(*entry);
+    if (type == ChttransIMType::Other) {
+        return false;
+    }
+
+    return enabledIM_.count(entry->uniqueName());
 }
 
 ChttransIMType Chttrans::convertType(fcitx::InputContext *inputContext) {
