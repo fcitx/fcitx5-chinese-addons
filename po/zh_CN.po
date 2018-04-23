@@ -5,13 +5,14 @@
 # Translators:
 # csslayer <wengxt@gmail.com>, 2017
 # Mingcong Bai <jeffbai@aosc.xyz>, 2018
+# wwj402 <wwj402@gmail.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2018-04-10 00:02-0700\n"
+"POT-Creation-Date: 2018-04-23 00:01-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Mingcong Bai <jeffbai@aosc.xyz>, 2018\n"
+"Last-Translator: wwj402 <wwj402@gmail.com>, 2018\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/fcitx/teams/12005/"
 "zh_CN/)\n"
 "Language: zh_CN\n"
@@ -30,27 +31,27 @@ msgstr "以"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:135
 msgid "%1 already exists, do you want to overwrite this dictionary?"
-msgstr ""
+msgstr "%1 已存在，是否要覆盖这个词典？"
 
 #: gui/pinyindictmanager/filedownloader.cpp:83
 msgid "%1% Downloaded."
-msgstr ""
+msgstr "%1%已下载"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:44
 msgid "&Browse Sogou Cell Dictionary Online"
-msgstr ""
+msgstr "在线浏览搜狗细胞词典(&B)"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:51
 msgid "&Clear User Data"
-msgstr ""
+msgstr "清理用户数据(&C)"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:356
 msgid "Are you sure to delete %1?"
-msgstr ""
+msgstr "您确定要删除 %1？"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:324
 msgid "Are you sure to delete all dictionaries?"
-msgstr ""
+msgstr "您确定要删除所有字典吗？"
 
 #: im/table/ime.h:73
 msgid "Auto phrase length"
@@ -78,7 +79,7 @@ msgstr "冰蟾全息"
 
 #: gui/pinyindictmanager/browserdialog.cpp:65
 msgid "Browse Sogou Cell Dict repository"
-msgstr ""
+msgstr "浏览搜狗细胞词库"
 
 #: im/table/cangjie.conf.in.in:3
 msgid "Cangjie"
@@ -86,7 +87,7 @@ msgstr "仓颉"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:52
 msgid "Clear &All Data"
-msgstr ""
+msgstr "清理所有数据(&A)"
 
 #: modules/cloudpinyin/cloudpinyin.conf.in:3
 msgid "Cloud Pinyin"
@@ -111,16 +112,16 @@ msgstr "没有候选词时提交原始输入"
 #: gui/pinyindictmanager/pinyindictmanager.cpp:323
 #: gui/pinyindictmanager/pinyindictmanager.cpp:355
 msgid "Confirm deletion"
-msgstr ""
+msgstr "确认删除"
 
 #: gui/pinyindictmanager/processrunner.cpp:62
 msgid "Convert failed."
-msgstr ""
+msgstr "转换失败。"
 
 #: gui/pinyindictmanager/processrunner.cpp:56
 #: gui/pinyindictmanager/renamefile.cpp:46
 msgid "Converter crashed."
-msgstr ""
+msgstr "转换器崩溃。"
 
 #: im/table/state.cpp:450
 msgid "Could not find pinyin."
@@ -130,15 +131,15 @@ msgstr "无法找到拼音。"
 #: gui/pinyindictmanager/pinyindictmanager.cpp:219
 #: gui/pinyindictmanager/pinyindictmanager.cpp:277
 msgid "Create directory failed. Please check the permission or disk space."
-msgstr ""
+msgstr "创建目录失败。请检查权限或磁盘空间。"
 
 #: gui/pinyindictmanager/filedownloader.cpp:34
 msgid "Create temporary file failed."
-msgstr ""
+msgstr "创建临时文件失败。"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:119
 msgid "Creating temp file failed. Please check the permission or disk space."
-msgstr ""
+msgstr "创建临时文件失败。请检查权限或磁盘空间。"
 
 #: im/table/db.conf.in.in:3
 msgid "Dianbaoma"
@@ -146,11 +147,11 @@ msgstr "电报码"
 
 #: im/pinyin/pinyin.h:101
 msgid "Dictionaries"
-msgstr ""
+msgstr "词典"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:134
 msgid "Dictionary already exists"
-msgstr ""
+msgstr "词典已经存在"
 
 #: im/table/ime.h:78
 msgid "Display Hint for word"
@@ -166,11 +167,11 @@ msgstr "不对短于长度的词排序"
 
 #: gui/pinyindictmanager/filedownloader.cpp:90
 msgid "Download Finished"
-msgstr ""
+msgstr "下载已完成"
 
 #: gui/pinyindictmanager/filedownloader.cpp:52
 msgid "Download started."
-msgstr ""
+msgstr "下载已开始。"
 
 #: im/table/ime.h:70
 msgid "End key"
@@ -182,7 +183,7 @@ msgstr "二笔"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:365
 msgid "Error while deleting %1."
-msgstr ""
+msgstr "删除 %1 时出错。"
 
 #: im/table/ime.h:76
 msgid "Exact Match"
@@ -194,20 +195,20 @@ msgstr "额外拼音功能"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:107
 msgid "Failed to create directory"
-msgstr ""
+msgstr "创建目录失败"
 
 #: gui/pinyindictmanager/filedownloader.cpp:48
 msgid "Failed to create request."
-msgstr ""
+msgstr "创建请求失败。"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:118
 msgid "Failed to create temp file"
-msgstr ""
+msgstr "创建临时文件失败"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:218
 #: gui/pinyindictmanager/pinyindictmanager.cpp:276
 msgid "Failed to get runtime directory"
-msgstr ""
+msgstr "获取 runtime 目录失败"
 
 #: im/table/ime.h:35
 msgid "File"
@@ -215,15 +216,15 @@ msgstr "文件"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:364
 msgid "File Operation Failed"
-msgstr ""
+msgstr "文件操作失败"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:41
 msgid "From &File"
-msgstr ""
+msgstr "从文件(&F)"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:42
 msgid "From &Sogou Cell Dictionary File"
-msgstr ""
+msgstr "来自搜狗细胞词典文件(&S)"
 
 #: modules/fullwidth/fullwidth.cpp:85 modules/fullwidth/fullwidth.h:40
 msgid "Full width Character"
@@ -267,7 +268,7 @@ msgstr "图标"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:94
 msgid "Input Dictionary Name"
-msgstr ""
+msgstr "输入词典名称"
 
 #: im/table/ime.h:55
 msgid "Key to trigger quickphrase"
@@ -287,7 +288,7 @@ msgstr "修改词典"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:94
 msgid "New Dictionary Name:"
-msgstr ""
+msgstr "新词典名称："
 
 #: im/table/ime.h:39
 msgid "Next page"
@@ -295,7 +296,7 @@ msgstr "下一页"
 
 #: gui/pinyindictmanager/browserdialog.cpp:115
 msgid "No browsing outside pinyin.sogou.com, now redirect to home page."
-msgstr ""
+msgstr "不允许访问 pinyin.sogou.com 之外的网页，将重定向到主页。"
 
 #: im/table/engine.cpp:113
 msgid "Not available"
@@ -311,7 +312,7 @@ msgstr "拼音"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:87
 msgid "Pinyin dictionary manager"
-msgstr ""
+msgstr "拼音词典管理器"
 
 #: im/table/state.cpp:436
 msgid "Please use this functionality after typing some text."
@@ -364,15 +365,15 @@ msgstr "保存自动组词"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:195
 msgid "Scel file (*.scel)"
-msgstr ""
+msgstr "Scel 文件 (*.scel)"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:154
 msgid "Select Dictionary File"
-msgstr ""
+msgstr "选择词典文件"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:195
 msgid "Select scel file"
-msgstr ""
+msgstr "选择 scel 文件"
 
 #: im/table/ime.h:47
 msgid "Selection"
@@ -404,7 +405,7 @@ msgstr "码表"
 
 #: gui/pinyindictmanager/filedownloader.cpp:38
 msgid "Temporary file created."
-msgstr ""
+msgstr "已创建临时文件。"
 
 #: modules/chttrans/chttrans.cpp:86 modules/chttrans/chttrans.h:74
 msgid "Traditional Chinese"
@@ -436,7 +437,7 @@ msgstr "模糊键"
 
 #: gui/pinyindictmanager/browserdialog.cpp:114
 msgid "Wrong Link"
-msgstr ""
+msgstr "链接错误"
 
 #: im/table/wbx.conf.in.in:3
 msgid "Wubi"
