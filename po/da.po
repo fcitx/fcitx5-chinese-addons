@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2018-04-10 00:02-0700\n"
+"POT-Creation-Date: 2018-05-07 00:01-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: scootergrisen, 2017\n"
 "Language-Team: Danish (https://www.transifex.com/fcitx/teams/12005/da/)\n"
@@ -32,23 +32,23 @@ msgstr ""
 
 #: gui/pinyindictmanager/filedownloader.cpp:83
 msgid "%1% Downloaded."
-msgstr ""
+msgstr "%1% downloadet."
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:44
 msgid "&Browse Sogou Cell Dictionary Online"
-msgstr ""
+msgstr "&Gennemse Sogou Cell-ordbog online"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:51
 msgid "&Clear User Data"
-msgstr ""
+msgstr "&Ryd brugerdata"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:356
 msgid "Are you sure to delete %1?"
-msgstr ""
+msgstr "Er du sikker på, at du vil slette %1?"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:324
 msgid "Are you sure to delete all dictionaries?"
-msgstr ""
+msgstr "Er du sikker på, at du vil slette alle ordbøger?"
 
 #: im/table/ime.h:73
 msgid "Auto phrase length"
@@ -76,7 +76,7 @@ msgstr "Bingchan"
 
 #: gui/pinyindictmanager/browserdialog.cpp:65
 msgid "Browse Sogou Cell Dict repository"
-msgstr ""
+msgstr "Gennemse Sogou Cell-ordbogsarkiv"
 
 #: im/table/cangjie.conf.in.in:3
 msgid "Cangjie"
@@ -84,7 +84,7 @@ msgstr "Cangjie"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:52
 msgid "Clear &All Data"
-msgstr ""
+msgstr "Ryd &al data"
 
 #: modules/cloudpinyin/cloudpinyin.conf.in:3
 msgid "Cloud Pinyin"
@@ -109,16 +109,16 @@ msgstr "Udfør rå input når der ikke er nogen kandidat"
 #: gui/pinyindictmanager/pinyindictmanager.cpp:323
 #: gui/pinyindictmanager/pinyindictmanager.cpp:355
 msgid "Confirm deletion"
-msgstr ""
+msgstr "Bekræft sletning"
 
 #: gui/pinyindictmanager/processrunner.cpp:62
 msgid "Convert failed."
-msgstr ""
+msgstr "Konvertering mislykkedes."
 
 #: gui/pinyindictmanager/processrunner.cpp:56
 #: gui/pinyindictmanager/renamefile.cpp:46
 msgid "Converter crashed."
-msgstr ""
+msgstr "Konverter holdt op med at virke."
 
 #: im/table/state.cpp:450
 msgid "Could not find pinyin."
@@ -132,7 +132,7 @@ msgstr ""
 
 #: gui/pinyindictmanager/filedownloader.cpp:34
 msgid "Create temporary file failed."
-msgstr ""
+msgstr "Oprettelse af midlertidig fil mislykkedes."
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:119
 msgid "Creating temp file failed. Please check the permission or disk space."
@@ -144,11 +144,11 @@ msgstr "Dianbaoma"
 
 #: im/pinyin/pinyin.h:101
 msgid "Dictionaries"
-msgstr ""
+msgstr "Ordbøger"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:134
 msgid "Dictionary already exists"
-msgstr ""
+msgstr "Ordbog findes allerede"
 
 #: im/table/ime.h:78
 msgid "Display Hint for word"
@@ -164,11 +164,11 @@ msgstr "Sortér ikke ord kortere"
 
 #: gui/pinyindictmanager/filedownloader.cpp:90
 msgid "Download Finished"
-msgstr ""
+msgstr "Download færdig"
 
 #: gui/pinyindictmanager/filedownloader.cpp:52
 msgid "Download started."
-msgstr ""
+msgstr "Download startet."
 
 #: im/table/ime.h:70
 msgid "End key"
@@ -180,7 +180,7 @@ msgstr "Erbi"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:365
 msgid "Error while deleting %1."
-msgstr ""
+msgstr "Fejl ved sletning af %1."
 
 #: im/table/ime.h:76
 msgid "Exact Match"
@@ -192,15 +192,15 @@ msgstr "Ekstra Pinyin-funktionalitet"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:107
 msgid "Failed to create directory"
-msgstr ""
+msgstr "Kunne ikke oprette mappe"
 
 #: gui/pinyindictmanager/filedownloader.cpp:48
 msgid "Failed to create request."
-msgstr ""
+msgstr "Kunne ikke oprette anmodning."
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:118
 msgid "Failed to create temp file"
-msgstr ""
+msgstr "Kunne ikke oprette midlertidig fil"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:218
 #: gui/pinyindictmanager/pinyindictmanager.cpp:276
@@ -213,15 +213,15 @@ msgstr "Fil"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:364
 msgid "File Operation Failed"
-msgstr ""
+msgstr "Filhandling mislykkedes"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:41
 msgid "From &File"
-msgstr ""
+msgstr "Fra &fil"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:42
 msgid "From &Sogou Cell Dictionary File"
-msgstr ""
+msgstr "Fra &Sogou Cell-ordbogsfil"
 
 #: modules/fullwidth/fullwidth.cpp:85 modules/fullwidth/fullwidth.h:40
 msgid "Full width Character"
@@ -265,7 +265,7 @@ msgstr "Ikon"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:94
 msgid "Input Dictionary Name"
-msgstr ""
+msgstr "Input ordbogsnavn"
 
 #: im/table/ime.h:55
 msgid "Key to trigger quickphrase"
@@ -285,7 +285,7 @@ msgstr "Rediger ordbog"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:94
 msgid "New Dictionary Name:"
-msgstr ""
+msgstr "Nyt ordbogsnavn:"
 
 #: im/table/ime.h:39
 msgid "Next page"
@@ -294,6 +294,8 @@ msgstr "Næste side"
 #: gui/pinyindictmanager/browserdialog.cpp:115
 msgid "No browsing outside pinyin.sogou.com, now redirect to home page."
 msgstr ""
+"Ingen gennemsøgning udenfor pinyin.sogou.com, viderestiller nu til "
+"startsiden."
 
 #: im/table/engine.cpp:113
 msgid "Not available"
@@ -309,7 +311,7 @@ msgstr "Pinyin"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:87
 msgid "Pinyin dictionary manager"
-msgstr ""
+msgstr "Pinyin-ordbogshåndtering"
 
 #: im/table/state.cpp:436
 msgid "Please use this functionality after typing some text."
@@ -362,15 +364,15 @@ msgstr "Gem automatisk frase"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:195
 msgid "Scel file (*.scel)"
-msgstr ""
+msgstr "Scel-fil (*.scel)"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:154
 msgid "Select Dictionary File"
-msgstr ""
+msgstr "Vælg ordbogsfil"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:195
 msgid "Select scel file"
-msgstr ""
+msgstr "Vælg scel-fil"
 
 #: im/table/ime.h:47
 msgid "Selection"
@@ -402,7 +404,7 @@ msgstr "Tabel"
 
 #: gui/pinyindictmanager/filedownloader.cpp:38
 msgid "Temporary file created."
-msgstr ""
+msgstr "Midlertidig fil oprettet."
 
 #: modules/chttrans/chttrans.cpp:86 modules/chttrans/chttrans.h:74
 msgid "Traditional Chinese"
@@ -434,7 +436,7 @@ msgstr "Jokertegn matcher tast"
 
 #: gui/pinyindictmanager/browserdialog.cpp:114
 msgid "Wrong Link"
-msgstr ""
+msgstr "Forkert link"
 
 #: im/table/wbx.conf.in.in:3
 msgid "Wubi"
