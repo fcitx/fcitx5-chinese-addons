@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2018-05-07 00:01-0700\n"
+"POT-Creation-Date: 2018-05-13 00:02-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: scootergrisen, 2017\n"
 "Language-Team: Danish (https://www.transifex.com/fcitx/teams/12005/da/)\n"
@@ -28,7 +28,7 @@ msgstr " for "
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:135
 msgid "%1 already exists, do you want to overwrite this dictionary?"
-msgstr ""
+msgstr "%1 findes allerede, vil du overskrive ordbogen?"
 
 #: gui/pinyindictmanager/filedownloader.cpp:83
 msgid "%1% Downloaded."
@@ -129,6 +129,8 @@ msgstr "Kunne ikke finde pinyin."
 #: gui/pinyindictmanager/pinyindictmanager.cpp:277
 msgid "Create directory failed. Please check the permission or disk space."
 msgstr ""
+"Oprettelse af mappe mislykkedes. Tjek venligst at du har rettighed eller at "
+"disken ikke er fuld."
 
 #: gui/pinyindictmanager/filedownloader.cpp:34
 msgid "Create temporary file failed."
@@ -137,6 +139,8 @@ msgstr "Oprettelse af midlertidig fil mislykkedes."
 #: gui/pinyindictmanager/pinyindictmanager.cpp:119
 msgid "Creating temp file failed. Please check the permission or disk space."
 msgstr ""
+"Oprettelse af midlertidig fil mislykkedes. Tjek venligst at du har rettighed "
+"eller at disken ikke er fuld."
 
 #: im/table/db.conf.in.in:3
 msgid "Dianbaoma"
@@ -205,7 +209,7 @@ msgstr "Kunne ikke oprette midlertidig fil"
 #: gui/pinyindictmanager/pinyindictmanager.cpp:218
 #: gui/pinyindictmanager/pinyindictmanager.cpp:276
 msgid "Failed to get runtime directory"
-msgstr ""
+msgstr "Kunne ikke hente runtime-mappe"
 
 #: im/table/ime.h:35
 msgid "File"
