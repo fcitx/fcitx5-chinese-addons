@@ -49,7 +49,7 @@ private:
     QUrl url_;
     QFile file_;
     QNetworkAccessManager nam_;
-    QNetworkReply *reply_;
+    QNetworkReply *reply_ = nullptr;
     int progress_;
 };
 
