@@ -1,0 +1,474 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the fcitx5-chinese-addons package.
+#
+# Translators:
+# mar well <m.wellendorf@gmx.de>, 2018
+msgid ""
+msgstr ""
+"Project-Id-Version: fcitx5-chinese-addons\n"
+"Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
+"POT-Creation-Date: 2018-06-20 00:02-0700\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: mar well <m.wellendorf@gmx.de>, 2018\n"
+"Language-Team: German (https://www.transifex.com/fcitx/teams/12005/de/)\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: im/table/state.cpp:622
+msgid " Return for "
+msgstr ""
+
+#: im/table/state.cpp:619
+msgid " for "
+msgstr ""
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:135
+msgid "%1 already exists, do you want to overwrite this dictionary?"
+msgstr "%1 existiert bereits, soll das Wörterbuch überschrieben werden?"
+
+#: gui/pinyindictmanager/filedownloader.cpp:83
+msgid "%1% Downloaded."
+msgstr "%1% Heruntergeladen."
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:44
+msgid "&Browse Sogou Cell Dictionary Online"
+msgstr "&Sogou Wörterbuchverzeichnis für Mobiles Online durchsuchen"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:51
+msgid "&Clear User Data"
+msgstr "&Nutzerdaten löschen"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:356
+msgid "Are you sure to delete %1?"
+msgstr "Sind Sie sicher, dass %1 gelöscht werden soll?"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:324
+msgid "Are you sure to delete all dictionaries?"
+msgstr "Sind Sie sicher, dass alle Wörterbücher gelöscht werden sollen?"
+
+#: im/table/ime.h:73
+msgid "Auto phrase length"
+msgstr "Länger der Auto-Phrase"
+
+#: im/table/ime.h:82
+msgid "Auto rule set"
+msgstr "Satz automatischer Regeln"
+
+#: im/table/ime.h:60
+msgid "Auto select candidate"
+msgstr "Kandidaten automatisch auswählen"
+
+#: im/table/ime.h:62
+msgid "Auto select candidate Length"
+msgstr "Kandidatenlänge automatisch auswählen"
+
+#: im/table/ime.h:65
+msgid "Auto select last candidate when there is no new match"
+msgstr ""
+"Automatisch den letzten Kandidaten auswählen, wenn es keine neuen Treffer "
+"gibt"
+
+#: im/table/qxm.conf.in.in:3
+msgid "Bingchan"
+msgstr "Bingchan"
+
+#: gui/pinyindictmanager/browserdialog.cpp:65
+msgid "Browse Sogou Cell Dict repository"
+msgstr "Sogou Wörterbuchverzeichnis für Mobiles durchsuchen"
+
+#: im/table/cangjie.conf.in.in:3
+msgid "Cangjie"
+msgstr "Cangjie"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:52
+msgid "Clear &All Data"
+msgstr "&Alle Daten löschen"
+
+#: modules/cloudpinyin/cloudpinyin.conf.in:3
+msgid "Cloud Pinyin"
+msgstr "Cloud Pinyin"
+
+#: im/pinyin/pinyin.cpp:629
+msgid "Cloud Pinyin Status"
+msgstr "Cloud Pinyin Status"
+
+#: im/pinyin/pinyin.cpp:631
+msgid "Cloud Pinyin is disabled."
+msgstr "Cloud Pinyin ist ausgeschaltet."
+
+#: im/pinyin/pinyin.cpp:630
+msgid "Cloud Pinyin is enabled."
+msgstr "Cloud Pinyin ist eingeschaltet."
+
+#: im/table/ime.h:68
+msgid "Commit raw input when there is no candidate"
+msgstr "Roher Eingabe zustimmen, wenn kein Kandidat vorhanden ist"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:323
+#: gui/pinyindictmanager/pinyindictmanager.cpp:355
+msgid "Confirm deletion"
+msgstr "Löschen bestätigen"
+
+#: gui/pinyindictmanager/processrunner.cpp:62
+msgid "Convert failed."
+msgstr "Konvertierung fehlgeschlagen."
+
+#: gui/pinyindictmanager/processrunner.cpp:56
+#: gui/pinyindictmanager/renamefile.cpp:46
+msgid "Converter crashed."
+msgstr "Konverter abgestürzt."
+
+#: im/table/state.cpp:450
+msgid "Could not find pinyin."
+msgstr "Pinyin kann nicht gefunden werden"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:108
+#: gui/pinyindictmanager/pinyindictmanager.cpp:219
+#: gui/pinyindictmanager/pinyindictmanager.cpp:277
+msgid "Create directory failed. Please check the permission or disk space."
+msgstr ""
+"Kopieren des Verzeichnisses fehlgeschlagen. Bitte überprüfen Sie die "
+"Dateiberechtigungen oder ob die Festplatte voll ist."
+
+#: gui/pinyindictmanager/filedownloader.cpp:34
+msgid "Create temporary file failed."
+msgstr "Erstellen der temporären Datei fehlgeschlagen."
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:119
+msgid "Creating temp file failed. Please check the permission or disk space."
+msgstr ""
+"Kopieren der temporären Datei fehlgeschlagen. Bitte überprüfen Sie die "
+"Dateiberechtigungen oder ob die Festplatte voll ist."
+
+#: im/table/db.conf.in.in:3
+msgid "Dianbaoma"
+msgstr "Dianbaoma"
+
+#: im/pinyin/pinyin.h:101
+msgid "Dictionaries"
+msgstr "Wörterbücher"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:134
+msgid "Dictionary already exists"
+msgstr "Wörterbuch existiert schon"
+
+#: im/table/ime.h:78
+msgid "Display Hint for word"
+msgstr "Hinweis für Wort anzeigen"
+
+#: im/table/ime.h:80
+msgid "Display custom hint"
+msgstr "Standardhinweis zeigen"
+
+#: im/table/ime.h:58
+msgid "Don't sort word shorter"
+msgstr ""
+
+#: gui/pinyindictmanager/filedownloader.cpp:90
+msgid "Download Finished"
+msgstr "Download beendet"
+
+#: gui/pinyindictmanager/filedownloader.cpp:52
+msgid "Download started."
+msgstr "Download begonnen."
+
+#: im/table/ime.h:70
+msgid "End key"
+msgstr ""
+
+#: im/table/erbi.conf.in.in:3
+msgid "Erbi"
+msgstr "Erbi"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:365
+msgid "Error while deleting %1."
+msgstr "Fehler beim Löschen von %1."
+
+#: im/table/ime.h:76
+msgid "Exact Match"
+msgstr "Genaue Übereinstimmung"
+
+#: modules/pinyinhelper/pinyinhelper.conf.in:3
+msgid "Extra Pinyin functionality"
+msgstr "Extra Pinyin-Funktionalitat"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:107
+msgid "Failed to create directory"
+msgstr "Verzeichnis konnte nicht erstellt werden"
+
+#: gui/pinyindictmanager/filedownloader.cpp:48
+msgid "Failed to create request."
+msgstr "Anforderung fehlgeschlagen."
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:118
+msgid "Failed to create temp file"
+msgstr "Erstellen der temporären Datei fehlgeschlagen"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:218
+#: gui/pinyindictmanager/pinyindictmanager.cpp:276
+msgid "Failed to get runtime directory"
+msgstr "Laufzeitverzeichnis konnte nicht gefunden werden"
+
+#: im/table/ime.h:35
+msgid "File"
+msgstr "Datei"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:364
+msgid "File Operation Failed"
+msgstr "Dateioperation gescheitert"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:41
+msgid "From &File"
+msgstr "Von &Datei"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:42
+msgid "From &Sogou Cell Dictionary File"
+msgstr "Von der &Sogou Wörterbuchdatei für Mobiles"
+
+#: modules/fullwidth/fullwidth.cpp:85 modules/fullwidth/fullwidth.h:40
+msgid "Full width Character"
+msgstr "Vollbreite Zeichen"
+
+#: modules/fullwidth/fullwidth.cpp:87
+msgid "Full width Character is disabled."
+msgstr "Vollbreite Zeichen sind ausgeschaltet."
+
+#: modules/fullwidth/fullwidth.cpp:86
+msgid "Full width Character is enabled."
+msgstr "Vollbreite Zeichen sind eingeschlaltet."
+
+#: modules/fullwidth/fullwidth.conf.in:3
+msgid "Full width character"
+msgstr "Vollbreite Zeichen"
+
+#: modules/punctuation/punctuation.h:65
+msgid "Full width punctuation"
+msgstr "Vollbreite Interpunktion"
+
+#: modules/punctuation/punctuation.cpp:155
+msgid "Full width punctuation is disabled."
+msgstr "Vollbreite Interpunktion ist ausgeschaltet."
+
+#: modules/punctuation/punctuation.cpp:154
+msgid "Full width punctuation is enabled."
+msgstr "Vollbreite Satzzeichen ist aktiviert."
+
+#: modules/fullwidth/fullwidth.h:41
+msgid "Half width Character"
+msgstr "Halbbreite Zeichen"
+
+#: modules/punctuation/punctuation.h:66
+msgid "Half width punctuation"
+msgstr "Halbweite Satzzeichen werden verwendet"
+
+#: im/table/ime.h:56
+msgid "Icon"
+msgstr "Icon"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:94
+msgid "Input Dictionary Name"
+msgstr "Name des Eingabewörterbuchs"
+
+#: im/table/ime.h:55
+msgid "Key to trigger quickphrase"
+msgstr "Trigger Key für QuickPhrase"
+
+#: im/table/ime.h:77
+msgid "Learning"
+msgstr "Lernen"
+
+#: im/table/engine.h:45
+msgid "Lookup pinyin"
+msgstr "Pinyin nachschlagen"
+
+#: im/table/engine.h:40
+msgid "Modify dictionary"
+msgstr "Wörterbuch ändern"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:94
+msgid "New Dictionary Name:"
+msgstr "Neuer Wörterbuchname:"
+
+#: im/table/ime.h:39
+msgid "Next page"
+msgstr "Nächste Seite"
+
+#: gui/pinyindictmanager/browserdialog.cpp:115
+msgid "No browsing outside pinyin.sogou.com, now redirect to home page."
+msgstr ""
+"Browsen außerhalb von pinyin.sogou.com nicht möglich. Sie werden zur "
+"Homepage umgeleitet."
+
+#: im/table/engine.cpp:113
+msgid "Not available"
+msgstr "Nicht verfügbar"
+
+#: im/table/ime.h:69
+msgid "Order policy"
+msgstr "Regel der Reihenfolge"
+
+#: im/pinyin/pinyin-addon.conf.in:3 im/pinyin/pinyin.conf.in:3
+msgid "Pinyin"
+msgstr "Pinyin"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:87
+msgid "Pinyin dictionary manager"
+msgstr "Pinyin-Wörterbuch-Manager"
+
+#: im/table/state.cpp:436
+msgid "Please use this functionality after typing some text."
+msgstr ""
+"Bitte benutzen Sie diese Funktionalität nach der Eingabe von etwas Text."
+
+#: im/pinyin/pinyin.cpp:467
+msgid "Prediction"
+msgstr "Autovervollständigen"
+
+#: im/table/ime.h:59
+msgid "Prefix key to trigger Pinyin"
+msgstr "Festgelegte Taste um Pinyin anzuschalten"
+
+#: im/pinyin/pinyin.cpp:859
+msgid "Press %1% for %2%"
+msgstr "%1% für %2% drücken"
+
+#: im/pinyin/pinyin.cpp:855
+msgid "Press %1% for %2% and %3% for %4%"
+msgstr "%1% für %2% und %3% für %4% drücken"
+
+#: im/table/state.cpp:467
+msgid "Press Backspace to forget."
+msgstr "Zum vergessen Rücktaste drücken"
+
+#: im/table/state.cpp:470
+msgid "Press Delete to remove."
+msgstr "Zum Entfernen Löschen drücken"
+
+#: im/table/state.cpp:464
+msgid "Press space to insert."
+msgstr "Zum Einfügen Leertaste drücken."
+
+#: im/table/ime.h:37
+msgid "Prev page"
+msgstr "Vorherige Seite"
+
+#: modules/punctuation/punctuation.cpp:153
+#: modules/punctuation/punctuation.conf.in:3
+msgid "Punctuation"
+msgstr "Interpunktion"
+
+#: im/pinyin/pinyin.cpp:856
+msgid "Return"
+msgstr "Zurück"
+
+#: im/table/ime.h:75
+msgid "Save auto phrase"
+msgstr "Automatische Phrase speichern"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:195
+msgid "Scel file (*.scel)"
+msgstr "Scel Datei (*.scel)"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:154
+msgid "Select Dictionary File"
+msgstr "Wörterbuchdatei auswählen"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:195
+msgid "Select scel file"
+msgstr "Scel Datei auswählen"
+
+#: im/table/ime.h:47
+msgid "Selection"
+msgstr "Auswahl"
+
+#: im/pinyin/pinyin.cpp:468
+msgid "Show prediction words"
+msgstr "Wörter der Autovervollständigung anzeigen"
+
+#: im/pinyin/shuangpin.conf.in:3
+msgid "Shuangpin"
+msgstr "Shuangpin"
+
+#: modules/chttrans/chttrans.cpp:87 modules/chttrans/chttrans.h:75
+msgid "Simplified Chinese"
+msgstr "Chinesische Kurzzeichen"
+
+#: modules/chttrans/chttrans.cpp:89
+msgid "Simplified Chinese is enabled."
+msgstr "Chinesische Kurzzeichen aktiviert."
+
+#: modules/chttrans/chttrans.conf.in:3
+msgid "Simplified and Traditional Chinese Translation"
+msgstr "Übersetzung simplizifiertes und traditionelles Chinesisch "
+
+#: im/table/table.conf.in:3
+msgid "Table"
+msgstr "Tabelle"
+
+#: gui/pinyindictmanager/filedownloader.cpp:38
+msgid "Temporary file created."
+msgstr "Temporäre Datei erstellt."
+
+#: modules/chttrans/chttrans.cpp:86 modules/chttrans/chttrans.h:74
+msgid "Traditional Chinese"
+msgstr "Chinesische Langzeichen"
+
+#: modules/chttrans/chttrans.cpp:88
+msgid "Traditional Chinese is enabled."
+msgstr "Chinesische Langzeichen aktiviert."
+
+#: im/table/state.cpp:442
+msgid "Use Left and Right to select character: "
+msgstr "Pfeiltasten Links und Rechts benutzen, um Zeichen auszuwählen"
+
+#: im/table/state.cpp:453
+msgid "Use Left and Right to select text. "
+msgstr "Pfeiltasten Links und Rechts benutzen, um Text auszuwählen"
+
+#: im/table/ime.h:53
+msgid "Use full width"
+msgstr "Verwende Vollbreite Form der Zeichen"
+
+#: im/table/wanfeng.conf.in.in:3
+msgid "Wanfeng"
+msgstr "Wanfeng"
+
+#: im/table/ime.h:71
+msgid "Wildcard matching Key"
+msgstr "Taste für passende Wildcards"
+
+#: gui/pinyindictmanager/browserdialog.cpp:114
+msgid "Wrong Link"
+msgstr "Falscher Link"
+
+#: im/table/wbx.conf.in.in:3
+msgid "Wubi"
+msgstr "Wubi"
+
+#: im/table/wbpy.conf.in.in:3
+msgid "Wubi Pinyin"
+msgstr "Wubi Pinyin"
+
+#: im/table/zrm.conf.in.in:3
+msgid "Ziranma"
+msgstr "Ziranma"
+
+#: im/pinyin/pinyin.cpp:112
+msgid "{0} ({1})"
+msgstr "{0} ({1})"
+
+#: im/table/state.cpp:485
+msgid "{0} is not in table."
+msgstr "{0} ist nicht in der Tabelle."
+
+#: im/table/state.cpp:474
+msgid "{0}: No corresponding code."
+msgstr "{0}: Kein passender Code"
+
+#: im/table/state.cpp:459 im/table/state.cpp:482
+msgid "{0}: {1}"
+msgstr "{0}: {1}"
