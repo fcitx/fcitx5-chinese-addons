@@ -4,6 +4,7 @@ Icon=fcitx-wubi
 Label=五
 LangCode=zh_CN
 Addon=table
+Configurable=True
 
 [Table]
 File=@LIBIME_INSTALL_PKGDATADIR@/wbpy.main.dict
