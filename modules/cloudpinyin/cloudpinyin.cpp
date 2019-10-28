@@ -65,56 +65,15 @@ public:
         curl_easy_setopt(queue->curl(), CURLOPT_URL, url.c_str());
     }
 
-    static inline bool ishex(char ch) {
-        if ((ch >= '0' && ch <= '9') || (ch >= 'a' && ch <= 'f') ||
-            (ch >= 'A' && ch <= 'F'))
-            return true;
-        return false;
-    }
-
-    static inline unsigned char tohex(char ch) {
-        if (ch >= '0' && ch <= '9')
-            return ch - '0';
-        if (ch >= 'a' && ch <= 'f')
-            return ch - 'a' + 10;
-        if (ch >= 'A' && ch <= 'F')
-            return ch - 'A' + 10;
-        return 0;
-    }
-
     std::string parseResult(CurlQueue *queue) override {
         std::string result(queue->result().begin(), queue->result().end());
-        auto start = result.find("[[[\"");
+        auto start = result.find("[[\"");
         std::string hanzi;
         if (start != std::string::npos) {
-            start += strlen("[[[\"");
+            start += strlen("[[\"");
             auto end = result.find("\",", start);
             if (end != std::string::npos && end > start) {
-                size_t length = end - start;
-                if (length % 6 == 0) {
-                }
-
-                size_t i = start;
-                while (i < end) {
-                    if (result[i] == '\\' && result[i + 1] == 'u') {
-                        if (ishex(result[i + 2]) && ishex(result[i + 3]) &&
-                            ishex(result[i + 4]) && ishex(result[i + 5])) {
-                            auto hi = (tohex(result[i + 2]) << 4) |
-                                      tohex(result[i + 3]);
-                            auto lo = (tohex(result[i + 4]) << 4) |
-                                      tohex(result[i + 5]);
-                            auto c = hi << 8 | lo;
-                            hanzi += utf8::UCS4ToUTF8(c);
-                        } else
-                            break;
-                    }
-
-                    i += 6;
-                }
-
-                if (i != end) {
-                    hanzi.clear();
-                }
+                hanzi = result.substr(start, end - start);
             }
         }
         return hanzi;
