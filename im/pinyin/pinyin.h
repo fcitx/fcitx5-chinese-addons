@@ -61,12 +61,15 @@ FCITX_CONFIGURATION(
                                        IntConstrain(3, 10)};
     Option<int, IntConstrain> predictionSize{
         this, "PredictionSize", "Prediction Size", 10, IntConstrain(3, 20)};
-    Option<bool> predictionEnabled{this, "Prediction", "Enable Prediction ",
+    Option<bool> predictionEnabled{this, "Prediction", "Enable Prediction",
                                    false};
     Option<bool> cloudPinyinEnabled{this, "CloudPinyinEnabled",
                                     "Enable Cloud Pinyin", true};
     Option<int, IntConstrain> cloudPinyinIndex{
         this, "CloudPinyinIndex", "Cloud Pinyin Index", 2, IntConstrain(1, 10)};
+    Option<bool> showPreeditInApplication{
+        this, "PreeditInApplicaation",
+        "Use preedit in application when possible", false};
     KeyListOption prevPage{
         this,
         "PrevPage",

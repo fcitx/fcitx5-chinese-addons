@@ -374,30 +374,17 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
             candidateList->setGlobalCursorIndex(0);
             inputPanel.setCandidateList(std::move(candidateList));
         }
-        inputPanel.setClientPreedit(
-            Text(context.sentence(), TextFormatFlag::Underline));
         auto preeditWithCursor = context.preeditWithCursor();
         Text preedit(preeditWithCursor.first);
         preedit.setCursor(preeditWithCursor.second);
-        inputPanel.setPreedit(preedit);
-#if 0
-        {
-            size_t count = 1;
-            std::cout << "--------------------------" << std::endl;
-            for (auto &candidate : context.candidates()) {
-                std::cout << (count % 10) << ": ";
-                for (auto node : candidate.sentence()) {
-                    std::cout << node->word();
-                    std::cout << " ";
-                }
-                std::cout << " " << candidate.score() << std::endl;
-                count++;
-                if (count > 20) {
-                    break;
-                }
-            }
+        if (config_.showPreeditInApplication.value() &&
+            inputContext->capabilityFlags().test(CapabilityFlag::Preedit)) {
+            inputPanel.setClientPreedit(preedit);
+        } else {
+            inputPanel.setPreedit(preedit);
+            inputPanel.setClientPreedit(
+                Text(context.sentence(), TextFormatFlag::Underline));
         }
-#endif
     }
     inputContext->updatePreedit();
     inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
