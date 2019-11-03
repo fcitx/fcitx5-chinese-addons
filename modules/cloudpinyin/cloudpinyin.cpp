@@ -20,6 +20,7 @@
 #include "cloudpinyin.h"
 #include <fcitx-config/iniparser.h>
 #include <fcitx-utils/fs.h>
+#include <fcitx-utils/log.h>
 #include <fcitx-utils/standardpath.h>
 #include <fcitx-utils/unixfd.h>
 #include <fcitx-utils/utf8.h>
@@ -30,6 +31,10 @@
 
 using namespace fcitx;
 
+FCITX_DEFINE_LOG_CATEGORY(cloudpinyin, "cloudpinyin");
+
+#define CLOUDPINYIN_DEBUG() FCITX_LOGC(cloudpinyin, Debug)
+
 class GoogleBackend : public Backend {
 public:
     void prepareRequest(CurlQueue *queue, const std::string &pinyin) override {
@@ -38,10 +43,12 @@ public:
         std::unique_ptr<char, decltype(&curl_free)> escaped(
             curl_escape(pinyin.c_str(), pinyin.size()), &curl_free);
         url += escaped.get();
+        CLOUDPINYIN_DEBUG() << "Request URL: " << url;
         curl_easy_setopt(queue->curl(), CURLOPT_URL, url.c_str());
     }
     std::string parseResult(CurlQueue *queue) override {
         std::string result(queue->result().begin(), queue->result().end());
+        CLOUDPINYIN_DEBUG() << "Request result: " << result;
         auto start = result.find("\",[\"");
         std::string hanzi;
         if (start != std::string::npos) {
@@ -62,11 +69,13 @@ public:
         std::unique_ptr<char, decltype(&curl_free)> escaped(
             curl_escape(pinyin.c_str(), pinyin.size()), &curl_free);
         url += escaped.get();
+        CLOUDPINYIN_DEBUG() << "Request URL: " << url;
         curl_easy_setopt(queue->curl(), CURLOPT_URL, url.c_str());
     }
 
     std::string parseResult(CurlQueue *queue) override {
         std::string result(queue->result().begin(), queue->result().end());
+        CLOUDPINYIN_DEBUG() << "Request result: " << result;
         auto start = result.find("[[\"");
         std::string hanzi;
         if (start != std::string::npos) {
@@ -153,6 +162,8 @@ CloudPinyin::CloudPinyin(fcitx::AddonManager *manager)
         resetError_->setEnabled(false);
     }
     thread_ = std::make_unique<FetchThread>(std::move(pipe1Fd[1]));
+
+    reloadConfig();
 }
 
 CloudPinyin::~CloudPinyin() {}
