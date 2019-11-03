@@ -4,3 +4,5 @@ Category=Module
 Library=cloudpinyin
 Type=SharedLibrary
 OnDemand=True
+Configurable=True
+

@@ -29,6 +29,7 @@
 #include <fcitx/addonfactory.h>
 #include <fcitx/addoninstance.h>
 #include <fcitx/instance.h>
+#include <fcitx-config/iniparser.h>
 
 FCITX_CONFIG_ENUM(CloudPinyinBackend, Google, Baidu);
 FCITX_CONFIGURATION(
@@ -53,6 +54,12 @@ public:
     ~CloudPinyin();
 
     void reloadConfig() override;
+    const fcitx::Configuration *getConfig() const override { return &config_; }
+    void setConfig(const fcitx::RawConfig &config) override {
+        config_.load(config, true);
+        fcitx::safeSaveAsIni(config_, "conf/cloudpinyin.conf");
+        reloadConfig();
+    }
 
     void request(const std::string &pinyin, CloudPinyinCallback callback);
     const fcitx::KeyList &toggleKey() { return config_.toggleKey.value(); }
