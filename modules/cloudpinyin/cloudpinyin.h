@@ -25,6 +25,7 @@
 #include <fcitx-config/configuration.h>
 #include <fcitx-config/enum.h>
 #include <fcitx-config/iniparser.h>
+#include <fcitx-utils/i18n.h>
 #include <fcitx-utils/misc.h>
 #include <fcitx-utils/unixfd.h>
 #include <fcitx/addonfactory.h>
@@ -35,10 +36,13 @@ FCITX_CONFIG_ENUM(CloudPinyinBackend, Google, Baidu);
 FCITX_CONFIGURATION(
     CloudPinyinConfig,
     fcitx::Option<fcitx::KeyList> toggleKey{
-        this, "Toggle Key", "Toggle Key", {fcitx::Key("Control+Alt+Shift+C")}};
+        this,
+        "Toggle Key",
+        _("Toggle Key"),
+        {fcitx::Key("Control+Alt+Shift+C")}};
     fcitx::Option<int> minimumLength{this, "MinimumPinyinLength",
-                                     "MinimumPinyinLength", 4};
-    fcitx::Option<CloudPinyinBackend> backend{this, "Backend", "Backend",
+                                     _("MinimumPinyinLength"), 4};
+    fcitx::Option<CloudPinyinBackend> backend{this, "Backend", _("Backend"),
                                               CloudPinyinBackend::Google};);
 
 class Backend {

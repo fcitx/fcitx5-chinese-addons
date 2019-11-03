@@ -34,12 +34,12 @@ FCITX_CONFIG_ENUM(ChttransEngine, Native, OpenCC);
 
 FCITX_CONFIGURATION(
     ChttransConfig,
-    fcitx::Option<ChttransEngine> engine{this, "Engine", "Translate engine",
+    fcitx::Option<ChttransEngine> engine{this, "Engine", _("Translate engine"),
                                          ChttransEngine::OpenCC};
     fcitx::Option<fcitx::KeyList> hotkey{
-        this, "Hotkey", "Toggle key", {fcitx::Key("Control+Shift+F")}};
+        this, "Hotkey", _("Toggle key"), {fcitx::Key("Control+Shift+F")}};
     fcitx::HiddenOption<std::vector<std::string>> enabledIM{
-        this, "EnabledIM", "Enabled Input Methods"};);
+        this, "EnabledIM", _("Enabled Input Methods")};);
 
 enum class ChttransIMType { Simp, Trad, Other };
 

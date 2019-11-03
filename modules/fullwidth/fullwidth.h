@@ -27,7 +27,7 @@
 #include <fcitx/instance.h>
 
 FCITX_CONFIGURATION(FullWidthConfig, fcitx::Option<fcitx::KeyList> hotkey{
-                                         this, "Hotkey", "Toggle key"};)
+                                         this, "Hotkey", _("Toggle key")};)
 
 class ToggleAction;
 

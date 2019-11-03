@@ -37,70 +37,70 @@ namespace fcitx {
 FCITX_CONFIG_ENUM(ShuangpinProfileEnum, Ziranma, MS, Ziguang, ABC,
                   Zhongwenzhixing, PinyinJiajia, Xiaohe, Custom)
 
-FCITX_CONFIGURATION(FuzzyConfig,
-                    Option<bool> ue{this, "VE_UE", "ue -> ve", true};
-                    Option<bool> ng{this, "NG_GN", "gn -> ng", true};
-                    Option<bool> inner{this, "Inner",
-                                       "Inner Segment (xian -> xi'an)", true};
-                    Option<bool> v{this, "V_U", "u <-> v", false};
-                    Option<bool> an{this, "AN_ANG", "an <-> ang", false};
-                    Option<bool> en{this, "EN_ENG", "en <-> eng", false};
-                    Option<bool> ian{this, "IAN_IANG", "ian <-> iang", false};
-                    Option<bool> in{this, "IN_ING", "in <-> ing", false};
-                    Option<bool> ou{this, "U_OU", "ue -> ve", false};
-                    Option<bool> uan{this, "UAN_UANG", "ue -> ve", false};
-                    Option<bool> c{this, "C_CH", "ue -> ve", false};
-                    Option<bool> f{this, "F_H", "ue -> ve", false};
-                    Option<bool> l{this, "L_N", "ue -> ve", false};
-                    Option<bool> s{this, "S_SH", "ue -> ve", false};
-                    Option<bool> z{this, "Z_ZH", "ue -> ve", false};)
+FCITX_CONFIGURATION(
+    FuzzyConfig, Option<bool> ue{this, "VE_UE", _("ue -> ve"), true};
+    Option<bool> ng{this, "NG_GN", _("gn -> ng"), true};
+    Option<bool> inner{this, "Inner", _("Inner Segment (xian -> xi'an)"), true};
+    Option<bool> v{this, "V_U", _("u <-> v"), false};
+    Option<bool> an{this, "AN_ANG", _("an <-> ang"), false};
+    Option<bool> en{this, "EN_ENG", _("en <-> eng"), false};
+    Option<bool> ian{this, "IAN_IANG", _("ian <-> iang"), false};
+    Option<bool> in{this, "IN_ING", _("in <-> ing"), false};
+    Option<bool> ou{this, "U_OU", _("u <-> ou"), false};
+    Option<bool> uan{this, "UAN_UANG", _("uan <-> uang"), false};
+    Option<bool> c{this, "C_CH", _("c <-> ch"), false};
+    Option<bool> f{this, "F_H", _("f <-> h"), false};
+    Option<bool> l{this, "L_N", _("l <-> n"), false};
+    Option<bool> s{this, "S_SH", _("s <-> sh"), false};
+    Option<bool> z{this, "Z_ZH", _("z <-> zh"), false};)
 
 FCITX_CONFIGURATION(
     PinyinEngineConfig,
-    Option<int, IntConstrain> pageSize{this, "PageSize", "Page size", 5,
+    Option<int, IntConstrain> pageSize{this, "PageSize", _("Page size"), 5,
                                        IntConstrain(3, 10)};
     Option<int, IntConstrain> predictionSize{
-        this, "PredictionSize", "Prediction Size", 10, IntConstrain(3, 20)};
-    Option<bool> predictionEnabled{this, "Prediction", "Enable Prediction",
+        this, "PredictionSize", _("Prediction Size"), 10, IntConstrain(3, 20)};
+    Option<bool> predictionEnabled{this, "Prediction", _("Enable Prediction"),
                                    false};
     Option<bool> cloudPinyinEnabled{this, "CloudPinyinEnabled",
-                                    "Enable Cloud Pinyin", true};
-    Option<int, IntConstrain> cloudPinyinIndex{
-        this, "CloudPinyinIndex", "Cloud Pinyin Index", 2, IntConstrain(1, 10)};
+                                    _("Enable Cloud Pinyin"), true};
+    Option<int, IntConstrain> cloudPinyinIndex{this, "CloudPinyinIndex",
+                                               _("Cloud Pinyin Index"), 2,
+                                               IntConstrain(1, 10)};
     Option<bool> showPreeditInApplication{
         this, "PreeditInApplicaation",
-        "Use preedit in application when possible", false};
+        _("Use preedit in application when possible"), false};
     KeyListOption prevPage{
         this,
         "PrevPage",
-        "Prev Page",
+        _("Prev Page"),
         {Key(FcitxKey_minus), Key(FcitxKey_Up)},
         KeyListConstrain({KeyConstrainFlag::AllowModifierLess})};
     KeyListOption nextPage{
         this,
         "NextPage",
-        "Next Page",
+        _("Next Page"),
         {Key(FcitxKey_equal), Key(FcitxKey_Down)},
         KeyListConstrain({KeyConstrainFlag::AllowModifierLess})};
     KeyListOption prevCandidate{
         this,
         "PrevCandidate",
-        "Prev Candidate",
+        _("Prev Candidate"),
         {Key("Shift+Tab")},
         KeyListConstrain({KeyConstrainFlag::AllowModifierLess})};
     KeyListOption nextCandidate{
         this,
         "NextCandidate",
-        "Next Candidate",
+        _("Next Candidate"),
         {Key("Tab")},
         KeyListConstrain({KeyConstrainFlag::AllowModifierLess})};
     Option<int, IntConstrain> nbest{this, "Number of sentence",
-                                    "Number of Sentence", 2,
+                                    _("Number of Sentence"), 2,
                                     IntConstrain(1, 3)};
     Option<ShuangpinProfileEnum> shuangpinProfile{
-        this, "ShuangpinProfile", "Shuangpin Profile",
+        this, "ShuangpinProfile", _("Shuangpin Profile"),
         ShuangpinProfileEnum::Ziranma};
-    Option<FuzzyConfig> fuzzyConfig{this, "Fuzzy", "Fuzzy Pinyin Settings"};
+    Option<FuzzyConfig> fuzzyConfig{this, "Fuzzy", _("Fuzzy Pinyin Settings")};
     ExternalOption dictmanager{this, "DictManager", _("Dictionaries"),
                                "fcitx://gui/pinyin/dictmanager"};);
 
