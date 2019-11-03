@@ -24,12 +24,12 @@
 #include "lrucache.h"
 #include <fcitx-config/configuration.h>
 #include <fcitx-config/enum.h>
+#include <fcitx-config/iniparser.h>
 #include <fcitx-utils/misc.h>
 #include <fcitx-utils/unixfd.h>
 #include <fcitx/addonfactory.h>
 #include <fcitx/addoninstance.h>
 #include <fcitx/instance.h>
-#include <fcitx-config/iniparser.h>
 
 FCITX_CONFIG_ENUM(CloudPinyinBackend, Google, Baidu);
 FCITX_CONFIGURATION(
