@@ -24,7 +24,8 @@
 
 int main() {
     setenv("FCITX_ADDON_DIRS", TESTING_BINARY_DIR "/modules/punctuation", 1);
-    setenv("FCITX_DATA_DIRS", TESTING_BINARY_DIR "/modules", 1);
+    setenv("FCITX_DATA_DIRS",
+           TESTING_BINARY_DIR "/modules:" TESTING_SOURCE_DIR "/modules", 1);
     fcitx::AddonManager manager(TESTING_BINARY_DIR "/modules/punctuation");
     manager.registerDefaultLoader(nullptr);
     manager.load();
