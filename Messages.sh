@@ -7,6 +7,10 @@ source_files=$(find . -name \*.cpp -o -name \*.h)
 $XGETTEXT --keyword=_ --keyword=N_ --language=C++ -o ${POT_FILE} $source_files
 desktop_files=$(find . -name \*.conf.in -o -name \*.conf.in.in -o -name \*.desktop)
 $XGETTEXT --language=Desktop -k --keyword=Name --keyword=GenericName --keyword=Comment --keyword=Keywords $desktop_files -j -o ${POT_FILE}
+ui_files=$(find . -name \*.ui)
+extractrc $ui_files > rc.cpp
+$XGETTEXT --kde --language=C++ --add-comments --sort-output -j -o ${POT_FILE} rc.cpp
+rm -f rc.cpp
 
 sed -i 's|^"Content-Type: text/plain; charset=CHARSET\\n"|"Content-Type: text/plain; charset=utf-8\\n"|g' ${POT_FILE}
 
