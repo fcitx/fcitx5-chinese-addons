@@ -41,7 +41,7 @@ FCITX_CONFIGURATION(
         _("Toggle Key"),
         {fcitx::Key("Control+Alt+Shift+C")}};
     fcitx::Option<int> minimumLength{this, "MinimumPinyinLength",
-                                     _("MinimumPinyinLength"), 4};
+                                     _("Minimum Pinyin Length"), 4};
     fcitx::Option<CloudPinyinBackend> backend{this, "Backend", _("Backend"),
                                               CloudPinyinBackend::Google};);
 
