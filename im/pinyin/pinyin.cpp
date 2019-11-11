@@ -57,6 +57,7 @@ namespace fcitx {
 FCITX_DEFINE_LOG_CATEGORY(pinyin, "pinyin");
 
 #define PINYIN_DEBUG() FCITX_LOGC(pinyin, Debug)
+#define PINYIN_ERROR() FCITX_LOGC(pinyin, Error)
 
 bool consumePreifx(boost::string_view &view, boost::string_view prefix) {
     if (boost::starts_with(view, prefix)) {
@@ -420,7 +421,8 @@ PinyinEngine::PinyinEngine(Instance *instance)
             std::istream in(&buffer);
             ime_->dict()->load(libime::PinyinDictionary::UserDict, in,
                                libime::PinyinDictFormat::Binary);
-        } catch (const std::exception &) {
+        } catch (const std::exception &e) {
+            PINYIN_ERROR() << "Failed to load pinyin dict: " << e.what();
         }
     } while (0);
     do {
@@ -434,7 +436,8 @@ PinyinEngine::PinyinEngine(Instance *instance)
                                       never_close_handle);
             std::istream in(&buffer);
             ime_->model()->load(in);
-        } catch (const std::exception &) {
+        } catch (const std::exception &e) {
+            PINYIN_ERROR() << "Failed to load pinyin history: " << e.what();
         }
     } while (0);
 
@@ -491,7 +494,8 @@ void PinyinEngine::loadExtraDict() {
             ime_->dict()->addEmptyDict();
             ime_->dict()->load(ime_->dict()->dictSize() - 1, in,
                                libime::PinyinDictFormat::Binary);
-        } catch (const std::exception &) {
+        } catch (const std::exception &e) {
+            PINYIN_ERROR() << "Failed to load pinyin dict " << file.first << ": " << e.what();
         }
     }
 }
@@ -908,7 +912,8 @@ void PinyinEngine::save() {
                 ime_->dict()->save(libime::PinyinDictionary::UserDict, out,
                                    libime::PinyinDictFormat::Binary);
                 return static_cast<bool>(out);
-            } catch (const std::exception &) {
+            } catch (const std::exception &e) {
+                PINYIN_ERROR() << "Failed to save pinyin dict: " << e.what();
                 return false;
             }
         });
@@ -922,7 +927,8 @@ void PinyinEngine::save() {
             try {
                 ime_->model()->save(out);
                 return true;
-            } catch (const std::exception &) {
+            } catch (const std::exception &e) {
+                PINYIN_ERROR() << "Failed to save pinyin history: " << e.what();
                 return false;
             }
         });
