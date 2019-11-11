@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2019-11-04 00:01-0800\n"
+"POT-Creation-Date: 2019-11-11 00:01-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,8 +35,29 @@ msgstr ""
 msgid "&Browse Sogou Cell Dictionary Online"
 msgstr ""
 
+#. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:55
+#. i18n: ectx: property (text), widget (QPushButton, clearDictButton_)
+#: rc.cpp:18
+#, kde-format
+msgid "&Clear Dict"
+msgstr ""
+
 #: gui/pinyindictmanager/pinyindictmanager.cpp:51
 msgid "&Clear User Data"
+msgstr ""
+
+#. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:22
+#. i18n: ectx: property (text), widget (QPushButton, importButton_)
+#: rc.cpp:9
+#, kde-format
+msgid "&Import"
+msgstr ""
+
+#. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:33
+#. i18n: ectx: property (text), widget (QPushButton, removeButton_)
+#: rc.cpp:12
+#, kde-format
+msgid "&Remove"
 msgstr ""
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:356
@@ -141,6 +162,13 @@ msgstr ""
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:119
 msgid "Creating temp file failed. Please check the permission or disk space."
+msgstr ""
+
+#. i18n: file: gui/pinyindictmanager/browserdialog.ui:14
+#. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
+#: rc.cpp:3
+#, kde-format
+msgid "Dialog"
 msgstr ""
 
 #: im/table/db.conf.in.in:3
@@ -305,7 +333,7 @@ msgid "Lookup pinyin"
 msgstr ""
 
 #: modules/cloudpinyin/cloudpinyin.h:44
-msgid "MinimumPinyinLength"
+msgid "Minimum Pinyin Length"
 msgstr ""
 
 #: im/table/engine.h:40
@@ -407,6 +435,13 @@ msgstr ""
 #: modules/punctuation/punctuation.cpp:153
 #: modules/punctuation/punctuation.conf.in:3
 msgid "Punctuation"
+msgstr ""
+
+#. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:44
+#. i18n: ectx: property (text), widget (QPushButton, removeAllButton_)
+#: rc.cpp:15
+#, kde-format
+msgid "Remove &All"
 msgstr ""
 
 #: im/pinyin/pinyin.cpp:843
@@ -524,6 +559,13 @@ msgstr ""
 
 #: im/table/zrm.conf.in.in:3
 msgid "Ziranma"
+msgstr ""
+
+#. i18n: file: gui/pinyindictmanager/browserdialog.ui:21
+#. i18n: ectx: property (url), widget (QWebEngineView, webView_)
+#: rc.cpp:6
+#, kde-format
+msgid "about:blank"
 msgstr ""
 
 #: im/pinyin/pinyin.h:45

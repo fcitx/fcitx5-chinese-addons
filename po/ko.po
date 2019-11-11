@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2019-11-04 00:01-0800\n"
+"POT-Creation-Date: 2019-11-11 00:01-0800\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: 이정희 <daemul72@gmail.com>, 2019\n"
 "Language-Team: Korean (https://www.transifex.com/fcitx/teams/12005/ko/)\n"
@@ -40,9 +40,30 @@ msgstr "%1% 다운로드됨."
 msgid "&Browse Sogou Cell Dictionary Online"
 msgstr ""
 
+#. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:55
+#. i18n: ectx: property (text), widget (QPushButton, clearDictButton_)
+#: rc.cpp:18
+#, kde-format
+msgid "&Clear Dict"
+msgstr ""
+
 #: gui/pinyindictmanager/pinyindictmanager.cpp:51
 msgid "&Clear User Data"
 msgstr "사용자 데이터 비우기(&C)"
+
+#. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:22
+#. i18n: ectx: property (text), widget (QPushButton, importButton_)
+#: rc.cpp:9
+#, kde-format
+msgid "&Import"
+msgstr ""
+
+#. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:33
+#. i18n: ectx: property (text), widget (QPushButton, removeButton_)
+#: rc.cpp:12
+#, kde-format
+msgid "&Remove"
+msgstr ""
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:356
 msgid "Are you sure to delete %1?"
@@ -147,6 +168,13 @@ msgstr "임시 파일 생성에 실패했습니다."
 #: gui/pinyindictmanager/pinyindictmanager.cpp:119
 msgid "Creating temp file failed. Please check the permission or disk space."
 msgstr "임시 파일을 만들지 못했습니다. 권한 또는 디스크 공간을 확인하십시오."
+
+#. i18n: file: gui/pinyindictmanager/browserdialog.ui:14
+#. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
+#: rc.cpp:3
+#, kde-format
+msgid "Dialog"
+msgstr ""
 
 #: im/table/db.conf.in.in:3
 msgid "Dianbaoma"
@@ -310,7 +338,7 @@ msgid "Lookup pinyin"
 msgstr "병음 검색"
 
 #: modules/cloudpinyin/cloudpinyin.h:44
-msgid "MinimumPinyinLength"
+msgid "Minimum Pinyin Length"
 msgstr ""
 
 #: im/table/engine.h:40
@@ -413,6 +441,13 @@ msgstr "앞 페이지"
 #: modules/punctuation/punctuation.conf.in:3
 msgid "Punctuation"
 msgstr "문장부호"
+
+#. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:44
+#. i18n: ectx: property (text), widget (QPushButton, removeAllButton_)
+#: rc.cpp:15
+#, kde-format
+msgid "Remove &All"
+msgstr ""
 
 #: im/pinyin/pinyin.cpp:843
 msgid "Return"
@@ -529,6 +564,13 @@ msgstr "Wubi 병음"
 
 #: im/table/zrm.conf.in.in:3
 msgid "Ziranma"
+msgstr ""
+
+#. i18n: file: gui/pinyindictmanager/browserdialog.ui:21
+#. i18n: ectx: property (url), widget (QWebEngineView, webView_)
+#: rc.cpp:6
+#, kde-format
+msgid "about:blank"
 msgstr ""
 
 #: im/pinyin/pinyin.h:45
