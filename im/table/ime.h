@@ -126,6 +126,7 @@ private:
 FCITX_DECLARE_LOG_CATEGORY(table_logcategory);
 
 #define TABLE_DEBUG() FCITX_LOGC(::fcitx::table_logcategory, Debug)
+#define TABLE_ERROR() FCITX_LOGC(::fcitx::table_logcategory, Error)
 } // namespace fcitx
 
 #endif // _TABLE_TABLEDICTRESOLVER_H_

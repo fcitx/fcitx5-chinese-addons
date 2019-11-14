@@ -495,7 +495,8 @@ void PinyinEngine::loadExtraDict() {
             ime_->dict()->load(ime_->dict()->dictSize() - 1, in,
                                libime::PinyinDictFormat::Binary);
         } catch (const std::exception &e) {
-            PINYIN_ERROR() << "Failed to load pinyin dict " << file.first << ": " << e.what();
+            PINYIN_ERROR() << "Failed to load pinyin dict " << file.first
+                           << ": " << e.what();
         }
     }
 }

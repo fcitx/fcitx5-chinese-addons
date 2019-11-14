@@ -25,9 +25,9 @@
 #include <fcitx-utils/log.h>
 #include <fcitx-utils/standardpath.h>
 #include <fcntl.h>
+#include <libime/core/utils.h>
 #include <libime/table/tablebaseddictionary.h>
 #include <libime/table/tableoptions.h>
-#include <libime/core/utils.h>
 
 namespace fcitx {
 
@@ -139,7 +139,7 @@ TableIME::requestDict(boost::string_view name) {
                 std::istream in(&buffer);
                 dict->loadUser(in);
             } catch (const std::exception &e) {
-                LIBIME_WARN() << e.what();
+                TABLE_ERROR() << e.what();
             }
 
             populateOptions(dict, iter->second.root);
@@ -160,7 +160,7 @@ TableIME::requestDict(boost::string_view name) {
                 std::istream in(&buffer);
                 iter->second.model->load(in);
             } catch (const std::exception &e) {
-                LIBIME_WARN() << e.what();
+                TABLE_ERROR() << e.what();
             }
         }
     }
