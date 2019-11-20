@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2019-11-11 00:01-0800\n"
+"POT-Creation-Date: 2019-11-20 00:01-0800\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: scootergrisen, 2019\n"
 "Language-Team: Danish (https://www.transifex.com/fcitx/teams/12005/da/)\n"
@@ -44,7 +44,7 @@ msgstr "&Gennemse Sogou Cell-ordbog online"
 #: rc.cpp:18
 #, kde-format
 msgid "&Clear Dict"
-msgstr ""
+msgstr "&Ryd ordbog"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:51
 msgid "&Clear User Data"
@@ -55,14 +55,14 @@ msgstr "&Ryd brugerdata"
 #: rc.cpp:9
 #, kde-format
 msgid "&Import"
-msgstr ""
+msgstr "&Importér"
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:33
 #. i18n: ectx: property (text), widget (QPushButton, removeButton_)
 #: rc.cpp:12
 #, kde-format
 msgid "&Remove"
-msgstr ""
+msgstr "&Fjern"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:356
 msgid "Are you sure to delete %1?"
@@ -120,15 +120,15 @@ msgstr "Sky-Pinyin"
 msgid "Cloud Pinyin Index"
 msgstr "Sky-Pinyin-indeks"
 
-#: im/pinyin/pinyin.cpp:616
+#: im/pinyin/pinyin.cpp:621
 msgid "Cloud Pinyin Status"
 msgstr "Status for sky-Pinyin"
 
-#: im/pinyin/pinyin.cpp:618
+#: im/pinyin/pinyin.cpp:623
 msgid "Cloud Pinyin is disabled."
 msgstr "Sky-Pinyin er deaktiveret."
 
-#: im/pinyin/pinyin.cpp:617
+#: im/pinyin/pinyin.cpp:622
 msgid "Cloud Pinyin is enabled."
 msgstr "Sky-Pinyin er aktiveret."
 
@@ -177,7 +177,7 @@ msgstr ""
 #: rc.cpp:3
 #, kde-format
 msgid "Dialog"
-msgstr ""
+msgstr "Dialog"
 
 #: im/table/db.conf.in.in:3
 msgid "Dianbaoma"
@@ -342,7 +342,7 @@ msgstr "Pinyin-opslag"
 
 #: modules/cloudpinyin/cloudpinyin.h:44
 msgid "Minimum Pinyin Length"
-msgstr ""
+msgstr "Maksimum længde for Pinyin"
 
 #: im/table/engine.h:40
 msgid "Modify dictionary"
@@ -398,7 +398,7 @@ msgstr "Pinyin-ordbogshåndtering"
 msgid "Please use this functionality after typing some text."
 msgstr "Brug venligst denne funktionalitet efter du har skrevet noget tekst."
 
-#: im/pinyin/pinyin.cpp:454
+#: im/pinyin/pinyin.cpp:457
 msgid "Prediction"
 msgstr "Forudsigelse"
 
@@ -410,11 +410,11 @@ msgstr "Størrelse på forudsigelse"
 msgid "Prefix key to trigger Pinyin"
 msgstr "Præfikstast til at udløse Pinyin"
 
-#: im/pinyin/pinyin.cpp:846
+#: im/pinyin/pinyin.cpp:851
 msgid "Press %1% for %2%"
 msgstr "Tryk på %1% for %2%"
 
-#: im/pinyin/pinyin.cpp:842
+#: im/pinyin/pinyin.cpp:847
 msgid "Press %1% for %2% and %3% for %4%"
 msgstr "Tryk på %1% for %2% og %3% for %4%"
 
@@ -452,9 +452,9 @@ msgstr "Tegnsætning"
 #: rc.cpp:15
 #, kde-format
 msgid "Remove &All"
-msgstr ""
+msgstr "Fjern &alle"
 
-#: im/pinyin/pinyin.cpp:843
+#: im/pinyin/pinyin.cpp:848
 msgid "Return"
 msgstr "Retur"
 
@@ -478,7 +478,7 @@ msgstr "Vælg scel-fil"
 msgid "Selection"
 msgstr "Valg"
 
-#: im/pinyin/pinyin.cpp:455
+#: im/pinyin/pinyin.cpp:458
 msgid "Show prediction words"
 msgstr "Vis forudsigelsesord"
 
@@ -576,7 +576,7 @@ msgstr "Ziranma"
 #: rc.cpp:6
 #, kde-format
 msgid "about:blank"
-msgstr ""
+msgstr "about:blank"
 
 #: im/pinyin/pinyin.h:45
 msgid "an <-> ang"
@@ -634,7 +634,7 @@ msgstr "ue -> ve"
 msgid "z <-> zh"
 msgstr "z <-> zh"
 
-#: im/pinyin/pinyin.cpp:112
+#: im/pinyin/pinyin.cpp:113
 msgid "{0} ({1})"
 msgstr "{0} ({1})"
 
