@@ -144,7 +144,8 @@ Punctuation::Punctuation(Instance *instance)
             if (keyEvent.isRelease()) {
                 return;
             }
-            if (keyEvent.key().checkKeyList(config_.hotkey.value())) {
+            if (inWhiteList(keyEvent.inputContext()) &&
+                keyEvent.key().checkKeyList(config_.hotkey.value())) {
                 setEnabled(!enabled(), keyEvent.inputContext());
                 if (notifications()) {
                     notifications()->call<INotifications::showTip>(
@@ -295,6 +296,10 @@ void Punctuation::reloadConfig() {
                 << "Error when load profile " << file.first << ": " << e.what();
         }
     }
+}
+
+bool Punctuation::inWhiteList(fcitx::InputContext *inputContext) const {
+    return toggleAction_.isParent(&inputContext->statusArea());
 }
 
 const std::string &Punctuation::pushPunctuation(const std::string &language,

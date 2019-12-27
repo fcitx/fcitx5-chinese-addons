@@ -104,6 +104,8 @@ public:
         }
     }
 
+    bool inWhiteList(fcitx::InputContext *inputContext) const;
+
 private:
     FCITX_ADDON_DEPENDENCY_LOADER(notifications, instance_->addonManager());
 
