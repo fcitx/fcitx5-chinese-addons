@@ -106,15 +106,15 @@ class TableIME {
 public:
     TableIME(libime::LanguageModelResolver *lmResolver);
 
-    const TableConfig &config(boost::string_view name);
+    const TableConfig &config(const std::string &name);
 
 public:
     std::tuple<libime::TableBasedDictionary *, libime::UserLanguageModel *,
                const TableConfig *>
-    requestDict(boost::string_view name);
-    void saveDict(boost::string_view name);
+    requestDict(const std::string &name);
+    void saveDict(const std::string &name);
     void saveAll();
-    void updateConfig(boost::string_view name, const RawConfig &config);
+    void updateConfig(const std::string &name, const RawConfig &config);
 
     void releaseUnusedDict(const std::unordered_set<std::string> &names);
 

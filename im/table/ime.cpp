@@ -84,8 +84,8 @@ TableIME::TableIME(libime::LanguageModelResolver *lm) : lm_(lm) {}
 
 std::tuple<libime::TableBasedDictionary *, libime::UserLanguageModel *,
            const TableConfig *>
-TableIME::requestDict(boost::string_view name) {
-    auto iter = tables_.find(name.to_string());
+TableIME::requestDict(const std::string &name) {
+    auto iter = tables_.find(name);
     if (iter == tables_.end()) {
         TABLE_DEBUG() << "Load table config for: " << name;
         std::string filename = "inputmethod/";
@@ -128,8 +128,7 @@ TableIME::requestDict(boost::string_view name) {
             try {
                 auto dictFile = StandardPath::global().openUser(
                     StandardPath::Type::PkgData,
-                    stringutils::concat("table/", name.to_string(),
-                                        ".user.dict"),
+                    stringutils::concat("table/", name, ".user.dict"),
                     O_RDONLY);
                 boost::iostreams::stream_buffer<
                     boost::iostreams::file_descriptor_source>
@@ -175,8 +174,8 @@ void TableIME::saveAll() {
     }
 }
 
-void TableIME::updateConfig(boost::string_view name, const RawConfig &config) {
-    auto iter = tables_.find(name.to_string());
+void TableIME::updateConfig(const std::string &name, const RawConfig &config) {
+    auto iter = tables_.find(name);
     if (iter == tables_.end()) {
         return;
     }
@@ -201,8 +200,8 @@ void TableIME::releaseUnusedDict(const std::unordered_set<std::string> &names) {
     }
 }
 
-void TableIME::saveDict(boost::string_view name) {
-    auto iter = tables_.find(name.to_string());
+void TableIME::saveDict(const std::string &name) {
+    auto iter = tables_.find(name);
     if (iter == tables_.end()) {
         return;
     }

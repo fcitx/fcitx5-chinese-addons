@@ -20,7 +20,6 @@
 #include "notifications_public.h"
 #include <boost/iostreams/device/file_descriptor.hpp>
 #include <boost/iostreams/stream_buffer.hpp>
-#include <boost/utility/string_view.hpp>
 #include <fcitx-config/iniparser.h>
 #include <fcitx-utils/charutils.h>
 #include <fcitx-utils/log.h>
@@ -33,6 +32,7 @@
 #include <fcitx/statusarea.h>
 #include <fcitx/userinterfacemanager.h>
 #include <fcntl.h>
+#include <string_view>
 #include <unordered_set>
 
 using namespace fcitx;
@@ -243,7 +243,7 @@ Punctuation::Punctuation(Instance *instance)
                 for (auto iter = std::begin(range); iter != std::end(range);
                      iter++) {
                     auto charRange = iter.charRange();
-                    boost::string_view chr(
+                    std::string_view chr(
                         &*charRange.first,
                         std::distance(charRange.first, charRange.second));
                     auto puncIter = std::find_if(

@@ -59,7 +59,7 @@ FCITX_DEFINE_LOG_CATEGORY(pinyin, "pinyin");
 #define PINYIN_DEBUG() FCITX_LOGC(pinyin, Debug)
 #define PINYIN_ERROR() FCITX_LOGC(pinyin, Error)
 
-bool consumePreifx(boost::string_view &view, boost::string_view prefix) {
+bool consumePreifx(std::string_view &view, std::string_view prefix) {
     if (boost::starts_with(view, prefix)) {
         view.remove_prefix(prefix.size());
         return true;
@@ -947,7 +947,7 @@ void PinyinEngine::cloudPinyinSelected(InputContext *inputContext,
         }
         preedit = preedit.substr(selected.size());
         auto pinyins = stringutils::split(preedit, " '");
-        boost::string_view wordView = word;
+        std::string_view wordView = word;
         if (pinyins.empty() || pinyins.size() != utf8::length(word)) {
             break;
         }
@@ -999,7 +999,7 @@ void PinyinEngine::cloudPinyinSelected(InputContext *inputContext,
                 auto joined = stringutils::join(pinyinsIter, pinyinsEnd, "'");
                 ime_->dict()->addWord(libime::PinyinDictionary::UserDict,
                                       joined, wordView);
-                words.push_back(wordView.to_string());
+                words.push_back(std::string{wordView});
             }
             ime_->model()->history().add(words);
         } catch (const std::exception &e) {

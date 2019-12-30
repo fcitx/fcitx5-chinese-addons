@@ -286,14 +286,13 @@ bool TableState::handlePinyinMode(KeyEvent &event) {
             candidateList->setPageSize(*context_->config().pageSize);
             std::vector<std::pair<std::string, float>> pinyinWords;
 
-            dict.matchWords(
-                pinyin.data(), pinyin.size(),
-                [&pinyinWords, &lm](boost::string_view,
-                                    boost::string_view hanzi, float) {
-                    pinyinWords.emplace_back(hanzi.to_string(),
-                                             lm.singleWordScore(hanzi));
-                    return true;
-                });
+            dict.matchWords(pinyin.data(), pinyin.size(),
+                            [&pinyinWords, &lm](std::string_view,
+                                                std::string_view hanzi, float) {
+                                pinyinWords.emplace_back(
+                                    hanzi, lm.singleWordScore(hanzi));
+                                return true;
+                            });
 
             std::sort(pinyinWords.begin(), pinyinWords.end(),
                       [](const auto &lhs, const auto &rhs) {

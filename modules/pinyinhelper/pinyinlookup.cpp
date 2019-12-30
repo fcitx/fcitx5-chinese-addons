@@ -20,19 +20,20 @@
 //
 #include "pinyinlookup.h"
 
-#include <boost/utility/string_view.hpp>
 #include <fcitx-utils/log.h>
 #include <fcitx-utils/macros.h>
 #include <fcitx-utils/standardpath.h>
 #include <fcitx-utils/utf8.h>
 #include <fcntl.h>
+#include <string_view>
+#include <unistd.h>
 
 namespace fcitx {
 
 namespace {
 
-boost::string_view py_enhance_get_vokal(int index, int tone) {
-    static const boost::string_view vokals_table[][5] = {
+std::string_view py_enhance_get_vokal(int index, int tone) {
+    static const std::string_view vokals_table[][5] = {
         {"", "", "", "", ""},
         {"a", "ā", "á", "ǎ", "à"},
         {"ai", "āi", "ái", "ǎi", "ài"},
@@ -83,8 +84,8 @@ boost::string_view py_enhance_get_vokal(int index, int tone) {
     return vokals_table[index][tone];
 }
 
-boost::string_view py_enhance_get_konsonant(int index) {
-    static const boost::string_view konsonants_table[] = {
+std::string_view py_enhance_get_konsonant(int index) {
+    static const std::string_view konsonants_table[] = {
         "",   "b", "c", "ch", "d", "f",  "g", "h", "j", "k", "l", "m", "n",
         "ng", "p", "q", "r",  "s", "sh", "t", "w", "x", "y", "z", "zh"};
     static const int8_t konsonants_count = FCITX_ARRAY_SIZE(konsonants_table);
@@ -145,7 +146,7 @@ bool PinyinLookup::load() {
             return false;
         }
         word[wordLen] = '\0';
-        boost::string_view view(word);
+        std::string_view view(word);
         if (utf8::lengthValidated(view) != 1) {
             return false;
         }

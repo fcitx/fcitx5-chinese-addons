@@ -32,7 +32,7 @@ public:
 
     bool load();
     std::vector<std::pair<std::string, std::string>>
-    lookup(boost::string_view input, int limit);
+    lookup(std::string_view input, int limit);
     std::string prettyString(const std::string &input) const;
 
 private:

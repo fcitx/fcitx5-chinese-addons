@@ -23,11 +23,11 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/iostreams/device/file_descriptor.hpp>
 #include <boost/iostreams/stream_buffer.hpp>
-#include <boost/utility/string_view.hpp>
 #include <fcitx-utils/standardpath.h>
 #include <fcitx-utils/utf8.h>
 #include <fcntl.h>
 #include <queue>
+#include <string_view>
 
 namespace fcitx {
 
@@ -78,12 +78,12 @@ bool Stroke::load() {
 #define TRANSPOSITION_WEIGHT 5
 
 std::vector<std::pair<std::string, std::string>>
-Stroke::lookup(boost::string_view input, int limit) {
+Stroke::lookup(std::string_view input, int limit) {
     std::vector<std::pair<std::string, std::string>> result;
     using position_type = decltype(dict_)::position_type;
     struct LookupItem {
         position_type pos;
-        boost::string_view remain;
+        std::string_view remain;
         int weight;
         int length;
 
@@ -171,8 +171,8 @@ Stroke::lookup(boost::string_view input, int limit) {
 
 std::string Stroke::prettyString(const std::string &input) const {
     std::string result;
-    static const boost::string_view stroke_table[] = {"一", "丨", "丿",
-                                                      "㇏", "𠃍", ""};
+    static const std::string_view stroke_table[] = {"一", "丨", "丿",
+                                                    "㇏", "𠃍", ""};
     for (auto c : input) {
         if (c < '1' || c > '5') {
             return {};
