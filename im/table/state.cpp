@@ -169,7 +169,7 @@ bool TableState::handleCandidateList(const TableConfig &config,
     if (idx >= 0) {
         event.filterAndAccept();
         if (idx < candidateList->size()) {
-            candidateList->candidate(idx)->select(inputContext);
+            candidateList->candidate(idx).select(inputContext);
         }
         return true;
     }
@@ -255,7 +255,7 @@ bool TableState::handlePinyinMode(KeyEvent &event) {
                 if (idx < 0) {
                     idx = 0;
                 }
-                candidateList->candidate(idx)->select(ic_);
+                candidateList->candidate(idx).select(ic_);
                 return true;
             } else if (!pinyinModeBuffer_.size()) {
                 if (!lastSegment_.empty()) {
@@ -300,9 +300,9 @@ bool TableState::handlePinyinMode(KeyEvent &event) {
                       });
 
             for (auto &p : pinyinWords) {
-                candidateList->append(new TablePinyinCandidateWord(
+                candidateList->append<TablePinyinCandidateWord>(
                     engine_, std::move(p.first), context_->dict(),
-                    *context_->config().displayCustomHint));
+                    *context_->config().displayCustomHint);
             }
 
             if (candidateList->size()) {
@@ -574,7 +574,7 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
                     if (idx < 0) {
                         idx = 0;
                     }
-                    candidateList->candidate(idx)->select(ic_);
+                    candidateList->candidate(idx).select(ic_);
                     return event.filterAndAccept();
                 }
             }
@@ -696,8 +696,8 @@ void TableState::updateUI() {
                     text.append(" ~ ");
                     text.append(hint);
                 }
-                candidateList->append(
-                    new TableCandidateWord(engine_, std::move(text), idx));
+                candidateList->append<TableCandidateWord>(engine_,
+                                                          std::move(text), idx);
                 idx++;
             }
             candidateList->setSelectionKey(*config.selection);

@@ -169,7 +169,7 @@ PinyinEngine::predictCandidateList(const std::vector<std::string> &words) {
     }
     auto candidateList = std::make_unique<CommonCandidateList>();
     for (const auto &word : words) {
-        candidateList->append(new PinyinPredictCandidateWord(this, word));
+        candidateList->append<PinyinPredictCandidateWord>(this, word);
     }
     candidateList->setSelectionKey(selectionKeys_);
     candidateList->setPageSize(*config_.pageSize);
@@ -307,8 +307,8 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
                     cloud->word() == candidateString) {
                     cloud.reset();
                 }
-                candidateList->append(new PinyinCandidateWord(
-                    this, Text(std::move(candidateString)), idx));
+                candidateList->append<PinyinCandidateWord>(
+                    this, Text(std::move(candidateString)), idx);
                 idx++;
             }
             int engNess;
@@ -329,8 +329,9 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
                         cloud.reset();
                     }
 
-                    candidateList->insert(actualIdx,
-                                          new SpellCandidateWord(this, result));
+                    candidateList->insert(
+                        actualIdx,
+                        std::make_unique<SpellCandidateWord>(this, result));
                     idx++;
                 }
             }
@@ -341,7 +342,7 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
                 if (index >= candidateList->totalSize()) {
                     index = candidateList->totalSize();
                 }
-                candidateList->insert(index - 1, cloud.release());
+                candidateList->insert(index - 1, std::move(cloud));
             }
             if (pinyinhelper() && context.selectedLength() == 0 &&
                 isStroke(context.userInput())) {
@@ -366,9 +367,9 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
                     if (desiredPos > candidateList->size()) {
                         desiredPos = candidateList->size();
                     }
-                    candidateList->insert(
-                        desiredPos,
-                        new StrokeCandidateWord(this, result.first, pystr));
+                    candidateList->insert(desiredPos,
+                                          std::make_unique<StrokeCandidateWord>(
+                                              this, result.first, pystr));
                 }
             }
             candidateList->setSelectionKey(selectionKeys_);
@@ -640,7 +641,7 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         if (idx >= 0) {
             event.filterAndAccept();
             if (idx < candidateList->size()) {
-                candidateList->candidate(idx)->select(inputContext);
+                candidateList->candidate(idx).select(inputContext);
             }
             return;
         }
@@ -783,7 +784,7 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
                 inputContext->inputPanel()
                     .candidateList()
                     ->candidate(idx)
-                    ->select(inputContext);
+                    .select(inputContext);
                 return;
             }
         }
@@ -823,10 +824,8 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         if (c) {
             if (inputContext->inputPanel().candidateList() &&
                 inputContext->inputPanel().candidateList()->size()) {
-                inputContext->inputPanel()
-                    .candidateList()
-                    ->candidate(0)
-                    ->select(inputContext);
+                inputContext->inputPanel().candidateList()->candidate(0).select(
+                    inputContext);
             }
             auto punc = punctuation()->call<IPunctuation::pushPunctuation>(
                 "zh_CN", inputContext, c);
