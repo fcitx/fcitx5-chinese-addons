@@ -39,7 +39,7 @@ class GoogleBackend : public Backend {
 public:
     void prepareRequest(CurlQueue *queue, const std::string &pinyin) override {
         std::string url =
-            "https://www.google.com/inputtools/request?ime=pinyin&text=";
+            "https://www.google.cn/inputtools/request?ime=pinyin&text=";
         std::unique_ptr<char, decltype(&curl_free)> escaped(
             curl_escape(pinyin.c_str(), pinyin.size()), &curl_free);
         url += escaped.get();
