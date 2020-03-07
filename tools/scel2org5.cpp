@@ -19,7 +19,11 @@
 
 #include <codecvt>
 #include <cstring>
+#ifdef __FreeBSD__
+#include <sys/endian.h>
+#else
 #include <endian.h>
+#endif
 #include <fcitx-utils/fs.h>
 #include <fcitx-utils/log.h>
 #include <fcitx-utils/stringutils.h>
