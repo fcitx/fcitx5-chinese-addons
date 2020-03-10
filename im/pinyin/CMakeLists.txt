@@ -11,3 +11,9 @@ install(FILES "${CMAKE_CURRENT_BINARY_DIR}/pinyin.conf" "${CMAKE_CURRENT_BINARY_
 fcitx5_translate_desktop_file(pinyin-addon.conf.in pinyin-addon.conf)
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/pinyin-addon.conf" RENAME pinyin.conf DESTINATION "${FCITX_INSTALL_PKGDATADIR}/addon")
 
+add_custom_command(
+  OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/emoji.dict"
+  DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/emoji.txt" LibIME::pinyindict
+  COMMAND LibIME::pinyindict "${CMAKE_CURRENT_SOURCE_DIR}/emoji.txt" "${CMAKE_CURRENT_BINARY_DIR}/emoji.dict")
+add_custom_target(emoji-dict ALL DEPENDS "emoji.dict")
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/emoji.dict" DESTINATION "${FCITX_INSTALL_PKGDATADIR}/pinyin")

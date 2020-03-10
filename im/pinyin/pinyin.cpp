@@ -474,31 +474,39 @@ PinyinEngine::PinyinEngine(Instance *instance)
 
 PinyinEngine::~PinyinEngine() {}
 
+void PinyinEngine::loadDict(const StandardPathFile &file) {
+    if (file.fd() < 0) {
+        return;
+    }
+    try {
+        boost::iostreams::stream_buffer<
+            boost::iostreams::file_descriptor_source>
+            buffer(file.fd(),
+                   boost::iostreams::file_descriptor_flags::never_close_handle);
+        std::istream in(&buffer);
+        ime_->dict()->addEmptyDict();
+        ime_->dict()->load(ime_->dict()->dictSize() - 1, in,
+                           libime::PinyinDictFormat::Binary);
+    } catch (const std::exception &e) {
+        PINYIN_ERROR() << "Failed to load pinyin dict " << file.path() << ": "
+                       << e.what();
+    }
+}
+
 void PinyinEngine::loadExtraDict() {
     auto &standardPath = StandardPath::global();
     auto files = standardPath.multiOpen(StandardPath::Type::PkgData,
                                         "pinyin/dictionaries", O_RDONLY,
                                         filter::Suffix(".dict"));
     ime_->dict()->removeAll();
+    if (*config_.emojiEnabled) {
+        auto file = standardPath.open(StandardPath::Type::PkgData,
+                                      "pinyin/emoji.dict", O_RDONLY);
+        loadDict(file);
+    }
     for (const auto &file : files) {
-        try {
-            if (file.second.fd() < 0) {
-                continue;
-            }
-            PINYIN_DEBUG() << "Loading extra dictionary: " << file.first;
-            boost::iostreams::stream_buffer<
-                boost::iostreams::file_descriptor_source>
-                buffer(file.second.fd(),
-                       boost::iostreams::file_descriptor_flags::
-                           never_close_handle);
-            std::istream in(&buffer);
-            ime_->dict()->addEmptyDict();
-            ime_->dict()->load(ime_->dict()->dictSize() - 1, in,
-                               libime::PinyinDictFormat::Binary);
-        } catch (const std::exception &e) {
-            PINYIN_ERROR() << "Failed to load pinyin dict " << file.first
-                           << ": " << e.what();
-        }
+        PINYIN_DEBUG() << "Loading extra dictionary: " << file.first;
+        loadDict(file.second);
     }
 }
 
@@ -879,7 +887,6 @@ void PinyinEngine::setSubConfig(const std::string &path, const RawConfig &) {
     } else if (path == "clearalldict") {
         ime_->dict()->clear(libime::PinyinDictionary::UserDict);
         ime_->model()->history().clear();
-        ;
     }
 }
 
