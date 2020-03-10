@@ -2039,6 +2039,7 @@
 🇦🇽	ao'lan'qun'dao	0
 🇦🇿	a'sai'bai'jiang	0
 🇧🇦	bo'si'ni'ya'he'hei'sai'ge'wei'na	0
+🇧🇦	bo'hei	0
 🇧🇧	ba'ba'duo'si	0
 🇧🇩	meng'jia'la'guo	0
 🇧🇪	bi'li'shi	0
@@ -2121,6 +2122,7 @@
 🇬🇼	ji'nei'ya'bi'shao	0
 🇬🇾	gui'ya'na	0
 🇭🇰	zhong'guo'xiang'gang	0
+🇭🇰	xiang'gang	0
 🇭🇲	he'de'dao'he'mai'ke'tang'na'qun'dao	0
 🇭🇳	hong'du'la'si	0
 🇭🇷	ke'luo'di'ya	0
@@ -2175,6 +2177,7 @@
 🇲🇲	mian'dian	0
 🇲🇳	meng'gu	0
 🇲🇴	zhong'guo'ao'men	0
+🇲🇴	ao'men	0
 🇲🇵	bei'ma'li'ya'na'qun'dao	0
 🇲🇶	ma'ti'ni'ke	0
 🇲🇷	mao'li'ta'ni'ya	0
