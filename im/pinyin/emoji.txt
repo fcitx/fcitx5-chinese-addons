@@ -1292,6 +1292,7 @@
 ❇	shan'yao	0
 🏖	sha'tan	0
 🦈	sha'yu	0
+🐍	she	0
 ⛎	she'fu'zuo	0
 🏹	she'jian	0
 ⛩	shen'dao'jiao	0
