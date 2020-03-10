@@ -660,7 +660,6 @@
 🥜	jian'guo	0
 🎖	jiang'zhang	0
 ➖	jian'hao	0
-0	jian'jiao	
 😯	jian'mo	0
 ⌨	jian'pan	0
 📋	jian'tie'ban	0
@@ -723,7 +722,7 @@
 ⚠	jing'gao	0
 👮	jing'guan	0
 ⚗	jing'hua	0
-🖖	jing'li	
+🖖	jing'li	0
 🧚	jing'ling	0
 🚨	jing'shi	0
 🌐	jing'wei	0
@@ -1353,7 +1352,7 @@
 📱	shou'ji	0
 📥	shou'jian'xiang	0
 🔫	shou'qiang	0
-0	shou'qiu🤾	
+🤾	shou'qiu	0
 🤕	shou'shang	0
 🍣	shou'si	0
 🧤	shou'tao	0
@@ -1718,7 +1717,7 @@
 🩺	xin'tiao	0
 💓	xin'tiao	0
 📰	xin'wen	0
-🗞	xin'wen	0=
+🗞	xin'wen	0
 📫	xin'xiang	0
 ℹ	xin'xi	0
 💳	xin'yong'ka	0
@@ -1983,7 +1982,7 @@
 🐽	zhu'bi'zi	0
 ®	zhu'ce	0
 🙏	zhu'fu	0
-🕯	zhu'guang	0x
+🕯	zhu'guang	0
 🥴	zhui'xun'xun	0
 🎱	zhuo'qiu	0
 🥩	zhu'pai	0
