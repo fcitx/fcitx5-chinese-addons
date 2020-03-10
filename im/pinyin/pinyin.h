@@ -22,6 +22,7 @@
 #include <fcitx-config/configuration.h>
 #include <fcitx-config/iniparser.h>
 #include <fcitx-utils/i18n.h>
+#include <fcitx-utils/standardpath.h>
 #include <fcitx/action.h>
 #include <fcitx/addonfactory.h>
 #include <fcitx/addonmanager.h>
@@ -62,6 +63,7 @@ FCITX_CONFIGURATION(
         this, "PredictionSize", _("Prediction Size"), 10, IntConstrain(3, 20)};
     Option<bool> predictionEnabled{this, "Prediction", _("Enable Prediction"),
                                    false};
+    Option<bool> emojiEnabled{this, "EmojiEnabled", _("Enable Emoji"), true};
     Option<bool> cloudPinyinEnabled{this, "CloudPinyinEnabled",
                                     _("Enable Cloud Pinyin"), true};
     Option<int, IntConstrain> cloudPinyinIndex{this, "CloudPinyinIndex",
@@ -147,6 +149,7 @@ private:
                              const std::string &selected,
                              const std::string &word);
     void loadExtraDict();
+    void loadDict(const StandardPathFile &file);
 
     Instance *instance_;
     PinyinEngineConfig config_;
