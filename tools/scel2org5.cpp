@@ -19,10 +19,10 @@
 
 #include <codecvt>
 #include <cstring>
-#ifdef __FreeBSD__
-#include <sys/endian.h>
-#else
+#if defined(__linux__) || defined(__GLIBC__)
 #include <endian.h>
+#else
+#include <sys/endian.h>
 #endif
 #include <fcitx-utils/fs.h>
 #include <fcitx-utils/log.h>
