@@ -50,6 +50,7 @@
 📰	bao'dao	0
 🌋	bao'fa	0
 📦	bao'guo	0
+🚨	bao'jing	0
 🎳	bao'ling'qiu	0
 🌽	bao'mi	0
 🍿	bao'mi'hua	0
@@ -333,6 +334,7 @@
 🌒	e'mei'yue	0
 🌛	e'mei'yue	0
 🦹	e'mo	0
+😈️	e'mo	0
 🧏	er'duo	0
 👂	er'duo	0
 🎧	er'ji	0
@@ -461,6 +463,7 @@
 🐕	gou	0
 🛍	gou'gu'dai	0
 🐶	gou'lian	0
+🐶	gou'tou	0
 🛒	gou'wu'che	0
 🥁	gu	0
 👾	guai'wu	0
@@ -532,6 +535,7 @@
 ☺	he'he	0
 🙂	he'he	0
 😀	hei'hei	0
+🌚	hei'lian	0
 🏴	hei'qi	0
 🏴	hei'se'qi	0
 ⚫	hei'se'yuan	0
@@ -832,6 +836,7 @@
 🌘	kui'mei'yue	0
 🌖	kui'tu'yue	0
 ☠	ku'lou	0
+💀️	ku'lou	0
 😿	ku'mao	0
 🥱	kun	0
 😪	kun	0
@@ -1028,6 +1033,7 @@
 🔑	mi'yue	0
 🦜	mo'fang	0
 🍄	mo'gu	0
+😈️	mo'gui	0
 ♑	mo'jie'zuo	0
 🕶	mo'jing	0
 😎	mo'jing	0
@@ -1383,6 +1389,7 @@
 💧	shui'di	0
 🥟	shui'jiao	0
 😪	shui'jiao	0
+💤️	shui'jiao	0
 🔮	shui'jing'qiu	0
 🚰	shui'long'tou	0
 🛏	shui'mian	0
@@ -1543,6 +1550,7 @@
 ⛏	wa'jue	0
 🖖	wa'ken	0
 🍜	wan	0
+💤️	wan'an	0
 👑	wang'guan	0
 ⏭	wang'hou	0
 🎾	wang'qiu	0
@@ -1795,6 +1803,7 @@
 🌿	yao'cao	0
 🧞	yao'guai	0
 👻	yao'guai	0
+👺️	yao'guai	0
 🤘	yao'gun	0
 🔑	yao'shi	0
 🗝	yao'shi	0
