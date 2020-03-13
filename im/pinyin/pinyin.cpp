@@ -69,7 +69,9 @@ bool consumePreifx(std::string_view &view, std::string_view prefix) {
 
 class PinyinState : public InputContextProperty {
 public:
-    PinyinState(PinyinEngine *engine) : context_(engine->ime()) {}
+    PinyinState(PinyinEngine *engine) : context_(engine->ime()) {
+        context_.setMaxSize(150);
+    }
 
     libime::PinyinContext context_;
     bool lastIsPunc_ = false;
