@@ -70,7 +70,7 @@ bool consumePreifx(std::string_view &view, std::string_view prefix) {
 class PinyinState : public InputContextProperty {
 public:
     PinyinState(PinyinEngine *engine) : context_(engine->ime()) {
-        context_.setMaxSize(150);
+        context_.setMaxSize(75);
     }
 
     libime::PinyinContext context_;
@@ -725,8 +725,10 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
             event.filterAndAccept();
             return;
         }
-        state->context_.type(Key::keySymToUTF8(event.key().sym()));
         event.filterAndAccept();
+        if (!state->context_.type(Key::keySymToUTF8(event.key().sym()))) {
+            return;
+        }
     } else if (state->context_.size()) {
         // key to handle when it is not empty.
         if (event.key().check(FcitxKey_BackSpace)) {
