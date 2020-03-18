@@ -70,7 +70,7 @@ bool consumePreifx(std::string_view &view, std::string_view prefix) {
 class PinyinState : public InputContextProperty {
 public:
     PinyinState(PinyinEngine *engine) : context_(engine->ime()) {
-        context_.setMaxSize(75);
+        context_.setMaxSentenceLength(35);
     }
 
     libime::PinyinContext context_;
