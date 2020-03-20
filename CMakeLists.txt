@@ -61,6 +61,8 @@ if (ENABLE_GUI)
     add_subdirectory(gui)
 endif()
 
+add_subdirectory(icon)
+
 if (ENABLE_TEST)
     enable_testing()
     add_subdirectory(test)
