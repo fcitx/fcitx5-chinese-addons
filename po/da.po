@@ -3,15 +3,15 @@
 # This file is distributed under the same license as the fcitx5-chinese-addons package.
 #
 # Translators:
-# scootergrisen, 2019
+# scootergrisen, 2020
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-03-11 00:01-0700\n"
+"POT-Creation-Date: 2020-03-20 00:01-0700\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
-"Last-Translator: scootergrisen, 2019\n"
+"Last-Translator: scootergrisen, 2020\n"
 "Language-Team: Danish (https://www.transifex.com/fcitx/teams/12005/da/)\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
@@ -120,15 +120,15 @@ msgstr "Sky-Pinyin"
 msgid "Cloud Pinyin Index"
 msgstr "Sky-Pinyin-indeks"
 
-#: im/pinyin/pinyin.cpp:630
+#: im/pinyin/pinyin.cpp:632
 msgid "Cloud Pinyin Status"
 msgstr "Status for sky-Pinyin"
 
-#: im/pinyin/pinyin.cpp:632
+#: im/pinyin/pinyin.cpp:634
 msgid "Cloud Pinyin is disabled."
 msgstr "Sky-Pinyin er deaktiveret."
 
-#: im/pinyin/pinyin.cpp:631
+#: im/pinyin/pinyin.cpp:633
 msgid "Cloud Pinyin is enabled."
 msgstr "Sky-Pinyin er aktiveret."
 
@@ -217,7 +217,7 @@ msgstr "Aktivér sky-Pinyin"
 
 #: im/pinyin/pinyin.h:66
 msgid "Enable Emoji"
-msgstr ""
+msgstr "Aktivér emoji"
 
 #: im/pinyin/pinyin.h:64
 msgid "Enable Prediction"
@@ -402,7 +402,7 @@ msgstr "Pinyin-ordbogshåndtering"
 msgid "Please use this functionality after typing some text."
 msgstr "Brug venligst denne funktionalitet efter du har skrevet noget tekst."
 
-#: im/pinyin/pinyin.cpp:458
+#: im/pinyin/pinyin.cpp:460
 msgid "Prediction"
 msgstr "Forudsigelse"
 
@@ -414,11 +414,11 @@ msgstr "Størrelse på forudsigelse"
 msgid "Prefix key to trigger Pinyin"
 msgstr "Præfikstast til at udløse Pinyin"
 
-#: im/pinyin/pinyin.cpp:858
+#: im/pinyin/pinyin.cpp:862
 msgid "Press %1% for %2%"
 msgstr "Tryk på %1% for %2%"
 
-#: im/pinyin/pinyin.cpp:854
+#: im/pinyin/pinyin.cpp:858
 msgid "Press %1% for %2% and %3% for %4%"
 msgstr "Tryk på %1% for %2% og %3% for %4%"
 
@@ -458,7 +458,7 @@ msgstr "Tegnsætning"
 msgid "Remove &All"
 msgstr "Fjern &alle"
 
-#: im/pinyin/pinyin.cpp:855
+#: im/pinyin/pinyin.cpp:859
 msgid "Return"
 msgstr "Retur"
 
@@ -482,7 +482,7 @@ msgstr "Vælg scel-fil"
 msgid "Selection"
 msgstr "Valg"
 
-#: im/pinyin/pinyin.cpp:459
+#: im/pinyin/pinyin.cpp:461
 msgid "Show prediction words"
 msgstr "Vis forudsigelsesord"
 
@@ -638,7 +638,7 @@ msgstr "ue -> ve"
 msgid "z <-> zh"
 msgstr "z <-> zh"
 
-#: im/pinyin/pinyin.cpp:113
+#: im/pinyin/pinyin.cpp:115
 msgid "{0} ({1})"
 msgstr "{0} ({1})"
 
