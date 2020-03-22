@@ -182,7 +182,7 @@ void PinyinDictManager::importFromFile() {
     setEnabled(false);
     pipeline_->reset();
     auto runner = new ProcessRunner(
-        "libime_pinyindict", QStringList() << info.fileName() << tempFile,
+        "libime_pinyindict", QStringList() << info.filePath() << tempFile,
         tempFile);
     auto rename = new RenameFile(tempFile, fullname);
     pipeline_->addJob(runner);
