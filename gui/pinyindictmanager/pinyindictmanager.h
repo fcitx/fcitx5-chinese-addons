@@ -36,6 +36,7 @@ public:
     void save() override;
     QString title() override;
     bool asyncSave() override;
+    QString icon() override { return "fcitx-pinyin"; }
 
 private slots:
     void importFromFile();
