@@ -4,15 +4,15 @@
 #
 # Translators:
 # Bon Keun Seo <scobyseo@gmail.com>, 2017
-# 이정희 <daemul72@gmail.com>, 2020
+# MarongHappy <daemul72@gmail.com>, 2020
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-03-11 00:01-0700\n"
+"POT-Creation-Date: 2020-03-25 00:01-0700\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
-"Last-Translator: 이정희 <daemul72@gmail.com>, 2020\n"
+"Last-Translator: MarongHappy <daemul72@gmail.com>, 2020\n"
 "Language-Team: Korean (https://www.transifex.com/fcitx/teams/12005/ko/)\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
@@ -115,23 +115,23 @@ msgstr "모든 데이터 비우기(&A)"
 
 #: modules/cloudpinyin/cloudpinyin.conf.in:3
 msgid "Cloud Pinyin"
-msgstr "클라우드 Pinyin"
+msgstr "클라우드 병음"
 
 #: im/pinyin/pinyin.h:70
 msgid "Cloud Pinyin Index"
 msgstr "클라우드 병음 색인"
 
-#: im/pinyin/pinyin.cpp:630
-msgid "Cloud Pinyin Status"
-msgstr "클라우드 Pinyin 상태"
-
 #: im/pinyin/pinyin.cpp:632
-msgid "Cloud Pinyin is disabled."
-msgstr "클라우드 Pinyin이 비활성화됨."
+msgid "Cloud Pinyin Status"
+msgstr "클라우드 병음 상태"
 
-#: im/pinyin/pinyin.cpp:631
+#: im/pinyin/pinyin.cpp:634
+msgid "Cloud Pinyin is disabled."
+msgstr "클라우드 병음이 비활성화됨."
+
+#: im/pinyin/pinyin.cpp:633
 msgid "Cloud Pinyin is enabled."
-msgstr "클라우드 Pinyin이 활성화됨."
+msgstr "클라우드 병음이 활성화되었습니다."
 
 #: im/table/ime.h:68
 msgid "Commit raw input when there is no candidate"
@@ -153,7 +153,7 @@ msgstr "변환도구가 충돌했습니다."
 
 #: im/table/state.cpp:449
 msgid "Could not find pinyin."
-msgstr "Pinyin를 찾을 수 없음"
+msgstr "병음을 찾을 수 없음"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:108
 #: gui/pinyindictmanager/pinyindictmanager.cpp:219
@@ -190,11 +190,11 @@ msgstr "사전이 이미 존재합니다"
 
 #: im/table/ime.h:78
 msgid "Display Hint for word"
-msgstr "단어 후보 보이기"
+msgstr "단어에 대한 힌트 보이기"
 
 #: im/table/ime.h:80
 msgid "Display custom hint"
-msgstr "사용자 힌트 보이기"
+msgstr "사용자지정 힌트 보이기"
 
 #: im/table/ime.h:58
 msgid "Don't sort word shorter"
@@ -214,7 +214,7 @@ msgstr "클라우드 병음 사용"
 
 #: im/pinyin/pinyin.h:66
 msgid "Enable Emoji"
-msgstr ""
+msgstr "그림문자 활성화"
 
 #: im/pinyin/pinyin.h:64
 msgid "Enable Prediction"
@@ -222,7 +222,7 @@ msgstr "예측 사용가능"
 
 #: modules/chttrans/chttrans.h:42
 msgid "Enabled Input Methods"
-msgstr "활성화된 입력 방법"
+msgstr "활성화된 입력기"
 
 #: im/table/ime.h:70
 msgid "End key"
@@ -287,7 +287,7 @@ msgstr "전각 문자 비활성화됨."
 
 #: modules/fullwidth/fullwidth.cpp:86
 msgid "Full width Character is enabled."
-msgstr "전각 문자 활성화됨."
+msgstr "전각 문자가 활성화되었습니다."
 
 #: modules/fullwidth/fullwidth.conf.in:3
 msgid "Full width character"
@@ -303,7 +303,7 @@ msgstr "전각 부호 비활성화됨."
 
 #: modules/punctuation/punctuation.cpp:155
 msgid "Full width punctuation is enabled."
-msgstr "전각 부호 활성화됨."
+msgstr "전각 부호가 활성화되었습니다."
 
 #: im/pinyin/pinyin.h:105
 msgid "Fuzzy Pinyin Settings"
@@ -388,17 +388,17 @@ msgstr "페이지 크기"
 
 #: im/pinyin/pinyin-addon.conf.in:3 im/pinyin/pinyin.conf.in:3
 msgid "Pinyin"
-msgstr "병음(Pinyin)"
+msgstr "병음"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:87
 msgid "Pinyin dictionary manager"
-msgstr "Pinyin 사전 관리도구"
+msgstr "병음 사전 관리도구"
 
 #: im/table/state.cpp:435
 msgid "Please use this functionality after typing some text."
 msgstr "글자를 입력한 후에 이 기능을 사용하세요."
 
-#: im/pinyin/pinyin.cpp:458
+#: im/pinyin/pinyin.cpp:460
 msgid "Prediction"
 msgstr "예측"
 
@@ -410,11 +410,11 @@ msgstr "예측 크기"
 msgid "Prefix key to trigger Pinyin"
 msgstr "병음 발동을 위한 사전입력 키"
 
-#: im/pinyin/pinyin.cpp:858
+#: im/pinyin/pinyin.cpp:862
 msgid "Press %1% for %2%"
 msgstr "%2%를 위해 %1%을 누르세요"
 
-#: im/pinyin/pinyin.cpp:854
+#: im/pinyin/pinyin.cpp:858
 msgid "Press %1% for %2% and %3% for %4%"
 msgstr "%2%를 위해 %1%을, %4%를 위해 %3%을 누르세요"
 
@@ -454,7 +454,7 @@ msgstr "문장부호"
 msgid "Remove &All"
 msgstr "모두 제거(&A)"
 
-#: im/pinyin/pinyin.cpp:855
+#: im/pinyin/pinyin.cpp:859
 msgid "Return"
 msgstr "돌아가기"
 
@@ -478,9 +478,9 @@ msgstr "scel 파일 선택"
 msgid "Selection"
 msgstr "선택"
 
-#: im/pinyin/pinyin.cpp:459
+#: im/pinyin/pinyin.cpp:461
 msgid "Show prediction words"
-msgstr "예상 단어 보이기"
+msgstr "예상 단어 표시"
 
 #: im/pinyin/shuangpin.conf.in:3
 msgid "Shuangpin"
@@ -488,7 +488,7 @@ msgstr "Shuangpin"
 
 #: im/pinyin/pinyin.h:103
 msgid "Shuangpin Profile"
-msgstr "Shuangpin 프로파일"
+msgstr "Shuangpin 프로필"
 
 #: modules/chttrans/chttrans.cpp:87 modules/chttrans/chttrans.h:75
 msgid "Simplified Chinese"
@@ -496,7 +496,7 @@ msgstr "간체 중국어"
 
 #: modules/chttrans/chttrans.cpp:89
 msgid "Simplified Chinese is enabled."
-msgstr "간체 중국어가 활성화됨."
+msgstr "중국어 간체가 활성화되었습니다."
 
 #: modules/chttrans/chttrans.conf.in:3
 msgid "Simplified and Traditional Chinese Translation"
@@ -525,7 +525,7 @@ msgstr "번체 중국어"
 
 #: modules/chttrans/chttrans.cpp:88
 msgid "Traditional Chinese is enabled."
-msgstr "번체 중국어가 활성화됨."
+msgstr "중국어 번체가 활성화되었습니다."
 
 #: modules/chttrans/chttrans.h:37
 msgid "Translate engine"
@@ -634,7 +634,7 @@ msgstr "ue -> ve"
 msgid "z <-> zh"
 msgstr "z <-> zh"
 
-#: im/pinyin/pinyin.cpp:113
+#: im/pinyin/pinyin.cpp:115
 msgid "{0} ({1})"
 msgstr "{0} ({1})"
 
