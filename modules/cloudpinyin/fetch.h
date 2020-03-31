@@ -23,8 +23,8 @@
 #include <cstdint>
 #include <curl/curl.h>
 #include <fcitx-utils/event.h>
+#include <fcitx-utils/eventdispatcher.h>
 #include <fcitx-utils/intrusivelist.h>
-#include <fcitx-utils/unixfd.h>
 #include <iterator>
 #include <mutex>
 #include <thread>
@@ -32,6 +32,8 @@
 #include <vector>
 #define MAX_HANDLE 100l
 #define MAX_BUFFER_SIZE 2048
+
+class CloudPinyin;
 
 class CurlQueue : public fcitx::IntrusiveListNode {
 public:
@@ -126,7 +128,7 @@ typedef std::function<void(CurlQueue *)> SetupRequestCallback;
 
 class FetchThread {
 public:
-    FetchThread(fcitx::UnixFD notifyFd);
+    FetchThread(CloudPinyin *cloudPinyin);
     ~FetchThread();
 
     bool addRequest(SetupRequestCallback);
@@ -154,14 +156,14 @@ private:
     void finished(CurlQueue *queue);
     void exit();
 
+    CloudPinyin *cloudPinyin_;
     std::unique_ptr<std::thread> thread_;
     std::unique_ptr<fcitx::EventLoop> loop_;
+    fcitx::EventDispatcher dispatcher_;
     std::unordered_map<int, std::unique_ptr<fcitx::EventSourceIO>> events_;
     std::unique_ptr<fcitx::EventSourceTime> timer_;
 
     CURLM *curlm_;
-    fcitx::UnixFD selfPipeFd_[2];
-    fcitx::UnixFD notifyFd_;
 
     CurlQueue handles_[MAX_HANDLE];
     fcitx::IntrusiveList<CurlQueue> pendingQueue;
