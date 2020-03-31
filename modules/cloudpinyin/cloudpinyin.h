@@ -25,9 +25,9 @@
 #include <fcitx-config/configuration.h>
 #include <fcitx-config/enum.h>
 #include <fcitx-config/iniparser.h>
+#include <fcitx-utils/eventdispatcher.h>
 #include <fcitx-utils/i18n.h>
 #include <fcitx-utils/misc.h>
-#include <fcitx-utils/unixfd.h>
 #include <fcitx/addonfactory.h>
 #include <fcitx/addoninstance.h>
 #include <fcitx/instance.h>
@@ -73,13 +73,15 @@ public:
         resetError_->setEnabled(false);
     }
 
+    void notifyFinished();
+
 private:
     FCITX_ADDON_EXPORT_FUNCTION(CloudPinyin, request);
     FCITX_ADDON_EXPORT_FUNCTION(CloudPinyin, toggleKey);
     FCITX_ADDON_EXPORT_FUNCTION(CloudPinyin, resetError);
-    fcitx::UnixFD recvFd_, notifyFd_;
     std::unique_ptr<FetchThread> thread_;
     fcitx::EventLoop *eventLoop_;
+    fcitx::EventDispatcher dispatcher_;
     std::unique_ptr<fcitx::EventSourceIO> event_;
     std::unique_ptr<fcitx::EventSourceTime> resetError_;
     LRUCache<std::string, std::string> cache_{2048};

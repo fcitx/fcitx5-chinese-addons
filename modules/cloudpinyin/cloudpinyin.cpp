@@ -99,16 +99,7 @@ constexpr int minInUs = 60000000;
 CloudPinyin::CloudPinyin(fcitx::AddonManager *manager)
     : eventLoop_(manager->eventLoop()) {
     curl_global_init(CURL_GLOBAL_ALL);
-    UnixFD pipe1Fd[2];
-
-    int pipe1[2];
-    if (pipe2(pipe1, O_NONBLOCK) < 0) {
-        throw std::runtime_error("Failed to create pipe");
-    }
-    pipe1Fd[0].give(pipe1[0]);
-    pipe1Fd[1].give(pipe1[1]);
-
-    recvFd_.give(pipe1Fd[0].release());
+    dispatcher_.attach(eventLoop_);
 
     backends_.emplace(
         CloudPinyinBackend::Google,
@@ -121,47 +112,6 @@ CloudPinyin::CloudPinyin(fcitx::AddonManager *manager)
     backends_.emplace(CloudPinyinBackend::Baidu,
                       std::make_unique<BaiduBackend>());
 
-    event_ = eventLoop_->addIOEvent(
-        recvFd_.fd(), IOEventFlag::In,
-        [this](EventSourceIO *, int, IOEventFlags) {
-            char c;
-            while (fs::safeRead(recvFd_.fd(), &c, sizeof(char)) > 0)
-                ;
-            CurlQueue *item;
-            auto backend = config_.backend.value();
-            auto iter = backends_.find(backend);
-            Backend *b = nullptr;
-            if (iter != backends_.end()) {
-                b = iter->second.get();
-            }
-
-            while ((item = thread_->popFinished())) {
-                if (item->httpCode() != 200) {
-                    errorCount_ += 1;
-
-                    if (errorCount_ == MAX_ERROR && resetError_) {
-                        FCITX_ERROR() << "Cloud pinyin reaches max error. "
-                                         "Retry in 5 minutes.";
-                        resetError_->setNextInterval(minInUs * 5);
-                        resetError_->setOneShot();
-                    }
-                }
-
-                std::string hanzi;
-                if (b) {
-                    hanzi = b->parseResult(item);
-                } else {
-                    hanzi = "";
-                }
-                item->callback()(item->pinyin(), hanzi);
-                if (hanzi.size()) {
-                    cache_.insert(item->pinyin(), hanzi);
-                }
-                item->release();
-            }
-            return true;
-        });
-
     resetError_ =
         eventLoop_->addTimeEvent(CLOCK_MONOTONIC, now(CLOCK_MONOTONIC), minInUs,
                                  [this](EventSourceTime *, uint64_t) {
@@ -171,12 +121,12 @@ CloudPinyin::CloudPinyin(fcitx::AddonManager *manager)
     if (resetError_) {
         resetError_->setEnabled(false);
     }
-    thread_ = std::make_unique<FetchThread>(std::move(pipe1Fd[1]));
+    thread_ = std::make_unique<FetchThread>(this);
 
     reloadConfig();
 }
 
-CloudPinyin::~CloudPinyin() {}
+CloudPinyin::~CloudPinyin() { dispatcher_.detach(); }
 
 void CloudPinyin::reloadConfig() {
     readAsIni(config_, "conf/cloudpinyin.conf");
@@ -207,6 +157,44 @@ void CloudPinyin::request(const std::string &pinyin,
             callback(pinyin, "");
         };
     }
+}
+
+void CloudPinyin::notifyFinished() {
+    dispatcher_.schedule([this]() {
+        CurlQueue *item;
+        auto backend = config_.backend.value();
+        auto iter = backends_.find(backend);
+        Backend *b = nullptr;
+        if (iter != backends_.end()) {
+            b = iter->second.get();
+        }
+
+        while ((item = thread_->popFinished())) {
+            if (item->httpCode() != 200) {
+                errorCount_ += 1;
+
+                if (errorCount_ == MAX_ERROR && resetError_) {
+                    FCITX_ERROR() << "Cloud pinyin reaches max error. "
+                                     "Retry in 5 minutes.";
+                    resetError_->setNextInterval(minInUs * 5);
+                    resetError_->setOneShot();
+                }
+            }
+
+            std::string hanzi;
+            if (b) {
+                hanzi = b->parseResult(item);
+            } else {
+                hanzi = "";
+            }
+            item->callback()(item->pinyin(), hanzi);
+            if (hanzi.size()) {
+                cache_.insert(item->pinyin(), hanzi);
+            }
+            item->release();
+        }
+        return true;
+    });
 }
 
 FCITX_ADDON_FACTORY(CloudPinyinFactory);
