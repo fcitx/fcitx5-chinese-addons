@@ -20,6 +20,9 @@
 #include "pinyin.h"
 #include "cloudpinyin_public.h"
 #include "config.h"
+#ifdef FCITX_HAS_LUA
+#include "luaaddon_public.h"
+#endif
 #include "notifications_public.h"
 #include "pinyinhelper_public.h"
 #include "punctuation_public.h"
@@ -124,6 +127,23 @@ public:
 private:
     PinyinEngine *engine_;
     std::string hz_;
+};
+
+class ExtraCandidateWord : public CandidateWord {
+public:
+    ExtraCandidateWord(PinyinEngine *engine, const std::string &word)
+        : CandidateWord(), engine_(engine), word_(std::move(word)) {
+        setText(Text(word_));
+    }
+
+    void select(InputContext *inputContext) const override {
+        inputContext->commitString(word_);
+        engine_->doReset(inputContext);
+    }
+
+private:
+    PinyinEngine *engine_;
+    std::string word_;
 };
 
 class SpellCandidateWord : public CandidateWord {
@@ -257,16 +277,42 @@ bool isStroke(const std::string &input) {
                        [](char c) { return py.count(c); });
 }
 
+#ifdef FCITX_HAS_LUA
+std::vector<std::string>
+PinyinEngine::luaCandidateTrigger(const std::string &candidateString) {
+    std::vector<std::string> result;
+    RawConfig arg;
+    arg.setValue(candidateString);
+    auto ret =
+        imeapi()->call<ILuaAddon::invokeLuaFunction>("candidateTrigger", arg);
+    auto length = ret.valueByPath("Length");
+    try {
+        if (length) {
+            auto n = std::stoi(*length);
+            for (int i = 0; i < n; i++) {
+                auto *candidate = ret.valueByPath(std::to_string(i));
+                if (candidate && !candidate->empty()) {
+                    result.push_back(*candidate);
+                }
+            }
+        }
+    } catch (...) {
+    }
+    return result;
+}
+#endif
+
 void PinyinEngine::updateUI(InputContext *inputContext) {
     inputContext->inputPanel().reset();
 
     auto state = inputContext->propertyFor(&factory_);
-    auto &context = state->context_;
+    // Use const ref to avoid accidentally change anything.
+    const auto &context = state->context_;
     if (context.selected()) {
         auto sentence = context.sentence();
         if (!inputContext->capabilityFlags().testAny(
                 CapabilityFlag::PasswordOrSensitive)) {
-            context.learn();
+            state->context_.learn();
         }
         inputContext->updatePreedit();
         inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
@@ -274,111 +320,17 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
         if (*config_.predictionEnabled) {
             initPredict(inputContext);
         }
-        context.clear();
+        state->context_.clear();
         return;
     }
 
-    if (context.userInput().size()) {
-        auto &candidates = context.candidates();
-        auto &inputPanel = inputContext->inputPanel();
-        if (context.candidates().size()) {
-            auto candidateList = std::make_unique<CommonCandidateList>();
-            size_t idx = 0;
-            candidateList->setPageSize(*config_.pageSize);
-            candidateList->setCursorPositionAfterPaging(
-                CursorPositionAfterPaging::ResetToFirst);
-
-            std::unique_ptr<CloudPinyinCandidateWord> cloud;
-            if (*config_.cloudPinyinEnabled && cloudpinyin() &&
-                !inputContext->capabilityFlags().testAny(
-                    CapabilityFlag::PasswordOrSensitive)) {
-                using namespace std::placeholders;
-                auto fullPinyin =
-                    context.useShuangpin()
-                        ? context.candidateFullPinyin(0)
-                        : context.userInput().substr(context.selectedLength());
-                cloud = std::make_unique<CloudPinyinCandidateWord>(
-                    cloudpinyin(), fullPinyin, context.selectedSentence(),
-                    inputContext,
-                    std::bind(&PinyinEngine::cloudPinyinSelected, this, _1, _2,
-                              _3));
-            }
-            for (const auto &candidate : candidates) {
-                auto candidateString = candidate.toString();
-                if (cloud && cloud->filled() &&
-                    cloud->word() == candidateString) {
-                    cloud.reset();
-                }
-                candidateList->append<PinyinCandidateWord>(
-                    this, Text(std::move(candidateString)), idx);
-                idx++;
-            }
-            int engNess;
-            auto parsedPy =
-                context.preedit().substr(context.selectedSentence().size());
-            if (spell() &&
-                (engNess = englishNess(parsedPy, context.useShuangpin()))) {
-                auto py = context.userInput().substr(context.selectedLength());
-                auto results = spell()->call<ISpell::hintWithProvider>(
-                    "en", SpellProvider::Custom, py, engNess);
-                int idx = 1;
-                for (auto &result : results) {
-                    auto actualIdx = idx;
-                    if (actualIdx > candidateList->totalSize()) {
-                        actualIdx = candidateList->totalSize();
-                    }
-                    if (cloud && cloud->filled() && cloud->word() == result) {
-                        cloud.reset();
-                    }
-
-                    candidateList->insert(
-                        actualIdx,
-                        std::make_unique<SpellCandidateWord>(this, result));
-                    idx++;
-                }
-            }
-            // if we didn't got it from cache or whatever, and not empty
-            // otherwise we can throw it away.
-            if (cloud && (!cloud->filled() || !cloud->word().empty())) {
-                auto index = *config_.cloudPinyinIndex;
-                if (index >= candidateList->totalSize()) {
-                    index = candidateList->totalSize();
-                }
-                candidateList->insert(index - 1, std::move(cloud));
-            }
-            if (pinyinhelper() && context.selectedLength() == 0 &&
-                isStroke(context.userInput())) {
-                int limit = (context.userInput().size() + 4) / 5;
-                if (limit > 3) {
-                    limit = 3;
-                }
-                auto results =
-                    pinyinhelper()->call<IPinyinHelper::lookupStroke>(
-                        context.userInput(), limit);
-                int desiredPos =
-                    *config_.pageSize - static_cast<int>(results.size());
-                if (desiredPos < 0) {
-                    desiredPos = 0;
-                }
-                for (auto &result : results) {
-                    utf8::getChar(result.first);
-                    auto py = pinyinhelper()->call<IPinyinHelper::lookup>(
-                        utf8::getChar(result.first));
-                    auto pystr = stringutils::join(py, " ");
-
-                    if (desiredPos > candidateList->size()) {
-                        desiredPos = candidateList->size();
-                    }
-                    candidateList->insert(desiredPos,
-                                          std::make_unique<StrokeCandidateWord>(
-                                              this, result.first, pystr));
-                }
-            }
-            candidateList->setSelectionKey(selectionKeys_);
-            candidateList->setGlobalCursorIndex(0);
-            inputPanel.setCandidateList(std::move(candidateList));
+    do {
+        if (context.userInput().empty()) {
+            break;
         }
-        auto preeditWithCursor = context.preeditWithCursor();
+        // Update Preedit.
+        auto &inputPanel = inputContext->inputPanel();
+        const auto preeditWithCursor = context.preeditWithCursor();
         Text preedit(preeditWithCursor.first);
         preedit.setCursor(preeditWithCursor.second);
         if (config_.showPreeditInApplication.value() &&
@@ -389,7 +341,135 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
             inputPanel.setClientPreedit(
                 Text(context.sentence(), TextFormatFlag::Underline));
         }
-    }
+        // Update candidate
+        auto &candidates = context.candidates();
+        if (candidates.empty()) {
+            break;
+        }
+
+        // Setup candidate list.
+        auto candidateList = std::make_unique<CommonCandidateList>();
+        candidateList->setPageSize(*config_.pageSize);
+        candidateList->setCursorPositionAfterPaging(
+            CursorPositionAfterPaging::ResetToFirst);
+
+        // Precompute some values.
+        const auto selectedLength = context.selectedLength();
+        const auto selectedSentence = context.selectedSentence();
+
+        /// Create cloud candidate. {{{
+        std::unique_ptr<CloudPinyinCandidateWord> cloud;
+        if (*config_.cloudPinyinEnabled && cloudpinyin() &&
+            !inputContext->capabilityFlags().testAny(
+                CapabilityFlag::PasswordOrSensitive)) {
+            using namespace std::placeholders;
+            auto fullPinyin = context.useShuangpin()
+                                  ? context.candidateFullPinyin(0)
+                                  : context.userInput().substr(selectedLength);
+            cloud = std::make_unique<CloudPinyinCandidateWord>(
+                cloudpinyin(), fullPinyin, selectedSentence, inputContext,
+                std::bind(&PinyinEngine::cloudPinyinSelected, this, _1, _2,
+                          _3));
+        }
+        /// }}}
+
+        /// Create spell candidate {{{
+        int engNess;
+        auto parsedPy = preeditWithCursor.first.substr(selectedSentence.size());
+        std::vector<std::unique_ptr<SpellCandidateWord>> spellCands;
+        if (spell() &&
+            (engNess = englishNess(parsedPy, context.useShuangpin()))) {
+            auto py = context.userInput().substr(selectedLength);
+            auto results = spell()->call<ISpell::hintWithProvider>(
+                "en", SpellProvider::Custom, py, engNess);
+            spellCands.reserve(results.size());
+            for (auto &result : results) {
+                if (cloud && cloud->filled() && cloud->word() == result) {
+                    cloud.reset();
+                }
+                spellCands.push_back(
+                    std::make_unique<SpellCandidateWord>(this, result));
+            }
+        }
+        /// }}}
+
+        /// Create stroke candidate {{{
+        std::vector<std::unique_ptr<StrokeCandidateWord>> strokeCands;
+        if (pinyinhelper() && context.selectedLength() == 0 &&
+            isStroke(context.userInput())) {
+            int limit = (context.userInput().size() + 4) / 5;
+            if (limit > 3) {
+                limit = 3;
+            }
+            auto results = pinyinhelper()->call<IPinyinHelper::lookupStroke>(
+                context.userInput(), limit);
+            for (auto &result : results) {
+                utf8::getChar(result.first);
+                auto py = pinyinhelper()->call<IPinyinHelper::lookup>(
+                    utf8::getChar(result.first));
+                auto pystr = stringutils::join(py, " ");
+                strokeCands.push_back(std::make_unique<StrokeCandidateWord>(
+                    this, result.first, pystr));
+            }
+        }
+        /// }}}
+
+        size_t idx = 0;
+        for (const auto &candidate : candidates) {
+            auto candidateString = candidate.toString();
+            std::vector<std::string> extraCandidates;
+#ifdef FCITX_HAS_LUA
+            // To invoke lua trigger, we need "raw full sentence". Also, check
+            // against nbest, otherwise single char may be invoked for too much
+            // times.
+            if (selectedLength == 0 &&
+                static_cast<int>(idx) <
+                    std::max(*config_.nbest, *config_.pageSize) &&
+                imeapi() &&
+                candidate.sentence().back()->to()->index() ==
+                    context.userInput().size()) {
+                extraCandidates = luaCandidateTrigger(candidateString);
+            }
+#endif
+            if (cloud && cloud->filled() && cloud->word() == candidateString) {
+                cloud.reset();
+            }
+            candidateList->append<PinyinCandidateWord>(
+                this, Text(std::move(candidateString)), idx);
+            for (auto &extraCandidate : extraCandidates) {
+                candidateList->append<ExtraCandidateWord>(this, extraCandidate);
+            }
+            idx++;
+            // We don't want to do too much comparision for cloud pinyin.
+            if (cloud && (!cloud->filled() || !cloud->word().empty()) &&
+                (static_cast<int>(idx) >
+                     std::max(*config_.nbest, *config_.cloudPinyinIndex - 1) ||
+                 idx == candidates.size())) {
+                auto desiredPos = *config_.cloudPinyinIndex - 1;
+                if (desiredPos > candidateList->totalSize()) {
+                    desiredPos = candidateList->totalSize();
+                }
+                candidateList->insert(desiredPos, std::move(cloud));
+            }
+            if (!spellCands.empty() && (idx == 1 || idx == candidates.size())) {
+                for (auto &spellCand : spellCands) {
+                    candidateList->append(std::move(spellCand));
+                }
+                spellCands.clear();
+            }
+            if (!strokeCands.empty() &&
+                (candidateList->totalSize() + 1 >= *config_.pageSize ||
+                 idx == candidates.size())) {
+                for (auto &strokeCand : strokeCands) {
+                    candidateList->append(std::move(strokeCand));
+                }
+                strokeCands.clear();
+            }
+        }
+        candidateList->setSelectionKey(selectionKeys_);
+        candidateList->setGlobalCursorIndex(0);
+        inputPanel.setCandidateList(std::move(candidateList));
+    } while (0);
     inputContext->updatePreedit();
     inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
 }

@@ -148,6 +148,10 @@ private:
     void cloudPinyinSelected(InputContext *inputContext,
                              const std::string &selected,
                              const std::string &word);
+#ifdef FCITX_HAS_LUA
+    std::vector<std::string>
+    luaCandidateTrigger(const std::string &candidateString);
+#endif
     void loadExtraDict();
     void loadDict(const StandardPathFile &file);
 
@@ -167,6 +171,7 @@ private:
     FCITX_ADDON_DEPENDENCY_LOADER(notifications, instance_->addonManager());
     FCITX_ADDON_DEPENDENCY_LOADER(pinyinhelper, instance_->addonManager());
     FCITX_ADDON_DEPENDENCY_LOADER(spell, instance_->addonManager());
+    FCITX_ADDON_DEPENDENCY_LOADER(imeapi, instance_->addonManager());
 };
 
 class PinyinEngineFactory : public AddonFactory {

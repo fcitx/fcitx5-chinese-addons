@@ -17,4 +17,4 @@ Configurable=True
 4=spell
 5=pinyinhelper
 6=chttrans
-
+7=imeapi
