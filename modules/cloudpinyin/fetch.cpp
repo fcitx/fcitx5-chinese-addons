@@ -204,6 +204,7 @@ bool FetchThread::addRequest(SetupRequestCallback callback) {
         pendingQueue.push_back(*queue);
     }
 
+    // Handle pending queue in fetch thread.
     dispatcher_.schedule([this]() {
         std::lock_guard<std::mutex> lock(pendingQueueLock);
 

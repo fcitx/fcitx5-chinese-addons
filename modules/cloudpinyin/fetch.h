@@ -131,6 +131,7 @@ public:
     FetchThread(CloudPinyin *cloudPinyin);
     ~FetchThread();
 
+    // Call from main thread.
     bool addRequest(SetupRequestCallback);
     CurlQueue *popFinished();
 
@@ -154,6 +155,8 @@ private:
 
     void run();
     void finished(CurlQueue *queue);
+
+    // Call from main thread.
     void exit();
 
     CloudPinyin *cloudPinyin_;
