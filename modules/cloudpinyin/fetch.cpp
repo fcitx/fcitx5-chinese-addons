@@ -46,7 +46,7 @@ FetchThread::FetchThread(fcitx::UnixFD notifyFd)
 }
 
 FetchThread::~FetchThread() {
-    quit();
+    exit();
     thread_->join();
 
     while (workingQueue.size()) {
@@ -214,7 +214,7 @@ bool FetchThread::addRequest(SetupRequestCallback callback) {
     return true;
 }
 
-void FetchThread::quit() {
+void FetchThread::exit() {
     char c = 1;
     fs::safeWrite(selfPipeFd_[1].fd(), &c, sizeof(c));
 }
@@ -244,7 +244,7 @@ void FetchThread::run() {
                 }
             }
             if (r == 0 || endflag) {
-                loop_->quit();
+                loop_->exit();
                 return true;
             }
 

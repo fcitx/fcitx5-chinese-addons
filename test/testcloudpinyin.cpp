@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
         std::cout << "Hanzi: " << hanzi << std::endl;
         returned++;
         if (returned == 1) {
-            loop.quit();
+            loop.exit();
         }
     };
     cloudpinyin->call<fcitx::ICloudPinyin::request>("nihao", callback);
