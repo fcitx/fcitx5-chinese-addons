@@ -152,7 +152,7 @@ private:
 
     void run();
     void finished(CurlQueue *queue);
-    void quit();
+    void exit();
 
     std::unique_ptr<std::thread> thread_;
     std::unique_ptr<fcitx::EventLoop> loop_;
