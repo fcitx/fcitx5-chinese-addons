@@ -150,7 +150,7 @@ private:
                              const std::string &word);
 #ifdef FCITX_HAS_LUA
     std::vector<std::string>
-    luaCandidateTrigger(const std::string &candidateString);
+    luaCandidateTrigger(InputContext *ic, const std::string &candidateString);
 #endif
     void loadExtraDict();
     void loadDict(const StandardPathFile &file);

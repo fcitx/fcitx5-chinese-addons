@@ -279,12 +279,13 @@ bool isStroke(const std::string &input) {
 
 #ifdef FCITX_HAS_LUA
 std::vector<std::string>
-PinyinEngine::luaCandidateTrigger(const std::string &candidateString) {
+PinyinEngine::luaCandidateTrigger(InputContext *ic,
+                                  const std::string &candidateString) {
     std::vector<std::string> result;
     RawConfig arg;
     arg.setValue(candidateString);
-    auto ret =
-        imeapi()->call<ILuaAddon::invokeLuaFunction>("candidateTrigger", arg);
+    auto ret = imeapi()->call<ILuaAddon::invokeLuaFunction>(
+        ic, "candidateTrigger", arg);
     auto length = ret.valueByPath("Length");
     try {
         if (length) {
@@ -428,7 +429,8 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
                 imeapi() &&
                 candidate.sentence().back()->to()->index() ==
                     context.userInput().size()) {
-                extraCandidates = luaCandidateTrigger(candidateString);
+                extraCandidates =
+                    luaCandidateTrigger(inputContext, candidateString);
             }
 #endif
             if (cloud && cloud->filled() && cloud->word() == candidateString) {
