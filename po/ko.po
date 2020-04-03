@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-03-25 00:01-0700\n"
+"POT-Creation-Date: 2020-04-03 00:01-0700\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: MarongHappy <daemul72@gmail.com>, 2020\n"
 "Language-Team: Korean (https://www.transifex.com/fcitx/teams/12005/ko/)\n"
@@ -121,15 +121,15 @@ msgstr "클라우드 병음"
 msgid "Cloud Pinyin Index"
 msgstr "클라우드 병음 색인"
 
-#: im/pinyin/pinyin.cpp:632
+#: im/pinyin/pinyin.cpp:714
 msgid "Cloud Pinyin Status"
 msgstr "클라우드 병음 상태"
 
-#: im/pinyin/pinyin.cpp:634
+#: im/pinyin/pinyin.cpp:716
 msgid "Cloud Pinyin is disabled."
 msgstr "클라우드 병음이 비활성화됨."
 
-#: im/pinyin/pinyin.cpp:633
+#: im/pinyin/pinyin.cpp:715
 msgid "Cloud Pinyin is enabled."
 msgstr "클라우드 병음이 활성화되었습니다."
 
@@ -295,15 +295,15 @@ msgstr "전각 문자"
 
 #: modules/punctuation/punctuation.h:65
 msgid "Full width punctuation"
-msgstr "전각 부호"
+msgstr "전각 문장부호"
 
 #: modules/punctuation/punctuation.cpp:156
 msgid "Full width punctuation is disabled."
-msgstr "전각 부호 비활성화됨."
+msgstr "전각 문장부호 비활성화되었습니다."
 
 #: modules/punctuation/punctuation.cpp:155
 msgid "Full width punctuation is enabled."
-msgstr "전각 부호가 활성화되었습니다."
+msgstr "전각 문장부호가 활성화되었습니다."
 
 #: im/pinyin/pinyin.h:105
 msgid "Fuzzy Pinyin Settings"
@@ -315,7 +315,7 @@ msgstr "반각 문자"
 
 #: modules/punctuation/punctuation.h:66
 msgid "Half width punctuation"
-msgstr "반각 부호"
+msgstr "반각 문장부호"
 
 #: im/table/ime.h:56
 msgid "Icon"
@@ -398,7 +398,7 @@ msgstr "병음 사전 관리도구"
 msgid "Please use this functionality after typing some text."
 msgstr "글자를 입력한 후에 이 기능을 사용하세요."
 
-#: im/pinyin/pinyin.cpp:460
+#: im/pinyin/pinyin.cpp:542
 msgid "Prediction"
 msgstr "예측"
 
@@ -410,11 +410,11 @@ msgstr "예측 크기"
 msgid "Prefix key to trigger Pinyin"
 msgstr "병음 발동을 위한 사전입력 키"
 
-#: im/pinyin/pinyin.cpp:862
+#: im/pinyin/pinyin.cpp:944
 msgid "Press %1% for %2%"
 msgstr "%2%를 위해 %1%을 누르세요"
 
-#: im/pinyin/pinyin.cpp:858
+#: im/pinyin/pinyin.cpp:940
 msgid "Press %1% for %2% and %3% for %4%"
 msgstr "%2%를 위해 %1%을, %4%를 위해 %3%을 누르세요"
 
@@ -424,7 +424,7 @@ msgstr "무시하기 위해 백스페이스를 누르세요."
 
 #: im/table/state.cpp:469
 msgid "Press Delete to remove."
-msgstr "제거하기 위해 Delete키를 누르세요."
+msgstr "제거하려면 Delete 키를 누르십시오"
 
 #: im/table/state.cpp:463
 msgid "Press space to insert."
@@ -454,7 +454,7 @@ msgstr "문장부호"
 msgid "Remove &All"
 msgstr "모두 제거(&A)"
 
-#: im/pinyin/pinyin.cpp:859
+#: im/pinyin/pinyin.cpp:941
 msgid "Return"
 msgstr "돌아가기"
 
@@ -478,7 +478,7 @@ msgstr "scel 파일 선택"
 msgid "Selection"
 msgstr "선택"
 
-#: im/pinyin/pinyin.cpp:461
+#: im/pinyin/pinyin.cpp:543
 msgid "Show prediction words"
 msgstr "예상 단어 표시"
 
@@ -634,7 +634,7 @@ msgstr "ue -> ve"
 msgid "z <-> zh"
 msgstr "z <-> zh"
 
-#: im/pinyin/pinyin.cpp:115
+#: im/pinyin/pinyin.cpp:118
 msgid "{0} ({1})"
 msgstr "{0} ({1})"
 
