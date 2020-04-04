@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-04-03 00:01-0700\n"
+"POT-Creation-Date: 2020-04-04 00:01-0700\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: MarongHappy <daemul72@gmail.com>, 2020\n"
 "Language-Team: Korean (https://www.transifex.com/fcitx/teams/12005/ko/)\n"
@@ -67,15 +67,15 @@ msgstr "제거(&R)"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:356
 msgid "Are you sure to delete %1?"
-msgstr "%1을(를) 지우시겠습니까?"
+msgstr "%1을(를) 삭제하시겠습니까?"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:324
 msgid "Are you sure to delete all dictionaries?"
-msgstr "모든 사전을 삭제 하시겠습니까?"
+msgstr "모든 사전을 삭제하시겠습니까?"
 
 #: im/table/ime.h:73
 msgid "Auto phrase length"
-msgstr "자동 문구 길이"
+msgstr "자동 문구 문자 수"
 
 #: im/table/ime.h:82
 msgid "Auto rule set"
@@ -87,7 +87,7 @@ msgstr "자동 후보 선택"
 
 #: im/table/ime.h:62
 msgid "Auto select candidate Length"
-msgstr "자동 후보 선택 길이"
+msgstr "후보 문자 수 자동 선택"
 
 #: im/table/ime.h:65
 msgid "Auto select last candidate when there is no new match"
@@ -119,7 +119,7 @@ msgstr "클라우드 병음"
 
 #: im/pinyin/pinyin.h:70
 msgid "Cloud Pinyin Index"
-msgstr "클라우드 병음 색인"
+msgstr "클라우드 병음 일련번호"
 
 #: im/pinyin/pinyin.cpp:714
 msgid "Cloud Pinyin Status"
@@ -343,7 +343,7 @@ msgstr "병음 검색"
 
 #: modules/cloudpinyin/cloudpinyin.h:44
 msgid "Minimum Pinyin Length"
-msgstr "최소 병음 길이"
+msgstr "최소 병음 문자 수"
 
 #: im/table/engine.h:40
 msgid "Modify dictionary"
