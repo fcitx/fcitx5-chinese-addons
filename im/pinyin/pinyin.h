@@ -38,6 +38,11 @@ namespace fcitx {
 FCITX_CONFIG_ENUM(ShuangpinProfileEnum, Ziranma, MS, Ziguang, ABC,
                   Zhongwenzhixing, PinyinJiajia, Xiaohe, Custom)
 
+FCITX_CONFIG_ENUM_I18N_ANNOTATION(ShuangpinProfileEnum, N_("Ziranma"), N_("MS"),
+                                  N_("Ziguang"), N_("ABC"),
+                                  N_("Zhongwenzhixing"), N_("PinyinJiajia"),
+                                  N_("Xiaohe"), N_("Custom"))
+
 FCITX_CONFIGURATION(
     FuzzyConfig, Option<bool> ue{this, "VE_UE", _("ue -> ve"), true};
     Option<bool> ng{this, "NG_GN", _("gn -> ng"), true};
@@ -99,9 +104,10 @@ FCITX_CONFIGURATION(
     Option<int, IntConstrain> nbest{this, "Number of sentence",
                                     _("Number of Sentence"), 2,
                                     IntConstrain(1, 3)};
-    Option<ShuangpinProfileEnum> shuangpinProfile{
-        this, "ShuangpinProfile", _("Shuangpin Profile"),
-        ShuangpinProfileEnum::Ziranma};
+    OptionWithAnnotation<ShuangpinProfileEnum,
+                         ShuangpinProfileEnumI18NAnnotation>
+        shuangpinProfile{this, "ShuangpinProfile", _("Shuangpin Profile"),
+                         ShuangpinProfileEnum::Ziranma};
     Option<FuzzyConfig> fuzzyConfig{this, "Fuzzy", _("Fuzzy Pinyin Settings")};
     ExternalOption dictmanager{this, "DictManager", _("Dictionaries"),
                                "fcitx://config/addon/pinyin/dictmanager"};);
