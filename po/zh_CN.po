@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-04-02 00:01-0700\n"
+"POT-Creation-Date: 2020-04-06 00:01-0700\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: csslayer <wengxt@gmail.com>, 2020\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/fcitx/teams/12005/"
@@ -67,6 +67,10 @@ msgstr "导入(&I)"
 msgid "&Remove"
 msgstr "移除(&R)"
 
+#: im/pinyin/pinyin.h:42
+msgid "ABC"
+msgstr ""
+
 #: gui/pinyindictmanager/pinyindictmanager.cpp:356
 msgid "Are you sure to delete %1?"
 msgstr "您确定要删除 %1？"
@@ -119,7 +123,7 @@ msgstr "清理所有数据(&A)"
 msgid "Cloud Pinyin"
 msgstr "云拼音"
 
-#: im/pinyin/pinyin.h:70
+#: im/pinyin/pinyin.h:75
 msgid "Cloud Pinyin Index"
 msgstr "云拼音位置"
 
@@ -171,6 +175,10 @@ msgstr "创建临时文件失败。"
 msgid "Creating temp file failed. Please check the permission or disk space."
 msgstr "创建临时文件失败。请检查权限或磁盘空间。"
 
+#: im/pinyin/pinyin.h:44
+msgid "Custom"
+msgstr ""
+
 #. i18n: file: gui/pinyindictmanager/browserdialog.ui:14
 #. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
 #: rc.cpp:3
@@ -182,7 +190,7 @@ msgstr "对话框"
 msgid "Dianbaoma"
 msgstr "电报码"
 
-#: im/pinyin/pinyin.h:106
+#: im/pinyin/pinyin.h:112
 msgid "Dictionaries"
 msgstr "词典"
 
@@ -210,15 +218,15 @@ msgstr "下载已完成"
 msgid "Download started."
 msgstr "下载已开始。"
 
-#: im/pinyin/pinyin.h:68
+#: im/pinyin/pinyin.h:73
 msgid "Enable Cloud Pinyin"
 msgstr "启用云拼音"
 
-#: im/pinyin/pinyin.h:66
+#: im/pinyin/pinyin.h:71
 msgid "Enable Emoji"
 msgstr "启用颜文字"
 
-#: im/pinyin/pinyin.h:64
+#: im/pinyin/pinyin.h:69
 msgid "Enable Prediction"
 msgstr "启用预测"
 
@@ -307,7 +315,7 @@ msgstr "全角标点已禁用。"
 msgid "Full width punctuation is enabled."
 msgstr "全角标点已启用。"
 
-#: im/pinyin/pinyin.h:105
+#: im/pinyin/pinyin.h:111
 msgid "Fuzzy Pinyin Settings"
 msgstr "模糊音设置"
 
@@ -323,7 +331,7 @@ msgstr "半角标点"
 msgid "Icon"
 msgstr "图标"
 
-#: im/pinyin/pinyin.h:44
+#: im/pinyin/pinyin.h:49
 msgid "Inner Segment (xian -> xi'an)"
 msgstr "内模糊音节 (xian -> xi'an)"
 
@@ -343,6 +351,10 @@ msgstr "学习"
 msgid "Lookup pinyin"
 msgstr "查找拼音"
 
+#: im/pinyin/pinyin.h:41
+msgid "MS"
+msgstr ""
+
 #: modules/cloudpinyin/cloudpinyin.h:44
 msgid "Minimum Pinyin Length"
 msgstr "最小拼音长度"
@@ -355,11 +367,11 @@ msgstr "修改词典"
 msgid "New Dictionary Name:"
 msgstr "新词典名称："
 
-#: im/pinyin/pinyin.h:96
+#: im/pinyin/pinyin.h:101
 msgid "Next Candidate"
 msgstr "下一个候选词"
 
-#: im/pinyin/pinyin.h:84
+#: im/pinyin/pinyin.h:89
 msgid "Next Page"
 msgstr "下一页"
 
@@ -375,7 +387,7 @@ msgstr "不允许访问 pinyin.sogou.com 之外的网页，将重定向到主页
 msgid "Not available"
 msgstr "不可用"
 
-#: im/pinyin/pinyin.h:100
+#: im/pinyin/pinyin.h:105
 msgid "Number of Sentence"
 msgstr "句子数量"
 
@@ -383,7 +395,7 @@ msgstr "句子数量"
 msgid "Order policy"
 msgstr "排序规则"
 
-#: im/pinyin/pinyin.h:60
+#: im/pinyin/pinyin.h:65
 msgid "Page size"
 msgstr "页大小"
 
@@ -395,6 +407,10 @@ msgstr "拼音"
 msgid "Pinyin dictionary manager"
 msgstr "拼音词典管理器"
 
+#: im/pinyin/pinyin.h:43
+msgid "PinyinJiajia"
+msgstr ""
+
 #: im/table/state.cpp:435
 msgid "Please use this functionality after typing some text."
 msgstr "请在输入一些文字之后再使用这个功能。"
@@ -403,7 +419,7 @@ msgstr "请在输入一些文字之后再使用这个功能。"
 msgid "Prediction"
 msgstr "预测"
 
-#: im/pinyin/pinyin.h:63
+#: im/pinyin/pinyin.h:68
 msgid "Prediction Size"
 msgstr "预测个数"
 
@@ -431,11 +447,11 @@ msgstr "按下删除键来移除。"
 msgid "Press space to insert."
 msgstr "按下空格键来插入。"
 
-#: im/pinyin/pinyin.h:90
+#: im/pinyin/pinyin.h:95
 msgid "Prev Candidate"
 msgstr "上一个候选词"
 
-#: im/pinyin/pinyin.h:78
+#: im/pinyin/pinyin.h:83
 msgid "Prev Page"
 msgstr "上一页"
 
@@ -487,7 +503,7 @@ msgstr "显示联想词组"
 msgid "Shuangpin"
 msgstr "双拼"
 
-#: im/pinyin/pinyin.h:103
+#: im/pinyin/pinyin.h:109
 msgid "Shuangpin Profile"
 msgstr "双拼方案"
 
@@ -544,7 +560,7 @@ msgstr "使用左右键来选择字符。"
 msgid "Use full width"
 msgstr "使用全角字符"
 
-#: im/pinyin/pinyin.h:74
+#: im/pinyin/pinyin.h:79
 msgid "Use preedit in application when possible"
 msgstr "可用时在应用程序中显示预编辑文本"
 
@@ -568,7 +584,19 @@ msgstr "五笔字型"
 msgid "Wubi Pinyin"
 msgstr "五笔拼音"
 
-#: im/table/zrm.conf.in.in:3
+#: im/pinyin/pinyin.h:44
+msgid "Xiaohe"
+msgstr ""
+
+#: im/pinyin/pinyin.h:43
+msgid "Zhongwenzhixing"
+msgstr ""
+
+#: im/pinyin/pinyin.h:42
+msgid "Ziguang"
+msgstr ""
+
+#: im/pinyin/pinyin.h:41 im/table/zrm.conf.in.in:3
 msgid "Ziranma"
 msgstr "自然码"
 
@@ -579,59 +607,59 @@ msgstr "自然码"
 msgid "about:blank"
 msgstr "about:blank"
 
-#: im/pinyin/pinyin.h:46
+#: im/pinyin/pinyin.h:51
 msgid "an <-> ang"
 msgstr "an <-> ang"
 
-#: im/pinyin/pinyin.h:52
+#: im/pinyin/pinyin.h:57
 msgid "c <-> ch"
 msgstr "c <-> ch"
 
-#: im/pinyin/pinyin.h:47
+#: im/pinyin/pinyin.h:52
 msgid "en <-> eng"
 msgstr "en <-> eng"
 
-#: im/pinyin/pinyin.h:53
+#: im/pinyin/pinyin.h:58
 msgid "f <-> h"
 msgstr "f <-> h"
 
-#: im/pinyin/pinyin.h:43
+#: im/pinyin/pinyin.h:48
 msgid "gn -> ng"
 msgstr "gn -> ng"
 
-#: im/pinyin/pinyin.h:48
+#: im/pinyin/pinyin.h:53
 msgid "ian <-> iang"
 msgstr "ian <-> iang"
 
-#: im/pinyin/pinyin.h:49
+#: im/pinyin/pinyin.h:54
 msgid "in <-> ing"
 msgstr "in <-> ing"
 
-#: im/pinyin/pinyin.h:54
+#: im/pinyin/pinyin.h:59
 msgid "l <-> n"
 msgstr "l <-> n"
 
-#: im/pinyin/pinyin.h:55
+#: im/pinyin/pinyin.h:60
 msgid "s <-> sh"
 msgstr "s <-> sh"
 
-#: im/pinyin/pinyin.h:50
+#: im/pinyin/pinyin.h:55
 msgid "u <-> ou"
 msgstr "u <-> ou"
 
-#: im/pinyin/pinyin.h:45
+#: im/pinyin/pinyin.h:50
 msgid "u <-> v"
 msgstr "u <-> v"
 
-#: im/pinyin/pinyin.h:51
+#: im/pinyin/pinyin.h:56
 msgid "uan <-> uang"
 msgstr "uan <-> uang"
 
-#: im/pinyin/pinyin.h:42
+#: im/pinyin/pinyin.h:47
 msgid "ue -> ve"
 msgstr "ue -> ve"
 
-#: im/pinyin/pinyin.h:56
+#: im/pinyin/pinyin.h:61
 msgid "z <-> zh"
 msgstr "z <-> zh"
 
