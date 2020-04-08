@@ -95,6 +95,27 @@ Stroke::lookup(std::string_view input, int limit) {
                         std::greater<LookupItem>>
         q;
 
+    // First lets check if the stroke is already a prefix of single word.
+    position_type onlyMatch = decltype(dict_)::NO_PATH;
+    size_t onlyMatchLength = 0;
+    if (!dict_.foreach(input, [this, &onlyMatch, &onlyMatchLength](
+                                  int32_t, size_t len, uint64_t pos) {
+            if (!dict_.isNoPath(onlyMatch)) {
+                return false;
+            }
+            onlyMatch = pos;
+            onlyMatchLength = len;
+            return true;
+        })) {
+        if (!dict_.isNoPath(onlyMatch)) {
+            std::string buf;
+            dict_.suffix(buf, input.size() + onlyMatchLength, onlyMatch);
+            if (auto idx = buf.find_last_of('|'); idx != std::string::npos) {
+                result.emplace_back(buf.substr(idx + 1), buf.substr(0, idx));
+            }
+        }
+    }
+
     auto pushQueue = [&q](LookupItem &&item) {
         if (item.weight >= 10) {
             return;

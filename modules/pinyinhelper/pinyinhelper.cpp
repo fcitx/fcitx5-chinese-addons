@@ -19,7 +19,9 @@
 
 #include "pinyinhelper.h"
 #include <algorithm>
+#include <clipboard_public.h>
 #include <fcitx-config/iniparser.h>
+#include <fcitx-utils/event.h>
 #include <fcitx-utils/i18n.h>
 #include <fcitx-utils/standardpath.h>
 #include <fcitx-utils/utf8.h>
@@ -27,6 +29,7 @@
 #include <fcitx/inputcontext.h>
 #include <fcitx/inputmethodentry.h>
 #include <fcntl.h>
+#include <fmt/format.h>
 #include <set>
 
 namespace fcitx {
@@ -34,10 +37,63 @@ namespace fcitx {
 PinyinHelper::PinyinHelper(Instance *instance) : instance_(instance) {
     lookup_.load();
     stroke_.load();
-    reloadConfig();
+
+    deferEvent_ = instance_->eventLoop().addDeferEvent([this](EventSource *) {
+        initQuickPhrase();
+        return true;
+    });
 }
 
-void PinyinHelper::reloadConfig() {}
+void PinyinHelper::initQuickPhrase() {
+    if (!quickphrase()) {
+        return;
+    }
+    handler_ = quickphrase()->call<IQuickPhrase::addProvider>(
+        [this](InputContext *ic, const std::string &input,
+               QuickPhraseAddCandidateCallback callback) {
+            if (input != "duyin") {
+                return false;
+            }
+            std::unordered_set<std::string> s;
+            if (ic->capabilityFlags().test(CapabilityFlag::SurroundingText)) {
+                if (auto selected = ic->surroundingText().selectedText();
+                    !selected.empty()) {
+                    s.insert(std::move(selected));
+                }
+            }
+            if (clipboard()) {
+                if (s.empty()) {
+                    s.insert(clipboard()->call<IClipboard::primary>(ic));
+                }
+                s.insert(clipboard()->call<IClipboard::clipboard>(ic));
+            } else {
+                return false;
+            }
+            for (const auto &str : s) {
+                if (!utf8::validate(str)) {
+                    continue;
+                }
+                // Hard limit to prevent do too much lookup.
+                constexpr int limit = 20;
+                int counter = 0;
+                for (auto c : utf8::MakeUTF8CharRange(str)) {
+                    auto result = lookup(c);
+                    if (!result.empty()) {
+                        auto py = stringutils::join(result, ", ");
+                        auto display = fmt::format(_("{0} ({1})"),
+                                                   utf8::UCS4ToUTF8(c), py);
+                        callback(display, display,
+                                 QuickPhraseAction::DoNothing);
+                    }
+                    if (counter >= limit) {
+                        break;
+                    }
+                    counter += 1;
+                }
+            }
+            return true;
+        });
+}
 
 std::vector<std::string> PinyinHelper::lookup(uint32_t chr) {
     return lookup_.lookup(chr);

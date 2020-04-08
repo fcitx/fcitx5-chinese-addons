@@ -108,7 +108,7 @@ local function normalize_time(h, m)
 end
 
 function get_time(input)
-    if fcitx.currentInputMethod() ~= "pinyin" then
+    if fcitx.currentInputMethod() ~= "pinyin" or fcitx.currentInputMethod() ~= "shuangpin"  then
         return nil
     end
 
@@ -131,7 +131,7 @@ end
 
 function get_date(input)
     fcitx.log(fcitx.currentInputMethod())
-    if fcitx.currentInputMethod() ~= "pinyin" then
+    if fcitx.currentInputMethod() ~= "pinyin" or fcitx.currentInputMethod() ~= "shuangpin"  then
         return nil
     end
 
