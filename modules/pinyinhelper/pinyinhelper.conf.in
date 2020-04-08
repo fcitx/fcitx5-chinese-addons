@@ -3,4 +3,8 @@ Name=Extra Pinyin functionality
 Category=Module
 Library=pinyinhelper
 Type=SharedLibrary
-OnDemand=True
+OnDemand=False
+
+[Addon/OptionalDependencies]
+0=quickphrase
+1=clipboard

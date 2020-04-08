@@ -4,7 +4,7 @@ set(PINYINHELPER_SOURCES
     stroke.cpp
 )
 add_library(pinyinhelper MODULE ${PINYINHELPER_SOURCES})
-target_link_libraries(pinyinhelper Fcitx5::Core Fcitx5::Config LibIME::Core Boost::iostreams)
+target_link_libraries(pinyinhelper Fcitx5::Core Fcitx5::Config LibIME::Core Boost::iostreams Fcitx5::Module::QuickPhrase Fcitx5::Module::Clipboard ${FMT_TARGET})
 set_target_properties(pinyinhelper PROPERTIES PREFIX "")
 install(TARGETS pinyinhelper DESTINATION "${CMAKE_INSTALL_LIBDIR}/fcitx5")
 fcitx5_translate_desktop_file(pinyinhelper.conf.in pinyinhelper.conf)

@@ -23,18 +23,18 @@
 #include "pinyinlookup.h"
 #include "stroke.h"
 #include <fcitx-config/configuration.h>
+#include <fcitx-utils/event.h>
 #include <fcitx/addoninstance.h>
 #include <fcitx/addonmanager.h>
 #include <fcitx/instance.h>
 #include <libime/core/datrie.h>
+#include <quickphrase_public.h>
 
 namespace fcitx {
 
 class PinyinHelper final : public AddonInstance {
 public:
     PinyinHelper(Instance *instance);
-
-    void reloadConfig() override;
 
     std::vector<std::string> lookup(uint32_t);
     std::vector<std::pair<std::string, std::string>>
@@ -45,10 +45,16 @@ public:
     FCITX_ADDON_EXPORT_FUNCTION(PinyinHelper, lookupStroke);
     FCITX_ADDON_EXPORT_FUNCTION(PinyinHelper, prettyStrokeString);
 
+    FCITX_ADDON_DEPENDENCY_LOADER(quickphrase, instance_->addonManager());
+    FCITX_ADDON_DEPENDENCY_LOADER(clipboard, instance_->addonManager());
+
 private:
+    void initQuickPhrase();
     Instance *instance_;
     PinyinLookup lookup_;
     Stroke stroke_;
+    std::unique_ptr<EventSource> deferEvent_;
+    std::unique_ptr<HandlerTableEntry<QuickPhraseProviderCallback>> handler_;
 };
 } // namespace fcitx
 
