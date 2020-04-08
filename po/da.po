@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-04-06 00:01-0700\n"
+"POT-Creation-Date: 2020-04-08 00:01-0700\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: scootergrisen, 2020\n"
 "Language-Team: Danish (https://www.transifex.com/fcitx/teams/12005/da/)\n"
@@ -66,7 +66,7 @@ msgstr "&Fjern"
 
 #: im/pinyin/pinyin.h:42
 msgid "ABC"
-msgstr ""
+msgstr "ABC"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:356
 msgid "Are you sure to delete %1?"
@@ -178,7 +178,7 @@ msgstr ""
 
 #: im/pinyin/pinyin.h:44
 msgid "Custom"
-msgstr ""
+msgstr "Tilpas"
 
 #. i18n: file: gui/pinyindictmanager/browserdialog.ui:14
 #. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
@@ -354,7 +354,7 @@ msgstr "Pinyin-opslag"
 
 #: im/pinyin/pinyin.h:41
 msgid "MS"
-msgstr ""
+msgstr "MS"
 
 #: modules/cloudpinyin/cloudpinyin.h:44
 msgid "Minimum Pinyin Length"
@@ -412,7 +412,7 @@ msgstr "Pinyin-ordbogshåndtering"
 
 #: im/pinyin/pinyin.h:43
 msgid "PinyinJiajia"
-msgstr ""
+msgstr "PinyinJiajia"
 
 #: im/table/state.cpp:435
 msgid "Please use this functionality after typing some text."
@@ -589,15 +589,15 @@ msgstr "Wubi Pinyin"
 
 #: im/pinyin/pinyin.h:44
 msgid "Xiaohe"
-msgstr ""
+msgstr "Xiaohe"
 
 #: im/pinyin/pinyin.h:43
 msgid "Zhongwenzhixing"
-msgstr ""
+msgstr "Zhongwenzhixing"
 
 #: im/pinyin/pinyin.h:42
 msgid "Ziguang"
-msgstr ""
+msgstr "Ziguang"
 
 #: im/pinyin/pinyin.h:41 im/table/zrm.conf.in.in:3
 msgid "Ziranma"
