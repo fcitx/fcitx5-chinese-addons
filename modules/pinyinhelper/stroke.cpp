@@ -80,6 +80,7 @@ bool Stroke::load() {
 std::vector<std::pair<std::string, std::string>>
 Stroke::lookup(std::string_view input, int limit) {
     std::vector<std::pair<std::string, std::string>> result;
+    std::unordered_set<std::string> resultSet;
     using position_type = decltype(dict_)::position_type;
     struct LookupItem {
         position_type pos;
@@ -98,8 +99,14 @@ Stroke::lookup(std::string_view input, int limit) {
     // First lets check if the stroke is already a prefix of single word.
     position_type onlyMatch = decltype(dict_)::NO_PATH;
     size_t onlyMatchLength = 0;
-    if (!dict_.foreach(input, [this, &onlyMatch, &onlyMatchLength](
-                                  int32_t, size_t len, uint64_t pos) {
+    auto addResult = [&result, &resultSet](std::string stroke, std::string hz) {
+        if (resultSet.insert(hz).second) {
+            result.emplace_back(std::move(stroke), std::move(hz));
+        }
+    };
+
+    if (dict_.foreach(input, [this, &onlyMatch, &onlyMatchLength](
+                                 int32_t, size_t len, uint64_t pos) {
             if (!dict_.isNoPath(onlyMatch)) {
                 return false;
             }
@@ -107,13 +114,16 @@ Stroke::lookup(std::string_view input, int limit) {
             onlyMatchLength = len;
             return true;
         })) {
-        if (!dict_.isNoPath(onlyMatch)) {
+        if (dict_.isValid(onlyMatch)) {
             std::string buf;
             dict_.suffix(buf, input.size() + onlyMatchLength, onlyMatch);
             if (auto idx = buf.find_last_of('|'); idx != std::string::npos) {
-                result.emplace_back(buf.substr(idx + 1), buf.substr(0, idx));
+                addResult(buf.substr(idx + 1), buf.substr(0, idx));
             }
         }
+    }
+    if (result.size() >= static_cast<size_t>(limit)) {
+        return result;
     }
 
     auto pushQueue = [&q](LookupItem &&item) {
@@ -131,12 +141,12 @@ Stroke::lookup(std::string_view input, int limit) {
         if (current.remain.empty()) {
             if (!dict_.foreach(
                     "|",
-                    [this, &result, &current, limit](int32_t, size_t len,
-                                                     uint64_t pos) {
+                    [this, &result, &current, limit,
+                     &addResult](int32_t, size_t len, uint64_t pos) {
                         std::string buf;
                         dict_.suffix(buf, current.length + 1 + len, pos);
-                        result.emplace_back(buf.substr(current.length + 1),
-                                            buf.substr(0, current.length));
+                        addResult(buf.substr(current.length + 1),
+                                  buf.substr(0, current.length));
                         if (limit > 0 &&
                             result.size() >= static_cast<size_t>(limit)) {
                             return false;
