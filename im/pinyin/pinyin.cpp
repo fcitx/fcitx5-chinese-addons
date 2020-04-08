@@ -463,7 +463,9 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
                 (candidateList->totalSize() + 1 >= *config_.pageSize ||
                  idx == candidates.size())) {
                 for (auto &strokeCand : strokeCands) {
-                    candidateList->append(std::move(strokeCand));
+                    candidateList->insert(*config_.pageSize -
+                                              strokeCands.size(),
+                                          std::move(strokeCand));
                 }
                 strokeCands.clear();
             }
