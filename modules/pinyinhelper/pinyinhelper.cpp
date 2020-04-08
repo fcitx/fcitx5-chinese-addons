@@ -52,7 +52,7 @@ void PinyinHelper::initQuickPhrase() {
         [this](InputContext *ic, const std::string &input,
                QuickPhraseAddCandidateCallback callback) {
             if (input != "duyin") {
-                return false;
+                return true;
             }
             std::unordered_set<std::string> s;
             if (ic->capabilityFlags().test(CapabilityFlag::SurroundingText)) {
@@ -91,7 +91,7 @@ void PinyinHelper::initQuickPhrase() {
                     counter += 1;
                 }
             }
-            return true;
+            return false;
         });
 }
 
