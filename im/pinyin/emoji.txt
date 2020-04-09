@@ -1060,6 +1060,7 @@
 🐄	nai'niu	0
 🐮	nai'niu	0
 🍼	nai'ping	0
+♂️	nan	0
 🚹	nan'ce	0
 🎃	nan'gua'deng	0
 😞	nan'guo	0
@@ -1090,6 +1091,7 @@
 🥑	niu'you'guo	0
 🤠	niu'zai	0
 👖	niu'zai'ku	0
+♀	nv	0
 🚺	nv'ce	0
 🦟	nve'ji	0
 👧	nv'hai	0
