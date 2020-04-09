@@ -17,6 +17,10 @@
 // see <http://www.gnu.org/licenses/>.
 //
 
+#include "browserdialog.h"
+#include "config.h"
+#include "filedownloader.h"
+#include "guicommon.h"
 #include <QDebug>
 #include <QIcon>
 #include <QMessageBox>
@@ -24,32 +28,41 @@
 #include <QTextCodec>
 #include <QUrl>
 #include <QUrlQuery>
-#include <QWebEngineView>
-
-#include "browserdialog.h"
-#include "filedownloader.h"
-#include "guicommon.h"
-#include "ui_browserdialog.h"
 #include <fcitx-utils/i18n.h>
 
 namespace fcitx {
+
+#ifdef USE_WEBKIT
+using WebPageBase = QWebPage;
+using WebViewType = QWebView;
+#else
+using WebPageBase = QWebEnginePage;
+using WebViewType = QWebEngineView;
+#endif
 
 /*
  * a typical link looks like this.
  * http://download.pinyin.sogou.com/dict/download_cell.php?id=15207&name=%D6%B2%CE%EF%B4%CA%BB%E3%B4%F3%C8%AB%A1%BE%B9%D9%B7%BD%CD%C6%BC%F6%A1%BF
  */
 
-class WebPage : public QWebEnginePage {
+class WebPage : public WebPageBase {
 public:
-    WebPage(BrowserDialog *dialog) : QWebEnginePage(dialog), dialog_(dialog) {}
+    WebPage(BrowserDialog *dialog) : WebPageBase(dialog), dialog_(dialog) {}
 
 protected:
+#ifdef USE_WEBKIT
+    bool acceptNavigationRequest(QWebFrame *, const QNetworkRequest &request,
+                                 NavigationType) override {
+        return dialog_->linkClicked(request.url());
+    }
+#else
     bool acceptNavigationRequest(const QUrl &url, NavigationType,
                                  bool) override {
         return dialog_->linkClicked(url);
     }
+#endif
 
-    QWebEnginePage *createWindow(QWebEnginePage::WebWindowType) override {
+    WebPageBase *createWindow(WebPageBase::WebWindowType) override {
         return this;
     }
 
@@ -64,11 +77,11 @@ BrowserDialog::BrowserDialog(QWidget *parent)
     setWindowIcon(QIcon::fromTheme("internet-web-browser"));
     setWindowTitle(_("Browse Sogou Cell Dict repository"));
 
-    connect(webView_, &QWebEngineView::loadProgress, progressBar_,
+    connect(webView_, &WebViewType::loadProgress, progressBar_,
             &QProgressBar::setValue);
-    connect(webView_, &QWebEngineView::loadStarted, progressBar_,
+    connect(webView_, &WebViewType::loadStarted, progressBar_,
             &QProgressBar::show);
-    connect(webView_, &QWebEngineView::loadFinished, progressBar_,
+    connect(webView_, &WebViewType::loadFinished, progressBar_,
             &QProgressBar::hide);
     webView_->load(QUrl(URL_BASE));
 }
