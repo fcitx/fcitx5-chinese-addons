@@ -17,11 +17,11 @@
 // see <http://www.gnu.org/licenses/>.
 //
 #include "pinyindictmanager.h"
-#include "browserdialog.h"
-#include "filedownloader.h"
+#include "config.h"
 #include "log.h"
 #include "processrunner.h"
 #include "renamefile.h"
+#include <QDesktopServices>
 #include <QFileDialog>
 #include <QInputDialog>
 #include <QMenu>
@@ -29,6 +29,11 @@
 #include <QTemporaryFile>
 #include <fcitx-utils/i18n.h>
 #include <fcitx-utils/standardpath.h>
+
+#ifdef ENABLE_BROWSER
+#include "browserdialog.h"
+#include "filedownloader.h"
+#endif
 
 namespace fcitx {
 
@@ -253,6 +258,7 @@ void PinyinDictManager::importFromSogou() {
 }
 
 void PinyinDictManager::importFromSogouOnline() {
+#ifdef ENABLE_BROWSER
     BrowserDialog dialog(this);
     int result = dialog.exec();
     if (result != QDialog::Accepted) {
@@ -316,6 +322,9 @@ void PinyinDictManager::importFromSogouOnline() {
     auto rename = new RenameFile(tempFile, fullname);
     pipeline_->addJob(rename);
     pipeline_->start();
+#else
+    QDesktopServices::openUrl(QUrl("https://pinyin.sogou.com/dict/"));
+#endif
 }
 
 void PinyinDictManager::removeAllDict() {
