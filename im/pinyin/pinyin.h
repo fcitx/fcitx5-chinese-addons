@@ -108,9 +108,10 @@ FCITX_CONFIGURATION(
                          ShuangpinProfileEnumI18NAnnotation>
         shuangpinProfile{this, "ShuangpinProfile", _("Shuangpin Profile"),
                          ShuangpinProfileEnum::Ziranma};
-    Option<FuzzyConfig> fuzzyConfig{this, "Fuzzy", _("Fuzzy Pinyin Settings")};
     ExternalOption dictmanager{this, "DictManager", _("Dictionaries"),
-                               "fcitx://config/addon/pinyin/dictmanager"};);
+                               "fcitx://config/addon/pinyin/dictmanager"};
+    Option<FuzzyConfig> fuzzyConfig{this, "Fuzzy",
+                                    _("Fuzzy Pinyin Settings")};);
 
 class PinyinState;
 class EventSourceTime;
