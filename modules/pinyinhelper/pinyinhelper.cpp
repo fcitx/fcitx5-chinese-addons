@@ -38,6 +38,10 @@ PinyinHelper::PinyinHelper(Instance *instance) : instance_(instance) {
     lookup_.load();
     stroke_.load();
 
+    // This is ok in the test.
+    if (!instance_) {
+        return;
+    }
     deferEvent_ = instance_->eventLoop().addDeferEvent([this](EventSource *) {
         initQuickPhrase();
         return true;
