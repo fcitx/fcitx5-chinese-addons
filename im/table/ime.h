@@ -51,6 +51,8 @@ FCITX_CONFIGURATION(
     Option<int, IntConstrain> pageSize{this, "PageSize", "Page size", 5,
                                        IntConstrain(3, 10)};
     Option<bool> useFullWidth{this, "UseFullWidth", _("Use full width"), true};
+    Option<bool> ignorePunc{this, "IgnorePunc",
+                            _("Ignore built in punctuation"), false};
     Option<Key> quickphrase{this, "QuickPhraseKey",
                             _("Key to trigger quickphrase")};
     HiddenOption<std::string> icon{this, "Icon", _("Icon")};

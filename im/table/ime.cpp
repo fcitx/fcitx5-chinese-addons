@@ -142,8 +142,15 @@ TableIME::requestDict(const std::string &name) {
             }
 
             populateOptions(dict, iter->second.root);
-            auto lmFile = lm_->languageModelFileForLanguage(
-                dict->tableOptions().languageCode());
+            std::shared_ptr<const libime::StaticLanguageModelFile> lmFile;
+            try {
+                lmFile = lm_->languageModelFileForLanguage(
+                    dict->tableOptions().languageCode());
+            } catch (...) {
+                TABLE_DEBUG()
+                    << "Load language model for "
+                    << dict->tableOptions().languageCode() << "failed.";
+            }
             iter->second.model =
                 std::make_unique<libime::UserLanguageModel>(lmFile);
 
