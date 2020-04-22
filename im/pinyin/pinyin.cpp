@@ -462,10 +462,14 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
             if (!strokeCands.empty() &&
                 (candidateList->totalSize() + 1 >= *config_.pageSize ||
                  idx == candidates.size())) {
+                int desiredPos =
+                    *config_.pageSize - static_cast<int>(strokeCands.size());
+                if (desiredPos < 0 || desiredPos > candidateList->totalSize()) {
+                    desiredPos = candidateList->totalSize();
+                }
                 for (auto &strokeCand : strokeCands) {
-                    candidateList->insert(*config_.pageSize -
-                                              strokeCands.size(),
-                                          std::move(strokeCand));
+                    candidateList->insert(desiredPos, std::move(strokeCand));
+                    desiredPos += 1;
                 }
                 strokeCands.clear();
             }
