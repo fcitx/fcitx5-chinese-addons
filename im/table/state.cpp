@@ -553,6 +553,7 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
             // Commit the last segement if it is selected.
             if (context->selected()) {
                 commitBuffer(false);
+                needUpdate = true;
                 event.filter();
             } else {
                 context->backspace();
