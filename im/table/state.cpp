@@ -546,7 +546,7 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
                 commitBuffer(false);
             }
             event.filterAndAccept();
-        } else if (event.key().check(FcitxKey_Return) && !context->selected()) {
+        } else if (event.key().check(FcitxKey_Return) && !context->empty()) {
             commitBuffer(true);
             event.filterAndAccept();
         } else if (event.key().check(FcitxKey_BackSpace)) {
@@ -608,8 +608,11 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
             commitBuffer(false);
             needUpdate = true;
         }
-        auto punc = engine_->punctuation()->call<IPunctuation::pushPunctuation>(
-            entry.languageCode(), inputContext, chr);
+        std::string punc;
+        if (!*context->config().ignorePunc) {
+            punc = engine_->punctuation()->call<IPunctuation::pushPunctuation>(
+                entry.languageCode(), inputContext, chr);
+        }
         if (event.key().check(*config.quickphrase) && engine_->quickphrase()) {
             auto s = punc.size() ? punc : utf8::UCS4ToUTF8(chr);
             auto alt = punc.size() ? utf8::UCS4ToUTF8(chr) : "";
@@ -629,8 +632,8 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         if (punc.size()) {
             event.filterAndAccept();
             inputContext->commitString(punc);
+            lastIsPunc_ = true;
         }
-        lastIsPunc_ = true;
     }
 
     if ((event.filtered() && event.accepted()) || needUpdate) {
