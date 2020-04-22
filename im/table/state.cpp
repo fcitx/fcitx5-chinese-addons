@@ -550,15 +550,14 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
             commitBuffer(true);
             event.filterAndAccept();
         } else if (event.key().check(FcitxKey_BackSpace)) {
-            // Discard the last segement if it is selected.
+            // Commit the last segement if it is selected.
             if (context->selected()) {
-                auto length =
-                    context->selectedSegmentLength(context->selectedSize() - 1);
-                context->erase(context->size() - length, context->size());
+                commitBuffer(false);
+                event.filter();
             } else {
                 context->backspace();
+                event.filterAndAccept();
             }
-            event.filterAndAccept();
         } else if (event.key().isCursorMove() ||
                    event.key().check(FcitxKey_Delete)) {
             // if it gonna commit something
