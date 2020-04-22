@@ -110,7 +110,7 @@ TableIME::requestDict(const std::string &name) {
             auto dict = std::make_unique<libime::TableBasedDictionary>();
             auto dictFile = StandardPath::global().open(
                 StandardPath::Type::PkgData, *root.config->file, O_RDONLY);
-            FCITX_LOG(Debug) << "Load table at: " << *root.config->file;
+            TABLE_DEBUG() << "Load table at: " << *root.config->file;
             if (dictFile.fd() < 0) {
                 throw std::runtime_error("Couldn't open file");
             }
@@ -149,7 +149,7 @@ TableIME::requestDict(const std::string &name) {
             } catch (...) {
                 TABLE_DEBUG()
                     << "Load language model for "
-                    << dict->tableOptions().languageCode() << "failed.";
+                    << dict->tableOptions().languageCode() << " failed.";
             }
             iter->second.model =
                 std::make_unique<libime::UserLanguageModel>(lmFile);
