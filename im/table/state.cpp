@@ -683,6 +683,7 @@ void TableState::updateUI() {
         if (context->candidates().size()) {
             auto candidateList = std::make_unique<CommonCandidateList>();
             size_t idx = 0;
+            candidateList->setLayoutHint(*config.candidateLayoutHint);
             candidateList->setCursorPositionAfterPaging(
                 CursorPositionAfterPaging::ResetToFirst);
 
