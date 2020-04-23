@@ -23,6 +23,7 @@
 #include <fcitx-config/enum.h>
 #include <fcitx-utils/i18n.h>
 #include <fcitx-utils/log.h>
+#include <fcitx/candidatelist.h>
 #include <libime/core/userlanguagemodel.h>
 #include <libime/table/tablebaseddictionary.h>
 #include <tuple>
@@ -30,6 +31,10 @@
 namespace fcitx {
 
 FCITX_CONFIG_ENUM(OrderPolicy, No, Freq, Fast);
+FCITX_CONFIG_ENUM_NAME(CandidateLayoutHint, "Not set", "Vertical",
+                       "Horizontal");
+FCITX_CONFIG_ENUM_I18N_ANNOTATION(CandidateLayoutHint, N_("Not set"),
+                                  N_("Vertical"), N_("Horizontal"));
 
 FCITX_CONFIGURATION(
     TableConfig, HiddenOption<std::string> file{this, "File", _("File")};
@@ -80,6 +85,10 @@ FCITX_CONFIGURATION(
     Option<bool> hint{this, "Hint", _("Display Hint for word")};
     Option<bool> displayCustomHint{this, "DisplayCustomHint",
                                    _("Display custom hint")};
+    OptionWithAnnotation<CandidateLayoutHint, CandidateLayoutHintI18NAnnotation>
+        candidateLayoutHint{this, "CandidateLayoutHint",
+                            _("Candidate List orientation"),
+                            CandidateLayoutHint::NotSet};
     HiddenOption<std::vector<std::string>> autoRuleSet{this, "AutoRuleSet",
                                                        _("Auto rule set")};);
 

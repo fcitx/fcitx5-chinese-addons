@@ -138,7 +138,7 @@ TableIME::requestDict(const std::string &name) {
                 std::istream in(&buffer);
                 dict->loadUser(in);
             } catch (const std::exception &e) {
-                TABLE_ERROR() << e.what();
+                TABLE_DEBUG() << e.what();
             }
 
             populateOptions(dict, iter->second.root);
@@ -166,7 +166,7 @@ TableIME::requestDict(const std::string &name) {
                 std::istream in(&buffer);
                 iter->second.model->load(in);
             } catch (const std::exception &e) {
-                TABLE_ERROR() << e.what();
+                TABLE_DEBUG() << e.what();
             }
         }
     }
