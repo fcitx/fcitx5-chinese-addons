@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-04-18 00:01-0700\n"
+"POT-Creation-Date: 2020-04-23 00:01-0700\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: csslayer <wengxt@gmail.com>, 2020\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/fcitx/teams/12005/"
@@ -22,11 +22,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: im/table/state.cpp:621
+#: im/table/state.cpp:625
 msgid " Return for "
 msgstr "回车以"
 
-#: im/table/state.cpp:618
+#: im/table/state.cpp:622
 msgid " for "
 msgstr "以"
 
@@ -79,23 +79,23 @@ msgstr "您确定要删除 %1？"
 msgid "Are you sure to delete all dictionaries?"
 msgstr "您确定要删除所有字典吗？"
 
-#: im/table/ime.h:73
+#: im/table/ime.h:80
 msgid "Auto phrase length"
 msgstr "自动词组长度"
 
-#: im/table/ime.h:82
+#: im/table/ime.h:93
 msgid "Auto rule set"
 msgstr "自动组词使用规则"
 
-#: im/table/ime.h:60
+#: im/table/ime.h:67
 msgid "Auto select candidate"
 msgstr "自动选择候选词"
 
-#: im/table/ime.h:62
+#: im/table/ime.h:69
 msgid "Auto select candidate Length"
 msgstr "自动选择候选词长度"
 
-#: im/table/ime.h:65
+#: im/table/ime.h:72
 msgid "Auto select last candidate when there is no new match"
 msgstr "没有新匹配时自动选择最后的候选词"
 
@@ -110,6 +110,10 @@ msgstr "冰蟾全息"
 #: gui/pinyindictmanager/browserdialog.cpp:78
 msgid "Browse Sogou Cell Dict repository"
 msgstr "浏览搜狗细胞词库"
+
+#: im/table/ime.h:90
+msgid "Candidate List orientation"
+msgstr ""
 
 #: im/table/cangjie.conf.in.in:3
 msgid "Cangjie"
@@ -127,19 +131,19 @@ msgstr "云拼音"
 msgid "Cloud Pinyin Index"
 msgstr "云拼音位置"
 
-#: im/pinyin/pinyin.cpp:716
+#: im/pinyin/pinyin.cpp:720
 msgid "Cloud Pinyin Status"
 msgstr "云拼音状态"
 
-#: im/pinyin/pinyin.cpp:718
+#: im/pinyin/pinyin.cpp:722
 msgid "Cloud Pinyin is disabled."
 msgstr "云拼音已禁用。"
 
-#: im/pinyin/pinyin.cpp:717
+#: im/pinyin/pinyin.cpp:721
 msgid "Cloud Pinyin is enabled."
 msgstr "云拼音已启用。"
 
-#: im/table/ime.h:68
+#: im/table/ime.h:75
 msgid "Commit raw input when there is no candidate"
 msgstr "没有候选词时提交原始输入"
 
@@ -200,15 +204,15 @@ msgstr "词典"
 msgid "Dictionary already exists"
 msgstr "词典已经存在"
 
-#: im/table/ime.h:78
+#: im/table/ime.h:85
 msgid "Display Hint for word"
 msgstr "显示词的提示"
 
-#: im/table/ime.h:80
+#: im/table/ime.h:87
 msgid "Display custom hint"
 msgstr "显示自定义提示"
 
-#: im/table/ime.h:58
+#: im/table/ime.h:65
 msgid "Don't sort word shorter"
 msgstr "不对短于长度的词排序"
 
@@ -236,7 +240,7 @@ msgstr "启用预测"
 msgid "Enabled Input Methods"
 msgstr "启用的输入法"
 
-#: im/table/ime.h:70
+#: im/table/ime.h:77
 msgid "End key"
 msgstr "中止键"
 
@@ -248,7 +252,7 @@ msgstr "二笔"
 msgid "Error while deleting %1."
 msgstr "删除 %1 时出错。"
 
-#: im/table/ime.h:76
+#: im/table/ime.h:83
 msgid "Exact Match"
 msgstr "精确匹配"
 
@@ -273,7 +277,7 @@ msgstr "创建临时文件失败"
 msgid "Failed to get runtime directory"
 msgstr "获取 runtime 目录失败"
 
-#: im/table/ime.h:35
+#: im/table/ime.h:40
 msgid "File"
 msgstr "文件"
 
@@ -329,9 +333,17 @@ msgstr "半角字符"
 msgid "Half width punctuation"
 msgstr "半角标点"
 
-#: im/table/ime.h:56
+#: im/table/ime.h:37
+msgid "Horizontal"
+msgstr ""
+
+#: im/table/ime.h:63
 msgid "Icon"
 msgstr "图标"
+
+#: im/table/ime.h:60
+msgid "Ignore built in punctuation"
+msgstr ""
 
 #: im/pinyin/pinyin.h:49
 msgid "Inner Segment (xian -> xi'an)"
@@ -341,11 +353,11 @@ msgstr "内模糊音节 (xian -> xi'an)"
 msgid "Input Dictionary Name"
 msgstr "输入词典名称"
 
-#: im/table/ime.h:55
+#: im/table/ime.h:62
 msgid "Key to trigger quickphrase"
 msgstr "快速输入的触发键"
 
-#: im/table/ime.h:77
+#: im/table/ime.h:84
 msgid "Learning"
 msgstr "学习"
 
@@ -377,7 +389,7 @@ msgstr "下一个候选词"
 msgid "Next Page"
 msgstr "下一页"
 
-#: im/table/ime.h:39
+#: im/table/ime.h:44
 msgid "Next page"
 msgstr "下一页"
 
@@ -389,11 +401,15 @@ msgstr "不允许访问 pinyin.sogou.com 之外的网页，将重定向到主页
 msgid "Not available"
 msgstr "不可用"
 
+#: im/table/ime.h:36
+msgid "Not set"
+msgstr ""
+
 #: im/pinyin/pinyin.h:105
 msgid "Number of Sentence"
 msgstr "句子数量"
 
-#: im/table/ime.h:69
+#: im/table/ime.h:76
 msgid "Order policy"
 msgstr "排序规则"
 
@@ -417,7 +433,7 @@ msgstr "拼音加加"
 msgid "Please use this functionality after typing some text."
 msgstr "请在输入一些文字之后再使用这个功能。"
 
-#: im/pinyin/pinyin.cpp:544
+#: im/pinyin/pinyin.cpp:548
 msgid "Prediction"
 msgstr "预测"
 
@@ -425,15 +441,15 @@ msgstr "预测"
 msgid "Prediction Size"
 msgstr "预测个数"
 
-#: im/table/ime.h:59
+#: im/table/ime.h:66
 msgid "Prefix key to trigger Pinyin"
 msgstr "触发拼音的前缀键"
 
-#: im/pinyin/pinyin.cpp:946
+#: im/pinyin/pinyin.cpp:950
 msgid "Press %1% for %2%"
 msgstr "按下%1%输入%2%"
 
-#: im/pinyin/pinyin.cpp:942
+#: im/pinyin/pinyin.cpp:946
 msgid "Press %1% for %2% and %3% for %4%"
 msgstr "按下%1%输入%2%，按下%3%输入%4%"
 
@@ -457,7 +473,7 @@ msgstr "上一个候选词"
 msgid "Prev Page"
 msgstr "上一页"
 
-#: im/table/ime.h:37
+#: im/table/ime.h:42
 msgid "Prev page"
 msgstr "上一页"
 
@@ -473,11 +489,11 @@ msgstr "标点"
 msgid "Remove &All"
 msgstr "移除全部(&A)"
 
-#: im/pinyin/pinyin.cpp:943
+#: im/pinyin/pinyin.cpp:947
 msgid "Return"
 msgstr "返回"
 
-#: im/table/ime.h:75
+#: im/table/ime.h:82
 msgid "Save auto phrase"
 msgstr "保存自动组词"
 
@@ -493,11 +509,11 @@ msgstr "选择词典文件"
 msgid "Select scel file"
 msgstr "选择 scel 文件"
 
-#: im/table/ime.h:47
+#: im/table/ime.h:52
 msgid "Selection"
 msgstr "选择"
 
-#: im/pinyin/pinyin.cpp:545
+#: im/pinyin/pinyin.cpp:549
 msgid "Show prediction words"
 msgstr "显示联想词组"
 
@@ -558,7 +574,7 @@ msgstr "使用左右键来选择字符："
 msgid "Use Left and Right to select text. "
 msgstr "使用左右键来选择字符。"
 
-#: im/table/ime.h:53
+#: im/table/ime.h:58
 msgid "Use full width"
 msgstr "使用全角字符"
 
@@ -566,11 +582,15 @@ msgstr "使用全角字符"
 msgid "Use preedit in application when possible"
 msgstr "可用时在应用程序中显示预编辑文本"
 
+#: im/table/ime.h:37
+msgid "Vertical"
+msgstr ""
+
 #: im/table/wanfeng.conf.in.in:3
 msgid "Wanfeng"
 msgstr "晚风"
 
-#: im/table/ime.h:71
+#: im/table/ime.h:78
 msgid "Wildcard matching Key"
 msgstr "模糊键"
 
@@ -667,7 +687,7 @@ msgstr "ue -> ve"
 msgid "z <-> zh"
 msgstr "z <-> zh"
 
-#: im/pinyin/pinyin.cpp:118 modules/pinyinhelper/pinyinhelper.cpp:83
+#: im/pinyin/pinyin.cpp:118 modules/pinyinhelper/pinyinhelper.cpp:87
 msgid "{0} ({1})"
 msgstr "{0} ({1})"
 

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-04-06 00:01-0700\n"
+"POT-Creation-Date: 2020-04-23 00:01-0700\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Robert Antoni Buj Gelonch <rbuj@fedoraproject.org>, 2017\n"
 "Language-Team: Catalan (https://www.transifex.com/fcitx/teams/12005/ca/)\n"
@@ -19,15 +19,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: im/table/state.cpp:621
+#: im/table/state.cpp:625
 msgid " Return for "
 msgstr ""
 
-#: im/table/state.cpp:618
+#: im/table/state.cpp:622
 msgid " for "
 msgstr ""
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:135
+#: gui/pinyindictmanager/pinyindictmanager.cpp:140
 msgid "%1 already exists, do you want to overwrite this dictionary?"
 msgstr ""
 
@@ -35,31 +35,31 @@ msgstr ""
 msgid "%1% Downloaded."
 msgstr ""
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:44
+#: gui/pinyindictmanager/pinyindictmanager.cpp:49
 msgid "&Browse Sogou Cell Dictionary Online"
 msgstr ""
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:55
 #. i18n: ectx: property (text), widget (QPushButton, clearDictButton_)
-#: rc.cpp:18
+#: rc.cpp:24
 #, kde-format
 msgid "&Clear Dict"
 msgstr ""
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:51
+#: gui/pinyindictmanager/pinyindictmanager.cpp:56
 msgid "&Clear User Data"
 msgstr ""
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:22
 #. i18n: ectx: property (text), widget (QPushButton, importButton_)
-#: rc.cpp:9
+#: rc.cpp:15
 #, kde-format
 msgid "&Import"
 msgstr ""
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:33
 #. i18n: ectx: property (text), widget (QPushButton, removeButton_)
-#: rc.cpp:12
+#: rc.cpp:18
 #, kde-format
 msgid "&Remove"
 msgstr ""
@@ -68,31 +68,31 @@ msgstr ""
 msgid "ABC"
 msgstr ""
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:356
+#: gui/pinyindictmanager/pinyindictmanager.cpp:365
 msgid "Are you sure to delete %1?"
 msgstr ""
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:324
+#: gui/pinyindictmanager/pinyindictmanager.cpp:333
 msgid "Are you sure to delete all dictionaries?"
 msgstr ""
 
-#: im/table/ime.h:73
+#: im/table/ime.h:80
 msgid "Auto phrase length"
 msgstr ""
 
-#: im/table/ime.h:82
+#: im/table/ime.h:93
 msgid "Auto rule set"
 msgstr ""
 
-#: im/table/ime.h:60
+#: im/table/ime.h:67
 msgid "Auto select candidate"
 msgstr "Selecciona automàticament la candidata"
 
-#: im/table/ime.h:62
+#: im/table/ime.h:69
 msgid "Auto select candidate Length"
 msgstr ""
 
-#: im/table/ime.h:65
+#: im/table/ime.h:72
 msgid "Auto select last candidate when there is no new match"
 msgstr ""
 
@@ -104,15 +104,19 @@ msgstr ""
 msgid "Bingchan"
 msgstr ""
 
-#: gui/pinyindictmanager/browserdialog.cpp:65
+#: gui/pinyindictmanager/browserdialog.cpp:78
 msgid "Browse Sogou Cell Dict repository"
+msgstr ""
+
+#: im/table/ime.h:90
+msgid "Candidate List orientation"
 msgstr ""
 
 #: im/table/cangjie.conf.in.in:3
 msgid "Cangjie"
 msgstr ""
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:52
+#: gui/pinyindictmanager/pinyindictmanager.cpp:57
 msgid "Clear &All Data"
 msgstr ""
 
@@ -124,24 +128,24 @@ msgstr "Pinyin al núvol"
 msgid "Cloud Pinyin Index"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:714
+#: im/pinyin/pinyin.cpp:720
 msgid "Cloud Pinyin Status"
 msgstr "Estat de pinyin al núvol"
 
-#: im/pinyin/pinyin.cpp:716
+#: im/pinyin/pinyin.cpp:722
 msgid "Cloud Pinyin is disabled."
 msgstr "El pinyin al núvol està inhabilitat."
 
-#: im/pinyin/pinyin.cpp:715
+#: im/pinyin/pinyin.cpp:721
 msgid "Cloud Pinyin is enabled."
 msgstr "El pinyin al núvol està habilitat."
 
-#: im/table/ime.h:68
+#: im/table/ime.h:75
 msgid "Commit raw input when there is no candidate"
 msgstr ""
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:323
-#: gui/pinyindictmanager/pinyindictmanager.cpp:355
+#: gui/pinyindictmanager/pinyindictmanager.cpp:332
+#: gui/pinyindictmanager/pinyindictmanager.cpp:364
 msgid "Confirm deletion"
 msgstr ""
 
@@ -158,9 +162,9 @@ msgstr ""
 msgid "Could not find pinyin."
 msgstr "No s'ha pogut trobar el pinyin."
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:108
-#: gui/pinyindictmanager/pinyindictmanager.cpp:219
-#: gui/pinyindictmanager/pinyindictmanager.cpp:277
+#: gui/pinyindictmanager/pinyindictmanager.cpp:113
+#: gui/pinyindictmanager/pinyindictmanager.cpp:224
+#: gui/pinyindictmanager/pinyindictmanager.cpp:283
 msgid "Create directory failed. Please check the permission or disk space."
 msgstr ""
 
@@ -168,7 +172,7 @@ msgstr ""
 msgid "Create temporary file failed."
 msgstr ""
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:119
+#: gui/pinyindictmanager/pinyindictmanager.cpp:124
 msgid "Creating temp file failed. Please check the permission or disk space."
 msgstr ""
 
@@ -178,7 +182,9 @@ msgstr ""
 
 #. i18n: file: gui/pinyindictmanager/browserdialog.ui:14
 #. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
-#: rc.cpp:3
+#. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:14
+#. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
+#: rc.cpp:3 rc.cpp:9
 #, kde-format
 msgid "Dialog"
 msgstr ""
@@ -187,23 +193,23 @@ msgstr ""
 msgid "Dianbaoma"
 msgstr ""
 
-#: im/pinyin/pinyin.h:112
+#: im/pinyin/pinyin.h:111
 msgid "Dictionaries"
 msgstr ""
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:134
+#: gui/pinyindictmanager/pinyindictmanager.cpp:139
 msgid "Dictionary already exists"
 msgstr ""
 
-#: im/table/ime.h:78
+#: im/table/ime.h:85
 msgid "Display Hint for word"
 msgstr "Mostra els suggeriments per a la paraula"
 
-#: im/table/ime.h:80
+#: im/table/ime.h:87
 msgid "Display custom hint"
 msgstr "Mostra el suggeriment personalitzat"
 
-#: im/table/ime.h:58
+#: im/table/ime.h:65
 msgid "Don't sort word shorter"
 msgstr ""
 
@@ -231,7 +237,7 @@ msgstr ""
 msgid "Enabled Input Methods"
 msgstr ""
 
-#: im/table/ime.h:70
+#: im/table/ime.h:77
 msgid "End key"
 msgstr "Tecla Fi"
 
@@ -239,11 +245,11 @@ msgstr "Tecla Fi"
 msgid "Erbi"
 msgstr ""
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:365
+#: gui/pinyindictmanager/pinyindictmanager.cpp:374
 msgid "Error while deleting %1."
 msgstr ""
 
-#: im/table/ime.h:76
+#: im/table/ime.h:83
 msgid "Exact Match"
 msgstr "Coincidència exacta"
 
@@ -251,7 +257,7 @@ msgstr "Coincidència exacta"
 msgid "Extra Pinyin functionality"
 msgstr ""
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:107
+#: gui/pinyindictmanager/pinyindictmanager.cpp:112
 msgid "Failed to create directory"
 msgstr ""
 
@@ -259,28 +265,28 @@ msgstr ""
 msgid "Failed to create request."
 msgstr ""
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:118
+#: gui/pinyindictmanager/pinyindictmanager.cpp:123
 msgid "Failed to create temp file"
 msgstr ""
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:218
-#: gui/pinyindictmanager/pinyindictmanager.cpp:276
+#: gui/pinyindictmanager/pinyindictmanager.cpp:223
+#: gui/pinyindictmanager/pinyindictmanager.cpp:282
 msgid "Failed to get runtime directory"
 msgstr ""
 
-#: im/table/ime.h:35
+#: im/table/ime.h:40
 msgid "File"
 msgstr "Fitxer"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:364
+#: gui/pinyindictmanager/pinyindictmanager.cpp:373
 msgid "File Operation Failed"
 msgstr ""
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:41
+#: gui/pinyindictmanager/pinyindictmanager.cpp:46
 msgid "From &File"
 msgstr ""
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:42
+#: gui/pinyindictmanager/pinyindictmanager.cpp:47
 msgid "From &Sogou Cell Dictionary File"
 msgstr ""
 
@@ -312,7 +318,7 @@ msgstr ""
 msgid "Full width punctuation is enabled."
 msgstr ""
 
-#: im/pinyin/pinyin.h:111
+#: im/pinyin/pinyin.h:114
 msgid "Fuzzy Pinyin Settings"
 msgstr ""
 
@@ -324,23 +330,31 @@ msgstr ""
 msgid "Half width punctuation"
 msgstr ""
 
-#: im/table/ime.h:56
+#: im/table/ime.h:37
+msgid "Horizontal"
+msgstr ""
+
+#: im/table/ime.h:63
 msgid "Icon"
 msgstr "Icona"
+
+#: im/table/ime.h:60
+msgid "Ignore built in punctuation"
+msgstr ""
 
 #: im/pinyin/pinyin.h:49
 msgid "Inner Segment (xian -> xi'an)"
 msgstr ""
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:94
+#: gui/pinyindictmanager/pinyindictmanager.cpp:99
 msgid "Input Dictionary Name"
 msgstr ""
 
-#: im/table/ime.h:55
+#: im/table/ime.h:62
 msgid "Key to trigger quickphrase"
 msgstr ""
 
-#: im/table/ime.h:77
+#: im/table/ime.h:84
 msgid "Learning"
 msgstr ""
 
@@ -360,7 +374,7 @@ msgstr ""
 msgid "Modify dictionary"
 msgstr "Modifica el diccionari"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:94
+#: gui/pinyindictmanager/pinyindictmanager.cpp:99
 msgid "New Dictionary Name:"
 msgstr ""
 
@@ -372,11 +386,11 @@ msgstr ""
 msgid "Next Page"
 msgstr ""
 
-#: im/table/ime.h:39
+#: im/table/ime.h:44
 msgid "Next page"
 msgstr "Av Pàg"
 
-#: gui/pinyindictmanager/browserdialog.cpp:115
+#: gui/pinyindictmanager/browserdialog.cpp:128
 msgid "No browsing outside pinyin.sogou.com, now redirect to home page."
 msgstr ""
 
@@ -384,11 +398,15 @@ msgstr ""
 msgid "Not available"
 msgstr "No disponible"
 
+#: im/table/ime.h:36
+msgid "Not set"
+msgstr ""
+
 #: im/pinyin/pinyin.h:105
 msgid "Number of Sentence"
 msgstr ""
 
-#: im/table/ime.h:69
+#: im/table/ime.h:76
 msgid "Order policy"
 msgstr "Política d'ordenació"
 
@@ -400,7 +418,7 @@ msgstr ""
 msgid "Pinyin"
 msgstr "Pinyin"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:87
+#: gui/pinyindictmanager/pinyindictmanager.cpp:92
 msgid "Pinyin dictionary manager"
 msgstr ""
 
@@ -412,7 +430,7 @@ msgstr ""
 msgid "Please use this functionality after typing some text."
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:542
+#: im/pinyin/pinyin.cpp:548
 msgid "Prediction"
 msgstr "Predicció"
 
@@ -420,15 +438,15 @@ msgstr "Predicció"
 msgid "Prediction Size"
 msgstr ""
 
-#: im/table/ime.h:59
+#: im/table/ime.h:66
 msgid "Prefix key to trigger Pinyin"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:944
+#: im/pinyin/pinyin.cpp:950
 msgid "Press %1% for %2%"
 msgstr "Premeu %1% per %2%"
 
-#: im/pinyin/pinyin.cpp:940
+#: im/pinyin/pinyin.cpp:946
 msgid "Press %1% for %2% and %3% for %4%"
 msgstr "Premeu %1% per %2% i %3% per %4%"
 
@@ -452,7 +470,7 @@ msgstr ""
 msgid "Prev Page"
 msgstr ""
 
-#: im/table/ime.h:37
+#: im/table/ime.h:42
 msgid "Prev page"
 msgstr "Re Pàg"
 
@@ -463,36 +481,36 @@ msgstr "Puntuació"
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:44
 #. i18n: ectx: property (text), widget (QPushButton, removeAllButton_)
-#: rc.cpp:15
+#: rc.cpp:21
 #, kde-format
 msgid "Remove &All"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:941
+#: im/pinyin/pinyin.cpp:947
 msgid "Return"
 msgstr "Retorn"
 
-#: im/table/ime.h:75
+#: im/table/ime.h:82
 msgid "Save auto phrase"
 msgstr "Desa la frase automàtica"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:195
+#: gui/pinyindictmanager/pinyindictmanager.cpp:200
 msgid "Scel file (*.scel)"
 msgstr ""
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:154
+#: gui/pinyindictmanager/pinyindictmanager.cpp:159
 msgid "Select Dictionary File"
 msgstr ""
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:195
+#: gui/pinyindictmanager/pinyindictmanager.cpp:200
 msgid "Select scel file"
 msgstr ""
 
-#: im/table/ime.h:47
+#: im/table/ime.h:52
 msgid "Selection"
 msgstr "Selecció"
 
-#: im/pinyin/pinyin.cpp:543
+#: im/pinyin/pinyin.cpp:549
 msgid "Show prediction words"
 msgstr "Mostra la predicció de paraules"
 
@@ -553,7 +571,7 @@ msgstr "Utilitza dret i esquerre per seleccionar el caràcter:"
 msgid "Use Left and Right to select text. "
 msgstr "Utilitza dret i esquerre per seleccionar el text:"
 
-#: im/table/ime.h:53
+#: im/table/ime.h:58
 msgid "Use full width"
 msgstr ""
 
@@ -561,15 +579,19 @@ msgstr ""
 msgid "Use preedit in application when possible"
 msgstr ""
 
+#: im/table/ime.h:37
+msgid "Vertical"
+msgstr ""
+
 #: im/table/wanfeng.conf.in.in:3
 msgid "Wanfeng"
 msgstr ""
 
-#: im/table/ime.h:71
+#: im/table/ime.h:78
 msgid "Wildcard matching Key"
 msgstr ""
 
-#: gui/pinyindictmanager/browserdialog.cpp:114
+#: gui/pinyindictmanager/browserdialog.cpp:127
 msgid "Wrong Link"
 msgstr ""
 
@@ -599,7 +621,9 @@ msgstr ""
 
 #. i18n: file: gui/pinyindictmanager/browserdialog.ui:21
 #. i18n: ectx: property (url), widget (QWebEngineView, webView_)
-#: rc.cpp:6
+#. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:21
+#. i18n: ectx: property (url), widget (QWebView, webView_)
+#: rc.cpp:6 rc.cpp:12
 #, kde-format
 msgid "about:blank"
 msgstr ""
@@ -660,7 +684,7 @@ msgstr ""
 msgid "z <-> zh"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:118
+#: im/pinyin/pinyin.cpp:118 modules/pinyinhelper/pinyinhelper.cpp:87
 msgid "{0} ({1})"
 msgstr "{0} ({1})"
 
