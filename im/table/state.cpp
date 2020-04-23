@@ -551,7 +551,8 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
             event.filterAndAccept();
         } else if (event.key().check(FcitxKey_BackSpace)) {
             // Commit the last segement if it is selected.
-            if (context->selected()) {
+            if (context->selected() && std::get<bool>(context->selectedSegment(
+                                           context->selectedSize() - 1))) {
                 commitBuffer(false);
                 needUpdate = true;
                 event.filter();
