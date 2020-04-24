@@ -710,11 +710,18 @@ void TableState::updateUI() {
             candidateList->setGlobalCursorIndex(0);
             inputPanel.setCandidateList(std::move(candidateList));
         }
-        Text preeditText = context->preeditText();
-        if (ic_->capabilityFlags().test(CapabilityFlag::Preedit)) {
-            inputPanel.setClientPreedit(preeditText);
+        if (*config.displayCustomHint) {
+            if (ic_->capabilityFlags().test(CapabilityFlag::Preedit)) {
+                inputPanel.setClientPreedit(context->preeditText(true));
+            }
+            inputPanel.setPreedit(context->preeditText(false));
         } else {
-            inputPanel.setPreedit(preeditText);
+            Text preeditText = context->preeditText(false);
+            if (ic_->capabilityFlags().test(CapabilityFlag::Preedit)) {
+                inputPanel.setClientPreedit(preeditText);
+            } else {
+                inputPanel.setPreedit(preeditText);
+            }
         }
     }
     ic_->updatePreedit();
