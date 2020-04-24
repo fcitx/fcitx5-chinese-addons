@@ -31,14 +31,14 @@ public:
                  libime::UserLanguageModel &model);
 
     const TableConfig &config() { return config_; }
-    std::string customHint(const std::string &code) {
+    std::string customHint(const std::string &code) const {
         if (*config_.displayCustomHint) {
             return dict().hint(code);
         }
         return code;
     }
 
-    Text preeditText() const;
+    Text preeditText(bool hint) const;
 
 private:
     const TableConfig &config_;

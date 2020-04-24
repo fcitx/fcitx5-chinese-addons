@@ -25,7 +25,7 @@ TableContext::TableContext(libime::TableBasedDictionary &dict,
                            libime::UserLanguageModel &model)
     : libime::TableContext(dict, model), config_(config) {}
 
-Text TableContext::preeditText() const {
+Text TableContext::preeditText(bool hint) const {
     Text text;
     for (size_t i = 0, e = selectedSize(); i < e; i++) {
         auto seg = selectedSegment(i);
@@ -33,14 +33,16 @@ Text TableContext::preeditText() const {
             text.append(std::get<std::string>(seg),
                         {TextFormatFlag::Underline});
         } else {
-            text.append(
-                stringutils::concat("(", std::get<std::string>(seg), ")"),
-                {TextFormatFlag::DontCommit, TextFormatFlag::Strike,
-                 TextFormatFlag::Underline});
+            auto segText = hint ? customHint(std::get<std::string>(seg))
+                                : std::get<std::string>(seg);
+            text.append(stringutils::concat("(", segText, ")"),
+                        {TextFormatFlag::DontCommit, TextFormatFlag::Strike,
+                         TextFormatFlag::Underline});
         }
     }
+    auto codeText = hint ? customHint(currentCode()) : currentCode();
     text.setCursor(text.textLength());
-    text.append(currentCode(),
+    text.append(codeText,
                 {TextFormatFlag::Underline, TextFormatFlag::HighLight});
 
     return text;
