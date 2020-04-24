@@ -214,6 +214,9 @@ void TableIME::saveDict(const std::string &name) {
     }
     libime::TableBasedDictionary *dict = iter->second.dict.get();
     libime::UserLanguageModel *lm = iter->second.model.get();
+    if (!dict || !lm) {
+        return;
+    }
     auto fileName = stringutils::joinPath("table", name);
 
     StandardPath::global().safeSave(
