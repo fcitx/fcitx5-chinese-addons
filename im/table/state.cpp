@@ -712,9 +712,9 @@ void TableState::updateUI() {
         }
         if (*config.displayCustomHint) {
             if (ic_->capabilityFlags().test(CapabilityFlag::Preedit)) {
-                inputPanel.setClientPreedit(context->preeditText(true));
+                inputPanel.setClientPreedit(context->preeditText(false));
             }
-            inputPanel.setPreedit(context->preeditText(false));
+            inputPanel.setPreedit(context->preeditText(true));
         } else {
             Text preeditText = context->preeditText(false);
             if (ic_->capabilityFlags().test(CapabilityFlag::Preedit)) {
