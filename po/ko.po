@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-04-23 00:01-0700\n"
+"POT-Creation-Date: 2020-04-24 00:01-0700\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: MarongHappy <daemul72@gmail.com>, 2020\n"
 "Language-Team: Korean (https://www.transifex.com/fcitx/teams/12005/ko/)\n"
@@ -111,7 +111,7 @@ msgstr "Sogou 셀 사전 저장소 찾아보기"
 
 #: im/table/ime.h:90
 msgid "Candidate List orientation"
-msgstr ""
+msgstr "후보 목록 방향"
 
 #: im/table/cangjie.conf.in.in:3
 msgid "Cangjie"
@@ -208,7 +208,7 @@ msgstr "단어에 대한 힌트 보이기"
 
 #: im/table/ime.h:87
 msgid "Display custom hint"
-msgstr "사용자지정 힌트 보이기"
+msgstr "사용자 지정 힌트 보이기"
 
 #: im/table/ime.h:65
 msgid "Don't sort word shorter"
@@ -333,7 +333,7 @@ msgstr "반각 문장부호"
 
 #: im/table/ime.h:37
 msgid "Horizontal"
-msgstr ""
+msgstr "가로 방향"
 
 #: im/table/ime.h:63
 msgid "Icon"
@@ -341,7 +341,7 @@ msgstr "아이콘"
 
 #: im/table/ime.h:60
 msgid "Ignore built in punctuation"
-msgstr ""
+msgstr "기본 구두점 무시"
 
 #: im/pinyin/pinyin.h:49
 msgid "Inner Segment (xian -> xi'an)"
@@ -402,7 +402,7 @@ msgstr "사용할 수 없음"
 
 #: im/table/ime.h:36
 msgid "Not set"
-msgstr ""
+msgstr "지정되지 않음"
 
 #: im/pinyin/pinyin.h:105
 msgid "Number of Sentence"
@@ -583,7 +583,7 @@ msgstr "가능한 경우 응용 프로그램에서 사전 편집 사용"
 
 #: im/table/ime.h:37
 msgid "Vertical"
-msgstr ""
+msgstr "세로 방향"
 
 #: im/table/wanfeng.conf.in.in:3
 msgid "Wanfeng"
