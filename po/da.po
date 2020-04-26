@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-04-23 00:01-0700\n"
+"POT-Creation-Date: 2020-04-26 00:01-0700\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: scootergrisen, 2020\n"
 "Language-Team: Danish (https://www.transifex.com/fcitx/teams/12005/da/)\n"
@@ -520,6 +520,10 @@ msgstr "Valg"
 msgid "Show prediction words"
 msgstr "Vis forudsigelsesord"
 
+#: im/pinyin/pinyin.h:78
+msgid "Show preedit within application"
+msgstr ""
+
 #: im/pinyin/shuangpin.conf.in:3
 msgid "Shuangpin"
 msgstr "Shuangpin"
@@ -580,10 +584,6 @@ msgstr "Brug venstre og højre til at vælge tekst. "
 #: im/table/ime.h:58
 msgid "Use full width"
 msgstr "Brug fuld bredde"
-
-#: im/pinyin/pinyin.h:79
-msgid "Use preedit in application when possible"
-msgstr "Brug preedit i program når det er muligt"
 
 #: im/table/ime.h:37
 msgid "Vertical"
