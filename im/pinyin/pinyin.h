@@ -75,7 +75,7 @@ FCITX_CONFIGURATION(
                                                _("Cloud Pinyin Index"), 2,
                                                IntConstrain(1, 10)};
     Option<bool> showPreeditInApplication{
-        this, "PreeditInApplicaation",
+        this, "PreeditInApplication",
         _("Use preedit in application when possible"), false};
     KeyListOption prevPage{
         this,
