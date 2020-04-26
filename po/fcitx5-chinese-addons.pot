@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-04-23 00:01-0700\n"
+"POT-Creation-Date: 2020-04-26 00:01-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -510,6 +510,10 @@ msgstr ""
 msgid "Show prediction words"
 msgstr ""
 
+#: im/pinyin/pinyin.h:78
+msgid "Show preedit within application"
+msgstr ""
+
 #: im/pinyin/shuangpin.conf.in:3
 msgid "Shuangpin"
 msgstr ""
@@ -569,10 +573,6 @@ msgstr ""
 
 #: im/table/ime.h:58
 msgid "Use full width"
-msgstr ""
-
-#: im/pinyin/pinyin.h:79
-msgid "Use preedit in application when possible"
 msgstr ""
 
 #: im/table/ime.h:37

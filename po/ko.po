@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-04-24 00:01-0700\n"
+"POT-Creation-Date: 2020-04-26 00:01-0700\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: MarongHappy <daemul72@gmail.com>, 2020\n"
 "Language-Team: Korean (https://www.transifex.com/fcitx/teams/12005/ko/)\n"
@@ -516,6 +516,10 @@ msgstr "선택"
 msgid "Show prediction words"
 msgstr "예상 단어 표시"
 
+#: im/pinyin/pinyin.h:78
+msgid "Show preedit within application"
+msgstr ""
+
 #: im/pinyin/shuangpin.conf.in:3
 msgid "Shuangpin"
 msgstr "이중병음"
@@ -576,10 +580,6 @@ msgstr "문장 선택을 위해 좌/우키 사용:"
 #: im/table/ime.h:58
 msgid "Use full width"
 msgstr "전각 문자 사용"
-
-#: im/pinyin/pinyin.h:79
-msgid "Use preedit in application when possible"
-msgstr "가능한 경우 응용 프로그램에서 사전 편집 사용"
 
 #: im/table/ime.h:37
 msgid "Vertical"

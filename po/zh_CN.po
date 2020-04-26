@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-04-23 00:01-0700\n"
+"POT-Creation-Date: 2020-04-26 00:01-0700\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: csslayer <wengxt@gmail.com>, 2020\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/fcitx/teams/12005/"
@@ -517,6 +517,10 @@ msgstr "选择"
 msgid "Show prediction words"
 msgstr "显示联想词组"
 
+#: im/pinyin/pinyin.h:78
+msgid "Show preedit within application"
+msgstr ""
+
 #: im/pinyin/shuangpin.conf.in:3
 msgid "Shuangpin"
 msgstr "双拼"
@@ -577,10 +581,6 @@ msgstr "使用左右键来选择字符。"
 #: im/table/ime.h:58
 msgid "Use full width"
 msgstr "使用全角字符"
-
-#: im/pinyin/pinyin.h:79
-msgid "Use preedit in application when possible"
-msgstr "可用时在应用程序中显示预编辑文本"
 
 #: im/table/ime.h:37
 msgid "Vertical"
