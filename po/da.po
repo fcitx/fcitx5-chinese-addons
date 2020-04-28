@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-04-26 00:01-0700\n"
+"POT-Creation-Date: 2020-04-28 00:01-0700\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: scootergrisen, 2020\n"
 "Language-Team: Danish (https://www.transifex.com/fcitx/teams/12005/da/)\n"
@@ -110,7 +110,7 @@ msgstr "Gennemse Sogou Cell-ordbogsarkiv"
 
 #: im/table/ime.h:90
 msgid "Candidate List orientation"
-msgstr ""
+msgstr "Orientering for kandidatliste"
 
 #: im/table/cangjie.conf.in.in:3
 msgid "Cangjie"
@@ -336,7 +336,7 @@ msgstr "Tegnsætning i halv bredde"
 
 #: im/table/ime.h:37
 msgid "Horizontal"
-msgstr ""
+msgstr "Vandret"
 
 #: im/table/ime.h:63
 msgid "Icon"
@@ -344,7 +344,7 @@ msgstr "Ikon"
 
 #: im/table/ime.h:60
 msgid "Ignore built in punctuation"
-msgstr ""
+msgstr "Ignorer indbygget tegnsætning"
 
 #: im/pinyin/pinyin.h:49
 msgid "Inner Segment (xian -> xi'an)"
@@ -406,7 +406,7 @@ msgstr "Ikke tilgængelig"
 
 #: im/table/ime.h:36
 msgid "Not set"
-msgstr ""
+msgstr "Ikke sat"
 
 #: im/pinyin/pinyin.h:105
 msgid "Number of Sentence"
@@ -522,7 +522,7 @@ msgstr "Vis forudsigelsesord"
 
 #: im/pinyin/pinyin.h:78
 msgid "Show preedit within application"
-msgstr ""
+msgstr "Brug preedit i program"
 
 #: im/pinyin/shuangpin.conf.in:3
 msgid "Shuangpin"
@@ -587,7 +587,7 @@ msgstr "Brug fuld bredde"
 
 #: im/table/ime.h:37
 msgid "Vertical"
-msgstr ""
+msgstr "Lodret"
 
 #: im/table/wanfeng.conf.in.in:3
 msgid "Wanfeng"
