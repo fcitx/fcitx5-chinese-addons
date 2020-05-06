@@ -32,6 +32,24 @@ namespace fcitx {
 
 namespace {
 
+class CommitAfterSelectWrapper {
+public:
+    CommitAfterSelectWrapper(TableState *state) : state_(state) {
+        if (auto *context = state->context(nullptr)) {
+            commitFrom_ = context->selectedSize();
+        }
+    }
+    ~CommitAfterSelectWrapper() {
+        if (commitFrom_ >= 0) {
+            state_->commitAfterSelect(commitFrom_);
+        }
+    }
+
+private:
+    TableState *state_;
+    int commitFrom_ = -1;
+};
+
 class TableCandidateWord : public CandidateWord {
 public:
     TableCandidateWord(TableEngine *engine, Text text, size_t idx)
@@ -44,7 +62,10 @@ public:
         if (!context || idx_ >= context->candidates().size()) {
             return;
         }
-        context->select(idx_);
+        {
+            CommitAfterSelectWrapper commitAfterSelectRAII(state);
+            context->select(idx_);
+        }
         state->updateUI();
     }
 
@@ -223,8 +244,17 @@ bool TableState::handlePinyinMode(KeyEvent &event) {
     }
     bool needUpdate = false;
     if (mode_ == TableMode::Normal && event.key().check(pinyinKey)) {
-        if (context->size() != 0) {
-            commitBuffer(false);
+        if (*context->config().commitAfterSelect) {
+            if (context->selected()) {
+            }
+        } else {
+            if (context->size() != 0) {
+                auto chr = Key::keySymToUnicode(event.key().sym());
+                if (context->isValidInput(chr)) {
+                    return false;
+                }
+                commitBuffer(false);
+            }
         }
         mode_ = TableMode::Pinyin;
         event.filterAndAccept();
@@ -527,7 +557,10 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
     auto chr = Key::keySymToUnicode(event.key().sym());
     if (!event.key().hasModifier() && chr && context->isValidInput(chr)) {
         auto str = utf8::UCS4ToUTF8(chr);
-        context->type(str);
+        {
+            CommitAfterSelectWrapper commitAfterSelectRAII(this);
+            context->type(str);
+        }
         if (context->candidates().empty() && context->currentCode() == str) {
             // This means it is not a valid start, make it go through the punc.
             context->backspace();
@@ -536,23 +569,35 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         }
     } else if (context->size()) {
         if (event.key().check(FcitxKey_Return, KeyState::Shift)) {
-            inputContext->commitString(context->userInput());
-            context->clear();
-            event.filterAndAccept();
+            if (*config.commitAfterSelect) {
+                if (!context->selected()) {
+                    event.filterAndAccept();
+                }
+                commitBuffer(true);
+            } else {
+                inputContext->commitString(context->userInput());
+                context->clear();
+                event.filterAndAccept();
+            }
         } else if (event.key().check(FcitxKey_Tab)) {
-            // if it gonna commit something
-            context->autoSelect();
+            {
+                CommitAfterSelectWrapper commitAfterSelectRAII(this);
+                context->autoSelect();
+            }
             if (context->selected()) {
                 commitBuffer(false);
             }
             event.filterAndAccept();
         } else if (event.key().check(FcitxKey_Return) && !context->empty()) {
+            if (!*config.commitAfterSelect || !context->selected()) {
+                event.filterAndAccept();
+            }
             commitBuffer(true);
-            event.filterAndAccept();
         } else if (event.key().check(FcitxKey_BackSpace)) {
             // Commit the last segement if it is selected.
-            if (context->selected() && std::get<bool>(context->selectedSegment(
-                                           context->selectedSize() - 1))) {
+            if (context->selected() && (std::get<bool>(context->selectedSegment(
+                                            context->selectedSize() - 1)) ||
+                                        *config.commitInvalidSegment)) {
                 commitBuffer(false);
                 needUpdate = true;
                 event.filter();
@@ -603,8 +648,11 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         if (event.key().hasModifier() || !chr) {
             return;
         }
-        // if it gonna commit something
-        context->autoSelect();
+        // if current key will produce some string, do the auto select.
+        {
+            CommitAfterSelectWrapper commitAfterSelectRAII(this);
+            context->autoSelect();
+        }
         if (context->selected()) {
             commitBuffer(false);
             needUpdate = true;
@@ -647,27 +695,54 @@ void TableState::commitBuffer(bool commitCode, bool noRealCommit) {
     if (!context) {
         return;
     }
-    auto sentence = context->selectedSentence();
-    TABLE_DEBUG() << "TableState::commitBuffer " << sentence << " "
-                  << context->selectedSize();
-    for (size_t i = 0; i < context->selectedSize(); i++) {
-        auto seg = context->selectedSegment(i);
-        if (std::get<bool>(seg)) {
-            pushLastCommit(std::get<std::string>(seg));
+    std::string sentence;
+    if (!*context->config().commitAfterSelect) {
+        for (size_t i = 0; i < context->selectedSize(); i++) {
+            auto seg = context->selectedSegment(i);
+            if (std::get<bool>(seg) ||
+                *context->config().commitInvalidSegment) {
+                pushLastCommit(std::get<std::string>(seg));
+                sentence += std::get<std::string>(seg);
+            }
         }
     }
 
     if (commitCode) {
         sentence += context->currentCode();
     }
+    TABLE_DEBUG() << "TableState::commitBuffer " << sentence << " "
+                  << context->selectedSize();
 
-    if (!noRealCommit) {
+    if (!noRealCommit && !sentence.empty()) {
         ic_->commitString(sentence);
     }
     if (!ic_->capabilityFlags().testAny(CapabilityFlag::PasswordOrSensitive)) {
         context->learn();
     }
     context->clear();
+}
+
+void TableState::commitAfterSelect(int commitFrom) {
+    auto context = context_.get();
+    if (!context) {
+        return;
+    }
+
+    auto &config = context->config();
+    if (!*config.commitAfterSelect) {
+        return;
+    }
+    std::string sentence;
+    for (int i = commitFrom, e = context_->selectedSize(); i < e; i++) {
+        auto seg = context->selectedSegment(i);
+        if (std::get<bool>(seg) || *config.commitInvalidSegment) {
+            pushLastCommit(std::get<std::string>(seg));
+            sentence += std::get<std::string>(seg);
+        }
+    }
+    if (!sentence.empty()) {
+        ic_->commitString(sentence);
+    }
 }
 
 void TableState::updateUI() {

@@ -186,7 +186,7 @@ void TableIME::updateConfig(const std::string &name, const RawConfig &config) {
     if (iter == tables_.end()) {
         return;
     }
-    iter->second.root.load(config, true);
+    iter->second.root.config.mutableValue()->load(config, true);
 
     if (iter->second.dict) {
         populateOptions(iter->second.dict.get(), iter->second.root);
