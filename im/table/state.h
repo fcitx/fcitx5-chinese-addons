@@ -54,6 +54,8 @@ public:
     void updateUI();
     void pushLastCommit(const std::string &lastSegment);
 
+    void commitAfterSelect(int commitFrom);
+
 private:
     bool handleCandidateList(const TableConfig &config, KeyEvent &event);
     bool handlePinyinMode(KeyEvent &event);

@@ -27,17 +27,26 @@ TableContext::TableContext(libime::TableBasedDictionary &dict,
 
 Text TableContext::preeditText(bool hint) const {
     Text text;
-    for (size_t i = 0, e = selectedSize(); i < e; i++) {
-        auto seg = selectedSegment(i);
-        if (std::get<bool>(seg)) {
-            text.append(std::get<std::string>(seg),
-                        {TextFormatFlag::Underline});
-        } else {
-            auto segText = hint ? customHint(std::get<std::string>(seg))
-                                : std::get<std::string>(seg);
-            text.append(stringutils::concat("(", segText, ")"),
-                        {TextFormatFlag::DontCommit, TextFormatFlag::Strike,
-                         TextFormatFlag::Underline});
+    if (!*config_.commitAfterSelect) {
+        for (size_t i = 0, e = selectedSize(); i < e; i++) {
+            auto seg = selectedSegment(i);
+            if (std::get<bool>(seg)) {
+                text.append(std::get<std::string>(seg),
+                            {TextFormatFlag::Underline});
+            } else {
+                auto segText = hint ? customHint(std::get<std::string>(seg))
+                                    : std::get<std::string>(seg);
+                TextFormatFlags flags;
+                if (!*config_.commitInvalidSegment) {
+                    segText = stringutils::concat("(", segText, ")");
+                    flags = TextFormatFlag::Underline;
+                } else {
+                    flags = {TextFormatFlag::DontCommit, TextFormatFlag::Strike,
+                             TextFormatFlag::Underline};
+                }
+
+                text.append(segText, flags);
+            }
         }
     }
     auto codeText = hint ? customHint(currentCode()) : currentCode();

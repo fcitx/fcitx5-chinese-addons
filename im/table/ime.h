@@ -55,6 +55,9 @@ FCITX_CONFIGURATION(
          Key(FcitxKey_9), Key(FcitxKey_0)}};
     Option<int, IntConstrain> pageSize{this, "PageSize", "Page size", 5,
                                        IntConstrain(3, 10)};
+    // Fcitx 4 default behavior.
+    Option<bool> commitAfterSelect{this, "CommitAfterSelect",
+                                   "Commit after select candidates", true};
     Option<bool> useFullWidth{this, "UseFullWidth", _("Use full width"), true};
     Option<bool> ignorePunc{this, "IgnorePunc",
                             _("Ignore built in punctuation"), false};
@@ -67,6 +70,8 @@ FCITX_CONFIGURATION(
     Option<bool> autoSelect{this, "AutoSelect", _("Auto select candidate")};
     Option<int> autoSelectLength{this, "AutoSelectLength",
                                  _("Auto select candidate Length")};
+    Option<bool> commitInvalidSegment{this, "CommitInvalidSegment",
+                                      _("Commit Invalid Segment"), false};
     Option<int> noMatchAutoSelectLength{
         this, "NoMatchAutoSelectLength",
         _("Auto select last candidate when there is no new match")};
