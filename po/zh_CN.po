@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-04-26 00:01-0700\n"
+"POT-Creation-Date: 2020-05-07 00:02-0700\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: csslayer <wengxt@gmail.com>, 2020\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/fcitx/teams/12005/"
@@ -22,11 +22,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: im/table/state.cpp:625
+#: im/table/state.cpp:676
 msgid " Return for "
 msgstr "回车以"
 
-#: im/table/state.cpp:622
+#: im/table/state.cpp:673
 msgid " for "
 msgstr "以"
 
@@ -79,23 +79,23 @@ msgstr "您确定要删除 %1？"
 msgid "Are you sure to delete all dictionaries?"
 msgstr "您确定要删除所有字典吗？"
 
-#: im/table/ime.h:80
+#: im/table/ime.h:85
 msgid "Auto phrase length"
 msgstr "自动词组长度"
 
-#: im/table/ime.h:93
+#: im/table/ime.h:98
 msgid "Auto rule set"
 msgstr "自动组词使用规则"
 
-#: im/table/ime.h:67
+#: im/table/ime.h:70
 msgid "Auto select candidate"
 msgstr "自动选择候选词"
 
-#: im/table/ime.h:69
+#: im/table/ime.h:72
 msgid "Auto select candidate Length"
 msgstr "自动选择候选词长度"
 
-#: im/table/ime.h:72
+#: im/table/ime.h:77
 msgid "Auto select last candidate when there is no new match"
 msgstr "没有新匹配时自动选择最后的候选词"
 
@@ -111,7 +111,7 @@ msgstr "冰蟾全息"
 msgid "Browse Sogou Cell Dict repository"
 msgstr "浏览搜狗细胞词库"
 
-#: im/table/ime.h:90
+#: im/table/ime.h:95
 msgid "Candidate List orientation"
 msgstr ""
 
@@ -143,7 +143,11 @@ msgstr "云拼音已禁用。"
 msgid "Cloud Pinyin is enabled."
 msgstr "云拼音已启用。"
 
-#: im/table/ime.h:75
+#: im/table/ime.h:74
+msgid "Commit Invalid Segment"
+msgstr ""
+
+#: im/table/ime.h:80
 msgid "Commit raw input when there is no candidate"
 msgstr "没有候选词时提交原始输入"
 
@@ -161,7 +165,7 @@ msgstr "转换失败。"
 msgid "Converter crashed."
 msgstr "转换器崩溃。"
 
-#: im/table/state.cpp:449
+#: im/table/state.cpp:482
 msgid "Could not find pinyin."
 msgstr "无法找到拼音。"
 
@@ -204,15 +208,15 @@ msgstr "词典"
 msgid "Dictionary already exists"
 msgstr "词典已经存在"
 
-#: im/table/ime.h:85
+#: im/table/ime.h:90
 msgid "Display Hint for word"
 msgstr "显示词的提示"
 
-#: im/table/ime.h:87
+#: im/table/ime.h:92
 msgid "Display custom hint"
 msgstr "显示自定义提示"
 
-#: im/table/ime.h:65
+#: im/table/ime.h:68
 msgid "Don't sort word shorter"
 msgstr "不对短于长度的词排序"
 
@@ -240,7 +244,7 @@ msgstr "启用预测"
 msgid "Enabled Input Methods"
 msgstr "启用的输入法"
 
-#: im/table/ime.h:77
+#: im/table/ime.h:82
 msgid "End key"
 msgstr "中止键"
 
@@ -252,7 +256,7 @@ msgstr "二笔"
 msgid "Error while deleting %1."
 msgstr "删除 %1 时出错。"
 
-#: im/table/ime.h:83
+#: im/table/ime.h:88
 msgid "Exact Match"
 msgstr "精确匹配"
 
@@ -337,11 +341,11 @@ msgstr "半角标点"
 msgid "Horizontal"
 msgstr ""
 
-#: im/table/ime.h:63
+#: im/table/ime.h:66
 msgid "Icon"
 msgstr "图标"
 
-#: im/table/ime.h:60
+#: im/table/ime.h:63
 msgid "Ignore built in punctuation"
 msgstr ""
 
@@ -353,11 +357,11 @@ msgstr "内模糊音节 (xian -> xi'an)"
 msgid "Input Dictionary Name"
 msgstr "输入词典名称"
 
-#: im/table/ime.h:62
+#: im/table/ime.h:65
 msgid "Key to trigger quickphrase"
 msgstr "快速输入的触发键"
 
-#: im/table/ime.h:84
+#: im/table/ime.h:89
 msgid "Learning"
 msgstr "学习"
 
@@ -409,7 +413,7 @@ msgstr ""
 msgid "Number of Sentence"
 msgstr "句子数量"
 
-#: im/table/ime.h:76
+#: im/table/ime.h:81
 msgid "Order policy"
 msgstr "排序规则"
 
@@ -429,7 +433,7 @@ msgstr "拼音词典管理器"
 msgid "PinyinJiajia"
 msgstr "拼音加加"
 
-#: im/table/state.cpp:435
+#: im/table/state.cpp:468
 msgid "Please use this functionality after typing some text."
 msgstr "请在输入一些文字之后再使用这个功能。"
 
@@ -441,7 +445,7 @@ msgstr "预测"
 msgid "Prediction Size"
 msgstr "预测个数"
 
-#: im/table/ime.h:66
+#: im/table/ime.h:69
 msgid "Prefix key to trigger Pinyin"
 msgstr "触发拼音的前缀键"
 
@@ -453,15 +457,15 @@ msgstr "按下%1%输入%2%"
 msgid "Press %1% for %2% and %3% for %4%"
 msgstr "按下%1%输入%2%，按下%3%输入%4%"
 
-#: im/table/state.cpp:466
+#: im/table/state.cpp:499
 msgid "Press Backspace to forget."
 msgstr "按下退格键以忘记。"
 
-#: im/table/state.cpp:469
+#: im/table/state.cpp:502
 msgid "Press Delete to remove."
 msgstr "按下删除键来移除。"
 
-#: im/table/state.cpp:463
+#: im/table/state.cpp:496
 msgid "Press space to insert."
 msgstr "按下空格键来插入。"
 
@@ -493,7 +497,7 @@ msgstr "移除全部(&A)"
 msgid "Return"
 msgstr "返回"
 
-#: im/table/ime.h:82
+#: im/table/ime.h:87
 msgid "Save auto phrase"
 msgstr "保存自动组词"
 
@@ -570,15 +574,15 @@ msgstr "繁体中文已启用。"
 msgid "Translate engine"
 msgstr "转换引擎"
 
-#: im/table/state.cpp:441
+#: im/table/state.cpp:474
 msgid "Use Left and Right to select character: "
 msgstr "使用左右键来选择字符："
 
-#: im/table/state.cpp:452
+#: im/table/state.cpp:485
 msgid "Use Left and Right to select text. "
 msgstr "使用左右键来选择字符。"
 
-#: im/table/ime.h:58
+#: im/table/ime.h:61
 msgid "Use full width"
 msgstr "使用全角字符"
 
@@ -590,7 +594,7 @@ msgstr ""
 msgid "Wanfeng"
 msgstr "晚风"
 
-#: im/table/ime.h:78
+#: im/table/ime.h:83
 msgid "Wildcard matching Key"
 msgstr "模糊键"
 
@@ -598,7 +602,7 @@ msgstr "模糊键"
 msgid "Wrong Link"
 msgstr "链接错误"
 
-#: im/table/wbx.conf.in.in:3
+#: im/table/wubi.conf.in.in:3
 msgid "Wubi"
 msgstr "五笔字型"
 
@@ -691,14 +695,14 @@ msgstr "z <-> zh"
 msgid "{0} ({1})"
 msgstr "{0} ({1})"
 
-#: im/table/state.cpp:484
+#: im/table/state.cpp:517
 msgid "{0} is not in table."
 msgstr "{0} 不在码表中。"
 
-#: im/table/state.cpp:473
+#: im/table/state.cpp:506
 msgid "{0}: No corresponding code."
 msgstr "{0}：没有对应的码。"
 
-#: im/table/state.cpp:458 im/table/state.cpp:481
+#: im/table/state.cpp:491 im/table/state.cpp:514
 msgid "{0}: {1}"
 msgstr "{0}：{1}"
