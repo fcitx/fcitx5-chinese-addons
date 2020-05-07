@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-04-26 00:01-0700\n"
+"POT-Creation-Date: 2020-05-07 00:02-0700\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Robert Antoni Buj Gelonch <rbuj@fedoraproject.org>, 2017\n"
 "Language-Team: Catalan (https://www.transifex.com/fcitx/teams/12005/ca/)\n"
@@ -19,11 +19,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: im/table/state.cpp:625
+#: im/table/state.cpp:676
 msgid " Return for "
 msgstr ""
 
-#: im/table/state.cpp:622
+#: im/table/state.cpp:673
 msgid " for "
 msgstr ""
 
@@ -76,23 +76,23 @@ msgstr ""
 msgid "Are you sure to delete all dictionaries?"
 msgstr ""
 
-#: im/table/ime.h:80
+#: im/table/ime.h:85
 msgid "Auto phrase length"
 msgstr ""
 
-#: im/table/ime.h:93
+#: im/table/ime.h:98
 msgid "Auto rule set"
 msgstr ""
 
-#: im/table/ime.h:67
+#: im/table/ime.h:70
 msgid "Auto select candidate"
 msgstr "Selecciona automàticament la candidata"
 
-#: im/table/ime.h:69
+#: im/table/ime.h:72
 msgid "Auto select candidate Length"
 msgstr ""
 
-#: im/table/ime.h:72
+#: im/table/ime.h:77
 msgid "Auto select last candidate when there is no new match"
 msgstr ""
 
@@ -108,7 +108,7 @@ msgstr ""
 msgid "Browse Sogou Cell Dict repository"
 msgstr ""
 
-#: im/table/ime.h:90
+#: im/table/ime.h:95
 msgid "Candidate List orientation"
 msgstr ""
 
@@ -140,7 +140,11 @@ msgstr "El pinyin al núvol està inhabilitat."
 msgid "Cloud Pinyin is enabled."
 msgstr "El pinyin al núvol està habilitat."
 
-#: im/table/ime.h:75
+#: im/table/ime.h:74
+msgid "Commit Invalid Segment"
+msgstr ""
+
+#: im/table/ime.h:80
 msgid "Commit raw input when there is no candidate"
 msgstr ""
 
@@ -158,7 +162,7 @@ msgstr ""
 msgid "Converter crashed."
 msgstr ""
 
-#: im/table/state.cpp:449
+#: im/table/state.cpp:482
 msgid "Could not find pinyin."
 msgstr "No s'ha pogut trobar el pinyin."
 
@@ -201,15 +205,15 @@ msgstr ""
 msgid "Dictionary already exists"
 msgstr ""
 
-#: im/table/ime.h:85
+#: im/table/ime.h:90
 msgid "Display Hint for word"
 msgstr "Mostra els suggeriments per a la paraula"
 
-#: im/table/ime.h:87
+#: im/table/ime.h:92
 msgid "Display custom hint"
 msgstr "Mostra el suggeriment personalitzat"
 
-#: im/table/ime.h:65
+#: im/table/ime.h:68
 msgid "Don't sort word shorter"
 msgstr ""
 
@@ -237,7 +241,7 @@ msgstr ""
 msgid "Enabled Input Methods"
 msgstr ""
 
-#: im/table/ime.h:77
+#: im/table/ime.h:82
 msgid "End key"
 msgstr "Tecla Fi"
 
@@ -249,7 +253,7 @@ msgstr ""
 msgid "Error while deleting %1."
 msgstr ""
 
-#: im/table/ime.h:83
+#: im/table/ime.h:88
 msgid "Exact Match"
 msgstr "Coincidència exacta"
 
@@ -334,11 +338,11 @@ msgstr ""
 msgid "Horizontal"
 msgstr ""
 
-#: im/table/ime.h:63
+#: im/table/ime.h:66
 msgid "Icon"
 msgstr "Icona"
 
-#: im/table/ime.h:60
+#: im/table/ime.h:63
 msgid "Ignore built in punctuation"
 msgstr ""
 
@@ -350,11 +354,11 @@ msgstr ""
 msgid "Input Dictionary Name"
 msgstr ""
 
-#: im/table/ime.h:62
+#: im/table/ime.h:65
 msgid "Key to trigger quickphrase"
 msgstr ""
 
-#: im/table/ime.h:84
+#: im/table/ime.h:89
 msgid "Learning"
 msgstr ""
 
@@ -406,7 +410,7 @@ msgstr ""
 msgid "Number of Sentence"
 msgstr ""
 
-#: im/table/ime.h:76
+#: im/table/ime.h:81
 msgid "Order policy"
 msgstr "Política d'ordenació"
 
@@ -426,7 +430,7 @@ msgstr ""
 msgid "PinyinJiajia"
 msgstr ""
 
-#: im/table/state.cpp:435
+#: im/table/state.cpp:468
 msgid "Please use this functionality after typing some text."
 msgstr ""
 
@@ -438,7 +442,7 @@ msgstr "Predicció"
 msgid "Prediction Size"
 msgstr ""
 
-#: im/table/ime.h:66
+#: im/table/ime.h:69
 msgid "Prefix key to trigger Pinyin"
 msgstr ""
 
@@ -450,15 +454,15 @@ msgstr "Premeu %1% per %2%"
 msgid "Press %1% for %2% and %3% for %4%"
 msgstr "Premeu %1% per %2% i %3% per %4%"
 
-#: im/table/state.cpp:466
+#: im/table/state.cpp:499
 msgid "Press Backspace to forget."
 msgstr ""
 
-#: im/table/state.cpp:469
+#: im/table/state.cpp:502
 msgid "Press Delete to remove."
 msgstr ""
 
-#: im/table/state.cpp:463
+#: im/table/state.cpp:496
 msgid "Press space to insert."
 msgstr ""
 
@@ -490,7 +494,7 @@ msgstr ""
 msgid "Return"
 msgstr "Retorn"
 
-#: im/table/ime.h:82
+#: im/table/ime.h:87
 msgid "Save auto phrase"
 msgstr "Desa la frase automàtica"
 
@@ -567,15 +571,15 @@ msgstr "El xinès tradicional està habilitat."
 msgid "Translate engine"
 msgstr ""
 
-#: im/table/state.cpp:441
+#: im/table/state.cpp:474
 msgid "Use Left and Right to select character: "
 msgstr "Utilitza dret i esquerre per seleccionar el caràcter:"
 
-#: im/table/state.cpp:452
+#: im/table/state.cpp:485
 msgid "Use Left and Right to select text. "
 msgstr "Utilitza dret i esquerre per seleccionar el text:"
 
-#: im/table/ime.h:58
+#: im/table/ime.h:61
 msgid "Use full width"
 msgstr ""
 
@@ -587,7 +591,7 @@ msgstr ""
 msgid "Wanfeng"
 msgstr ""
 
-#: im/table/ime.h:78
+#: im/table/ime.h:83
 msgid "Wildcard matching Key"
 msgstr ""
 
@@ -595,7 +599,7 @@ msgstr ""
 msgid "Wrong Link"
 msgstr ""
 
-#: im/table/wbx.conf.in.in:3
+#: im/table/wubi.conf.in.in:3
 msgid "Wubi"
 msgstr "Wubi"
 
@@ -688,14 +692,14 @@ msgstr ""
 msgid "{0} ({1})"
 msgstr "{0} ({1})"
 
-#: im/table/state.cpp:484
+#: im/table/state.cpp:517
 msgid "{0} is not in table."
 msgstr "{0} no està a la taula."
 
-#: im/table/state.cpp:473
+#: im/table/state.cpp:506
 msgid "{0}: No corresponding code."
 msgstr "{0}: sense codi corresponent."
 
-#: im/table/state.cpp:458 im/table/state.cpp:481
+#: im/table/state.cpp:491 im/table/state.cpp:514
 msgid "{0}: {1}"
 msgstr "{0}: {1}"
