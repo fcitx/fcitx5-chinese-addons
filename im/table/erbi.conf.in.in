@@ -20,9 +20,6 @@ MatchingKey=?
 AutoPhraseLength=4
 SaveAutoPhraseAfter=-1
 
-[Table/AutoRuleSet]
-0=e2
-
 [Table/PrevPage]
 0=Up
 1=minus
