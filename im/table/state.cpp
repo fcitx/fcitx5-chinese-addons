@@ -244,18 +244,21 @@ bool TableState::handlePinyinMode(KeyEvent &event) {
     }
     bool needUpdate = false;
     if (mode_ == TableMode::Normal && event.key().check(pinyinKey)) {
+        auto chr = Key::keySymToUnicode(event.key().sym());
         if (*context->config().commitAfterSelect) {
-            if (context->selected()) {
-            }
-        } else {
-            if (context->size() != 0) {
-                auto chr = Key::keySymToUnicode(event.key().sym());
+            if (!context->empty() && !context->selected()) {
                 if (context->isValidInput(chr)) {
                     return false;
                 }
-                commitBuffer(false);
+            }
+        } else {
+            if (context->size() != 0) {
+                if (context->isValidInput(chr)) {
+                    return false;
+                }
             }
         }
+        commitBuffer(false);
         mode_ = TableMode::Pinyin;
         event.filterAndAccept();
 
