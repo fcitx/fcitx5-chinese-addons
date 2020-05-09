@@ -179,7 +179,7 @@ void TableIME::updateConfig(const std::string &name, const RawConfig &config) {
     if (iter->second.dict) {
         populateOptions(iter->second.dict.get(), iter->second.root);
     }
-    safeSaveAsIni(iter->second.root,
+    safeSaveAsIni(iter->second.root, StandardPath::Type::PkgData,
                   stringutils::concat("inputmethod/", name, ".conf"));
 }
 
