@@ -38,14 +38,42 @@ FCITX_CONFIG_ENUM_I18N_ANNOTATION(CandidateLayoutHint, N_("Not set"),
 
 FCITX_CONFIGURATION(
     TableConfig, HiddenOption<std::string> file{this, "File", _("File")};
-    Option<KeyList> prevPage{
-        this, "PrevPage", _("Prev page"), {Key(FcitxKey_Up)}};
-    Option<KeyList> nextPage{
-        this, "NextPage", _("Next page"), {Key(FcitxKey_Down)}};
-    Option<KeyList> prevCandidate{
-        this, "PrevCandidate", "Prev Candidate", {Key("Left")}};
-    Option<KeyList> nextCandidate{
-        this, "NextCandidate", "Next Candidate", {Key("Right")}};
+    KeyListOption prevPage{
+        this,
+        "PrevPage",
+        _("Prev page"),
+        {Key(FcitxKey_Up)},
+        KeyListConstrain(KeyConstrainFlag::AllowModifierLess)};
+    KeyListOption nextPage{
+        this,
+        "NextPage",
+        _("Next page"),
+        {Key(FcitxKey_Down)},
+        KeyListConstrain(KeyConstrainFlag::AllowModifierLess)};
+    KeyListOption prevCandidate{
+        this,
+        "PrevCandidate",
+        _("Prev Candidate"),
+        {Key("Left")},
+        KeyListConstrain(KeyConstrainFlag::AllowModifierLess)};
+    KeyListOption nextCandidate{
+        this,
+        "NextCandidate",
+        _("Next Candidate"),
+        {Key("Right")},
+        KeyListConstrain(KeyConstrainFlag::AllowModifierLess)};
+    Option<Key, KeyConstrain> secondCandidate{
+        this,
+        "SecondCandidate",
+        _("Select Second Candidate"),
+        Key(),
+        {KeyConstrainFlag::AllowModifierLess}};
+    Option<Key, KeyConstrain> thirdCandidate{
+        this,
+        "ThirdCandidate",
+        _("Select Third Candidate"),
+        Key(),
+        {KeyConstrainFlag::AllowModifierLess}};
     HiddenOption<KeyList> selection{
         this,
         "Selection",
@@ -65,8 +93,18 @@ FCITX_CONFIGURATION(
                             _("Key to trigger quickphrase")};
     HiddenOption<std::string> icon{this, "Icon", _("Icon")};
     Option<int> noSortInputLength{this, "NoSortInputLength",
-                                  _("Don't sort word shorter")};
-    Option<Key> pinyinKey{this, "PinyinKey", _("Prefix key to trigger Pinyin")};
+                                  _("Don't sort word shorter than")};
+    Option<Key, KeyConstrain> matchingKey{
+        this,
+        "MatchingKey",
+        _("Wildcard matching Key"),
+        Key(),
+        {KeyConstrainFlag::AllowModifierLess}};
+    Option<Key, KeyConstrain> pinyinKey{this,
+                                        "PinyinKey",
+                                        _("Prefix key to trigger Pinyin"),
+                                        Key(),
+                                        {KeyConstrainFlag::AllowModifierLess}};
     Option<bool> autoSelect{this, "AutoSelect", _("Auto select candidate")};
     Option<int> autoSelectLength{this, "AutoSelectLength",
                                  _("Auto select candidate Length")};
@@ -80,7 +118,6 @@ FCITX_CONFIGURATION(
         _("Commit raw input when there is no candidate")};
     Option<OrderPolicy> orderPolicy{this, "OrderPolicy", _("Order policy")};
     HiddenOption<KeyList> endKey{this, "EndKey", _("End key")};
-    Option<Key> matchingKey{this, "MatchingKey", _("Wildcard matching Key")};
     Option<int> autoPhraseLength{this, "AutoPhraseLength",
                                  _("Auto phrase length"), -1};
     Option<int> saveAutoPhraseAfter{this, "SaveAutoPhraseAfter",
