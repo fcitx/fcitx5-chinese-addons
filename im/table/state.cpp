@@ -187,6 +187,14 @@ bool TableState::handleCandidateList(const TableConfig &config,
     }
 
     int idx = event.key().keyListIndex(*config.selection);
+
+    if (event.key().check(*config.secondCandidate)) {
+        // Index starts with 0
+        idx = 1;
+    }
+    if (event.key().check(*config.thirdCandidate)) {
+        idx = 2;
+    }
     if (idx >= 0) {
         event.filterAndAccept();
         if (idx < candidateList->size()) {
