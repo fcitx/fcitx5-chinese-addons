@@ -71,8 +71,8 @@ Chttrans::Chttrans(fcitx::Instance *instance) : instance_(instance) {
                         "fcitx-chttrans-toggle", "fcitx",
                         tradEnabled ? "fcitx-chttrans-active"
                                     : "fcitx-chttrans-inactive",
-                        tradEnabled ? _("Traditional Chinese")
-                                    : _("Simplified Chinese"),
+                        tradEnabled ? _("Switch to Simplified Chinese")
+                                    : _("Switch to Traditional Chinese"),
                         tradEnabled ? _("Traditional Chinese is enabled.")
                                     : _("Simplified Chinese is enabled."),
                         -1);
