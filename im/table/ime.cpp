@@ -202,7 +202,7 @@ void TableIME::saveDict(const std::string &name) {
     }
     libime::TableBasedDictionary *dict = iter->second.dict.get();
     libime::UserLanguageModel *lm = iter->second.model.get();
-    if (!dict || !lm) {
+    if (!dict || !lm || *iter->second.root.config->learning) {
         return;
     }
     auto fileName = stringutils::joinPath("table", name);
