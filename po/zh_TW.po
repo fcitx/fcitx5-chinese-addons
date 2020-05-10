@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-05-09 00:01-0700\n"
+"POT-Creation-Date: 2020-05-10 00:01-0700\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: byStarTW (pan93412) <pan93412@gmail.com>, 2019\n"
 "Language-Team: Chinese (Taiwan) (https://www.transifex.com/fcitx/teams/12005/"
@@ -539,7 +539,7 @@ msgstr ""
 msgid "Shuangpin Profile"
 msgstr ""
 
-#: modules/chttrans/chttrans.cpp:75 modules/chttrans/chttrans.h:63
+#: modules/chttrans/chttrans.h:63
 msgid "Simplified Chinese"
 msgstr ""
 
@@ -549,6 +549,14 @@ msgstr ""
 
 #: modules/chttrans/chttrans.conf.in:3
 msgid "Simplified and Traditional Chinese Translation"
+msgstr ""
+
+#: modules/chttrans/chttrans.cpp:74
+msgid "Switch to Simplified Chinese"
+msgstr ""
+
+#: modules/chttrans/chttrans.cpp:75
+msgid "Switch to Traditional Chinese"
 msgstr ""
 
 #: im/table/table.conf.in:3
@@ -568,7 +576,7 @@ msgstr ""
 msgid "Toggle key"
 msgstr ""
 
-#: modules/chttrans/chttrans.cpp:74 modules/chttrans/chttrans.h:62
+#: modules/chttrans/chttrans.h:62
 msgid "Traditional Chinese"
 msgstr ""
 

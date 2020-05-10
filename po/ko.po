@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-05-09 00:01-0700\n"
+"POT-Creation-Date: 2020-05-10 00:01-0700\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: MarongHappy <daemul72@gmail.com>, 2020\n"
 "Language-Team: Korean (https://www.transifex.com/fcitx/teams/12005/ko/)\n"
@@ -540,7 +540,7 @@ msgstr "이중병음"
 msgid "Shuangpin Profile"
 msgstr "이중병음 프로필"
 
-#: modules/chttrans/chttrans.cpp:75 modules/chttrans/chttrans.h:63
+#: modules/chttrans/chttrans.h:63
 msgid "Simplified Chinese"
 msgstr "간체 중국어"
 
@@ -551,6 +551,14 @@ msgstr "중국어 간체가 활성화되었습니다."
 #: modules/chttrans/chttrans.conf.in:3
 msgid "Simplified and Traditional Chinese Translation"
 msgstr "간체 / 번체 중국어 번역"
+
+#: modules/chttrans/chttrans.cpp:74
+msgid "Switch to Simplified Chinese"
+msgstr ""
+
+#: modules/chttrans/chttrans.cpp:75
+msgid "Switch to Traditional Chinese"
+msgstr ""
 
 #: im/table/table.conf.in:3
 msgid "Table"
@@ -569,7 +577,7 @@ msgstr "전환 키"
 msgid "Toggle key"
 msgstr "전환 키"
 
-#: modules/chttrans/chttrans.cpp:74 modules/chttrans/chttrans.h:62
+#: modules/chttrans/chttrans.h:62
 msgid "Traditional Chinese"
 msgstr "번체 중국어"
 
