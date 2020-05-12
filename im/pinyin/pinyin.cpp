@@ -684,6 +684,136 @@ void PinyinEngine::deactivate(const fcitx::InputMethodEntry &entry,
     reset(entry, event);
 }
 
+bool PinyinEngine::handleCloudpinyinTrigger(KeyEvent &event) {
+    if (cloudpinyin() && event.key().checkKeyList(
+                             cloudpinyin()->call<ICloudPinyin::toggleKey>())) {
+        config_.cloudPinyinEnabled.setValue(!*config_.cloudPinyinEnabled);
+        safeSaveAsIni(config_, "conf/pinyin.conf");
+
+        notifications()->call<INotifications::showTip>(
+            "fcitx-cloudpinyin-toggle", "fcitx", "", _("Cloud Pinyin Status"),
+            *config_.cloudPinyinEnabled ? _("Cloud Pinyin is enabled.")
+                                        : _("Cloud Pinyin is disabled."),
+            -1);
+        if (*config_.cloudPinyinEnabled) {
+            cloudpinyin()->call<ICloudPinyin::resetError>();
+        }
+        event.filterAndAccept();
+        return true;
+    }
+    return false;
+}
+
+bool PinyinEngine::handleCandidateList(KeyEvent &event) {
+    auto inputContext = event.inputContext();
+    auto candidateList = inputContext->inputPanel().candidateList();
+    if (!candidateList) {
+        return false;
+    }
+    int idx = event.key().keyListIndex(selectionKeys_);
+    if (idx >= 0) {
+        event.filterAndAccept();
+        if (idx < candidateList->size()) {
+            candidateList->candidate(idx).select(inputContext);
+        }
+        return true;
+    }
+
+    if (event.key().checkKeyList(*config_.prevPage)) {
+        auto pageable = candidateList->toPageable();
+        if (!pageable->hasPrev()) {
+            if (pageable->usedNextBefore()) {
+                event.filterAndAccept();
+                return true;
+            }
+        } else {
+            event.filterAndAccept();
+            pageable->prev();
+            inputContext->updateUserInterface(
+                UserInterfaceComponent::InputPanel);
+            return true;
+        }
+    }
+
+    if (event.key().checkKeyList(*config_.nextPage)) {
+        event.filterAndAccept();
+        candidateList->toPageable()->next();
+        inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
+        return true;
+    }
+
+    if (auto movable = candidateList->toCursorMovable()) {
+        if (event.key().checkKeyList(*config_.nextCandidate)) {
+            movable->nextCandidate();
+            inputContext->updateUserInterface(
+                UserInterfaceComponent::InputPanel);
+            event.filterAndAccept();
+            return true;
+        } else if (event.key().checkKeyList(*config_.prevCandidate)) {
+            movable->prevCandidate();
+            inputContext->updateUserInterface(
+                UserInterfaceComponent::InputPanel);
+            event.filterAndAccept();
+            return true;
+        }
+    }
+    return false;
+}
+
+bool PinyinEngine::handlePunc(KeyEvent &event) {
+    auto inputContext = event.inputContext();
+    auto candidateList = inputContext->inputPanel().candidateList();
+    auto state = inputContext->propertyFor(&factory_);
+    if (event.filtered()) {
+        return false;
+    }
+    if (event.key().states().testAny(KeyState::SimpleMask)) {
+        return false;
+    }
+    // if it gonna commit something
+    auto c = Key::keySymToUnicode(event.key().sym());
+    if (!c) {
+        return false;
+    }
+    if (candidateList && candidateList->size()) {
+        candidateList->candidate(0).select(inputContext);
+    }
+    auto punc = punctuation()->call<IPunctuation::pushPunctuation>(
+        "zh_CN", inputContext, c);
+    if (event.key().check(FcitxKey_semicolon) && quickphrase()) {
+        auto keyString = utf8::UCS4ToUTF8(c);
+        // s is punc or key
+        auto output = punc.size() ? punc : keyString;
+        // alt is key or empty
+        auto altOutput = punc.size() ? keyString : "";
+        // if no punc: key -> key (s = key, alt = empty)
+        // if there's punc: key -> punc, return -> key (s = punc, alt =
+        // key)
+        std::string text;
+        if (!output.empty()) {
+            if (!altOutput.empty()) {
+                text = boost::str(
+                    boost::format(_("Press %1% for %2% and %3% for %4%")) %
+                    keyString % output % _("Return") % altOutput);
+            } else {
+                text = boost::str(boost::format(_("Press %1% for %2%")) %
+                                  keyString % altOutput);
+            }
+        }
+        quickphrase()->call<IQuickPhrase::trigger>(
+            inputContext, text, "", output, altOutput, Key(FcitxKey_semicolon));
+        event.filterAndAccept();
+        return true;
+    }
+
+    if (punc.size()) {
+        event.filterAndAccept();
+        inputContext->commitString(punc);
+    }
+    state->lastIsPunc_ = true;
+    return false;
+}
+
 void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
     FCITX_UNUSED(entry);
     PINYIN_DEBUG() << "Pinyin receive key: " << event.key() << " "
@@ -699,76 +829,19 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         return;
     }
 
-    if (cloudpinyin() && event.key().checkKeyList(
-                             cloudpinyin()->call<ICloudPinyin::toggleKey>())) {
-        config_.cloudPinyinEnabled.setValue(!*config_.cloudPinyinEnabled);
-        safeSaveAsIni(config_, "conf/pinyin.conf");
-
-        notifications()->call<INotifications::showTip>(
-            "fcitx-cloudpinyin-toggle", "fcitx", "", _("Cloud Pinyin Status"),
-            *config_.cloudPinyinEnabled ? _("Cloud Pinyin is enabled.")
-                                        : _("Cloud Pinyin is disabled."),
-            -1);
-        if (*config_.cloudPinyinEnabled) {
-            cloudpinyin()->call<ICloudPinyin::resetError>();
-        }
-        event.filterAndAccept();
+    if (handleCloudpinyinTrigger(event)) {
         return;
     }
 
     auto inputContext = event.inputContext();
     auto state = inputContext->propertyFor(&factory_);
+    auto candidateList = inputContext->inputPanel().candidateList();
     bool lastIsPunc = state->lastIsPunc_;
     state->lastIsPunc_ = false;
-    // check if we can select candidate.
-    auto candidateList = inputContext->inputPanel().candidateList();
-    if (candidateList) {
-        int idx = event.key().keyListIndex(selectionKeys_);
-        if (idx >= 0) {
-            event.filterAndAccept();
-            if (idx < candidateList->size()) {
-                candidateList->candidate(idx).select(inputContext);
-            }
-            return;
-        }
 
-        if (event.key().checkKeyList(*config_.prevPage)) {
-            auto pageable = candidateList->toPageable();
-            if (!pageable->hasPrev()) {
-                if (pageable->usedNextBefore()) {
-                    event.filterAndAccept();
-                    return;
-                }
-            } else {
-                event.filterAndAccept();
-                pageable->prev();
-                inputContext->updateUserInterface(
-                    UserInterfaceComponent::InputPanel);
-                return;
-            }
-        }
-
-        if (event.key().checkKeyList(*config_.nextPage)) {
-            event.filterAndAccept();
-            candidateList->toPageable()->next();
-            inputContext->updateUserInterface(
-                UserInterfaceComponent::InputPanel);
-            return;
-        }
-
-        if (auto movable = candidateList->toCursorMovable()) {
-            if (event.key().checkKeyList(*config_.nextCandidate)) {
-                movable->nextCandidate();
-                inputContext->updateUserInterface(
-                    UserInterfaceComponent::InputPanel);
-                return event.filterAndAccept();
-            } else if (event.key().checkKeyList(*config_.prevCandidate)) {
-                movable->prevCandidate();
-                inputContext->updateUserInterface(
-                    UserInterfaceComponent::InputPanel);
-                return event.filterAndAccept();
-            }
-        }
+    // handle number key selection and prev/next page/candidate.
+    if (handleCandidateList(event)) {
+        return;
     }
 
     // In prediction, as long as it's not candidate selection, clear, then
@@ -922,55 +995,8 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
             }
         }
     }
-    if (!event.filtered()) {
-        if (event.key().states().testAny(KeyState::SimpleMask)) {
-            return;
-        }
-        // if it gonna commit something
-        auto c = Key::keySymToUnicode(event.key().sym());
-        if (c) {
-            if (inputContext->inputPanel().candidateList() &&
-                inputContext->inputPanel().candidateList()->size()) {
-                inputContext->inputPanel().candidateList()->candidate(0).select(
-                    inputContext);
-            }
-            auto punc = punctuation()->call<IPunctuation::pushPunctuation>(
-                "zh_CN", inputContext, c);
-            if (event.key().check(FcitxKey_semicolon) && quickphrase()) {
-                auto keyString = utf8::UCS4ToUTF8(c);
-                // s is punc or key
-                auto output = punc.size() ? punc : keyString;
-                // alt is key or empty
-                auto altOutput = punc.size() ? keyString : "";
-                // if no punc: key -> key (s = key, alt = empty)
-                // if there's punc: key -> punc, return -> key (s = punc, alt =
-                // key)
-                std::string text;
-                if (!output.empty()) {
-                    if (!altOutput.empty()) {
-                        text = boost::str(
-                            boost::format(
-                                _("Press %1% for %2% and %3% for %4%")) %
-                            keyString % output % _("Return") % altOutput);
-                    } else {
-                        text =
-                            boost::str(boost::format(_("Press %1% for %2%")) %
-                                       keyString % altOutput);
-                    }
-                }
-                quickphrase()->call<IQuickPhrase::trigger>(
-                    inputContext, text, "", output, altOutput,
-                    Key(FcitxKey_semicolon));
-                event.filterAndAccept();
-                return;
-            }
-
-            if (punc.size()) {
-                event.filterAndAccept();
-                inputContext->commitString(punc);
-            }
-            state->lastIsPunc_ = true;
-        }
+    if (handlePunc(event)) {
+        return;
     }
 
     if (event.filtered() && event.accepted()) {

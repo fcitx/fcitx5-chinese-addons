@@ -149,6 +149,11 @@ private:
     void cloudPinyinSelected(InputContext *inputContext,
                              const std::string &selected,
                              const std::string &word);
+
+    bool handleCloudpinyinTrigger(KeyEvent &event);
+    bool handleCandidateList(KeyEvent &event);
+    bool handlePunc(KeyEvent &event);
+
 #ifdef FCITX_HAS_LUA
     std::vector<std::string>
     luaCandidateTrigger(InputContext *ic, const std::string &candidateString);
