@@ -16,6 +16,8 @@ FCITX_ADDON_DECLARE_FUNCTION(PinyinHelper, lookup,
 FCITX_ADDON_DECLARE_FUNCTION(PinyinHelper, lookupStroke,
                              std::vector<std::pair<std::string, std::string>>(
                                  const std::string &, int limit));
+FCITX_ADDON_DECLARE_FUNCTION(PinyinHelper, reverseLookupStroke,
+                             std::string(const std::string &));
 FCITX_ADDON_DECLARE_FUNCTION(PinyinHelper, prettyStrokeString,
                              std::string(const std::string &));
 

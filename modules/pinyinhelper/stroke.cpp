@@ -54,6 +54,7 @@ bool Stroke::load() {
         }
         std::string token = tokens[0] + '|' + tokens[1];
         dict_.set(token, 1);
+        revserseDict_[tokens[1]] = tokens[0];
     }
 
     return true;
@@ -185,6 +186,11 @@ Stroke::lookup(std::string_view input, int limit) {
     }
 
     return result;
+}
+
+std::string Stroke::reverseLookup(const std::string &hanzi) const {
+    auto iter = revserseDict_.find(hanzi);
+    return iter != revserseDict_.end() ? iter->second : std::string();
 }
 
 std::string Stroke::prettyString(const std::string &input) const {

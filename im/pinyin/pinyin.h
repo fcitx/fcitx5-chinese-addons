@@ -95,6 +95,12 @@ FCITX_CONFIGURATION(
         _("Choose Character from Phrase"),
         {Key("["), Key("]")},
         KeyListConstrain({KeyConstrainFlag::AllowModifierLess})};
+    KeyListOption selectByStroke{
+        this,
+        "FilterByStroke",
+        _("Filter by stroke"),
+        {Key("grave")},
+        KeyListConstrain({KeyConstrainFlag::AllowModifierLess})};
     Option<int, IntConstrain> nbest{this, "Number of sentence",
                                     _("Number of Sentence"), 2,
                                     IntConstrain(1, 3)};
@@ -145,6 +151,8 @@ public:
     predictCandidateList(const std::vector<std::string> &words);
     void updateUI(InputContext *inputContext);
 
+    void resetStroke(InputContext *inputContext);
+
 private:
     void cloudPinyinSelected(InputContext *inputContext,
                              const std::string &selected,
@@ -152,7 +160,10 @@ private:
 
     bool handleCloudpinyinTrigger(KeyEvent &event);
     bool handleCandidateList(KeyEvent &event);
+    bool handleStrokeFilter(KeyEvent &event);
     bool handlePunc(KeyEvent &event);
+
+    void updateStroke(InputContext *inputContext);
 
 #ifdef FCITX_HAS_LUA
     std::vector<std::string>

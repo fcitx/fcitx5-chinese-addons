@@ -22,9 +22,11 @@ public:
     std::vector<std::pair<std::string, std::string>>
     lookup(std::string_view input, int limit);
     std::string prettyString(const std::string &input) const;
+    std::string reverseLookup(const std::string &hanzi) const;
 
 private:
     libime::DATrie<int32_t> dict_;
+    std::unordered_map<std::string, std::string> revserseDict_;
 };
 } // namespace fcitx
 

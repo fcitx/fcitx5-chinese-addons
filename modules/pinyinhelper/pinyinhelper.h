@@ -27,10 +27,12 @@ public:
     std::vector<std::string> lookup(uint32_t);
     std::vector<std::pair<std::string, std::string>>
     lookupStroke(const std::string &input, int limit);
+    std::string reverseLookupStroke(const std::string &input);
     std::string prettyStrokeString(const std::string &input);
 
     FCITX_ADDON_EXPORT_FUNCTION(PinyinHelper, lookup);
     FCITX_ADDON_EXPORT_FUNCTION(PinyinHelper, lookupStroke);
+    FCITX_ADDON_EXPORT_FUNCTION(PinyinHelper, reverseLookupStroke);
     FCITX_ADDON_EXPORT_FUNCTION(PinyinHelper, prettyStrokeString);
 
     FCITX_ADDON_DEPENDENCY_LOADER(quickphrase, instance_->addonManager());

@@ -120,6 +120,10 @@ PinyinHelper::lookupStroke(const std::string &input, int limit) {
     return {};
 }
 
+std::string PinyinHelper::reverseLookupStroke(const std::string &input) {
+    return stroke_.reverseLookup(input);
+}
+
 std::string PinyinHelper::prettyStrokeString(const std::string &input) {
     return stroke_.prettyString(input);
 }
