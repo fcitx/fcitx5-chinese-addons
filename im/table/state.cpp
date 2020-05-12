@@ -781,7 +781,9 @@ void TableState::updateUI() {
             }
             candidateList->setSelectionKey(*config.selection);
             candidateList->setPageSize(*config.pageSize);
-            candidateList->setGlobalCursorIndex(0);
+            if (candidateList->size()) {
+                candidateList->setGlobalCursorIndex(0);
+            }
             inputPanel.setCandidateList(std::move(candidateList));
         }
         if (*config.displayCustomHint) {
