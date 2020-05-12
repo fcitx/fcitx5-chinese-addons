@@ -862,18 +862,37 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
             state->context_.clear();
             event.filterAndAccept();
         } else if (event.key().check(FcitxKey_space)) {
-            auto candidateList = inputContext->inputPanel().candidateList();
             if (candidateList && candidateList->size()) {
                 event.filterAndAccept();
                 int idx = candidateList->cursorIndex();
                 if (idx < 0) {
                     idx = 0;
                 }
-                inputContext->inputPanel()
-                    .candidateList()
-                    ->candidate(idx)
-                    .select(inputContext);
+                candidateList->candidate(idx).select(inputContext);
                 return;
+            }
+        } else if (int idx =
+                       event.key().keyListIndex(*config_.selectCharFromPhrase);
+                   idx >= 0) {
+            if (candidateList && candidateList->size() &&
+                candidateList->cursorIndex() >= 0) {
+                auto str =
+                    candidateList->candidate(candidateList->cursorIndex())
+                        .text()
+                        .toStringForCommit();
+                // Validate string and length.
+                if (auto len = utf8::lengthValidated(str);
+                    len != utf8::INVALID_LENGTH &&
+                    len > static_cast<size_t>(idx)) {
+                    // Get idx-th char.
+                    auto charRange =
+                        std::next(utf8::MakeUTF8CharRange(str).begin(), idx)
+                            .charRange();
+                    std::string chr(charRange.first, charRange.second);
+                    inputContext->commitString(chr);
+                    event.filterAndAccept();
+                    state->context_.clear();
+                }
             }
         }
     } else {
