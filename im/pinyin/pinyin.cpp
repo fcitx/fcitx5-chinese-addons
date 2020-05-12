@@ -211,7 +211,9 @@ PinyinEngine::predictCandidateList(const std::vector<std::string> &words) {
     }
     candidateList->setSelectionKey(selectionKeys_);
     candidateList->setPageSize(*config_.pageSize);
-    candidateList->setGlobalCursorIndex(0);
+    if (candidateList->size()) {
+        candidateList->setGlobalCursorIndex(0);
+    }
     return candidateList;
 }
 
@@ -491,7 +493,9 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
             }
         }
         candidateList->setSelectionKey(selectionKeys_);
-        candidateList->setGlobalCursorIndex(0);
+        if (candidateList->size()) {
+            candidateList->setGlobalCursorIndex(0);
+        }
         inputPanel.setCandidateList(std::move(candidateList));
     } while (0);
     inputContext->updatePreedit();
@@ -792,8 +796,6 @@ void PinyinEngine::updateStroke(InputContext *inputContext) {
     auto state = inputContext->propertyFor(&factory_);
     auto &inputPanel = inputContext->inputPanel();
     inputPanel.reset();
-    inputContext->updatePreedit();
-    inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
 
     const auto preeditWithCursor = state->context_.preeditWithCursor();
     Text preedit(preeditWithCursor.first);
@@ -833,8 +835,12 @@ void PinyinEngine::updateStroke(InputContext *inputContext) {
         }
     }
     candidateList->setSelectionKey(selectionKeys_);
-    candidateList->setGlobalCursorIndex(0);
+    if (candidateList->size()) {
+        candidateList->setGlobalCursorIndex(0);
+    }
     inputContext->inputPanel().setCandidateList(std::move(candidateList));
+    inputContext->updatePreedit();
+    inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
 }
 
 void PinyinEngine::resetStroke(InputContext *inputContext) {
