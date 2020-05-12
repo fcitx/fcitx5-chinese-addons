@@ -66,6 +66,8 @@ public:
 
     libime::PinyinContext context_;
     bool lastIsPunc_ = false;
+    std::shared_ptr<CandidateList> strokeCandidateList_;
+    InputBuffer strokeBuffer_;
     std::unique_ptr<EventSourceTime> cancelLastEvent_;
 
     std::vector<std::string> predictWords_;
@@ -117,9 +119,35 @@ private:
     std::string hz_;
 };
 
+class StrokeFilterCandidateWord : public CandidateWord {
+public:
+    StrokeFilterCandidateWord(PinyinEngine *engine, Text text, int index)
+        : CandidateWord(), engine_(engine), index_(index) {
+        setText(std::move(text));
+    }
+
+    void select(InputContext *inputContext) const override {
+        auto state = inputContext->propertyFor(&engine_->factory());
+        if (!state->strokeCandidateList_ ||
+            state->strokeCandidateList_->toBulk()->totalSize() <= index_) {
+            FCITX_ERROR() << "Stroke candidate is not consistent. Probably a "
+                             "bug in implementation";
+            return;
+        }
+        // Forward the selection to internal candidate list.
+        state->strokeCandidateList_->toBulk()->candidateFromAll(index_).select(
+            inputContext);
+        engine_->resetStroke(inputContext);
+    }
+
+private:
+    PinyinEngine *engine_;
+    int index_;
+};
+
 class ExtraCandidateWord : public CandidateWord {
 public:
-    ExtraCandidateWord(PinyinEngine *engine, const std::string &word)
+    ExtraCandidateWord(PinyinEngine *engine, std::string word)
         : CandidateWord(), engine_(engine), word_(std::move(word)) {
         setText(Text(word_));
     }
@@ -136,7 +164,7 @@ private:
 
 class SpellCandidateWord : public CandidateWord {
 public:
-    SpellCandidateWord(PinyinEngine *engine, const std::string &word)
+    SpellCandidateWord(PinyinEngine *engine, std::string word)
         : CandidateWord(), engine_(engine), word_(std::move(word)) {
         setText(Text(word_));
     }
@@ -760,6 +788,118 @@ bool PinyinEngine::handleCandidateList(KeyEvent &event) {
     return false;
 }
 
+void PinyinEngine::updateStroke(InputContext *inputContext) {
+    auto state = inputContext->propertyFor(&factory_);
+    auto &inputPanel = inputContext->inputPanel();
+    inputPanel.reset();
+    inputContext->updatePreedit();
+    inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
+
+    const auto preeditWithCursor = state->context_.preeditWithCursor();
+    Text preedit(preeditWithCursor.first);
+    preedit.setCursor(preeditWithCursor.second);
+    if (config_.showPreeditInApplication.value() &&
+        inputContext->capabilityFlags().test(CapabilityFlag::Preedit)) {
+        inputPanel.setClientPreedit(preedit);
+    } else {
+        inputPanel.setClientPreedit(
+            Text(state->context_.sentence(), TextFormatFlag::Underline));
+    }
+    preedit.append(_("\t[Stroke Filtering] "));
+    preedit.append(pinyinhelper()->call<IPinyinHelper::prettyStrokeString>(
+        state->strokeBuffer_.userInput()));
+    inputPanel.setPreedit(preedit);
+
+    auto candidateList = std::make_unique<CommonCandidateList>();
+    candidateList->setPageSize(*config_.pageSize);
+    candidateList->setCursorPositionAfterPaging(
+        CursorPositionAfterPaging::ResetToFirst);
+
+    auto origCandidateList = state->strokeCandidateList_->toBulk();
+    for (int i = 0; i < origCandidateList->totalSize(); i++) {
+        auto &candidate = origCandidateList->candidateFromAll(i);
+        auto str = candidate.text().toStringForCommit();
+        if (auto length = utf8::lengthValidated(str);
+            length != utf8::INVALID_LENGTH && length >= 1) {
+            auto charEnd = utf8::nextChar(str.begin());
+            std::string chr(str.begin(), charEnd);
+            std::string stroke =
+                pinyinhelper()->call<IPinyinHelper::reverseLookupStroke>(chr);
+            if (stringutils::startsWith(stroke,
+                                        state->strokeBuffer_.userInput())) {
+                candidateList->append<StrokeFilterCandidateWord>(
+                    this, candidate.text(), i);
+            }
+        }
+    }
+    candidateList->setSelectionKey(selectionKeys_);
+    candidateList->setGlobalCursorIndex(0);
+    inputContext->inputPanel().setCandidateList(std::move(candidateList));
+}
+
+void PinyinEngine::resetStroke(InputContext *inputContext) {
+    auto state = inputContext->propertyFor(&factory_);
+    state->strokeCandidateList_.reset();
+    state->strokeBuffer_.clear();
+}
+
+bool PinyinEngine::handleStrokeFilter(KeyEvent &event) {
+    auto inputContext = event.inputContext();
+    auto candidateList = inputContext->inputPanel().candidateList();
+    auto state = inputContext->propertyFor(&factory_);
+    if (!state->strokeCandidateList_) {
+        if (candidateList && candidateList->size() && candidateList->toBulk() &&
+            event.key().checkKeyList(*config_.selectByStroke) &&
+            pinyinhelper()) {
+            resetStroke(inputContext);
+            state->strokeCandidateList_ = candidateList;
+            updateStroke(inputContext);
+            event.filterAndAccept();
+            return true;
+        }
+        return false;
+    }
+
+    event.filterAndAccept();
+    // Skip all key combinition.
+    if (event.key().states().testAny(KeyState::SimpleMask)) {
+        return true;
+    }
+
+    if (event.key().check(FcitxKey_Escape)) {
+        resetStroke(inputContext);
+        updateUI(inputContext);
+        return true;
+    } else if (event.key().check(FcitxKey_BackSpace)) {
+        state->strokeBuffer_.backspace();
+        updateStroke(inputContext);
+        return true;
+    }
+    // if it gonna commit something
+    auto c = Key::keySymToUnicode(event.key().sym());
+    if (!c) {
+        return true;
+    }
+
+    if (event.key().check(FcitxKey_h) || event.key().check(FcitxKey_p) ||
+        event.key().check(FcitxKey_s) || event.key().check(FcitxKey_n) ||
+        event.key().check(FcitxKey_z)) {
+        static const std::unordered_map<FcitxKeySym, char> strokeMap{
+            {FcitxKey_h, '1'},
+            {FcitxKey_s, '2'},
+            {FcitxKey_p, '3'},
+            {FcitxKey_n, '4'},
+            {FcitxKey_z, '5'}};
+        if (auto iter = strokeMap.find(event.key().sym());
+            iter != strokeMap.end()) {
+            state->strokeBuffer_.type(iter->second);
+            updateStroke(inputContext);
+        }
+    }
+
+    return true;
+}
+
 bool PinyinEngine::handlePunc(KeyEvent &event) {
     auto inputContext = event.inputContext();
     auto candidateList = inputContext->inputPanel().candidateList();
@@ -841,6 +981,10 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
 
     // handle number key selection and prev/next page/candidate.
     if (handleCandidateList(event)) {
+        return;
+    }
+
+    if (handleStrokeFilter(event)) {
         return;
     }
 
@@ -1022,6 +1166,7 @@ void PinyinEngine::reset(const InputMethodEntry &, InputContextEvent &event) {
 
 void PinyinEngine::doReset(InputContext *inputContext) {
     auto state = inputContext->propertyFor(&factory_);
+    resetStroke(inputContext);
     state->context_.clear();
     state->predictWords_.clear();
     inputContext->inputPanel().reset();
