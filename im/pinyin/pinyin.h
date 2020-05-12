@@ -89,6 +89,12 @@ FCITX_CONFIGURATION(
         _("Next Candidate"),
         {Key("Tab")},
         KeyListConstrain({KeyConstrainFlag::AllowModifierLess})};
+    KeyListOption selectCharFromPhrase{
+        this,
+        "ChooseCharFromPhrase",
+        _("Choose Character from Phrase"),
+        {Key("["), Key("]")},
+        KeyListConstrain({KeyConstrainFlag::AllowModifierLess})};
     Option<int, IntConstrain> nbest{this, "Number of sentence",
                                     _("Number of Sentence"), 2,
                                     IntConstrain(1, 3)};
