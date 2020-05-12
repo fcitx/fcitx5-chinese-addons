@@ -38,5 +38,12 @@ int main() {
         pinyinhelper->call<fcitx::IPinyinHelper::lookupStroke>("szhh", 3);
     FCITX_ASSERT(result2 == result3);
 
+    auto result4 =
+        pinyinhelper->call<fcitx::IPinyinHelper::reverseLookupStroke>("你");
+    FCITX_ASSERT(result4 == "3235234");
+    auto result5 =
+        pinyinhelper->call<fcitx::IPinyinHelper::prettyStrokeString>("54321");
+    FCITX_ASSERT(result5 == "𠃍㇏丿丨一");
+
     return 0;
 }
