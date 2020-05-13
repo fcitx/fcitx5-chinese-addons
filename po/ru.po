@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-05-10 00:01-0700\n"
+"POT-Creation-Date: 2020-05-13 00:01-0700\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: TotalCaesar659 <x24cm5b8c54q6szxw@yandex.ru>, 2017\n"
 "Language-Team: Russian (https://www.transifex.com/fcitx/teams/12005/ru/)\n"
@@ -20,6 +20,10 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
 "%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: im/pinyin/pinyin.cpp:810
+msgid "\t[Stroke Filtering] "
+msgstr ""
 
 #: im/table/state.cpp:672
 msgid " Return for "
@@ -119,6 +123,10 @@ msgstr ""
 msgid "Cangjie"
 msgstr ""
 
+#: im/pinyin/pinyin.h:95
+msgid "Choose Character from Phrase"
+msgstr ""
+
 #: gui/pinyindictmanager/pinyindictmanager.cpp:45
 msgid "Clear &All Data"
 msgstr ""
@@ -131,15 +139,15 @@ msgstr "Cloud Pinyin"
 msgid "Cloud Pinyin Index"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:708
+#: im/pinyin/pinyin.cpp:726
 msgid "Cloud Pinyin Status"
 msgstr "Статус Cloud Pinyin"
 
-#: im/pinyin/pinyin.cpp:710
+#: im/pinyin/pinyin.cpp:728
 msgid "Cloud Pinyin is disabled."
 msgstr "Cloud Pinyin отключен."
 
-#: im/pinyin/pinyin.cpp:709
+#: im/pinyin/pinyin.cpp:727
 msgid "Cloud Pinyin is enabled."
 msgstr "Cloud Pinyin включен."
 
@@ -200,7 +208,7 @@ msgstr ""
 msgid "Dianbaoma"
 msgstr ""
 
-#: im/pinyin/pinyin.h:99
+#: im/pinyin/pinyin.h:111
 msgid "Dictionaries"
 msgstr ""
 
@@ -289,6 +297,10 @@ msgstr "Файл"
 msgid "File Operation Failed"
 msgstr ""
 
+#: im/pinyin/pinyin.h:101
+msgid "Filter by stroke"
+msgstr ""
+
 #: gui/pinyindictmanager/pinyindictmanager.cpp:34
 msgid "From &File"
 msgstr ""
@@ -325,7 +337,7 @@ msgstr "Полноширинная пунктуация отключена."
 msgid "Full width punctuation is enabled."
 msgstr "Полноширинная пунктуация включена."
 
-#: im/pinyin/pinyin.h:102
+#: im/pinyin/pinyin.h:114
 msgid "Fuzzy Pinyin Settings"
 msgstr ""
 
@@ -409,7 +421,7 @@ msgstr "Недоступно"
 msgid "Not set"
 msgstr ""
 
-#: im/pinyin/pinyin.h:93
+#: im/pinyin/pinyin.h:105
 msgid "Number of Sentence"
 msgstr ""
 
@@ -437,7 +449,7 @@ msgstr ""
 msgid "Please use this functionality after typing some text."
 msgstr "Пожалуйста, используйте эту функцию после набора текста."
 
-#: im/pinyin/pinyin.cpp:536
+#: im/pinyin/pinyin.cpp:568
 msgid "Prediction"
 msgstr "Предсказание"
 
@@ -449,11 +461,11 @@ msgstr ""
 msgid "Prefix key to trigger Pinyin"
 msgstr "Клавиша-префикс для активации пиньинь"
 
-#: im/pinyin/pinyin.cpp:938
+#: im/pinyin/pinyin.cpp:945
 msgid "Press %1% for %2%"
 msgstr "Нажмите %1% для %2%"
 
-#: im/pinyin/pinyin.cpp:934
+#: im/pinyin/pinyin.cpp:942
 msgid "Press %1% for %2% and %3% for %4%"
 msgstr "Нажмите %1% для %2% и %3% для %4%"
 
@@ -493,7 +505,7 @@ msgstr "Пунктуация"
 msgid "Remove &All"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:935
+#: im/pinyin/pinyin.cpp:943
 msgid "Return"
 msgstr "Return"
 
@@ -525,7 +537,7 @@ msgstr ""
 msgid "Selection"
 msgstr "Выбор"
 
-#: im/pinyin/pinyin.cpp:537
+#: im/pinyin/pinyin.cpp:569
 msgid "Show prediction words"
 msgstr "Показать слова-предсказания"
 
@@ -537,7 +549,7 @@ msgstr ""
 msgid "Shuangpin"
 msgstr "Шуанпинь"
 
-#: im/pinyin/pinyin.h:97
+#: im/pinyin/pinyin.h:109
 msgid "Shuangpin Profile"
 msgstr ""
 
@@ -707,7 +719,7 @@ msgstr ""
 msgid "z <-> zh"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:106 modules/pinyinhelper/pinyinhelper.cpp:75
+#: im/pinyin/pinyin.cpp:108 modules/pinyinhelper/pinyinhelper.cpp:75
 msgid "{0} ({1})"
 msgstr ""
 

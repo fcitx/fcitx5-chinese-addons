@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-05-10 00:01-0700\n"
+"POT-Creation-Date: 2020-05-13 00:01-0700\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: MarongHappy <daemul72@gmail.com>, 2020\n"
 "Language-Team: Korean (https://www.transifex.com/fcitx/teams/12005/ko/)\n"
@@ -19,6 +19,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+#: im/pinyin/pinyin.cpp:810
+msgid "\t[Stroke Filtering] "
+msgstr ""
 
 #: im/table/state.cpp:672
 msgid " Return for "
@@ -117,6 +121,10 @@ msgstr "후보 목록 방향"
 msgid "Cangjie"
 msgstr "창힐"
 
+#: im/pinyin/pinyin.h:95
+msgid "Choose Character from Phrase"
+msgstr ""
+
 #: gui/pinyindictmanager/pinyindictmanager.cpp:45
 msgid "Clear &All Data"
 msgstr "모든 데이터 비우기(&A)"
@@ -129,15 +137,15 @@ msgstr "클라우드 병음"
 msgid "Cloud Pinyin Index"
 msgstr "클라우드 병음 일련번호"
 
-#: im/pinyin/pinyin.cpp:708
+#: im/pinyin/pinyin.cpp:726
 msgid "Cloud Pinyin Status"
 msgstr "클라우드 병음 상태"
 
-#: im/pinyin/pinyin.cpp:710
+#: im/pinyin/pinyin.cpp:728
 msgid "Cloud Pinyin is disabled."
 msgstr "클라우드 병음이 비활성화됨."
 
-#: im/pinyin/pinyin.cpp:709
+#: im/pinyin/pinyin.cpp:727
 msgid "Cloud Pinyin is enabled."
 msgstr "클라우드 병음이 활성화되었습니다."
 
@@ -198,7 +206,7 @@ msgstr "대화창"
 msgid "Dianbaoma"
 msgstr "Dianbaoma"
 
-#: im/pinyin/pinyin.h:99
+#: im/pinyin/pinyin.h:111
 msgid "Dictionaries"
 msgstr "사전"
 
@@ -287,6 +295,10 @@ msgstr "파일"
 msgid "File Operation Failed"
 msgstr "파일 작업 실패"
 
+#: im/pinyin/pinyin.h:101
+msgid "Filter by stroke"
+msgstr ""
+
 #: gui/pinyindictmanager/pinyindictmanager.cpp:34
 msgid "From &File"
 msgstr "파일에서 불러오기(&F)"
@@ -323,7 +335,7 @@ msgstr "전각 문장부호 비활성화되었습니다."
 msgid "Full width punctuation is enabled."
 msgstr "전각 문장부호가 활성화되었습니다."
 
-#: im/pinyin/pinyin.h:102
+#: im/pinyin/pinyin.h:114
 msgid "Fuzzy Pinyin Settings"
 msgstr "퍼지 병음 설정"
 
@@ -408,7 +420,7 @@ msgstr "사용할 수 없음"
 msgid "Not set"
 msgstr "지정되지 않음"
 
-#: im/pinyin/pinyin.h:93
+#: im/pinyin/pinyin.h:105
 msgid "Number of Sentence"
 msgstr "문장 수"
 
@@ -436,7 +448,7 @@ msgstr "PinyinJiajia"
 msgid "Please use this functionality after typing some text."
 msgstr "글자를 입력한 후에 이 기능을 사용하세요."
 
-#: im/pinyin/pinyin.cpp:536
+#: im/pinyin/pinyin.cpp:568
 msgid "Prediction"
 msgstr "예측"
 
@@ -448,11 +460,11 @@ msgstr "예측 크기"
 msgid "Prefix key to trigger Pinyin"
 msgstr "병음 발동을 위한 사전입력 키"
 
-#: im/pinyin/pinyin.cpp:938
+#: im/pinyin/pinyin.cpp:945
 msgid "Press %1% for %2%"
 msgstr "%2%를 위해 %1%을 누르세요"
 
-#: im/pinyin/pinyin.cpp:934
+#: im/pinyin/pinyin.cpp:942
 msgid "Press %1% for %2% and %3% for %4%"
 msgstr "%2%를 위해 %1%을, %4%를 위해 %3%을 누르세요"
 
@@ -492,7 +504,7 @@ msgstr "문장부호"
 msgid "Remove &All"
 msgstr "모두 제거(&A)"
 
-#: im/pinyin/pinyin.cpp:935
+#: im/pinyin/pinyin.cpp:943
 msgid "Return"
 msgstr "돌아가기"
 
@@ -524,7 +536,7 @@ msgstr "scel 파일 선택"
 msgid "Selection"
 msgstr "선택"
 
-#: im/pinyin/pinyin.cpp:537
+#: im/pinyin/pinyin.cpp:569
 msgid "Show prediction words"
 msgstr "예상 단어 표시"
 
@@ -536,7 +548,7 @@ msgstr ""
 msgid "Shuangpin"
 msgstr "이중병음"
 
-#: im/pinyin/pinyin.h:97
+#: im/pinyin/pinyin.h:109
 msgid "Shuangpin Profile"
 msgstr "이중병음 프로필"
 
@@ -706,7 +718,7 @@ msgstr "ue -> ve"
 msgid "z <-> zh"
 msgstr "z <-> zh"
 
-#: im/pinyin/pinyin.cpp:106 modules/pinyinhelper/pinyinhelper.cpp:75
+#: im/pinyin/pinyin.cpp:108 modules/pinyinhelper/pinyinhelper.cpp:75
 msgid "{0} ({1})"
 msgstr "{0} ({1})"
 
