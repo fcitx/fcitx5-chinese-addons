@@ -10,6 +10,7 @@
 #include <cstdint>
 #include <libime/core/datrie.h>
 #include <string>
+#include <unordered_map>
 #include <utility>
 
 namespace fcitx {
