@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-05-10 00:01-0700\n"
+"POT-Creation-Date: 2020-05-13 00:01-0700\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: csslayer <wengxt@gmail.com>, 2020\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/fcitx/teams/12005/"
@@ -21,6 +21,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+#: im/pinyin/pinyin.cpp:810
+msgid "\t[Stroke Filtering] "
+msgstr ""
 
 #: im/table/state.cpp:672
 msgid " Return for "
@@ -119,6 +123,10 @@ msgstr ""
 msgid "Cangjie"
 msgstr "仓颉"
 
+#: im/pinyin/pinyin.h:95
+msgid "Choose Character from Phrase"
+msgstr ""
+
 #: gui/pinyindictmanager/pinyindictmanager.cpp:45
 msgid "Clear &All Data"
 msgstr "清理所有数据(&A)"
@@ -131,15 +139,15 @@ msgstr "云拼音"
 msgid "Cloud Pinyin Index"
 msgstr "云拼音位置"
 
-#: im/pinyin/pinyin.cpp:708
+#: im/pinyin/pinyin.cpp:726
 msgid "Cloud Pinyin Status"
 msgstr "云拼音状态"
 
-#: im/pinyin/pinyin.cpp:710
+#: im/pinyin/pinyin.cpp:728
 msgid "Cloud Pinyin is disabled."
 msgstr "云拼音已禁用。"
 
-#: im/pinyin/pinyin.cpp:709
+#: im/pinyin/pinyin.cpp:727
 msgid "Cloud Pinyin is enabled."
 msgstr "云拼音已启用。"
 
@@ -200,7 +208,7 @@ msgstr "对话框"
 msgid "Dianbaoma"
 msgstr "电报码"
 
-#: im/pinyin/pinyin.h:99
+#: im/pinyin/pinyin.h:111
 msgid "Dictionaries"
 msgstr "词典"
 
@@ -289,6 +297,10 @@ msgstr "文件"
 msgid "File Operation Failed"
 msgstr "文件操作失败"
 
+#: im/pinyin/pinyin.h:101
+msgid "Filter by stroke"
+msgstr ""
+
 #: gui/pinyindictmanager/pinyindictmanager.cpp:34
 msgid "From &File"
 msgstr "从文件(&F)"
@@ -325,7 +337,7 @@ msgstr "全角标点已禁用。"
 msgid "Full width punctuation is enabled."
 msgstr "全角标点已启用。"
 
-#: im/pinyin/pinyin.h:102
+#: im/pinyin/pinyin.h:114
 msgid "Fuzzy Pinyin Settings"
 msgstr "模糊音设置"
 
@@ -409,7 +421,7 @@ msgstr "不可用"
 msgid "Not set"
 msgstr ""
 
-#: im/pinyin/pinyin.h:93
+#: im/pinyin/pinyin.h:105
 msgid "Number of Sentence"
 msgstr "句子数量"
 
@@ -437,7 +449,7 @@ msgstr "拼音加加"
 msgid "Please use this functionality after typing some text."
 msgstr "请在输入一些文字之后再使用这个功能。"
 
-#: im/pinyin/pinyin.cpp:536
+#: im/pinyin/pinyin.cpp:568
 msgid "Prediction"
 msgstr "预测"
 
@@ -449,11 +461,11 @@ msgstr "预测个数"
 msgid "Prefix key to trigger Pinyin"
 msgstr "触发拼音的前缀键"
 
-#: im/pinyin/pinyin.cpp:938
+#: im/pinyin/pinyin.cpp:945
 msgid "Press %1% for %2%"
 msgstr "按下%1%输入%2%"
 
-#: im/pinyin/pinyin.cpp:934
+#: im/pinyin/pinyin.cpp:942
 msgid "Press %1% for %2% and %3% for %4%"
 msgstr "按下%1%输入%2%，按下%3%输入%4%"
 
@@ -493,7 +505,7 @@ msgstr "标点"
 msgid "Remove &All"
 msgstr "移除全部(&A)"
 
-#: im/pinyin/pinyin.cpp:935
+#: im/pinyin/pinyin.cpp:943
 msgid "Return"
 msgstr "返回"
 
@@ -525,7 +537,7 @@ msgstr "选择 scel 文件"
 msgid "Selection"
 msgstr "选择"
 
-#: im/pinyin/pinyin.cpp:537
+#: im/pinyin/pinyin.cpp:569
 msgid "Show prediction words"
 msgstr "显示联想词组"
 
@@ -537,7 +549,7 @@ msgstr ""
 msgid "Shuangpin"
 msgstr "双拼"
 
-#: im/pinyin/pinyin.h:97
+#: im/pinyin/pinyin.h:109
 msgid "Shuangpin Profile"
 msgstr "双拼方案"
 
@@ -707,7 +719,7 @@ msgstr "ue -> ve"
 msgid "z <-> zh"
 msgstr "z <-> zh"
 
-#: im/pinyin/pinyin.cpp:106 modules/pinyinhelper/pinyinhelper.cpp:75
+#: im/pinyin/pinyin.cpp:108 modules/pinyinhelper/pinyinhelper.cpp:75
 msgid "{0} ({1})"
 msgstr "{0} ({1})"
 
