@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-05-13 00:01-0700\n"
+"POT-Creation-Date: 2020-05-20 00:01-0700\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: MarongHappy <daemul72@gmail.com>, 2020\n"
 "Language-Team: Korean (https://www.transifex.com/fcitx/teams/12005/ko/)\n"
@@ -22,7 +22,7 @@ msgstr ""
 
 #: im/pinyin/pinyin.cpp:810
 msgid "\t[Stroke Filtering] "
-msgstr ""
+msgstr "\t[필획 필터링] "
 
 #: im/table/state.cpp:672
 msgid " Return for "
@@ -123,7 +123,7 @@ msgstr "창힐"
 
 #: im/pinyin/pinyin.h:95
 msgid "Choose Character from Phrase"
-msgstr ""
+msgstr "문구에서 문자 선택"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:45
 msgid "Clear &All Data"
@@ -151,7 +151,7 @@ msgstr "클라우드 병음이 활성화되었습니다."
 
 #: im/table/ime.h:100
 msgid "Commit Invalid Segment"
-msgstr ""
+msgstr "잘못된 세그먼트 커밋"
 
 #: im/table/ime.h:106
 msgid "Commit raw input when there is no candidate"
@@ -224,7 +224,7 @@ msgstr "사용자 지정 힌트 보이기"
 
 #: im/table/ime.h:84
 msgid "Don't sort word shorter than"
-msgstr ""
+msgstr "다음보다 짧은 단어를 정렬하지 마십시오"
 
 #: gui/pinyindictmanager/filedownloader.cpp:78
 msgid "Download Finished"
@@ -297,7 +297,7 @@ msgstr "파일 작업 실패"
 
 #: im/pinyin/pinyin.h:101
 msgid "Filter by stroke"
-msgstr ""
+msgstr "필획으로 필터링"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:34
 msgid "From &File"
@@ -522,11 +522,11 @@ msgstr "사전 파일 선택"
 
 #: im/table/ime.h:56
 msgid "Select Second Candidate"
-msgstr ""
+msgstr "두 번째 후보 선택"
 
 #: im/table/ime.h:62
 msgid "Select Third Candidate"
-msgstr ""
+msgstr "세 번째 후보 선택"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:188
 msgid "Select scel file"
@@ -542,7 +542,7 @@ msgstr "예상 단어 표시"
 
 #: im/pinyin/pinyin.h:66
 msgid "Show preedit within application"
-msgstr ""
+msgstr "응용프로그램 내에서 프리에디트 표시"
 
 #: im/pinyin/shuangpin.conf.in:3
 msgid "Shuangpin"
@@ -566,11 +566,11 @@ msgstr "간체 / 번체 중국어 번역"
 
 #: modules/chttrans/chttrans.cpp:74
 msgid "Switch to Simplified Chinese"
-msgstr ""
+msgstr "중국어 간체로 전환"
 
 #: modules/chttrans/chttrans.cpp:75
 msgid "Switch to Traditional Chinese"
-msgstr ""
+msgstr "중국어 번체로 전환"
 
 #: im/table/table.conf.in:3
 msgid "Table"
