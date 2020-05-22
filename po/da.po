@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-05-13 00:01-0700\n"
+"POT-Creation-Date: 2020-05-22 00:01-0700\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: scootergrisen, 2020\n"
 "Language-Team: Danish (https://www.transifex.com/fcitx/teams/12005/da/)\n"
@@ -21,7 +21,7 @@ msgstr ""
 
 #: im/pinyin/pinyin.cpp:810
 msgid "\t[Stroke Filtering] "
-msgstr ""
+msgstr "\t[Trykfiltrering] "
 
 #: im/table/state.cpp:672
 msgid " Return for "
@@ -122,7 +122,7 @@ msgstr "Cangjie"
 
 #: im/pinyin/pinyin.h:95
 msgid "Choose Character from Phrase"
-msgstr ""
+msgstr "Vælg tegn fra frase"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:45
 msgid "Clear &All Data"
@@ -300,7 +300,7 @@ msgstr "Filhandling mislykkedes"
 
 #: im/pinyin/pinyin.h:101
 msgid "Filter by stroke"
-msgstr ""
+msgstr "Filtrér efter tryk"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:34
 msgid "From &File"
