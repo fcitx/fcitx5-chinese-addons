@@ -179,7 +179,19 @@ void TableIME::updateConfig(const std::string &name, const RawConfig &config) {
     if (iter->second.dict) {
         populateOptions(iter->second.dict.get(), iter->second.root);
     }
-    safeSaveAsIni(iter->second.root, StandardPath::Type::PkgData,
+
+    // Load existing user level config, in order to avoid overwrite user config.
+    RawConfig existingConfig;
+    {
+        auto file = StandardPath::global().openUser(
+            StandardPath::Type::PkgData,
+            stringutils::concat("inputmethod/", name, ".conf"), O_RDONLY);
+        if (file.fd() >= 0) {
+            readFromIni(existingConfig, file.fd());
+        }
+    }
+    iter->second.root.save(existingConfig);
+    safeSaveAsIni(existingConfig, StandardPath::Type::PkgData,
                   stringutils::concat("inputmethod/", name, ".conf"));
 }
 
