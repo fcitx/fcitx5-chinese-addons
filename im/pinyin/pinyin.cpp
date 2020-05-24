@@ -71,6 +71,9 @@ public:
     std::unique_ptr<EventSourceTime> cancelLastEvent_;
 
     std::vector<std::string> predictWords_;
+
+    int keyReleased_ = -1;
+    int keyReleasedIndex_ = -2;
 };
 
 class PinyinPredictCandidateWord : public CandidateWord {
@@ -744,6 +747,78 @@ bool PinyinEngine::handleCloudpinyinTrigger(KeyEvent &event) {
     return false;
 }
 
+bool PinyinEngine::handle2nd3rdSelection(KeyEvent &event) {
+    auto inputContext = event.inputContext();
+    auto candidateList = inputContext->inputPanel().candidateList();
+    if (!candidateList) {
+        return false;
+    }
+
+    struct {
+        const KeyList &list;
+        int selection;
+    } keyHandlers[] = {
+        // Index starts with 0
+        {*config_.secondCandidate, 1},
+        {*config_.thirdCandidate, 2},
+    };
+
+    auto state = inputContext->propertyFor(&factory_);
+    int keyReleased = state->keyReleased_;
+    int keyReleasedIndex = state->keyReleasedIndex_;
+    // Keep these two values, and reset them in the state
+    state->keyReleased_ = -1;
+    state->keyReleasedIndex_ = -2;
+    const bool isModifier = event.origKey().isModifier();
+    if (event.isRelease()) {
+        int idx = 0;
+        for (auto &keyHandler : keyHandlers) {
+            if (keyReleased == idx &&
+                keyReleasedIndex ==
+                    event.origKey().keyListIndex(keyHandler.list)) {
+                if (isModifier) {
+                    if (keyHandler.selection < candidateList->size()) {
+                        candidateList->candidate(keyHandler.selection)
+                            .select(inputContext);
+                    }
+                    event.filterAndAccept();
+                    return true;
+                } else {
+                    event.filter();
+                    return true;
+                }
+            }
+            idx++;
+        }
+    }
+
+    if (!event.filtered() && !event.isRelease()) {
+        int idx = 0;
+        for (auto &keyHandler : keyHandlers) {
+            auto keyIdx = event.origKey().keyListIndex(keyHandler.list);
+            if (keyIdx >= 0) {
+                state->keyReleased_ = idx;
+                state->keyReleasedIndex_ = keyIdx;
+                if (isModifier) {
+                    // don't forward to input method, but make it pass
+                    // through to client.
+                    event.filter();
+                    return true;
+                } else {
+                    if (keyHandler.selection < candidateList->size()) {
+                        candidateList->candidate(keyHandler.selection)
+                            .select(inputContext);
+                    }
+                    event.filterAndAccept();
+                    return true;
+                }
+            }
+            idx++;
+        }
+    }
+    return false;
+}
+
 bool PinyinEngine::handleCandidateList(KeyEvent &event) {
     auto inputContext = event.inputContext();
     auto candidateList = inputContext->inputPanel().candidateList();
@@ -964,6 +1039,13 @@ bool PinyinEngine::handlePunc(KeyEvent &event) {
         event.filterAndAccept();
         inputContext->commitString(punc);
     }
+    if (!event.filtered()) {
+        // Re-forward the event to ensure we got delivered later than
+        // commit.
+        event.filterAndAccept();
+        inputContext->forwardKey(event.rawKey(), event.isRelease(),
+                                 event.time());
+    }
     state->lastIsPunc_ = true;
     return false;
 }
@@ -972,6 +1054,14 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
     FCITX_UNUSED(entry);
     PINYIN_DEBUG() << "Pinyin receive key: " << event.key() << " "
                    << event.isRelease();
+    auto inputContext = event.inputContext();
+    auto state = inputContext->propertyFor(&factory_);
+
+    // 2nd/3rd selection is allowed to be modifier only, handle them before we
+    // skip the release.
+    if (handle2nd3rdSelection(event)) {
+        return;
+    }
 
     // by pass all key release
     if (event.isRelease()) {
@@ -987,8 +1077,6 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         return;
     }
 
-    auto inputContext = event.inputContext();
-    auto state = inputContext->propertyFor(&factory_);
     auto candidateList = inputContext->inputPanel().candidateList();
     bool lastIsPunc = state->lastIsPunc_;
     state->lastIsPunc_ = false;
@@ -1187,6 +1275,9 @@ void PinyinEngine::doReset(InputContext *inputContext) {
     inputContext->updatePreedit();
     inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
     // state->lastIsPunc_ = false;
+
+    state->keyReleased_ = -1;
+    state->keyReleasedIndex_ = -2;
 }
 
 void PinyinEngine::save() {
