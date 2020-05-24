@@ -89,6 +89,20 @@ FCITX_CONFIGURATION(
         _("Next Candidate"),
         {Key("Tab")},
         KeyListConstrain({KeyConstrainFlag::AllowModifierLess})};
+    KeyListOption secondCandidate{
+        this,
+        "SecondCandidate",
+        _("Select 2nd Candidate"),
+        {},
+        KeyListConstrain({KeyConstrainFlag::AllowModifierLess,
+                          KeyConstrainFlag::AllowModifierOnly})};
+    KeyListOption thirdCandidate{
+        this,
+        "ThirdCandidate",
+        _("Select 3rd Candidate"),
+        {},
+        KeyListConstrain({KeyConstrainFlag::AllowModifierLess,
+                          KeyConstrainFlag::AllowModifierOnly})};
     KeyListOption selectCharFromPhrase{
         this,
         "ChooseCharFromPhrase",
@@ -159,6 +173,7 @@ private:
                              const std::string &word);
 
     bool handleCloudpinyinTrigger(KeyEvent &event);
+    bool handle2nd3rdSelection(KeyEvent &event);
     bool handleCandidateList(KeyEvent &event);
     bool handleStrokeFilter(KeyEvent &event);
     bool handlePunc(KeyEvent &event);

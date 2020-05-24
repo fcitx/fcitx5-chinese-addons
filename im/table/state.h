@@ -45,6 +45,7 @@ public:
     void commitAfterSelect(int commitFrom);
 
 private:
+    bool handle2nd3rdCandidate(const TableConfig &config, KeyEvent &event);
     bool handleCandidateList(const TableConfig &config, KeyEvent &event);
     bool handlePinyinMode(KeyEvent &event);
     bool handleLookupPinyinOrModifyDictionaryMode(KeyEvent &event);
@@ -61,6 +62,9 @@ private:
     std::string lastSegment_;
     std::list<std::string> lastSingleCharCommit_;
     std::unique_ptr<TableContext> context_;
+
+    int keyReleased_ = -1;
+    int keyReleasedIndex_ = -2;
 };
 } // namespace fcitx
 

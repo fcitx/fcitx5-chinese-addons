@@ -108,11 +108,6 @@ void TableEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
     TABLE_DEBUG() << "Table receive key: " << event.key() << " "
                   << event.isRelease();
 
-    // by pass all key release and by pass all modifier
-    if (event.isRelease() || event.key().isModifier()) {
-        return;
-    }
-
     auto inputContext = event.inputContext();
     auto state = inputContext->propertyFor(&factory_);
     state->keyEvent(entry, event);

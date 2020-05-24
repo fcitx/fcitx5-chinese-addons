@@ -50,18 +50,20 @@ FCITX_CONFIGURATION(
         _("Next Candidate"),
         {Key("Right")},
         KeyListConstrain(KeyConstrainFlag::AllowModifierLess)};
-    Option<Key, KeyConstrain> secondCandidate{
+    KeyListOption secondCandidate{
         this,
         "SecondCandidate",
         _("Select Second Candidate"),
-        Key(),
-        {KeyConstrainFlag::AllowModifierLess}};
-    Option<Key, KeyConstrain> thirdCandidate{
+        {},
+        KeyListConstrain({KeyConstrainFlag::AllowModifierLess,
+                          KeyConstrainFlag::AllowModifierOnly})};
+    KeyListOption thirdCandidate{
         this,
         "ThirdCandidate",
         _("Select Third Candidate"),
-        Key(),
-        {KeyConstrainFlag::AllowModifierLess}};
+        {},
+        KeyListConstrain({KeyConstrainFlag::AllowModifierLess,
+                          KeyConstrainFlag::AllowModifierOnly})};
     HiddenOption<KeyList> selection{
         this,
         "Selection",

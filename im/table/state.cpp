@@ -163,6 +163,9 @@ void TableState::reset(const InputMethodEntry *entry) {
     mode_ = TableMode::Normal;
     pinyinModePrefix_.clear();
     pinyinModeBuffer_.clear();
+
+    keyReleased_ = -1;
+    keyReleasedIndex_ = -2;
 }
 
 bool TableState::handleCandidateList(const TableConfig &config,
@@ -175,14 +178,6 @@ bool TableState::handleCandidateList(const TableConfig &config,
     }
 
     int idx = event.key().keyListIndex(*config.selection);
-
-    if (event.key().check(*config.secondCandidate)) {
-        // Index starts with 0
-        idx = 1;
-    }
-    if (event.key().check(*config.thirdCandidate)) {
-        idx = 2;
-    }
     if (idx >= 0) {
         event.filterAndAccept();
         if (idx < candidateList->size()) {
@@ -532,6 +527,18 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         return;
     }
 
+    auto &config = context->config();
+    // 2nd/3rd selection is allowed to be modifier only, handle them before we
+    // skip the release.
+    if (handle2nd3rdCandidate(config, event)) {
+        return;
+    }
+
+    // by pass all key release and by pass all modifier
+    if (event.isRelease() || event.key().isModifier()) {
+        return;
+    }
+
     if ((mode_ != TableMode::Normal || context_->size()) &&
         event.key().check(FcitxKey_Escape)) {
         reset();
@@ -539,7 +546,6 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
     }
 
     lastIsPunc_ = false;
-    auto &config = context->config();
 
     if (handleCandidateList(config, event)) {
         return;
@@ -687,6 +693,85 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
     if ((event.filtered() && event.accepted()) || needUpdate) {
         updateUI();
     }
+    if (!event.filtered()) {
+        // Re-forward the event to ensure we got delivered later than
+        // commit.
+        event.filterAndAccept();
+        inputContext->forwardKey(event.rawKey(), event.isRelease(),
+                                 event.time());
+    }
+}
+
+bool TableState::handle2nd3rdCandidate(const TableConfig &config,
+                                       KeyEvent &event) {
+    auto inputContext = event.inputContext();
+    auto candidateList = inputContext->inputPanel().candidateList();
+    if (!candidateList) {
+        return false;
+    }
+
+    struct {
+        const KeyList &list;
+        int selection;
+    } keyHandlers[] = {
+        // Index starts with 0
+        {*config.secondCandidate, 1},
+        {*config.thirdCandidate, 2},
+    };
+
+    int keyReleased = keyReleased_;
+    int keyReleasedIndex = keyReleasedIndex_;
+    // Keep these two values, and reset them in the state
+    keyReleased_ = -1;
+    keyReleasedIndex_ = -2;
+    const bool isModifier = event.origKey().isModifier();
+    if (event.isRelease()) {
+        int idx = 0;
+        for (auto &keyHandler : keyHandlers) {
+            if (keyReleased == idx &&
+                keyReleasedIndex ==
+                    event.origKey().keyListIndex(keyHandler.list)) {
+                if (isModifier) {
+                    if (keyHandler.selection < candidateList->size()) {
+                        candidateList->candidate(keyHandler.selection)
+                            .select(inputContext);
+                    }
+                    event.filterAndAccept();
+                    return true;
+                } else {
+                    event.filter();
+                    return true;
+                }
+            }
+            idx++;
+        }
+    }
+
+    if (!event.filtered() && !event.isRelease()) {
+        int idx = 0;
+        for (auto &keyHandler : keyHandlers) {
+            auto keyIdx = event.origKey().keyListIndex(keyHandler.list);
+            if (keyIdx >= 0) {
+                keyReleased_ = idx;
+                keyReleasedIndex_ = keyIdx;
+                if (isModifier) {
+                    // don't forward to input method, but make it pass
+                    // through to client.
+                    event.filter();
+                    return true;
+                } else {
+                    if (keyHandler.selection < candidateList->size()) {
+                        candidateList->candidate(keyHandler.selection)
+                            .select(inputContext);
+                    }
+                    event.filterAndAccept();
+                    return true;
+                }
+            }
+            idx++;
+        }
+    }
+    return false;
 }
 
 void TableState::commitBuffer(bool commitCode, bool noRealCommit) {
