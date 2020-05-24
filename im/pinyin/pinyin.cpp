@@ -608,6 +608,9 @@ void PinyinEngine::loadExtraDict() {
     auto files = standardPath.multiOpen(StandardPath::Type::PkgData,
                                         "pinyin/dictionaries", O_RDONLY,
                                         filter::Suffix(".dict"));
+    auto disableFiles = standardPath.multiOpen(StandardPath::Type::PkgData,
+                                               "pinyin/dictionaries", O_RDONLY,
+                                               filter::Suffix(".dict.disable"));
     ime_->dict()->removeAll();
     if (*config_.emojiEnabled) {
         auto file = standardPath.open(StandardPath::Type::PkgData,
@@ -615,12 +618,17 @@ void PinyinEngine::loadExtraDict() {
         loadDict(file);
     }
     for (const auto &file : files) {
+        if (disableFiles.count(stringutils::concat(file.first, ".disable"))) {
+            PINYIN_DEBUG() << "Dictionary: " << file.first << " is disabled.";
+            continue;
+        }
         PINYIN_DEBUG() << "Loading extra dictionary: " << file.first;
         loadDict(file.second);
     }
 }
 
 void PinyinEngine::reloadConfig() {
+    PINYIN_DEBUG() << "Reload pinyin config.";
     readAsIni(config_, "conf/pinyin.conf");
     ime_->setNBest(*config_.nbest);
     if (*config_.shuangpinProfile == ShuangpinProfileEnum::Custom) {

@@ -21,12 +21,19 @@ public:
     QVariant data(const QModelIndex &index,
                   int role = Qt::DisplayRole) const override;
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+    bool setData(const QModelIndex &index, const QVariant &value,
+                 int role) override;
+    Qt::ItemFlags flags(const QModelIndex &index) const override;
 
     void loadFileList();
+    void save();
     int findFile(const QString &lastFileName);
 
+signals:
+    void changed();
+
 private:
-    QStringList fileList_;
+    QList<QPair<QString, bool>> fileList_;
 };
 
 } // namespace fcitx

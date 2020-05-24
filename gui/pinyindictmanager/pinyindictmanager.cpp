@@ -71,11 +71,21 @@ PinyinDictManager::PinyinDictManager(QWidget *parent)
     });
 
     model_->loadFileList();
+    connect(model_, &FileListModel::changed, this, [this]() { changed(true); });
 }
 
 void PinyinDictManager::load() {}
 
-void PinyinDictManager::save() {}
+void PinyinDictManager::save() {
+    QMetaObject::invokeMethod(
+        this,
+        [this]() {
+            model_->save();
+            emit changed(false);
+            emit saveFinished();
+        },
+        Qt::QueuedConnection);
+}
 
 QString PinyinDictManager::title() { return _("Pinyin dictionary manager"); }
 
