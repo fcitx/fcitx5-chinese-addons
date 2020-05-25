@@ -19,6 +19,7 @@ PinyinKey=[
 MatchingKey=?
 AutoPhraseLength=4
 SaveAutoPhraseAfter=-1
+UseContextRelatedOrder=False
 
 [Table/PrevPage]
 0=Up
