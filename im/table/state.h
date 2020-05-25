@@ -16,6 +16,7 @@ namespace fcitx {
 enum class TableMode {
     Normal,
     ModifyDictionary,
+    ForgetWord,
     Pinyin,
     LookupPinyin,
 };
@@ -44,12 +45,16 @@ public:
 
     void commitAfterSelect(int commitFrom);
 
+    auto mode() const { return mode_; }
+
+    void forgetCandidateWord(size_t idx);
+
 private:
     bool handle2nd3rdCandidate(const TableConfig &config, KeyEvent &event);
     bool handleCandidateList(const TableConfig &config, KeyEvent &event);
+    bool handleForgetWord(KeyEvent &event);
     bool handlePinyinMode(KeyEvent &event);
     bool handleLookupPinyinOrModifyDictionaryMode(KeyEvent &event);
-    bool handleAddPhraseMode(KeyEvent &event);
 
     TableMode mode_ = TableMode::Normal;
     std::string pinyinModePrefix_;

@@ -28,6 +28,11 @@ FCITX_CONFIGURATION(TableGlobalConfig,
                                                    _("Modify dictionary"),
                                                    {Key("Control+8")},
                                                    KeyListConstrain()};
+                    KeyListOption forgetWord{this,
+                                             "ForgetWord",
+                                             _("Forget word"),
+                                             {Key("Control+7")},
+                                             KeyListConstrain()};
                     KeyListOption lookupPinyin{this,
                                                "LookupPinyinKey",
                                                _("Lookup pinyin"),

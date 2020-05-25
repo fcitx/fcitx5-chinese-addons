@@ -50,6 +50,10 @@ public:
         if (!context || idx_ >= context->candidates().size()) {
             return;
         }
+        if (state->mode() == TableMode::ForgetWord) {
+            state->forgetCandidateWord(idx_);
+            return;
+        }
         {
             CommitAfterSelectWrapper commitAfterSelectRAII(state);
             context->select(idx_);
@@ -353,6 +357,33 @@ bool TableState::handlePinyinMode(KeyEvent &event) {
     return true;
 }
 
+bool TableState::handleForgetWord(KeyEvent &event) {
+    auto inputContext = event.inputContext();
+    auto candidateList = inputContext->inputPanel().candidateList();
+    if (!candidateList || candidateList->size() == 0) {
+        return false;
+    }
+    if (mode_ == TableMode::Normal &&
+        event.key().checkKeyList(*engine_->config().forgetWord)) {
+        mode_ = TableMode::ForgetWord;
+        event.filterAndAccept();
+        updateUI();
+        return true;
+    }
+    if (mode_ == TableMode::ForgetWord && event.key().check(FcitxKey_Escape)) {
+        mode_ = TableMode::Normal;
+        event.filterAndAccept();
+        updateUI();
+        return true;
+    }
+
+    if (mode_ == TableMode::ForgetWord) {
+        event.filterAndAccept();
+        return true;
+    }
+    return false;
+}
+
 bool TableState::handleLookupPinyinOrModifyDictionaryMode(KeyEvent &event) {
     // Lookup pinyin and addPhrase may share some code.
     auto context = context_.get();
@@ -382,7 +413,8 @@ bool TableState::handleLookupPinyinOrModifyDictionaryMode(KeyEvent &event) {
         }
         needUpdate = true;
     } else if (mode_ != TableMode::LookupPinyin &&
-               mode_ != TableMode::ModifyDictionary) {
+               mode_ != TableMode::ModifyDictionary &&
+               mode_ != TableMode::ForgetWord) {
         return false;
     }
 
@@ -518,6 +550,19 @@ bool TableState::handleLookupPinyinOrModifyDictionaryMode(KeyEvent &event) {
     return true;
 }
 
+void TableState::forgetCandidateWord(size_t idx) {
+    auto code = TableContext::code(context_->candidates()[idx]);
+    if (!code.empty()) {
+        auto word = context_->candidates()[idx].toString();
+        context_->mutableDict().removeWord(code, word);
+        context_->mutableModel().history().forget(word);
+    }
+    context_->clear();
+    mode_ = TableMode::Normal;
+
+    updateUI();
+}
+
 void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
     bool needUpdate = false;
     auto inputContext = event.inputContext();
@@ -553,6 +598,9 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
 
     if (handlePinyinMode(event)) {
         return;
+    }
+
+    if (handleForgetWord(event)) {
     }
 
     if (handleLookupPinyinOrModifyDictionaryMode(event)) {
@@ -878,7 +926,7 @@ void TableState::updateUI() {
             }
             inputPanel.setCandidateList(std::move(candidateList));
         }
-        if (*config.displayCustomHint) {
+        if (*config.displayCustomHint && context->dict().hasCustomPrompt()) {
             if (ic_->capabilityFlags().test(CapabilityFlag::Preedit)) {
                 inputPanel.setClientPreedit(context->preeditText(false));
             }
@@ -890,6 +938,11 @@ void TableState::updateUI() {
             } else {
                 inputPanel.setPreedit(preeditText);
             }
+        }
+        if (mode_ == TableMode::ForgetWord) {
+            inputPanel.setPreedit(Text());
+            inputPanel.setAuxUp(
+                Text(_("Select candidate to be removed from history:")));
         }
     }
     ic_->updatePreedit();
