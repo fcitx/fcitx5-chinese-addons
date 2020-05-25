@@ -132,8 +132,10 @@ TableIME::requestDict(const std::string &name) {
             populateOptions(dict, iter->second.root);
             std::shared_ptr<const libime::StaticLanguageModelFile> lmFile;
             try {
-                lmFile = lm_->languageModelFileForLanguage(
-                    dict->tableOptions().languageCode());
+                if (*iter->second.root.config->useSystemLanguageModel) {
+                    lmFile = lm_->languageModelFileForLanguage(
+                        dict->tableOptions().languageCode());
+                }
             } catch (...) {
                 TABLE_DEBUG()
                     << "Load language model for "
@@ -141,6 +143,8 @@ TableIME::requestDict(const std::string &name) {
             }
             iter->second.model =
                 std::make_unique<libime::UserLanguageModel>(lmFile);
+            iter->second.model->setUseOnlyUnigram(
+                !*iter->second.root.config->useContextBasedOrder);
 
             try {
                 auto dictFile = StandardPath::global().openUser(
