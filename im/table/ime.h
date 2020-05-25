@@ -84,6 +84,11 @@ FCITX_CONFIGURATION(
     HiddenOption<std::string> icon{this, "Icon", _("Icon")};
     Option<int> noSortInputLength{this, "NoSortInputLength",
                                   _("Don't sort word shorter than")};
+    Option<OrderPolicy> orderPolicy{this, "OrderPolicy", _("Order policy")};
+    Option<bool> useSystemLanguageModel{this, "UseSystemLanguageModel",
+                                        _("Use system language model"), true};
+    Option<bool> useContextBasedOrder{this, "UseContextRelatedOrder",
+                                      _("Use context related sort"), true};
     Option<Key, KeyConstrain> matchingKey{
         this,
         "MatchingKey",
@@ -106,7 +111,6 @@ FCITX_CONFIGURATION(
     Option<int> commitRawInput{
         this, "CommitRawInput",
         _("Commit raw input when there is no candidate")};
-    Option<OrderPolicy> orderPolicy{this, "OrderPolicy", _("Order policy")};
     HiddenOption<KeyList> endKey{this, "EndKey", _("End key")};
     Option<int> autoPhraseLength{this, "AutoPhraseLength",
                                  _("Auto phrase length"), -1};

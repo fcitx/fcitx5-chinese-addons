@@ -826,6 +826,13 @@ void TableState::commitAfterSelect(int commitFrom) {
     }
     if (!sentence.empty()) {
         ic_->commitString(sentence);
+        if (!*config.useContextBasedOrder) {
+            if (!ic_->capabilityFlags().testAny(
+                    CapabilityFlag::PasswordOrSensitive)) {
+                context->learn();
+            }
+            context->clear();
+        }
     }
 }
 
