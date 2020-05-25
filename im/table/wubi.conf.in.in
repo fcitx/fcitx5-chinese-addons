@@ -20,6 +20,7 @@ UseFullWidth=True
 QuickPhraseKey=semicolon
 AutoPhraseLength=4
 SaveAutoPhraseAfter=3
+UseContextRelatedOrder=False
 
 [Table/PrevPage]
 0=Up
