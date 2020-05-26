@@ -741,7 +741,9 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
     if ((event.filtered() && event.accepted()) || needUpdate) {
         updateUI();
     }
-    if (!event.filtered()) {
+    if (inputContext->capabilityFlags().test(
+            CapabilityFlag::KeyEventOrderFix) &&
+        !event.filtered()) {
         // Re-forward the event to ensure we got delivered later than
         // commit.
         event.filterAndAccept();
