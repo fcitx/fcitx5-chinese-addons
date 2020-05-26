@@ -634,6 +634,7 @@ void PinyinEngine::reloadConfig() {
     PINYIN_DEBUG() << "Reload pinyin config.";
     readAsIni(config_, "conf/pinyin.conf");
     ime_->setNBest(*config_.nbest);
+    ime_->setPartialLongWordLimit(*config_.longWordLimit);
     if (*config_.shuangpinProfile == ShuangpinProfileEnum::Custom) {
         auto file = StandardPath::global().open(StandardPath::Type::PkgConfig,
                                                 "pinyin/sp.dat", O_RDONLY);

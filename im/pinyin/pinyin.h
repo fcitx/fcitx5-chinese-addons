@@ -118,6 +118,10 @@ FCITX_CONFIGURATION(
     Option<int, IntConstrain> nbest{this, "Number of sentence",
                                     _("Number of Sentence"), 2,
                                     IntConstrain(1, 3)};
+    Option<int, IntConstrain> longWordLimit{
+        this, "LongWordLengthLimit",
+        _("Prompt long word length when input length over (0 for disable)"), 4,
+        IntConstrain(0, 10)};
     OptionWithAnnotation<ShuangpinProfileEnum,
                          ShuangpinProfileEnumI18NAnnotation>
         shuangpinProfile{this, "ShuangpinProfile", _("Shuangpin Profile"),
