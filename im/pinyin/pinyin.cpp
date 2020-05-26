@@ -1040,10 +1040,13 @@ bool PinyinEngine::handlePunc(KeyEvent &event) {
         event.filterAndAccept();
         inputContext->commitString(punc);
     }
-    if (!event.filtered()) {
+    if (inputContext->capabilityFlags().test(
+            CapabilityFlag::KeyEventOrderFix) &&
+        !event.filtered()) {
         // Re-forward the event to ensure we got delivered later than
         // commit.
         event.filterAndAccept();
+        FCITX_INFO() << "Reforward";
         inputContext->forwardKey(event.rawKey(), event.isRelease(),
                                  event.time());
     }
