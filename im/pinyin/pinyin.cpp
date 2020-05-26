@@ -1046,7 +1046,6 @@ bool PinyinEngine::handlePunc(KeyEvent &event) {
         // Re-forward the event to ensure we got delivered later than
         // commit.
         event.filterAndAccept();
-        FCITX_INFO() << "Reforward";
         inputContext->forwardKey(event.rawKey(), event.isRelease(),
                                  event.time());
     }
