@@ -705,10 +705,10 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         {
             CommitAfterSelectWrapper commitAfterSelectRAII(this);
             context->autoSelect();
+            needUpdate = true;
         }
         if (context->selected()) {
             commitBuffer(false);
-            needUpdate = true;
         }
         std::string punc;
         if (!*context->config().ignorePunc) {
@@ -734,8 +734,8 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         if (punc.size()) {
             event.filterAndAccept();
             inputContext->commitString(punc);
-            lastIsPunc_ = true;
         }
+        lastIsPunc_ = true;
     }
 
     if ((event.filtered() && event.accepted()) || needUpdate) {
