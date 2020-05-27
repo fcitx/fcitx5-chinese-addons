@@ -711,7 +711,7 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
             commitBuffer(false);
         }
         std::string punc;
-        if (!*context->config().ignorePunc) {
+        if (!*context->config().ignorePunc || event.key().isKeyPad()) {
             punc = engine_->punctuation()->call<IPunctuation::pushPunctuation>(
                 entry.languageCode(), inputContext, chr);
         }
