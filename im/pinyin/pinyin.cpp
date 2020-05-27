@@ -1115,7 +1115,7 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
                    Key::keySymToUnicode(event.key().sym()));
     };
 
-    if (event.key().isLAZ() ||
+    if (event.key().isLAZ() || event.key().isUAZ() ||
         (event.key().check(FcitxKey_apostrophe) && state->context_.size()) ||
         (state->context_.size() && checkSp(event, state))) {
         // first v, use it to trigger quickphrase
