@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-05-26 00:01-0700\n"
+"POT-Creation-Date: 2020-05-27 00:01-0700\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: csslayer <wengxt@gmail.com>, 2020\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/fcitx/teams/12005/"
@@ -24,7 +24,7 @@ msgstr ""
 
 #: im/pinyin/pinyin.cpp:894
 msgid "\t[Stroke Filtering] "
-msgstr ""
+msgstr "\t[笔画过滤] "
 
 #: im/table/state.cpp:726
 msgid " Return for "
@@ -117,7 +117,7 @@ msgstr "浏览搜狗细胞词库"
 
 #: im/table/ime.h:126
 msgid "Candidate List orientation"
-msgstr ""
+msgstr "候选词列表方向"
 
 #: im/table/cangjie.conf.in.in:3
 msgid "Cangjie"
@@ -125,7 +125,7 @@ msgstr "仓颉"
 
 #: im/pinyin/pinyin.h:109
 msgid "Choose Character from Phrase"
-msgstr ""
+msgstr "以词定字"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:45
 msgid "Clear &All Data"
@@ -153,7 +153,7 @@ msgstr "云拼音已启用。"
 
 #: im/table/ime.h:107
 msgid "Commit Invalid Segment"
-msgstr ""
+msgstr "提交无效分段"
 
 #: im/table/ime.h:113
 msgid "Commit raw input when there is no candidate"
@@ -226,7 +226,7 @@ msgstr "显示自定义提示"
 
 #: im/table/ime.h:86
 msgid "Don't sort word shorter than"
-msgstr ""
+msgstr "不对短于...的词排序"
 
 #: gui/pinyindictmanager/filedownloader.cpp:78
 msgid "Download Finished"
@@ -299,11 +299,11 @@ msgstr "文件操作失败"
 
 #: im/pinyin/pinyin.h:115
 msgid "Filter by stroke"
-msgstr ""
+msgstr "按笔画过滤"
 
 #: im/table/engine.h:33
 msgid "Forget word"
-msgstr ""
+msgstr "忘记词汇"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:34
 msgid "From &File"
@@ -355,7 +355,7 @@ msgstr "半角标点"
 
 #: im/table/ime.h:25
 msgid "Horizontal"
-msgstr ""
+msgstr "横向"
 
 #: im/table/ime.h:84
 msgid "Icon"
@@ -363,7 +363,7 @@ msgstr "图标"
 
 #: im/table/ime.h:81
 msgid "Ignore built in punctuation"
-msgstr ""
+msgstr "忽略内置标点"
 
 #: im/pinyin/pinyin.h:37
 msgid "Inner Segment (xian -> xi'an)"
@@ -423,7 +423,7 @@ msgstr "不可用"
 
 #: im/table/ime.h:24
 msgid "Not set"
-msgstr ""
+msgstr "未设置"
 
 #: im/pinyin/pinyin.h:119
 msgid "Number of Sentence"
@@ -499,7 +499,7 @@ msgstr "上一页"
 
 #: im/pinyin/pinyin.h:123
 msgid "Prompt long word length when input length over (0 for disable)"
-msgstr ""
+msgstr "输入长于...时提示长词 (设置为 0 时禁用)"
 
 #: modules/punctuation/punctuation.cpp:142
 #: modules/punctuation/punctuation.conf.in:3
@@ -527,11 +527,11 @@ msgstr "Scel 文件 (*.scel)"
 
 #: im/pinyin/pinyin.h:95
 msgid "Select 2nd Candidate"
-msgstr ""
+msgstr "选择第 2 个候选词"
 
 #: im/pinyin/pinyin.h:102
 msgid "Select 3rd Candidate"
-msgstr ""
+msgstr "选择第 3 个候选词"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:157
 msgid "Select Dictionary File"
@@ -539,15 +539,15 @@ msgstr "选择词典文件"
 
 #: im/table/ime.h:56
 msgid "Select Second Candidate"
-msgstr ""
+msgstr "选择第二个候选词"
 
 #: im/table/ime.h:63
 msgid "Select Third Candidate"
-msgstr ""
+msgstr "选择第三个候选词"
 
-#: im/table/state.cpp:945
+#: im/table/state.cpp:947
 msgid "Select candidate to be removed from history:"
-msgstr ""
+msgstr "选择要从历史中移除的候选词："
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:198
 msgid "Select scel file"
@@ -563,7 +563,7 @@ msgstr "显示联想词组"
 
 #: im/pinyin/pinyin.h:66
 msgid "Show preedit within application"
-msgstr ""
+msgstr "在程序中显示预编辑文本"
 
 #: im/pinyin/shuangpin.conf.in:3
 msgid "Shuangpin"
@@ -587,11 +587,11 @@ msgstr "简繁转换"
 
 #: modules/chttrans/chttrans.cpp:74
 msgid "Switch to Simplified Chinese"
-msgstr ""
+msgstr "切换到简体中文"
 
 #: modules/chttrans/chttrans.cpp:75
 msgid "Switch to Traditional Chinese"
-msgstr ""
+msgstr "切换到繁体中文"
 
 #: im/table/table.conf.in:3
 msgid "Table"
@@ -632,7 +632,7 @@ msgstr "使用左右键来选择字符。"
 
 #: im/table/ime.h:91
 msgid "Use context related sort"
-msgstr ""
+msgstr "使用上下文相关的排序"
 
 #: im/table/ime.h:79
 msgid "Use full width"
@@ -640,11 +640,11 @@ msgstr "使用全角字符"
 
 #: im/table/ime.h:89
 msgid "Use system language model"
-msgstr ""
+msgstr "使用系统语言模型"
 
 #: im/table/ime.h:25
 msgid "Vertical"
-msgstr ""
+msgstr "纵向"
 
 #: im/table/wanfeng.conf.in.in:3
 msgid "Wanfeng"
