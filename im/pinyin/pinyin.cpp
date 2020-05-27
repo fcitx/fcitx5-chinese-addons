@@ -1008,8 +1008,12 @@ bool PinyinEngine::handlePunc(KeyEvent &event) {
     if (candidateList && candidateList->size()) {
         candidateList->candidate(0).select(inputContext);
     }
-    auto punc = punctuation()->call<IPunctuation::pushPunctuation>(
-        "zh_CN", inputContext, c);
+    std::string punc;
+    // skip key pad
+    if (!event.key().isKeyPad()) {
+        punc = punctuation()->call<IPunctuation::pushPunctuation>(
+            "zh_CN", inputContext, c);
+    }
     if (event.key().check(FcitxKey_semicolon) && quickphrase()) {
         auto keyString = utf8::UCS4ToUTF8(c);
         // s is punc or key
