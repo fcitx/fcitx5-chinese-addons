@@ -40,6 +40,7 @@
 #include <libime/pinyin/pinyincontext.h>
 #include <libime/pinyin/pinyindecoder.h>
 #include <libime/pinyin/pinyindictionary.h>
+#include <libime/pinyin/pinyinencoder.h>
 #include <libime/pinyin/shuangpinprofile.h>
 #include <quickphrase_public.h>
 
@@ -1384,7 +1385,23 @@ void PinyinEngine::cloudPinyinSelected(InputContext *inputContext,
                 ime_->dict()->addWord(libime::PinyinDictionary::UserDict,
                                       joined, word);
             } else {
+                if (state->context_.useShuangpin()) {
+                    bool end = false;
+                    for (auto &sppinyin :
+                         MakeIterRange(pinyinsIter, pinyinsEnd)) {
+                        sppinyin = libime::PinyinEncoder::shuangpinToPinyin(
+                            sppinyin, *ime_->shuangpinProfile());
+                        if (sppinyin.empty()) {
+                            end = true;
+                            break;
+                        }
+                    }
+                    if (end) {
+                        break;
+                    }
+                }
                 auto joined = stringutils::join(pinyinsIter, pinyinsEnd, "'");
+                FCITX_INFO() << "joined" << joined;
                 ime_->dict()->addWord(libime::PinyinDictionary::UserDict,
                                       joined, wordView);
                 words.push_back(std::string{wordView});
