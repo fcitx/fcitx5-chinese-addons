@@ -109,22 +109,30 @@ Punctuation::Punctuation(Instance *instance)
                 state->lastIsEngOrDigit_ = '\0';
             }
         });
-    keyEventConn_ = instance_->connect<Instance::KeyEventResult>(
-        [this](const KeyEvent &event) {
-            auto state = event.inputContext()->propertyFor(&factory_);
-            if (event.isRelease()) {
-                return;
+    auto processKeyEvent = [this](const KeyEventBase &event) {
+        auto &keyEvent = static_cast<const ForwardKeyEvent &>(event);
+        auto state = keyEvent.inputContext()->propertyFor(&factory_);
+        if (keyEvent.isRelease()) {
+            return;
+        }
+        if (!event.accepted()) {
+            if (keyEvent.key().isUAZ() || keyEvent.key().isLAZ() ||
+                keyEvent.key().isDigit()) {
+                state->lastIsEngOrDigit_ =
+                    Key::keySymToUnicode(keyEvent.key().sym());
+            } else {
+                state->lastIsEngOrDigit_ = '\0';
             }
-            if (!event.accepted()) {
-                if (event.key().isUAZ() || event.key().isLAZ() ||
-                    event.key().isDigit()) {
-                    state->lastIsEngOrDigit_ =
-                        Key::keySymToUnicode(event.key().sym());
-                } else {
-                    state->lastIsEngOrDigit_ = '\0';
-                }
-            }
-        });
+        }
+    };
+    keyEventConn_ =
+        instance_->connect<Instance::KeyEventResult>(processKeyEvent);
+    eventWatchers_.emplace_back(instance_->watchEvent(
+        EventType::InputContextForwardKey, EventWatcherPhase::PostInputMethod,
+        [processKeyEvent](Event &event) {
+            auto &keyEvent = static_cast<ForwardKeyEvent &>(event);
+            processKeyEvent(keyEvent);
+        }));
     eventWatchers_.emplace_back(instance_->watchEvent(
         EventType::InputContextKeyEvent, EventWatcherPhase::PostInputMethod,
         [this](Event &event) {
