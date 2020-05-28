@@ -258,13 +258,9 @@ int englishNess(const std::string &input, bool sp) {
     for (auto iter = pys.begin(), end = pys.end(); iter != end; ++iter) {
         if (sp) {
             if (iter->size() == 2) {
-                weight += fullWeight;
+                weight += fullWeight / 2;
             } else {
-                if (std::next(iter) == end) {
-                    weight += shortWeight;
-                } else {
-                    weight += invalidWeight;
-                }
+                weight += invalidWeight;
             }
         } else {
             if (*iter == "ng") {
@@ -290,7 +286,7 @@ int englishNess(const std::string &input, bool sp) {
     if (weight < 0) {
         return 0;
     }
-    return (weight + 3) / 10;
+    return (weight + 7) / 10;
 }
 
 bool isStroke(const std::string &input) {
