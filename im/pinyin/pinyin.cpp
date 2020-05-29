@@ -617,6 +617,13 @@ void PinyinEngine::loadExtraDict() {
                                       "pinyin/emoji.dict", O_RDONLY);
         loadDict(file);
     }
+    if (*config_.chaiziEnabled) {
+        auto file = standardPath.open(StandardPath::Type::PkgData,
+                                      "pinyin/chaizi.dict", O_RDONLY);
+        loadDict(file);
+        ime_->dict()->setFlags(ime_->dict()->dictSize() - 1,
+                               libime::PinyinDictFlag::FullMatch);
+    }
     for (const auto &file : files) {
         if (disableFiles.count(stringutils::concat(file.first, ".disable"))) {
             PINYIN_DEBUG() << "Dictionary: " << file.first << " is disabled.";

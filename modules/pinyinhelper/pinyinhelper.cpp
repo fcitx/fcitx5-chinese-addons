@@ -46,20 +46,28 @@ void PinyinHelper::initQuickPhrase() {
             if (input != "duyin") {
                 return true;
             }
-            std::unordered_set<std::string> s;
+            std::vector<std::string> s;
             if (ic->capabilityFlags().test(CapabilityFlag::SurroundingText)) {
                 if (auto selected = ic->surroundingText().selectedText();
                     !selected.empty()) {
-                    s.insert(std::move(selected));
+                    s.push_back(std::move(selected));
                 }
             }
             if (clipboard()) {
                 if (s.empty()) {
-                    s.insert(clipboard()->call<IClipboard::primary>(ic));
+                    auto primary = clipboard()->call<IClipboard::primary>(ic);
+                    if (std::find(s.begin(), s.end(), primary) == s.end()) {
+                        s.push_back(std::move(primary));
+                    }
                 }
-                s.insert(clipboard()->call<IClipboard::clipboard>(ic));
-            } else {
-                return false;
+                auto clip = clipboard()->call<IClipboard::clipboard>(ic);
+                if (std::find(s.begin(), s.end(), clip) == s.end()) {
+                    s.push_back(std::move(clip));
+                }
+            }
+
+            if (s.empty()) {
+                return true;
             }
             for (const auto &str : s) {
                 if (!utf8::validate(str)) {
