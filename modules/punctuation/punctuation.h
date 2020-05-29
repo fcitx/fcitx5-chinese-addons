@@ -10,6 +10,7 @@
 #include "punctuation_public.h"
 #include <fcitx-config/configuration.h>
 #include <fcitx-config/enum.h>
+#include <fcitx-config/iniparser.h>
 #include <fcitx-utils/i18n.h>
 #include <fcitx/action.h>
 #include <fcitx/addonfactory.h>
@@ -79,6 +80,12 @@ public:
                                   fcitx::InputContext *ic);
 
     void reloadConfig() override;
+    const fcitx::Configuration *getConfig() const override { return &config_; }
+    void setConfig(const fcitx::RawConfig &config) override {
+        config_.load(config, true);
+        fcitx::safeSaveAsIni(config_, "conf/punctuation.conf");
+        reloadConfig();
+    }
 
     FCITX_ADDON_EXPORT_FUNCTION(Punctuation, getPunctuation);
     FCITX_ADDON_EXPORT_FUNCTION(Punctuation, pushPunctuation);

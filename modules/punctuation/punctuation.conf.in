@@ -3,6 +3,7 @@ Name=Punctuation
 Category=Module
 Library=punctuation
 Type=SharedLibrary
+Configurable=True
 
 [Addon/OptionalDependencies]
 0=notifications
