@@ -8,6 +8,7 @@
 #define _FULLWIDTH_FULLWIDTH_H_
 
 #include <fcitx-config/configuration.h>
+#include <fcitx-config/iniparser.h>
 #include <fcitx-utils/i18n.h>
 #include <fcitx/action.h>
 #include <fcitx/addoninstance.h>
@@ -45,7 +46,12 @@ public:
     Fullwidth(fcitx::Instance *instance);
 
     void reloadConfig() override;
-    void save() override;
+    const fcitx::Configuration *getConfig() const override { return &config_; }
+    void setConfig(const fcitx::RawConfig &config) override {
+        config_.load(config, true);
+        fcitx::safeSaveAsIni(config_, "conf/fullwidth.conf");
+        reloadConfig();
+    }
 
     FCITX_ADDON_DEPENDENCY_LOADER(notifications, instance_->addonManager());
 
