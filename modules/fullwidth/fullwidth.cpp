@@ -110,8 +110,6 @@ Fullwidth::Fullwidth(Instance *instance) : instance_(instance) {
 
 void Fullwidth::reloadConfig() { readAsIni(config_, "conf/fullwidth.conf"); }
 
-void Fullwidth::save() { safeSaveAsIni(config_, "conf/fullwidth.conf"); }
-
 bool Fullwidth::inWhiteList(InputContext *inputContext) const {
     return toggleAction_.isParent(&inputContext->statusArea());
 }

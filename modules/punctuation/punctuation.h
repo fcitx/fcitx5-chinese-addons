@@ -80,6 +80,9 @@ public:
                                   fcitx::InputContext *ic);
 
     void reloadConfig() override;
+    void save() override {
+        fcitx::safeSaveAsIni(config_, "conf/punctuation.conf");
+    }
     const fcitx::Configuration *getConfig() const override { return &config_; }
     void setConfig(const fcitx::RawConfig &config) override {
         config_.load(config, true);
