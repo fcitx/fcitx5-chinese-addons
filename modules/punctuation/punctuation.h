@@ -23,7 +23,7 @@ FCITX_CONFIGURATION(
     PunctuationConfig,
     fcitx::Option<fcitx::KeyList> hotkey{
         this, "Hotkey", _("Toggle key"), {fcitx::Key("Control+period")}};
-    fcitx::Option<bool> enabled{this, "Enabled", "Enabled", true};);
+    fcitx::HiddenOption<bool> enabled{this, "Enabled", "Enabled", true};);
 
 class PunctuationProfile {
 public:
