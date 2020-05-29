@@ -1397,7 +1397,6 @@ void PinyinEngine::cloudPinyinSelected(InputContext *inputContext,
                     }
                 }
                 auto joined = stringutils::join(pinyinsIter, pinyinsEnd, "'");
-                FCITX_INFO() << "joined" << joined;
                 ime_->dict()->addWord(libime::PinyinDictionary::UserDict,
                                       joined, wordView);
                 words.push_back(std::string{wordView});
