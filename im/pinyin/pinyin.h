@@ -57,6 +57,7 @@ FCITX_CONFIGURATION(
     Option<bool> predictionEnabled{this, "Prediction", _("Enable Prediction"),
                                    false};
     Option<bool> emojiEnabled{this, "EmojiEnabled", _("Enable Emoji"), true};
+    Option<bool> chaiziEnabled{this, "ChaiziEnabled", _("Enable Chaizi"), true};
     Option<bool> cloudPinyinEnabled{this, "CloudPinyinEnabled",
                                     _("Enable Cloud Pinyin"), true};
     Option<int, IntConstrain> cloudPinyinIndex{this, "CloudPinyinIndex",

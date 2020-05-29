@@ -24,3 +24,10 @@ add_custom_command(
   COMMAND LibIME::pinyindict "${CMAKE_CURRENT_SOURCE_DIR}/emoji.txt" "${CMAKE_CURRENT_BINARY_DIR}/emoji.dict")
 add_custom_target(emoji-dict ALL DEPENDS "emoji.dict")
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/emoji.dict" DESTINATION "${FCITX_INSTALL_PKGDATADIR}/pinyin")
+
+add_custom_command(
+  OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/chaizi.dict"
+  DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/chaizi.txt" LibIME::pinyindict
+  COMMAND LibIME::pinyindict "${CMAKE_CURRENT_SOURCE_DIR}/chaizi.txt" "${CMAKE_CURRENT_BINARY_DIR}/chaizi.dict")
+add_custom_target(chaizi-dict ALL DEPENDS "chaizi.dict")
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/chaizi.dict" DESTINATION "${FCITX_INSTALL_PKGDATADIR}/pinyin")
