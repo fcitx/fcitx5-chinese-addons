@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-05-26 00:01-0700\n"
+"POT-Creation-Date: 2020-05-30 00:01-0700\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: MarongHappy <daemul72@gmail.com>, 2020\n"
 "Language-Team: Korean (https://www.transifex.com/fcitx/teams/12005/ko/)\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: im/pinyin/pinyin.cpp:894
+#: im/pinyin/pinyin.cpp:898
 msgid "\t[Stroke Filtering] "
 msgstr "\t[필획 필터링] "
 
@@ -121,7 +121,7 @@ msgstr "후보 목록 방향"
 msgid "Cangjie"
 msgstr "창힐"
 
-#: im/pinyin/pinyin.h:109
+#: im/pinyin/pinyin.h:110
 msgid "Choose Character from Phrase"
 msgstr "문구에서 문자 선택"
 
@@ -133,19 +133,19 @@ msgstr "모든 데이터 비우기(&A)"
 msgid "Cloud Pinyin"
 msgstr "클라우드 병음"
 
-#: im/pinyin/pinyin.h:63
+#: im/pinyin/pinyin.h:64
 msgid "Cloud Pinyin Index"
 msgstr "클라우드 병음 일련번호"
 
-#: im/pinyin/pinyin.cpp:738
+#: im/pinyin/pinyin.cpp:742
 msgid "Cloud Pinyin Status"
 msgstr "클라우드 병음 상태"
 
-#: im/pinyin/pinyin.cpp:740
+#: im/pinyin/pinyin.cpp:744
 msgid "Cloud Pinyin is disabled."
 msgstr "클라우드 병음이 비활성화됨."
 
-#: im/pinyin/pinyin.cpp:739
+#: im/pinyin/pinyin.cpp:743
 msgid "Cloud Pinyin is enabled."
 msgstr "클라우드 병음이 활성화되었습니다."
 
@@ -206,7 +206,7 @@ msgstr "대화창"
 msgid "Dianbaoma"
 msgstr "Dianbaoma"
 
-#: im/pinyin/pinyin.h:129
+#: im/pinyin/pinyin.h:130
 msgid "Dictionaries"
 msgstr "사전"
 
@@ -234,7 +234,11 @@ msgstr "다운로드 완료됨"
 msgid "Download started."
 msgstr "다운로드 시작됨."
 
-#: im/pinyin/pinyin.h:61
+#: im/pinyin/pinyin.h:60
+msgid "Enable Chaizi"
+msgstr ""
+
+#: im/pinyin/pinyin.h:62
 msgid "Enable Cloud Pinyin"
 msgstr "클라우드 병음 사용"
 
@@ -295,7 +299,7 @@ msgstr "파일"
 msgid "File Operation Failed"
 msgstr "파일 작업 실패"
 
-#: im/pinyin/pinyin.h:115
+#: im/pinyin/pinyin.h:116
 msgid "Filter by stroke"
 msgstr "필획으로 필터링"
 
@@ -311,7 +315,7 @@ msgstr "파일에서 불러오기(&F)"
 msgid "From &Sogou Cell Dictionary File"
 msgstr "&Sogou 셀 사전 파일에서 불러오기"
 
-#: modules/fullwidth/fullwidth.cpp:73 modules/fullwidth/fullwidth.h:28
+#: modules/fullwidth/fullwidth.cpp:73 modules/fullwidth/fullwidth.h:29
 msgid "Full width Character"
 msgstr "전각 문자"
 
@@ -327,27 +331,27 @@ msgstr "전각 문자가 활성화되었습니다."
 msgid "Full width character"
 msgstr "전각 문자"
 
-#: modules/punctuation/punctuation.h:53
+#: modules/punctuation/punctuation.h:54
 msgid "Full width punctuation"
 msgstr "전각 문장부호"
 
-#: modules/punctuation/punctuation.cpp:144
+#: modules/punctuation/punctuation.cpp:152
 msgid "Full width punctuation is disabled."
 msgstr "전각 문장부호 비활성화되었습니다."
 
-#: modules/punctuation/punctuation.cpp:143
+#: modules/punctuation/punctuation.cpp:151
 msgid "Full width punctuation is enabled."
 msgstr "전각 문장부호가 활성화되었습니다."
 
-#: im/pinyin/pinyin.h:132
+#: im/pinyin/pinyin.h:133
 msgid "Fuzzy Pinyin Settings"
 msgstr "퍼지 병음 설정"
 
-#: modules/fullwidth/fullwidth.h:29
+#: modules/fullwidth/fullwidth.h:30
 msgid "Half width Character"
 msgstr "반각 문자"
 
-#: modules/punctuation/punctuation.h:54
+#: modules/punctuation/punctuation.h:55
 msgid "Half width punctuation"
 msgstr "반각 문장부호"
 
@@ -399,11 +403,11 @@ msgstr "사전 수정"
 msgid "New Dictionary Name:"
 msgstr "새로운 사전 이름:"
 
-#: im/table/ime.h:50 im/pinyin/pinyin.h:89
+#: im/table/ime.h:50 im/pinyin/pinyin.h:90
 msgid "Next Candidate"
 msgstr "다음 후보"
 
-#: im/pinyin/pinyin.h:77
+#: im/pinyin/pinyin.h:78
 msgid "Next Page"
 msgstr "다음 페이지"
 
@@ -424,7 +428,7 @@ msgstr "사용할 수 없음"
 msgid "Not set"
 msgstr "지정되지 않음"
 
-#: im/pinyin/pinyin.h:119
+#: im/pinyin/pinyin.h:120
 msgid "Number of Sentence"
 msgstr "문장 수"
 
@@ -452,7 +456,7 @@ msgstr "PinyinJiajia"
 msgid "Please use this functionality after typing some text."
 msgstr "글자를 입력한 후에 이 기능을 사용하세요."
 
-#: im/pinyin/pinyin.cpp:571
+#: im/pinyin/pinyin.cpp:568
 msgid "Prediction"
 msgstr "예측"
 
@@ -464,11 +468,11 @@ msgstr "예측 크기"
 msgid "Prefix key to trigger Pinyin"
 msgstr "병음 발동을 위한 사전입력 키"
 
-#: im/pinyin/pinyin.cpp:1029
+#: im/pinyin/pinyin.cpp:1037
 msgid "Press %1% for %2%"
 msgstr "%2%를 위해 %1%을 누르세요"
 
-#: im/pinyin/pinyin.cpp:1026
+#: im/pinyin/pinyin.cpp:1034
 msgid "Press %1% for %2% and %3% for %4%"
 msgstr "%2%를 위해 %1%을, %4%를 위해 %3%을 누르세요"
 
@@ -484,11 +488,11 @@ msgstr "제거하려면 Delete 키를 누르십시오"
 msgid "Press space to insert."
 msgstr "입력하기 위해 스페이스를 누르세요"
 
-#: im/table/ime.h:44 im/pinyin/pinyin.h:83
+#: im/table/ime.h:44 im/pinyin/pinyin.h:84
 msgid "Prev Candidate"
 msgstr "이전 후보"
 
-#: im/pinyin/pinyin.h:71
+#: im/pinyin/pinyin.h:72
 msgid "Prev Page"
 msgstr "이전 페이지"
 
@@ -496,11 +500,11 @@ msgstr "이전 페이지"
 msgid "Prev page"
 msgstr "앞 페이지"
 
-#: im/pinyin/pinyin.h:123
+#: im/pinyin/pinyin.h:124
 msgid "Prompt long word length when input length over (0 for disable)"
 msgstr ""
 
-#: modules/punctuation/punctuation.cpp:142
+#: modules/punctuation/punctuation.cpp:150
 #: modules/punctuation/punctuation.conf.in:3
 msgid "Punctuation"
 msgstr "문장부호"
@@ -512,7 +516,7 @@ msgstr "문장부호"
 msgid "Remove &All"
 msgstr "모두 제거(&A)"
 
-#: im/pinyin/pinyin.cpp:1027
+#: im/pinyin/pinyin.cpp:1035
 msgid "Return"
 msgstr "돌아가기"
 
@@ -524,11 +528,11 @@ msgstr "자동 문구 저장"
 msgid "Scel file (*.scel)"
 msgstr "Scel 파일 (*.scel)"
 
-#: im/pinyin/pinyin.h:95
+#: im/pinyin/pinyin.h:96
 msgid "Select 2nd Candidate"
 msgstr ""
 
-#: im/pinyin/pinyin.h:102
+#: im/pinyin/pinyin.h:103
 msgid "Select 3rd Candidate"
 msgstr ""
 
@@ -544,7 +548,7 @@ msgstr "두 번째 후보 선택"
 msgid "Select Third Candidate"
 msgstr "세 번째 후보 선택"
 
-#: im/table/state.cpp:945
+#: im/table/state.cpp:947
 msgid "Select candidate to be removed from history:"
 msgstr ""
 
@@ -556,11 +560,11 @@ msgstr "scel 파일 선택"
 msgid "Selection"
 msgstr "선택"
 
-#: im/pinyin/pinyin.cpp:572
+#: im/pinyin/pinyin.cpp:569
 msgid "Show prediction words"
 msgstr "예상 단어 표시"
 
-#: im/pinyin/pinyin.h:66
+#: im/pinyin/pinyin.h:67
 msgid "Show preedit within application"
 msgstr "응용프로그램 내에서 프리에디트 표시"
 
@@ -568,7 +572,7 @@ msgstr "응용프로그램 내에서 프리에디트 표시"
 msgid "Shuangpin"
 msgstr "이중병음"
 
-#: im/pinyin/pinyin.h:127
+#: im/pinyin/pinyin.h:128
 msgid "Shuangpin Profile"
 msgstr "이중병음 프로필"
 
@@ -604,7 +608,7 @@ msgstr "임시 파일 생성됨."
 msgid "Toggle Key"
 msgstr "전환 키"
 
-#: modules/fullwidth/fullwidth.h:18 modules/punctuation/punctuation.h:24
+#: modules/fullwidth/fullwidth.h:19 modules/punctuation/punctuation.h:25
 #: modules/chttrans/chttrans.h:28
 msgid "Toggle key"
 msgstr "전환 키"
@@ -746,7 +750,7 @@ msgstr "ue -> ve"
 msgid "z <-> zh"
 msgstr "z <-> zh"
 
-#: im/pinyin/pinyin.cpp:111 modules/pinyinhelper/pinyinhelper.cpp:75
+#: im/pinyin/pinyin.cpp:112 modules/pinyinhelper/pinyinhelper.cpp:83
 msgid "{0} ({1})"
 msgstr "{0} ({1})"
 
