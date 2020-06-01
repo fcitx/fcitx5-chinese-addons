@@ -850,7 +850,10 @@ void TableState::commitBuffer(bool commitCode, bool noRealCommit) {
     if (!noRealCommit && !sentence.empty()) {
         ic_->commitString(sentence);
     }
-    if (!ic_->capabilityFlags().testAny(CapabilityFlag::PasswordOrSensitive)) {
+    // If commitAfterSelect && !useContextBasedOrder, learnLast will be used.
+    if (!ic_->capabilityFlags().testAny(CapabilityFlag::PasswordOrSensitive) &&
+        !(*context->config().commitAfterSelect &&
+          !*context->config().useContextBasedOrder)) {
         context->learn();
     }
     context->clear();
