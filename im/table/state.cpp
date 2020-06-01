@@ -879,9 +879,8 @@ void TableState::commitAfterSelect(int commitFrom) {
         if (!*config.useContextBasedOrder) {
             if (!ic_->capabilityFlags().testAny(
                     CapabilityFlag::PasswordOrSensitive)) {
-                context->learn();
+                context->learnLast();
             }
-            context->clear();
         }
     }
 }
