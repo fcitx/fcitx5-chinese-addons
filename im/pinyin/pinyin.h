@@ -18,6 +18,7 @@
 #include <fcitx/inputmethodengine.h>
 #include <fcitx/instance.h>
 #include <libime/core/prediction.h>
+#include <libime/pinyin/pinyincontext.h>
 #include <libime/pinyin/pinyinime.h>
 #include <memory>
 
@@ -66,6 +67,11 @@ FCITX_CONFIGURATION(
     Option<bool> showPreeditInApplication{this, "PreeditInApplication",
                                           _("Show preedit within application"),
                                           false};
+    KeyListOption forgetWord{this,
+                             "ForgetWord",
+                             _("Forget word"),
+                             {Key("Control+7")},
+                             KeyListConstrain()};
     KeyListOption prevPage{
         this,
         "PrevPage",
@@ -171,6 +177,7 @@ public:
     void updateUI(InputContext *inputContext);
 
     void resetStroke(InputContext *inputContext);
+    void resetForgetCandidate(InputContext *inputContext);
 
 private:
     void cloudPinyinSelected(InputContext *inputContext,
@@ -181,9 +188,15 @@ private:
     bool handle2nd3rdSelection(KeyEvent &event);
     bool handleCandidateList(KeyEvent &event);
     bool handleStrokeFilter(KeyEvent &event);
+    bool handleForgetCandidate(KeyEvent &event);
     bool handlePunc(KeyEvent &event);
 
     void updateStroke(InputContext *inputContext);
+    void updateForgetCandidate(InputContext *inputContext);
+
+    bool showClientPreedit(InputContext *inputContext) const;
+    Text fetchAndSetClientPreedit(InputContext *inputContext,
+                                  const libime::PinyinContext &context) const;
 
 #ifdef FCITX_HAS_LUA
     std::vector<std::string>
