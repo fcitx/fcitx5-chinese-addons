@@ -37,11 +37,12 @@ FCITX_DEFINE_LOG_CATEGORY(cloudpinyin, "cloudpinyin");
 
 class GoogleBackend : public Backend {
 public:
+    GoogleBackend(const std::string &url) : url_(url) {}
+
     void prepareRequest(CurlQueue *queue, const std::string &pinyin) override {
-        std::string url =
-            "https://www.google.com/inputtools/request?ime=pinyin&text=";
         std::unique_ptr<char, decltype(&curl_free)> escaped(
             curl_escape(pinyin.c_str(), pinyin.size()), &curl_free);
+        std::string url = url_;
         url += escaped.get();
         CLOUDPINYIN_DEBUG() << "Request URL: " << url;
         curl_easy_setopt(queue->curl(), CURLOPT_URL, url.c_str());
@@ -60,6 +61,9 @@ public:
         }
         return hanzi;
     }
+
+private:
+    const std::string url_;
 };
 
 class BaiduBackend : public Backend {
@@ -106,8 +110,14 @@ CloudPinyin::CloudPinyin(fcitx::AddonManager *manager)
 
     recvFd_.give(pipe1Fd[0].release());
 
-    backends_.emplace(CloudPinyinBackend::Google,
-                      std::make_unique<GoogleBackend>());
+    backends_.emplace(
+        CloudPinyinBackend::Google,
+        std::make_unique<GoogleBackend>(
+            "https://www.google.com/inputtools/request?ime=pinyin&text="));
+    backends_.emplace(
+        CloudPinyinBackend::GoogleCN,
+        std::make_unique<GoogleBackend>(
+            "https://www.google.cn/inputtools/request?ime=pinyin&text="));
     backends_.emplace(CloudPinyinBackend::Baidu,
                       std::make_unique<BaiduBackend>());
 

@@ -32,7 +32,7 @@
 #include <fcitx/addoninstance.h>
 #include <fcitx/instance.h>
 
-FCITX_CONFIG_ENUM(CloudPinyinBackend, Google, Baidu);
+FCITX_CONFIG_ENUM(CloudPinyinBackend, Google, GoogleCN, Baidu);
 FCITX_CONFIGURATION(
     CloudPinyinConfig,
     fcitx::Option<fcitx::KeyList> toggleKey{
@@ -43,13 +43,14 @@ FCITX_CONFIGURATION(
     fcitx::Option<int> minimumLength{this, "MinimumPinyinLength",
                                      _("Minimum Pinyin Length"), 4};
     fcitx::Option<CloudPinyinBackend> backend{this, "Backend", _("Backend"),
-                                              CloudPinyinBackend::Google};);
+                                              CloudPinyinBackend::GoogleCN};);
 
 class Backend {
 public:
     virtual void prepareRequest(CurlQueue *queue,
                                 const std::string &pinyin) = 0;
     virtual std::string parseResult(CurlQueue *queue) = 0;
+    virtual ~Backend() = default;
 };
 
 class CloudPinyin : public fcitx::AddonInstance {
