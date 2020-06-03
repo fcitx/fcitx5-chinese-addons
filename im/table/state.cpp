@@ -641,7 +641,7 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
                 commitBuffer(false);
             }
             event.filterAndAccept();
-        } else if (event.key().check(FcitxKey_Return) && !context->empty()) {
+        } else if (event.key().sym() == FcitxKey_Return) {
             if (!*config.commitAfterSelect || !context->selected()) {
                 event.filterAndAccept();
             }

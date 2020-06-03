@@ -1330,7 +1330,7 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         } else if (event.key().check(FcitxKey_Escape)) {
             state->context_.clear();
             event.filterAndAccept();
-        } else if (event.key().check(FcitxKey_Return)) {
+        } else if (event.key().sym() == FcitxKey_Return) {
             inputContext->commitString(state->context_.userInput());
             state->context_.clear();
             event.filterAndAccept();
