@@ -757,15 +757,6 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
     if ((event.filtered() && event.accepted()) || needUpdate) {
         updateUI();
     }
-    if (inputContext->capabilityFlags().test(
-            CapabilityFlag::KeyEventOrderFix) &&
-        !event.accepted()) {
-        // Re-forward the event to ensure we got delivered later than
-        // commit.
-        event.filterAndAccept();
-        inputContext->forwardKey(event.rawKey(), event.isRelease(),
-                                 event.time());
-    }
 }
 
 bool TableState::handle2nd3rdCandidate(const TableConfig &config,

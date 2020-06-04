@@ -1187,15 +1187,6 @@ bool PinyinEngine::handlePunc(KeyEvent &event) {
         event.filterAndAccept();
         inputContext->commitString(punc);
     }
-    if (inputContext->capabilityFlags().test(
-            CapabilityFlag::KeyEventOrderFix) &&
-        !event.accepted()) {
-        // Re-forward the event to ensure we got delivered later than
-        // commit.
-        event.filterAndAccept();
-        inputContext->forwardKey(event.rawKey(), event.isRelease(),
-                                 event.time());
-    }
     state->lastIsPunc_ = true;
     return false;
 }
