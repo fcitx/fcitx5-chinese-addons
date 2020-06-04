@@ -665,7 +665,6 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
             // if it gonna commit something
             commitBuffer(true);
             needUpdate = true;
-            event.filter();
         } else if (!context->selected()) {
             // key to handle when it is not empty.
             if (event.key().check(FcitxKey_space)) {
@@ -699,7 +698,11 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
             return;
         }
     }
-    if (!event.filtered()) {
+
+    do {
+        if (event.filtered()) {
+            break;
+        }
         if (*context->config().commitAfterSelect && isContextEmpty()) {
             if (event.key().check(FcitxKey_Delete) ||
                 event.key().check(FcitxKey_BackSpace) ||
@@ -712,7 +715,7 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         }
 
         if (event.key().hasModifier() || !chr) {
-            return;
+            break;
         }
         // if current key will produce some string, do the auto select.
         {
@@ -749,14 +752,14 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
             inputContext->commitString(punc);
         }
         lastIsPunc_ = true;
-    }
+    } while (0);
 
     if ((event.filtered() && event.accepted()) || needUpdate) {
         updateUI();
     }
     if (inputContext->capabilityFlags().test(
             CapabilityFlag::KeyEventOrderFix) &&
-        !event.filtered()) {
+        !event.accepted()) {
         // Re-forward the event to ensure we got delivered later than
         // commit.
         event.filterAndAccept();
