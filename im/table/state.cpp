@@ -700,6 +700,17 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         }
     }
     if (!event.filtered()) {
+        if (*context->config().commitAfterSelect && isContextEmpty()) {
+            if (event.key().check(FcitxKey_Delete) ||
+                event.key().check(FcitxKey_BackSpace) ||
+                event.key().check(FcitxKey_Delete, KeyState::Ctrl) ||
+                event.key().check(FcitxKey_BackSpace, KeyState::Ctrl) ||
+                event.key().isCursorMove() ||
+                event.key().sym() == FcitxKey_Return) {
+                commitBuffer(false);
+            }
+        }
+
         if (event.key().hasModifier() || !chr) {
             return;
         }
