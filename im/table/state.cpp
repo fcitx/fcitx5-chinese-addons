@@ -23,7 +23,7 @@ namespace {
 class CommitAfterSelectWrapper {
 public:
     CommitAfterSelectWrapper(TableState *state) : state_(state) {
-        if (auto *context = state->context(nullptr)) {
+        if (auto *context = state->updateContext(nullptr)) {
             commitFrom_ = context->selectedSize();
         }
     }
@@ -46,7 +46,7 @@ public:
     void select(InputContext *inputContext) const override {
         auto state = inputContext->propertyFor(&engine_->factory());
         // nullptr means use the last requested entry.
-        auto *context = state->context(nullptr);
+        auto *context = state->updateContext(nullptr);
         if (!context || idx_ >= context->candidates().size()) {
             return;
         }
@@ -99,7 +99,7 @@ public:
 };
 } // namespace
 
-TableContext *TableState::context(const InputMethodEntry *entry) {
+TableContext *TableState::updateContext(const InputMethodEntry *entry) {
     if (!entry || lastContext_ == entry->uniqueName()) {
         return context_.get();
     }
@@ -156,7 +156,7 @@ void TableState::pushLastCommit(const std::string &lastSegment) {
 }
 
 void TableState::reset(const InputMethodEntry *entry) {
-    auto context = this->context(entry);
+    auto context = updateContext(entry);
     if (context) {
         context->clear();
     }
@@ -170,6 +170,17 @@ void TableState::reset(const InputMethodEntry *entry) {
 
     keyReleased_ = -1;
     keyReleasedIndex_ = -2;
+}
+
+bool TableState::isContextEmpty() const {
+    if (!context_) {
+        return true;
+    }
+
+    if (*context_->config().commitAfterSelect) {
+        return context_->empty() || context_->selected();
+    }
+    return context_->empty();
 }
 
 bool TableState::handleCandidateList(const TableConfig &config,
@@ -240,17 +251,9 @@ bool TableState::handlePinyinMode(KeyEvent &event) {
     bool needUpdate = false;
     if (mode_ == TableMode::Normal && event.key().check(pinyinKey)) {
         auto chr = Key::keySymToUnicode(event.key().sym());
-        if (*context->config().commitAfterSelect) {
-            if (!context->empty() && !context->selected()) {
-                if (context->isValidInput(chr)) {
-                    return false;
-                }
-            }
-        } else {
-            if (context->size() != 0) {
-                if (context->isValidInput(chr)) {
-                    return false;
-                }
+        if (!isContextEmpty()) {
+            if (context->isValidInput(chr)) {
+                return false;
             }
         }
         commitBuffer(false);
@@ -386,7 +389,6 @@ bool TableState::handleForgetWord(KeyEvent &event) {
 
 bool TableState::handleLookupPinyinOrModifyDictionaryMode(KeyEvent &event) {
     // Lookup pinyin and addPhrase may share some code.
-    auto context = context_.get();
     bool needUpdate = false;
     if (mode_ == TableMode::Normal) {
         if (event.key().checkKeyList(*engine_->config().lookupPinyin)) {
@@ -399,9 +401,7 @@ bool TableState::handleLookupPinyinOrModifyDictionaryMode(KeyEvent &event) {
             return false;
         }
 
-        if (context->size() != 0) {
-            commitBuffer(false);
-        }
+        commitBuffer(false);
         lookupPinyinIndex_ = 0;
         lookupPinyinString_ = lastCommit_;
         if (ic_->capabilityFlags().test(CapabilityFlag::SurroundingText) &&
@@ -567,7 +567,7 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
     bool needUpdate = false;
     auto inputContext = event.inputContext();
     bool lastIsPunc = lastIsPunc_;
-    auto context = this->context(&entry);
+    auto context = updateContext(&entry);
     if (!context) {
         return;
     }
@@ -584,10 +584,14 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         return;
     }
 
-    if ((mode_ != TableMode::Normal || context_->size()) &&
-        event.key().check(FcitxKey_Escape)) {
+    if (event.key().check(FcitxKey_Escape)) {
         reset();
-        return event.filterAndAccept();
+        if (mode_ != TableMode::Normal) {
+            return event.filterAndAccept();
+        }
+        if (!isContextEmpty()) {
+            return event.filterAndAccept();
+        }
     }
 
     lastIsPunc_ = false;
@@ -620,13 +624,11 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         } else {
             event.filterAndAccept();
         }
-    } else if (context->size()) {
+    } else if (!isContextEmpty()) {
         if (event.key().check(FcitxKey_Return, KeyState::Shift)) {
             if (*config.commitAfterSelect) {
-                if (!context->selected()) {
-                    event.filterAndAccept();
-                }
                 commitBuffer(true);
+                event.filterAndAccept();
             } else {
                 inputContext->commitString(context->userInput());
                 context->clear();
