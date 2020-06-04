@@ -25,7 +25,7 @@ Text TableContext::preeditText(bool hint) const {
                 auto segText = hint ? customHint(std::get<std::string>(seg))
                                     : std::get<std::string>(seg);
                 TextFormatFlags flags;
-                if (!*config_.commitInvalidSegment) {
+                if (*config_.commitInvalidSegment) {
                     segText = stringutils::concat("(", segText, ")");
                     flags = TextFormatFlag::Underline;
                 } else {

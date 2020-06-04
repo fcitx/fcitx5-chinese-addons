@@ -33,7 +33,7 @@ public:
     bool lastIsPunc_ = false;
     std::unique_ptr<EventSourceTime> cancelLastEvent_;
 
-    TableContext *context(const InputMethodEntry *entry);
+    TableContext *updateContext(const InputMethodEntry *entry);
     void release();
     void reset(const InputMethodEntry *entry = nullptr);
 
@@ -55,6 +55,8 @@ private:
     bool handleForgetWord(KeyEvent &event);
     bool handlePinyinMode(KeyEvent &event);
     bool handleLookupPinyinOrModifyDictionaryMode(KeyEvent &event);
+
+    bool isContextEmpty() const;
 
     TableMode mode_ = TableMode::Normal;
     std::string pinyinModePrefix_;

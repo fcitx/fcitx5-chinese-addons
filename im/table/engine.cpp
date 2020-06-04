@@ -67,7 +67,7 @@ void TableEngine::activate(const fcitx::InputMethodEntry &entry,
                            fcitx::InputContextEvent &event) {
     auto inputContext = event.inputContext();
     auto state = inputContext->propertyFor(&factory_);
-    auto context = state->context(&entry);
+    auto context = state->updateContext(&entry);
     if (stringutils::startsWith(entry.languageCode(), "zh_")) {
         chttrans();
         for (auto actionName : {"chttrans", "punctuation"}) {
@@ -97,7 +97,7 @@ void TableEngine::deactivate(const fcitx::InputMethodEntry &entry,
 std::string TableEngine::subMode(const fcitx::InputMethodEntry &entry,
                                  fcitx::InputContext &ic) {
     auto state = ic.propertyFor(&factory_);
-    if (!state->context(&entry)) {
+    if (!state->updateContext(&entry)) {
         return _("Not available");
     }
     return {};
