@@ -1189,7 +1189,7 @@ bool PinyinEngine::handlePunc(KeyEvent &event) {
     }
     if (inputContext->capabilityFlags().test(
             CapabilityFlag::KeyEventOrderFix) &&
-        !event.filtered()) {
+        !event.accepted()) {
         // Re-forward the event to ensure we got delivered later than
         // commit.
         event.filterAndAccept();
