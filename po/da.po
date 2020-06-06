@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-06-02 00:01-0700\n"
+"POT-Creation-Date: 2020-06-06 00:01-0700\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: scootergrisen, 2020\n"
 "Language-Team: Danish (https://www.transifex.com/fcitx/teams/12005/da/)\n"
@@ -23,11 +23,11 @@ msgstr ""
 msgid "\t[Stroke Filtering] "
 msgstr "\t[Trykfiltrering] "
 
-#: im/table/state.cpp:726
+#: im/table/state.cpp:742
 msgid " Return for "
 msgstr " Retur for "
 
-#: im/table/state.cpp:723
+#: im/table/state.cpp:739
 msgid " for "
 msgstr " for "
 
@@ -239,7 +239,7 @@ msgstr "Download startet."
 
 #: im/pinyin/pinyin.h:61
 msgid "Enable Chaizi"
-msgstr ""
+msgstr "Aktivér chaizi"
 
 #: im/pinyin/pinyin.h:63
 msgid "Enable Cloud Pinyin"
@@ -553,7 +553,7 @@ msgstr "Vælg anden kandidat"
 msgid "Select Third Candidate"
 msgstr "Vælg tredje kandidat"
 
-#: im/table/state.cpp:949
+#: im/table/state.cpp:956
 msgid "Select candidate to be removed from history:"
 msgstr "Vælg kandidat som skal fjernes fra historik:"
 
@@ -692,7 +692,7 @@ msgstr "Ziranma"
 
 #: im/pinyin/pinyin.cpp:987
 msgid "[Select the word to remove from history]"
-msgstr ""
+msgstr "[vælg det ord som skal fjernes fra historik]"
 
 #. i18n: file: gui/pinyindictmanager/browserdialog.ui:21
 #. i18n: ectx: property (url), widget (QWebEngineView, webView_)
