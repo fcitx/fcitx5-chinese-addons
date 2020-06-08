@@ -968,12 +968,22 @@ void PinyinEngine::updateStroke(InputContext *inputContext) {
         auto str = candidate.text().toStringForCommit();
         if (auto length = utf8::lengthValidated(str);
             length != utf8::INVALID_LENGTH && length >= 1) {
-            auto charEnd = utf8::nextChar(str.begin());
-            std::string chr(str.begin(), charEnd);
-            std::string stroke =
-                pinyinhelper()->call<IPinyinHelper::reverseLookupStroke>(chr);
-            if (stringutils::startsWith(stroke,
-                                        state->strokeBuffer_.userInput())) {
+            auto charRange = utf8::MakeUTF8CharRange(str);
+            bool strokeMatched = false;
+            for (auto iter = std::begin(charRange), end = std::end(charRange);
+                 iter != end; ++iter) {
+                std::string chr(iter.charRange().first,
+                                iter.charRange().second);
+                auto stroke =
+                    pinyinhelper()->call<IPinyinHelper::reverseLookupStroke>(
+                        chr);
+                if (stringutils::startsWith(stroke,
+                                            state->strokeBuffer_.userInput())) {
+                    strokeMatched = true;
+                    break;
+                }
+            }
+            if (strokeMatched) {
                 candidateList->append<StrokeFilterCandidateWord>(
                     this, candidate.text(), i);
             }
