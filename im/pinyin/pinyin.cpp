@@ -1079,8 +1079,15 @@ bool PinyinEngine::handleStrokeFilter(KeyEvent &event) {
         updateUI(inputContext);
         return true;
     } else if (event.key().check(FcitxKey_BackSpace)) {
-        state->strokeBuffer_.backspace();
-        updateStroke(inputContext);
+        // Do backspace is stroke is not empty.
+        if (!state->strokeBuffer_.empty()) {
+            state->strokeBuffer_.backspace();
+            updateStroke(inputContext);
+        } else {
+            // Exit stroke mode when stroke buffer is empty.
+            resetStroke(inputContext);
+            updateUI(inputContext);
+        }
         return true;
     }
     // if it gonna commit something
