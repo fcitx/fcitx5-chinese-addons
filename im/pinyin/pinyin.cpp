@@ -892,6 +892,16 @@ bool PinyinEngine::handleCandidateList(KeyEvent &event) {
             candidateList->candidate(idx).select(inputContext);
         }
         return true;
+    } else if (event.key().check(FcitxKey_space)) {
+        if (candidateList->size()) {
+            event.filterAndAccept();
+            int idx = candidateList->cursorIndex();
+            if (idx < 0) {
+                idx = 0;
+            }
+            candidateList->candidate(idx).select(inputContext);
+            return true;
+        }
     }
 
     if (event.key().checkKeyList(*config_.prevPage)) {
@@ -1325,16 +1335,6 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
             inputContext->commitString(state->context_.userInput());
             state->context_.clear();
             event.filterAndAccept();
-        } else if (event.key().check(FcitxKey_space)) {
-            if (candidateList && candidateList->size()) {
-                event.filterAndAccept();
-                int idx = candidateList->cursorIndex();
-                if (idx < 0) {
-                    idx = 0;
-                }
-                candidateList->candidate(idx).select(inputContext);
-                return;
-            }
         } else if (int idx =
                        event.key().keyListIndex(*config_.selectCharFromPhrase);
                    idx >= 0) {
