@@ -794,7 +794,8 @@ bool PinyinEngine::handleCloudpinyinTrigger(KeyEvent &event) {
         safeSaveAsIni(config_, "conf/pinyin.conf");
 
         notifications()->call<INotifications::showTip>(
-            "fcitx-cloudpinyin-toggle", "fcitx", "", _("Cloud Pinyin Status"),
+            "fcitx-cloudpinyin-toggle", _("Pinyin"), "",
+            _("Cloud Pinyin Status"),
             *config_.cloudPinyinEnabled ? _("Cloud Pinyin is enabled.")
                                         : _("Cloud Pinyin is disabled."),
             -1);

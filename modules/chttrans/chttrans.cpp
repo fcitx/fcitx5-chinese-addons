@@ -68,7 +68,8 @@ Chttrans::Chttrans(fcitx::Instance *instance) : instance_(instance) {
                 bool tradEnabled = convertType(ic) == ChttransIMType::Trad;
                 if (notifications()) {
                     notifications()->call<INotifications::showTip>(
-                        "fcitx-chttrans-toggle", "fcitx",
+                        "fcitx-chttrans-toggle",
+                        _("Simplified and Traditional Chinese Translation"),
                         tradEnabled ? "fcitx-chttrans-active"
                                     : "fcitx-chttrans-inactive",
                         tradEnabled ? _("Switch to Simplified Chinese")

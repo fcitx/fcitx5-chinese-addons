@@ -145,7 +145,7 @@ Punctuation::Punctuation(Instance *instance)
                 setEnabled(!enabled(), keyEvent.inputContext());
                 if (notifications()) {
                     notifications()->call<INotifications::showTip>(
-                        "fcitx-punc-toggle", "fcitx",
+                        "fcitx-punc-toggle", _("Punctuation"),
                         enabled() ? "fcitx-punc-active" : "fcitx-punc-inactive",
                         _("Punctuation"),
                         enabled() ? _("Full width punctuation is enabled.")
