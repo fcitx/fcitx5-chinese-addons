@@ -67,6 +67,8 @@ FCITX_CONFIGURATION(
     Option<bool> showPreeditInApplication{this, "PreeditInApplication",
                                           _("Show preedit within application"),
                                           false};
+    Option<bool> showActualPinyinInPreedit{
+        this, "PinyinInPreedit", _("Show complete pinyin in preedit"), false};
     KeyListOption forgetWord{this,
                              "ForgetWord",
                              _("Forget word"),
