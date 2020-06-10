@@ -67,7 +67,7 @@ Fullwidth::Fullwidth(Instance *instance) : instance_(instance) {
                 setEnabled(!enabled_, keyEvent.inputContext());
                 if (notifications()) {
                     notifications()->call<INotifications::showTip>(
-                        "fcitx-fullwidth-toggle", "fcitx",
+                        "fcitx-fullwidth-toggle", _("Full width character"),
                         enabled_ ? "fcitx-fullwidth-active"
                                  : "fcitx-fullwidth-inactive",
                         _("Full width Character"),
