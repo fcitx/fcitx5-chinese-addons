@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-06-06 00:01-0700\n"
+"POT-Creation-Date: 2020-06-10 00:01-0700\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: scootergrisen, 2020\n"
 "Language-Team: Danish (https://www.transifex.com/fcitx/teams/12005/da/)\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: im/pinyin/pinyin.cpp:945
+#: im/pinyin/pinyin.cpp:959
 msgid "\t[Stroke Filtering] "
 msgstr "\t[Trykfiltrering] "
 
@@ -120,7 +120,7 @@ msgstr "Orientering for kandidatliste"
 msgid "Cangjie"
 msgstr "Cangjie"
 
-#: im/pinyin/pinyin.h:116
+#: im/pinyin/pinyin.h:118
 msgid "Choose Character from Phrase"
 msgstr "Vælg tegn fra frase"
 
@@ -136,15 +136,15 @@ msgstr "Sky-Pinyin"
 msgid "Cloud Pinyin Index"
 msgstr "Sky-Pinyin-indeks"
 
-#: im/pinyin/pinyin.cpp:797
+#: im/pinyin/pinyin.cpp:801
 msgid "Cloud Pinyin Status"
 msgstr "Status for sky-Pinyin"
 
-#: im/pinyin/pinyin.cpp:799
+#: im/pinyin/pinyin.cpp:803
 msgid "Cloud Pinyin is disabled."
 msgstr "Sky-Pinyin er deaktiveret."
 
-#: im/pinyin/pinyin.cpp:798
+#: im/pinyin/pinyin.cpp:802
 msgid "Cloud Pinyin is enabled."
 msgstr "Sky-Pinyin er aktiveret."
 
@@ -209,7 +209,7 @@ msgstr "Dialog"
 msgid "Dianbaoma"
 msgstr "Dianbaoma"
 
-#: im/pinyin/pinyin.h:136
+#: im/pinyin/pinyin.h:138
 msgid "Dictionaries"
 msgstr "Ordbøger"
 
@@ -302,11 +302,11 @@ msgstr "Fil"
 msgid "File Operation Failed"
 msgstr "Filhandling mislykkedes"
 
-#: im/pinyin/pinyin.h:122
+#: im/pinyin/pinyin.h:124
 msgid "Filter by stroke"
 msgstr "Filtrér efter tryk"
 
-#: im/table/engine.h:33 im/pinyin/pinyin.h:72
+#: im/table/engine.h:33 im/pinyin/pinyin.h:74
 msgid "Forget word"
 msgstr "Glem ord"
 
@@ -330,7 +330,7 @@ msgstr "Fuld tegnbredde er deaktiveret."
 msgid "Full width Character is enabled."
 msgstr "Fuld tegnbredde er aktiveret."
 
-#: modules/fullwidth/fullwidth.conf.in:3
+#: modules/fullwidth/fullwidth.cpp:70 modules/fullwidth/fullwidth.conf.in:3
 msgid "Full width character"
 msgstr "Fuld tegnbredde"
 
@@ -346,7 +346,7 @@ msgstr "Tegnsætning i fuld bredde er deaktiveret."
 msgid "Full width punctuation is enabled."
 msgstr "Tegnsætning i fuld bredde er aktiveret."
 
-#: im/pinyin/pinyin.h:139
+#: im/pinyin/pinyin.h:141
 msgid "Fuzzy Pinyin Settings"
 msgstr "Uafklarede Pinyin-indstillinger"
 
@@ -406,11 +406,11 @@ msgstr "Rediger ordbog"
 msgid "New Dictionary Name:"
 msgstr "Nyt ordbogsnavn:"
 
-#: im/table/ime.h:50 im/pinyin/pinyin.h:96
+#: im/table/ime.h:50 im/pinyin/pinyin.h:98
 msgid "Next Candidate"
 msgstr "Næste kandidat"
 
-#: im/pinyin/pinyin.h:84
+#: im/pinyin/pinyin.h:86
 msgid "Next Page"
 msgstr "Næste side"
 
@@ -432,7 +432,7 @@ msgstr "Ikke tilgængelig"
 msgid "Not set"
 msgstr "Ikke sat"
 
-#: im/pinyin/pinyin.h:126
+#: im/pinyin/pinyin.h:128
 msgid "Number of Sentence"
 msgstr "Antal sætninger"
 
@@ -444,7 +444,8 @@ msgstr "Regel for rækkefølge"
 msgid "Page size"
 msgstr "Sidestørrelse"
 
-#: im/pinyin/pinyin-addon.conf.in:3 im/pinyin/pinyin.conf.in:3
+#: im/pinyin/pinyin.cpp:800 im/pinyin/pinyin-addon.conf.in:3
+#: im/pinyin/pinyin.conf.in:3
 msgid "Pinyin"
 msgstr "Pinyin"
 
@@ -472,11 +473,11 @@ msgstr "Størrelse på forudsigelse"
 msgid "Prefix key to trigger Pinyin"
 msgstr "Præfikstast til at udløse Pinyin"
 
-#: im/pinyin/pinyin.cpp:1176
+#: im/pinyin/pinyin.cpp:1207
 msgid "Press %1% for %2%"
 msgstr "Tryk på %1% for %2%"
 
-#: im/pinyin/pinyin.cpp:1173
+#: im/pinyin/pinyin.cpp:1204
 msgid "Press %1% for %2% and %3% for %4%"
 msgstr "Tryk på %1% for %2% og %3% for %4%"
 
@@ -492,11 +493,11 @@ msgstr "Tryk på Delete for at flytte."
 msgid "Press space to insert."
 msgstr "Tryk på mellemrum for at indsætte."
 
-#: im/table/ime.h:44 im/pinyin/pinyin.h:90
+#: im/table/ime.h:44 im/pinyin/pinyin.h:92
 msgid "Prev Candidate"
 msgstr "Forrige kandidat"
 
-#: im/pinyin/pinyin.h:78
+#: im/pinyin/pinyin.h:80
 msgid "Prev Page"
 msgstr "Forrige side"
 
@@ -504,11 +505,12 @@ msgstr "Forrige side"
 msgid "Prev page"
 msgstr "Forrige side"
 
-#: im/pinyin/pinyin.h:130
+#: im/pinyin/pinyin.h:132
 msgid "Prompt long word length when input length over (0 for disable)"
 msgstr ""
 "Spørg om længden på lange ord når inputlængden er over (0 for deaktivér)"
 
+#: modules/punctuation/punctuation.cpp:148
 #: modules/punctuation/punctuation.cpp:150
 #: modules/punctuation/punctuation.conf.in:3
 msgid "Punctuation"
@@ -521,7 +523,7 @@ msgstr "Tegnsætning"
 msgid "Remove &All"
 msgstr "Fjern &alle"
 
-#: im/pinyin/pinyin.cpp:1174
+#: im/pinyin/pinyin.cpp:1205
 msgid "Return"
 msgstr "Retur"
 
@@ -533,11 +535,11 @@ msgstr "Gem automatisk frase"
 msgid "Scel file (*.scel)"
 msgstr "Scel-fil (*.scel)"
 
-#: im/pinyin/pinyin.h:102
+#: im/pinyin/pinyin.h:104
 msgid "Select 2nd Candidate"
 msgstr "Vælg anden kandidat"
 
-#: im/pinyin/pinyin.h:109
+#: im/pinyin/pinyin.h:111
 msgid "Select 3rd Candidate"
 msgstr "Vælg tredje kandidat"
 
@@ -565,6 +567,10 @@ msgstr "Vælg scel-fil"
 msgid "Selection"
 msgstr "Valg"
 
+#: im/pinyin/pinyin.h:71
+msgid "Show complete pinyin in preedit"
+msgstr ""
+
 #: im/pinyin/pinyin.cpp:624
 msgid "Show prediction words"
 msgstr "Vis forudsigelsesord"
@@ -577,7 +583,7 @@ msgstr "Brug preedit i program"
 msgid "Shuangpin"
 msgstr "Shuangpin"
 
-#: im/pinyin/pinyin.h:134
+#: im/pinyin/pinyin.h:136
 msgid "Shuangpin Profile"
 msgstr "Shuangpin-profil"
 
@@ -585,19 +591,19 @@ msgstr "Shuangpin-profil"
 msgid "Simplified Chinese"
 msgstr "Forenklet kinesisk"
 
-#: modules/chttrans/chttrans.cpp:77
+#: modules/chttrans/chttrans.cpp:78
 msgid "Simplified Chinese is enabled."
 msgstr "Forenklet kinesisk er aktiveret."
 
-#: modules/chttrans/chttrans.conf.in:3
+#: modules/chttrans/chttrans.cpp:72 modules/chttrans/chttrans.conf.in:3
 msgid "Simplified and Traditional Chinese Translation"
 msgstr "Oversættelse af forenklet og traditionel kinesisk"
 
-#: modules/chttrans/chttrans.cpp:74
+#: modules/chttrans/chttrans.cpp:75
 msgid "Switch to Simplified Chinese"
 msgstr "Skift til forenklet kinesisk"
 
-#: modules/chttrans/chttrans.cpp:75
+#: modules/chttrans/chttrans.cpp:76
 msgid "Switch to Traditional Chinese"
 msgstr "Skift til traditionel kinesisk"
 
@@ -622,7 +628,7 @@ msgstr "Tast til at skifte"
 msgid "Traditional Chinese"
 msgstr "Traditionel kinesisk"
 
-#: modules/chttrans/chttrans.cpp:76
+#: modules/chttrans/chttrans.cpp:77
 msgid "Traditional Chinese is enabled."
 msgstr "Traditionel kinesisk er aktiveret."
 
@@ -690,7 +696,7 @@ msgstr "Ziguang"
 msgid "Ziranma"
 msgstr "Ziranma"
 
-#: im/pinyin/pinyin.cpp:987
+#: im/pinyin/pinyin.cpp:1011
 msgid "[Select the word to remove from history]"
 msgstr "[vælg det ord som skal fjernes fra historik]"
 

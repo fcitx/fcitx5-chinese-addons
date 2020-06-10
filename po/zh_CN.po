@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-06-02 00:01-0700\n"
+"POT-Creation-Date: 2020-06-10 00:01-0700\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: csslayer <wengxt@gmail.com>, 2020\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/fcitx/teams/12005/"
@@ -22,15 +22,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: im/pinyin/pinyin.cpp:945
+#: im/pinyin/pinyin.cpp:959
 msgid "\t[Stroke Filtering] "
 msgstr "\t[笔画过滤] "
 
-#: im/table/state.cpp:726
+#: im/table/state.cpp:742
 msgid " Return for "
 msgstr "回车以"
 
-#: im/table/state.cpp:723
+#: im/table/state.cpp:739
 msgid " for "
 msgstr "以"
 
@@ -123,7 +123,7 @@ msgstr "候选词列表方向"
 msgid "Cangjie"
 msgstr "仓颉"
 
-#: im/pinyin/pinyin.h:116
+#: im/pinyin/pinyin.h:118
 msgid "Choose Character from Phrase"
 msgstr "以词定字"
 
@@ -139,15 +139,15 @@ msgstr "云拼音"
 msgid "Cloud Pinyin Index"
 msgstr "云拼音位置"
 
-#: im/pinyin/pinyin.cpp:797
+#: im/pinyin/pinyin.cpp:801
 msgid "Cloud Pinyin Status"
 msgstr "云拼音状态"
 
-#: im/pinyin/pinyin.cpp:799
+#: im/pinyin/pinyin.cpp:803
 msgid "Cloud Pinyin is disabled."
 msgstr "云拼音已禁用。"
 
-#: im/pinyin/pinyin.cpp:798
+#: im/pinyin/pinyin.cpp:802
 msgid "Cloud Pinyin is enabled."
 msgstr "云拼音已启用。"
 
@@ -208,7 +208,7 @@ msgstr "对话框"
 msgid "Dianbaoma"
 msgstr "电报码"
 
-#: im/pinyin/pinyin.h:136
+#: im/pinyin/pinyin.h:138
 msgid "Dictionaries"
 msgstr "词典"
 
@@ -301,11 +301,11 @@ msgstr "文件"
 msgid "File Operation Failed"
 msgstr "文件操作失败"
 
-#: im/pinyin/pinyin.h:122
+#: im/pinyin/pinyin.h:124
 msgid "Filter by stroke"
 msgstr "按笔画过滤"
 
-#: im/table/engine.h:33 im/pinyin/pinyin.h:72
+#: im/table/engine.h:33 im/pinyin/pinyin.h:74
 msgid "Forget word"
 msgstr "忘记词汇"
 
@@ -329,7 +329,7 @@ msgstr "全角字符已禁用。"
 msgid "Full width Character is enabled."
 msgstr "全角字符已启用。"
 
-#: modules/fullwidth/fullwidth.conf.in:3
+#: modules/fullwidth/fullwidth.cpp:70 modules/fullwidth/fullwidth.conf.in:3
 msgid "Full width character"
 msgstr "全角字符"
 
@@ -345,7 +345,7 @@ msgstr "全角标点已禁用。"
 msgid "Full width punctuation is enabled."
 msgstr "全角标点已启用。"
 
-#: im/pinyin/pinyin.h:139
+#: im/pinyin/pinyin.h:141
 msgid "Fuzzy Pinyin Settings"
 msgstr "模糊音设置"
 
@@ -405,11 +405,11 @@ msgstr "修改词典"
 msgid "New Dictionary Name:"
 msgstr "新词典名称："
 
-#: im/table/ime.h:50 im/pinyin/pinyin.h:96
+#: im/table/ime.h:50 im/pinyin/pinyin.h:98
 msgid "Next Candidate"
 msgstr "下一个候选词"
 
-#: im/pinyin/pinyin.h:84
+#: im/pinyin/pinyin.h:86
 msgid "Next Page"
 msgstr "下一页"
 
@@ -429,7 +429,7 @@ msgstr "不可用"
 msgid "Not set"
 msgstr "未设置"
 
-#: im/pinyin/pinyin.h:126
+#: im/pinyin/pinyin.h:128
 msgid "Number of Sentence"
 msgstr "句子数量"
 
@@ -441,7 +441,8 @@ msgstr "排序规则"
 msgid "Page size"
 msgstr "页大小"
 
-#: im/pinyin/pinyin-addon.conf.in:3 im/pinyin/pinyin.conf.in:3
+#: im/pinyin/pinyin.cpp:800 im/pinyin/pinyin-addon.conf.in:3
+#: im/pinyin/pinyin.conf.in:3
 msgid "Pinyin"
 msgstr "拼音"
 
@@ -469,11 +470,11 @@ msgstr "预测个数"
 msgid "Prefix key to trigger Pinyin"
 msgstr "触发拼音的前缀键"
 
-#: im/pinyin/pinyin.cpp:1176
+#: im/pinyin/pinyin.cpp:1207
 msgid "Press %1% for %2%"
 msgstr "按下%1%输入%2%"
 
-#: im/pinyin/pinyin.cpp:1173
+#: im/pinyin/pinyin.cpp:1204
 msgid "Press %1% for %2% and %3% for %4%"
 msgstr "按下%1%输入%2%，按下%3%输入%4%"
 
@@ -489,11 +490,11 @@ msgstr "按下删除键来移除。"
 msgid "Press space to insert."
 msgstr "按下空格键来插入。"
 
-#: im/table/ime.h:44 im/pinyin/pinyin.h:90
+#: im/table/ime.h:44 im/pinyin/pinyin.h:92
 msgid "Prev Candidate"
 msgstr "上一个候选词"
 
-#: im/pinyin/pinyin.h:78
+#: im/pinyin/pinyin.h:80
 msgid "Prev Page"
 msgstr "上一页"
 
@@ -501,10 +502,11 @@ msgstr "上一页"
 msgid "Prev page"
 msgstr "上一页"
 
-#: im/pinyin/pinyin.h:130
+#: im/pinyin/pinyin.h:132
 msgid "Prompt long word length when input length over (0 for disable)"
 msgstr "输入长于...时提示长词 (设置为 0 时禁用)"
 
+#: modules/punctuation/punctuation.cpp:148
 #: modules/punctuation/punctuation.cpp:150
 #: modules/punctuation/punctuation.conf.in:3
 msgid "Punctuation"
@@ -517,7 +519,7 @@ msgstr "标点"
 msgid "Remove &All"
 msgstr "移除全部(&A)"
 
-#: im/pinyin/pinyin.cpp:1174
+#: im/pinyin/pinyin.cpp:1205
 msgid "Return"
 msgstr "返回"
 
@@ -529,11 +531,11 @@ msgstr "保存自动组词"
 msgid "Scel file (*.scel)"
 msgstr "Scel 文件 (*.scel)"
 
-#: im/pinyin/pinyin.h:102
+#: im/pinyin/pinyin.h:104
 msgid "Select 2nd Candidate"
 msgstr "选择第 2 个候选词"
 
-#: im/pinyin/pinyin.h:109
+#: im/pinyin/pinyin.h:111
 msgid "Select 3rd Candidate"
 msgstr "选择第 3 个候选词"
 
@@ -549,7 +551,7 @@ msgstr "选择第二个候选词"
 msgid "Select Third Candidate"
 msgstr "选择第三个候选词"
 
-#: im/table/state.cpp:949
+#: im/table/state.cpp:956
 msgid "Select candidate to be removed from history:"
 msgstr "选择要从历史中移除的候选词："
 
@@ -560,6 +562,10 @@ msgstr "选择 scel 文件"
 #: im/table/ime.h:70
 msgid "Selection"
 msgstr "选择"
+
+#: im/pinyin/pinyin.h:71
+msgid "Show complete pinyin in preedit"
+msgstr ""
 
 #: im/pinyin/pinyin.cpp:624
 msgid "Show prediction words"
@@ -573,7 +579,7 @@ msgstr "在程序中显示预编辑文本"
 msgid "Shuangpin"
 msgstr "双拼"
 
-#: im/pinyin/pinyin.h:134
+#: im/pinyin/pinyin.h:136
 msgid "Shuangpin Profile"
 msgstr "双拼方案"
 
@@ -581,19 +587,19 @@ msgstr "双拼方案"
 msgid "Simplified Chinese"
 msgstr "简体中文"
 
-#: modules/chttrans/chttrans.cpp:77
+#: modules/chttrans/chttrans.cpp:78
 msgid "Simplified Chinese is enabled."
 msgstr "简体中文已启用。"
 
-#: modules/chttrans/chttrans.conf.in:3
+#: modules/chttrans/chttrans.cpp:72 modules/chttrans/chttrans.conf.in:3
 msgid "Simplified and Traditional Chinese Translation"
 msgstr "简繁转换"
 
-#: modules/chttrans/chttrans.cpp:74
+#: modules/chttrans/chttrans.cpp:75
 msgid "Switch to Simplified Chinese"
 msgstr "切换到简体中文"
 
-#: modules/chttrans/chttrans.cpp:75
+#: modules/chttrans/chttrans.cpp:76
 msgid "Switch to Traditional Chinese"
 msgstr "切换到繁体中文"
 
@@ -618,7 +624,7 @@ msgstr "切换键"
 msgid "Traditional Chinese"
 msgstr "繁体中文"
 
-#: modules/chttrans/chttrans.cpp:76
+#: modules/chttrans/chttrans.cpp:77
 msgid "Traditional Chinese is enabled."
 msgstr "繁体中文已启用。"
 
@@ -686,7 +692,7 @@ msgstr "紫光"
 msgid "Ziranma"
 msgstr "自然码"
 
-#: im/pinyin/pinyin.cpp:987
+#: im/pinyin/pinyin.cpp:1011
 msgid "[Select the word to remove from history]"
 msgstr ""
 
