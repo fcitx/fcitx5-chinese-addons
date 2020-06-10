@@ -66,11 +66,10 @@ bool FileListModel::setData(const QModelIndex &index, const QVariant &value,
 
 Qt::ItemFlags FileListModel::flags(const QModelIndex &index) const {
     if (!index.isValid() || index.row() >= fileList_.size()) {
-        return 0;
+        return {};
     }
 
     return Qt::ItemIsUserCheckable | QAbstractListModel::flags(index);
-    ;
 }
 
 void FileListModel::loadFileList() {
