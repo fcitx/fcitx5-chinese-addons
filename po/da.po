@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-06-10 00:01-0700\n"
+"POT-Creation-Date: 2020-06-13 00:01-0700\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: scootergrisen, 2020\n"
 "Language-Team: Danish (https://www.transifex.com/fcitx/teams/12005/da/)\n"
@@ -569,7 +569,7 @@ msgstr "Valg"
 
 #: im/pinyin/pinyin.h:71
 msgid "Show complete pinyin in preedit"
-msgstr ""
+msgstr "Brug komplet pinyin i preedit"
 
 #: im/pinyin/pinyin.cpp:624
 msgid "Show prediction words"
