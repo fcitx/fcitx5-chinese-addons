@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-06-10 00:01-0700\n"
+"POT-Creation-Date: 2020-06-15 00:01-0700\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: MarongHappy <daemul72@gmail.com>, 2020\n"
 "Language-Team: Korean (https://www.transifex.com/fcitx/teams/12005/ko/)\n"
@@ -236,7 +236,7 @@ msgstr "다운로드 시작됨."
 
 #: im/pinyin/pinyin.h:61
 msgid "Enable Chaizi"
-msgstr ""
+msgstr "Chaizi 활성화"
 
 #: im/pinyin/pinyin.h:63
 msgid "Enable Cloud Pinyin"
@@ -305,7 +305,7 @@ msgstr "필획으로 필터링"
 
 #: im/table/engine.h:33 im/pinyin/pinyin.h:74
 msgid "Forget word"
-msgstr ""
+msgstr "단어 잊기"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:34
 msgid "From &File"
@@ -503,7 +503,7 @@ msgstr "앞 페이지"
 
 #: im/pinyin/pinyin.h:132
 msgid "Prompt long word length when input length over (0 for disable)"
-msgstr ""
+msgstr "입력 길이가 초과될 때 프롬프트 긴 단어 길이(사용안할 경우 0)"
 
 #: modules/punctuation/punctuation.cpp:148
 #: modules/punctuation/punctuation.cpp:150
@@ -532,11 +532,11 @@ msgstr "Scel 파일 (*.scel)"
 
 #: im/pinyin/pinyin.h:104
 msgid "Select 2nd Candidate"
-msgstr ""
+msgstr "두 번째 후보 선택"
 
 #: im/pinyin/pinyin.h:111
 msgid "Select 3rd Candidate"
-msgstr ""
+msgstr "세 번째 후보 선택"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:157
 msgid "Select Dictionary File"
@@ -552,7 +552,7 @@ msgstr "세 번째 후보 선택"
 
 #: im/table/state.cpp:956
 msgid "Select candidate to be removed from history:"
-msgstr ""
+msgstr "기록에서 제거할 후보 선택"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:198
 msgid "Select scel file"
@@ -564,7 +564,7 @@ msgstr "선택"
 
 #: im/pinyin/pinyin.h:71
 msgid "Show complete pinyin in preedit"
-msgstr ""
+msgstr "사전편집에서 완전한 병음 표시"
 
 #: im/pinyin/pinyin.cpp:624
 msgid "Show prediction words"
@@ -572,7 +572,7 @@ msgstr "예상 단어 표시"
 
 #: im/pinyin/pinyin.h:68
 msgid "Show preedit within application"
-msgstr "응용프로그램 내에서 프리에디트 표시"
+msgstr "응용프로그램 내에서 사전편집 표시"
 
 #: im/pinyin/shuangpin.conf.in:3
 msgid "Shuangpin"
@@ -641,7 +641,7 @@ msgstr "문장 선택을 위해 좌/우키 사용:"
 
 #: im/table/ime.h:91
 msgid "Use context related sort"
-msgstr ""
+msgstr "컨텍스트 관련 정렬 사용"
 
 #: im/table/ime.h:79
 msgid "Use full width"
@@ -649,7 +649,7 @@ msgstr "전각 문자 사용"
 
 #: im/table/ime.h:89
 msgid "Use system language model"
-msgstr ""
+msgstr "시스템 언어 모델 사용"
 
 #: im/table/ime.h:25
 msgid "Vertical"
@@ -693,7 +693,7 @@ msgstr "지란마"
 
 #: im/pinyin/pinyin.cpp:1011
 msgid "[Select the word to remove from history]"
-msgstr ""
+msgstr "[기록에서 삭제할 단어 선택]"
 
 #. i18n: file: gui/pinyindictmanager/browserdialog.ui:21
 #. i18n: ectx: property (url), widget (QWebEngineView, webView_)
