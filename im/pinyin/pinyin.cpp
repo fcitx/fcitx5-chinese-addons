@@ -176,11 +176,16 @@ public:
 
         if (index_ < state->context_.candidates().size()) {
             auto &sentence = state->context_.candidates()[index_];
-            auto py = state->context_.candidateFullPinyin(index_);
-            state->context_.ime()->dict()->removeWord(
-                libime::PinyinDictionary::UserDict, py, sentence.toString());
-            state->context_.ime()->model()->history().forget(
-                sentence.toString());
+            // If this is a word, remove it from user dict.
+            if (sentence.size() == 1) {
+                auto py = state->context_.candidateFullPinyin(index_);
+                state->context_.ime()->dict()->removeWord(
+                    libime::PinyinDictionary::UserDict, py,
+                    sentence.toString());
+            }
+            for (const auto &word : sentence.sentence()) {
+                state->context_.ime()->model()->history().forget(word->word());
+            }
         }
         engine_->resetForgetCandidate(inputContext);
         engine_->doReset(inputContext);
@@ -1022,9 +1027,6 @@ void PinyinEngine::updateForgetCandidate(InputContext *inputContext) {
         if (auto pyCandidate =
                 dynamic_cast<const PinyinCandidateWord *>(&candidate)) {
             if (pyCandidate->idx_ >= state->context_.candidates().size() ||
-                state->context_.candidates()[pyCandidate->idx_]
-                        .sentence()
-                        .size() != 1 ||
                 state->context_.candidateFullPinyin(pyCandidate->idx_)
                     .empty()) {
                 continue;
