@@ -166,7 +166,315 @@ function get_today()
     return get_date("")
 end
 
+local _MATH_SYMBOL = {
+"＋",
+"－",
+"＜",
+"＝",
+"＞",
+"±",
+"×",
+"÷",
+"∈",
+"∏",
+"∑",
+"∕",
+"√",
+"∝",
+"∞",
+"∟",
+"∠",
+"∣",
+"∥",
+"∧",
+"∨",
+"∩",
+"∪",
+"∫",
+"∮",
+"∴",
+"∵",
+"∶",
+"∷",
+"∽",
+"≈",
+"≌",
+"≒",
+"≠",
+"≡",
+"≤",
+"≥",
+"≦",
+"≧",
+"≮",
+"≯",
+"⊕",
+"⊙",
+"⊥",
+"⊿",
+}
+
+local _ROMAN_NUMBER = {
+"ⅰ",
+"ⅱ",
+"ⅲ",
+"ⅳ",
+"ⅴ",
+"ⅵ",
+"ⅶ",
+"ⅷ",
+"ⅸ",
+"ⅹ",
+"ⅰ",
+"ⅱ",
+"ⅲ",
+"ⅳ",
+"ⅴ",
+"ⅵ",
+"ⅶ",
+"ⅷ",
+"ⅸ",
+"ⅹ",
+}
+
+local _UPPER_GREEK_LETTER = {
+"Α",
+"Β",
+"Γ",
+"Δ",
+"Ε",
+"Ζ",
+"Η",
+"Θ",
+"Ι",
+"Κ",
+"Λ",
+"Μ",
+"Ν",
+"Ξ",
+"Ο",
+"Π",
+"Ρ",
+"Σ",
+"Τ",
+"Υ",
+"Φ",
+"Χ",
+"Ψ",
+"Ω",
+}
+
+local _LOWER_GREEK_LETTER = {
+"α",
+"β",
+"γ",
+"δ",
+"ε",
+"ζ",
+"η",
+"θ",
+"ι",
+"κ",
+"λ",
+"μ",
+"ν",
+"ξ",
+"ο",
+"π",
+"ρ",
+"σ",
+"τ",
+"υ",
+"φ",
+"χ",
+"ψ",
+"ω",
+}
+
+local _UPPER_RUSSIAN_LETTER = {
+"А",
+"Б",
+"В",
+"Г",
+"Д",
+"Е",
+"Ж",
+"З",
+"И",
+"Й",
+"К",
+"Л",
+"М",
+"Н",
+"О",
+"П",
+"Р",
+"С",
+"Т",
+"У",
+"Ф",
+"Х",
+"Ц",
+"Ч",
+"Ш",
+"Щ",
+"Ъ",
+"Ы",
+"Ь",
+"Э",
+"Ю",
+"Я",
+"Ё",
+}
+
+local _LOWER_RUSSIAN_LETTER = {
+"а",
+"б",
+"в",
+"г",
+"д",
+"е",
+"ж",
+"з",
+"и",
+"й",
+"к",
+"л",
+"м",
+"н",
+"о",
+"п",
+"р",
+"с",
+"т",
+"у",
+"ф",
+"х",
+"ц",
+"ч",
+"ш",
+"щ",
+"ъ",
+"ы",
+"ь",
+"э",
+"ю",
+"я",
+"ё",
+}
+
+local _NUMBER_SYMBOL = {
+"①",
+"②",
+"③",
+"④",
+"⑤",
+"⑥",
+"⑦",
+"⑧",
+"⑨",
+"⑩",
+"⑴",
+"⑵",
+"⑶",
+"⑷",
+"⑸",
+"⑹",
+"⑺",
+"⑻",
+"⑼",
+"⑽",
+"⑾",
+"⑿",
+"⒀",
+"⒁",
+"⒂",
+"⒃",
+"⒄",
+"⒅",
+"⒆",
+"⒇",
+"⒈",
+"⒉",
+"⒊",
+"⒋",
+"⒌",
+"⒍",
+"⒎",
+"⒏",
+"⒐",
+"⒑",
+"⒒",
+"⒓",
+"⒔",
+"⒕",
+"⒖",
+"⒗",
+"⒘",
+"⒙",
+"⒚",
+"⒛",
+"㈠",
+"㈡",
+"㈢",
+"㈣",
+"㈤",
+"㈥",
+"㈦",
+"㈧",
+"㈨",
+"㈩",
+}
+
+local _CURRENCY_SYMBOL = {
+"＄",
+"￠",
+"￡",
+"￥",
+"¤",
+}
+
+local _ARROW_SYMBOL = {
+"←",
+"↑",
+"→",
+"↓",
+"↖",
+"↗",
+"↘",
+"↙",
+}
+
+function get_symbol(input)
+    if fcitx.currentInputMethod() ~= "pinyin" and fcitx.currentInputMethod() ~= "shuangpin"  then
+        return nil
+    end
+
+    if input == "sx" then
+        return _MATH_SYMBOL
+    elseif input == "lmsz" then
+        return _ROMAN_NUMBER
+    elseif input == "dxxl" then
+        return _UPPER_GREEK_LETTER
+    elseif input == "xxxl" then
+        return _LOWER_GREEK_LETTER
+    elseif input == "dxew" then
+        return _UPPER_RUSSIAN_LETTER
+    elseif input == "xxew" then
+        return _LOWER_RUSSIAN_LETTER
+    elseif input == "sz" then
+        return _NUMBER_SYMBOL
+    elseif input == "hb" then
+        return _CURRENCY_SYMBOL
+    elseif input == "jt" then
+        return _ARROW_SYMBOL
+    end
+    return nil
+end
+
 ------------
+ime.register_command("fh", "get_symbol", "输入符号", "digit", "")
+
 ime.register_command("sj", "get_time", "输入时间", "alpha", "输入可选时间，例如12:34")
 ime.register_command("rq", "get_date", "输入日期", "alpha", "输入可选日期，例如2013-01-01")
 ime.register_trigger("get_current_time", "显示时间", {}, {'时间'})
