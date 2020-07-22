@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-06-10 00:01-0700\n"
+"POT-Creation-Date: 2020-07-22 00:01-0700\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: csslayer <wengxt@gmail.com>, 2020\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/fcitx/teams/12005/"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: im/pinyin/pinyin.cpp:959
+#: im/pinyin/pinyin.cpp:964
 msgid "\t[Stroke Filtering] "
 msgstr "\t[笔画过滤] "
 
@@ -139,15 +139,15 @@ msgstr "云拼音"
 msgid "Cloud Pinyin Index"
 msgstr "云拼音位置"
 
-#: im/pinyin/pinyin.cpp:801
+#: im/pinyin/pinyin.cpp:806
 msgid "Cloud Pinyin Status"
 msgstr "云拼音状态"
 
-#: im/pinyin/pinyin.cpp:803
+#: im/pinyin/pinyin.cpp:808
 msgid "Cloud Pinyin is disabled."
 msgstr "云拼音已禁用。"
 
-#: im/pinyin/pinyin.cpp:802
+#: im/pinyin/pinyin.cpp:807
 msgid "Cloud Pinyin is enabled."
 msgstr "云拼音已启用。"
 
@@ -238,7 +238,7 @@ msgstr "下载已开始。"
 
 #: im/pinyin/pinyin.h:61
 msgid "Enable Chaizi"
-msgstr ""
+msgstr "启用拆字"
 
 #: im/pinyin/pinyin.h:63
 msgid "Enable Cloud Pinyin"
@@ -441,7 +441,7 @@ msgstr "排序规则"
 msgid "Page size"
 msgstr "页大小"
 
-#: im/pinyin/pinyin.cpp:800 im/pinyin/pinyin-addon.conf.in:3
+#: im/pinyin/pinyin.cpp:805 im/pinyin/pinyin-addon.conf.in:3
 #: im/pinyin/pinyin.conf.in:3
 msgid "Pinyin"
 msgstr "拼音"
@@ -458,7 +458,7 @@ msgstr "拼音加加"
 msgid "Please use this functionality after typing some text."
 msgstr "请在输入一些文字之后再使用这个功能。"
 
-#: im/pinyin/pinyin.cpp:623
+#: im/pinyin/pinyin.cpp:628
 msgid "Prediction"
 msgstr "预测"
 
@@ -470,11 +470,11 @@ msgstr "预测个数"
 msgid "Prefix key to trigger Pinyin"
 msgstr "触发拼音的前缀键"
 
-#: im/pinyin/pinyin.cpp:1207
+#: im/pinyin/pinyin.cpp:1209
 msgid "Press %1% for %2%"
 msgstr "按下%1%输入%2%"
 
-#: im/pinyin/pinyin.cpp:1204
+#: im/pinyin/pinyin.cpp:1206
 msgid "Press %1% for %2% and %3% for %4%"
 msgstr "按下%1%输入%2%，按下%3%输入%4%"
 
@@ -519,7 +519,7 @@ msgstr "标点"
 msgid "Remove &All"
 msgstr "移除全部(&A)"
 
-#: im/pinyin/pinyin.cpp:1205
+#: im/pinyin/pinyin.cpp:1207
 msgid "Return"
 msgstr "返回"
 
@@ -565,9 +565,9 @@ msgstr "选择"
 
 #: im/pinyin/pinyin.h:71
 msgid "Show complete pinyin in preedit"
-msgstr ""
+msgstr "在预编辑中显示完整拼音"
 
-#: im/pinyin/pinyin.cpp:624
+#: im/pinyin/pinyin.cpp:629
 msgid "Show prediction words"
 msgstr "显示联想词组"
 
@@ -692,9 +692,9 @@ msgstr "紫光"
 msgid "Ziranma"
 msgstr "自然码"
 
-#: im/pinyin/pinyin.cpp:1011
+#: im/pinyin/pinyin.cpp:1016
 msgid "[Select the word to remove from history]"
-msgstr ""
+msgstr "[选择要从历史中移除的词]"
 
 #. i18n: file: gui/pinyindictmanager/browserdialog.ui:21
 #. i18n: ectx: property (url), widget (QWebEngineView, webView_)
