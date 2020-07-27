@@ -28,8 +28,8 @@ public:
     GoogleBackend(const std::string &url) : url_(url) {}
 
     void prepareRequest(CurlQueue *queue, const std::string &pinyin) override {
-        std::unique_ptr<char, decltype(&curl_free)> escaped(
-            curl_escape(pinyin.c_str(), pinyin.size()), &curl_free);
+        UniqueCPtr<char, curl_free> escaped(
+            curl_escape(pinyin.c_str(), pinyin.size()));
         std::string url = url_;
         url += escaped.get();
         CLOUDPINYIN_DEBUG() << "Request URL: " << url;
