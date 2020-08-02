@@ -16,7 +16,6 @@
 #include "punctuation_public.h"
 #include "spell_public.h"
 #include <boost/algorithm/string.hpp>
-#include <boost/format.hpp>
 #include <boost/iostreams/device/file_descriptor.hpp>
 #include <boost/iostreams/stream.hpp>
 #include <fcitx-config/iniparser.h>
@@ -1173,24 +1172,29 @@ bool PinyinEngine::handlePunc(KeyEvent &event) {
     if (event.filtered()) {
         return false;
     }
-    if (event.key().states().testAny(KeyState::SimpleMask)) {
-        return false;
-    }
     // if it gonna commit something
     auto c = Key::keySymToUnicode(event.key().sym());
-    if (!c) {
+    if (event.key().hasModifier() || !c) {
+        // Handle quick phrase with modifier
+        if (event.key().check(*config_.quickphraseKey) && quickphrase()) {
+            quickphrase()->call<IQuickPhrase::trigger>(inputContext, "", "", "",
+                                                       "", Key());
+            event.filterAndAccept();
+            return true;
+        }
         return false;
     }
     if (candidateList && candidateList->size()) {
         candidateList->candidate(0).select(inputContext);
     }
+
     std::string punc;
     // skip key pad
-    if (!event.key().isKeyPad()) {
+    if (c && !event.key().isKeyPad()) {
         punc = punctuation()->call<IPunctuation::pushPunctuation>(
             "zh_CN", inputContext, c);
     }
-    if (event.key().check(FcitxKey_semicolon) && quickphrase()) {
+    if (event.key().check(*config_.quickphraseKey) && quickphrase()) {
         auto keyString = utf8::UCS4ToUTF8(c);
         // s is punc or key
         auto output = punc.size() ? punc : keyString;
@@ -1202,20 +1206,17 @@ bool PinyinEngine::handlePunc(KeyEvent &event) {
         std::string text;
         if (!output.empty()) {
             if (!altOutput.empty()) {
-                text = boost::str(
-                    boost::format(_("Press %1% for %2% and %3% for %4%")) %
-                    keyString % output % _("Return") % altOutput);
+                text = fmt::format(_("Press {} for {} and Return for {}"),
+                                   keyString, output, altOutput);
             } else {
-                text = boost::str(boost::format(_("Press %1% for %2%")) %
-                                  keyString % altOutput);
+                text = fmt::format(_("Press {} for {}"), keyString, altOutput);
             }
         }
         quickphrase()->call<IQuickPhrase::trigger>(
-            inputContext, text, "", output, altOutput, Key(FcitxKey_semicolon));
+            inputContext, text, "", output, altOutput, *config_.quickphraseKey);
         event.filterAndAccept();
         return true;
     }
-
     if (punc.size()) {
         event.filterAndAccept();
         inputContext->commitString(punc);
