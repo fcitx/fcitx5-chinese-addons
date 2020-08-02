@@ -715,6 +715,14 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         }
 
         if (event.key().hasModifier() || !chr) {
+            // Handle quick phrase with modifier
+            if (event.key().check(*config.quickphrase) &&
+                engine_->quickphrase()) {
+                engine_->quickphrase()->call<IQuickPhrase::trigger>(
+                    inputContext, "", "", "", "", Key());
+                event.filterAndAccept();
+                return;
+            }
             break;
         }
         // if current key will produce some string, do the auto select.
@@ -742,7 +750,7 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
                 text += _(" Return for ") + alt;
             }
             engine_->quickphrase()->call<IQuickPhrase::trigger>(
-                inputContext, text, "", s, alt, Key(FcitxKey_semicolon));
+                inputContext, text, "", s, alt, *config.quickphrase);
             event.filterAndAccept();
             return;
         }

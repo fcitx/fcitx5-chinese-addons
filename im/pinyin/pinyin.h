@@ -124,6 +124,12 @@ FCITX_CONFIGURATION(
         _("Filter by stroke"),
         {Key("grave")},
         KeyListConstrain({KeyConstrainFlag::AllowModifierLess})};
+    Option<Key, KeyConstrain> quickphraseKey{
+        this,
+        "QuickPhraseKey",
+        _("Key to trigger quickphrase"),
+        Key{FcitxKey_semicolon},
+        {KeyConstrainFlag::AllowModifierLess}};
     Option<int, IntConstrain> nbest{this, "Number of sentence",
                                     _("Number of Sentence"), 2,
                                     IntConstrain(1, 3)};

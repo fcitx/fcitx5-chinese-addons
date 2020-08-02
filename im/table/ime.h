@@ -79,8 +79,12 @@ FCITX_CONFIGURATION(
     Option<bool> useFullWidth{this, "UseFullWidth", _("Use full width"), true};
     Option<bool> ignorePunc{this, "IgnorePunc",
                             _("Ignore built in punctuation"), false};
-    Option<Key> quickphrase{this, "QuickPhraseKey",
-                            _("Key to trigger quickphrase")};
+    Option<Key, KeyConstrain> quickphrase{
+        this,
+        "QuickPhraseKey",
+        _("Key to trigger quickphrase"),
+        Key{},
+        {KeyConstrainFlag::AllowModifierLess}};
     HiddenOption<std::string> icon{this, "Icon", _("Icon")};
     Option<int> noSortInputLength{this, "NoSortInputLength",
                                   _("Don't sort word shorter than")};
