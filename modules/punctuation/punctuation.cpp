@@ -305,7 +305,8 @@ const std::string &Punctuation::pushPunctuation(const std::string &language,
         return emptyString;
     }
     auto state = ic->propertyFor(&factory_);
-    if (state->lastIsEngOrDigit_ && dontConvertWhenEn(unicode)) {
+    if (state->lastIsEngOrDigit_ && *config_.halfWidthPuncAfterLatinOrNumber &&
+        dontConvertWhenEn(unicode)) {
         state->notConverted_ = unicode;
         return emptyString;
     } else {
