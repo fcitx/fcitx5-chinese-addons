@@ -42,7 +42,7 @@ void PinyinHelper::initQuickPhrase() {
     }
     handler_ = quickphrase()->call<IQuickPhrase::addProvider>(
         [this](InputContext *ic, const std::string &input,
-               QuickPhraseAddCandidateCallback callback) {
+               const QuickPhraseAddCandidateCallback &callback) {
             if (input != "duyin") {
                 return true;
             }

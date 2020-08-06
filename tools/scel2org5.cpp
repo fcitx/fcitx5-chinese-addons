@@ -55,7 +55,7 @@ std::string unicodeToUTF8(const char16_t *value, size_t size) {
 
 std::string unicodeToUTF8(const char *value, size_t size) {
     FCITX_ASSERT(size % 2 == 0) << "Invalid size of string";
-    auto ustr = reinterpret_cast<const uint16_t *>(value);
+    const auto *ustr = reinterpret_cast<const uint16_t *>(value);
     std::u16string str;
     str.reserve(size / 2);
     for (size_t i = 0; i < size / 2; i++) {

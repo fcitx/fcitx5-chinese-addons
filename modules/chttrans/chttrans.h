@@ -91,7 +91,7 @@ public:
     bool needConvert(fcitx::InputContext *inputContext);
     ChttransIMType convertType(fcitx::InputContext *inputContext);
     std::string convert(ChttransIMType type, const std::string &str);
-    void toggle(fcitx::InputContext *inputContext);
+    void toggle(fcitx::InputContext *ic);
 
     fcitx::AddonInstance *notifications() {
         if (!notifications_) {

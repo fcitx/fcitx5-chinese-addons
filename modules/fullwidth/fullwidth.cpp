@@ -88,7 +88,7 @@ Fullwidth::Fullwidth(Instance *instance) : instance_(instance) {
             }
             auto len = utf8::length(str);
             std::string result;
-            auto ps = str.c_str();
+            const auto *ps = str.c_str();
             for (size_t i = 0; i < len; ++i) {
                 uint32_t wc;
                 char *nps;

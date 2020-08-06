@@ -112,7 +112,7 @@ TableIME::requestDict(const std::string &name) {
         } catch (const std::exception &) {
         }
 
-        if (auto dict = iter->second.dict.get()) {
+        if (auto *dict = iter->second.dict.get()) {
             try {
                 auto dictFile = StandardPath::global().openUser(
                     StandardPath::Type::PkgData,

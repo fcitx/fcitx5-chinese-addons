@@ -184,10 +184,10 @@ void PinyinDictManager::importFromFile() {
 
     setEnabled(false);
     pipeline_->reset();
-    auto runner = new ProcessRunner(
+    auto *runner = new ProcessRunner(
         "libime_pinyindict", QStringList() << info.filePath() << tempFile,
         tempFile);
-    auto rename = new RenameFile(tempFile, fullname);
+    auto *rename = new RenameFile(tempFile, fullname);
     pipeline_->addJob(runner);
     pipeline_->addJob(rename);
     pipeline_->start();
@@ -243,14 +243,14 @@ void PinyinDictManager::importFromSogou() {
 
     setEnabled(false);
     pipeline_->reset();
-    auto scelrunner = new ProcessRunner(
+    auto *scelrunner = new ProcessRunner(
         "scel2org5",
         QStringList() << info.absoluteFilePath() << "-o" << txtFile, txtFile);
     pipeline_->addJob(scelrunner);
-    auto dictrunner = new ProcessRunner(
+    auto *dictrunner = new ProcessRunner(
         "libime_pinyindict", QStringList() << txtFile << tempFile, tempFile);
     pipeline_->addJob(dictrunner);
-    auto rename = new RenameFile(tempFile, fullname);
+    auto *rename = new RenameFile(tempFile, fullname);
     pipeline_->addJob(rename);
     pipeline_->start();
 }
@@ -309,15 +309,15 @@ void PinyinDictManager::importFromSogouOnline() {
 
     setEnabled(false);
     pipeline_->reset();
-    auto fileDownloader = new FileDownloader(dialog.url(), scelFile);
+    auto *fileDownloader = new FileDownloader(dialog.url(), scelFile);
     pipeline_->addJob(fileDownloader);
-    auto scelrunner = new ProcessRunner(
+    auto *scelrunner = new ProcessRunner(
         "scel2org5", QStringList() << scelFile << "-o" << txtFile, txtFile);
     pipeline_->addJob(scelrunner);
-    auto dictrunner = new ProcessRunner(
+    auto *dictrunner = new ProcessRunner(
         "libime_pinyindict", QStringList() << txtFile << tempFile, tempFile);
     pipeline_->addJob(dictrunner);
-    auto rename = new RenameFile(tempFile, fullname);
+    auto *rename = new RenameFile(tempFile, fullname);
     pipeline_->addJob(rename);
     pipeline_->start();
 #else

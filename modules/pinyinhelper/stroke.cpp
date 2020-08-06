@@ -93,16 +93,16 @@ Stroke::lookup(std::string_view input, int limit) {
         }
     };
 
-    if (dict_.foreach(input, [this, &onlyMatch, &onlyMatchLength](
-                                 int32_t, size_t len, uint64_t pos) {
-            if (!dict_.isNoPath(onlyMatch)) {
+    if (dict_.foreach(input, [&onlyMatch, &onlyMatchLength](int32_t, size_t len,
+                                                            uint64_t pos) {
+            if (!decltype(dict_)::isNoPath(onlyMatch)) {
                 return false;
             }
             onlyMatch = pos;
             onlyMatchLength = len;
             return true;
         })) {
-        if (dict_.isValid(onlyMatch)) {
+        if (decltype(dict_)::isValid(onlyMatch)) {
             std::string buf;
             dict_.suffix(buf, input.size() + onlyMatchLength, onlyMatch);
             if (auto idx = buf.find_last_of('|'); idx != std::string::npos) {
@@ -118,7 +118,7 @@ Stroke::lookup(std::string_view input, int limit) {
         if (item.weight >= 10) {
             return;
         }
-        q.push(std::move(item));
+        q.push(item);
     };
 
     pushQueue(LookupItem{0, input, 0, 0});
@@ -135,11 +135,8 @@ Stroke::lookup(std::string_view input, int limit) {
                         dict_.suffix(buf, current.length + 1 + len, pos);
                         addResult(buf.substr(current.length + 1),
                                   buf.substr(0, current.length));
-                        if (limit > 0 &&
-                            result.size() >= static_cast<size_t>(limit)) {
-                            return false;
-                        }
-                        return true;
+                        return !(limit > 0 &&
+                                 result.size() >= static_cast<size_t>(limit));
                     },
                     current.pos)) {
                 break;
@@ -147,7 +144,7 @@ Stroke::lookup(std::string_view input, int limit) {
         }
 
         // Deletion
-        if (current.remain.size() >= 1) {
+        if (!current.remain.empty()) {
             pushQueue(LookupItem{current.pos, current.remain.substr(1),
                                  current.weight + DELETION_WEIGHT,
                                  current.length});

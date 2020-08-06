@@ -55,7 +55,9 @@ public:
     }
 
     void request(const std::string &pinyin, CloudPinyinCallback callback);
-    const fcitx::KeyList &toggleKey() { return config_.toggleKey.value(); }
+    const fcitx::KeyList &toggleKey() const {
+        return config_.toggleKey.value();
+    }
     void resetError() {
         errorCount_ = 0;
         resetError_->setEnabled(false);

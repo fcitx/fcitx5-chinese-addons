@@ -165,7 +165,7 @@ public:
                InputContextEvent &event) override;
     void setSubConfig(const std::string &path,
                       const fcitx::RawConfig &) override;
-    void doReset(InputContext *ic);
+    void doReset(InputContext *inputContext);
     void save() override;
     auto &factory() { return factory_; }
 
@@ -178,8 +178,8 @@ public:
 
     libime::PinyinIME *ime() { return ime_.get(); }
 
-    void initPredict(InputContext *ic);
-    void updatePredict(InputContext *ic);
+    void initPredict(InputContext *inputContext);
+    void updatePredict(InputContext *inputContext);
     std::unique_ptr<CandidateList>
     predictCandidateList(const std::vector<std::string> &words);
     void updateUI(InputContext *inputContext);

@@ -26,8 +26,8 @@
 using namespace fcitx;
 
 namespace {
-static const std::string emptyString;
-static const std::pair<std::string, std::string> emptyStringPair;
+const std::string emptyString;
+const std::pair<std::string, std::string> emptyStringPair;
 } // namespace
 
 bool dontConvertWhenEn(uint32_t c) { return c == '.' || c == ','; }
@@ -99,19 +99,19 @@ Punctuation::Punctuation(Instance *instance)
 
     commitConn_ = instance_->connect<Instance::CommitFilter>(
         [this](InputContext *ic, const std::string &sentence) {
-            auto state = ic->propertyFor(&factory_);
+            auto *state = ic->propertyFor(&factory_);
             // Though sentence is utf8, we only check ascii.
-            if (sentence.size() && (charutils::isupper(sentence.back()) ||
-                                    charutils::islower(sentence.back()) ||
-                                    charutils::isdigit(sentence.back()))) {
+            if (!sentence.empty() && (charutils::isupper(sentence.back()) ||
+                                      charutils::islower(sentence.back()) ||
+                                      charutils::isdigit(sentence.back()))) {
                 state->lastIsEngOrDigit_ = sentence.back();
             } else {
                 state->lastIsEngOrDigit_ = '\0';
             }
         });
     auto processKeyEvent = [this](const KeyEventBase &event) {
-        auto &keyEvent = static_cast<const ForwardKeyEvent &>(event);
-        auto state = keyEvent.inputContext()->propertyFor(&factory_);
+        const auto &keyEvent = static_cast<const ForwardKeyEvent &>(event);
+        auto *state = keyEvent.inputContext()->propertyFor(&factory_);
         if (keyEvent.isRelease()) {
             return;
         }
@@ -159,8 +159,8 @@ Punctuation::Punctuation(Instance *instance)
         EventType::InputContextFocusIn, EventWatcherPhase::PostInputMethod,
         [this](Event &event) {
             auto &icEvent = static_cast<InputContextEvent &>(event);
-            auto ic = icEvent.inputContext();
-            auto state = ic->propertyFor(&factory_);
+            auto *ic = icEvent.inputContext();
+            auto *state = ic->propertyFor(&factory_);
             if (ic->capabilityFlags().test(CapabilityFlag::SurroundingText)) {
                 state->mayRebuildStateFromSurroundingText_ = true;
             }
@@ -169,8 +169,8 @@ Punctuation::Punctuation(Instance *instance)
         EventType::InputContextReset, EventWatcherPhase::PostInputMethod,
         [this](Event &event) {
             auto &icEvent = static_cast<InputContextEvent &>(event);
-            auto ic = icEvent.inputContext();
-            auto state = ic->propertyFor(&factory_);
+            auto *ic = icEvent.inputContext();
+            auto *state = ic->propertyFor(&factory_);
             state->lastIsEngOrDigit_ = 0;
             // Backup the state.
             state->notConvertedBackup_ = state->notConverted_;
@@ -186,8 +186,8 @@ Punctuation::Punctuation(Instance *instance)
         EventType::InputContextSurroundingTextUpdated,
         EventWatcherPhase::PostInputMethod, [this](Event &event) {
             auto &icEvent = static_cast<InputContextEvent &>(event);
-            auto ic = icEvent.inputContext();
-            auto state = ic->propertyFor(&factory_);
+            auto *ic = icEvent.inputContext();
+            auto *state = ic->propertyFor(&factory_);
             // Enable to rebuild punctuation state from surrounding text.
             if (state->mayRebuildStateFromSurroundingText_) {
                 state->mayRebuildStateFromSurroundingText_ = false;
@@ -201,7 +201,7 @@ Punctuation::Punctuation(Instance *instance)
                 return;
             }
             // We need text before the cursor.
-            auto &text = ic->surroundingText().text();
+            const auto &text = ic->surroundingText().text();
             auto cursor = ic->surroundingText().cursor();
             auto length = utf8::lengthValidated(text);
             if (length == utf8::INVALID_LENGTH) {
@@ -304,31 +304,29 @@ const std::string &Punctuation::pushPunctuation(const std::string &language,
     if (!enabled()) {
         return emptyString;
     }
-    auto state = ic->propertyFor(&factory_);
+    auto *state = ic->propertyFor(&factory_);
     if (state->lastIsEngOrDigit_ && *config_.halfWidthPuncAfterLatinOrNumber &&
         dontConvertWhenEn(unicode)) {
         state->notConverted_ = unicode;
         return emptyString;
-    } else {
-        auto iter = profiles_.find(language);
-        if (iter == profiles_.end()) {
-            return emptyString;
-        }
-        auto &result = getPunctuation(language, unicode);
-        state->notConverted_ = 0;
-        if (result.second.empty()) {
-            return result.first;
-        } else {
-            auto iter = state->lastPuncStack_.find(unicode);
-            if (iter != state->lastPuncStack_.end()) {
-                state->lastPuncStack_.erase(iter);
-                return result.second;
-            } else {
-                state->lastPuncStack_.emplace(unicode, result.first);
-                return result.first;
-            }
-        }
     }
+    auto iter = profiles_.find(language);
+    if (iter == profiles_.end()) {
+        return emptyString;
+    }
+    const auto &result = getPunctuation(language, unicode);
+    state->notConverted_ = 0;
+    if (result.second.empty()) {
+        return result.first;
+    }
+
+    auto puncIter = state->lastPuncStack_.find(unicode);
+    if (puncIter != state->lastPuncStack_.end()) {
+        state->lastPuncStack_.erase(puncIter);
+        return result.second;
+    }
+    state->lastPuncStack_.emplace(unicode, result.first);
+    return result.first;
 }
 
 const std::string &Punctuation::cancelLast(const std::string &language,
@@ -336,9 +334,9 @@ const std::string &Punctuation::cancelLast(const std::string &language,
     if (!enabled()) {
         return emptyString;
     }
-    auto state = ic->propertyFor(&factory_);
+    auto *state = ic->propertyFor(&factory_);
     if (dontConvertWhenEn(state->notConverted_)) {
-        auto &result = getPunctuation(language, state->notConverted_);
+        const auto &result = getPunctuation(language, state->notConverted_);
         state->notConverted_ = 0;
         return result.first;
     }

@@ -44,7 +44,7 @@ public:
         : CandidateWord(std::move(text)), engine_(engine), idx_(idx) {}
 
     void select(InputContext *inputContext) const override {
-        auto state = inputContext->propertyFor(&engine_->factory());
+        auto *state = inputContext->propertyFor(&engine_->factory());
         // nullptr means use the last requested entry.
         auto *context = state->updateContext(nullptr);
         if (!context || idx_ >= context->candidates().size()) {
@@ -70,7 +70,7 @@ public:
     TablePinyinCandidateWord(TableEngine *engine, std::string word,
                              const libime::TableBasedDictionary &dict,
                              bool customHint)
-        : CandidateWord(), engine_(engine), word_(std::move(word)) {
+        : engine_(engine), word_(std::move(word)) {
         Text text;
         text.append(word_);
         if (utf8::lengthValidated(word_) == 1) {
@@ -88,7 +88,7 @@ public:
     }
 
     void select(InputContext *inputContext) const override {
-        auto state = inputContext->propertyFor(&engine_->factory());
+        auto *state = inputContext->propertyFor(&engine_->factory());
         inputContext->commitString(word_);
         state->pushLastCommit(word_);
         state->reset();
@@ -156,7 +156,7 @@ void TableState::pushLastCommit(const std::string &lastSegment) {
 }
 
 void TableState::reset(const InputMethodEntry *entry) {
-    auto context = updateContext(entry);
+    auto *context = updateContext(entry);
     if (context) {
         context->clear();
     }
@@ -185,7 +185,7 @@ bool TableState::isContextEmpty() const {
 
 bool TableState::handleCandidateList(const TableConfig &config,
                                      KeyEvent &event) {
-    auto inputContext = event.inputContext();
+    auto *inputContext = event.inputContext();
     // check if we can select candidate.
     auto candidateList = inputContext->inputPanel().candidateList();
     if (!candidateList) {
@@ -202,7 +202,7 @@ bool TableState::handleCandidateList(const TableConfig &config,
     }
 
     if (event.key().checkKeyList(*config.prevPage)) {
-        auto pageable = candidateList->toPageable();
+        auto *pageable = candidateList->toPageable();
         if (!pageable->hasPrev()) {
             if (pageable->usedNextBefore()) {
                 event.filterAndAccept();
@@ -223,14 +223,15 @@ bool TableState::handleCandidateList(const TableConfig &config,
         inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
         return true;
     }
-    if (auto movable = candidateList->toCursorMovable()) {
+    if (auto *movable = candidateList->toCursorMovable()) {
         if (event.key().checkKeyList(*config.nextCandidate)) {
             movable->nextCandidate();
             inputContext->updateUserInterface(
                 UserInterfaceComponent::InputPanel);
             event.filterAndAccept();
             return true;
-        } else if (event.key().checkKeyList(*config.prevCandidate)) {
+        }
+        if (event.key().checkKeyList(*config.prevCandidate)) {
             movable->prevCandidate();
             inputContext->updateUserInterface(
                 UserInterfaceComponent::InputPanel);
@@ -243,7 +244,7 @@ bool TableState::handleCandidateList(const TableConfig &config,
 }
 
 bool TableState::handlePinyinMode(KeyEvent &event) {
-    auto context = context_.get();
+    auto *context = context_.get();
     const auto &pinyinKey = *context->config().pinyinKey;
     if (pinyinKey.sym() == FcitxKey_None) {
         return false;
@@ -272,7 +273,7 @@ bool TableState::handlePinyinMode(KeyEvent &event) {
             pinyinModeBuffer_.type(Key::keySymToUTF8(event.key().sym()));
             needUpdate = true;
         } else if (event.key().check(FcitxKey_BackSpace)) {
-            if (pinyinModeBuffer_.size()) {
+            if (!pinyinModeBuffer_.empty()) {
                 pinyinModeBuffer_.backspace();
                 needUpdate = true;
             } else {
@@ -288,7 +289,8 @@ bool TableState::handlePinyinMode(KeyEvent &event) {
                 }
                 candidateList->candidate(idx).select(ic_);
                 return true;
-            } else if (!pinyinModeBuffer_.size()) {
+            }
+            if (pinyinModeBuffer_.empty()) {
                 if (!lastSegment_.empty()) {
                     ic_->commitString(lastSegment_);
                 }
@@ -306,9 +308,9 @@ bool TableState::handlePinyinMode(KeyEvent &event) {
         auto &inputPanel = ic_->inputPanel();
         ic_->inputPanel().reset();
 
-        if (pinyinModeBuffer_.size()) {
-            auto &dict = engine_->pinyinDict();
-            auto &lm = engine_->pinyinModel();
+        if (!pinyinModeBuffer_.empty()) {
+            const auto &dict = engine_->pinyinDict();
+            const auto &lm = engine_->pinyinModel();
             auto pinyin = libime::PinyinEncoder::encodeOneUserPinyin(
                 pinyinModeBuffer_.userInput());
 
@@ -361,7 +363,7 @@ bool TableState::handlePinyinMode(KeyEvent &event) {
 }
 
 bool TableState::handleForgetWord(KeyEvent &event) {
-    auto inputContext = event.inputContext();
+    auto *inputContext = event.inputContext();
     auto candidateList = inputContext->inputPanel().candidateList();
     if (!candidateList || candidateList->size() == 0) {
         return false;
@@ -565,14 +567,14 @@ void TableState::forgetCandidateWord(size_t idx) {
 
 void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
     bool needUpdate = false;
-    auto inputContext = event.inputContext();
+    auto *inputContext = event.inputContext();
     bool lastIsPunc = lastIsPunc_;
-    auto context = updateContext(&entry);
+    auto *context = updateContext(&entry);
     if (!context) {
         return;
     }
 
-    auto &config = context->config();
+    const auto &config = context->config();
     // 2nd/3rd selection is allowed to be modifier only, handle them before we
     // skip the release.
     if (handle2nd3rdCandidate(config, event)) {
@@ -688,7 +690,7 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
             cancelLastEvent_ = engine_->instance()->eventLoop().addTimeEvent(
                 CLOCK_MONOTONIC, now(CLOCK_MONOTONIC) + 300, 0,
                 [this, ref, puncStr](EventSourceTime *, uint64_t) {
-                    if (auto inputContext = ref.get()) {
+                    if (auto *inputContext = ref.get()) {
                         inputContext->commitString(puncStr);
                     }
                     cancelLastEvent_.reset();
@@ -740,13 +742,13 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
                 entry.languageCode(), inputContext, chr);
         }
         if (event.key().check(*config.quickphrase) && engine_->quickphrase()) {
-            auto s = punc.size() ? punc : utf8::UCS4ToUTF8(chr);
-            auto alt = punc.size() ? utf8::UCS4ToUTF8(chr) : "";
+            auto s = !punc.empty() ? punc : utf8::UCS4ToUTF8(chr);
+            auto alt = !punc.empty() ? utf8::UCS4ToUTF8(chr) : "";
             std::string text;
-            if (s.size()) {
+            if (!s.empty()) {
                 text += alt + _(" for ") + s;
             }
-            if (alt.size()) {
+            if (!alt.empty()) {
                 text += _(" Return for ") + alt;
             }
             engine_->quickphrase()->call<IQuickPhrase::trigger>(
@@ -755,7 +757,7 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
             return;
         }
 
-        if (punc.size()) {
+        if (!punc.empty()) {
             event.filterAndAccept();
             inputContext->commitString(punc);
         }
@@ -769,7 +771,7 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
 
 bool TableState::handle2nd3rdCandidate(const TableConfig &config,
                                        KeyEvent &event) {
-    auto inputContext = event.inputContext();
+    auto *inputContext = event.inputContext();
     auto candidateList = inputContext->inputPanel().candidateList();
     if (!candidateList) {
         return false;
@@ -803,10 +805,9 @@ bool TableState::handle2nd3rdCandidate(const TableConfig &config,
                     }
                     event.filterAndAccept();
                     return true;
-                } else {
-                    event.filter();
-                    return true;
                 }
+                event.filter();
+                return true;
             }
             idx++;
         }
@@ -824,14 +825,13 @@ bool TableState::handle2nd3rdCandidate(const TableConfig &config,
                     // through to client.
                     event.filter();
                     return true;
-                } else {
-                    if (keyHandler.selection < candidateList->size()) {
-                        candidateList->candidate(keyHandler.selection)
-                            .select(inputContext);
-                    }
-                    event.filterAndAccept();
-                    return true;
                 }
+                if (keyHandler.selection < candidateList->size()) {
+                    candidateList->candidate(keyHandler.selection)
+                        .select(inputContext);
+                }
+                event.filterAndAccept();
+                return true;
             }
             idx++;
         }
@@ -840,7 +840,7 @@ bool TableState::handle2nd3rdCandidate(const TableConfig &config,
 }
 
 void TableState::commitBuffer(bool commitCode, bool noRealCommit) {
-    auto context = context_.get();
+    auto *context = context_.get();
     if (!context) {
         return;
     }
@@ -875,12 +875,12 @@ void TableState::commitBuffer(bool commitCode, bool noRealCommit) {
 }
 
 void TableState::commitAfterSelect(int commitFrom) {
-    auto context = context_.get();
+    auto *context = context_.get();
     if (!context) {
         return;
     }
 
-    auto &config = context->config();
+    const auto &config = context->config();
     if (!*config.commitAfterSelect) {
         return;
     }
@@ -906,12 +906,12 @@ void TableState::commitAfterSelect(int commitFrom) {
 void TableState::updateUI() {
     ic_->inputPanel().reset();
 
-    auto context = context_.get();
+    auto *context = context_.get();
     if (!context) {
         return;
     }
-    auto &config = context->config();
-    if (context->userInput().size()) {
+    const auto &config = context->config();
+    if (!context->userInput().empty()) {
         auto candidates = context->candidates();
         auto &inputPanel = ic_->inputPanel();
         if (context->candidates().size()) {

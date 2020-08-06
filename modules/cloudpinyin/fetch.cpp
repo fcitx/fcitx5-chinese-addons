@@ -31,19 +31,19 @@ FetchThread::~FetchThread() {
     exit();
     thread_->join();
 
-    while (workingQueue.size()) {
-        auto queue = &workingQueue.front();
+    while (!workingQueue.empty()) {
+        auto *queue = &workingQueue.front();
         workingQueue.pop_front();
         curl_multi_remove_handle(curlm_, queue->curl());
         queue->release();
     }
-    while (pendingQueue.size()) {
-        auto queue = &pendingQueue.front();
+    while (!pendingQueue.empty()) {
+        auto *queue = &pendingQueue.front();
         pendingQueue.pop_front();
         queue->release();
     }
-    while (finishingQueue.size()) {
-        auto queue = &finishingQueue.front();
+    while (!finishingQueue.empty()) {
+        auto *queue = &finishingQueue.front();
         finishingQueue.pop_front();
         queue->release();
     }
@@ -89,7 +89,7 @@ void FetchThread::processMessages() {
             int curl_result = curl_message->data.result;
             void *p = nullptr;
             curl_easy_getinfo(curl_message->easy_handle, CURLINFO_PRIVATE, &p);
-            auto queue = static_cast<CurlQueue *>(p);
+            auto *queue = static_cast<CurlQueue *>(p);
             curl_multi_remove_handle(curlm_, queue->curl());
             queue->finish(curl_result);
             queue->remove();
@@ -109,12 +109,12 @@ void FetchThread::curl(curl_socket_t s, int action) {
     } else {
         auto iter = events_.find(s);
         if (iter == events_.end()) {
-            auto that_ = this;
+            auto *that_ = this;
             auto p = events_.emplace(
                 s, loop_->addIOEvent(
                        s, IOEventFlags(0),
                        [that_](EventSourceIO *, int fd, IOEventFlags flags) {
-                           auto that = that_;
+                           auto *that = that_;
                            // make sure "that" is valid since io handler may
                            // free itself.
                            that->handleIO(fd, flags);
@@ -137,7 +137,7 @@ void FetchThread::curl(curl_socket_t s, int action) {
 }
 
 int FetchThread::curlTimerCallback(CURLM *, long timeout_ms, void *user) {
-    auto self = static_cast<FetchThread *>(user);
+    auto *self = static_cast<FetchThread *>(user);
     self->curlTimer(timeout_ms);
     return 0;
 }
@@ -174,7 +174,7 @@ void FetchThread::finished(CurlQueue *queue) {
     cloudPinyin_->notifyFinished();
 }
 
-bool FetchThread::addRequest(SetupRequestCallback callback) {
+bool FetchThread::addRequest(const SetupRequestCallback &callback) {
     CurlQueue *queue = nullptr;
     for (auto &handle : handles_) {
         if (!handle.busy()) {
@@ -196,8 +196,8 @@ bool FetchThread::addRequest(SetupRequestCallback callback) {
     dispatcher_.schedule([this]() {
         std::lock_guard<std::mutex> lock(pendingQueueLock);
 
-        while (pendingQueue.size()) {
-            auto queue = &pendingQueue.front();
+        while (!pendingQueue.empty()) {
+            auto *queue = &pendingQueue.front();
             pendingQueue.pop_front();
             curl_multi_add_handle(curlm_, queue->curl());
             workingQueue.push_back(*queue);
@@ -216,7 +216,7 @@ void FetchThread::exit() {
 CurlQueue *FetchThread::popFinished() {
     std::lock_guard<std::mutex> lock(finishQueueLock);
     CurlQueue *result = nullptr;
-    if (finishingQueue.size()) {
+    if (!finishingQueue.empty()) {
         result = &finishingQueue.front();
         finishingQueue.pop_front();
     }

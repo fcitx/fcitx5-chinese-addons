@@ -42,7 +42,7 @@ public:
         std::string hanzi;
         if (start != std::string::npos) {
             start += strlen("\",[\"");
-            auto end = result.find("\"", start);
+            auto end = result.find('\"', start);
             if (end != std::string::npos && end > start) {
                 hanzi = result.substr(start, end - start);
             }
@@ -126,7 +126,7 @@ void CloudPinyin::request(const std::string &pinyin,
         callback(pinyin, "");
         return;
     }
-    if (auto value = cache_.find(pinyin)) {
+    if (auto *value = cache_.find(pinyin)) {
         callback(pinyin, *value);
     } else {
         auto backend = config_.backend.value();
@@ -135,7 +135,7 @@ void CloudPinyin::request(const std::string &pinyin,
             callback(pinyin, "");
             return;
         }
-        auto b = iter->second.get();
+        auto *b = iter->second.get();
         if (!thread_->addRequest([b, &pinyin, &callback](CurlQueue *queue) {
                 b->prepareRequest(queue, pinyin);
                 queue->setPinyin(pinyin);
@@ -176,7 +176,7 @@ void CloudPinyin::notifyFinished() {
                 hanzi = "";
             }
             item->callback()(item->pinyin(), hanzi);
-            if (hanzi.size()) {
+            if (!hanzi.empty()) {
                 cache_.insert(item->pinyin(), hanzi);
             }
             item->release();

@@ -17,7 +17,7 @@ int main() {
     fcitx::AddonManager manager(TESTING_BINARY_DIR "/modules/punctuation");
     manager.registerDefaultLoader(nullptr);
     manager.load();
-    auto punctuation = manager.addon("punctuation", true);
+    auto *punctuation = manager.addon("punctuation", true);
     FCITX_ASSERT(punctuation);
     FCITX_ASSERT(
         punctuation->call<fcitx::IPunctuation::getPunctuation>("zh_CN", ',')

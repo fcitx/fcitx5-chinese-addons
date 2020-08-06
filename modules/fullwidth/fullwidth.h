@@ -68,7 +68,6 @@ private:
     bool enabled_ = false;
     fcitx::Instance *instance_;
     FullWidthConfig config_;
-    fcitx::AddonInstance *notifications_ = nullptr;
     std::vector<std::unique_ptr<fcitx::HandlerTableEntry<fcitx::EventHandler>>>
         eventHandlers_;
     fcitx::ScopedConnection commitFilterConn_;
