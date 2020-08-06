@@ -66,8 +66,9 @@ std::string_view py_enhance_get_vokal(int index, int tone) {
     if (index < 0 || index >= vokals_count) {
         return "";
     }
-    if (tone < 0 || tone > 4)
+    if (tone < 0 || tone > 4) {
         tone = 0;
+    }
     return vokals_table[index][tone];
 }
 
@@ -142,8 +143,9 @@ bool PinyinLookup::load() {
         if (read(file.fd(), &count, 1) != 1) {
             return false;
         }
-        if (count == 0)
+        if (count == 0) {
             continue;
+        }
         auto &data = data_[chr];
         while (count--) {
             uint8_t buf[3];

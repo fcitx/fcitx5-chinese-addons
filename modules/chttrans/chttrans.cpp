@@ -27,8 +27,8 @@ using namespace fcitx;
 static ChttransIMType inputMethodType(const InputMethodEntry &entry) {
     if (entry.languageCode() == "zh_CN") {
         return ChttransIMType::Simp;
-    } else if (entry.languageCode() == "zh_HK" ||
-               entry.languageCode() == "zh_TW") {
+    }
+    if (entry.languageCode() == "zh_HK" || entry.languageCode() == "zh_TW") {
         return ChttransIMType::Trad;
     }
     return ChttransIMType::Other;
@@ -52,9 +52,9 @@ Chttrans::Chttrans(fcitx::Instance *instance) : instance_(instance) {
             if (keyEvent.isRelease()) {
                 return;
             }
-            auto ic = keyEvent.inputContext();
-            auto engine = instance_->inputMethodEngine(ic);
-            auto entry = instance_->inputMethodEntry(ic);
+            auto *ic = keyEvent.inputContext();
+            auto *engine = instance_->inputMethodEngine(ic);
+            const auto *entry = instance_->inputMethodEntry(ic);
             if (!engine || !entry ||
                 !toggleAction_.isParent(&ic->statusArea())) {
                 return;
@@ -138,8 +138,8 @@ Chttrans::Chttrans(fcitx::Instance *instance) : instance_(instance) {
 }
 
 void Chttrans::toggle(InputContext *ic) {
-    auto engine = instance_->inputMethodEngine(ic);
-    auto entry = instance_->inputMethodEntry(ic);
+    auto *engine = instance_->inputMethodEngine(ic);
+    const auto *entry = instance_->inputMethodEntry(ic);
     if (!engine || !entry || !toggleAction_.isParent(&ic->statusArea())) {
         return;
     }
@@ -183,14 +183,13 @@ std::string Chttrans::convert(ChttransIMType type, const std::string &str) {
 
     if (type == ChttransIMType::Trad) {
         return iter->second->convertSimpToTrad(str);
-    } else {
-        return iter->second->convertTradToSimp(str);
     }
+    return iter->second->convertTradToSimp(str);
 }
 
 bool Chttrans::needConvert(fcitx::InputContext *inputContext) {
-    auto engine = instance_->inputMethodEngine(inputContext);
-    auto entry = instance_->inputMethodEntry(inputContext);
+    auto *engine = instance_->inputMethodEngine(inputContext);
+    const auto *entry = instance_->inputMethodEntry(inputContext);
     if (!engine || !entry) {
         return false;
     }
@@ -203,8 +202,8 @@ bool Chttrans::needConvert(fcitx::InputContext *inputContext) {
 }
 
 ChttransIMType Chttrans::convertType(fcitx::InputContext *inputContext) {
-    auto engine = instance_->inputMethodEngine(inputContext);
-    auto entry = instance_->inputMethodEntry(inputContext);
+    auto *engine = instance_->inputMethodEngine(inputContext);
+    const auto *entry = instance_->inputMethodEntry(inputContext);
     if (!engine || !entry) {
         return ChttransIMType::Other;
     }

@@ -45,7 +45,7 @@ TableEngine::TableEngine(Instance *instance)
         EventType::InputMethodGroupChanged, EventWatcherPhase::Default,
         [this](Event &) {
             instance_->inputContextManager().foreach([this](InputContext *ic) {
-                auto state = ic->propertyFor(&factory_);
+                auto *state = ic->propertyFor(&factory_);
                 state->release();
                 return true;
             });
@@ -65,13 +65,13 @@ void TableEngine::reloadConfig() { readAsIni(config_, "conf/table.conf"); }
 
 void TableEngine::activate(const fcitx::InputMethodEntry &entry,
                            fcitx::InputContextEvent &event) {
-    auto inputContext = event.inputContext();
-    auto state = inputContext->propertyFor(&factory_);
-    auto context = state->updateContext(&entry);
+    auto *inputContext = event.inputContext();
+    auto *state = inputContext->propertyFor(&factory_);
+    auto *context = state->updateContext(&entry);
     if (stringutils::startsWith(entry.languageCode(), "zh_")) {
         chttrans();
-        for (auto actionName : {"chttrans", "punctuation"}) {
-            if (auto action = instance_->userInterfaceManager().lookupAction(
+        for (const auto *actionName : {"chttrans", "punctuation"}) {
+            if (auto *action = instance_->userInterfaceManager().lookupAction(
                     actionName)) {
                 inputContext->statusArea().addAction(StatusGroup::InputMethod,
                                                      action);
@@ -79,7 +79,7 @@ void TableEngine::activate(const fcitx::InputMethodEntry &entry,
         }
     }
     if (context && *context->config().useFullWidth && fullwidth()) {
-        if (auto action =
+        if (auto *action =
                 instance_->userInterfaceManager().lookupAction("fullwidth")) {
             inputContext->statusArea().addAction(StatusGroup::InputMethod,
                                                  action);
@@ -89,14 +89,14 @@ void TableEngine::activate(const fcitx::InputMethodEntry &entry,
 
 void TableEngine::deactivate(const fcitx::InputMethodEntry &entry,
                              fcitx::InputContextEvent &event) {
-    auto inputContext = event.inputContext();
+    auto *inputContext = event.inputContext();
     inputContext->statusArea().clearGroup(StatusGroup::InputMethod);
     reset(entry, event);
 }
 
 std::string TableEngine::subMode(const fcitx::InputMethodEntry &entry,
                                  fcitx::InputContext &ic) {
-    auto state = ic.propertyFor(&factory_);
+    auto *state = ic.propertyFor(&factory_);
     if (!state->updateContext(&entry)) {
         return _("Not available");
     }
@@ -108,17 +108,17 @@ void TableEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
     TABLE_DEBUG() << "Table receive key: " << event.key() << " "
                   << event.isRelease();
 
-    auto inputContext = event.inputContext();
-    auto state = inputContext->propertyFor(&factory_);
+    auto *inputContext = event.inputContext();
+    auto *state = inputContext->propertyFor(&factory_);
     state->keyEvent(entry, event);
 }
 
 void TableEngine::reset(const InputMethodEntry &entry,
                         InputContextEvent &event) {
     TABLE_DEBUG() << "TableEngine::reset";
-    auto inputContext = event.inputContext();
+    auto *inputContext = event.inputContext();
 
-    auto state = inputContext->propertyFor(&factory_);
+    auto *state = inputContext->propertyFor(&factory_);
     // The reason that we do not commit here is we want to force the behavior.
     // When client get unfocused, the framework will try to commit the string.
     state->commitBuffer(true, event.type() == EventType::InputContextFocusOut);

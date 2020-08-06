@@ -25,8 +25,9 @@ int FileListModel::rowCount(const QModelIndex &) const {
 }
 
 QVariant FileListModel::data(const QModelIndex &index, int role) const {
-    if (!index.isValid() || index.row() >= fileList_.size())
+    if (!index.isValid() || index.row() >= fileList_.size()) {
         return QVariant();
+    }
 
     switch (role) {
     case Qt::DisplayRole: {

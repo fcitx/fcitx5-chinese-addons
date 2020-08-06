@@ -18,7 +18,7 @@ class PinyinDictManager : public FcitxQtConfigUIWidget,
                           public Ui::PinyinDictManager {
     Q_OBJECT
 public:
-    PinyinDictManager(QWidget *widget);
+    PinyinDictManager(QWidget *parent);
 
     void load() override;
     void save() override;

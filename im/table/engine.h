@@ -50,7 +50,7 @@ public:
                     InputContextEvent &event) override;
     void keyEvent(const InputMethodEntry &entry, KeyEvent &keyEvent) override;
     std::string subMode(const InputMethodEntry &entry,
-                        InputContext &event) override;
+                        InputContext &ic) override;
     void reloadConfig() override;
     void reset(const InputMethodEntry &entry,
                InputContextEvent &event) override;

@@ -117,9 +117,8 @@ bool BrowserDialog::linkClicked(const QUrl &url) {
                                    "redirect to home page."));
         webView_->load(QUrl(URL_BASE));
         return false;
-    } else {
-        return true;
     }
+    return true;
 }
 
 } // namespace fcitx

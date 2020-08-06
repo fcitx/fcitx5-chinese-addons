@@ -22,9 +22,8 @@ void FileDownloader::start() {
         emit message(QMessageBox::Warning, _("Create temporary file failed."));
         emit finished(false);
         return;
-    } else {
-        emit message(QMessageBox::Information, _("Temporary file created."));
     }
+    emit message(QMessageBox::Information, _("Temporary file created."));
 
     QNetworkRequest request(url_);
     request.setRawHeader(

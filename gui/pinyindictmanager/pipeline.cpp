@@ -32,7 +32,7 @@ void Pipeline::abort() {
 
 void Pipeline::reset() {
     abort();
-    for (auto job : jobs_) {
+    for (auto *job : jobs_) {
         delete job;
     }
     jobs_.clear();
@@ -55,7 +55,7 @@ void Pipeline::startNext() {
 }
 
 void Pipeline::emitFinished(bool result) {
-    for (auto job : jobs_) {
+    for (auto *job : jobs_) {
         job->cleanUp();
     }
     emit finished(result);

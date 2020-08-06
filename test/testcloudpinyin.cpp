@@ -22,7 +22,7 @@ int main(int argc, char *argv[]) {
     manager.setEventLoop(&loop);
     manager.registerDefaultLoader(nullptr);
     manager.load();
-    auto cloudpinyin = manager.addon("cloudpinyin", true);
+    auto *cloudpinyin = manager.addon("cloudpinyin", true);
     int returned = 0;
     auto callback = [&loop, &returned](const std::string &pinyin,
                                        const std::string &hanzi) {

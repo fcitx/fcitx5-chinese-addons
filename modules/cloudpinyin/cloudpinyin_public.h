@@ -41,14 +41,14 @@ public:
                              fcitx::InputContext *inputContext,
                              CloudPinyinSelectedCallback callback)
         : CandidateWord(fcitx::Text{}), selectedSentence_(selectedSentence),
-          inputContext_(inputContext), callback_(callback) {
+          inputContext_(inputContext), callback_(std::move(callback)) {
         // use cloud unicode char
         setText(fcitx::Text("\xe2\x98\x81"));
         auto ref = watch();
         cloudpinyin_->call<fcitx::ICloudPinyin::request>(
             pinyin, [ref](const std::string &pinyin, const std::string &hanzi) {
                 FCITX_UNUSED(pinyin);
-                auto self = ref.get();
+                auto *self = ref.get();
                 if (self) {
                     self->fill(hanzi);
                 }
@@ -80,12 +80,12 @@ private:
     }
 
     void update() {
-        auto inputContext = inputContext_;
+        auto *inputContext = inputContext_;
         auto candidateList = inputContext_->inputPanel().candidateList();
         if (!candidateList) {
             return;
         }
-        auto modifiable = candidateList->toModifiable();
+        auto *modifiable = candidateList->toModifiable();
         if (!modifiable) {
             return;
         }
@@ -93,7 +93,7 @@ private:
         int idx = -1;
         bool dup = false;
         for (auto i = 0, e = modifiable->totalSize(); i < e; i++) {
-            auto &candidate = modifiable->candidateFromAll(i);
+            const auto &candidate = modifiable->candidateFromAll(i);
             if (static_cast<CandidateWord *>(this) == &candidate) {
                 idx = i;
             } else {

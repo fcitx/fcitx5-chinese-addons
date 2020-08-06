@@ -17,7 +17,7 @@ int main() {
     fcitx::AddonManager manager(TESTING_BINARY_DIR "/modules/pinyinhelper");
     manager.registerDefaultLoader(nullptr);
     manager.load();
-    auto pinyinhelper = manager.addon("pinyinhelper", true);
+    auto *pinyinhelper = manager.addon("pinyinhelper", true);
     FCITX_ASSERT(pinyinhelper);
     std::vector<std::string> expect{"nǐ"};
     auto result = pinyinhelper->call<fcitx::IPinyinHelper::lookup>(

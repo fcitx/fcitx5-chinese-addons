@@ -56,7 +56,7 @@ std::string convert(const std::unordered_map<uint32_t, std::string> &transMap,
                     const std::string &strHZ) {
     auto len = utf8::length(strHZ);
     std::string result;
-    auto ps = strHZ.c_str();
+    const auto *ps = strHZ.c_str();
     for (size_t i = 0; i < len; ++i) {
         uint32_t wc;
         char *nps;

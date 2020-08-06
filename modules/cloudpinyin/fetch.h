@@ -64,14 +64,16 @@ public:
     const std::vector<char> &result() { return data_; }
 
     CloudPinyinCallback callback() { return callback_; }
-    void setCallback(CloudPinyinCallback callback) { callback_ = callback; }
+    void setCallback(CloudPinyinCallback callback) {
+        callback_ = std::move(callback);
+    }
 
     int httpCode() const { return httpCode_; }
 
 private:
     static size_t curlWriteFunction(char *ptr, size_t size, size_t nmemb,
                                     void *userdata) {
-        auto self = static_cast<CurlQueue *>(userdata);
+        auto *self = static_cast<CurlQueue *>(userdata);
         return self->curlWrite(ptr, size, nmemb);
     }
 
@@ -85,8 +87,9 @@ private:
 
         if ((unsigned long long)((nmemb | size) & ((unsigned long long)SIZE_MAX
                                                    << (sizeof(size_t) << 2))) &&
-            (realsize / size != nmemb))
+            (realsize / size != nmemb)) {
             return 0;
+        }
 
         if (SIZE_MAX - data_.size() < realsize) {
             realsize = SIZE_MAX - data_.size();
@@ -120,7 +123,7 @@ public:
     ~FetchThread();
 
     // Call from main thread.
-    bool addRequest(SetupRequestCallback);
+    bool addRequest(const SetupRequestCallback &callback);
     CurlQueue *popFinished();
 
 private:

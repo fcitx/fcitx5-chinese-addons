@@ -19,7 +19,7 @@ using namespace fcitx;
 
 void scheduleEvent(EventDispatcher *dispatcher, Instance *instance) {
     dispatcher->schedule([instance]() {
-        auto pinyin = instance->addonManager().addon("pinyin", true);
+        auto *pinyin = instance->addonManager().addon("pinyin", true);
         FCITX_ASSERT(pinyin);
     });
     dispatcher->schedule([dispatcher, instance]() {
@@ -28,7 +28,7 @@ void scheduleEvent(EventDispatcher *dispatcher, Instance *instance) {
             .inputMethodList()
             .push_back(InputMethodGroupItem("pinyin"));
         instance->inputMethodManager().currentGroup().setDefaultInputMethod("");
-        auto testfrontend = instance->addonManager().addon("testfrontend");
+        auto *testfrontend = instance->addonManager().addon("testfrontend");
         auto uuid =
             testfrontend->call<ITestFrontend::createInputContext>("testapp");
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Control+space"),

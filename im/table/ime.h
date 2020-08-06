@@ -159,7 +159,6 @@ public:
 
     const TableConfig &config(const std::string &name);
 
-public:
     std::tuple<libime::TableBasedDictionary *, libime::UserLanguageModel *,
                const TableConfig *>
     requestDict(const std::string &name);
