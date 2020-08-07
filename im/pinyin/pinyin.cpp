@@ -1493,7 +1493,8 @@ void PinyinEngine::cloudPinyinSelected(InputContext *inputContext,
                                        const std::string &word) {
     auto *state = inputContext->propertyFor(&factory_);
     auto words = state->context_.selectedWords();
-    auto preedit = state->context_.preedit();
+    // This ensure us to convert pinyin to the right one.
+    auto preedit = state->context_.preedit(libime::PinyinPreeditMode::RawText);
     do {
         if (!stringutils::startsWith(preedit, selected)) {
             break;
@@ -1553,6 +1554,11 @@ void PinyinEngine::cloudPinyinSelected(InputContext *inputContext,
                     bool end = false;
                     for (auto &sppinyin :
                          MakeIterRange(pinyinsIter, pinyinsEnd)) {
+                        // Likely something goes wrong.
+                        if (sppinyin.size() > 2) {
+                            end = true;
+                            break;
+                        }
                         sppinyin = libime::PinyinEncoder::shuangpinToPinyin(
                             sppinyin, *ime_->shuangpinProfile());
                         if (sppinyin.empty()) {
@@ -1565,6 +1571,8 @@ void PinyinEngine::cloudPinyinSelected(InputContext *inputContext,
                     }
                 }
                 auto joined = stringutils::join(pinyinsIter, pinyinsEnd, "'");
+                PINYIN_DEBUG()
+                    << "Cloud pinyin saves word: " << wordView << " " << joined;
                 ime_->dict()->addWord(libime::PinyinDictionary::UserDict,
                                       joined, wordView);
                 words.push_back(std::string{wordView});
