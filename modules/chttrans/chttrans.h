@@ -93,18 +93,11 @@ public:
     std::string convert(ChttransIMType type, const std::string &str);
     void toggle(fcitx::InputContext *ic);
 
-    fcitx::AddonInstance *notifications() {
-        if (!notifications_) {
-            notifications_ =
-                instance_->addonManager().addon("notifications", true);
-        }
-        return notifications_;
-    }
+    FCITX_ADDON_DEPENDENCY_LOADER(notifications, instance_->addonManager());
 
 private:
     fcitx::Instance *instance_;
     ChttransConfig config_;
-    fcitx::AddonInstance *notifications_ = nullptr;
     std::unique_ptr<fcitx::HandlerTableEntry<fcitx::EventHandler>>
         eventHandler_;
     std::unordered_map<ChttransEngine, std::unique_ptr<ChttransBackend>,

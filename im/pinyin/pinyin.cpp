@@ -696,6 +696,43 @@ void PinyinEngine::loadExtraDict() {
 void PinyinEngine::reloadConfig() {
     PINYIN_DEBUG() << "Reload pinyin config.";
     readAsIni(config_, "conf/pinyin.conf");
+    if (*config_.firstRun) {
+        config_.firstRun.setValue(false);
+        safeSaveAsIni(config_, "conf/pinyin.conf");
+        deferEvent_ = instance_->eventLoop().addDeferEvent([this](
+                                                               EventSource *) {
+            if (cloudpinyin() && !*config_.cloudPinyinEnabled) {
+                auto key = cloudpinyin()->call<ICloudPinyin::toggleKey>();
+
+                std::string msg;
+                if (key.empty()) {
+                    msg = _("Do you want to enable cloudpinyin now for better "
+                            "prediction? You can always toggle it later in "
+                            "configuration.");
+                } else {
+                    msg = fmt::format(
+                        _("Do you want to enable cloudpinyin now for better "
+                          "prediction? You can always toggle it later in "
+                          "configuration or by pressing {}."),
+                        Key::keyListToString(key, KeyStringFormat::Localized));
+                }
+                std::vector<std::string> actions = {"yes", _("Yes"), "no",
+                                                    _("No")};
+
+                notifications()->call<INotifications::sendNotification>(
+                    _("Pinyin"), 0, "fcitx-pinyin", _("Enable Cloudpinyin"),
+                    msg, actions, -1,
+                    [this](const std::string &action) {
+                        if (action == "yes") {
+                            config_.cloudPinyinEnabled.setValue(true);
+                            save();
+                        }
+                    },
+                    nullptr);
+            }
+            return true;
+        });
+    }
     ime_->setNBest(*config_.nbest);
     ime_->setPartialLongWordLimit(*config_.longWordLimit);
     ime_->setPreeditMode(*config_.showActualPinyinInPreedit
@@ -800,12 +837,14 @@ bool PinyinEngine::handleCloudpinyinTrigger(KeyEvent &event) {
         config_.cloudPinyinEnabled.setValue(!*config_.cloudPinyinEnabled);
         safeSaveAsIni(config_, "conf/pinyin.conf");
 
-        notifications()->call<INotifications::showTip>(
-            "fcitx-cloudpinyin-toggle", _("Pinyin"), "",
-            _("Cloud Pinyin Status"),
-            *config_.cloudPinyinEnabled ? _("Cloud Pinyin is enabled.")
-                                        : _("Cloud Pinyin is disabled."),
-            -1);
+        if (notifications()) {
+            notifications()->call<INotifications::showTip>(
+                "fcitx-cloudpinyin-toggle", _("Pinyin"), "",
+                _("Cloud Pinyin Status"),
+                *config_.cloudPinyinEnabled ? _("Cloud Pinyin is enabled.")
+                                            : _("Cloud Pinyin is disabled."),
+                -1);
+        }
         if (*config_.cloudPinyinEnabled) {
             cloudpinyin()->call<ICloudPinyin::resetError>();
         }
