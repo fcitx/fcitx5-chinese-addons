@@ -9,6 +9,7 @@
 
 #include <fcitx-config/configuration.h>
 #include <fcitx-config/iniparser.h>
+#include <fcitx-utils/event.h>
 #include <fcitx-utils/i18n.h>
 #include <fcitx-utils/standardpath.h>
 #include <fcitx/action.h>
@@ -60,7 +61,7 @@ FCITX_CONFIGURATION(
     Option<bool> emojiEnabled{this, "EmojiEnabled", _("Enable Emoji"), true};
     Option<bool> chaiziEnabled{this, "ChaiziEnabled", _("Enable Chaizi"), true};
     Option<bool> cloudPinyinEnabled{this, "CloudPinyinEnabled",
-                                    _("Enable Cloud Pinyin"), true};
+                                    _("Enable Cloud Pinyin"), false};
     Option<int, IntConstrain> cloudPinyinIndex{this, "CloudPinyinIndex",
                                                _("Cloud Pinyin Index"), 2,
                                                IntConstrain(1, 10)};
@@ -143,8 +144,8 @@ FCITX_CONFIGURATION(
                          ShuangpinProfileEnum::Ziranma};
     ExternalOption dictmanager{this, "DictManager", _("Dictionaries"),
                                "fcitx://config/addon/pinyin/dictmanager"};
-    Option<FuzzyConfig> fuzzyConfig{this, "Fuzzy",
-                                    _("Fuzzy Pinyin Settings")};);
+    Option<FuzzyConfig> fuzzyConfig{this, "Fuzzy", _("Fuzzy Pinyin Settings")};
+    HiddenOption<bool> firstRun{this, "FirstRun", "FirstRun", true};);
 
 class PinyinState;
 class EventSourceTime;
@@ -220,6 +221,7 @@ private:
     FactoryFor<PinyinState> factory_;
     SimpleAction predictionAction_;
     libime::Prediction prediction_;
+    std::unique_ptr<EventSource> deferEvent_;
 
     FCITX_ADDON_DEPENDENCY_LOADER(quickphrase, instance_->addonManager());
     FCITX_ADDON_DEPENDENCY_LOADER(cloudpinyin, instance_->addonManager());
