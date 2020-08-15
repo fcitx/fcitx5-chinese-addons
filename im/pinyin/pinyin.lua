@@ -450,7 +450,19 @@ function get_symbol(input)
         return nil
     end
 
-    if input == "sx" then
+    if input == "" then
+        return {
+            {suggest="sx", help="数学符号"},
+            {suggest="lmsz", help="罗马数字"},
+            {suggest="dxxl", help="大写希腊"},
+            {suggest="xxxl", help="小写希腊"},
+            {suggest="dxew", help="大写俄文"},
+            {suggest="xxew", help="小写俄文"},
+            {suggest="sz", help="数字符号"},
+            {suggest="hb", help="货币"},
+            {suggest="jt", help="箭头"},
+        }
+    elseif input == "sx" then
         return _MATH_SYMBOL
     elseif input == "lmsz" then
         return _ROMAN_NUMBER
