@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-08-13 00:01-0700\n"
+"POT-Creation-Date: 2020-08-17 00:01-0700\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: csslayer <wengxt@gmail.com>, 2020\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/fcitx/teams/12005/"
@@ -229,12 +229,14 @@ msgid ""
 "Do you want to enable cloudpinyin now for better prediction? You can always "
 "toggle it later in configuration or by pressing {}."
 msgstr ""
+"您想要启用云拼音以获得更好的预测吗？您也可以稍后在配置中更改设置或者通过按下 "
+"{} 来切换。"
 
 #: im/pinyin/pinyin.cpp:709
 msgid ""
 "Do you want to enable cloudpinyin now for better prediction? You can always "
 "toggle it later in configuration."
-msgstr ""
+msgstr "您想要启用云拼音以获得更好的预测吗？您也可以稍后在配置中更改设置。"
 
 #: im/table/ime.h:90
 msgid "Don't sort word shorter than"
@@ -258,7 +260,7 @@ msgstr "启用云拼音"
 
 #: im/pinyin/pinyin.cpp:723
 msgid "Enable Cloudpinyin"
-msgstr ""
+msgstr "启用云拼音"
 
 #: im/pinyin/pinyin.h:61
 msgid "Enable Emoji"
@@ -439,7 +441,7 @@ msgstr "下一页"
 
 #: im/pinyin/pinyin.cpp:720
 msgid "No"
-msgstr ""
+msgstr "否"
 
 #: gui/pinyindictmanager/browserdialog.cpp:116
 msgid "No browsing outside pinyin.sogou.com, now redirect to home page."
@@ -702,7 +704,7 @@ msgstr "小鹤"
 
 #: im/pinyin/pinyin.cpp:719
 msgid "Yes"
-msgstr ""
+msgstr "是"
 
 #: im/pinyin/pinyin.h:33
 msgid "Zhongwenzhixing"
