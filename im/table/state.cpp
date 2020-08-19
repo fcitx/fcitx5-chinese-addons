@@ -339,6 +339,7 @@ bool TableState::handlePinyinMode(KeyEvent &event) {
             }
 
             if (candidateList->size()) {
+                candidateList->setGlobalCursorIndex(0);
                 inputPanel.setCandidateList(std::move(candidateList));
             }
         } else {
