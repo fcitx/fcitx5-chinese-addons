@@ -588,12 +588,15 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
     }
 
     if (event.key().check(FcitxKey_Escape)) {
-        reset();
         if (mode_ != TableMode::Normal) {
-            return event.filterAndAccept();
+            event.filterAndAccept();
         }
         if (!isContextEmpty()) {
-            return event.filterAndAccept();
+            event.filterAndAccept();
+        }
+        reset();
+        if (event.accepted()) {
+            return;
         }
     }
 
@@ -608,6 +611,7 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
     }
 
     if (handleForgetWord(event)) {
+        return;
     }
 
     if (handleLookupPinyinOrModifyDictionaryMode(event)) {
