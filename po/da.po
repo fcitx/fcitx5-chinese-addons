@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-08-13 00:01-0700\n"
+"POT-Creation-Date: 2020-08-21 00:01-0700\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: scootergrisen, 2020\n"
 "Language-Team: Danish (https://www.transifex.com/fcitx/teams/12005/da/)\n"
@@ -23,11 +23,11 @@ msgstr ""
 msgid "\t[Stroke Filtering] "
 msgstr "\t[Trykfiltrering] "
 
-#: im/table/state.cpp:752
+#: im/table/state.cpp:757
 msgid " Return for "
 msgstr " Retur for "
 
-#: im/table/state.cpp:749
+#: im/table/state.cpp:754
 msgid " for "
 msgstr " for "
 
@@ -170,7 +170,7 @@ msgstr "Konvertering mislykkedes."
 msgid "Converter crashed."
 msgstr "Konverter holdt op med at virke."
 
-#: im/table/state.cpp:507
+#: im/table/state.cpp:508
 msgid "Could not find pinyin."
 msgstr "Kunne ikke finde pinyin."
 
@@ -440,7 +440,7 @@ msgstr "Næste side"
 
 #: im/pinyin/pinyin.cpp:720
 msgid "No"
-msgstr ""
+msgstr "Nej"
 
 #: gui/pinyindictmanager/browserdialog.cpp:116
 msgid "No browsing outside pinyin.sogou.com, now redirect to home page."
@@ -481,7 +481,7 @@ msgstr "Pinyin-ordbogshåndtering"
 msgid "PinyinJiajia"
 msgstr "PinyinJiajia"
 
-#: im/table/state.cpp:493
+#: im/table/state.cpp:494
 msgid "Please use this functionality after typing some text."
 msgstr "Brug venligst denne funktionalitet efter du har skrevet noget tekst."
 
@@ -497,25 +497,25 @@ msgstr "Størrelse på forudsigelse"
 msgid "Prefix key to trigger Pinyin"
 msgstr "Præfikstast til at udløse Pinyin"
 
-#: im/table/state.cpp:524
+#: im/table/state.cpp:525
 msgid "Press Backspace to forget."
 msgstr "Tryk på Backspace for at glemme."
 
-#: im/table/state.cpp:527
+#: im/table/state.cpp:528
 msgid "Press Delete to remove."
 msgstr "Tryk på Delete for at flytte."
 
-#: im/table/state.cpp:521
+#: im/table/state.cpp:522
 msgid "Press space to insert."
 msgstr "Tryk på mellemrum for at indsætte."
 
 #: im/pinyin/pinyin.cpp:1252
 msgid "Press {} for {}"
-msgstr ""
+msgstr "Tryk på {} for {}"
 
 #: im/pinyin/pinyin.cpp:1249
 msgid "Press {} for {} and Return for {}"
-msgstr ""
+msgstr "Tryk på {} for {} og Retur for {}"
 
 #: im/table/ime.h:44 im/pinyin/pinyin.h:93
 msgid "Prev Candidate"
@@ -575,7 +575,7 @@ msgstr "Vælg anden kandidat"
 msgid "Select Third Candidate"
 msgstr "Vælg tredje kandidat"
 
-#: im/table/state.cpp:964
+#: im/table/state.cpp:969
 msgid "Select candidate to be removed from history:"
 msgstr "Vælg kandidat som skal fjernes fra historik:"
 
@@ -656,11 +656,11 @@ msgstr "Traditionel kinesisk er aktiveret."
 msgid "Translate engine"
 msgstr "Oversættelsesmotor"
 
-#: im/table/state.cpp:499
+#: im/table/state.cpp:500
 msgid "Use Left and Right to select character: "
 msgstr "Brug venstre og højre til at vælge tegn: "
 
-#: im/table/state.cpp:510
+#: im/table/state.cpp:511
 msgid "Use Left and Right to select text. "
 msgstr "Brug venstre og højre til at vælge tekst. "
 
@@ -706,7 +706,7 @@ msgstr "Xiaohe"
 
 #: im/pinyin/pinyin.cpp:719
 msgid "Yes"
-msgstr ""
+msgstr "Ja"
 
 #: im/pinyin/pinyin.h:33
 msgid "Zhongwenzhixing"
@@ -793,14 +793,14 @@ msgstr "z <-> zh"
 msgid "{0} ({1})"
 msgstr "{0} ({1})"
 
-#: im/table/state.cpp:542
+#: im/table/state.cpp:543
 msgid "{0} is not in table."
 msgstr "{0} er ikke i tabellen."
 
-#: im/table/state.cpp:531
+#: im/table/state.cpp:532
 msgid "{0}: No corresponding code."
 msgstr "{0}: Ingen tilhørende kode."
 
-#: im/table/state.cpp:516 im/table/state.cpp:539
+#: im/table/state.cpp:517 im/table/state.cpp:540
 msgid "{0}: {1}"
 msgstr "{0}: {1}"
