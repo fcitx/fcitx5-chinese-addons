@@ -18,6 +18,7 @@
 🛑	ba'bian'xing	0
 🕗	ba'dian	0
 🕣	ba'dian'ban	0
+🪠	ba'tong	0
 💡	bai'chi'deng	0
 🥼	bai'da'gua	0
 🦳	bai'fa	0
@@ -87,6 +88,7 @@
 📒	bi'ji'ben	0
 📓	bi'ji'ben	0
 👙	bi'ji'ni	0
+🫓	bing	0
 ♟	bing	0
 ⛸	bing'dao	0
 🦠	bing'du	0
@@ -123,6 +125,7 @@
 🤱	bu'ru	0
 🆓	bu'shou'fei	0
 ☹	bu'shuang	0
+🪤	bu'shu'jia	0
 🤮	bu'shu'fu	0
 🤭	bu'shuo	0
 😒	bu'xie	0
@@ -135,6 +138,7 @@
 🛒	cai'gou	0
 🌈	cai'hong	0
 ⛏	cai'kuang	0
+🪰	cang'ying	0
 🐹	cang'shu	0
 ♿	can'ji	0
 🍽	can'ju	0
@@ -154,12 +158,15 @@
 🤥	chang'bi'zi	0
 📏	chang'du	0
 🎤	chang'ge	0
+🪘	chang'gu	0
+🦣	chang'mao'xiang	0
 🦒	chang'jing'lu	0
 🌲	chang'qing'shu	0
 🧦	chang'wa	0
 ™	chan'pin	0
 🦸	chao'neng'li	0
 🦹	chao'neng'li	0
+🫖	cha'hu	0
 🔌	cha'tou	0
 ℹ	cha'xun	0
 🔍	cha'zhao	0
@@ -199,6 +206,7 @@
 ⛏	chu'tou	0
 🚕	chu'zu'che	0
 🚖	chu'zu'che	0
+🪟	chuang'hu	0
 🈁	ci'chu	0
 📼	ci'dai	0
 💾	ci'pan	0
@@ -261,6 +269,7 @@
 🛫	deng'ji	0
 🎃	deng'long	0
 🏮	deng'long	0
+🫑	deng'long'jiao	0
 💡	deng'pao	0
 🧗	deng'shan	0
 🥾	deng'shan'xie	0
@@ -276,6 +285,7 @@
 🎚	dian'ping	0
 📺	dian'shi	0
 📻	dian'tai	0
+🛗	dian'ti	0
 🔌	dian'xian	0
 🧇	dian'xin	0
 🎞	dian'ying	0
@@ -328,6 +338,7 @@
 🛡	dun'pai	0
 ⛅	duo'yun	0
 🌥	duo'yun	0
+🦤	du'du'niao	0
 🌆	du'shi	0
 🏙	du'shi	0
 🥑	e'li	0
@@ -382,6 +393,7 @@
 💬	fa'yan	0
 📤	fa'you'jian	0
 📩	fa'you'jian	0
+🫁	fei	0
 🎯	fei'biao	0
 🛸	fei'die	0
 👾	fei'die	0
@@ -424,6 +436,7 @@
 ✒	gang'bi'jian	0
 🎹	gang'qin	0
 🍊	gan'ju	0
+🫒	gan'lan	0
 🏈	gan'lan'qiu	0
 🏉	gan'lan'qiu	0
 😷	gan'mao	0
@@ -432,6 +445,7 @@
 ⛳	gao'er'fu	0
 🏌	gao'er'fu	0
 👠	gao'gen'xie	0
+🪧	gao'shi'pai	0
 🚅	gao'su	0
 🚄	gao'tie	0
 🚅	gao'tie	0
@@ -465,6 +479,7 @@
 🐶	gou'lian	0
 🐶	gou'tou	0
 🛒	gou'wu'che	0
+🪝	gou'zi	0
 🥁	gu	0
 👾	guai'wu	0
 🦯	guai'zhang	0
@@ -508,8 +523,10 @@
 👏	gu'zhang	0
 😃	ha'ha	0
 😺	ha'ha'mao	0
+🦭	hai'bao	0
 🛃	hai'guan	0
 🐢	hai'gui	0
+🦫	hai'li	0
 🐚	hai'luo	0
 🧽	hai'mian	0
 😨	hai'pa	0
@@ -540,6 +557,7 @@
 🏴	hei'se'qi	0
 ⚫	hei'se'yuan	0
 ♠	hei'tao	0
+🐈‍⬛	hei'mao	0
 🖤	hei'xin	0
 🦛	he'ma	0
 ➖	heng'xian	0
@@ -624,6 +642,7 @@
 🔙	hui'tui	0
 ☄	hui'xing	0
 📎	hui'xing'zhen	0
+🪃	hui'xuan'biao	0
 🦊	hu'li	0
 💤	hu'lu	0
 😴	hu'lu	0
@@ -634,6 +653,7 @@
 💲	huo'bi	0
 🚂	huo'che	0
 🎇	huo'hua	0
+🫕	huo'guo	0
 🦃	huo'ji	0
 🚀	huo'jian	0
 🦩	huo'lie'niao	0
@@ -691,6 +711,7 @@
 👣	jiao'yin	0
 🥟	jiao'zi	0
 🎰	jiao'zi'ji	0
+🪲	jia'chong	0
 🗜	jia'qian	0
 🦐	jia'qiao	0
 🍗	jia'qin	0
@@ -735,6 +756,7 @@
 🔇	jing'yin	0
 🔕	jing'yin	0
 🐋	jing'yu	0
+🪞	jing'zi	0
 🧬	jin'hua	0
 🦺	jin'ji	0
 ♉	jin'niu'zuo	0
@@ -785,6 +807,7 @@
 ♋	ju'xie'zuo	0
 🎭	ju'yuan	0
 🏋	ju'zhong	0
+🪚	ju'zi	0
 🍊	ju'zi	0
 🍊	ju'zi	0
 🚚	ka'che	0
@@ -862,6 +885,7 @@
 〰	lang'hua	0
 🌊	lang'hua	0
 💒	lang'man	0
+🫐	lan'mei	0
 🏀	lan'qiu	0
 🔵	lan'se'yuan	0
 💙	lan'xin	0
@@ -896,6 +920,7 @@
 🔆	liang'du	0
 💕	liang'ke'xin	0
 🌾	liang'shi	0
+🩴	liang'xie	0
 👡	liang'xie	0
 😊	lian'hong	0
 🔗	lian'jie	0
@@ -919,6 +944,7 @@
 🚿	lin'yu	0
 🎁	li'pin	0
 ⛸	liu'bing	0
+🛼	liu'bing	0
 🕕	liu'dian	0
 🕡	liu'dian'ban	0
 🔯	liu'jiao'xing	0
@@ -945,6 +971,7 @@
 🧔	luo'sai'hu	0
 🔩	luo'shuan	0
 🔩	luo'si	0
+🪛	luo'si'dao	0
 🐪	luo'tuo	0
 🐫	luo'tuo	0
 🌳	luo'ye	0
@@ -1031,6 +1058,7 @@
 🔯	ming'yun	0
 🎯	ming'zhong	0
 🔑	mi'yue	0
+🪄	mo'fa'ang	0
 🦜	mo'fang	0
 🍄	mo'gu	0
 😈️	mo'gui	0
@@ -1041,20 +1069,25 @@
 🎡	mo'tian'lun	0
 🏍	mo'tuo'che	0
 🛥	mo'tuo'ting	0
+🫔	mo'xi'ge	0
 🌮	mo'xi'ge	0
 🌯	mo'xi'ge	0
 🦑	mo'yu	0
+🪄	mo'zhang	0
+🪦	mu'bei	0
 🌺	mu'jin	0
 🦪	mu'li	0
 📇	mu'lu	0
 🎠	mu'ma	0
 ☪	mu'si'lin	0
 🕌	mu'si'lin	0
+🪵	mu'tou	0
 🪓	mu'tou	0
 ☘	mu'xu	0
 🚼	mu'ying'shi	0
 🛁	mu'yu	0
 🥛	nai	0
+🧋	nai'cha	0
 🧀	nai'lao	0
 🤶	nai'nai	0
 🐄	nai'niu	0
@@ -1091,6 +1124,7 @@
 🥑	niu'you'guo	0
 🤠	niu'zai	0
 👖	niu'zai'ku	0
+🤌	nie'shou'zhi	0
 ♀	nv	0
 🚺	nv'ce	0
 🦟	nve'ji	0
@@ -1127,6 +1161,7 @@
 🛁	pao'zao	0
 🥓	pei'gen	0
 🧫	pei'yang'min	0
+🪴	pen'zai	0
 🌋	pen'fa	0
 🍻	peng'bei	0
 🥂	peng'bei	0
@@ -1146,6 +1181,7 @@
 🍻	pi'jiu	0
 😩	pi'juan	0
 😩	pi'lao	0
+🛻	pi'ka	0
 🍳	ping'di'guo	0
 🥿	ping'di'xie	0
 🍎	ping'guo	0
@@ -1204,6 +1240,7 @@
 🆘	qiu'jiu	0
 🥍	qiu'men	0
 🥅	qiu'men	0
+🪱	qiu'yin	0
 🌡	qi'wen	0
 🎋	qi'xi	0
 🥝	qi'yi'guo	0
@@ -1223,6 +1260,7 @@
 🌭	re'gou	0
 😣	ren'nai	0
 🎎	ren'ou	0
+🥷	ren'zhe	0
 👤	ren'xiang	0
 ☕	re'yin	0
 🌄	ri'chu	0
@@ -1357,6 +1395,7 @@
 🎮	shou'bing	0
 👝	shou'dai	0
 🔦	shou'dian	0
+🪗	shou'feng'qin	0
 📱	shou'ji	0
 📥	shou'jian'xiang	0
 🔫	shou'qiang	0
@@ -1459,6 +1498,7 @@
 🎸	tan'zou	0
 🍑	tao'zi	0
 🦝	tao'qi	0
+🪆	tao'wa	0
 🦺	tao'sheng	0
 ♎	tian'cheng'zuo	0
 🧸	tian'chong	0
@@ -1504,6 +1544,8 @@
 🤒	ti'wen'ji	0
 🪒	ti'xu'dao	0
 🏟	ti'yu'guan	0
+🪜	yi'zi	0
+🪣	tong	0
 🈴	tong'guo	0
 👸	tong'hua	0
 🈷	tong'ji	0
@@ -1521,6 +1563,7 @@
 💀	tou'gu	0
 🧕	tou'jin	0
 👳	tou'jin	0
+🪖	tou'kui	0
 ⛑	tou'kui	0
 🧠	tou'nao	0
 🗳	tou'piao	0
@@ -1590,6 +1633,7 @@
 😊	wei'xiao	0
 📡	wei'xing	0
 🛰	wei'xing	0
+🥸	wei'zhuang	0
 💋	wen	0
 📄	wen'dang	0
 🌡	wen'du'ji	0
@@ -1675,6 +1719,7 @@
 🔈	xiao'sheng	0
 👼	xiao'tian'shi	0
 🃏	xiao'wang	0
+🛖	xiao'wu	0
 👺	xiao'yao'jing	0
 😱	xia'si	0
 🌗	xia'xian'yue	0
@@ -1782,6 +1827,7 @@
 🎖	xun'zhang	0
 🌱	ya	0
 🦷	ya'chi	0
+🪥	ya'shua	0
 🧂	yan	0
 🐏	yang	0
 🐑	yang	0
@@ -1801,6 +1847,7 @@
 🈲	yan'jin	0
 😂	yan'lei	0
 🦩	yan'li	0
+🪨	yan'shi	0
 🤵	yan'wei'fu	0
 🌿	yao'cao	0
 🧞	yao'guai	0
@@ -1815,6 +1862,7 @@
 🦷	ya'yi	0
 🌏	ya'zhou	0
 🦆	ya'zi	0
+🦬	ye'niu	0
 🌃	ye'wan	0
 🌆	ye'wan	0
 🐗	ye'zhu	0
@@ -1834,6 +1882,7 @@
 🎵	yin'fu	0
 🎶	yin'fu	0
 💷	ying'bang	0
+🪙	ying'bi	0
 ✒	ying'bi	0
 🖋	ying'bi	0
 🚼	ying'er	0
@@ -1865,6 +1914,7 @@
 🪑	yi'zi	0
 💺	yi'zi	0
 🤗	yong'bao	0
+🫂	yong'bao	0
 💞	yong'dong	0
 ♾	yong'heng	0
 🩱	yong'yi	0
@@ -1895,6 +1945,7 @@
 🍥	yu'ban	0
 ☔	yu'di	0
 🈯	yu'ding	0
+🪶	yu'mao	0
 🥮	yue'bing	0
 🌕	yue'liang	0
 🌙	yue'liang	0
@@ -1930,6 +1981,7 @@
 💣	zha'dan	0
 📒	zhang'ben	0
 🧾	zhang'dan	0
+🪳	zhang'lang	0
 ⛺	zhang'peng	0
 🏕	zhang'peng	0
 🐙	zhang'yu	0
@@ -2296,3 +2348,5 @@
 🏴󠁧󠁢󠁥󠁮󠁧󠁿	ying'ge'lan	0
 🏴󠁧󠁢󠁳󠁣󠁴󠁿	su'ge'lan	0
 🏴󠁧󠁢󠁷󠁬󠁳󠁿	wei'er'shi	0
+🏳️‍🌈	cai'hong'qi	0
+🏳️‍⚧️	kua'xing'bie'qi	0
