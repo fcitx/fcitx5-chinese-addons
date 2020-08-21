@@ -849,6 +849,16 @@ void TableState::commitBuffer(bool commitCode, bool noRealCommit) {
     if (!context) {
         return;
     }
+
+    if (mode_ == TableMode::Pinyin && !noRealCommit) {
+        auto commit = pinyinModePrefix_ + pinyinModeBuffer_.userInput();
+        if (!commit.empty()) {
+            ic_->commitString(commit);
+        }
+        reset();
+        return;
+    }
+
     std::string sentence;
     if (!*context->config().commitAfterSelect) {
         for (size_t i = 0; i < context->selectedSize(); i++) {
