@@ -126,6 +126,7 @@
 🆓	bu'shou'fei	0
 ☹	bu'shuang	0
 🪤	bu'shu'jia	0
+🪤	bu'shu'qi	0
 🤮	bu'shu'fu	0
 🤭	bu'shuo	0
 😒	bu'xie	0
@@ -414,6 +415,7 @@
 🍯	feng'mi	0
 📔	feng'mian	0
 🧵	feng'ren	0
+🪡	feng'yi'zhen	0
 🍁	feng'ye	0
 🪁	feng'zheng	0
 🗯	fen'nu	0
@@ -430,6 +432,7 @@
 🖨	fu'yin	0
 🍛	ga'li	0
 🍻	gan'bei	0
+🥲	gan'dong	0
 ⚱	gang	0
 😓	gan'ga	0
 🖋	gang'bi	0
@@ -944,7 +947,7 @@
 🚿	lin'yu	0
 🎁	li'pin	0
 ⛸	liu'bing	0
-🛼	liu'bing	0
+🛼	han'bing	0
 🕕	liu'dian	0
 🕡	liu'dian'ban	0
 🔯	liu'jiao'xing	0
@@ -982,6 +985,7 @@
 📹	lu'ying	0
 📼	lu'ying'dai	0
 🎙	lu'yin'shi	0
+🛼	lun'hua	0
 🏨	lv'guan	0
 🟢	lv'se'yuan	0
 💚	lv'xin	0
@@ -1032,6 +1036,7 @@
 🎟	men'piao	0
 🎫	men'piao	0
 🎍	men'song	0
+🛖	meng'gu'bao	0
 🍞	mian'bao	0
 🥐	mian'bao	0
 🈚	mian'fei	0
@@ -1058,7 +1063,7 @@
 🔯	ming'yun	0
 🎯	ming'zhong	0
 🔑	mi'yue	0
-🪄	mo'fa'ang	0
+🪄	mo'fa'bang	0
 🦜	mo'fang	0
 🍄	mo'gu	0
 😈️	mo'gui	0
@@ -1216,6 +1221,7 @@
 🌄	qing'chen	0
 🌅	qing'chen	0
 🚈	qing'gui	0
+🫑	qing'jiao	0
 🧼	qing'jie	0
 🧽	qing'jie	0
 💢	qing'jin	0
@@ -1261,6 +1267,7 @@
 😣	ren'nai	0
 🎎	ren'ou	0
 🥷	ren'zhe	0
+🩴	ren'zi'tuo	0
 👤	ren'xiang	0
 ☕	re'yin	0
 🌄	ri'chu	0
@@ -1380,6 +1387,7 @@
 📹	shi'pin	0
 📽	shi'pin	0
 👹	shi'ren'mo	0
+🪨	shi'tou	0
 😞	shi'wang	0
 😥	shi'wang	0
 🕚	shi'yi'dian	0
@@ -1544,7 +1552,7 @@
 🤒	ti'wen'ji	0
 🪒	ti'xu'dao	0
 🏟	ti'yu'guan	0
-🪜	yi'zi	0
+🪜	ti'zi	0
 🪣	tong	0
 🈴	tong'guo	0
 👸	tong'hua	0
@@ -1697,6 +1705,7 @@
 📦	xiang'zi	0
 💐	xian'hua	0
 🕳	xian'jing	0
+🪤	xian'jing	0
 🗓	xian'quan	0
 🌵	xian'ren'zhang	0
 🖥	xian'shi'ping	0
@@ -1994,6 +2003,7 @@
 😘	zha'yan	0
 🧨	zha'yao	0
 🈹	zhe'kou	0
+🪡	zhen	0
 👍	zhen'bang	0
 💉	zhen'dong	0
 📳	zhen'dong	0
