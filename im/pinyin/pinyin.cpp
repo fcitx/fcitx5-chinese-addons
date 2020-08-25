@@ -461,9 +461,17 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
             auto results = spell()->call<ISpell::hintWithProvider>(
                 "en", SpellProvider::Custom, py, engNess);
             spellCands.reserve(results.size());
+            std::string bestSentence;
+            if (!candidates.empty()) {
+                bestSentence = candidates[0].toString();
+            }
             for (auto &result : results) {
                 if (cloud && cloud->filled() && cloud->word() == result) {
                     cloud.reset();
+                }
+                // Pinyin can only return eng when there is no valid option.
+                if (result == bestSentence) {
+                    continue;
                 }
                 spellCands.push_back(
                     std::make_unique<SpellCandidateWord>(this, result));
