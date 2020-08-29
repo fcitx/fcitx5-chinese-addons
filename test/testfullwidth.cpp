@@ -23,6 +23,9 @@ void scheduleEvent(EventDispatcher *dispatcher, Instance *instance) {
     dispatcher->schedule([instance]() {
         auto *fullwidth = instance->addonManager().addon("fullwidth", true);
         FCITX_ASSERT(fullwidth);
+        RawConfig config;
+        config.setValueByPath("Hotkey/0", "Control+period");
+        fullwidth->setConfig(config);
     });
 
     dispatcher->schedule([dispatcher, instance]() {
@@ -45,6 +48,12 @@ void scheduleEvent(EventDispatcher *dispatcher, Instance *instance) {
                     action->activate(keyEvent.inputContext());
                 }
 
+                // Test multiple character string
+                if (s == "c") {
+                    s = "abcd";
+                } else if (s == "d") {
+                    s = "test!";
+                }
                 keyEvent.inputContext()->commitString(s);
                 keyEvent.filterAndAccept();
             }
@@ -62,6 +71,19 @@ void scheduleEvent(EventDispatcher *dispatcher, Instance *instance) {
         testfrontend->call<ITestFrontend::pushCommitExpectation>("？");
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("?"), false);
 
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("ａｂｃｄ");
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("c"), false);
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("ｔｅｓｔ！");
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("d"), false);
+
+        // Test toggle key
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Control+period"),
+                                                    false);
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("e");
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("e"), false);
+        testfrontend->call<ITestFrontend::pushCommitExpectation>(",");
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key(","), false);
+
         dispatcher->detach();
         instance->exit();
     });
@@ -72,8 +94,7 @@ void runInstance() {}
 int main() {
     setupTestingEnvironment(
         TESTING_BINARY_DIR,
-        {"modules/fullwidth", StandardPath::fcitxPath("addondir")},
-        {"test"});
+        {"modules/fullwidth", StandardPath::fcitxPath("addondir")}, {"test"});
     fcitx::Log::setLogRule("*=5");
 
     char arg0[] = "testfullwidth";
