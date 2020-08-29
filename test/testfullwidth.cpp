@@ -72,12 +72,15 @@ void runInstance() {}
 int main() {
     setupTestingEnvironment(
         TESTING_BINARY_DIR,
-        {"src/addonloader", StandardPath::fcitxPath("addondir")},
-        {"test", TESTING_SOURCE_DIR "/test",
-         StandardPath::fcitxPath("pkgdatadir", "testing")});
+        {"modules/fullwidth", StandardPath::fcitxPath("addondir")},
+        {"test"});
     fcitx::Log::setLogRule("*=5");
 
-    Instance instance(0, nullptr);
+    char arg0[] = "testfullwidth";
+    char arg1[] = "--disable=all";
+    char arg2[] = "--enable=testim,testfrontend,fullwidth";
+    char *argv[] = {arg0, arg1, arg2};
+    Instance instance(FCITX_ARRAY_SIZE(argv), argv);
     instance.addonManager().registerDefaultLoader(nullptr);
     EventDispatcher dispatcher;
     dispatcher.attach(&instance.eventLoop());
