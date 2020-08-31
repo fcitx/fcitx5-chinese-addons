@@ -661,12 +661,11 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
                                             context->selectedSize() - 1)) ||
                                         *config.commitInvalidSegment)) {
                 commitBuffer(false);
-                needUpdate = true;
-                event.filter();
-            } else {
-                context->backspace();
-                event.filterAndAccept();
+                updateUI();
+                return;
             }
+            context->backspace();
+            event.filterAndAccept();
         } else if (event.key().isCursorMove() ||
                    event.key().check(FcitxKey_Delete)) {
             // if it gonna commit something
