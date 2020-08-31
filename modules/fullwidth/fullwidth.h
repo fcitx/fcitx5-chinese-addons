@@ -50,7 +50,6 @@ public:
     void setConfig(const fcitx::RawConfig &config) override {
         config_.load(config, true);
         fcitx::safeSaveAsIni(config_, "conf/fullwidth.conf");
-        reloadConfig();
     }
 
     FCITX_ADDON_DEPENDENCY_LOADER(notifications, instance_->addonManager());
