@@ -15,6 +15,11 @@ target_link_libraries(testpinyinhelper Fcitx5::Core Fcitx5::Module::PinyinHelper
 add_dependencies(testpinyinhelper pinyinhelper pinyinhelper.conf.in-fmt)
 add_test(NAME testpinyinhelper COMMAND testpinyinhelper)
 
+add_executable(testfullwidth testfullwidth.cpp)
+target_link_libraries(testfullwidth Fcitx5::Core Fcitx5::Module::TestFrontend Fcitx5::Module::TestIM Pthread::Pthread)
+add_dependencies(testfullwidth fullwidth fullwidth.conf.in-fmt)
+add_test(NAME testfullwidth COMMAND testfullwidth)
+
 add_subdirectory(addon)
 add_subdirectory(inputmethod)
 add_executable(testpinyin testpinyin.cpp)
