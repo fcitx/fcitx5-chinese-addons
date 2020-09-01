@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-08-28 00:01-0700\n"
+"POT-Creation-Date: 2020-09-01 00:01-0700\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: scootergrisen, 2020\n"
 "Language-Team: Danish (https://www.transifex.com/fcitx/teams/12005/da/)\n"
@@ -23,11 +23,11 @@ msgstr ""
 msgid "\t[Stroke Filtering] "
 msgstr "\t[Trykfiltrering] "
 
-#: im/table/state.cpp:757
+#: im/table/state.cpp:762
 msgid " Return for "
 msgstr " Retur for "
 
-#: im/table/state.cpp:754
+#: im/table/state.cpp:759
 msgid " for "
 msgstr " for "
 
@@ -80,25 +80,17 @@ msgstr "Er du sikker på, at du vil slette %1?"
 msgid "Are you sure to delete all dictionaries?"
 msgstr "Er du sikker på, at du vil slette alle ordbøger?"
 
-#: im/table/ime.h:120
+#: im/table/ime.h:165
 msgid "Auto phrase length"
 msgstr "Automatisk fraselængde"
 
-#: im/table/ime.h:133
+#: im/table/ime.h:178
 msgid "Auto rule set"
 msgstr "Automatisk sæt af regel"
 
-#: im/table/ime.h:107
+#: im/table/ime.h:125
 msgid "Auto select candidate"
 msgstr "Automatisk valg af kandidat"
-
-#: im/table/ime.h:109
-msgid "Auto select candidate Length"
-msgstr "Automatisk valg af kandidatlængde"
-
-#: im/table/ime.h:114
-msgid "Auto select last candidate when there is no new match"
-msgstr "Automatisk valg af sidste kandidat når der ikke er noget nyt match"
 
 #: modules/cloudpinyin/cloudpinyin.h:33
 msgid "Backend"
@@ -112,7 +104,7 @@ msgstr "Bingchan"
 msgid "Browse Sogou Cell Dict repository"
 msgstr "Gennemse Sogou Cell-ordbogsarkiv"
 
-#: im/table/ime.h:130
+#: im/table/ime.h:175
 msgid "Candidate List orientation"
 msgstr "Orientering for kandidatliste"
 
@@ -148,13 +140,19 @@ msgstr "Skypinyin er deaktiveret."
 msgid "Cloud Pinyin is enabled."
 msgstr "Skypinyin er aktiveret."
 
-#: im/table/ime.h:111
+#: im/table/ime.h:141
 msgid "Commit Invalid Segment"
 msgstr "Udfør ugyldigt segment"
 
-#: im/table/ime.h:117
-msgid "Commit raw input when there is no candidate"
-msgstr "Udfør rå input når der ikke er nogen kandidat"
+#: im/table/ime.h:78
+msgid "Commit after auto select candidates"
+msgstr ""
+
+#: im/table/ime.h:146
+msgid ""
+"Commit the segment that does not exist in the table. This option is useful "
+"for some latin/compose based table."
+msgstr ""
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:330
 #: gui/pinyindictmanager/pinyindictmanager.cpp:362
@@ -170,7 +168,7 @@ msgstr "Konvertering mislykkedes."
 msgid "Converter crashed."
 msgstr "Konverter holdt op med at virke."
 
-#: im/table/state.cpp:508
+#: im/table/state.cpp:518
 msgid "Could not find pinyin."
 msgstr "Kunne ikke finde pinyin."
 
@@ -217,11 +215,11 @@ msgstr "Ordbøger"
 msgid "Dictionary already exists"
 msgstr "Ordbog findes allerede"
 
-#: im/table/ime.h:125
+#: im/table/ime.h:170
 msgid "Display Hint for word"
 msgstr "Vis tip for ord"
 
-#: im/table/ime.h:127
+#: im/table/ime.h:172
 msgid "Display custom hint"
 msgstr "Vis tilpasset tip"
 
@@ -241,7 +239,7 @@ msgstr ""
 "Vil du aktivere skypinyin nu for bedre forudsigelse? Du kan altid skifte "
 "indstillingen senere i konfigurationen."
 
-#: im/table/ime.h:90
+#: im/table/ime.h:91
 msgid "Don't sort word shorter than"
 msgstr "Sortér ikke ord kortere end"
 
@@ -277,7 +275,7 @@ msgstr "Aktivér forudsigelse"
 msgid "Enabled Input Methods"
 msgstr "Aktiverede inputmetoder"
 
-#: im/table/ime.h:118
+#: im/table/ime.h:163
 msgid "End key"
 msgstr "Slut-tast"
 
@@ -289,7 +287,7 @@ msgstr "Erbi"
 msgid "Error while deleting %1."
 msgstr "Fejl ved sletning af %1."
 
-#: im/table/ime.h:123
+#: im/table/ime.h:168
 msgid "Exact Match"
 msgstr "Præcist match"
 
@@ -386,11 +384,11 @@ msgstr "Tegnsætning i halv bredde"
 msgid "Horizontal"
 msgstr "Vandret"
 
-#: im/table/ime.h:88
+#: im/table/ime.h:89
 msgid "Icon"
 msgstr "Ikon"
 
-#: im/table/ime.h:81
+#: im/table/ime.h:82
 msgid "Ignore built in punctuation"
 msgstr "Ignorer indbygget tegnsætning"
 
@@ -402,13 +400,22 @@ msgstr "Indre segment (xian -> xi'an)"
 msgid "Input Dictionary Name"
 msgstr "Input ordbogsnavn"
 
-#: im/table/ime.h:85 im/pinyin/pinyin.h:131
+#: im/table/ime.h:86 im/pinyin/pinyin.h:131
 msgid "Key to trigger quickphrase"
 msgstr "Tast til at udløse hurtigfrase"
 
-#: im/table/ime.h:124
+#: im/table/ime.h:169
 msgid "Learning"
 msgstr "Læring"
+
+#: im/table/ime.h:151
+msgid ""
+"Length limit of selecting the current candidate when there is no new match"
+msgstr ""
+
+#: im/table/ime.h:129
+msgid "Length limit of selecting the only candidate"
+msgstr ""
 
 #: im/table/engine.h:38
 msgid "Lookup pinyin"
@@ -464,11 +471,18 @@ msgstr "Ikke sat"
 msgid "Number of Sentence"
 msgstr "Antal sætninger"
 
-#: im/table/ime.h:91
+#: im/table/ime.h:92
 msgid "Order policy"
 msgstr "Regel for rækkefølge"
 
-#: im/pinyin/pinyin.h:55
+#: im/table/ime.h:111
+msgid ""
+"Order the candidate based on the word you already typed. You may want to "
+"disable this option if you want the candidate order to be stable regardless "
+"of the history."
+msgstr ""
+
+#: im/table/ime.h:74 im/pinyin/pinyin.h:55
 msgid "Page size"
 msgstr "Sidestørrelse"
 
@@ -485,7 +499,7 @@ msgstr "Pinyin-ordbogshåndtering"
 msgid "PinyinJiajia"
 msgstr "PinyinJiajia"
 
-#: im/table/state.cpp:494
+#: im/table/state.cpp:504
 msgid "Please use this functionality after typing some text."
 msgstr "Brug venligst denne funktionalitet efter du har skrevet noget tekst."
 
@@ -497,19 +511,19 @@ msgstr "Forudsigelse"
 msgid "Prediction Size"
 msgstr "Størrelse på forudsigelse"
 
-#: im/table/ime.h:104
+#: im/table/ime.h:122
 msgid "Prefix key to trigger Pinyin"
 msgstr "Præfikstast til at udløse Pinyin"
 
-#: im/table/state.cpp:525
+#: im/table/state.cpp:535
 msgid "Press Backspace to forget."
 msgstr "Tryk på Backspace for at glemme."
 
-#: im/table/state.cpp:528
+#: im/table/state.cpp:538
 msgid "Press Delete to remove."
 msgstr "Tryk på Delete for at flytte."
 
-#: im/table/state.cpp:522
+#: im/table/state.cpp:532
 msgid "Press space to insert."
 msgstr "Tryk på mellemrum for at indsætte."
 
@@ -551,7 +565,7 @@ msgstr "Tegnsætning"
 msgid "Remove &All"
 msgstr "Fjern &alle"
 
-#: im/table/ime.h:122
+#: im/table/ime.h:167
 msgid "Save auto phrase"
 msgstr "Gem automatisk frase"
 
@@ -579,7 +593,7 @@ msgstr "Vælg anden kandidat"
 msgid "Select Third Candidate"
 msgstr "Vælg tredje kandidat"
 
-#: im/table/state.cpp:979
+#: im/table/state.cpp:984
 msgid "Select candidate to be removed from history:"
 msgstr "Vælg kandidat som skal fjernes fra historik:"
 
@@ -660,23 +674,23 @@ msgstr "Traditionel kinesisk er aktiveret."
 msgid "Translate engine"
 msgstr "Oversættelsesmotor"
 
-#: im/table/state.cpp:500
+#: im/table/state.cpp:510
 msgid "Use Left and Right to select character: "
 msgstr "Brug venstre og højre til at vælge tegn: "
 
-#: im/table/state.cpp:511
+#: im/table/state.cpp:521
 msgid "Use Left and Right to select text. "
 msgstr "Brug venstre og højre til at vælge tekst. "
 
-#: im/table/ime.h:95
+#: im/table/ime.h:106
 msgid "Use context related sort"
 msgstr "Brug kontekstrelateret sortering"
 
-#: im/table/ime.h:79
+#: im/table/ime.h:80
 msgid "Use full width"
 msgstr "Brug fuld bredde"
 
-#: im/table/ime.h:93
+#: im/table/ime.h:96
 msgid "Use system language model"
 msgstr "Brug systemets sprogmodel"
 
@@ -688,7 +702,29 @@ msgstr "Lodret"
 msgid "Wanfeng"
 msgstr "Wanfeng"
 
-#: im/table/ime.h:99
+#: im/table/ime.h:100
+msgid ""
+"When available, system language model will be loaded for given language and "
+"provide ability to give better context based order."
+msgstr ""
+
+#: im/table/ime.h:134
+msgid ""
+"When current input length is greater than or equal to the limit and there is "
+"only one candidate available, automatically select this candidate. -1 Means "
+"the maximum code length of the table. 0 means disable this behavior."
+msgstr ""
+
+#: im/table/ime.h:157
+msgid ""
+"When typing a new character, if the current input length is greater than or "
+"equal to the limit, and the existing segment with the new character does not "
+"have any matched entries in the table, select the current candidate and then "
+"type in the new character. -1 means the maximum code length of the table. 0 "
+"means disable this behavior."
+msgstr ""
+
+#: im/table/ime.h:117
 msgid "Wildcard matching Key"
 msgstr "Jokertegn matcher tast"
 
@@ -696,7 +732,7 @@ msgstr "Jokertegn matcher tast"
 msgid "Wrong Link"
 msgstr "Forkert link"
 
-#: im/table/wubi.conf.in.in:3
+#: im/table/wbx.conf.in.in:3
 msgid "Wubi"
 msgstr "Wubi"
 
@@ -797,14 +833,14 @@ msgstr "z <-> zh"
 msgid "{0} ({1})"
 msgstr "{0} ({1})"
 
-#: im/table/state.cpp:543
+#: im/table/state.cpp:553
 msgid "{0} is not in table."
 msgstr "{0} er ikke i tabellen."
 
-#: im/table/state.cpp:532
+#: im/table/state.cpp:542
 msgid "{0}: No corresponding code."
 msgstr "{0}: Ingen tilhørende kode."
 
-#: im/table/state.cpp:517 im/table/state.cpp:540
+#: im/table/state.cpp:527 im/table/state.cpp:550
 msgid "{0}: {1}"
 msgstr "{0}: {1}"
