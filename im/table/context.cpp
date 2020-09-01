@@ -38,7 +38,7 @@ Text TableContext::preeditText(bool hint) const {
         }
     }
     auto codeText = hint ? customHint(currentCode()) : currentCode();
-    text.setCursor(text.textLength());
+    text.setCursor(0);
     text.append(codeText,
                 {TextFormatFlag::Underline, TextFormatFlag::HighLight});
 
