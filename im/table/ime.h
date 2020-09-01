@@ -71,11 +71,12 @@ FCITX_CONFIGURATION(
         {Key(FcitxKey_1), Key(FcitxKey_2), Key(FcitxKey_3), Key(FcitxKey_4),
          Key(FcitxKey_5), Key(FcitxKey_6), Key(FcitxKey_7), Key(FcitxKey_8),
          Key(FcitxKey_9), Key(FcitxKey_0)}};
-    Option<int, IntConstrain> pageSize{this, "PageSize", "Page size", 5,
+    Option<int, IntConstrain> pageSize{this, "PageSize", _("Page size"), 5,
                                        IntConstrain(3, 10)};
     // Fcitx 4 default behavior.
     Option<bool> commitAfterSelect{this, "CommitAfterSelect",
-                                   "Commit after select candidates", true};
+                                   _("Commit after auto select candidates"),
+                                   true};
     Option<bool> useFullWidth{this, "UseFullWidth", _("Use full width"), true};
     Option<bool> ignorePunc{this, "IgnorePunc",
                             _("Ignore built in punctuation"), false};

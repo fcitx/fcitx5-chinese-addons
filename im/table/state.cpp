@@ -58,6 +58,9 @@ public:
             CommitAfterSelectWrapper commitAfterSelectRAII(state);
             context->select(idx_);
         }
+        if (context->selected()) {
+            state->commitBuffer(true);
+        }
         state->updateUI();
     }
 
@@ -183,6 +186,19 @@ bool TableState::isContextEmpty() const {
     return context_->empty();
 }
 
+bool TableState::autoSelectCandidate() {
+    auto candidateList = ic_->inputPanel().candidateList();
+    if (candidateList && candidateList->size()) {
+        int idx = candidateList->cursorIndex();
+        if (idx < 0) {
+            idx = 0;
+        }
+        candidateList->candidate(idx).select(ic_);
+        return true;
+    }
+    return false;
+}
+
 bool TableState::handleCandidateList(const TableConfig &config,
                                      KeyEvent &event) {
     auto *inputContext = event.inputContext();
@@ -257,7 +273,7 @@ bool TableState::handlePinyinMode(KeyEvent &event) {
                 return false;
             }
         }
-        commitBuffer(false);
+        commitBuffer(true);
         mode_ = TableMode::Pinyin;
         event.filterAndAccept();
 
@@ -281,13 +297,7 @@ bool TableState::handlePinyinMode(KeyEvent &event) {
                 return true;
             }
         } else if (event.key().check(FcitxKey_space)) {
-            auto candidateList = ic_->inputPanel().candidateList();
-            if (candidateList && candidateList->size()) {
-                int idx = candidateList->cursorIndex();
-                if (idx < 0) {
-                    idx = 0;
-                }
-                candidateList->candidate(idx).select(ic_);
+            if (autoSelectCandidate()) {
                 return true;
             }
             if (pinyinModeBuffer_.empty()) {
@@ -625,7 +635,9 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
             CommitAfterSelectWrapper commitAfterSelectRAII(this);
             context->type(str);
         }
-        if (context->candidates().empty() && context->currentCode() == str) {
+        if (context->candidates().empty() &&
+            ((*config.commitAfterSelect && context->currentCode() == str) ||
+             context->userInput() == str)) {
             // This means it is not a valid start, make it go through the punc.
             context->backspace();
         } else {
@@ -635,31 +647,37 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         if (event.key().check(FcitxKey_Return, KeyState::Shift)) {
             if (*config.commitAfterSelect) {
                 commitBuffer(true);
-                event.filterAndAccept();
             } else {
                 inputContext->commitString(context->userInput());
                 context->clear();
-                event.filterAndAccept();
             }
+            event.filterAndAccept();
         } else if (event.key().check(FcitxKey_Tab)) {
             {
                 CommitAfterSelectWrapper commitAfterSelectRAII(this);
-                context->autoSelect();
+                autoSelectCandidate();
             }
             if (context->selected()) {
                 commitBuffer(false);
             }
             event.filterAndAccept();
         } else if (event.key().sym() == FcitxKey_Return) {
-            if (!*config.commitAfterSelect || !context->selected()) {
+            if (*config.commitAfterSelect) {
+                if (!context->selected()) {
+                    event.filterAndAccept();
+                }
+                commitBuffer(true);
+            } else {
+                inputContext->commitString(context->userInput());
+                context->clear();
                 event.filterAndAccept();
             }
-            commitBuffer(true);
         } else if (event.key().check(FcitxKey_BackSpace)) {
             // Commit the last segement if it is selected.
-            if (context->selected() && (std::get<bool>(context->selectedSegment(
-                                            context->selectedSize() - 1)) ||
-                                        *config.commitInvalidSegment)) {
+            if (*config.commitAfterSelect && context->selected() &&
+                (std::get<bool>(
+                     context->selectedSegment(context->selectedSize() - 1)) ||
+                 *config.commitInvalidSegment)) {
                 commitBuffer(false);
                 updateUI();
                 return;
@@ -674,15 +692,8 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         } else if (!context->selected()) {
             // key to handle when it is not empty.
             if (event.key().check(FcitxKey_space)) {
-                auto candidateList = ic_->inputPanel().candidateList();
-                if (candidateList && candidateList->size()) {
-                    int idx = candidateList->cursorIndex();
-                    if (idx < 0) {
-                        idx = 0;
-                    }
-                    candidateList->candidate(idx).select(ic_);
-                    return event.filterAndAccept();
-                }
+                autoSelectCandidate();
+                return event.filterAndAccept();
             }
         }
     } else if (event.key().check(FcitxKey_BackSpace) && lastIsPunc) {
@@ -731,14 +742,9 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
             }
             break;
         }
-        // if current key will produce some string, do the auto select.
-        {
-            CommitAfterSelectWrapper commitAfterSelectRAII(this);
-            context->autoSelect();
-            needUpdate = true;
-        }
-        if (context->selected()) {
-            commitBuffer(false);
+        // if current key will produce some string, select the candidate.
+        if (!autoSelectCandidate()) {
+            commitBuffer(true);
         }
         std::string punc;
         if (!*context->config().ignorePunc || event.key().isKeyPad()) {
