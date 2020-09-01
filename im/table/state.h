@@ -57,6 +57,7 @@ private:
     bool handleLookupPinyinOrModifyDictionaryMode(KeyEvent &event);
 
     bool isContextEmpty() const;
+    bool autoSelectCandidate();
 
     TableMode mode_ = TableMode::Normal;
     std::string pinyinModePrefix_;
