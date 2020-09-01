@@ -44,7 +44,6 @@ void populateOptions(libime::TableBasedDictionary *dict,
     options.setAutoSelect(*root.config->autoSelect);
     options.setAutoSelectLength(*root.config->autoSelectLength);
     options.setNoMatchAutoSelectLength(*root.config->noMatchAutoSelectLength);
-    options.setCommitRawInput(*root.config->commitRawInput);
     options.setMatchingKey(
         Key::keySymToUnicode(root.config->matchingKey->sym()));
     std::set<uint32_t> endKeys;

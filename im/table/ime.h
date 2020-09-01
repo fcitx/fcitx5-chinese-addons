@@ -89,10 +89,27 @@ FCITX_CONFIGURATION(
     Option<int> noSortInputLength{this, "NoSortInputLength",
                                   _("Don't sort word shorter than")};
     Option<OrderPolicy> orderPolicy{this, "OrderPolicy", _("Order policy")};
-    Option<bool> useSystemLanguageModel{this, "UseSystemLanguageModel",
-                                        _("Use system language model"), true};
-    Option<bool> useContextBasedOrder{this, "UseContextRelatedOrder",
-                                      _("Use context related sort"), true};
+    OptionWithAnnotation<bool, ToolTipAnnotation> useSystemLanguageModel{
+        this,
+        "UseSystemLanguageModel",
+        _("Use system language model"),
+        true,
+        {},
+        {},
+        ToolTipAnnotation(_("When available, system language model will be "
+                            "loaded for given language and provide ability to "
+                            "give better context based order."))};
+    OptionWithAnnotation<bool, ToolTipAnnotation> useContextBasedOrder{
+        this,
+        "UseContextRelatedOrder",
+        _("Use context related sort"),
+        true,
+        {},
+        {},
+        ToolTipAnnotation(
+            _("Order the candidate based on the word you already typed. You "
+              "may want to disable this option if you want the candidate order "
+              "to be stable regardless of the history."))};
     Option<Key, KeyConstrain> matchingKey{
         this,
         "MatchingKey",
@@ -105,16 +122,43 @@ FCITX_CONFIGURATION(
                                         Key(),
                                         {KeyConstrainFlag::AllowModifierLess}};
     Option<bool> autoSelect{this, "AutoSelect", _("Auto select candidate")};
-    Option<int> autoSelectLength{this, "AutoSelectLength",
-                                 _("Auto select candidate Length")};
-    Option<bool> commitInvalidSegment{this, "CommitInvalidSegment",
-                                      _("Commit Invalid Segment"), false};
-    Option<int> noMatchAutoSelectLength{
-        this, "NoMatchAutoSelectLength",
-        _("Auto select last candidate when there is no new match")};
-    Option<int> commitRawInput{
-        this, "CommitRawInput",
-        _("Commit raw input when there is no candidate")};
+    OptionWithAnnotation<int, ToolTipAnnotation> autoSelectLength{
+        this,
+        "AutoSelectLength",
+        _("Length limit of selecting the only candidate"),
+        0,
+        {},
+        {},
+        ToolTipAnnotation(
+            _("When current input length is greater than or equal to the limit "
+              "and there is only one candidate available, automatically select "
+              "this candidate. -1 Means the maximum code length of the table. "
+              "0 means disable this behavior."))};
+    OptionWithAnnotation<bool, ToolTipAnnotation> commitInvalidSegment{
+        this,
+        "CommitInvalidSegment",
+        _("Commit Invalid Segment"),
+        false,
+        {},
+        {},
+        ToolTipAnnotation(
+            _("Commit the segment that does not exist in the table. This "
+              "option is useful for some latin/compose based table."))};
+    OptionWithAnnotation<int, ToolTipAnnotation> noMatchAutoSelectLength{
+        this,
+        "NoMatchAutoSelectLength",
+        _("Length limit of selecting the current candidate when there is no "
+          "new match"),
+        0,
+        {},
+        {},
+        ToolTipAnnotation(
+            _("When typing a new character, if the current input length is "
+              "greater than or equal to the limit, and the existing segment "
+              "with the new character does not have any matched entries in the "
+              "table, select the current candidate and then type in the new "
+              "character. -1 means the maximum code length of the table. 0 "
+              "means disable this behavior."))};
     HiddenOption<KeyList> endKey{this, "EndKey", _("End key")};
     Option<int> autoPhraseLength{this, "AutoPhraseLength",
                                  _("Auto phrase length"), -1};
