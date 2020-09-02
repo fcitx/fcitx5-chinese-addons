@@ -25,7 +25,7 @@ FCITX_CONFIGURATION(
         this, "Hotkey", _("Toggle key"), {fcitx::Key("Control+period")}};
     fcitx::Option<bool> halfWidthPuncAfterLatinOrNumber{
         this, "HalfWidthPuncAfterLetterOrNumber",
-        _("Half widith punctuation after latin letter or numbber"), true};
+        _("Half width punctuation after latin letter or number"), true};
     fcitx::HiddenOption<bool> enabled{this, "Enabled", "Enabled", true};);
 
 class PunctuationProfile {
