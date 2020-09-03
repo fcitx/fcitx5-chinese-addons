@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-09-01 00:01-0700\n"
+"POT-Creation-Date: 2020-09-03 00:01-0700\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: csslayer <wengxt@gmail.com>, 2020\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/fcitx/teams/12005/"
@@ -149,13 +149,13 @@ msgstr "提交无效分段"
 
 #: im/table/ime.h:78
 msgid "Commit after auto select candidates"
-msgstr ""
+msgstr "自动选择候选词之后提交"
 
 #: im/table/ime.h:146
 msgid ""
 "Commit the segment that does not exist in the table. This option is useful "
 "for some latin/compose based table."
-msgstr ""
+msgstr "提交不存在于码表中的内容。这个选项对于某些拉丁/组合的码表更有用。"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:330
 #: gui/pinyindictmanager/pinyindictmanager.cpp:362
@@ -365,10 +365,6 @@ msgstr "全角标点已启用。"
 msgid "Fuzzy Pinyin Settings"
 msgstr "模糊音设置"
 
-#: modules/punctuation/punctuation.h:28
-msgid "Half widith punctuation after latin letter or numbber"
-msgstr "字母或者数字之后输入半角标点"
-
 #: modules/fullwidth/fullwidth.h:30
 msgid "Half width Character"
 msgstr "半角字符"
@@ -376,6 +372,10 @@ msgstr "半角字符"
 #: modules/punctuation/punctuation.h:58
 msgid "Half width punctuation"
 msgstr "半角标点"
+
+#: modules/punctuation/punctuation.h:28
+msgid "Half width punctuation after latin letter or number"
+msgstr ""
 
 #: im/table/ime.h:25
 msgid "Horizontal"
@@ -408,11 +408,11 @@ msgstr "学习"
 #: im/table/ime.h:151
 msgid ""
 "Length limit of selecting the current candidate when there is no new match"
-msgstr ""
+msgstr "选择没有新匹配时的当前候选词的长度限制"
 
 #: im/table/ime.h:129
 msgid "Length limit of selecting the only candidate"
-msgstr ""
+msgstr "选择唯一候选词的长度限制"
 
 #: im/table/engine.h:38
 msgid "Lookup pinyin"
@@ -476,6 +476,8 @@ msgid ""
 "disable this option if you want the candidate order to be stable regardless "
 "of the history."
 msgstr ""
+"根据已经输入的内容对候选词进行排序。如果想要候选词顺序与输入历史无关，则需要"
+"禁用这个选项。"
 
 #: im/table/ime.h:74 im/pinyin/pinyin.h:55
 msgid "Page size"
@@ -701,6 +703,7 @@ msgid ""
 "When available, system language model will be loaded for given language and "
 "provide ability to give better context based order."
 msgstr ""
+"当系统语言模型可用时，将会根据对应语言加载并提供更好的基于上下文的排序。"
 
 #: im/table/ime.h:134
 msgid ""
@@ -708,6 +711,8 @@ msgid ""
 "only one candidate available, automatically select this candidate. -1 Means "
 "the maximum code length of the table. 0 means disable this behavior."
 msgstr ""
+"当当前的输入长度大于等于限制并且只有一个候选词可用时，自动选择这个候选词。-1 "
+"表示码表的最大码长。0 表示禁用这个行为。"
 
 #: im/table/ime.h:157
 msgid ""
@@ -717,6 +722,9 @@ msgid ""
 "type in the new character. -1 means the maximum code length of the table. 0 "
 "means disable this behavior."
 msgstr ""
+"当输入一个新字符时，如果当前输入长度大于等于这个限制，并且当前的分段加上这个"
+"新字符在码表中没有匹配，将选择当前候选词再输入这个新字符。-1 表示码表的最大码"
+"长。0 表示禁用这个行为。"
 
 #: im/table/ime.h:117
 msgid "Wildcard matching Key"

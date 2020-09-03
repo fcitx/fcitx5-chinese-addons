@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-09-01 00:01-0700\n"
+"POT-Creation-Date: 2020-09-03 00:01-0700\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Robert Antoni Buj Gelonch <rbuj@fedoraproject.org>, 2017\n"
 "Language-Team: Catalan (https://www.transifex.com/fcitx/teams/12005/ca/)\n"
@@ -360,16 +360,16 @@ msgstr ""
 msgid "Fuzzy Pinyin Settings"
 msgstr ""
 
-#: modules/punctuation/punctuation.h:28
-msgid "Half widith punctuation after latin letter or numbber"
-msgstr ""
-
 #: modules/fullwidth/fullwidth.h:30
 msgid "Half width Character"
 msgstr ""
 
 #: modules/punctuation/punctuation.h:58
 msgid "Half width punctuation"
+msgstr ""
+
+#: modules/punctuation/punctuation.h:28
+msgid "Half width punctuation after latin letter or number"
 msgstr ""
 
 #: im/table/ime.h:25

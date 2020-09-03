@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-09-01 00:01-0700\n"
+"POT-Creation-Date: 2020-09-03 00:01-0700\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: JungHee Lee <daemul72@gmail.com>, 2020\n"
 "Language-Team: Korean (https://www.transifex.com/fcitx/teams/12005/ko/)\n"
@@ -361,10 +361,6 @@ msgstr "전각 문장부호가 활성화되었습니다."
 msgid "Fuzzy Pinyin Settings"
 msgstr "퍼지 병음 설정"
 
-#: modules/punctuation/punctuation.h:28
-msgid "Half widith punctuation after latin letter or numbber"
-msgstr ""
-
 #: modules/fullwidth/fullwidth.h:30
 msgid "Half width Character"
 msgstr "반각 문자"
@@ -372,6 +368,10 @@ msgstr "반각 문자"
 #: modules/punctuation/punctuation.h:58
 msgid "Half width punctuation"
 msgstr "반각 문장부호"
+
+#: modules/punctuation/punctuation.h:28
+msgid "Half width punctuation after latin letter or number"
+msgstr ""
 
 #: im/table/ime.h:25
 msgid "Horizontal"
