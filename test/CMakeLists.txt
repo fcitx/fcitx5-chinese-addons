@@ -20,8 +20,13 @@ target_link_libraries(testfullwidth Fcitx5::Core Fcitx5::Module::TestFrontend Fc
 add_dependencies(testfullwidth fullwidth fullwidth.conf.in-fmt)
 add_test(NAME testfullwidth COMMAND testfullwidth)
 
-add_subdirectory(addon)
 add_subdirectory(inputmethod)
+add_executable(testchttrans testchttrans.cpp)
+target_link_libraries(testchttrans Fcitx5::Core Fcitx5::Module::TestFrontend Fcitx5::Module::TestIM Pthread::Pthread)
+add_dependencies(testchttrans chttrans chttrans.conf.in-fmt copy-testim)
+add_test(NAME testchttrans COMMAND testchttrans)
+
+add_subdirectory(addon)
 add_executable(testpinyin testpinyin.cpp)
 target_link_libraries(testpinyin Fcitx5::Core Fcitx5::Module::TestFrontend Pthread::Pthread)
 add_dependencies(testpinyin pinyin pinyinhelper copy-addon copy-im)
