@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-09-01 00:01-0700\n"
+"POT-Creation-Date: 2020-09-03 00:01-0700\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: scootergrisen, 2020\n"
 "Language-Team: Danish (https://www.transifex.com/fcitx/teams/12005/da/)\n"
@@ -368,10 +368,6 @@ msgstr "Tegnsætning i fuld bredde er aktiveret."
 msgid "Fuzzy Pinyin Settings"
 msgstr "Uafklarede Pinyin-indstillinger"
 
-#: modules/punctuation/punctuation.h:28
-msgid "Half widith punctuation after latin letter or numbber"
-msgstr "Tegnsætning med halv bredde efter latinsk bogstav eller tal"
-
 #: modules/fullwidth/fullwidth.h:30
 msgid "Half width Character"
 msgstr "Halv tegnbredde"
@@ -379,6 +375,10 @@ msgstr "Halv tegnbredde"
 #: modules/punctuation/punctuation.h:58
 msgid "Half width punctuation"
 msgstr "Tegnsætning i halv bredde"
+
+#: modules/punctuation/punctuation.h:28
+msgid "Half width punctuation after latin letter or number"
+msgstr ""
 
 #: im/table/ime.h:25
 msgid "Horizontal"
