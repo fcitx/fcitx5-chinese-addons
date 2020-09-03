@@ -23,11 +23,14 @@ void scheduleEvent(EventDispatcher *dispatcher, Instance *instance) {
         FCITX_ASSERT(pinyin);
     });
     dispatcher->schedule([dispatcher, instance]() {
-        instance->inputMethodManager()
-            .currentGroup()
-            .inputMethodList()
-            .push_back(InputMethodGroupItem("pinyin"));
-        instance->inputMethodManager().currentGroup().setDefaultInputMethod("");
+        auto defaultGroup = instance->inputMethodManager().currentGroup();
+        defaultGroup.inputMethodList().clear();
+        defaultGroup.inputMethodList().push_back(
+            InputMethodGroupItem("keyboard-us"));
+        defaultGroup.inputMethodList().push_back(
+            InputMethodGroupItem("pinyin"));
+        defaultGroup.setDefaultInputMethod("");
+        instance->inputMethodManager().setGroup(defaultGroup);
         auto *testfrontend = instance->addonManager().addon("testfrontend");
         auto uuid =
             testfrontend->call<ITestFrontend::createInputContext>("testapp");
