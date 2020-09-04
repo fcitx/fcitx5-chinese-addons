@@ -75,23 +75,33 @@ TableIME::requestDict(const std::string &name) {
     auto iter = tables_.find(name);
     if (iter == tables_.end()) {
         TABLE_DEBUG() << "Load table config for: " << name;
-        std::string filename = "inputmethod/";
-        filename.append(name.begin(), name.end());
-        filename += ".conf";
-        auto files = StandardPath::global().openAll(StandardPath::Type::PkgData,
-                                                    filename, O_RDONLY);
-        RawConfig rawConfig;
-        // reverse the order, so we end up parse user file at last.
-        for (const auto &file : files | boost::adaptors::reversed) {
-            readFromIni(rawConfig, file.fd());
-        }
-
         iter = tables_
                    .emplace(std::piecewise_construct, std::make_tuple(name),
                             std::make_tuple())
                    .first;
         auto &root = iter->second.root;
-        root.load(rawConfig);
+
+        std::string filename = stringutils::joinPath(
+            "inputmethod", stringutils::concat(name, ".conf"));
+        auto files = StandardPath::global().openAll(StandardPath::Type::PkgData,
+                                                    filename, O_RDONLY);
+        // reverse the order, so we end up parse user file at last.
+        for (const auto &file : files | boost::adaptors::reversed) {
+            RawConfig rawConfig;
+            readFromIni(rawConfig, file.fd());
+            root.load(rawConfig, true);
+        }
+
+        std::string customization =
+            stringutils::joinPath("table", stringutils::concat(name, ".conf"));
+        files = StandardPath::global().openAll(StandardPath::Type::PkgConfig,
+                                               customization, O_RDONLY);
+        // reverse the order, so we end up parse user file at last.
+        for (const auto &file : files | boost::adaptors::reversed) {
+            RawConfig rawConfig;
+            readFromIni(rawConfig, file.fd());
+            root.load(rawConfig, true);
+        }
 
         try {
             auto dict = std::make_unique<libime::TableBasedDictionary>();
@@ -183,19 +193,8 @@ void TableIME::updateConfig(const std::string &name, const RawConfig &config) {
         populateOptions(iter->second.dict.get(), iter->second.root);
     }
 
-    // Load existing user level config, in order to avoid overwrite user config.
-    RawConfig existingConfig;
-    {
-        auto file = StandardPath::global().openUser(
-            StandardPath::Type::PkgData,
-            stringutils::concat("inputmethod/", name, ".conf"), O_RDONLY);
-        if (file.fd() >= 0) {
-            readFromIni(existingConfig, file.fd());
-        }
-    }
-    iter->second.root.save(existingConfig);
-    safeSaveAsIni(existingConfig, StandardPath::Type::PkgData,
-                  stringutils::concat("inputmethod/", name, ".conf"));
+    safeSaveAsIni(iter->second.root, StandardPath::Type::PkgConfig,
+                  stringutils::concat("table/", name, ".conf"));
 }
 
 void TableIME::releaseUnusedDict(const std::unordered_set<std::string> &names) {
