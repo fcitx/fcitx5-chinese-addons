@@ -92,6 +92,9 @@ TableIME::requestDict(const std::string &name) {
             root.load(rawConfig, true);
         }
 
+        // So "Default" can be reset to current value.
+        root.syncDefaultValueToCurrent();
+
         std::string customization =
             stringutils::joinPath("table", stringutils::concat(name, ".conf"));
         files = StandardPath::global().openAll(StandardPath::Type::PkgConfig,
