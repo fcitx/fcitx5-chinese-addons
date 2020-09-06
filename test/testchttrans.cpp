@@ -1,7 +1,9 @@
-//
-// Created by Vifly on 9/1/20.
-//
-
+/*
+ * SPDX-FileCopyrightText: 2020-2020 Vifly <viflythink@gmail.com>
+ *
+ * SPDX-License-Identifier: LGPL-2.1-or-later
+ *
+ */
 #include "testdir.h"
 #include "testfrontend_public.h"
 #include "testim_public.h"
