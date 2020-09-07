@@ -37,6 +37,8 @@ FCITX_CONFIGURATION(
     FuzzyConfig, Option<bool> ue{this, "VE_UE", _("ue -> ve"), true};
     Option<bool> ng{this, "NG_GN", _("gn -> ng"), true};
     Option<bool> inner{this, "Inner", _("Inner Segment (xian -> xi'an)"), true};
+    Option<bool> innerShort{
+        this, "Inner", _("Inner Segment for Short Pinyin (qie -> qi'e)"), true};
     Option<bool> v{this, "V_U", _("u <-> v"), false};
     Option<bool> an{this, "AN_ANG", _("an <-> ang"), false};
     Option<bool> en{this, "EN_ENG", _("en <-> eng"), false};

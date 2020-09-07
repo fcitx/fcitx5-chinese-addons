@@ -790,6 +790,7 @@ void PinyinEngine::reloadConfig() {
     SET_FUZZY_FLAG(ue, VE_UE)
     SET_FUZZY_FLAG(ng, NG_GN)
     SET_FUZZY_FLAG(inner, Inner)
+    SET_FUZZY_FLAG(innerShort, InnerShort)
     SET_FUZZY_FLAG(v, V_U)
     SET_FUZZY_FLAG(an, AN_ANG)
     SET_FUZZY_FLAG(en, EN_ENG)
