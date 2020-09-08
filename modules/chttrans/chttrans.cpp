@@ -157,6 +157,10 @@ void Chttrans::toggle(InputContext *ic) {
 
 void Chttrans::reloadConfig() {
     readAsIni(config_, "conf/chttrans.conf");
+    populateConfig();
+}
+
+void Chttrans::populateConfig() {
     enabledIM_.clear();
     enabledIM_.insert(config_.enabledIM.value().begin(),
                       config_.enabledIM.value().end());

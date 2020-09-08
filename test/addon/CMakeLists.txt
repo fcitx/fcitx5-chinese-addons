@@ -3,4 +3,5 @@ add_custom_command(TARGET copy-addon COMMAND ${CMAKE_COMMAND} -E copy ${PROJECT_
 add_custom_command(TARGET copy-addon COMMAND ${CMAKE_COMMAND} -E copy ${PROJECT_BINARY_DIR}/modules/punctuation/punctuation.conf ${CMAKE_CURRENT_BINARY_DIR}/punctuation.conf)
 add_custom_command(TARGET copy-addon COMMAND ${CMAKE_COMMAND} -E copy ${PROJECT_BINARY_DIR}/modules/pinyinhelper/pinyinhelper.conf ${CMAKE_CURRENT_BINARY_DIR}/pinyinhelper.conf)
 add_custom_command(TARGET copy-addon COMMAND ${CMAKE_COMMAND} -E copy ${PROJECT_BINARY_DIR}/modules/fullwidth/fullwidth.conf ${CMAKE_CURRENT_BINARY_DIR}/fullwidth.conf)
+add_custom_command(TARGET copy-addon COMMAND ${CMAKE_COMMAND} -E copy ${PROJECT_BINARY_DIR}/modules/chttrans/chttrans.conf ${CMAKE_CURRENT_BINARY_DIR}/chttrans.conf)
 
