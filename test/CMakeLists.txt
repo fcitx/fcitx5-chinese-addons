@@ -23,7 +23,7 @@ add_test(NAME testfullwidth COMMAND testfullwidth)
 add_subdirectory(inputmethod)
 add_executable(testchttrans testchttrans.cpp)
 target_link_libraries(testchttrans Fcitx5::Core Fcitx5::Module::TestFrontend Fcitx5::Module::TestIM Pthread::Pthread)
-add_dependencies(testchttrans chttrans chttrans.conf.in-fmt copy-testim)
+add_dependencies(testchttrans chttrans chttrans.conf.in-fmt copy-addon copy-testim)
 add_test(NAME testchttrans COMMAND testchttrans)
 
 add_subdirectory(addon)
