@@ -22,13 +22,33 @@
 
 using namespace fcitx;
 
+std::string getTestWord(const std::string &s) {
+    std::string result;
+    if (s == "a") {
+        result = "无";
+    } else if (s == "b") {
+        result = "测";
+    } else if (s == "c") {
+        result = "多个词";
+    } else if (s == "d") {
+        result = "书";
+    } else if (s == "e") {
+        result = "時";
+    } else if (s == "f") {
+        result = "皇后";
+    } else {
+        result = s;
+    }
+    return result;
+}
+
 void scheduleEvent(EventDispatcher *dispatcher, Instance *instance) {
-    dispatcher->schedule([instance]() {
+    dispatcher->schedule([dispatcher, instance]() {
         auto *chttrans = instance->addonManager().addon("chttrans", true);
         FCITX_ASSERT(chttrans);
-    });
-
-    dispatcher->schedule([dispatcher, instance]() {
+        RawConfig config;
+        config.setValueByPath("Engine", "OpenCC");
+        chttrans->setConfig(config);
         auto testfrontend = instance->addonManager().addon("testfrontend");
         auto testim = instance->addonManager().addon("testim");
         auto *action =
@@ -47,7 +67,7 @@ void scheduleEvent(EventDispatcher *dispatcher, Instance *instance) {
                             .defaultInputMethod();
 
         testim->call<ITestIM::setHandler>([action](const InputMethodEntry &,
-                                                     KeyEvent &keyEvent) {
+                                                   KeyEvent &keyEvent) {
             if (keyEvent.key().states() != KeyState::NoState ||
                 keyEvent.isRelease()) {
                 return;
@@ -61,14 +81,13 @@ void scheduleEvent(EventDispatcher *dispatcher, Instance *instance) {
                     action->activate(keyEvent.inputContext());
                 }
 
-                // Test words and convertTradToSimp
-                if (s == "多") {
-                    s = "多个词";
-                } else if (s == "時") {
+                // Test convertTradToSimp
+                std::string word = getTestWord(s);
+                if (word == "時") {
                     action->activate(keyEvent.inputContext());
                 }
 
-                keyEvent.inputContext()->commitString(s);
+                keyEvent.inputContext()->commitString(word);
                 keyEvent.filterAndAccept();
             }
         });
@@ -77,17 +96,20 @@ void scheduleEvent(EventDispatcher *dispatcher, Instance *instance) {
             testfrontend->call<ITestFrontend::createInputContext>("testapp");
 
         testfrontend->call<ITestFrontend::pushCommitExpectation>("無");
-        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("无"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
         testfrontend->call<ITestFrontend::pushCommitExpectation>("測");
-        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("测"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("b"), false);
 
         testfrontend->call<ITestFrontend::pushCommitExpectation>("多個詞");
-        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("多"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("c"), false);
+
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("皇后");
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("f"), false);
 
         testfrontend->call<ITestFrontend::keyEvent>(
             uuid, Key("Control+Shift+F"), false);
         testfrontend->call<ITestFrontend::pushCommitExpectation>("书");
-        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("书"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("d"), false);
 
         // Switch to Trad IM from Sim IM
         testfrontend->call<ITestFrontend::keyEvent>(
@@ -97,7 +119,18 @@ void scheduleEvent(EventDispatcher *dispatcher, Instance *instance) {
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Control+space"),
                                                     false);
         testfrontend->call<ITestFrontend::pushCommitExpectation>("时");
-        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("時"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("e"), false);
+
+        // Test Native engine
+        inputmethodgroup.setDefaultInputMethod("sim");
+        instance->inputMethodManager().setGroup(inputmethodgroup);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Control+space"),
+                                                    false);
+        config.setValueByPath("Engine", "Native");
+        config.setValueByPath("EnabledIM/0", "sim");
+        chttrans->setConfig(config);
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("皇後");
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("f"), false);
 
         dispatcher->detach();
         instance->exit();
@@ -109,7 +142,8 @@ void runInstance() {}
 int main() {
     setupTestingEnvironment(
         TESTING_BINARY_DIR,
-        {"modules/chttrans", StandardPath::fcitxPath("addondir")}, {"test"});
+        {"modules/chttrans", StandardPath::fcitxPath("addondir")},
+        {"test", TESTING_SOURCE_DIR "/modules"});
 
     fcitx::Log::setLogRule("*=5");
 

@@ -12,7 +12,7 @@
 #include <fcitx-utils/utf8.h>
 #include <fcntl.h>
 
-#define TABLE_GBKS2T "data/gbks2t.tab"
+#define TABLE_GBKS2T "chttrans/gbks2t.tab"
 
 using namespace fcitx;
 
