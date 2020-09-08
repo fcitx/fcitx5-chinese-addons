@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later
  *
  */
+#include "config.h"
 #include "testdir.h"
 #include "testfrontend_public.h"
 #include "testim_public.h"
@@ -46,9 +47,6 @@ void scheduleEvent(EventDispatcher *dispatcher, Instance *instance) {
     dispatcher->schedule([dispatcher, instance]() {
         auto *chttrans = instance->addonManager().addon("chttrans", true);
         FCITX_ASSERT(chttrans);
-        RawConfig config;
-        config.setValueByPath("Engine", "OpenCC");
-        chttrans->setConfig(config);
         auto testfrontend = instance->addonManager().addon("testfrontend");
         auto testim = instance->addonManager().addon("testim");
         auto *action =
@@ -95,6 +93,9 @@ void scheduleEvent(EventDispatcher *dispatcher, Instance *instance) {
         auto uuid =
             testfrontend->call<ITestFrontend::createInputContext>("testapp");
 
+        RawConfig config;
+        config.setValueByPath("Engine", "OpenCC");
+        chttrans->setConfig(config);
         testfrontend->call<ITestFrontend::pushCommitExpectation>("無");
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
         testfrontend->call<ITestFrontend::pushCommitExpectation>("測");
@@ -103,8 +104,10 @@ void scheduleEvent(EventDispatcher *dispatcher, Instance *instance) {
         testfrontend->call<ITestFrontend::pushCommitExpectation>("多個詞");
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("c"), false);
 
+#ifdef ENABLE_OPENCC
         testfrontend->call<ITestFrontend::pushCommitExpectation>("皇后");
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("f"), false);
+#endif
 
         testfrontend->call<ITestFrontend::keyEvent>(
             uuid, Key("Control+Shift+F"), false);
