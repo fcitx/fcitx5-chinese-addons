@@ -37,7 +37,14 @@ Text TableContext::preeditText(bool hint) const {
             }
         }
     }
-    auto codeText = hint ? customHint(currentCode()) : currentCode();
+
+    std::string codeText;
+    if (*config_.firstCandidateAsPreedit && !candidates().empty()) {
+        codeText = candidates().front().toString();
+    } else {
+        codeText = hint ? customHint(currentCode()) : currentCode();
+    }
+
     text.setCursor(0);
     text.append(codeText,
                 {TextFormatFlag::Underline, TextFormatFlag::HighLight});
