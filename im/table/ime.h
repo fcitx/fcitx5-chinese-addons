@@ -80,6 +80,9 @@ FCITX_CONFIGURATION(
     Option<bool> useFullWidth{this, "UseFullWidth", _("Use full width"), true};
     Option<bool> ignorePunc{this, "IgnorePunc",
                             _("Ignore built in punctuation"), false};
+    Option<bool> firstCandidateAsPreedit{this, "FirstCandidateAsPreedit",
+                                         _("First candidate as Preedit"),
+                                         false};
     Option<Key, KeyConstrain> quickphrase{
         this,
         "QuickPhraseKey",

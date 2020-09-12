@@ -934,7 +934,7 @@ void TableState::updateUI() {
     if (!context->userInput().empty()) {
         auto candidates = context->candidates();
         auto &inputPanel = ic_->inputPanel();
-        if (context->candidates().size()) {
+        if (!candidates.empty()) {
             auto candidateList = std::make_unique<CommonCandidateList>();
             size_t idx = 0;
             candidateList->setLayoutHint(*config.candidateLayoutHint);
