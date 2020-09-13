@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-09-08 00:01-0700\n"
+"POT-Creation-Date: 2020-09-13 00:01-0700\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: csslayer <wengxt@gmail.com>, 2020\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/fcitx/teams/12005/"
@@ -375,7 +375,7 @@ msgstr "半角标点"
 
 #: modules/punctuation/punctuation.h:28
 msgid "Half width punctuation after latin letter or number"
-msgstr ""
+msgstr "字母或者数字之后输入半角标点"
 
 #: im/table/ime.h:25
 msgid "Horizontal"
@@ -395,7 +395,7 @@ msgstr "内模糊音节 (xian -> xi'an)"
 
 #: im/pinyin/pinyin.h:41
 msgid "Inner Segment for Short Pinyin (qie -> qi'e)"
-msgstr ""
+msgstr "短拼音的内模糊音节 (qie -> qi'e)"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:97
 msgid "Input Dictionary Name"
