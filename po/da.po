@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-09-08 00:01-0700\n"
+"POT-Creation-Date: 2020-09-13 00:01-0700\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: scootergrisen, 2020\n"
 "Language-Team: Danish (https://www.transifex.com/fcitx/teams/12005/da/)\n"
@@ -146,13 +146,15 @@ msgstr "Udfør ugyldigt segment"
 
 #: im/table/ime.h:78
 msgid "Commit after auto select candidates"
-msgstr ""
+msgstr "Udfør efter automatisk valg af kandidater"
 
 #: im/table/ime.h:146
 msgid ""
 "Commit the segment that does not exist in the table. This option is useful "
 "for some latin/compose based table."
 msgstr ""
+"Udfør det segment som ikke findes i tabellen. Valgmuligheden er nyttig til "
+"nogle latinske/sammensætningsbaserede tabeller."
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:330
 #: gui/pinyindictmanager/pinyindictmanager.cpp:362
@@ -378,7 +380,7 @@ msgstr "Tegnsætning i halv bredde"
 
 #: modules/punctuation/punctuation.h:28
 msgid "Half width punctuation after latin letter or number"
-msgstr ""
+msgstr "Tegnsætning med halv bredde efter latinsk bogstav eller tal"
 
 #: im/table/ime.h:25
 msgid "Horizontal"
@@ -398,7 +400,7 @@ msgstr "Indre segment (xian -> xi'an)"
 
 #: im/pinyin/pinyin.h:41
 msgid "Inner Segment for Short Pinyin (qie -> qi'e)"
-msgstr ""
+msgstr "Indre segment for kort Pinyin (qie -> qi'e)"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:97
 msgid "Input Dictionary Name"
