@@ -90,8 +90,9 @@ public:
     void setConfig(const fcitx::RawConfig &config) override {
         config_.load(config, true);
         fcitx::safeSaveAsIni(config_, "conf/punctuation.conf");
-        reloadConfig();
+        populateConfig();
     }
+    void populateConfig();
 
     FCITX_ADDON_EXPORT_FUNCTION(Punctuation, getPunctuation);
     FCITX_ADDON_EXPORT_FUNCTION(Punctuation, pushPunctuation);
