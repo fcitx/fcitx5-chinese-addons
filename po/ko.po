@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-09-08 00:01-0700\n"
+"POT-Creation-Date: 2020-09-15 00:02-0700\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: JungHee Lee <daemul72@gmail.com>, 2020\n"
 "Language-Team: Korean (https://www.transifex.com/fcitx/teams/12005/ko/)\n"
@@ -359,7 +359,7 @@ msgstr "전각 문장부호가 활성화되었습니다."
 
 #: im/pinyin/pinyin.h:150
 msgid "Fuzzy Pinyin Settings"
-msgstr "퍼지 병음 설정"
+msgstr "불분명한 병음 설정"
 
 #: modules/fullwidth/fullwidth.h:30
 msgid "Half width Character"
@@ -448,7 +448,7 @@ msgstr "다음 페이지"
 
 #: im/pinyin/pinyin.cpp:728
 msgid "No"
-msgstr ""
+msgstr "아니요"
 
 #: gui/pinyindictmanager/browserdialog.cpp:116
 msgid "No browsing outside pinyin.sogou.com, now redirect to home page."
@@ -741,7 +741,7 @@ msgstr "Xiaohe"
 
 #: im/pinyin/pinyin.cpp:727
 msgid "Yes"
-msgstr ""
+msgstr "예"
 
 #: im/pinyin/pinyin.h:33
 msgid "Zhongwenzhixing"
