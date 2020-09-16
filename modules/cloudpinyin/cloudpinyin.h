@@ -51,9 +51,7 @@ public:
     void setConfig(const fcitx::RawConfig &config) override {
         config_.load(config, true);
         fcitx::safeSaveAsIni(config_, "conf/cloudpinyin.conf");
-        populateConfig();
     }
-    void populateConfig();
 
     void request(const std::string &pinyin, CloudPinyinCallback callback);
     const fcitx::KeyList &toggleKey() const {

@@ -118,10 +118,7 @@ CloudPinyin::~CloudPinyin() { dispatcher_.detach(); }
 
 void CloudPinyin::reloadConfig() {
     readAsIni(config_, "conf/cloudpinyin.conf");
-    populateConfig();
 }
-
-void CloudPinyin::populateConfig() {}
 
 void CloudPinyin::request(const std::string &pinyin,
                           CloudPinyinCallback callback) {
