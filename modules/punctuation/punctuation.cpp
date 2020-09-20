@@ -259,7 +259,10 @@ Punctuation::~Punctuation() {}
 
 void Punctuation::reloadConfig() {
     readAsIni(config_, "conf/punctuation.conf");
+    populateConfig();
+}
 
+void Punctuation::populateConfig() {
     auto files = StandardPath::global().multiOpen(StandardPath::Type::PkgData,
                                                   "punctuation", O_RDONLY,
                                                   filter::Prefix("punc.mb."));
@@ -283,7 +286,7 @@ void Punctuation::reloadConfig() {
                 boost::iostreams::file_descriptor_source>
                 buffer(file.second.fd(),
                        boost::iostreams::file_descriptor_flags::
-                           never_close_handle);
+                       never_close_handle);
             std::istream in(&buffer);
             PunctuationProfile newProfile(in);
             profiles_[lang] = std::move(newProfile);
