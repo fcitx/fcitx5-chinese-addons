@@ -55,12 +55,13 @@ FCITX_CONFIGURATION(
 
 FCITX_CONFIGURATION(
     PinyinEngineConfig,
+    OptionWithAnnotation<ShuangpinProfileEnum,
+                         ShuangpinProfileEnumI18NAnnotation>
+        shuangpinProfile{this, "ShuangpinProfile", _("Shuangpin Profile"),
+                         ShuangpinProfileEnum::Ziranma};
     Option<int, IntConstrain> pageSize{this, "PageSize", _("Page size"), 5,
                                        IntConstrain(3, 10)};
-    Option<int, IntConstrain> predictionSize{
-        this, "PredictionSize", _("Prediction Size"), 10, IntConstrain(3, 20)};
-    Option<bool> predictionEnabled{this, "Prediction", _("Enable Prediction"),
-                                   false};
+    Option<bool> spellEnabled{this, "SpellEnabled", _("Enable Spell"), true};
     Option<bool> emojiEnabled{this, "EmojiEnabled", _("Enable Emoji"), true};
     Option<bool> chaiziEnabled{this, "ChaiziEnabled", _("Enable Chaizi"), true};
     Option<bool> cloudPinyinEnabled{this, "CloudPinyinEnabled",
@@ -73,6 +74,10 @@ FCITX_CONFIGURATION(
                                           false};
     Option<bool> showActualPinyinInPreedit{
         this, "PinyinInPreedit", _("Show complete pinyin in preedit"), false};
+    Option<bool> predictionEnabled{this, "Prediction", _("Enable Prediction"),
+                                   false};
+    Option<int, IntConstrain> predictionSize{
+        this, "PredictionSize", _("Prediction Size"), 10, IntConstrain(3, 20)};
     KeyListOption forgetWord{this,
                              "ForgetWord",
                              _("Forget word"),
@@ -141,10 +146,6 @@ FCITX_CONFIGURATION(
         this, "LongWordLengthLimit",
         _("Prompt long word length when input length over (0 for disable)"), 4,
         IntConstrain(0, 10)};
-    OptionWithAnnotation<ShuangpinProfileEnum,
-                         ShuangpinProfileEnumI18NAnnotation>
-        shuangpinProfile{this, "ShuangpinProfile", _("Shuangpin Profile"),
-                         ShuangpinProfileEnum::Ziranma};
     ExternalOption dictmanager{this, "DictManager", _("Dictionaries"),
                                "fcitx://config/addon/pinyin/dictmanager"};
     Option<FuzzyConfig> fuzzyConfig{this, "Fuzzy", _("Fuzzy Pinyin Settings")};

@@ -453,9 +453,10 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
 
         /// Create spell candidate {{{
         int engNess;
-        auto parsedPy = preedit.stringAt(0).substr(selectedSentence.size());
+        auto parsedPy =
+            state->context_.preedit(libime::PinyinPreeditMode::RawText);
         std::vector<std::unique_ptr<SpellCandidateWord>> spellCands;
-        if (spell() &&
+        if (*config_.spellEnabled && spell() &&
             (engNess = englishNess(parsedPy, context.useShuangpin()))) {
             auto py = context.userInput().substr(selectedLength);
             auto results = spell()->call<ISpell::hintWithProvider>(
