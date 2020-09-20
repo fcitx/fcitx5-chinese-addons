@@ -286,7 +286,7 @@ void Punctuation::populateConfig() {
                 boost::iostreams::file_descriptor_source>
                 buffer(file.second.fd(),
                        boost::iostreams::file_descriptor_flags::
-                       never_close_handle);
+                           never_close_handle);
             std::istream in(&buffer);
             PunctuationProfile newProfile(in);
             profiles_[lang] = std::move(newProfile);
