@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-09-21 00:02-0700\n"
+"POT-Creation-Date: 2020-09-25 00:02-0700\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: scootergrisen, 2020\n"
 "Language-Team: Danish (https://www.transifex.com/fcitx/teams/12005/da/)\n"
@@ -275,7 +275,7 @@ msgstr "Aktivér forudsigelse"
 
 #: im/pinyin/pinyin.h:64
 msgid "Enable Spell"
-msgstr ""
+msgstr "Aktivér stav"
 
 #: modules/chttrans/chttrans.h:30
 msgid "Enabled Input Methods"
@@ -332,7 +332,7 @@ msgstr "Filtrér efter tryk"
 
 #: im/table/ime.h:84
 msgid "First candidate as Preedit"
-msgstr ""
+msgstr "Første kandidat som Preedit"
 
 #: im/table/engine.h:33 im/pinyin/pinyin.h:83
 msgid "Forget word"
@@ -651,11 +651,11 @@ msgstr "Forenklet kinesisk er aktiveret."
 msgid "Simplified and Traditional Chinese Translation"
 msgstr "Oversættelse af forenklet og traditionel kinesisk"
 
-#: modules/chttrans/chttrans.cpp:75
+#: modules/chttrans/chttrans.cpp:76
 msgid "Switch to Simplified Chinese"
 msgstr "Skift til forenklet kinesisk"
 
-#: modules/chttrans/chttrans.cpp:76
+#: modules/chttrans/chttrans.cpp:75
 msgid "Switch to Traditional Chinese"
 msgstr "Skift til traditionel kinesisk"
 
