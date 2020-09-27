@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-09-25 00:02-0700\n"
+"POT-Creation-Date: 2020-09-27 00:01-0700\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: scootergrisen, 2020\n"
 "Language-Team: Danish (https://www.transifex.com/fcitx/teams/12005/da/)\n"
@@ -426,10 +426,12 @@ msgstr "Læring"
 msgid ""
 "Length limit of selecting the current candidate when there is no new match"
 msgstr ""
+"Grænse for længde ved valg af den nuværende kandidat når der ikke er noget "
+"nyt match"
 
 #: im/table/ime.h:132
 msgid "Length limit of selecting the only candidate"
-msgstr ""
+msgstr "Grænse for længde ved valg af den eneste kandidat"
 
 #: im/table/engine.h:38
 msgid "Lookup pinyin"
@@ -495,6 +497,9 @@ msgid ""
 "disable this option if you want the candidate order to be stable regardless "
 "of the history."
 msgstr ""
+"Kandidatens rækkefølge skal baseres på det ord du allerede har skrevet. Det "
+"kan være du vil deaktivere valgmuligheden hvis du vil have at rækkefølgen "
+"for kandidaten skal være stabil uanset historikken."
 
 #: im/table/ime.h:74 im/pinyin/pinyin.h:62
 msgid "Page size"
@@ -721,6 +726,8 @@ msgid ""
 "When available, system language model will be loaded for given language and "
 "provide ability to give better context based order."
 msgstr ""
+"Når det er muligt, så indlæses model for systemtets sprog for givne sprog og "
+"giver mulighed for bedre rækkefølge baseret på kontekst."
 
 #: im/table/ime.h:137
 msgid ""
