@@ -40,6 +40,9 @@ FCITX_CONFIGURATION(
     Option<bool> innerShort{this, "InnerShort",
                             _("Inner Segment for Short Pinyin (qie -> qi'e)"),
                             true};
+    Option<bool> partialFinal{this, "PartialFinal",
+                              _("Match partial finals (e -> en, eng, ei)"),
+                              true};
     Option<bool> v{this, "V_U", _("u <-> v"), false};
     Option<bool> an{this, "AN_ANG", _("an <-> ang"), false};
     Option<bool> en{this, "EN_ENG", _("en <-> eng"), false};
