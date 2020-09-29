@@ -26,7 +26,7 @@ public:
         return code;
     }
 
-    Text preeditText(bool hint) const;
+    Text preeditText(bool hint, bool clientPreedit) const;
 
 private:
     const TableConfig &config_;

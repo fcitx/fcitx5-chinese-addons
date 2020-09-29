@@ -13,7 +13,7 @@ TableContext::TableContext(libime::TableBasedDictionary &dict,
                            libime::UserLanguageModel &model)
     : libime::TableContext(dict, model), config_(config) {}
 
-Text TableContext::preeditText(bool hint) const {
+Text TableContext::preeditText(bool hint, bool clientPreedit) const {
     Text text;
     if (!*config_.commitAfterSelect) {
         for (size_t i = 0, e = selectedSize(); i < e; i++) {
@@ -45,10 +45,14 @@ Text TableContext::preeditText(bool hint) const {
         codeText = hint ? customHint(currentCode()) : currentCode();
     }
 
-    text.setCursor(0);
     text.append(codeText,
                 {TextFormatFlag::Underline, TextFormatFlag::HighLight});
 
+    if (clientPreedit) {
+        text.setCursor(0);
+    } else {
+        text.setCursor(text.textLength());
+    }
     return text;
 }
 } // namespace fcitx
