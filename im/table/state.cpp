@@ -965,14 +965,19 @@ void TableState::updateUI() {
             }
             inputPanel.setCandidateList(std::move(candidateList));
         }
+        const bool useClientPreedit =
+            ic_->capabilityFlags().test(CapabilityFlag::Preedit);
         if (*config.displayCustomHint && context->dict().hasCustomPrompt()) {
-            if (ic_->capabilityFlags().test(CapabilityFlag::Preedit)) {
-                inputPanel.setClientPreedit(context->preeditText(false));
+            if (useClientPreedit) {
+                inputPanel.setClientPreedit(context->preeditText(
+                    /*hint=*/false, /*clientPreedit=*/true));
             }
-            inputPanel.setPreedit(context->preeditText(true));
+            inputPanel.setPreedit(
+                context->preeditText(/*hint=*/true, /*clientPreedit=*/false));
         } else {
-            Text preeditText = context->preeditText(false);
-            if (ic_->capabilityFlags().test(CapabilityFlag::Preedit)) {
+            Text preeditText =
+                context->preeditText(/*hint=*/false, useClientPreedit);
+            if (useClientPreedit) {
                 inputPanel.setClientPreedit(preeditText);
             } else {
                 inputPanel.setPreedit(preeditText);
