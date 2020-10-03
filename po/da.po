@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-09-28 00:02-0700\n"
+"POT-Creation-Date: 2020-10-03 00:02-0700\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: scootergrisen, 2020\n"
 "Language-Team: Danish (https://www.transifex.com/fcitx/teams/12005/da/)\n"
@@ -443,7 +443,7 @@ msgstr "MS"
 
 #: im/pinyin/pinyin.h:44
 msgid "Match partial finals (e -> en, eng, ei)"
-msgstr ""
+msgstr "Match delvise slutninger (e -> en, eng, ei)"
 
 #: modules/cloudpinyin/cloudpinyin.h:32
 msgid "Minimum Pinyin Length"
@@ -616,7 +616,7 @@ msgstr "Vælg anden kandidat"
 msgid "Select Third Candidate"
 msgstr "Vælg tredje kandidat"
 
-#: im/table/state.cpp:984
+#: im/table/state.cpp:989
 msgid "Select candidate to be removed from history:"
 msgstr "Vælg kandidat som skal fjernes fra historik:"
 
