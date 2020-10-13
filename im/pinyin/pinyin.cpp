@@ -1332,15 +1332,22 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
 
     auto checkSp = [this](const KeyEvent &event, PinyinState *state) {
         auto shuangpinProfile = ime_->shuangpinProfile();
-        return state->context_.useShuangpin() && shuangpinProfile &&
-               event.key().isSimple() &&
-               shuangpinProfile->validInput().count(
-                   Key::keySymToUnicode(event.key().sym()));
+        if (!state->context_.useShuangpin() || !shuangpinProfile ||
+            !event.key().isSimple()) {
+            return false;
+        }
+        // event.key().isSimple() make sure the return value is within range of
+        // char.
+        char chr = Key::keySymToUnicode(event.key().sym());
+        return (!state->context_.empty() &&
+                shuangpinProfile->validInput().count(chr)) ||
+               (state->context_.empty() &&
+                shuangpinProfile->validInitial().count(chr));
     };
 
     if (event.key().isLAZ() || event.key().isUAZ() ||
         (event.key().check(FcitxKey_apostrophe) && !state->context_.empty()) ||
-        (!state->context_.empty() && checkSp(event, state))) {
+        checkSp(event, state)) {
         // first v, use it to trigger quickphrase
         if (!state->context_.useShuangpin() && quickphrase() &&
             event.key().check(FcitxKey_v) && state->context_.empty()) {
