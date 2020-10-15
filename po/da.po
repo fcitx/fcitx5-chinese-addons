@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-10-07 00:02-0700\n"
+"POT-Creation-Date: 2020-10-15 00:02-0700\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: scootergrisen, 2020\n"
 "Language-Team: Danish (https://www.transifex.com/fcitx/teams/12005/da/)\n"
@@ -209,7 +209,7 @@ msgstr "Dialog"
 msgid "Dianbaoma"
 msgstr "Dianbaoma"
 
-#: im/pinyin/pinyin.h:152
+#: im/pinyin/pinyin.h:154
 msgid "Dictionaries"
 msgstr "Ordbøger"
 
@@ -374,7 +374,7 @@ msgstr "Tegnsætning i fuld bredde er deaktiveret."
 msgid "Full width punctuation is enabled."
 msgstr "Tegnsætning i fuld bredde er aktiveret."
 
-#: im/pinyin/pinyin.h:154
+#: im/pinyin/pinyin.h:156
 msgid "Fuzzy Pinyin Settings"
 msgstr "Uafklarede Pinyin-indstillinger"
 
@@ -487,7 +487,7 @@ msgstr "Ikke tilgængelig"
 msgid "Not set"
 msgstr "Ikke sat"
 
-#: im/pinyin/pinyin.h:146
+#: im/pinyin/pinyin.h:148
 msgid "Number of Sentence"
 msgstr "Antal sætninger"
 
@@ -570,7 +570,7 @@ msgstr "Forrige side"
 msgid "Prev page"
 msgstr "Forrige side"
 
-#: im/pinyin/pinyin.h:150
+#: im/pinyin/pinyin.h:152
 msgid "Prompt long word length when input length over (0 for disable)"
 msgstr ""
 "Spørg om længden på lange ord når inputlængden er over (0 for deaktivér)"
@@ -705,6 +705,10 @@ msgstr "Brug venstre og højre til at vælge tegn: "
 msgid "Use Left and Right to select text. "
 msgstr "Brug venstre og højre til at vælge tekst. "
 
+#: im/pinyin/pinyin.h:146
+msgid "Use V to trigger quickphrase"
+msgstr ""
+
 #: im/table/ime.h:109
 msgid "Use context related sort"
 msgstr "Brug kontekstrelateret sortering"
@@ -751,6 +755,11 @@ msgid ""
 "type in the new character. -1 means the maximum code length of the table. 0 "
 "means disable this behavior."
 msgstr ""
+"Når der skrives et nyt tegn, så hvis den nuværende inputlængde er større end "
+"eller det samme som grænsen og det eksisterende segment med det nye tegn "
+"ikke har nogen matchende poster i tabellen, så vælg den nuværende kandidat "
+"og skriv det nye tegn. -1 betyder den maksimale kodelængde på tabellen. 0 "
+"betyder deaktivér opførslen."
 
 #: im/table/ime.h:120
 msgid "Wildcard matching Key"
