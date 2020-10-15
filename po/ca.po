@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-09-28 00:02-0700\n"
+"POT-Creation-Date: 2020-10-15 00:02-0700\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Robert Antoni Buj Gelonch <rbuj@fedoraproject.org>, 2017\n"
 "Language-Team: Catalan (https://www.transifex.com/fcitx/teams/12005/ca/)\n"
@@ -203,7 +203,7 @@ msgstr ""
 msgid "Dianbaoma"
 msgstr ""
 
-#: im/pinyin/pinyin.h:152
+#: im/pinyin/pinyin.h:154
 msgid "Dictionaries"
 msgstr ""
 
@@ -364,7 +364,7 @@ msgstr ""
 msgid "Full width punctuation is enabled."
 msgstr ""
 
-#: im/pinyin/pinyin.h:154
+#: im/pinyin/pinyin.h:156
 msgid "Fuzzy Pinyin Settings"
 msgstr ""
 
@@ -473,7 +473,7 @@ msgstr "No disponible"
 msgid "Not set"
 msgstr ""
 
-#: im/pinyin/pinyin.h:146
+#: im/pinyin/pinyin.h:148
 msgid "Number of Sentence"
 msgstr ""
 
@@ -553,7 +553,7 @@ msgstr ""
 msgid "Prev page"
 msgstr "Re Pàg"
 
-#: im/pinyin/pinyin.h:150
+#: im/pinyin/pinyin.h:152
 msgid "Prompt long word length when input length over (0 for disable)"
 msgstr ""
 
@@ -598,7 +598,7 @@ msgstr ""
 msgid "Select Third Candidate"
 msgstr ""
 
-#: im/table/state.cpp:984
+#: im/table/state.cpp:989
 msgid "Select candidate to be removed from history:"
 msgstr ""
 
@@ -686,6 +686,10 @@ msgstr "Utilitza dret i esquerre per seleccionar el caràcter:"
 #: im/table/state.cpp:521
 msgid "Use Left and Right to select text. "
 msgstr "Utilitza dret i esquerre per seleccionar el text:"
+
+#: im/pinyin/pinyin.h:146
+msgid "Use V to trigger quickphrase"
+msgstr ""
 
 #: im/table/ime.h:109
 msgid "Use context related sort"

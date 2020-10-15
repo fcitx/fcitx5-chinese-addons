@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-09-28 00:02-0700\n"
+"POT-Creation-Date: 2020-10-15 00:02-0700\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: JungHee Lee <daemul72@gmail.com>, 2020\n"
 "Language-Team: Korean (https://www.transifex.com/fcitx/teams/12005/ko/)\n"
@@ -204,7 +204,7 @@ msgstr "대화창"
 msgid "Dianbaoma"
 msgstr "Dianbaoma"
 
-#: im/pinyin/pinyin.h:152
+#: im/pinyin/pinyin.h:154
 msgid "Dictionaries"
 msgstr "사전"
 
@@ -365,7 +365,7 @@ msgstr "전각 문장부호 비활성화되었습니다."
 msgid "Full width punctuation is enabled."
 msgstr "전각 문장부호가 활성화되었습니다."
 
-#: im/pinyin/pinyin.h:154
+#: im/pinyin/pinyin.h:156
 msgid "Fuzzy Pinyin Settings"
 msgstr "불분명한 병음 설정"
 
@@ -475,7 +475,7 @@ msgstr "사용할 수 없음"
 msgid "Not set"
 msgstr "지정되지 않음"
 
-#: im/pinyin/pinyin.h:146
+#: im/pinyin/pinyin.h:148
 msgid "Number of Sentence"
 msgstr "문장 수"
 
@@ -555,7 +555,7 @@ msgstr "이전 페이지"
 msgid "Prev page"
 msgstr "앞 페이지"
 
-#: im/pinyin/pinyin.h:150
+#: im/pinyin/pinyin.h:152
 msgid "Prompt long word length when input length over (0 for disable)"
 msgstr "입력 길이가 초과될 때 프롬프트 긴 단어 길이(사용안할 경우 0)"
 
@@ -600,7 +600,7 @@ msgstr "두 번째 후보 선택"
 msgid "Select Third Candidate"
 msgstr "세 번째 후보 선택"
 
-#: im/table/state.cpp:984
+#: im/table/state.cpp:989
 msgid "Select candidate to be removed from history:"
 msgstr "기록에서 제거할 후보 선택"
 
@@ -688,6 +688,10 @@ msgstr "문자 선택을 위해 좌/우키 사용:"
 #: im/table/state.cpp:521
 msgid "Use Left and Right to select text. "
 msgstr "문장 선택을 위해 좌/우키 사용:"
+
+#: im/pinyin/pinyin.h:146
+msgid "Use V to trigger quickphrase"
+msgstr ""
 
 #: im/table/ime.h:109
 msgid "Use context related sort"

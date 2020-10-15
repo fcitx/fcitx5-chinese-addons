@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-09-28 00:02-0700\n"
+"POT-Creation-Date: 2020-10-15 00:02-0700\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: csslayer <wengxt@gmail.com>, 2020\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/fcitx/teams/12005/"
@@ -206,7 +206,7 @@ msgstr "对话框"
 msgid "Dianbaoma"
 msgstr "电报码"
 
-#: im/pinyin/pinyin.h:152
+#: im/pinyin/pinyin.h:154
 msgid "Dictionaries"
 msgstr "词典"
 
@@ -369,7 +369,7 @@ msgstr "全角标点已禁用。"
 msgid "Full width punctuation is enabled."
 msgstr "全角标点已启用。"
 
-#: im/pinyin/pinyin.h:154
+#: im/pinyin/pinyin.h:156
 msgid "Fuzzy Pinyin Settings"
 msgstr "模糊音设置"
 
@@ -478,7 +478,7 @@ msgstr "不可用"
 msgid "Not set"
 msgstr "未设置"
 
-#: im/pinyin/pinyin.h:146
+#: im/pinyin/pinyin.h:148
 msgid "Number of Sentence"
 msgstr "句子数量"
 
@@ -560,7 +560,7 @@ msgstr "上一页"
 msgid "Prev page"
 msgstr "上一页"
 
-#: im/pinyin/pinyin.h:150
+#: im/pinyin/pinyin.h:152
 msgid "Prompt long word length when input length over (0 for disable)"
 msgstr "输入长于...时提示长词 (设置为 0 时禁用)"
 
@@ -605,7 +605,7 @@ msgstr "选择第二个候选词"
 msgid "Select Third Candidate"
 msgstr "选择第三个候选词"
 
-#: im/table/state.cpp:984
+#: im/table/state.cpp:989
 msgid "Select candidate to be removed from history:"
 msgstr "选择要从历史中移除的候选词："
 
@@ -693,6 +693,10 @@ msgstr "使用左右键来选择字符："
 #: im/table/state.cpp:521
 msgid "Use Left and Right to select text. "
 msgstr "使用左右键来选择字符。"
+
+#: im/pinyin/pinyin.h:146
+msgid "Use V to trigger quickphrase"
+msgstr ""
 
 #: im/table/ime.h:109
 msgid "Use context related sort"
