@@ -142,6 +142,8 @@ FCITX_CONFIGURATION(
         _("Key to trigger quickphrase"),
         Key{FcitxKey_semicolon},
         {KeyConstrainFlag::AllowModifierLess}};
+    Option<bool> useVAsQuickphrase{this, "VAsQuickphrase",
+                                   _("Use V to trigger quickphrase"), true};
     Option<int, IntConstrain> nbest{this, "Number of sentence",
                                     _("Number of Sentence"), 2,
                                     IntConstrain(1, 3)};

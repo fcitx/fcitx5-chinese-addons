@@ -1350,7 +1350,8 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         checkSp(event, state)) {
         // first v, use it to trigger quickphrase
         if (!state->context_.useShuangpin() && quickphrase() &&
-            event.key().check(FcitxKey_v) && state->context_.empty()) {
+            *config_.useVAsQuickphrase && event.key().check(FcitxKey_v) &&
+            state->context_.empty()) {
 
             quickphrase()->call<IQuickPhrase::trigger>(
                 inputContext, "", "v", "", "", Key(FcitxKey_None));
