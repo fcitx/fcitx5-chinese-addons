@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-10-15 00:02-0700\n"
+"POT-Creation-Date: 2020-10-28 12:14-0700\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: csslayer <wengxt@gmail.com>, 2020\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/fcitx/teams/12005/"
@@ -270,7 +270,7 @@ msgstr "启用预测"
 
 #: im/pinyin/pinyin.h:67
 msgid "Enable Spell"
-msgstr ""
+msgstr "启用拼写检查"
 
 #: modules/chttrans/chttrans.h:30
 msgid "Enabled Input Methods"
@@ -327,7 +327,7 @@ msgstr "按笔画过滤"
 
 #: im/table/ime.h:84
 msgid "First candidate as Preedit"
-msgstr ""
+msgstr "将第一个候选词作为预编辑文本"
 
 #: im/table/engine.h:33 im/pinyin/pinyin.h:86
 msgid "Forget word"
@@ -436,7 +436,7 @@ msgstr "微软"
 
 #: im/pinyin/pinyin.h:44
 msgid "Match partial finals (e -> en, eng, ei)"
-msgstr ""
+msgstr "匹配不完整的元音 (e -> en, eng, ei)"
 
 #: modules/cloudpinyin/cloudpinyin.h:32
 msgid "Minimum Pinyin Length"
@@ -696,7 +696,7 @@ msgstr "使用左右键来选择字符。"
 
 #: im/pinyin/pinyin.h:146
 msgid "Use V to trigger quickphrase"
-msgstr ""
+msgstr "使用 V 来触发快速输入"
 
 #: im/table/ime.h:109
 msgid "Use context related sort"
