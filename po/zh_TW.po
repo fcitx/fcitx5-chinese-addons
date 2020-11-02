@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-10-15 00:02-0700\n"
+"POT-Creation-Date: 2020-11-02 11:58-0800\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: byStarTW (pan93412) <pan93412@gmail.com>, 2019\n"
 "Language-Team: Chinese (Taiwan) (https://www.transifex.com/fcitx/teams/12005/"
@@ -46,7 +46,7 @@ msgstr "線上瀏覽搜狗细胞词库(&B)"
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:55
 #. i18n: ectx: property (text), widget (QPushButton, clearDictButton_)
-#: rc.cpp:24
+#: rc.cpp:12 rc.cpp:36
 #, kde-format
 msgid "&Clear Dict"
 msgstr "清空字典(&C)"
@@ -57,20 +57,26 @@ msgstr "清空使用者資訊(&C)"
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:22
 #. i18n: ectx: property (text), widget (QPushButton, importButton_)
-#: rc.cpp:15
+#: rc.cpp:3 rc.cpp:27
 #, kde-format
 msgid "&Import"
 msgstr "匯入(&I)"
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:33
 #. i18n: ectx: property (text), widget (QPushButton, removeButton_)
-#: rc.cpp:18
+#: rc.cpp:6 rc.cpp:30
 #, kde-format
 msgid "&Remove"
 msgstr "移除(&R)"
 
 #: im/pinyin/pinyin.h:32
 msgid "ABC"
+msgstr ""
+
+#: org.fcitx.fcitx5-chinese-addons.metainfo.xml.in:8
+msgid ""
+"Add support for Pinyin, Table and many other Chinese related functionality "
+"to Fcitx"
 msgstr ""
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:363
@@ -112,6 +118,10 @@ msgstr ""
 #: im/table/cangjie.conf.in.in:3
 msgid "Cangjie"
 msgstr "倉頡"
+
+#: org.fcitx.fcitx5-chinese-addons.metainfo.xml.in:7
+msgid "Chinese Addons"
+msgstr ""
 
 #: im/pinyin/pinyin.h:130
 msgid "Choose Character from Phrase"
@@ -191,11 +201,15 @@ msgstr "建立暫存檔失敗。請檢查權限或磁碟空間。"
 msgid "Custom"
 msgstr ""
 
+#. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:14
+#. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
 #. i18n: file: gui/pinyindictmanager/browserdialog.ui:14
 #. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
 #. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:14
 #. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
-#: rc.cpp:3 rc.cpp:9
+#. i18n: file: gui/pinyindictmanager/browserdialog.ui:14
+#. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
+#: rc.cpp:15 rc.cpp:21 rc.cpp:39 rc.cpp:45
 #, kde-format
 msgid "Dialog"
 msgstr "對話框"
@@ -493,8 +507,8 @@ msgstr ""
 msgid "Page size"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:732 im/pinyin/pinyin.cpp:853
-#: im/pinyin/pinyin-addon.conf.in:3 im/pinyin/pinyin.conf.in:3
+#: im/pinyin/pinyin.cpp:732 im/pinyin/pinyin.cpp:853 im/pinyin/pinyin.conf.in:3
+#: im/pinyin/pinyin-addon.conf.in:3
 msgid "Pinyin"
 msgstr ""
 
@@ -566,7 +580,7 @@ msgstr ""
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:44
 #. i18n: ectx: property (text), widget (QPushButton, removeAllButton_)
-#: rc.cpp:21
+#: rc.cpp:9 rc.cpp:33
 #, kde-format
 msgid "Remove &All"
 msgstr ""
@@ -663,8 +677,8 @@ msgstr ""
 msgid "Toggle Key"
 msgstr ""
 
-#: modules/fullwidth/fullwidth.h:19 modules/punctuation/punctuation.h:25
-#: modules/chttrans/chttrans.h:28
+#: modules/punctuation/punctuation.h:25 modules/chttrans/chttrans.h:28
+#: modules/fullwidth/fullwidth.h:19
 msgid "Toggle key"
 msgstr ""
 
@@ -774,11 +788,15 @@ msgstr ""
 msgid "[Select the word to remove from history]"
 msgstr ""
 
+#. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:21
+#. i18n: ectx: property (url), widget (QWebView, webView_)
 #. i18n: file: gui/pinyindictmanager/browserdialog.ui:21
 #. i18n: ectx: property (url), widget (QWebEngineView, webView_)
 #. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:21
 #. i18n: ectx: property (url), widget (QWebView, webView_)
-#: rc.cpp:6 rc.cpp:12
+#. i18n: file: gui/pinyindictmanager/browserdialog.ui:21
+#. i18n: ectx: property (url), widget (QWebEngineView, webView_)
+#: rc.cpp:18 rc.cpp:24 rc.cpp:42 rc.cpp:48
 #, kde-format
 msgid "about:blank"
 msgstr ""
