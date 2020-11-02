@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-11-02 11:58-0800\n"
+"POT-Creation-Date: 2020-11-02 12:16-0800\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: csslayer <wengxt@gmail.com>, 2020\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/fcitx/teams/12005/"
@@ -79,7 +79,7 @@ msgstr "智能ABC"
 msgid ""
 "Add support for Pinyin, Table and many other Chinese related functionality "
 "to Fcitx"
-msgstr ""
+msgstr "增加对拼音，码表，以及其他许多中文相关的功能到 Fcitx"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:363
 msgid "Are you sure to delete %1?"
@@ -123,7 +123,7 @@ msgstr "仓颉"
 
 #: org.fcitx.fcitx5-chinese-addons.metainfo.xml.in:7
 msgid "Chinese Addons"
-msgstr ""
+msgstr "中文附加组件"
 
 #: im/pinyin/pinyin.h:130
 msgid "Choose Character from Phrase"
