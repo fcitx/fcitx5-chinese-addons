@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-10-28 12:14-0700\n"
+"POT-Creation-Date: 2020-11-02 11:58-0800\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: csslayer <wengxt@gmail.com>, 2020\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/fcitx/teams/12005/"
@@ -48,7 +48,7 @@ msgstr "在线浏览搜狗细胞词典(&B)"
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:55
 #. i18n: ectx: property (text), widget (QPushButton, clearDictButton_)
-#: rc.cpp:24
+#: rc.cpp:12 rc.cpp:36
 #, kde-format
 msgid "&Clear Dict"
 msgstr "清空词库(&C)"
@@ -59,14 +59,14 @@ msgstr "清理用户数据(&C)"
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:22
 #. i18n: ectx: property (text), widget (QPushButton, importButton_)
-#: rc.cpp:15
+#: rc.cpp:3 rc.cpp:27
 #, kde-format
 msgid "&Import"
 msgstr "导入(&I)"
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:33
 #. i18n: ectx: property (text), widget (QPushButton, removeButton_)
-#: rc.cpp:18
+#: rc.cpp:6 rc.cpp:30
 #, kde-format
 msgid "&Remove"
 msgstr "移除(&R)"
@@ -74,6 +74,12 @@ msgstr "移除(&R)"
 #: im/pinyin/pinyin.h:32
 msgid "ABC"
 msgstr "智能ABC"
+
+#: org.fcitx.fcitx5-chinese-addons.metainfo.xml.in:8
+msgid ""
+"Add support for Pinyin, Table and many other Chinese related functionality "
+"to Fcitx"
+msgstr ""
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:363
 msgid "Are you sure to delete %1?"
@@ -114,6 +120,10 @@ msgstr "候选词列表方向"
 #: im/table/cangjie.conf.in.in:3
 msgid "Cangjie"
 msgstr "仓颉"
+
+#: org.fcitx.fcitx5-chinese-addons.metainfo.xml.in:7
+msgid "Chinese Addons"
+msgstr ""
 
 #: im/pinyin/pinyin.h:130
 msgid "Choose Character from Phrase"
@@ -193,11 +203,15 @@ msgstr "创建临时文件失败。请检查权限或磁盘空间。"
 msgid "Custom"
 msgstr "自定义"
 
+#. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:14
+#. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
 #. i18n: file: gui/pinyindictmanager/browserdialog.ui:14
 #. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
 #. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:14
 #. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
-#: rc.cpp:3 rc.cpp:9
+#. i18n: file: gui/pinyindictmanager/browserdialog.ui:14
+#. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
+#: rc.cpp:15 rc.cpp:21 rc.cpp:39 rc.cpp:45
 #, kde-format
 msgid "Dialog"
 msgstr "对话框"
@@ -499,8 +513,8 @@ msgstr ""
 msgid "Page size"
 msgstr "页大小"
 
-#: im/pinyin/pinyin.cpp:732 im/pinyin/pinyin.cpp:853
-#: im/pinyin/pinyin-addon.conf.in:3 im/pinyin/pinyin.conf.in:3
+#: im/pinyin/pinyin.cpp:732 im/pinyin/pinyin.cpp:853 im/pinyin/pinyin.conf.in:3
+#: im/pinyin/pinyin-addon.conf.in:3
 msgid "Pinyin"
 msgstr "拼音"
 
@@ -572,7 +586,7 @@ msgstr "标点"
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:44
 #. i18n: ectx: property (text), widget (QPushButton, removeAllButton_)
-#: rc.cpp:21
+#: rc.cpp:9 rc.cpp:33
 #, kde-format
 msgid "Remove &All"
 msgstr "移除全部(&A)"
@@ -669,8 +683,8 @@ msgstr "已创建临时文件。"
 msgid "Toggle Key"
 msgstr "切换键"
 
-#: modules/fullwidth/fullwidth.h:19 modules/punctuation/punctuation.h:25
-#: modules/chttrans/chttrans.h:28
+#: modules/punctuation/punctuation.h:25 modules/chttrans/chttrans.h:28
+#: modules/fullwidth/fullwidth.h:19
 msgid "Toggle key"
 msgstr "切换键"
 
@@ -786,11 +800,15 @@ msgstr "自然码"
 msgid "[Select the word to remove from history]"
 msgstr "[选择要从历史中移除的词]"
 
+#. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:21
+#. i18n: ectx: property (url), widget (QWebView, webView_)
 #. i18n: file: gui/pinyindictmanager/browserdialog.ui:21
 #. i18n: ectx: property (url), widget (QWebEngineView, webView_)
 #. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:21
 #. i18n: ectx: property (url), widget (QWebView, webView_)
-#: rc.cpp:6 rc.cpp:12
+#. i18n: file: gui/pinyindictmanager/browserdialog.ui:21
+#. i18n: ectx: property (url), widget (QWebEngineView, webView_)
+#: rc.cpp:18 rc.cpp:24 rc.cpp:42 rc.cpp:48
 #, kde-format
 msgid "about:blank"
 msgstr "about:blank"
