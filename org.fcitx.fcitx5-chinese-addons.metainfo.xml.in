@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<component type="addon">
+<component type="inputmethod">
   <id>org.fcitx.fcitx5-chinese-addons</id>
   <extends>org.fcitx.Fcitx5.desktop</extends>
   <metadata_license>CC0-1.0</metadata_license>
