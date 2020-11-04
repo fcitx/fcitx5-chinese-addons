@@ -471,7 +471,8 @@ bool TableState::handleLookupPinyinOrModifyDictionaryMode(KeyEvent &event) {
             if (context_->dict().generate(subString, result)) {
                 if (context_->dict().wordExists(result, subString) ==
                     libime::PhraseFlag::Invalid) {
-                    context_->mutableDict().insert(subString);
+                    context_->mutableDict().insert(subString,
+                                                   libime::PhraseFlag::User);
                     reset();
                     return true;
                 }
