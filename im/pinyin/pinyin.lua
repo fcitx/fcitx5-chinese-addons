@@ -113,7 +113,7 @@ local function normalize_time(h, m)
     return string.format("%02d:%02d", h, m)
 end
 
-function get_time(input)
+function pinyin_get_time(input)
     if fcitx.currentInputMethod() ~= "pinyin" and fcitx.currentInputMethod() ~= "shuangpin"  then
         return nil
     end
@@ -135,7 +135,7 @@ function get_time(input)
     }
 end
 
-function get_date(input)
+function pinyin_get_date(input)
     if fcitx.currentInputMethod() ~= "pinyin" and fcitx.currentInputMethod() ~= "shuangpin"  then
         return nil
     end
@@ -158,12 +158,12 @@ function get_date(input)
     }
 end
 
-function get_current_time()
-    return get_time("")
+function pinyin_get_current_time()
+    return pinyin_get_time("")
 end
 
-function get_today()
-    return get_date("")
+function pinyin_get_today()
+    return pinyin_get_date("")
 end
 
 local _MATH_SYMBOL = {
@@ -445,7 +445,7 @@ local _ARROW_SYMBOL = {
 "↙",
 }
 
-function get_symbol(input)
+function pinyin_get_symbol(input)
     if fcitx.currentInputMethod() ~= "pinyin" and fcitx.currentInputMethod() ~= "shuangpin"  then
         return nil
     end
@@ -485,9 +485,9 @@ function get_symbol(input)
 end
 
 ------------
-ime.register_command("fh", "get_symbol", "输入符号", "digit", "")
+ime.register_command("fh", "pinyin_get_symbol", "输入符号", "digit", "")
 
-ime.register_command("sj", "get_time", "输入时间", "alpha", "输入可选时间，例如12:34")
-ime.register_command("rq", "get_date", "输入日期", "alpha", "输入可选日期，例如2013-01-01")
-ime.register_trigger("get_current_time", "显示时间", {}, {'时间'})
-ime.register_trigger("get_today", "显示日期", {}, {'日期'})
+ime.register_command("sj", "pinyin_get_time", "输入时间", "alpha", "输入可选时间，例如12:34")
+ime.register_command("rq", "pinyin_get_date", "输入日期", "alpha", "输入可选日期，例如2013-01-01")
+ime.register_trigger("pinyin_get_current_time", "显示时间", {}, {'时间'})
+ime.register_trigger("pinyin_get_today", "显示日期", {}, {'日期'})
