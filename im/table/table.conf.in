@@ -4,6 +4,7 @@ Category=InputMethod
 Library=table
 Type=SharedLibrary
 OnDemand=True
+Configurable=True
 
 [Addon/Dependencies]
 0=punctuation
