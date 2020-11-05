@@ -41,7 +41,8 @@ public:
 
     void commitBuffer(bool commitCode, bool noRealCommit = false);
     void updateUI();
-    void pushLastCommit(const std::string &lastSegment);
+    void pushLastCommit(const std::string &code,
+                        const std::string &lastSegment);
 
     void commitAfterSelect(int commitFrom);
 
@@ -58,17 +59,18 @@ private:
 
     bool isContextEmpty() const;
     bool autoSelectCandidate();
+    std::string commitSegements(size_t from, size_t to);
 
     TableMode mode_ = TableMode::Normal;
     std::string pinyinModePrefix_;
     InputBuffer pinyinModeBuffer_{
         {InputBufferOption::AsciiOnly, InputBufferOption::FixedCursor}};
     size_t lookupPinyinIndex_ = 0;
-    std::string lookupPinyinString_;
+    std::vector<std::pair<std::string, std::string>> lookupPinyinString_;
     std::string lastContext_;
-    std::string lastCommit_;
+    std::list<std::pair<std::string, std::string>> lastCommit_;
     std::string lastSegment_;
-    std::list<std::string> lastSingleCharCommit_;
+    std::list<std::pair<std::string, std::string>> lastSingleCharCommit_;
     std::unique_ptr<TableContext> context_;
 
     int keyReleased_ = -1;
