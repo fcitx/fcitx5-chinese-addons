@@ -137,7 +137,7 @@ FCITX_CONFIGURATION(
             _("When current input length is greater than or equal to the limit "
               "and there is only one candidate available, automatically select "
               "this candidate. -1 Means the maximum code length of the table. "
-              "0 means disable this behavior."))};
+              "0 means this behavior is disabled."))};
     OptionWithAnnotation<bool, ToolTipAnnotation> commitInvalidSegment{
         this,
         "CommitInvalidSegment",
@@ -162,12 +162,32 @@ FCITX_CONFIGURATION(
               "with the new character does not have any matched entries in the "
               "table, select the current candidate and then type in the new "
               "character. -1 means the maximum code length of the table. 0 "
-              "means disable this behavior."))};
+              "means this behavior is disabled."))};
     HiddenOption<KeyList> endKey{this, "EndKey", _("End key")};
-    Option<int> autoPhraseLength{this, "AutoPhraseLength",
-                                 _("Auto phrase length"), -1};
-    Option<int> saveAutoPhraseAfter{this, "SaveAutoPhraseAfter",
-                                    _("Save auto phrase"), -1};
+    OptionWithAnnotation<int, ToolTipAnnotation> autoPhraseLength{
+        this,
+        "AutoPhraseLength",
+        _("Auto phrase length"),
+        -1,
+        {},
+        {},
+        ToolTipAnnotation(
+            _("After committing every character, learn the new phrase based on "
+              "the input history. If certain word is seen for multiple times "
+              "or selected by user once, it will be added as user phrase. -1 "
+              "means the maximum code length of the table. 0 means disable "
+              "this feature. "))};
+    OptionWithAnnotation<int, ToolTipAnnotation> saveAutoPhraseAfter{
+        this,
+        "SaveAutoPhraseAfter",
+        _("Save auto phrase after being typed for ... times"),
+        -1,
+        {},
+        {},
+        ToolTipAnnotation(
+            _("If the value less than 0, means this feature is disabled. If "
+              "auto phrase is enabled, selecting auto phrase candidate "
+              "explicitly will still add the word as a new user phrase."))};
     Option<bool> exactMatch{this, "ExactMatch", _("Exact Match")};
     Option<bool> learning{this, "Learning", _("Learning"), true};
     Option<bool> hint{this, "Hint", _("Display Hint for word")};
