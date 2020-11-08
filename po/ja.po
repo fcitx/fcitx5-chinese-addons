@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-11-02 11:53-0800\n"
+"POT-Creation-Date: 2020-11-08 00:00-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: csslayer <wengxt@gmail.com>, 2017\n"
 "Language-Team: Japanese (https://www.transifex.com/fcitx/teams/12005/ja/)\n"
@@ -22,11 +22,11 @@ msgstr ""
 msgid "\t[Stroke Filtering] "
 msgstr ""
 
-#: im/table/state.cpp:762
+#: im/table/state.cpp:817
 msgid " Return for "
 msgstr ""
 
-#: im/table/state.cpp:759
+#: im/table/state.cpp:814
 msgid " for "
 msgstr ""
 
@@ -44,7 +44,7 @@ msgstr ""
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:55
 #. i18n: ectx: property (text), widget (QPushButton, clearDictButton_)
-#: rc.cpp:12 rc.cpp:36
+#: rc.cpp:24 rc.cpp:48
 #, kde-format
 msgid "&Clear Dict"
 msgstr ""
@@ -55,14 +55,14 @@ msgstr ""
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:22
 #. i18n: ectx: property (text), widget (QPushButton, importButton_)
-#: rc.cpp:3 rc.cpp:27
+#: rc.cpp:15 rc.cpp:39
 #, kde-format
 msgid "&Import"
 msgstr ""
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:33
 #. i18n: ectx: property (text), widget (QPushButton, removeButton_)
-#: rc.cpp:6 rc.cpp:30
+#: rc.cpp:18 rc.cpp:42
 #, kde-format
 msgid "&Remove"
 msgstr ""
@@ -77,6 +77,14 @@ msgid ""
 "to Fcitx"
 msgstr ""
 
+#: im/table/ime.h:175
+msgid ""
+"After committing every character, learn the new phrase based on the input "
+"history. If certain word is seen for multiple times or selected by user "
+"once, it will be added as user phrase. -1 means the maximum code length of "
+"the table. 0 means disable this feature. "
+msgstr ""
+
 #: gui/pinyindictmanager/pinyindictmanager.cpp:363
 msgid "Are you sure to delete %1?"
 msgstr ""
@@ -85,11 +93,11 @@ msgstr ""
 msgid "Are you sure to delete all dictionaries?"
 msgstr ""
 
-#: im/table/ime.h:168
+#: im/table/ime.h:170
 msgid "Auto phrase length"
 msgstr ""
 
-#: im/table/ime.h:181
+#: im/table/ime.h:201
 msgid "Auto rule set"
 msgstr ""
 
@@ -109,7 +117,7 @@ msgstr ""
 msgid "Browse Sogou Cell Dict repository"
 msgstr ""
 
-#: im/table/ime.h:178
+#: im/table/ime.h:198
 msgid "Candidate List orientation"
 msgstr ""
 
@@ -177,7 +185,7 @@ msgstr ""
 msgid "Converter crashed."
 msgstr ""
 
-#: im/table/state.cpp:518
+#: im/table/state.cpp:572
 msgid "Could not find pinyin."
 msgstr ""
 
@@ -199,15 +207,15 @@ msgstr ""
 msgid "Custom"
 msgstr ""
 
-#. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:14
-#. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
 #. i18n: file: gui/pinyindictmanager/browserdialog.ui:14
 #. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
 #. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:14
 #. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
 #. i18n: file: gui/pinyindictmanager/browserdialog.ui:14
 #. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
-#: rc.cpp:15 rc.cpp:21 rc.cpp:39 rc.cpp:45
+#. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:14
+#. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
+#: rc.cpp:3 rc.cpp:9 rc.cpp:27 rc.cpp:33
 #, kde-format
 msgid "Dialog"
 msgstr ""
@@ -224,11 +232,11 @@ msgstr ""
 msgid "Dictionary already exists"
 msgstr ""
 
-#: im/table/ime.h:173
+#: im/table/ime.h:193
 msgid "Display Hint for word"
 msgstr ""
 
-#: im/table/ime.h:175
+#: im/table/ime.h:195
 msgid "Display custom hint"
 msgstr ""
 
@@ -296,7 +304,7 @@ msgstr ""
 msgid "Error while deleting %1."
 msgstr ""
 
-#: im/table/ime.h:171
+#: im/table/ime.h:191
 msgid "Exact Match"
 msgstr ""
 
@@ -401,6 +409,13 @@ msgstr ""
 msgid "Icon"
 msgstr ""
 
+#: im/table/ime.h:188
+msgid ""
+"If the value less than 0, means this feature is disabled. If auto phrase is "
+"enabled, selecting auto phrase candidate explicitly will still add the word "
+"as a new user phrase."
+msgstr ""
+
 #: im/table/ime.h:82
 msgid "Ignore built in punctuation"
 msgstr ""
@@ -421,7 +436,7 @@ msgstr ""
 msgid "Key to trigger quickphrase"
 msgstr ""
 
-#: im/table/ime.h:172
+#: im/table/ime.h:192
 msgid "Learning"
 msgstr ""
 
@@ -505,8 +520,8 @@ msgstr ""
 msgid "Page size"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:732 im/pinyin/pinyin.cpp:853 im/pinyin/pinyin.conf.in:3
-#: im/pinyin/pinyin-addon.conf.in:3
+#: im/pinyin/pinyin.cpp:732 im/pinyin/pinyin.cpp:853
+#: im/pinyin/pinyin-addon.conf.in:3 im/pinyin/pinyin.conf.in:3
 msgid "Pinyin"
 msgstr ""
 
@@ -518,7 +533,7 @@ msgstr ""
 msgid "PinyinJiajia"
 msgstr ""
 
-#: im/table/state.cpp:504
+#: im/table/state.cpp:558
 msgid "Please use this functionality after typing some text."
 msgstr ""
 
@@ -534,15 +549,15 @@ msgstr ""
 msgid "Prefix key to trigger Pinyin"
 msgstr ""
 
-#: im/table/state.cpp:535
+#: im/table/state.cpp:590
 msgid "Press Backspace to forget."
 msgstr ""
 
-#: im/table/state.cpp:538
+#: im/table/state.cpp:593
 msgid "Press Delete to remove."
 msgstr ""
 
-#: im/table/state.cpp:532
+#: im/table/state.cpp:587
 msgid "Press space to insert."
 msgstr ""
 
@@ -578,13 +593,13 @@ msgstr ""
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:44
 #. i18n: ectx: property (text), widget (QPushButton, removeAllButton_)
-#: rc.cpp:9 rc.cpp:33
+#: rc.cpp:21 rc.cpp:45
 #, kde-format
 msgid "Remove &All"
 msgstr ""
 
-#: im/table/ime.h:170
-msgid "Save auto phrase"
+#: im/table/ime.h:183
+msgid "Save auto phrase after being typed for ... times"
 msgstr ""
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:198
@@ -611,7 +626,7 @@ msgstr ""
 msgid "Select Third Candidate"
 msgstr ""
 
-#: im/table/state.cpp:989
+#: im/table/state.cpp:1032
 msgid "Select candidate to be removed from history:"
 msgstr ""
 
@@ -675,8 +690,8 @@ msgstr ""
 msgid "Toggle Key"
 msgstr ""
 
-#: modules/punctuation/punctuation.h:25 modules/chttrans/chttrans.h:28
-#: modules/fullwidth/fullwidth.h:19
+#: modules/fullwidth/fullwidth.h:19 modules/punctuation/punctuation.h:25
+#: modules/chttrans/chttrans.h:28
 msgid "Toggle key"
 msgstr ""
 
@@ -692,11 +707,11 @@ msgstr ""
 msgid "Translate engine"
 msgstr ""
 
-#: im/table/state.cpp:510
+#: im/table/state.cpp:564
 msgid "Use Left and Right to select character: "
 msgstr ""
 
-#: im/table/state.cpp:521
+#: im/table/state.cpp:575
 msgid "Use Left and Right to select text. "
 msgstr ""
 
@@ -734,7 +749,7 @@ msgstr ""
 msgid ""
 "When current input length is greater than or equal to the limit and there is "
 "only one candidate available, automatically select this candidate. -1 Means "
-"the maximum code length of the table. 0 means disable this behavior."
+"the maximum code length of the table. 0 means this behavior is disabled."
 msgstr ""
 
 #: im/table/ime.h:160
@@ -743,7 +758,7 @@ msgid ""
 "equal to the limit, and the existing segment with the new character does not "
 "have any matched entries in the table, select the current candidate and then "
 "type in the new character. -1 means the maximum code length of the table. 0 "
-"means disable this behavior."
+"means this behavior is disabled."
 msgstr ""
 
 #: im/table/ime.h:120
@@ -786,15 +801,15 @@ msgstr ""
 msgid "[Select the word to remove from history]"
 msgstr ""
 
-#. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:21
-#. i18n: ectx: property (url), widget (QWebView, webView_)
 #. i18n: file: gui/pinyindictmanager/browserdialog.ui:21
 #. i18n: ectx: property (url), widget (QWebEngineView, webView_)
 #. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:21
 #. i18n: ectx: property (url), widget (QWebView, webView_)
 #. i18n: file: gui/pinyindictmanager/browserdialog.ui:21
 #. i18n: ectx: property (url), widget (QWebEngineView, webView_)
-#: rc.cpp:18 rc.cpp:24 rc.cpp:42 rc.cpp:48
+#. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:21
+#. i18n: ectx: property (url), widget (QWebView, webView_)
+#: rc.cpp:6 rc.cpp:12 rc.cpp:30 rc.cpp:36
 #, kde-format
 msgid "about:blank"
 msgstr ""
@@ -859,14 +874,14 @@ msgstr ""
 msgid "{0} ({1})"
 msgstr ""
 
-#: im/table/state.cpp:553
+#: im/table/state.cpp:608
 msgid "{0} is not in table."
 msgstr ""
 
-#: im/table/state.cpp:542
+#: im/table/state.cpp:597
 msgid "{0}: No corresponding code."
 msgstr ""
 
-#: im/table/state.cpp:527 im/table/state.cpp:550
+#: im/table/state.cpp:582 im/table/state.cpp:605
 msgid "{0}: {1}"
 msgstr ""
