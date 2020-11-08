@@ -348,62 +348,68 @@ bool TableState::handlePinyinMode(KeyEvent &event) {
             reset();
         }
     }
-    if (needUpdate) {
-        auto &inputPanel = ic_->inputPanel();
-        ic_->inputPanel().reset();
-
-        if (!pinyinModeBuffer_.empty()) {
-            const auto &dict = engine_->pinyinDict();
-            const auto &lm = engine_->pinyinModel();
-            auto pinyin = libime::PinyinEncoder::encodeOneUserPinyin(
-                pinyinModeBuffer_.userInput());
-
-            auto candidateList = std::make_unique<CommonCandidateList>();
-            candidateList->setSelectionKey(*context_->config().selection);
-            candidateList->setPageSize(*context_->config().pageSize);
-            std::vector<std::pair<std::string, float>> pinyinWords;
-
-            dict.matchWords(pinyin.data(), pinyin.size(),
-                            [&pinyinWords, &lm](std::string_view,
-                                                std::string_view hanzi, float) {
-                                pinyinWords.emplace_back(
-                                    hanzi, lm.singleWordScore(hanzi));
-                                return true;
-                            });
-
-            std::sort(pinyinWords.begin(), pinyinWords.end(),
-                      [](const auto &lhs, const auto &rhs) {
-                          return lhs.second > rhs.second;
-                      });
-
-            for (auto &p : pinyinWords) {
-                candidateList->append<TablePinyinCandidateWord>(
-                    engine_, std::move(p.first), context_->dict(),
-                    *context_->config().displayCustomHint);
-            }
-
-            if (candidateList->size()) {
-                candidateList->setGlobalCursorIndex(0);
-                inputPanel.setCandidateList(std::move(candidateList));
-            }
-        } else {
-            if (!lastSegment_.empty()) {
-                inputPanel.setAuxDown(Text(lastSegment_));
-            }
-        }
-        Text preeditText;
-        preeditText.append(pinyinModePrefix_);
-        preeditText.append(pinyinModeBuffer_.userInput());
-        if (ic_->capabilityFlags().test(CapabilityFlag::Preedit)) {
-            preeditText.setCursor(0);
-            inputPanel.setClientPreedit(preeditText);
-        } else {
-            preeditText.setCursor(preeditText.textLength());
-            inputPanel.setPreedit(preeditText);
-        }
-        ic_->updatePreedit();
-        ic_->updateUserInterface(UserInterfaceComponent::InputPanel);
+    if (!needUpdate) {
+        return false;
     }
+    auto &inputPanel = ic_->inputPanel();
+    ic_->inputPanel().reset();
+
+    if (!pinyinModeBuffer_.empty()) {
+        const auto &dict = engine_->pinyinDict();
+        const auto &lm = engine_->pinyinModel();
+        const auto &config = context_->config();
+        auto pinyin = libime::PinyinEncoder::encodeOneUserPinyin(
+            pinyinModeBuffer_.userInput());
+
+        auto candidateList = std::make_unique<CommonCandidateList>();
+        candidateList->setLayoutHint(*config.candidateLayoutHint);
+        candidateList->setCursorPositionAfterPaging(
+            CursorPositionAfterPaging::ResetToFirst);
+        candidateList->setSelectionKey(*config.selection);
+        candidateList->setPageSize(*config.pageSize);
+
+        std::vector<std::pair<std::string, float>> pinyinWords;
+
+        dict.matchWords(pinyin.data(), pinyin.size(),
+                        [&pinyinWords, &lm](std::string_view,
+                                            std::string_view hanzi, float) {
+                            pinyinWords.emplace_back(hanzi,
+                                                     lm.singleWordScore(hanzi));
+                            return true;
+                        });
+
+        std::sort(pinyinWords.begin(), pinyinWords.end(),
+                  [](const auto &lhs, const auto &rhs) {
+                      return lhs.second > rhs.second;
+                  });
+
+        for (auto &p : pinyinWords) {
+            candidateList->append<TablePinyinCandidateWord>(
+                engine_, std::move(p.first), context_->dict(),
+                *config.displayCustomHint);
+        }
+
+        if (candidateList->size()) {
+            candidateList->setGlobalCursorIndex(0);
+            inputPanel.setCandidateList(std::move(candidateList));
+        }
+    } else {
+        if (!lastSegment_.empty()) {
+            inputPanel.setAuxDown(Text(lastSegment_));
+        }
+    }
+    Text preeditText;
+    preeditText.append(pinyinModePrefix_);
+    preeditText.append(pinyinModeBuffer_.userInput());
+    if (ic_->capabilityFlags().test(CapabilityFlag::Preedit)) {
+        preeditText.setCursor(0);
+        inputPanel.setClientPreedit(preeditText);
+    } else {
+        preeditText.setCursor(preeditText.textLength());
+        inputPanel.setPreedit(preeditText);
+    }
+    ic_->updatePreedit();
+    ic_->updateUserInterface(UserInterfaceComponent::InputPanel);
     return true;
 }
 
@@ -977,6 +983,8 @@ void TableState::updateUI() {
             candidateList->setLayoutHint(*config.candidateLayoutHint);
             candidateList->setCursorPositionAfterPaging(
                 CursorPositionAfterPaging::ResetToFirst);
+            candidateList->setSelectionKey(*config.selection);
+            candidateList->setPageSize(*config.pageSize);
 
             for (const auto &candidate : candidates) {
                 auto candidateString = candidate.toString();
@@ -995,8 +1003,6 @@ void TableState::updateUI() {
                                                           std::move(text), idx);
                 idx++;
             }
-            candidateList->setSelectionKey(*config.selection);
-            candidateList->setPageSize(*config.pageSize);
             if (candidateList->size()) {
                 candidateList->setGlobalCursorIndex(0);
             }
