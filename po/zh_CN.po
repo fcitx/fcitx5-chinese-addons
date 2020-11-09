@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-11-08 00:02-0800\n"
+"POT-Creation-Date: 2020-11-09 00:03-0800\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: csslayer <wengxt@gmail.com>, 2020\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/fcitx/teams/12005/"
@@ -48,7 +48,7 @@ msgstr "在线浏览搜狗细胞词典(&B)"
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:55
 #. i18n: ectx: property (text), widget (QPushButton, clearDictButton_)
-#: rc.cpp:24 rc.cpp:48
+#: rc.cpp:24
 #, kde-format
 msgid "&Clear Dict"
 msgstr "清空词库(&C)"
@@ -59,14 +59,14 @@ msgstr "清理用户数据(&C)"
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:22
 #. i18n: ectx: property (text), widget (QPushButton, importButton_)
-#: rc.cpp:15 rc.cpp:39
+#: rc.cpp:15
 #, kde-format
 msgid "&Import"
 msgstr "导入(&I)"
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:33
 #. i18n: ectx: property (text), widget (QPushButton, removeButton_)
-#: rc.cpp:18 rc.cpp:42
+#: rc.cpp:18
 #, kde-format
 msgid "&Remove"
 msgstr "移除(&R)"
@@ -88,6 +88,8 @@ msgid ""
 "once, it will be added as user phrase. -1 means the maximum code length of "
 "the table. 0 means disable this feature. "
 msgstr ""
+"每个字符提交之后，根据输入历史学习新词组。如果特定的词出现多次或者被用户选中"
+"一次，它将被添加为用户词组。-1 表示码码表最大长度，0 表示禁用这个功能。"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:363
 msgid "Are you sure to delete %1?"
@@ -215,11 +217,7 @@ msgstr "自定义"
 #. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
 #. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:14
 #. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
-#. i18n: file: gui/pinyindictmanager/browserdialog.ui:14
-#. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
-#. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:14
-#. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
-#: rc.cpp:3 rc.cpp:9 rc.cpp:27 rc.cpp:33
+#: rc.cpp:3 rc.cpp:9
 #, kde-format
 msgid "Dialog"
 msgstr "对话框"
@@ -421,6 +419,8 @@ msgid ""
 "enabled, selecting auto phrase candidate explicitly will still add the word "
 "as a new user phrase."
 msgstr ""
+"如果小于 0，表示禁用这个功能。如果自动组词启用，选中自动组词仍会将其添加为新"
+"用户组词。"
 
 #: im/table/ime.h:82
 msgid "Ignore built in punctuation"
@@ -601,14 +601,14 @@ msgstr "标点"
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:44
 #. i18n: ectx: property (text), widget (QPushButton, removeAllButton_)
-#: rc.cpp:21 rc.cpp:45
+#: rc.cpp:21
 #, kde-format
 msgid "Remove &All"
 msgstr "移除全部(&A)"
 
 #: im/table/ime.h:183
 msgid "Save auto phrase after being typed for ... times"
-msgstr ""
+msgstr "在输入...次后保存自动组词"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:198
 msgid "Scel file (*.scel)"
@@ -760,6 +760,8 @@ msgid ""
 "only one candidate available, automatically select this candidate. -1 Means "
 "the maximum code length of the table. 0 means this behavior is disabled."
 msgstr ""
+"当当前的输入长度大于等于限制并且只有一个候选词可用时，自动选择这个候选词。-1 "
+"表示码表的最大码长。0 表示禁用这个行为。"
 
 #: im/table/ime.h:160
 msgid ""
@@ -769,6 +771,9 @@ msgid ""
 "type in the new character. -1 means the maximum code length of the table. 0 "
 "means this behavior is disabled."
 msgstr ""
+"当输入一个新字符时，如果当前输入长度大于等于这个限制，并且当前的分段加上这个"
+"新字符在码表中没有匹配，将选择当前候选词再输入这个新字符。-1 表示码表的最大码"
+"长。0 表示禁用这个行为。"
 
 #: im/table/ime.h:120
 msgid "Wildcard matching Key"
@@ -814,11 +819,7 @@ msgstr "[选择要从历史中移除的词]"
 #. i18n: ectx: property (url), widget (QWebEngineView, webView_)
 #. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:21
 #. i18n: ectx: property (url), widget (QWebView, webView_)
-#. i18n: file: gui/pinyindictmanager/browserdialog.ui:21
-#. i18n: ectx: property (url), widget (QWebEngineView, webView_)
-#. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:21
-#. i18n: ectx: property (url), widget (QWebView, webView_)
-#: rc.cpp:6 rc.cpp:12 rc.cpp:30 rc.cpp:36
+#: rc.cpp:6 rc.cpp:12
 #, kde-format
 msgid "about:blank"
 msgstr "about:blank"
