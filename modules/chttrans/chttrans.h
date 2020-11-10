@@ -7,6 +7,7 @@
 #ifndef _CHTTRANS_CHTTRANS_H_
 #define _CHTTRANS_CHTTRANS_H_
 
+#include "config.h"
 #include "notifications_public.h"
 #include <fcitx-config/configuration.h>
 #include <fcitx-config/enum.h>
@@ -22,30 +23,44 @@ FCITX_CONFIG_ENUM(ChttransEngine, Native, OpenCC);
 
 FCITX_CONFIGURATION(
     ChttransConfig,
+#ifdef ENABLE_OPENCC
     fcitx::Option<ChttransEngine> engine{this, "Engine", _("Translate engine"),
                                          ChttransEngine::OpenCC};
+#endif
     fcitx::Option<fcitx::KeyList> hotkey{
         this, "Hotkey", _("Toggle key"), {fcitx::Key("Control+Shift+F")}};
     fcitx::HiddenOption<std::vector<std::string>> enabledIM{
-        this, "EnabledIM", _("Enabled Input Methods")};);
+        this, "EnabledIM", _("Enabled Input Methods")};
+#ifdef ENABLE_OPENCC
+    fcitx::Option<std::string> openCCS2TProfile{
+        this, "OpenCCS2TProfile",
+        "OpenCC profile for Simplified to Traditional", ""};
+    fcitx::Option<std::string> openCCT2SProfile{
+        this, "OpenCCT2SProfile",
+        "OpenCC profile for Traditional to Simplified", ""};
+#endif
+);
 
 enum class ChttransIMType { Simp, Trad, Other };
 
 class ChttransBackend {
 public:
     virtual ~ChttransBackend() {}
-    bool load() {
+    bool load(const ChttransConfig &config) {
         if (!loaded_) {
-            loadResult_ = loadOnce();
+            loadResult_ = loadOnce(config);
             loaded_ = true;
         }
         return loadResult_;
     }
     virtual std::string convertSimpToTrad(const std::string &) = 0;
     virtual std::string convertTradToSimp(const std::string &) = 0;
+    bool loaded() { return loaded_ && loadResult_; }
+
+    virtual void updateConfig(const ChttransConfig &) {}
 
 protected:
-    virtual bool loadOnce() = 0;
+    virtual bool loadOnce(const ChttransConfig &) = 0;
 
 private:
     bool loaded_ = false;
@@ -97,6 +112,8 @@ public:
     FCITX_ADDON_DEPENDENCY_LOADER(notifications, instance_->addonManager());
 
 private:
+    void syncToConfig();
+
     fcitx::Instance *instance_;
     ChttransConfig config_;
     std::unique_ptr<fcitx::HandlerTableEntry<fcitx::EventHandler>>

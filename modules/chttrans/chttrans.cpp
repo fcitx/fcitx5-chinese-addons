@@ -6,7 +6,6 @@
  */
 
 #include "chttrans.h"
-#include "config.h"
 #include <fcitx-config/iniparser.h>
 #include <fcitx-utils/i18n.h>
 #include <fcitx-utils/standardpath.h>
@@ -152,6 +151,7 @@ void Chttrans::toggle(InputContext *ic) {
     } else {
         enabledIM_.insert(entry->uniqueName());
     }
+    syncToConfig();
     toggleAction_.update(ic);
 }
 
@@ -164,24 +164,38 @@ void Chttrans::populateConfig() {
     enabledIM_.clear();
     enabledIM_.insert(config_.enabledIM.value().begin(),
                       config_.enabledIM.value().end());
+    for (const auto &backend : backends_) {
+        if (backend.second->loaded()) {
+            backend.second->updateConfig(config_);
+        }
+    }
 }
 
-void Chttrans::save() {
+void Chttrans::syncToConfig() {
     std::vector<std::string> values_;
     for (const auto &id : enabledIM_) {
         values_.push_back(id);
     }
     config_.enabledIM.setValue(std::move(values_));
+}
 
+void Chttrans::save() {
+    syncToConfig();
     safeSaveAsIni(config_, "conf/chttrans.conf");
 }
 
 std::string Chttrans::convert(ChttransIMType type, const std::string &str) {
-    auto iter = backends_.find(config_.engine.value());
+#ifdef ENABLE_OPENCC
+    auto engine = config_.engine.value();
+#else
+    auto engine = ChttransEngine::Native;
+#endif
+
+    auto iter = backends_.find(engine);
     if (iter == backends_.end()) {
         iter = backends_.find(ChttransEngine::Native);
     }
-    if (iter == backends_.end() || !iter->second->load()) {
+    if (iter == backends_.end() || !iter->second->load(config_)) {
         return str;
     }
 

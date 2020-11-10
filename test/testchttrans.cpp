@@ -37,6 +37,8 @@ std::string getTestWord(const std::string &s) {
         result = "時";
     } else if (s == "f") {
         result = "皇后";
+    } else if (s == "g") {
+        result = "启动";
     } else {
         result = s;
     }
@@ -107,6 +109,14 @@ void scheduleEvent(EventDispatcher *dispatcher, Instance *instance) {
 #ifdef ENABLE_OPENCC
         testfrontend->call<ITestFrontend::pushCommitExpectation>("皇后");
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("f"), false);
+
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("啓動");
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("g"), false);
+
+        config.setValueByPath("OpenCCS2TProfile", "s2tw.json");
+        chttrans->setConfig(config);
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("啟動");
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("g"), false);
 #endif
 
         testfrontend->call<ITestFrontend::keyEvent>(
