@@ -15,8 +15,10 @@ public:
     std::string convertSimpToTrad(const std::string &) override;
     std::string convertTradToSimp(const std::string &) override;
 
+    void updateConfig(const ChttransConfig &config) override;
+
 protected:
-    bool loadOnce() override;
+    bool loadOnce(const ChttransConfig &config) override;
 
 private:
     std::unique_ptr<opencc::SimpleConverter> s2t_;

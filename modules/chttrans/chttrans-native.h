@@ -16,7 +16,7 @@ public:
     std::string convertTradToSimp(const std::string &) override;
 
 protected:
-    bool loadOnce() override;
+    bool loadOnce(const ChttransConfig &) override;
 
 private:
     std::unordered_map<uint32_t, std::string> s2tMap_;
