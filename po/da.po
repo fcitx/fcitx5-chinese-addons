@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-11-08 00:02-0800\n"
+"POT-Creation-Date: 2020-11-11 00:02-0800\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: scootergrisen, 2020\n"
 "Language-Team: Danish (https://www.transifex.com/fcitx/teams/12005/da/)\n"
@@ -45,7 +45,7 @@ msgstr "&Gennemse Sogou Cell-ordbog online"
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:55
 #. i18n: ectx: property (text), widget (QPushButton, clearDictButton_)
-#: rc.cpp:24 rc.cpp:48
+#: rc.cpp:24
 #, kde-format
 msgid "&Clear Dict"
 msgstr "&Ryd ordbog"
@@ -56,14 +56,14 @@ msgstr "&Ryd brugerdata"
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:22
 #. i18n: ectx: property (text), widget (QPushButton, importButton_)
-#: rc.cpp:15 rc.cpp:39
+#: rc.cpp:15
 #, kde-format
 msgid "&Import"
 msgstr "&Importér"
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:33
 #. i18n: ectx: property (text), widget (QPushButton, removeButton_)
-#: rc.cpp:18 rc.cpp:42
+#: rc.cpp:18
 #, kde-format
 msgid "&Remove"
 msgstr "&Fjern"
@@ -220,11 +220,7 @@ msgstr "Tilpas"
 #. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
 #. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:14
 #. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
-#. i18n: file: gui/pinyindictmanager/browserdialog.ui:14
-#. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
-#. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:14
-#. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
-#: rc.cpp:3 rc.cpp:9 rc.cpp:27 rc.cpp:33
+#: rc.cpp:3 rc.cpp:9
 #, kde-format
 msgid "Dialog"
 msgstr "Dialog"
@@ -301,7 +297,7 @@ msgstr "Aktivér forudsigelse"
 msgid "Enable Spell"
 msgstr "Aktivér stav"
 
-#: modules/chttrans/chttrans.h:30
+#: modules/chttrans/chttrans.h:33
 msgid "Enabled Input Methods"
 msgstr "Aktiverede inputmetoder"
 
@@ -614,14 +610,14 @@ msgstr "Tegnsætning"
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:44
 #. i18n: ectx: property (text), widget (QPushButton, removeAllButton_)
-#: rc.cpp:21 rc.cpp:45
+#: rc.cpp:21
 #, kde-format
 msgid "Remove &All"
 msgstr "Fjern &alle"
 
 #: im/table/ime.h:183
 msgid "Save auto phrase after being typed for ... times"
-msgstr ""
+msgstr "Gem automatisk frase efter den er blevet skrevet ... gange"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:198
 msgid "Scel file (*.scel)"
@@ -679,23 +675,23 @@ msgstr "Shuangpin"
 msgid "Shuangpin Profile"
 msgstr "Shuangpin-profil"
 
-#: modules/chttrans/chttrans.h:63
+#: modules/chttrans/chttrans.h:78
 msgid "Simplified Chinese"
 msgstr "Forenklet kinesisk"
 
-#: modules/chttrans/chttrans.cpp:78
+#: modules/chttrans/chttrans.cpp:77
 msgid "Simplified Chinese is enabled."
 msgstr "Forenklet kinesisk er aktiveret."
 
-#: modules/chttrans/chttrans.cpp:72 modules/chttrans/chttrans.conf.in:3
+#: modules/chttrans/chttrans.cpp:71 modules/chttrans/chttrans.conf.in:3
 msgid "Simplified and Traditional Chinese Translation"
 msgstr "Oversættelse af forenklet og traditionel kinesisk"
 
-#: modules/chttrans/chttrans.cpp:76
+#: modules/chttrans/chttrans.cpp:75
 msgid "Switch to Simplified Chinese"
 msgstr "Skift til forenklet kinesisk"
 
-#: modules/chttrans/chttrans.cpp:75
+#: modules/chttrans/chttrans.cpp:74
 msgid "Switch to Traditional Chinese"
 msgstr "Skift til traditionel kinesisk"
 
@@ -712,19 +708,19 @@ msgid "Toggle Key"
 msgstr "Tast til at skifte"
 
 #: modules/fullwidth/fullwidth.h:19 modules/punctuation/punctuation.h:25
-#: modules/chttrans/chttrans.h:28
+#: modules/chttrans/chttrans.h:31
 msgid "Toggle key"
 msgstr "Tast til at skifte"
 
-#: modules/chttrans/chttrans.h:62
+#: modules/chttrans/chttrans.h:77
 msgid "Traditional Chinese"
 msgstr "Traditionel kinesisk"
 
-#: modules/chttrans/chttrans.cpp:77
+#: modules/chttrans/chttrans.cpp:76
 msgid "Traditional Chinese is enabled."
 msgstr "Traditionel kinesisk er aktiveret."
 
-#: modules/chttrans/chttrans.h:25
+#: modules/chttrans/chttrans.h:27
 msgid "Translate engine"
 msgstr "Oversættelsesmotor"
 
@@ -774,6 +770,10 @@ msgid ""
 "only one candidate available, automatically select this candidate. -1 Means "
 "the maximum code length of the table. 0 means this behavior is disabled."
 msgstr ""
+"Når den nuværende inputlængde er større end eller det samme som grænsen og "
+"der kun er én kandidat tilgængelig, så vælg automatisk kandidaten. -1 "
+"betyder den maksimale kodelængde på tabellen. 0 betyder at opførslen er "
+"deaktiveret."
 
 #: im/table/ime.h:160
 msgid ""
@@ -783,6 +783,11 @@ msgid ""
 "type in the new character. -1 means the maximum code length of the table. 0 "
 "means this behavior is disabled."
 msgstr ""
+"Når der skrives et nyt tegn, så hvis den nuværende inputlængde er større end "
+"eller det samme som grænsen og det eksisterende segment med det nye tegn "
+"ikke har nogen matchende poster i tabellen, så vælg den nuværende kandidat "
+"og skriv det nye tegn. -1 betyder den maksimale kodelængde på tabellen. 0 "
+"betyder at opførslen er deaktiveret."
 
 #: im/table/ime.h:120
 msgid "Wildcard matching Key"
@@ -828,11 +833,7 @@ msgstr "[vælg det ord som skal fjernes fra historik]"
 #. i18n: ectx: property (url), widget (QWebEngineView, webView_)
 #. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:21
 #. i18n: ectx: property (url), widget (QWebView, webView_)
-#. i18n: file: gui/pinyindictmanager/browserdialog.ui:21
-#. i18n: ectx: property (url), widget (QWebEngineView, webView_)
-#. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:21
-#. i18n: ectx: property (url), widget (QWebView, webView_)
-#: rc.cpp:6 rc.cpp:12 rc.cpp:30 rc.cpp:36
+#: rc.cpp:6 rc.cpp:12
 #, kde-format
 msgid "about:blank"
 msgstr "about:blank"
