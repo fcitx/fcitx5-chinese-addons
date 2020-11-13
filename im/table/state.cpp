@@ -692,7 +692,7 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         }
         if (context->candidates().empty() &&
             ((*config.commitAfterSelect && context->currentCode() == str) ||
-             context->userInput() == str)) {
+             (!*config.commitAfterSelect && context->userInput() == str))) {
             // This means it is not a valid start, make it go through the punc.
             context->backspace();
         } else {
