@@ -4,14 +4,15 @@
 #
 # Translators:
 # byStarTW (pan93412) <pan93412@gmail.com>, 2019
+# Billy Su <billy4195.su@gmail.com>, 2020
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-11-08 00:02-0800\n"
+"POT-Creation-Date: 2020-11-13 00:02-0800\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
-"Last-Translator: byStarTW (pan93412) <pan93412@gmail.com>, 2019\n"
+"Last-Translator: Billy Su <billy4195.su@gmail.com>, 2020\n"
 "Language-Team: Chinese (Taiwan) (https://www.transifex.com/fcitx/teams/12005/"
 "zh_TW/)\n"
 "Language: zh_TW\n"
@@ -46,32 +47,32 @@ msgstr "線上瀏覽搜狗细胞词库(&B)"
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:55
 #. i18n: ectx: property (text), widget (QPushButton, clearDictButton_)
-#: rc.cpp:24 rc.cpp:48
+#: rc.cpp:24
 #, kde-format
 msgid "&Clear Dict"
-msgstr "清空字典(&C)"
+msgstr "&清空字典"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:44
 msgid "&Clear User Data"
-msgstr "清空使用者資訊(&C)"
+msgstr "&清空使用者資訊"
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:22
 #. i18n: ectx: property (text), widget (QPushButton, importButton_)
-#: rc.cpp:15 rc.cpp:39
+#: rc.cpp:15
 #, kde-format
 msgid "&Import"
 msgstr "匯入(&I)"
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:33
 #. i18n: ectx: property (text), widget (QPushButton, removeButton_)
-#: rc.cpp:18 rc.cpp:42
+#: rc.cpp:18
 #, kde-format
 msgid "&Remove"
 msgstr "移除(&R)"
 
 #: im/pinyin/pinyin.h:32
 msgid "ABC"
-msgstr ""
+msgstr "ABC"
 
 #: org.fcitx.fcitx5-chinese-addons.metainfo.xml.in:8
 msgid ""
@@ -213,11 +214,7 @@ msgstr ""
 #. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
 #. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:14
 #. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
-#. i18n: file: gui/pinyindictmanager/browserdialog.ui:14
-#. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
-#. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:14
-#. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
-#: rc.cpp:3 rc.cpp:9 rc.cpp:27 rc.cpp:33
+#: rc.cpp:3 rc.cpp:9
 #, kde-format
 msgid "Dialog"
 msgstr "對話框"
@@ -290,7 +287,7 @@ msgstr "啟用預測功能"
 msgid "Enable Spell"
 msgstr ""
 
-#: modules/chttrans/chttrans.h:30
+#: modules/chttrans/chttrans.h:33
 msgid "Enabled Input Methods"
 msgstr "啟用的輸入法"
 
@@ -316,11 +313,11 @@ msgstr ""
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:110
 msgid "Failed to create directory"
-msgstr ""
+msgstr "建立資料夾失敗"
 
 #: gui/pinyindictmanager/filedownloader.cpp:35
 msgid "Failed to create request."
-msgstr ""
+msgstr "建立請求失敗"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:121
 msgid "Failed to create temp file"
@@ -333,11 +330,11 @@ msgstr ""
 
 #: im/table/ime.h:28
 msgid "File"
-msgstr ""
+msgstr "檔案"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:371
 msgid "File Operation Failed"
-msgstr ""
+msgstr "檔案操作失敗"
 
 #: im/pinyin/pinyin.h:136
 msgid "Filter by stroke"
@@ -373,11 +370,11 @@ msgstr ""
 
 #: modules/fullwidth/fullwidth.cpp:70 modules/fullwidth/fullwidth.conf.in:3
 msgid "Full width character"
-msgstr ""
+msgstr "全形字元"
 
 #: modules/punctuation/punctuation.h:57
 msgid "Full width punctuation"
-msgstr ""
+msgstr "全形符號"
 
 #: modules/punctuation/punctuation.cpp:152
 msgid "Full width punctuation is disabled."
@@ -405,11 +402,11 @@ msgstr ""
 
 #: im/table/ime.h:25
 msgid "Horizontal"
-msgstr ""
+msgstr "水平的"
 
 #: im/table/ime.h:92
 msgid "Icon"
-msgstr ""
+msgstr "圖示"
 
 #: im/table/ime.h:188
 msgid ""
@@ -440,7 +437,7 @@ msgstr ""
 
 #: im/table/ime.h:192
 msgid "Learning"
-msgstr ""
+msgstr "學習"
 
 #: im/table/ime.h:154
 msgid ""
@@ -595,7 +592,7 @@ msgstr ""
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:44
 #. i18n: ectx: property (text), widget (QPushButton, removeAllButton_)
-#: rc.cpp:21 rc.cpp:45
+#: rc.cpp:21
 #, kde-format
 msgid "Remove &All"
 msgstr ""
@@ -660,23 +657,23 @@ msgstr ""
 msgid "Shuangpin Profile"
 msgstr ""
 
-#: modules/chttrans/chttrans.h:63
+#: modules/chttrans/chttrans.h:78
 msgid "Simplified Chinese"
 msgstr ""
 
-#: modules/chttrans/chttrans.cpp:78
+#: modules/chttrans/chttrans.cpp:77
 msgid "Simplified Chinese is enabled."
 msgstr ""
 
-#: modules/chttrans/chttrans.cpp:72 modules/chttrans/chttrans.conf.in:3
+#: modules/chttrans/chttrans.cpp:71 modules/chttrans/chttrans.conf.in:3
 msgid "Simplified and Traditional Chinese Translation"
 msgstr ""
 
-#: modules/chttrans/chttrans.cpp:76
+#: modules/chttrans/chttrans.cpp:75
 msgid "Switch to Simplified Chinese"
 msgstr ""
 
-#: modules/chttrans/chttrans.cpp:75
+#: modules/chttrans/chttrans.cpp:74
 msgid "Switch to Traditional Chinese"
 msgstr ""
 
@@ -693,19 +690,19 @@ msgid "Toggle Key"
 msgstr ""
 
 #: modules/fullwidth/fullwidth.h:19 modules/punctuation/punctuation.h:25
-#: modules/chttrans/chttrans.h:28
+#: modules/chttrans/chttrans.h:31
 msgid "Toggle key"
 msgstr ""
 
-#: modules/chttrans/chttrans.h:62
+#: modules/chttrans/chttrans.h:77
 msgid "Traditional Chinese"
 msgstr ""
 
-#: modules/chttrans/chttrans.cpp:77
+#: modules/chttrans/chttrans.cpp:76
 msgid "Traditional Chinese is enabled."
 msgstr ""
 
-#: modules/chttrans/chttrans.h:25
+#: modules/chttrans/chttrans.h:27
 msgid "Translate engine"
 msgstr ""
 
@@ -807,11 +804,7 @@ msgstr ""
 #. i18n: ectx: property (url), widget (QWebEngineView, webView_)
 #. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:21
 #. i18n: ectx: property (url), widget (QWebView, webView_)
-#. i18n: file: gui/pinyindictmanager/browserdialog.ui:21
-#. i18n: ectx: property (url), widget (QWebEngineView, webView_)
-#. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:21
-#. i18n: ectx: property (url), widget (QWebView, webView_)
-#: rc.cpp:6 rc.cpp:12 rc.cpp:30 rc.cpp:36
+#: rc.cpp:6 rc.cpp:12
 #, kde-format
 msgid "about:blank"
 msgstr ""
