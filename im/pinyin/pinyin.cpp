@@ -819,6 +819,35 @@ void PinyinEngine::reloadConfig() {
 
     ime_->setFuzzyFlags(flags);
 
+    quickphraseTriggerDict_.clear();
+    for (std::string_view prefix : *config_.quickphraseTrigger) {
+        if (prefix.empty()) {
+            continue;
+        }
+        auto length = utf8::lengthValidated(prefix);
+        if (length == utf8::INVALID_LENGTH || length <= 1) {
+            continue;
+        }
+        auto latinPartLength =
+            utf8::ncharByteLength(prefix.begin(), length - 1);
+        auto latinPart = prefix.substr(0, latinPartLength);
+
+        if (!latinPartLength ||
+            std::any_of(latinPart.begin(), latinPart.end(), [](char c) {
+                return !charutils::islower(c) && !charutils::isupper(c);
+            })) {
+            continue;
+        }
+
+        const uint32_t trigger =
+            utf8::getChar(prefix.begin() + latinPartLength, prefix.end());
+        if (trigger && trigger != utf8::INVALID_CHAR &&
+            trigger != utf8::NOT_ENOUGH_SPACE) {
+            quickphraseTriggerDict_[std::string(latinPart)].insert(trigger);
+        }
+    }
+    PINYIN_DEBUG() << "Quick Phrase Trigger Dict: " << quickphraseTriggerDict_;
+
     loadExtraDict();
 }
 void PinyinEngine::activate(const fcitx::InputMethodEntry &entry,
@@ -1355,6 +1384,22 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
                (state->context_.empty() &&
                 shuangpinProfile->validInitial().count(chr));
     };
+
+    if (!state->context_.empty() && !event.key().hasModifier() &&
+        quickphrase()) {
+        const auto iter =
+            quickphraseTriggerDict_.find(state->context_.userInput());
+        if (iter != quickphraseTriggerDict_.end() && !iter->second.empty() &&
+            iter->second.count(Key::keySymToUnicode(event.key().sym()))) {
+            std::string text = state->context_.userInput();
+            text.append(Key::keySymToUTF8(event.key().sym()));
+            doReset(inputContext);
+            quickphrase()->call<IQuickPhrase::trigger>(inputContext, "", text,
+                                                       "", "", Key());
+
+            return event.filterAndAccept();
+        }
+    }
 
     if (event.key().isLAZ() || event.key().isUAZ() ||
         (event.key().check(FcitxKey_apostrophe) && !state->context_.empty()) ||

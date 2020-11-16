@@ -22,6 +22,8 @@
 #include <libime/pinyin/pinyincontext.h>
 #include <libime/pinyin/pinyinime.h>
 #include <memory>
+#include <unordered_map>
+#include <unordered_set>
 
 namespace fcitx {
 
@@ -154,6 +156,12 @@ FCITX_CONFIGURATION(
     ExternalOption dictmanager{this, "DictManager", _("Dictionaries"),
                                "fcitx://config/addon/pinyin/dictmanager"};
     Option<FuzzyConfig> fuzzyConfig{this, "Fuzzy", _("Fuzzy Pinyin Settings")};
+    Option<std::vector<std::string>> quickphraseTrigger{
+        this,
+        "QuickPhrase trigger",
+        _("Strings to trigger quick phrase"),
+        {"www.", "ftp.", "http:", "mail.", "bbs.", "forum.",
+         "https:", "ftp:", "telnet:", "mailto:"}};
     HiddenOption<bool> firstRun{this, "FirstRun", "FirstRun", true};);
 
 class PinyinState;
@@ -226,6 +234,8 @@ private:
     Instance *instance_;
     PinyinEngineConfig config_;
     std::unique_ptr<libime::PinyinIME> ime_;
+    std::unordered_map<std::string, std::unordered_set<uint32_t>>
+        quickphraseTriggerDict_;
     KeyList selectionKeys_;
     FactoryFor<PinyinState> factory_;
     SimpleAction predictionAction_;
