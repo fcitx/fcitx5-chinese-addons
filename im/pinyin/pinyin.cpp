@@ -648,6 +648,17 @@ PinyinEngine::PinyinEngine(Instance *instance)
         });
     instance_->userInterfaceManager().registerAction("pinyin-prediction",
                                                      &predictionAction_);
+    event_ = instance_->watchEvent(
+        EventType::InputContextKeyEvent, EventWatcherPhase::PreInputMethod,
+        [this](Event &event) {
+            auto &keyEvent = static_cast<KeyEvent &>(event);
+            auto *inputContext = keyEvent.inputContext();
+            auto *entry = instance_->inputMethodEntry(inputContext);
+            if (!entry || entry->addon() != "pinyin") {
+                return;
+            }
+            handle2nd3rdSelection(keyEvent);
+        });
 }
 
 PinyinEngine::~PinyinEngine() {}
