@@ -231,6 +231,7 @@ private:
     SimpleAction predictionAction_;
     libime::Prediction prediction_;
     std::unique_ptr<EventSource> deferEvent_;
+    std::unique_ptr<HandlerTableEntry<EventHandler>> event_;
 
     FCITX_ADDON_DEPENDENCY_LOADER(quickphrase, instance_->addonManager());
     FCITX_ADDON_DEPENDENCY_LOADER(cloudpinyin, instance_->addonManager());
