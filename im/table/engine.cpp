@@ -41,7 +41,7 @@ TableEngine::TableEngine(Instance *instance)
 
     reloadConfig();
     instance_->inputContextManager().registerProperty("tableState", &factory_);
-    event_ = instance_->watchEvent(
+    events_.emplace_back(instance_->watchEvent(
         EventType::InputMethodGroupChanged, EventWatcherPhase::Default,
         [this](Event &) {
             instance_->inputContextManager().foreach([this](InputContext *ic) {
@@ -56,7 +56,19 @@ TableEngine::TableEngine(Instance *instance)
                 names.insert(im.name());
             }
             ime_->releaseUnusedDict(names);
-        });
+        }));
+    events_.emplace_back(instance_->watchEvent(
+        EventType::InputContextKeyEvent, EventWatcherPhase::PreInputMethod,
+        [this](Event &event) {
+            auto &keyEvent = static_cast<KeyEvent &>(event);
+            auto *inputContext = keyEvent.inputContext();
+            auto *entry = instance_->inputMethodEntry(inputContext);
+            if (!entry || entry->addon() != "table") {
+                return;
+            }
+            auto *state = inputContext->propertyFor(&factory_);
+            state->handle2nd3rdCandidate(keyEvent);
+        }));
 }
 
 TableEngine::~TableEngine() {}
