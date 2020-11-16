@@ -49,6 +49,15 @@ public:
     auto mode() const { return mode_; }
 
     void forgetCandidateWord(size_t idx);
+    void handle2nd3rdCandidate(KeyEvent &event) {
+        auto *context = context_.get();
+        if (!context) {
+            return;
+        }
+
+        const auto &config = context->config();
+        handle2nd3rdCandidate(config, event);
+    }
 
 private:
     bool handle2nd3rdCandidate(const TableConfig &config, KeyEvent &event);
