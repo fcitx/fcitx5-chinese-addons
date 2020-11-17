@@ -825,15 +825,14 @@ void PinyinEngine::reloadConfig() {
             continue;
         }
         auto length = utf8::lengthValidated(prefix);
-        if (length == utf8::INVALID_LENGTH || length <= 1) {
+        if (length == utf8::INVALID_LENGTH || length < 1) {
             continue;
         }
         auto latinPartLength =
             utf8::ncharByteLength(prefix.begin(), length - 1);
         auto latinPart = prefix.substr(0, latinPartLength);
 
-        if (!latinPartLength ||
-            std::any_of(latinPart.begin(), latinPart.end(), [](char c) {
+        if (std::any_of(latinPart.begin(), latinPart.end(), [](char c) {
                 return !charutils::islower(c) && !charutils::isupper(c);
             })) {
             continue;
@@ -1385,8 +1384,7 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
                 shuangpinProfile->validInitial().count(chr));
     };
 
-    if (!state->context_.empty() && !event.key().hasModifier() &&
-        quickphrase()) {
+    if (!event.key().hasModifier() && quickphrase()) {
         const auto iter =
             quickphraseTriggerDict_.find(state->context_.userInput());
         if (iter != quickphraseTriggerDict_.end() && !iter->second.empty() &&
