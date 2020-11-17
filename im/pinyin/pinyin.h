@@ -156,12 +156,16 @@ FCITX_CONFIGURATION(
     ExternalOption dictmanager{this, "DictManager", _("Dictionaries"),
                                "fcitx://config/addon/pinyin/dictmanager"};
     Option<FuzzyConfig> fuzzyConfig{this, "Fuzzy", _("Fuzzy Pinyin Settings")};
-    Option<std::vector<std::string>> quickphraseTrigger{
-        this,
-        "QuickPhrase trigger",
-        _("Strings to trigger quick phrase"),
-        {"www.", "ftp.", "http:", "mail.", "bbs.", "forum.",
-         "https:", "ftp:", "telnet:", "mailto:"}};
+    OptionWithAnnotation<std::vector<std::string>, ToolTipAnnotation>
+        quickphraseTrigger{this,
+                           "QuickPhrase trigger",
+                           _("Strings to trigger quick phrase"),
+                           {"www.", "ftp.", "http:", "mail.", "bbs.", "forum.",
+                            "https:", "ftp:", "telnet:", "mailto:"},
+                           {},
+                           {},
+                           {_("Enter a string from the list will make it enter "
+                              "quickphrase mode.")}};
     HiddenOption<bool> firstRun{this, "FirstRun", "FirstRun", true};);
 
 class PinyinState;
