@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-11-08 00:02-0800\n"
+"POT-Creation-Date: 2020-11-17 00:02-0800\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Robert Antoni Buj Gelonch <rbuj@fedoraproject.org>, 2017\n"
 "Language-Team: Catalan (https://www.transifex.com/fcitx/teams/12005/ca/)\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: im/pinyin/pinyin.cpp:1013
+#: im/pinyin/pinyin.cpp:1052
 msgid "\t[Stroke Filtering] "
 msgstr ""
 
@@ -45,7 +45,7 @@ msgstr ""
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:55
 #. i18n: ectx: property (text), widget (QPushButton, clearDictButton_)
-#: rc.cpp:24 rc.cpp:48
+#: rc.cpp:24
 #, kde-format
 msgid "&Clear Dict"
 msgstr ""
@@ -56,19 +56,19 @@ msgstr ""
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:22
 #. i18n: ectx: property (text), widget (QPushButton, importButton_)
-#: rc.cpp:15 rc.cpp:39
+#: rc.cpp:15
 #, kde-format
 msgid "&Import"
 msgstr ""
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:33
 #. i18n: ectx: property (text), widget (QPushButton, removeButton_)
-#: rc.cpp:18 rc.cpp:42
+#: rc.cpp:18
 #, kde-format
 msgid "&Remove"
 msgstr ""
 
-#: im/pinyin/pinyin.h:32
+#: im/pinyin/pinyin.h:34
 msgid "ABC"
 msgstr ""
 
@@ -130,7 +130,7 @@ msgstr ""
 msgid "Chinese Addons"
 msgstr ""
 
-#: im/pinyin/pinyin.h:130
+#: im/pinyin/pinyin.h:132
 msgid "Choose Character from Phrase"
 msgstr ""
 
@@ -142,19 +142,19 @@ msgstr ""
 msgid "Cloud Pinyin"
 msgstr "Pinyin al núvol"
 
-#: im/pinyin/pinyin.h:73
+#: im/pinyin/pinyin.h:75
 msgid "Cloud Pinyin Index"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:854
+#: im/pinyin/pinyin.cpp:893
 msgid "Cloud Pinyin Status"
 msgstr "Estat de pinyin al núvol"
 
-#: im/pinyin/pinyin.cpp:856
+#: im/pinyin/pinyin.cpp:895
 msgid "Cloud Pinyin is disabled."
 msgstr "El pinyin al núvol està inhabilitat."
 
-#: im/pinyin/pinyin.cpp:855
+#: im/pinyin/pinyin.cpp:894
 msgid "Cloud Pinyin is enabled."
 msgstr "El pinyin al núvol està habilitat."
 
@@ -204,7 +204,7 @@ msgstr ""
 msgid "Creating temp file failed. Please check the permission or disk space."
 msgstr ""
 
-#: im/pinyin/pinyin.h:34
+#: im/pinyin/pinyin.h:36
 msgid "Custom"
 msgstr ""
 
@@ -212,11 +212,7 @@ msgstr ""
 #. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
 #. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:14
 #. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
-#. i18n: file: gui/pinyindictmanager/browserdialog.ui:14
-#. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
-#. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:14
-#. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
-#: rc.cpp:3 rc.cpp:9 rc.cpp:27 rc.cpp:33
+#: rc.cpp:3 rc.cpp:9
 #, kde-format
 msgid "Dialog"
 msgstr ""
@@ -225,7 +221,7 @@ msgstr ""
 msgid "Dianbaoma"
 msgstr ""
 
-#: im/pinyin/pinyin.h:154
+#: im/pinyin/pinyin.h:156
 msgid "Dictionaries"
 msgstr ""
 
@@ -241,13 +237,13 @@ msgstr "Mostra els suggeriments per a la paraula"
 msgid "Display custom hint"
 msgstr "Mostra el suggeriment personalitzat"
 
-#: im/pinyin/pinyin.cpp:723
+#: im/pinyin/pinyin.cpp:734
 msgid ""
 "Do you want to enable cloudpinyin now for better prediction? You can always "
 "toggle it later in configuration or by pressing {}."
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:718
+#: im/pinyin/pinyin.cpp:729
 msgid ""
 "Do you want to enable cloudpinyin now for better prediction? You can always "
 "toggle it later in configuration."
@@ -265,37 +261,41 @@ msgstr ""
 msgid "Download started."
 msgstr ""
 
-#: im/pinyin/pinyin.h:69
+#: im/pinyin/pinyin.h:71
 msgid "Enable Chaizi"
 msgstr ""
 
-#: im/pinyin/pinyin.h:71
+#: im/pinyin/pinyin.h:73
 msgid "Enable Cloud Pinyin"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:732
+#: im/pinyin/pinyin.cpp:743
 msgid "Enable Cloudpinyin"
 msgstr ""
 
-#: im/pinyin/pinyin.h:68
+#: im/pinyin/pinyin.h:70
 msgid "Enable Emoji"
 msgstr ""
 
-#: im/pinyin/pinyin.h:80
+#: im/pinyin/pinyin.h:82
 msgid "Enable Prediction"
 msgstr ""
 
-#: im/pinyin/pinyin.h:67
+#: im/pinyin/pinyin.h:69
 msgid "Enable Spell"
 msgstr ""
 
-#: modules/chttrans/chttrans.h:30
+#: modules/chttrans/chttrans.h:33
 msgid "Enabled Input Methods"
 msgstr ""
 
 #: im/table/ime.h:166
 msgid "End key"
 msgstr "Tecla Fi"
+
+#: im/pinyin/pinyin.h:167
+msgid "Enter a string from the list will make it enter quickphrase mode."
+msgstr ""
 
 #: im/table/erbi.conf.in.in:3
 msgid "Erbi"
@@ -338,7 +338,7 @@ msgstr "Fitxer"
 msgid "File Operation Failed"
 msgstr ""
 
-#: im/pinyin/pinyin.h:136
+#: im/pinyin/pinyin.h:138
 msgid "Filter by stroke"
 msgstr ""
 
@@ -346,7 +346,7 @@ msgstr ""
 msgid "First candidate as Preedit"
 msgstr ""
 
-#: im/table/engine.h:33 im/pinyin/pinyin.h:86
+#: im/table/engine.h:33 im/pinyin/pinyin.h:88
 msgid "Forget word"
 msgstr ""
 
@@ -386,7 +386,7 @@ msgstr ""
 msgid "Full width punctuation is enabled."
 msgstr ""
 
-#: im/pinyin/pinyin.h:156
+#: im/pinyin/pinyin.h:158
 msgid "Fuzzy Pinyin Settings"
 msgstr ""
 
@@ -421,11 +421,11 @@ msgstr ""
 msgid "Ignore built in punctuation"
 msgstr ""
 
-#: im/pinyin/pinyin.h:39
+#: im/pinyin/pinyin.h:41
 msgid "Inner Segment (xian -> xi'an)"
 msgstr ""
 
-#: im/pinyin/pinyin.h:41
+#: im/pinyin/pinyin.h:43
 msgid "Inner Segment for Short Pinyin (qie -> qi'e)"
 msgstr ""
 
@@ -433,7 +433,7 @@ msgstr ""
 msgid "Input Dictionary Name"
 msgstr ""
 
-#: im/table/ime.h:89 im/pinyin/pinyin.h:142
+#: im/table/ime.h:89 im/pinyin/pinyin.h:144
 msgid "Key to trigger quickphrase"
 msgstr ""
 
@@ -454,11 +454,11 @@ msgstr ""
 msgid "Lookup pinyin"
 msgstr ""
 
-#: im/pinyin/pinyin.h:31
+#: im/pinyin/pinyin.h:33
 msgid "MS"
 msgstr ""
 
-#: im/pinyin/pinyin.h:44
+#: im/pinyin/pinyin.h:46
 msgid "Match partial finals (e -> en, eng, ei)"
 msgstr ""
 
@@ -474,11 +474,11 @@ msgstr "Modifica el diccionari"
 msgid "New Dictionary Name:"
 msgstr ""
 
-#: im/table/ime.h:50 im/pinyin/pinyin.h:110
+#: im/table/ime.h:50 im/pinyin/pinyin.h:112
 msgid "Next Candidate"
 msgstr ""
 
-#: im/pinyin/pinyin.h:98
+#: im/pinyin/pinyin.h:100
 msgid "Next Page"
 msgstr ""
 
@@ -486,7 +486,7 @@ msgstr ""
 msgid "Next page"
 msgstr "Av Pàg"
 
-#: im/pinyin/pinyin.cpp:729
+#: im/pinyin/pinyin.cpp:740
 msgid "No"
 msgstr ""
 
@@ -494,7 +494,7 @@ msgstr ""
 msgid "No browsing outside pinyin.sogou.com, now redirect to home page."
 msgstr ""
 
-#: im/table/engine.cpp:101
+#: im/table/engine.cpp:113
 msgid "Not available"
 msgstr "No disponible"
 
@@ -502,7 +502,7 @@ msgstr "No disponible"
 msgid "Not set"
 msgstr ""
 
-#: im/pinyin/pinyin.h:148
+#: im/pinyin/pinyin.h:150
 msgid "Number of Sentence"
 msgstr ""
 
@@ -517,11 +517,11 @@ msgid ""
 "of the history."
 msgstr ""
 
-#: im/table/ime.h:74 im/pinyin/pinyin.h:65
+#: im/table/ime.h:74 im/pinyin/pinyin.h:67
 msgid "Page size"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:732 im/pinyin/pinyin.cpp:853
+#: im/pinyin/pinyin.cpp:743 im/pinyin/pinyin.cpp:892
 #: im/pinyin/pinyin-addon.conf.in:3 im/pinyin/pinyin.conf.in:3
 msgid "Pinyin"
 msgstr "Pinyin"
@@ -530,7 +530,7 @@ msgstr "Pinyin"
 msgid "Pinyin dictionary manager"
 msgstr ""
 
-#: im/pinyin/pinyin.h:33
+#: im/pinyin/pinyin.h:35
 msgid "PinyinJiajia"
 msgstr ""
 
@@ -542,7 +542,7 @@ msgstr ""
 msgid "Prediction"
 msgstr "Predicció"
 
-#: im/pinyin/pinyin.h:83
+#: im/pinyin/pinyin.h:85
 msgid "Prediction Size"
 msgstr ""
 
@@ -562,19 +562,19 @@ msgstr ""
 msgid "Press space to insert."
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1263
+#: im/pinyin/pinyin.cpp:1302
 msgid "Press {} for {}"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1260
+#: im/pinyin/pinyin.cpp:1299
 msgid "Press {} for {} and Return for {}"
 msgstr ""
 
-#: im/table/ime.h:44 im/pinyin/pinyin.h:104
+#: im/table/ime.h:44 im/pinyin/pinyin.h:106
 msgid "Prev Candidate"
 msgstr ""
 
-#: im/pinyin/pinyin.h:92
+#: im/pinyin/pinyin.h:94
 msgid "Prev Page"
 msgstr ""
 
@@ -582,7 +582,7 @@ msgstr ""
 msgid "Prev page"
 msgstr "Re Pàg"
 
-#: im/pinyin/pinyin.h:152
+#: im/pinyin/pinyin.h:154
 msgid "Prompt long word length when input length over (0 for disable)"
 msgstr ""
 
@@ -594,7 +594,7 @@ msgstr "Puntuació"
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:44
 #. i18n: ectx: property (text), widget (QPushButton, removeAllButton_)
-#: rc.cpp:21 rc.cpp:45
+#: rc.cpp:21
 #, kde-format
 msgid "Remove &All"
 msgstr ""
@@ -607,11 +607,11 @@ msgstr ""
 msgid "Scel file (*.scel)"
 msgstr ""
 
-#: im/pinyin/pinyin.h:116
+#: im/pinyin/pinyin.h:118
 msgid "Select 2nd Candidate"
 msgstr ""
 
-#: im/pinyin/pinyin.h:123
+#: im/pinyin/pinyin.h:125
 msgid "Select 3rd Candidate"
 msgstr ""
 
@@ -639,7 +639,7 @@ msgstr ""
 msgid "Selection"
 msgstr "Selecció"
 
-#: im/pinyin/pinyin.h:79
+#: im/pinyin/pinyin.h:81
 msgid "Show complete pinyin in preedit"
 msgstr ""
 
@@ -647,7 +647,7 @@ msgstr ""
 msgid "Show prediction words"
 msgstr "Mostra la predicció de paraules"
 
-#: im/pinyin/pinyin.h:76
+#: im/pinyin/pinyin.h:78
 msgid "Show preedit within application"
 msgstr ""
 
@@ -655,27 +655,31 @@ msgstr ""
 msgid "Shuangpin"
 msgstr "Shuangpin"
 
-#: im/pinyin/pinyin.h:63
+#: im/pinyin/pinyin.h:65
 msgid "Shuangpin Profile"
 msgstr ""
 
-#: modules/chttrans/chttrans.h:63
+#: modules/chttrans/chttrans.h:78
 msgid "Simplified Chinese"
 msgstr "Xinès simplificat"
 
-#: modules/chttrans/chttrans.cpp:78
+#: modules/chttrans/chttrans.cpp:77
 msgid "Simplified Chinese is enabled."
 msgstr "El xinès simplificat està habilitat."
 
-#: modules/chttrans/chttrans.cpp:72 modules/chttrans/chttrans.conf.in:3
+#: modules/chttrans/chttrans.cpp:71 modules/chttrans/chttrans.conf.in:3
 msgid "Simplified and Traditional Chinese Translation"
 msgstr "Traducció de xinès simplificat i tradicional"
 
-#: modules/chttrans/chttrans.cpp:76
-msgid "Switch to Simplified Chinese"
+#: im/pinyin/pinyin.h:162
+msgid "Strings to trigger quick phrase"
 msgstr ""
 
 #: modules/chttrans/chttrans.cpp:75
+msgid "Switch to Simplified Chinese"
+msgstr ""
+
+#: modules/chttrans/chttrans.cpp:74
 msgid "Switch to Traditional Chinese"
 msgstr ""
 
@@ -692,19 +696,19 @@ msgid "Toggle Key"
 msgstr ""
 
 #: modules/fullwidth/fullwidth.h:19 modules/punctuation/punctuation.h:25
-#: modules/chttrans/chttrans.h:28
+#: modules/chttrans/chttrans.h:31
 msgid "Toggle key"
 msgstr ""
 
-#: modules/chttrans/chttrans.h:62
+#: modules/chttrans/chttrans.h:77
 msgid "Traditional Chinese"
 msgstr "Xinès tradicional"
 
-#: modules/chttrans/chttrans.cpp:77
+#: modules/chttrans/chttrans.cpp:76
 msgid "Traditional Chinese is enabled."
 msgstr "El xinès tradicional està habilitat."
 
-#: modules/chttrans/chttrans.h:25
+#: modules/chttrans/chttrans.h:27
 msgid "Translate engine"
 msgstr ""
 
@@ -716,7 +720,7 @@ msgstr "Utilitza dret i esquerre per seleccionar el caràcter:"
 msgid "Use Left and Right to select text. "
 msgstr "Utilitza dret i esquerre per seleccionar el text:"
 
-#: im/pinyin/pinyin.h:146
+#: im/pinyin/pinyin.h:148
 msgid "Use V to trigger quickphrase"
 msgstr ""
 
@@ -778,27 +782,27 @@ msgstr "Wubi"
 msgid "Wubi Pinyin"
 msgstr "Wubi Pinyin"
 
-#: im/pinyin/pinyin.h:34
+#: im/pinyin/pinyin.h:36
 msgid "Xiaohe"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:728
+#: im/pinyin/pinyin.cpp:739
 msgid "Yes"
 msgstr ""
 
-#: im/pinyin/pinyin.h:33
+#: im/pinyin/pinyin.h:35
 msgid "Zhongwenzhixing"
 msgstr ""
 
-#: im/pinyin/pinyin.h:32
+#: im/pinyin/pinyin.h:34
 msgid "Ziguang"
 msgstr ""
 
-#: im/pinyin/pinyin.h:31 im/table/zrm.conf.in.in:3
+#: im/pinyin/pinyin.h:33 im/table/zrm.conf.in.in:3
 msgid "Ziranma"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1065
+#: im/pinyin/pinyin.cpp:1104
 msgid "[Select the word to remove from history]"
 msgstr ""
 
@@ -806,68 +810,64 @@ msgstr ""
 #. i18n: ectx: property (url), widget (QWebEngineView, webView_)
 #. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:21
 #. i18n: ectx: property (url), widget (QWebView, webView_)
-#. i18n: file: gui/pinyindictmanager/browserdialog.ui:21
-#. i18n: ectx: property (url), widget (QWebEngineView, webView_)
-#. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:21
-#. i18n: ectx: property (url), widget (QWebView, webView_)
-#: rc.cpp:6 rc.cpp:12 rc.cpp:30 rc.cpp:36
+#: rc.cpp:6 rc.cpp:12
 #, kde-format
 msgid "about:blank"
 msgstr ""
 
-#: im/pinyin/pinyin.h:47
+#: im/pinyin/pinyin.h:49
 msgid "an <-> ang"
 msgstr ""
 
-#: im/pinyin/pinyin.h:53
+#: im/pinyin/pinyin.h:55
 msgid "c <-> ch"
 msgstr ""
 
-#: im/pinyin/pinyin.h:48
+#: im/pinyin/pinyin.h:50
 msgid "en <-> eng"
 msgstr ""
 
-#: im/pinyin/pinyin.h:54
+#: im/pinyin/pinyin.h:56
 msgid "f <-> h"
 msgstr ""
 
-#: im/pinyin/pinyin.h:38
+#: im/pinyin/pinyin.h:40
 msgid "gn -> ng"
 msgstr ""
 
-#: im/pinyin/pinyin.h:49
+#: im/pinyin/pinyin.h:51
 msgid "ian <-> iang"
 msgstr ""
 
-#: im/pinyin/pinyin.h:50
+#: im/pinyin/pinyin.h:52
 msgid "in <-> ing"
 msgstr ""
 
-#: im/pinyin/pinyin.h:55
+#: im/pinyin/pinyin.h:57
 msgid "l <-> n"
 msgstr ""
 
-#: im/pinyin/pinyin.h:56
+#: im/pinyin/pinyin.h:58
 msgid "s <-> sh"
 msgstr ""
 
-#: im/pinyin/pinyin.h:51
+#: im/pinyin/pinyin.h:53
 msgid "u <-> ou"
 msgstr ""
 
-#: im/pinyin/pinyin.h:46
+#: im/pinyin/pinyin.h:48
 msgid "u <-> v"
 msgstr ""
 
-#: im/pinyin/pinyin.h:52
+#: im/pinyin/pinyin.h:54
 msgid "uan <-> uang"
 msgstr ""
 
-#: im/pinyin/pinyin.h:37
+#: im/pinyin/pinyin.h:39
 msgid "ue -> ve"
 msgstr ""
 
-#: im/pinyin/pinyin.h:57
+#: im/pinyin/pinyin.h:59
 msgid "z <-> zh"
 msgstr ""
 
