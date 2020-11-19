@@ -32,6 +32,7 @@ include("${FCITX_INSTALL_CMAKECONFIG_DIR}/Fcitx5Utils/Fcitx5CompilerSettings.cma
 #######################################################################
 option(ENABLE_TEST "Build Test" On)
 option(ENABLE_COVERAGE "Build the project with gcov support (Need ENABLE_TEST=On)" Off)
+set(GCOV_TOOL "gcov" CACHE STRING "Path to gcov tool used by coverage.")
 option(ENABLE_OPENCC "Enable OpenCC for chttrans" On)
 option(ENABLE_GUI "Enable Configure Gui" On)
 option(ENABLE_BROWSER "Enable built-in browser." On)
@@ -81,7 +82,7 @@ if (ENABLE_TEST)
     if (ENABLE_COVERAGE)
         add_custom_target(coverage
                         COMMAND "${CMAKE_CTEST_COMMAND}"
-                        COMMAND lcov --no-external --capture --directory ./ -b "${CMAKE_CURRENT_SOURCE_DIR}" --output-file coverage.info
+                        COMMAND lcov --gcov-tool "${GCOV_TOOL}" --no-external --capture --directory ./ -b "${CMAKE_CURRENT_SOURCE_DIR}" --output-file coverage.info
                         COMMAND genhtml coverage.info --output-directory "coverage_pages"
                         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
     endif()
