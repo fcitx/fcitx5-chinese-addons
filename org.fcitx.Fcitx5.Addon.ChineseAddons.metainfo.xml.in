@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component type="inputmethod">
-  <id>org.fcitx.fcitx5-chinese-addons</id>
+  <id>org.fcitx.Fcitx5.Addon.ChineseAddons</id>
   <extends>org.fcitx.Fcitx5.desktop</extends>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0+ and LGPL-2.1+</project_license>
@@ -8,7 +8,7 @@
   <summary>Add support for Pinyin, Table and many other Chinese related functionality to Fcitx</summary>
   <url type="homepage">https://fcitx-im.org</url>
   <releases>
-    <release version="5.0.0" date="2020-10-30"/>
     <release version="5.0.1" date="2020-11-03"/>
+    <release version="5.0.0" date="2020-10-30"/>
   </releases>
 </component>
