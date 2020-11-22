@@ -239,6 +239,7 @@ ChttransIMType Chttrans::convertType(fcitx::InputContext *inputContext) {
 
 class ChttransModuleFactory : public AddonFactory {
     AddonInstance *create(AddonManager *manager) override {
+        registerDomain("fcitx5-chinese-addons", FCITX_INSTALL_LOCALEDIR);
         return new Chttrans(manager->instance());
     }
 };

@@ -116,6 +116,7 @@ bool Fullwidth::inWhiteList(InputContext *inputContext) const {
 
 class FullwidthModuleFactory : public AddonFactory {
     AddonInstance *create(AddonManager *manager) override {
+        registerDomain("fcitx5-chinese-addons", FCITX_INSTALL_LOCALEDIR);
         return new Fullwidth(manager->instance());
     }
 };
