@@ -8,7 +8,7 @@ include(GNUInstallDirs)
 include(ECMSetupVersion)
 include(ECMUninstallTarget)
 
-find_package(Fcitx5Core REQUIRED)
+find_package(Fcitx5Core 5.0.2 REQUIRED)
 find_package(Fcitx5Module REQUIRED COMPONENTS Notifications QuickPhrase Spell Clipboard TestFrontend TestIM)
 find_package(Fcitx5ModuleLuaAddonLoader)
 find_package(LibIntl REQUIRED)
@@ -63,6 +63,7 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.h.in ${CMAKE_CURRENT_BINARY_DI
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 add_definitions(-DFCITX_GETTEXT_DOMAIN=\"fcitx5-chinese-addons\")
+fcitx5_add_i18n_definition()
 
 add_subdirectory(modules)
 add_subdirectory(im)
@@ -88,9 +89,9 @@ if (ENABLE_TEST)
     endif()
 endif ()
 
-fcitx5_translate_desktop_file(org.fcitx.fcitx5-chinese-addons.metainfo.xml.in
-                              org.fcitx.fcitx5-chinese-addons.metainfo.xml XML)
+fcitx5_translate_desktop_file(org.fcitx.Fcitx5.Addon.ChineseAddons.metainfo.xml.in
+    org.fcitx.Fcitx.Addon.ChineseAddons.metainfo.xml XML)
 
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/org.fcitx.fcitx5-chinese-addons.metainfo.xml" DESTINATION ${CMAKE_INSTALL_DATADIR}/metainfo)
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/org.fcitx.Fcitx5.Addon.ChineseAddons.metainfo.xml" DESTINATION ${CMAKE_INSTALL_DATADIR}/metainfo)
 
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)

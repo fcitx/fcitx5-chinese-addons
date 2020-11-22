@@ -138,6 +138,7 @@ std::string PinyinHelper::prettyStrokeString(const std::string &input) {
 
 class PinyinHelperModuleFactory : public AddonFactory {
     AddonInstance *create(AddonManager *manager) override {
+        registerDomain("fcitx5-chinese-addons", FCITX_INSTALL_LOCALEDIR);
         return new PinyinHelper(manager->instance());
     }
 };

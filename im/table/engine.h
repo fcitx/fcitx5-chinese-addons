@@ -98,6 +98,7 @@ private:
 class TableEngineFactory : public AddonFactory {
 public:
     AddonInstance *create(AddonManager *manager) override {
+        registerDomain("fcitx5-chinese-addons", FCITX_INSTALL_LOCALEDIR);
         return new TableEngine(manager->instance());
     }
 };
