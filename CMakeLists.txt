@@ -90,7 +90,7 @@ if (ENABLE_TEST)
 endif ()
 
 fcitx5_translate_desktop_file(org.fcitx.Fcitx5.Addon.ChineseAddons.metainfo.xml.in
-    org.fcitx.Fcitx.Addon.ChineseAddons.metainfo.xml XML)
+    org.fcitx.Fcitx5.Addon.ChineseAddons.metainfo.xml XML)
 
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/org.fcitx.Fcitx5.Addon.ChineseAddons.metainfo.xml" DESTINATION ${CMAKE_INSTALL_DATADIR}/metainfo)
 
