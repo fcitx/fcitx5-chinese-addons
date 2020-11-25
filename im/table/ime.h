@@ -151,8 +151,7 @@ FCITX_CONFIGURATION(
     OptionWithAnnotation<int, ToolTipAnnotation> noMatchAutoSelectLength{
         this,
         "NoMatchAutoSelectLength",
-        _("Length limit of selecting the current candidate when there is no "
-          "new match"),
+        _("Auto select if current input has no match"),
         0,
         {},
         {},
