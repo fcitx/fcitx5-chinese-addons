@@ -101,7 +101,6 @@ void TableEngine::activate(const fcitx::InputMethodEntry &entry,
 
 void TableEngine::deactivate(const fcitx::InputMethodEntry &entry,
                              fcitx::InputContextEvent &event) {
-    auto *inputContext = event.inputContext();
     reset(entry, event);
 }
 

@@ -106,7 +106,7 @@ FCITX_CONFIGURATION(
     OptionWithAnnotation<bool, ToolTipAnnotation> useContextBasedOrder{
         this,
         "UseContextRelatedOrder",
-        _("Use context related sort"),
+        _("Sort candidates based on current context"),
         true,
         {},
         {},
