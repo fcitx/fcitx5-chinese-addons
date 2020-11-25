@@ -727,7 +727,8 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
                 context->clear();
                 event.filterAndAccept();
             }
-        } else if (event.key().check(FcitxKey_BackSpace)) {
+        } else if (event.key().check(FcitxKey_BackSpace) ||
+                   event.key().check(FcitxKey_BackSpace, KeyState::Ctrl)) {
             // Commit the last segment if it is selected.
             if (*config.commitAfterSelect && context->selected() &&
                 (std::get<bool>(
@@ -737,7 +738,22 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
                 updateUI();
                 return;
             }
-            context->backspace();
+            if (event.key().check(FcitxKey_BackSpace, KeyState::Ctrl)) {
+                // For non-commitAfterSelect, remove the whole segment, or the
+                // current code.
+                if (!*config.commitAfterSelect && context->selected()) {
+                    auto cursor = context->cursor();
+                    context_->erase(cursor - context->selectedSegmentLength(
+                                                 context->selectedSize() - 1),
+                                    cursor);
+                } else {
+                    auto cursor = context->cursor();
+                    context_->erase(
+                        cursor - utf8::length(context_->currentCode()), cursor);
+                }
+            } else {
+                context->backspace();
+            }
             event.filterAndAccept();
         } else if (event.key().isCursorMove() ||
                    event.key().check(FcitxKey_Delete)) {
