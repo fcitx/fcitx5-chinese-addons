@@ -1427,6 +1427,22 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         } else if (event.key().check(FcitxKey_Delete)) {
             state->context_.del();
             event.filterAndAccept();
+        } else if (event.key().check(FcitxKey_BackSpace, KeyState::Ctrl)) {
+            if (state->context_.cursor() == state->context_.selectedLength()) {
+                state->context_.cancel();
+            }
+            auto cursor = state->context_.pinyinBeforeCursor();
+            if (cursor >= 0) {
+                state->context_.erase(cursor, state->context_.cursor());
+            }
+            event.filterAndAccept();
+        } else if (event.key().check(FcitxKey_Delete, KeyState::Ctrl)) {
+            auto cursor = state->context_.pinyinAfterCursor();
+            if (cursor >= 0 &&
+                static_cast<size_t>(cursor) <= state->context_.size()) {
+                state->context_.erase(state->context_.cursor(), cursor);
+            }
+            event.filterAndAccept();
         } else if (event.key().check(FcitxKey_Home)) {
             state->context_.setCursor(state->context_.selectedLength());
             event.filterAndAccept();
