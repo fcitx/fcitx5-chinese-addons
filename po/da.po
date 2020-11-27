@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-11-17 00:02-0800\n"
+"POT-Creation-Date: 2020-11-28 00:02+0100\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: scootergrisen, 2020\n"
 "Language-Team: Danish (https://www.transifex.com/fcitx/teams/12005/da/)\n"
@@ -19,15 +19,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: im/pinyin/pinyin.cpp:1052
+#: im/pinyin/pinyin.cpp:1051
 msgid "\t[Stroke Filtering] "
 msgstr "\t[Trykfiltrering] "
 
-#: im/table/state.cpp:817
+#: im/table/state.cpp:833
 msgid " Return for "
 msgstr " Retur for "
 
-#: im/table/state.cpp:814
+#: im/table/state.cpp:830
 msgid " for "
 msgstr " for "
 
@@ -72,7 +72,7 @@ msgstr "&Fjern"
 msgid "ABC"
 msgstr "ABC"
 
-#: org.fcitx.fcitx5-chinese-addons.metainfo.xml.in:8
+#: org.fcitx.Fcitx5.Addon.ChineseAddons.metainfo.xml.in:8
 msgid ""
 "Add support for Pinyin, Table and many other Chinese related functionality "
 "to Fcitx"
@@ -80,7 +80,7 @@ msgstr ""
 "Tilføj understøttelse af Pinyin, tabel og mange andre kinesiskrelaterede "
 "funktionaliteter til Fcitx"
 
-#: im/table/ime.h:175
+#: im/table/ime.h:174
 msgid ""
 "After committing every character, learn the new phrase based on the input "
 "history. If certain word is seen for multiple times or selected by user "
@@ -100,17 +100,21 @@ msgstr "Er du sikker på, at du vil slette %1?"
 msgid "Are you sure to delete all dictionaries?"
 msgstr "Er du sikker på, at du vil slette alle ordbøger?"
 
-#: im/table/ime.h:170
+#: im/table/ime.h:169
 msgid "Auto phrase length"
 msgstr "Automatisk fraselængde"
 
-#: im/table/ime.h:201
+#: im/table/ime.h:200
 msgid "Auto rule set"
 msgstr "Automatisk sæt af regel"
 
 #: im/table/ime.h:128
 msgid "Auto select candidate"
 msgstr "Automatisk valg af kandidat"
+
+#: im/table/ime.h:154
+msgid "Auto select if current input has no match"
+msgstr ""
 
 #: modules/cloudpinyin/cloudpinyin.h:33
 msgid "Backend"
@@ -124,7 +128,7 @@ msgstr "Bingchan"
 msgid "Browse Sogou Cell Dict repository"
 msgstr "Gennemse Sogou Cell-ordbogsarkiv"
 
-#: im/table/ime.h:198
+#: im/table/ime.h:197
 msgid "Candidate List orientation"
 msgstr "Orientering for kandidatliste"
 
@@ -132,7 +136,7 @@ msgstr "Orientering for kandidatliste"
 msgid "Cangjie"
 msgstr "Cangjie"
 
-#: org.fcitx.fcitx5-chinese-addons.metainfo.xml.in:7
+#: org.fcitx.Fcitx5.Addon.ChineseAddons.metainfo.xml.in:7
 msgid "Chinese Addons"
 msgstr "Kinesiske tilføjelser"
 
@@ -152,15 +156,15 @@ msgstr "Skypinyin"
 msgid "Cloud Pinyin Index"
 msgstr "Skypinyin-indeks"
 
-#: im/pinyin/pinyin.cpp:893
+#: im/pinyin/pinyin.cpp:892
 msgid "Cloud Pinyin Status"
 msgstr "Status for skypinyin"
 
-#: im/pinyin/pinyin.cpp:895
+#: im/pinyin/pinyin.cpp:894
 msgid "Cloud Pinyin is disabled."
 msgstr "Skypinyin er deaktiveret."
 
-#: im/pinyin/pinyin.cpp:894
+#: im/pinyin/pinyin.cpp:893
 msgid "Cloud Pinyin is enabled."
 msgstr "Skypinyin er aktiveret."
 
@@ -220,9 +224,9 @@ msgstr ""
 msgid "Custom"
 msgstr "Tilpas"
 
-#. i18n: file: gui/pinyindictmanager/browserdialog.ui:14
-#. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
 #. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:14
+#. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
+#. i18n: file: gui/pinyindictmanager/browserdialog.ui:14
 #. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
 #: rc.cpp:3 rc.cpp:9
 #, kde-format
@@ -241,11 +245,11 @@ msgstr "Ordbøger"
 msgid "Dictionary already exists"
 msgstr "Ordbog findes allerede"
 
-#: im/table/ime.h:193
+#: im/table/ime.h:192
 msgid "Display Hint for word"
 msgstr "Vis tip for ord"
 
-#: im/table/ime.h:195
+#: im/table/ime.h:194
 msgid "Display custom hint"
 msgstr "Vis tilpasset tip"
 
@@ -305,7 +309,7 @@ msgstr "Aktivér stav"
 msgid "Enabled Input Methods"
 msgstr "Aktiverede inputmetoder"
 
-#: im/table/ime.h:166
+#: im/table/ime.h:165
 msgid "End key"
 msgstr "Slut-tast"
 
@@ -321,7 +325,7 @@ msgstr "Erbi"
 msgid "Error while deleting %1."
 msgstr "Fejl ved sletning af %1."
 
-#: im/table/ime.h:191
+#: im/table/ime.h:190
 msgid "Exact Match"
 msgstr "Præcist match"
 
@@ -426,7 +430,7 @@ msgstr "Vandret"
 msgid "Icon"
 msgstr "Ikon"
 
-#: im/table/ime.h:188
+#: im/table/ime.h:187
 msgid ""
 "If the value less than 0, means this feature is disabled. If auto phrase is "
 "enabled, selecting auto phrase candidate explicitly will still add the word "
@@ -456,16 +460,9 @@ msgstr "Input ordbogsnavn"
 msgid "Key to trigger quickphrase"
 msgstr "Tast til at udløse hurtigfrase"
 
-#: im/table/ime.h:192
+#: im/table/ime.h:191
 msgid "Learning"
 msgstr "Læring"
-
-#: im/table/ime.h:154
-msgid ""
-"Length limit of selecting the current candidate when there is no new match"
-msgstr ""
-"Grænse for længde ved valg af den nuværende kandidat når der ikke er noget "
-"nyt match"
 
 #: im/table/ime.h:132
 msgid "Length limit of selecting the only candidate"
@@ -517,7 +514,7 @@ msgstr ""
 "Ingen gennemsøgning udenfor pinyin.sogou.com, viderestiller nu til "
 "startsiden."
 
-#: im/table/engine.cpp:113
+#: im/table/engine.cpp:111
 msgid "Not available"
 msgstr "Ikke tilgængelig"
 
@@ -547,7 +544,7 @@ msgstr ""
 msgid "Page size"
 msgstr "Sidestørrelse"
 
-#: im/pinyin/pinyin.cpp:743 im/pinyin/pinyin.cpp:892
+#: im/pinyin/pinyin.cpp:743 im/pinyin/pinyin.cpp:891
 #: im/pinyin/pinyin-addon.conf.in:3 im/pinyin/pinyin.conf.in:3
 msgid "Pinyin"
 msgstr "Pinyin"
@@ -588,11 +585,11 @@ msgstr "Tryk på Delete for at flytte."
 msgid "Press space to insert."
 msgstr "Tryk på mellemrum for at indsætte."
 
-#: im/pinyin/pinyin.cpp:1302
+#: im/pinyin/pinyin.cpp:1301
 msgid "Press {} for {}"
 msgstr "Tryk på {} for {}"
 
-#: im/pinyin/pinyin.cpp:1299
+#: im/pinyin/pinyin.cpp:1298
 msgid "Press {} for {} and Return for {}"
 msgstr "Tryk på {} for {} og Retur for {}"
 
@@ -626,7 +623,7 @@ msgstr "Tegnsætning"
 msgid "Remove &All"
 msgstr "Fjern &alle"
 
-#: im/table/ime.h:183
+#: im/table/ime.h:182
 msgid "Save auto phrase after being typed for ... times"
 msgstr "Gem automatisk frase efter den er blevet skrevet ... gange"
 
@@ -654,7 +651,7 @@ msgstr "Vælg anden kandidat"
 msgid "Select Third Candidate"
 msgstr "Vælg tredje kandidat"
 
-#: im/table/state.cpp:1032
+#: im/table/state.cpp:1048
 msgid "Select candidate to be removed from history:"
 msgstr "Vælg kandidat som skal fjernes fra historik:"
 
@@ -698,6 +695,10 @@ msgstr "Forenklet kinesisk er aktiveret."
 msgid "Simplified and Traditional Chinese Translation"
 msgstr "Oversættelse af forenklet og traditionel kinesisk"
 
+#: im/table/ime.h:109
+msgid "Sort candidates based on current context"
+msgstr ""
+
 #: im/pinyin/pinyin.h:162
 msgid "Strings to trigger quick phrase"
 msgstr ""
@@ -722,8 +723,8 @@ msgstr "Midlertidig fil oprettet."
 msgid "Toggle Key"
 msgstr "Tast til at skifte"
 
-#: modules/fullwidth/fullwidth.h:19 modules/punctuation/punctuation.h:25
-#: modules/chttrans/chttrans.h:31
+#: modules/fullwidth/fullwidth.h:19 modules/chttrans/chttrans.h:31
+#: modules/punctuation/punctuation.h:25
 msgid "Toggle key"
 msgstr "Tast til at skifte"
 
@@ -750,10 +751,6 @@ msgstr "Brug venstre og højre til at vælge tekst. "
 #: im/pinyin/pinyin.h:148
 msgid "Use V to trigger quickphrase"
 msgstr "Brug V til at udløse hurtigfrase"
-
-#: im/table/ime.h:109
-msgid "Use context related sort"
-msgstr "Brug kontekstrelateret sortering"
 
 #: im/table/ime.h:80
 msgid "Use full width"
@@ -790,7 +787,7 @@ msgstr ""
 "betyder den maksimale kodelængde på tabellen. 0 betyder at opførslen "
 "deaktiveres."
 
-#: im/table/ime.h:160
+#: im/table/ime.h:159
 msgid ""
 "When typing a new character, if the current input length is greater than or "
 "equal to the limit, and the existing segment with the new character does not "
@@ -840,14 +837,14 @@ msgstr "Ziguang"
 msgid "Ziranma"
 msgstr "Ziranma"
 
-#: im/pinyin/pinyin.cpp:1104
+#: im/pinyin/pinyin.cpp:1103
 msgid "[Select the word to remove from history]"
 msgstr "[vælg det ord som skal fjernes fra historik]"
 
-#. i18n: file: gui/pinyindictmanager/browserdialog.ui:21
-#. i18n: ectx: property (url), widget (QWebEngineView, webView_)
 #. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:21
 #. i18n: ectx: property (url), widget (QWebView, webView_)
+#. i18n: file: gui/pinyindictmanager/browserdialog.ui:21
+#. i18n: ectx: property (url), widget (QWebEngineView, webView_)
 #: rc.cpp:6 rc.cpp:12
 #, kde-format
 msgid "about:blank"
