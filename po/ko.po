@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-11-17 00:02-0800\n"
+"POT-Creation-Date: 2020-11-28 00:02+0100\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: JungHee Lee <daemul72@gmail.com>, 2020\n"
 "Language-Team: Korean (https://www.transifex.com/fcitx/teams/12005/ko/)\n"
@@ -20,15 +20,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: im/pinyin/pinyin.cpp:1052
+#: im/pinyin/pinyin.cpp:1051
 msgid "\t[Stroke Filtering] "
 msgstr "\t[필획 필터링] "
 
-#: im/table/state.cpp:817
+#: im/table/state.cpp:833
 msgid " Return for "
 msgstr " Return for "
 
-#: im/table/state.cpp:814
+#: im/table/state.cpp:830
 msgid " for "
 msgstr " for "
 
@@ -73,13 +73,13 @@ msgstr "제거(&R)"
 msgid "ABC"
 msgstr "ABC"
 
-#: org.fcitx.fcitx5-chinese-addons.metainfo.xml.in:8
+#: org.fcitx.Fcitx5.Addon.ChineseAddons.metainfo.xml.in:8
 msgid ""
 "Add support for Pinyin, Table and many other Chinese related functionality "
 "to Fcitx"
 msgstr ""
 
-#: im/table/ime.h:175
+#: im/table/ime.h:174
 msgid ""
 "After committing every character, learn the new phrase based on the input "
 "history. If certain word is seen for multiple times or selected by user "
@@ -95,17 +95,21 @@ msgstr "%1을(를) 삭제하시겠습니까?"
 msgid "Are you sure to delete all dictionaries?"
 msgstr "모든 사전을 삭제하시겠습니까?"
 
-#: im/table/ime.h:170
+#: im/table/ime.h:169
 msgid "Auto phrase length"
 msgstr "자동 문구 문자 수"
 
-#: im/table/ime.h:201
+#: im/table/ime.h:200
 msgid "Auto rule set"
 msgstr "자동 규칙 모음"
 
 #: im/table/ime.h:128
 msgid "Auto select candidate"
 msgstr "자동 후보 선택"
+
+#: im/table/ime.h:154
+msgid "Auto select if current input has no match"
+msgstr ""
 
 #: modules/cloudpinyin/cloudpinyin.h:33
 msgid "Backend"
@@ -119,7 +123,7 @@ msgstr "Bingchan"
 msgid "Browse Sogou Cell Dict repository"
 msgstr "Sogou 셀 사전 저장소 찾아보기"
 
-#: im/table/ime.h:198
+#: im/table/ime.h:197
 msgid "Candidate List orientation"
 msgstr "후보 목록 방향"
 
@@ -127,7 +131,7 @@ msgstr "후보 목록 방향"
 msgid "Cangjie"
 msgstr "창힐"
 
-#: org.fcitx.fcitx5-chinese-addons.metainfo.xml.in:7
+#: org.fcitx.Fcitx5.Addon.ChineseAddons.metainfo.xml.in:7
 msgid "Chinese Addons"
 msgstr ""
 
@@ -147,15 +151,15 @@ msgstr "클라우드 병음"
 msgid "Cloud Pinyin Index"
 msgstr "클라우드 병음 일련번호"
 
-#: im/pinyin/pinyin.cpp:893
+#: im/pinyin/pinyin.cpp:892
 msgid "Cloud Pinyin Status"
 msgstr "클라우드 병음 상태"
 
-#: im/pinyin/pinyin.cpp:895
+#: im/pinyin/pinyin.cpp:894
 msgid "Cloud Pinyin is disabled."
 msgstr "클라우드 병음이 비활성화됨."
 
-#: im/pinyin/pinyin.cpp:894
+#: im/pinyin/pinyin.cpp:893
 msgid "Cloud Pinyin is enabled."
 msgstr "클라우드 병음이 활성화되었습니다."
 
@@ -209,9 +213,9 @@ msgstr "임시 파일을 만들지 못했습니다. 권한 또는 디스크 공�
 msgid "Custom"
 msgstr "사용자 지정"
 
-#. i18n: file: gui/pinyindictmanager/browserdialog.ui:14
-#. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
 #. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:14
+#. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
+#. i18n: file: gui/pinyindictmanager/browserdialog.ui:14
 #. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
 #: rc.cpp:3 rc.cpp:9
 #, kde-format
@@ -230,11 +234,11 @@ msgstr "사전"
 msgid "Dictionary already exists"
 msgstr "사전이 이미 존재합니다"
 
-#: im/table/ime.h:193
+#: im/table/ime.h:192
 msgid "Display Hint for word"
 msgstr "단어에 대한 힌트 보이기"
 
-#: im/table/ime.h:195
+#: im/table/ime.h:194
 msgid "Display custom hint"
 msgstr "사용자 지정 힌트 보이기"
 
@@ -290,7 +294,7 @@ msgstr ""
 msgid "Enabled Input Methods"
 msgstr "활성화된 입력기"
 
-#: im/table/ime.h:166
+#: im/table/ime.h:165
 msgid "End key"
 msgstr "중지  키"
 
@@ -306,7 +310,7 @@ msgstr "Erbi"
 msgid "Error while deleting %1."
 msgstr "%1을 삭제하는 중 오류 발생"
 
-#: im/table/ime.h:191
+#: im/table/ime.h:190
 msgid "Exact Match"
 msgstr "정확한 일치"
 
@@ -411,7 +415,7 @@ msgstr "가로 방향"
 msgid "Icon"
 msgstr "아이콘"
 
-#: im/table/ime.h:188
+#: im/table/ime.h:187
 msgid ""
 "If the value less than 0, means this feature is disabled. If auto phrase is "
 "enabled, selecting auto phrase candidate explicitly will still add the word "
@@ -438,14 +442,9 @@ msgstr "입력 사전 이름"
 msgid "Key to trigger quickphrase"
 msgstr "QuickPhrase 발동 키"
 
-#: im/table/ime.h:192
+#: im/table/ime.h:191
 msgid "Learning"
 msgstr "학습"
-
-#: im/table/ime.h:154
-msgid ""
-"Length limit of selecting the current candidate when there is no new match"
-msgstr ""
 
 #: im/table/ime.h:132
 msgid "Length limit of selecting the only candidate"
@@ -496,7 +495,7 @@ msgid "No browsing outside pinyin.sogou.com, now redirect to home page."
 msgstr ""
 "pinyin.sogou.com 외부에서 검색하지 않고, 이제 홈 페이지로 리디렉션됩니다."
 
-#: im/table/engine.cpp:113
+#: im/table/engine.cpp:111
 msgid "Not available"
 msgstr "사용할 수 없음"
 
@@ -523,7 +522,7 @@ msgstr ""
 msgid "Page size"
 msgstr "페이지 크기"
 
-#: im/pinyin/pinyin.cpp:743 im/pinyin/pinyin.cpp:892
+#: im/pinyin/pinyin.cpp:743 im/pinyin/pinyin.cpp:891
 #: im/pinyin/pinyin-addon.conf.in:3 im/pinyin/pinyin.conf.in:3
 msgid "Pinyin"
 msgstr "병음"
@@ -564,11 +563,11 @@ msgstr "제거하려면 Delete 키를 누르십시오"
 msgid "Press space to insert."
 msgstr "입력하기 위해 스페이스를 누르세요"
 
-#: im/pinyin/pinyin.cpp:1302
+#: im/pinyin/pinyin.cpp:1301
 msgid "Press {} for {}"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1299
+#: im/pinyin/pinyin.cpp:1298
 msgid "Press {} for {} and Return for {}"
 msgstr ""
 
@@ -601,7 +600,7 @@ msgstr "문장부호"
 msgid "Remove &All"
 msgstr "모두 제거(&A)"
 
-#: im/table/ime.h:183
+#: im/table/ime.h:182
 msgid "Save auto phrase after being typed for ... times"
 msgstr ""
 
@@ -629,7 +628,7 @@ msgstr "두 번째 후보 선택"
 msgid "Select Third Candidate"
 msgstr "세 번째 후보 선택"
 
-#: im/table/state.cpp:1032
+#: im/table/state.cpp:1048
 msgid "Select candidate to be removed from history:"
 msgstr "기록에서 제거할 후보 선택"
 
@@ -673,6 +672,10 @@ msgstr "중국어 간체가 활성화되었습니다."
 msgid "Simplified and Traditional Chinese Translation"
 msgstr "간체 / 번체 중국어 번역"
 
+#: im/table/ime.h:109
+msgid "Sort candidates based on current context"
+msgstr ""
+
 #: im/pinyin/pinyin.h:162
 msgid "Strings to trigger quick phrase"
 msgstr ""
@@ -697,8 +700,8 @@ msgstr "임시 파일 생성됨."
 msgid "Toggle Key"
 msgstr "전환 키"
 
-#: modules/fullwidth/fullwidth.h:19 modules/punctuation/punctuation.h:25
-#: modules/chttrans/chttrans.h:31
+#: modules/fullwidth/fullwidth.h:19 modules/chttrans/chttrans.h:31
+#: modules/punctuation/punctuation.h:25
 msgid "Toggle key"
 msgstr "전환 키"
 
@@ -725,10 +728,6 @@ msgstr "문장 선택을 위해 좌/우키 사용:"
 #: im/pinyin/pinyin.h:148
 msgid "Use V to trigger quickphrase"
 msgstr ""
-
-#: im/table/ime.h:109
-msgid "Use context related sort"
-msgstr "컨텍스트 관련 정렬 사용"
 
 #: im/table/ime.h:80
 msgid "Use full width"
@@ -759,7 +758,7 @@ msgid ""
 "the maximum code length of the table. 0 means this behavior is disabled."
 msgstr ""
 
-#: im/table/ime.h:160
+#: im/table/ime.h:159
 msgid ""
 "When typing a new character, if the current input length is greater than or "
 "equal to the limit, and the existing segment with the new character does not "
@@ -804,14 +803,14 @@ msgstr "Ziguang"
 msgid "Ziranma"
 msgstr "지란마"
 
-#: im/pinyin/pinyin.cpp:1104
+#: im/pinyin/pinyin.cpp:1103
 msgid "[Select the word to remove from history]"
 msgstr "[기록에서 삭제할 단어 선택]"
 
-#. i18n: file: gui/pinyindictmanager/browserdialog.ui:21
-#. i18n: ectx: property (url), widget (QWebEngineView, webView_)
 #. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:21
 #. i18n: ectx: property (url), widget (QWebView, webView_)
+#. i18n: file: gui/pinyindictmanager/browserdialog.ui:21
+#. i18n: ectx: property (url), widget (QWebEngineView, webView_)
 #: rc.cpp:6 rc.cpp:12
 #, kde-format
 msgid "about:blank"

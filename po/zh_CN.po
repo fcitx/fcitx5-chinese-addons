@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-11-18 00:12-0800\n"
+"POT-Creation-Date: 2020-11-28 00:02+0100\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: csslayer <wengxt@gmail.com>, 2020\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/fcitx/teams/12005/"
@@ -22,15 +22,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: im/pinyin/pinyin.cpp:1052
+#: im/pinyin/pinyin.cpp:1051
 msgid "\t[Stroke Filtering] "
 msgstr "\t[笔画过滤] "
 
-#: im/table/state.cpp:817
+#: im/table/state.cpp:833
 msgid " Return for "
 msgstr "回车以"
 
-#: im/table/state.cpp:814
+#: im/table/state.cpp:830
 msgid " for "
 msgstr "以"
 
@@ -75,13 +75,13 @@ msgstr "移除(&R)"
 msgid "ABC"
 msgstr "智能ABC"
 
-#: org.fcitx.fcitx5-chinese-addons.metainfo.xml.in:8
+#: org.fcitx.Fcitx5.Addon.ChineseAddons.metainfo.xml.in:8
 msgid ""
 "Add support for Pinyin, Table and many other Chinese related functionality "
 "to Fcitx"
 msgstr "增加对拼音，码表，以及其他许多中文相关的功能到 Fcitx"
 
-#: im/table/ime.h:175
+#: im/table/ime.h:174
 msgid ""
 "After committing every character, learn the new phrase based on the input "
 "history. If certain word is seen for multiple times or selected by user "
@@ -99,17 +99,21 @@ msgstr "您确定要删除 %1？"
 msgid "Are you sure to delete all dictionaries?"
 msgstr "您确定要删除所有字典吗？"
 
-#: im/table/ime.h:170
+#: im/table/ime.h:169
 msgid "Auto phrase length"
 msgstr "自动词组长度"
 
-#: im/table/ime.h:201
+#: im/table/ime.h:200
 msgid "Auto rule set"
 msgstr "自动组词使用规则"
 
 #: im/table/ime.h:128
 msgid "Auto select candidate"
 msgstr "自动选择候选词"
+
+#: im/table/ime.h:154
+msgid "Auto select if current input has no match"
+msgstr "当前输入没有匹配时自动选择"
 
 #: modules/cloudpinyin/cloudpinyin.h:33
 msgid "Backend"
@@ -123,7 +127,7 @@ msgstr "冰蟾全息"
 msgid "Browse Sogou Cell Dict repository"
 msgstr "浏览搜狗细胞词库"
 
-#: im/table/ime.h:198
+#: im/table/ime.h:197
 msgid "Candidate List orientation"
 msgstr "候选词列表方向"
 
@@ -131,7 +135,7 @@ msgstr "候选词列表方向"
 msgid "Cangjie"
 msgstr "仓颉"
 
-#: org.fcitx.fcitx5-chinese-addons.metainfo.xml.in:7
+#: org.fcitx.Fcitx5.Addon.ChineseAddons.metainfo.xml.in:7
 msgid "Chinese Addons"
 msgstr "中文附加组件"
 
@@ -151,15 +155,15 @@ msgstr "云拼音"
 msgid "Cloud Pinyin Index"
 msgstr "云拼音位置"
 
-#: im/pinyin/pinyin.cpp:893
+#: im/pinyin/pinyin.cpp:892
 msgid "Cloud Pinyin Status"
 msgstr "云拼音状态"
 
-#: im/pinyin/pinyin.cpp:895
+#: im/pinyin/pinyin.cpp:894
 msgid "Cloud Pinyin is disabled."
 msgstr "云拼音已禁用。"
 
-#: im/pinyin/pinyin.cpp:894
+#: im/pinyin/pinyin.cpp:893
 msgid "Cloud Pinyin is enabled."
 msgstr "云拼音已启用。"
 
@@ -213,9 +217,9 @@ msgstr "创建临时文件失败。请检查权限或磁盘空间。"
 msgid "Custom"
 msgstr "自定义"
 
-#. i18n: file: gui/pinyindictmanager/browserdialog.ui:14
-#. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
 #. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:14
+#. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
+#. i18n: file: gui/pinyindictmanager/browserdialog.ui:14
 #. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
 #: rc.cpp:3 rc.cpp:9
 #, kde-format
@@ -234,11 +238,11 @@ msgstr "词典"
 msgid "Dictionary already exists"
 msgstr "词典已经存在"
 
-#: im/table/ime.h:193
+#: im/table/ime.h:192
 msgid "Display Hint for word"
 msgstr "显示词的提示"
 
-#: im/table/ime.h:195
+#: im/table/ime.h:194
 msgid "Display custom hint"
 msgstr "显示自定义提示"
 
@@ -296,7 +300,7 @@ msgstr "启用拼写检查"
 msgid "Enabled Input Methods"
 msgstr "启用的输入法"
 
-#: im/table/ime.h:166
+#: im/table/ime.h:165
 msgid "End key"
 msgstr "中止键"
 
@@ -312,7 +316,7 @@ msgstr "二笔"
 msgid "Error while deleting %1."
 msgstr "删除 %1 时出错。"
 
-#: im/table/ime.h:191
+#: im/table/ime.h:190
 msgid "Exact Match"
 msgstr "精确匹配"
 
@@ -417,7 +421,7 @@ msgstr "横向"
 msgid "Icon"
 msgstr "图标"
 
-#: im/table/ime.h:188
+#: im/table/ime.h:187
 msgid ""
 "If the value less than 0, means this feature is disabled. If auto phrase is "
 "enabled, selecting auto phrase candidate explicitly will still add the word "
@@ -446,14 +450,9 @@ msgstr "输入词典名称"
 msgid "Key to trigger quickphrase"
 msgstr "快速输入的触发键"
 
-#: im/table/ime.h:192
+#: im/table/ime.h:191
 msgid "Learning"
 msgstr "学习"
-
-#: im/table/ime.h:154
-msgid ""
-"Length limit of selecting the current candidate when there is no new match"
-msgstr "选择没有新匹配时的当前候选词的长度限制"
 
 #: im/table/ime.h:132
 msgid "Length limit of selecting the only candidate"
@@ -503,7 +502,7 @@ msgstr "否"
 msgid "No browsing outside pinyin.sogou.com, now redirect to home page."
 msgstr "不允许访问 pinyin.sogou.com 之外的网页，将重定向到主页。"
 
-#: im/table/engine.cpp:113
+#: im/table/engine.cpp:111
 msgid "Not available"
 msgstr "不可用"
 
@@ -532,7 +531,7 @@ msgstr ""
 msgid "Page size"
 msgstr "页大小"
 
-#: im/pinyin/pinyin.cpp:743 im/pinyin/pinyin.cpp:892
+#: im/pinyin/pinyin.cpp:743 im/pinyin/pinyin.cpp:891
 #: im/pinyin/pinyin-addon.conf.in:3 im/pinyin/pinyin.conf.in:3
 msgid "Pinyin"
 msgstr "拼音"
@@ -573,11 +572,11 @@ msgstr "按下删除键来移除。"
 msgid "Press space to insert."
 msgstr "按下空格键来插入。"
 
-#: im/pinyin/pinyin.cpp:1302
+#: im/pinyin/pinyin.cpp:1301
 msgid "Press {} for {}"
 msgstr "按下 {} 输入 {}"
 
-#: im/pinyin/pinyin.cpp:1299
+#: im/pinyin/pinyin.cpp:1298
 msgid "Press {} for {} and Return for {}"
 msgstr "按下 {} 输入 {}，按下回车输入 {}"
 
@@ -610,7 +609,7 @@ msgstr "标点"
 msgid "Remove &All"
 msgstr "移除全部(&A)"
 
-#: im/table/ime.h:183
+#: im/table/ime.h:182
 msgid "Save auto phrase after being typed for ... times"
 msgstr "在输入...次后保存自动组词"
 
@@ -638,7 +637,7 @@ msgstr "选择第二个候选词"
 msgid "Select Third Candidate"
 msgstr "选择第三个候选词"
 
-#: im/table/state.cpp:1032
+#: im/table/state.cpp:1048
 msgid "Select candidate to be removed from history:"
 msgstr "选择要从历史中移除的候选词："
 
@@ -682,6 +681,10 @@ msgstr "简体中文已启用。"
 msgid "Simplified and Traditional Chinese Translation"
 msgstr "简繁转换"
 
+#: im/table/ime.h:109
+msgid "Sort candidates based on current context"
+msgstr "根据当前上下文排序候选词"
+
 #: im/pinyin/pinyin.h:162
 msgid "Strings to trigger quick phrase"
 msgstr "触发快速输入的字符串"
@@ -706,8 +709,8 @@ msgstr "已创建临时文件。"
 msgid "Toggle Key"
 msgstr "切换键"
 
-#: modules/fullwidth/fullwidth.h:19 modules/punctuation/punctuation.h:25
-#: modules/chttrans/chttrans.h:31
+#: modules/fullwidth/fullwidth.h:19 modules/chttrans/chttrans.h:31
+#: modules/punctuation/punctuation.h:25
 msgid "Toggle key"
 msgstr "切换键"
 
@@ -734,10 +737,6 @@ msgstr "使用左右键来选择字符。"
 #: im/pinyin/pinyin.h:148
 msgid "Use V to trigger quickphrase"
 msgstr "使用 V 来触发快速输入"
-
-#: im/table/ime.h:109
-msgid "Use context related sort"
-msgstr "使用上下文相关的排序"
 
 #: im/table/ime.h:80
 msgid "Use full width"
@@ -771,7 +770,7 @@ msgstr ""
 "当当前的输入长度大于等于限制并且只有一个候选词可用时，自动选择这个候选词。-1 "
 "表示码表的最大码长。0 表示禁用这个行为。"
 
-#: im/table/ime.h:160
+#: im/table/ime.h:159
 msgid ""
 "When typing a new character, if the current input length is greater than or "
 "equal to the limit, and the existing segment with the new character does not "
@@ -819,14 +818,14 @@ msgstr "紫光"
 msgid "Ziranma"
 msgstr "自然码"
 
-#: im/pinyin/pinyin.cpp:1104
+#: im/pinyin/pinyin.cpp:1103
 msgid "[Select the word to remove from history]"
 msgstr "[选择要从历史中移除的词]"
 
-#. i18n: file: gui/pinyindictmanager/browserdialog.ui:21
-#. i18n: ectx: property (url), widget (QWebEngineView, webView_)
 #. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:21
 #. i18n: ectx: property (url), widget (QWebView, webView_)
+#. i18n: file: gui/pinyindictmanager/browserdialog.ui:21
+#. i18n: ectx: property (url), widget (QWebEngineView, webView_)
 #: rc.cpp:6 rc.cpp:12
 #, kde-format
 msgid "about:blank"
