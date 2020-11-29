@@ -817,13 +817,14 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         if (!autoSelectCandidate()) {
             commitBuffer(true);
         }
-        std::string punc;
+        std::string punc, puncAfter;
         if (!*context->config().ignorePunc || event.key().isKeyPad()) {
-            punc = engine_->punctuation()->call<IPunctuation::pushPunctuation>(
-                entry.languageCode(), inputContext, chr);
+            std::tie(punc, puncAfter) =
+                engine_->punctuation()->call<IPunctuation::pushPunctuationV2>(
+                    entry.languageCode(), inputContext, chr);
         }
         if (event.key().check(*config.quickphrase) && engine_->quickphrase()) {
-            auto s = !punc.empty() ? punc : utf8::UCS4ToUTF8(chr);
+            auto s = !punc.empty() ? punc + puncAfter : utf8::UCS4ToUTF8(chr);
             auto alt = !punc.empty() ? utf8::UCS4ToUTF8(chr) : "";
             std::string text;
             if (!s.empty()) {
@@ -840,7 +841,13 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
 
         if (!punc.empty()) {
             event.filterAndAccept();
-            inputContext->commitString(punc);
+            inputContext->commitString(punc + puncAfter);
+            if (size_t length = utf8::lengthValidated(puncAfter);
+                length != 0 && length != utf8::INVALID_LENGTH) {
+                for (size_t i = 0; i < length; i++) {
+                    inputContext->forwardKey(Key(FcitxKey_Left));
+                }
+            }
         }
         lastIsPunc_ = true;
     } while (0);

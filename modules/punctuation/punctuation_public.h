@@ -23,5 +23,9 @@ FCITX_ADDON_DECLARE_FUNCTION(Punctuation, pushPunctuation,
                              const std::string &(const std::string &language,
                                                  InputContext *ic,
                                                  uint32_t unicode));
+FCITX_ADDON_DECLARE_FUNCTION(
+    Punctuation, pushPunctuationV2,
+    std::pair<std::string, std::string>(const std::string &language,
+                                        InputContext *ic, uint32_t unicode));
 
 #endif // _PUNCTUATION_PUNCTUATION_PUBLIC_H_
