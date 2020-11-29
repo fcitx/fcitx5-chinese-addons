@@ -362,10 +362,9 @@ Punctuation::pushPunctuationV2(const std::string &language, InputContext *ic,
     if (puncIter != state->lastPuncStack_.end()) {
         state->lastPuncStack_.erase(puncIter);
         return {result.second, emptyString};
-        ;
     }
     state->lastPuncStack_.emplace(unicode, result.first);
-    return {result.first, result.second};
+    return {result.first, emptyString};
 }
 
 const std::string &Punctuation::cancelLast(const std::string &language,
