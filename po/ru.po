@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-11-28 00:02+0100\n"
+"POT-Creation-Date: 2020-11-30 00:02+0100\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: TotalCaesar659 <x24cm5b8c54q6szxw@yandex.ru>, 2017\n"
 "Language-Team: Russian (https://www.transifex.com/fcitx/teams/12005/ru/)\n"
@@ -25,11 +25,11 @@ msgstr ""
 msgid "\t[Stroke Filtering] "
 msgstr ""
 
-#: im/table/state.cpp:833
+#: im/table/state.cpp:834
 msgid " Return for "
 msgstr " Return for "
 
-#: im/table/state.cpp:830
+#: im/table/state.cpp:831
 msgid " for "
 msgstr " for "
 
@@ -380,7 +380,7 @@ msgstr "Полноширинный символ включен."
 msgid "Full width character"
 msgstr "Полноширинный символ"
 
-#: modules/punctuation/punctuation.h:57
+#: modules/punctuation/punctuation.h:60
 msgid "Full width punctuation"
 msgstr "Полноширинная пунктуация"
 
@@ -400,7 +400,7 @@ msgstr ""
 msgid "Half width Character"
 msgstr "Полуширинный символ"
 
-#: modules/punctuation/punctuation.h:58
+#: modules/punctuation/punctuation.h:61
 msgid "Half width punctuation"
 msgstr "Полуширинная пунктуация"
 
@@ -563,11 +563,11 @@ msgstr "Нажмите Delete, чтобы удалить."
 msgid "Press space to insert."
 msgstr "Нажмите пробел, чтобы вставить."
 
-#: im/pinyin/pinyin.cpp:1301
+#: im/pinyin/pinyin.cpp:1302
 msgid "Press {} for {}"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1298
+#: im/pinyin/pinyin.cpp:1299
 msgid "Press {} for {} and Return for {}"
 msgstr ""
 
@@ -628,7 +628,7 @@ msgstr ""
 msgid "Select Third Candidate"
 msgstr ""
 
-#: im/table/state.cpp:1048
+#: im/table/state.cpp:1055
 msgid "Select candidate to be removed from history:"
 msgstr ""
 
@@ -715,6 +715,10 @@ msgstr "Традиционный китайский включен."
 
 #: modules/chttrans/chttrans.h:27
 msgid "Translate engine"
+msgstr ""
+
+#: modules/punctuation/punctuation.h:31
+msgid "Type paired punctuations together (e.g. Quote)"
 msgstr ""
 
 #: im/table/state.cpp:564
