@@ -5,14 +5,15 @@
 # Translators:
 # byStarTW (pan93412) <pan93412@gmail.com>, 2019
 # Billy Su <billy4195.su@gmail.com>, 2020
+# bruh, 2020
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-11-28 00:02+0100\n"
+"POT-Creation-Date: 2020-11-30 00:02+0100\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
-"Last-Translator: Billy Su <billy4195.su@gmail.com>, 2020\n"
+"Last-Translator: bruh, 2020\n"
 "Language-Team: Chinese (Taiwan) (https://www.transifex.com/fcitx/teams/12005/"
 "zh_TW/)\n"
 "Language: zh_TW\n"
@@ -25,11 +26,11 @@ msgstr ""
 msgid "\t[Stroke Filtering] "
 msgstr ""
 
-#: im/table/state.cpp:833
+#: im/table/state.cpp:834
 msgid " Return for "
 msgstr "按下 Enter 以"
 
-#: im/table/state.cpp:830
+#: im/table/state.cpp:831
 msgid " for "
 msgstr " 以"
 
@@ -50,11 +51,11 @@ msgstr "線上瀏覽搜狗细胞词库(&B)"
 #: rc.cpp:24
 #, kde-format
 msgid "&Clear Dict"
-msgstr "&清空字典"
+msgstr "清空字典(&C)"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:44
 msgid "&Clear User Data"
-msgstr "&清空使用者資訊"
+msgstr "清空使用者資訊(&C)"
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:22
 #. i18n: ectx: property (text), widget (QPushButton, importButton_)
@@ -380,7 +381,7 @@ msgstr ""
 msgid "Full width character"
 msgstr "全形字元"
 
-#: modules/punctuation/punctuation.h:57
+#: modules/punctuation/punctuation.h:60
 msgid "Full width punctuation"
 msgstr "全形符號"
 
@@ -400,7 +401,7 @@ msgstr ""
 msgid "Half width Character"
 msgstr ""
 
-#: modules/punctuation/punctuation.h:58
+#: modules/punctuation/punctuation.h:61
 msgid "Half width punctuation"
 msgstr ""
 
@@ -563,11 +564,11 @@ msgstr ""
 msgid "Press space to insert."
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1301
+#: im/pinyin/pinyin.cpp:1302
 msgid "Press {} for {}"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1298
+#: im/pinyin/pinyin.cpp:1299
 msgid "Press {} for {} and Return for {}"
 msgstr ""
 
@@ -628,7 +629,7 @@ msgstr ""
 msgid "Select Third Candidate"
 msgstr ""
 
-#: im/table/state.cpp:1048
+#: im/table/state.cpp:1055
 msgid "Select candidate to be removed from history:"
 msgstr ""
 
@@ -715,6 +716,10 @@ msgstr ""
 
 #: modules/chttrans/chttrans.h:27
 msgid "Translate engine"
+msgstr ""
+
+#: modules/punctuation/punctuation.h:31
+msgid "Type paired punctuations together (e.g. Quote)"
 msgstr ""
 
 #: im/table/state.cpp:564

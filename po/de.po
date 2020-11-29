@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-11-28 00:02+0100\n"
+"POT-Creation-Date: 2020-11-30 00:02+0100\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: mar well <m.wellendorf@gmx.de>, 2018\n"
 "Language-Team: German (https://www.transifex.com/fcitx/teams/12005/de/)\n"
@@ -23,11 +23,11 @@ msgstr ""
 msgid "\t[Stroke Filtering] "
 msgstr ""
 
-#: im/table/state.cpp:833
+#: im/table/state.cpp:834
 msgid " Return for "
 msgstr ""
 
-#: im/table/state.cpp:830
+#: im/table/state.cpp:831
 msgid " for "
 msgstr ""
 
@@ -382,7 +382,7 @@ msgstr "Vollbreite Zeichen sind eingeschlaltet."
 msgid "Full width character"
 msgstr "Vollbreite Zeichen"
 
-#: modules/punctuation/punctuation.h:57
+#: modules/punctuation/punctuation.h:60
 msgid "Full width punctuation"
 msgstr "Vollbreite Interpunktion"
 
@@ -402,7 +402,7 @@ msgstr ""
 msgid "Half width Character"
 msgstr "Halbbreite Zeichen"
 
-#: modules/punctuation/punctuation.h:58
+#: modules/punctuation/punctuation.h:61
 msgid "Half width punctuation"
 msgstr "Halbweite Satzzeichen werden verwendet"
 
@@ -568,11 +568,11 @@ msgstr "Zum Entfernen Löschen drücken"
 msgid "Press space to insert."
 msgstr "Zum Einfügen Leertaste drücken."
 
-#: im/pinyin/pinyin.cpp:1301
+#: im/pinyin/pinyin.cpp:1302
 msgid "Press {} for {}"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1298
+#: im/pinyin/pinyin.cpp:1299
 msgid "Press {} for {} and Return for {}"
 msgstr ""
 
@@ -633,7 +633,7 @@ msgstr ""
 msgid "Select Third Candidate"
 msgstr ""
 
-#: im/table/state.cpp:1048
+#: im/table/state.cpp:1055
 msgid "Select candidate to be removed from history:"
 msgstr ""
 
@@ -720,6 +720,10 @@ msgstr "Chinesische Langzeichen aktiviert."
 
 #: modules/chttrans/chttrans.h:27
 msgid "Translate engine"
+msgstr ""
+
+#: modules/punctuation/punctuation.h:31
+msgid "Type paired punctuations together (e.g. Quote)"
 msgstr ""
 
 #: im/table/state.cpp:564

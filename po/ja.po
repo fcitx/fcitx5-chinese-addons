@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-11-28 00:00+0100\n"
+"POT-Creation-Date: 2020-11-30 00:00+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: csslayer <wengxt@gmail.com>, 2017\n"
 "Language-Team: Japanese (https://www.transifex.com/fcitx/teams/12005/ja/)\n"
@@ -22,11 +22,11 @@ msgstr ""
 msgid "\t[Stroke Filtering] "
 msgstr ""
 
-#: im/table/state.cpp:833
+#: im/table/state.cpp:834
 msgid " Return for "
 msgstr ""
 
-#: im/table/state.cpp:830
+#: im/table/state.cpp:831
 msgid " for "
 msgstr ""
 
@@ -377,7 +377,7 @@ msgstr ""
 msgid "Full width character"
 msgstr ""
 
-#: modules/punctuation/punctuation.h:57
+#: modules/punctuation/punctuation.h:60
 msgid "Full width punctuation"
 msgstr ""
 
@@ -397,7 +397,7 @@ msgstr ""
 msgid "Half width Character"
 msgstr ""
 
-#: modules/punctuation/punctuation.h:58
+#: modules/punctuation/punctuation.h:61
 msgid "Half width punctuation"
 msgstr ""
 
@@ -560,11 +560,11 @@ msgstr ""
 msgid "Press space to insert."
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1301
+#: im/pinyin/pinyin.cpp:1302
 msgid "Press {} for {}"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1298
+#: im/pinyin/pinyin.cpp:1299
 msgid "Press {} for {} and Return for {}"
 msgstr ""
 
@@ -625,7 +625,7 @@ msgstr ""
 msgid "Select Third Candidate"
 msgstr ""
 
-#: im/table/state.cpp:1048
+#: im/table/state.cpp:1055
 msgid "Select candidate to be removed from history:"
 msgstr ""
 
@@ -712,6 +712,10 @@ msgstr ""
 
 #: modules/chttrans/chttrans.h:27
 msgid "Translate engine"
+msgstr ""
+
+#: modules/punctuation/punctuation.h:31
+msgid "Type paired punctuations together (e.g. Quote)"
 msgstr ""
 
 #: im/table/state.cpp:564
