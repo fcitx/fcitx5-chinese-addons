@@ -26,6 +26,9 @@ FCITX_CONFIGURATION(
     fcitx::Option<bool> halfWidthPuncAfterLatinOrNumber{
         this, "HalfWidthPuncAfterLetterOrNumber",
         _("Half width punctuation after latin letter or number"), true};
+    fcitx::Option<bool> typePairedPunctuationTogether{
+        this, "TypePairedPunctuationsTogether",
+        _("Type paired punctuations together (e.g. Quote)"), false};
     fcitx::HiddenOption<bool> enabled{this, "Enabled", "Enabled", true};);
 
 class PunctuationProfile {
@@ -79,6 +82,9 @@ public:
     const std::string &pushPunctuation(const std::string &language,
                                        fcitx::InputContext *ic,
                                        uint32_t unicode);
+    std::pair<std::string, std::string>
+    pushPunctuationV2(const std::string &language, fcitx::InputContext *ic,
+                      uint32_t unicode);
     const std::string &cancelLast(const std::string &language,
                                   fcitx::InputContext *ic);
 
@@ -96,6 +102,7 @@ public:
 
     FCITX_ADDON_EXPORT_FUNCTION(Punctuation, getPunctuation);
     FCITX_ADDON_EXPORT_FUNCTION(Punctuation, pushPunctuation);
+    FCITX_ADDON_EXPORT_FUNCTION(Punctuation, pushPunctuationV2);
     FCITX_ADDON_EXPORT_FUNCTION(Punctuation, cancelLast);
 
     bool enabled() const { return *config_.enabled; }

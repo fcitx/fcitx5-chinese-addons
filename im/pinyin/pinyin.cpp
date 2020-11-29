@@ -1277,16 +1277,17 @@ bool PinyinEngine::handlePunc(KeyEvent &event) {
         candidateList->candidate(0).select(inputContext);
     }
 
-    std::string punc;
+    std::string punc, puncAfter;
     // skip key pad
     if (c && !event.key().isKeyPad()) {
-        punc = punctuation()->call<IPunctuation::pushPunctuation>(
-            "zh_CN", inputContext, c);
+        std::tie(punc, puncAfter) =
+            punctuation()->call<IPunctuation::pushPunctuationV2>(
+                "zh_CN", inputContext, c);
     }
     if (event.key().check(*config_.quickphraseKey) && quickphrase()) {
         auto keyString = utf8::UCS4ToUTF8(c);
         // s is punc or key
-        auto output = !punc.empty() ? punc : keyString;
+        auto output = !punc.empty() ? (punc + puncAfter) : keyString;
         // alt is key or empty
         auto altOutput = !punc.empty() ? keyString : "";
         // if no punc: key -> key (s = key, alt = empty)
@@ -1308,7 +1309,13 @@ bool PinyinEngine::handlePunc(KeyEvent &event) {
     }
     if (!punc.empty()) {
         event.filterAndAccept();
-        inputContext->commitString(punc);
+        inputContext->commitString(punc + puncAfter);
+        if (size_t length = utf8::lengthValidated(puncAfter);
+            length != 0 && length != utf8::INVALID_LENGTH) {
+            for (size_t i = 0; i < length; i++) {
+                inputContext->forwardKey(Key(FcitxKey_Left));
+            }
+        }
     }
     state->lastIsPunc_ = true;
     return false;

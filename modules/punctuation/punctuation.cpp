@@ -332,6 +332,42 @@ const std::string &Punctuation::pushPunctuation(const std::string &language,
     return result.first;
 }
 
+std::pair<std::string, std::string>
+Punctuation::pushPunctuationV2(const std::string &language, InputContext *ic,
+                               uint32_t unicode) {
+    if (!enabled()) {
+        return {emptyString, emptyString};
+    }
+    auto *state = ic->propertyFor(&factory_);
+    if (state->lastIsEngOrDigit_ && *config_.halfWidthPuncAfterLatinOrNumber &&
+        dontConvertWhenEn(unicode)) {
+        state->notConverted_ = unicode;
+        return {emptyString, emptyString};
+    }
+    auto iter = profiles_.find(language);
+    if (iter == profiles_.end()) {
+        return {emptyString, emptyString};
+    }
+    const auto &result = getPunctuation(language, unicode);
+    state->notConverted_ = 0;
+    if (result.second.empty()) {
+        return {result.first, emptyString};
+    }
+
+    if (*config_.typePairedPunctuationTogether) {
+        return {result.first, result.second};
+    }
+
+    auto puncIter = state->lastPuncStack_.find(unicode);
+    if (puncIter != state->lastPuncStack_.end()) {
+        state->lastPuncStack_.erase(puncIter);
+        return {result.second, emptyString};
+        ;
+    }
+    state->lastPuncStack_.emplace(unicode, result.first);
+    return {result.first, result.second};
+}
+
 const std::string &Punctuation::cancelLast(const std::string &language,
                                            InputContext *ic) {
     if (!enabled()) {
