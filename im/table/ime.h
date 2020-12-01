@@ -24,8 +24,17 @@ FCITX_CONFIG_ENUM_NAME(CandidateLayoutHint, "Not set", "Vertical",
 FCITX_CONFIG_ENUM_I18N_ANNOTATION(CandidateLayoutHint, N_("Not set"),
                                   N_("Vertical"), N_("Horizontal"));
 
+struct NoSaveAnnotation {
+    bool skipDescription() { return true; }
+    bool skipSave() { return true; }
+    void dumpDescription(RawConfig &) const {}
+};
+
+template <typename T>
+using NoSaveOption = OptionWithAnnotation<T, NoSaveAnnotation>;
+
 FCITX_CONFIGURATION(
-    TableConfig, HiddenOption<std::string> file{this, "File", _("File")};
+    TableConfig, NoSaveOption<std::string> file{this, "File", _("File")};
     KeyListOption prevPage{
         this,
         "PrevPage",
@@ -64,7 +73,7 @@ FCITX_CONFIGURATION(
         {},
         KeyListConstrain({KeyConstrainFlag::AllowModifierLess,
                           KeyConstrainFlag::AllowModifierOnly})};
-    HiddenOption<KeyList> selection{
+    NoSaveOption<KeyList> selection{
         this,
         "Selection",
         _("Selection"),
@@ -89,7 +98,7 @@ FCITX_CONFIGURATION(
         _("Key to trigger quickphrase"),
         Key{},
         {KeyConstrainFlag::AllowModifierLess}};
-    HiddenOption<std::string> icon{this, "Icon", _("Icon")};
+    NoSaveOption<std::string> icon{this, "Icon", _("Icon")};
     Option<int> noSortInputLength{this, "NoSortInputLength",
                                   _("Don't sort word shorter than")};
     Option<OrderPolicy> orderPolicy{this, "OrderPolicy", _("Order policy")};
@@ -162,7 +171,7 @@ FCITX_CONFIGURATION(
               "table, select the current candidate and then type in the new "
               "character. -1 means the maximum code length of the table. 0 "
               "means this behavior is disabled."))};
-    HiddenOption<KeyList> endKey{this, "EndKey", _("End key")};
+    NoSaveOption<KeyList> endKey{this, "EndKey", _("End key")};
     OptionWithAnnotation<int, ToolTipAnnotation> autoPhraseLength{
         this,
         "AutoPhraseLength",
@@ -196,17 +205,11 @@ FCITX_CONFIGURATION(
         candidateLayoutHint{this, "CandidateLayoutHint",
                             _("Candidate List orientation"),
                             CandidateLayoutHint::NotSet};
-    HiddenOption<std::vector<std::string>> autoRuleSet{this, "AutoRuleSet",
+    NoSaveOption<std::vector<std::string>> autoRuleSet{this, "AutoRuleSet",
                                                        _("Auto rule set")};);
 
 FCITX_CONFIGURATION(PartialIMInfo, HiddenOption<std::string> languageCode{
                                        this, "LangCode", "Language Code"};);
-
-struct NoSaveAnnotation {
-    bool skipDescription() const { return true; }
-    bool skipSave() const { return true; }
-    void dumpDescription(RawConfig &) const {}
-};
 
 FCITX_CONFIGURATION(TableConfigRoot,
                     Option<TableConfig> config{this, "Table", "Table"};
