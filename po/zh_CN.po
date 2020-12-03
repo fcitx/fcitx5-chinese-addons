@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-11-30 00:02+0100\n"
+"POT-Creation-Date: 2020-12-04 00:02+0100\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: csslayer <wengxt@gmail.com>, 2020\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/fcitx/teams/12005/"
@@ -81,7 +81,7 @@ msgid ""
 "to Fcitx"
 msgstr "增加对拼音，码表，以及其他许多中文相关的功能到 Fcitx"
 
-#: im/table/ime.h:174
+#: im/table/ime.h:183
 msgid ""
 "After committing every character, learn the new phrase based on the input "
 "history. If certain word is seen for multiple times or selected by user "
@@ -99,19 +99,19 @@ msgstr "您确定要删除 %1？"
 msgid "Are you sure to delete all dictionaries?"
 msgstr "您确定要删除所有字典吗？"
 
-#: im/table/ime.h:169
+#: im/table/ime.h:178
 msgid "Auto phrase length"
 msgstr "自动词组长度"
 
-#: im/table/ime.h:200
+#: im/table/ime.h:209
 msgid "Auto rule set"
 msgstr "自动组词使用规则"
 
-#: im/table/ime.h:128
+#: im/table/ime.h:137
 msgid "Auto select candidate"
 msgstr "自动选择候选词"
 
-#: im/table/ime.h:154
+#: im/table/ime.h:163
 msgid "Auto select if current input has no match"
 msgstr "当前输入没有匹配时自动选择"
 
@@ -127,7 +127,7 @@ msgstr "冰蟾全息"
 msgid "Browse Sogou Cell Dict repository"
 msgstr "浏览搜狗细胞词库"
 
-#: im/table/ime.h:197
+#: im/table/ime.h:206
 msgid "Candidate List orientation"
 msgstr "候选词列表方向"
 
@@ -167,15 +167,15 @@ msgstr "云拼音已禁用。"
 msgid "Cloud Pinyin is enabled."
 msgstr "云拼音已启用。"
 
-#: im/table/ime.h:144
+#: im/table/ime.h:153
 msgid "Commit Invalid Segment"
 msgstr "提交无效分段"
 
-#: im/table/ime.h:78
+#: im/table/ime.h:87
 msgid "Commit after auto select candidates"
 msgstr "自动选择候选词之后提交"
 
-#: im/table/ime.h:149
+#: im/table/ime.h:158
 msgid ""
 "Commit the segment that does not exist in the table. This option is useful "
 "for some latin/compose based table."
@@ -238,11 +238,11 @@ msgstr "词典"
 msgid "Dictionary already exists"
 msgstr "词典已经存在"
 
-#: im/table/ime.h:192
+#: im/table/ime.h:201
 msgid "Display Hint for word"
 msgstr "显示词的提示"
 
-#: im/table/ime.h:194
+#: im/table/ime.h:203
 msgid "Display custom hint"
 msgstr "显示自定义提示"
 
@@ -260,7 +260,7 @@ msgid ""
 "toggle it later in configuration."
 msgstr "您想要启用云拼音以获得更好的预测吗？您也可以稍后在配置中更改设置。"
 
-#: im/table/ime.h:94
+#: im/table/ime.h:103
 msgid "Don't sort word shorter than"
 msgstr "不对短于...的词排序"
 
@@ -300,7 +300,7 @@ msgstr "启用拼写检查"
 msgid "Enabled Input Methods"
 msgstr "启用的输入法"
 
-#: im/table/ime.h:165
+#: im/table/ime.h:174
 msgid "End key"
 msgstr "中止键"
 
@@ -316,7 +316,7 @@ msgstr "二笔"
 msgid "Error while deleting %1."
 msgstr "删除 %1 时出错。"
 
-#: im/table/ime.h:190
+#: im/table/ime.h:199
 msgid "Exact Match"
 msgstr "精确匹配"
 
@@ -341,7 +341,7 @@ msgstr "创建临时文件失败"
 msgid "Failed to get runtime directory"
 msgstr "获取 runtime 目录失败"
 
-#: im/table/ime.h:28
+#: im/table/ime.h:37
 msgid "File"
 msgstr "文件"
 
@@ -353,7 +353,7 @@ msgstr "文件操作失败"
 msgid "Filter by stroke"
 msgstr "按笔画过滤"
 
-#: im/table/ime.h:84
+#: im/table/ime.h:93
 msgid "First candidate as Preedit"
 msgstr "将第一个候选词作为预编辑文本"
 
@@ -417,11 +417,11 @@ msgstr "字母或者数字之后输入半角标点"
 msgid "Horizontal"
 msgstr "横向"
 
-#: im/table/ime.h:92
+#: im/table/ime.h:101
 msgid "Icon"
 msgstr "图标"
 
-#: im/table/ime.h:187
+#: im/table/ime.h:196
 msgid ""
 "If the value less than 0, means this feature is disabled. If auto phrase is "
 "enabled, selecting auto phrase candidate explicitly will still add the word "
@@ -430,7 +430,7 @@ msgstr ""
 "如果小于 0，表示禁用这个功能。如果自动组词启用，选中自动组词仍会将其添加为新"
 "用户组词。"
 
-#: im/table/ime.h:82
+#: im/table/ime.h:91
 msgid "Ignore built in punctuation"
 msgstr "忽略内置标点"
 
@@ -446,15 +446,15 @@ msgstr "短拼音的内模糊音节 (qie -> qi'e)"
 msgid "Input Dictionary Name"
 msgstr "输入词典名称"
 
-#: im/table/ime.h:89 im/pinyin/pinyin.h:144
+#: im/table/ime.h:98 im/pinyin/pinyin.h:144
 msgid "Key to trigger quickphrase"
 msgstr "快速输入的触发键"
 
-#: im/table/ime.h:191
+#: im/table/ime.h:200
 msgid "Learning"
 msgstr "学习"
 
-#: im/table/ime.h:132
+#: im/table/ime.h:141
 msgid "Length limit of selecting the only candidate"
 msgstr "选择唯一候选词的长度限制"
 
@@ -482,7 +482,7 @@ msgstr "修改词典"
 msgid "New Dictionary Name:"
 msgstr "新词典名称："
 
-#: im/table/ime.h:50 im/pinyin/pinyin.h:112
+#: im/table/ime.h:59 im/pinyin/pinyin.h:112
 msgid "Next Candidate"
 msgstr "下一个候选词"
 
@@ -490,7 +490,7 @@ msgstr "下一个候选词"
 msgid "Next Page"
 msgstr "下一页"
 
-#: im/table/ime.h:38
+#: im/table/ime.h:47
 msgid "Next page"
 msgstr "下一页"
 
@@ -514,11 +514,11 @@ msgstr "未设置"
 msgid "Number of Sentence"
 msgstr "句子数量"
 
-#: im/table/ime.h:95
+#: im/table/ime.h:104
 msgid "Order policy"
 msgstr "排序规则"
 
-#: im/table/ime.h:114
+#: im/table/ime.h:123
 msgid ""
 "Order the candidate based on the word you already typed. You may want to "
 "disable this option if you want the candidate order to be stable regardless "
@@ -527,7 +527,7 @@ msgstr ""
 "根据已经输入的内容对候选词进行排序。如果想要候选词顺序与输入历史无关，则需要"
 "禁用这个选项。"
 
-#: im/table/ime.h:74 im/pinyin/pinyin.h:67
+#: im/table/ime.h:83 im/pinyin/pinyin.h:67
 msgid "Page size"
 msgstr "页大小"
 
@@ -556,7 +556,7 @@ msgstr "预测"
 msgid "Prediction Size"
 msgstr "预测个数"
 
-#: im/table/ime.h:125
+#: im/table/ime.h:134
 msgid "Prefix key to trigger Pinyin"
 msgstr "触发拼音的前缀键"
 
@@ -580,7 +580,7 @@ msgstr "按下 {} 输入 {}"
 msgid "Press {} for {} and Return for {}"
 msgstr "按下 {} 输入 {}，按下回车输入 {}"
 
-#: im/table/ime.h:44 im/pinyin/pinyin.h:106
+#: im/table/ime.h:53 im/pinyin/pinyin.h:106
 msgid "Prev Candidate"
 msgstr "上一个候选词"
 
@@ -588,7 +588,7 @@ msgstr "上一个候选词"
 msgid "Prev Page"
 msgstr "上一页"
 
-#: im/table/ime.h:32
+#: im/table/ime.h:41
 msgid "Prev page"
 msgstr "上一页"
 
@@ -609,7 +609,7 @@ msgstr "标点"
 msgid "Remove &All"
 msgstr "移除全部(&A)"
 
-#: im/table/ime.h:182
+#: im/table/ime.h:191
 msgid "Save auto phrase after being typed for ... times"
 msgstr "在输入...次后保存自动组词"
 
@@ -629,11 +629,11 @@ msgstr "选择第 3 个候选词"
 msgid "Select Dictionary File"
 msgstr "选择词典文件"
 
-#: im/table/ime.h:56
+#: im/table/ime.h:65
 msgid "Select Second Candidate"
 msgstr "选择第二个候选词"
 
-#: im/table/ime.h:63
+#: im/table/ime.h:72
 msgid "Select Third Candidate"
 msgstr "选择第三个候选词"
 
@@ -645,7 +645,7 @@ msgstr "选择要从历史中移除的候选词："
 msgid "Select scel file"
 msgstr "选择 scel 文件"
 
-#: im/table/ime.h:70
+#: im/table/ime.h:79
 msgid "Selection"
 msgstr "选择"
 
@@ -681,7 +681,7 @@ msgstr "简体中文已启用。"
 msgid "Simplified and Traditional Chinese Translation"
 msgstr "简繁转换"
 
-#: im/table/ime.h:109
+#: im/table/ime.h:118
 msgid "Sort candidates based on current context"
 msgstr "根据当前上下文排序候选词"
 
@@ -728,7 +728,7 @@ msgstr "转换引擎"
 
 #: modules/punctuation/punctuation.h:31
 msgid "Type paired punctuations together (e.g. Quote)"
-msgstr ""
+msgstr "同时输入成对标点 (例如引号)"
 
 #: im/table/state.cpp:564
 msgid "Use Left and Right to select character: "
@@ -742,11 +742,11 @@ msgstr "使用左右键来选择字符。"
 msgid "Use V to trigger quickphrase"
 msgstr "使用 V 来触发快速输入"
 
-#: im/table/ime.h:80
+#: im/table/ime.h:89
 msgid "Use full width"
 msgstr "使用全角字符"
 
-#: im/table/ime.h:99
+#: im/table/ime.h:108
 msgid "Use system language model"
 msgstr "使用系统语言模型"
 
@@ -758,14 +758,14 @@ msgstr "纵向"
 msgid "Wanfeng"
 msgstr "晚风"
 
-#: im/table/ime.h:103
+#: im/table/ime.h:112
 msgid ""
 "When available, system language model will be loaded for given language and "
 "provide ability to give better context based order."
 msgstr ""
 "当系统语言模型可用时，将会根据对应语言加载并提供更好的基于上下文的排序。"
 
-#: im/table/ime.h:137
+#: im/table/ime.h:146
 msgid ""
 "When current input length is greater than or equal to the limit and there is "
 "only one candidate available, automatically select this candidate. -1 Means "
@@ -774,7 +774,7 @@ msgstr ""
 "当当前的输入长度大于等于限制并且只有一个候选词可用时，自动选择这个候选词。-1 "
 "表示码表的最大码长。0 表示禁用这个行为。"
 
-#: im/table/ime.h:159
+#: im/table/ime.h:168
 msgid ""
 "When typing a new character, if the current input length is greater than or "
 "equal to the limit, and the existing segment with the new character does not "
@@ -786,7 +786,7 @@ msgstr ""
 "新字符在码表中没有匹配，将选择当前候选词再输入这个新字符。-1 表示码表的最大码"
 "长。0 表示禁用这个行为。"
 
-#: im/table/ime.h:120
+#: im/table/ime.h:129
 msgid "Wildcard matching Key"
 msgstr "模糊键"
 
