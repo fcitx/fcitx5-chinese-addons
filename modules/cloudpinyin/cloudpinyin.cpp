@@ -136,8 +136,15 @@ void CloudPinyin::request(const std::string &pinyin,
             return;
         }
         auto *b = iter->second.get();
-        if (!thread_->addRequest([b, &pinyin, &callback](CurlQueue *queue) {
+        if (!thread_->addRequest([proxy = *config_.proxy, b, &pinyin,
+                                  &callback](CurlQueue *queue) {
                 b->prepareRequest(queue, pinyin);
+                if (proxy.empty()) {
+                    curl_easy_setopt(queue->curl(), CURLOPT_PROXY, nullptr);
+                } else {
+                    curl_easy_setopt(queue->curl(), CURLOPT_PROXY,
+                                     proxy.data());
+                }
                 queue->setPinyin(pinyin);
                 queue->setBusy();
                 queue->setCallback(callback);

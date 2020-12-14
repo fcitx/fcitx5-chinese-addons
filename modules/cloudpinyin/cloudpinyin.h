@@ -31,7 +31,8 @@ FCITX_CONFIGURATION(
     fcitx::Option<int> minimumLength{this, "MinimumPinyinLength",
                                      _("Minimum Pinyin Length"), 4};
     fcitx::Option<CloudPinyinBackend> backend{this, "Backend", _("Backend"),
-                                              CloudPinyinBackend::GoogleCN};);
+                                              CloudPinyinBackend::GoogleCN};
+    fcitx::Option<std::string> proxy{this, "Proxy", _("Proxy"), ""};);
 
 class Backend {
 public:
