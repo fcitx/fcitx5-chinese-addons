@@ -32,7 +32,16 @@ FCITX_CONFIGURATION(
                                      _("Minimum Pinyin Length"), 4};
     fcitx::Option<CloudPinyinBackend> backend{this, "Backend", _("Backend"),
                                               CloudPinyinBackend::GoogleCN};
-    fcitx::Option<std::string> proxy{this, "Proxy", _("Proxy"), ""};);
+    fcitx::OptionWithAnnotation<std::string, fcitx::ToolTipAnnotation> proxy{
+        this,
+        "Proxy",
+        _("Proxy"),
+        "",
+        {},
+        {},
+        {_("The proxy format must be the one that is supported by cURL. "
+           "Usually it is in the format of [scheme]://[host]:[port], e.g. "
+           "http://localhost:1080.")}};);
 
 class Backend {
 public:
