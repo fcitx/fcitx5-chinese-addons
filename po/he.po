@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-12-10 01:10+0000\n"
+"POT-Creation-Date: 2020-12-15 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Omer I.S. <omeritzicschwartz@gmail.com>, 2020\n"
 "Language-Team: Hebrew (https://www.transifex.com/fcitx/teams/12005/he/)\n"
@@ -586,6 +586,10 @@ msgstr ""
 msgid "Prompt long word length when input length over (0 for disable)"
 msgstr ""
 
+#: modules/cloudpinyin/cloudpinyin.h:38
+msgid "Proxy"
+msgstr ""
+
 #: modules/punctuation/punctuation.cpp:148
 #: modules/punctuation/punctuation.cpp:150
 #: modules/punctuation/punctuation.conf.in:3
@@ -693,6 +697,12 @@ msgstr ""
 
 #: gui/pinyindictmanager/filedownloader.cpp:26
 msgid "Temporary file created."
+msgstr ""
+
+#: modules/cloudpinyin/cloudpinyin.h:42
+msgid ""
+"The proxy format must be the one that is supported by cURL. Usually it is in "
+"the format of [scheme]://[host]:[port], e.g. http://localhost:1080."
 msgstr ""
 
 #: modules/cloudpinyin/cloudpinyin.h:29
