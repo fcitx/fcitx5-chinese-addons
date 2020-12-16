@@ -10,6 +10,7 @@ Configurable=True
 File=@LIBIME_INSTALL_PKGDATADIR@/erbi.main.dict
 AutoSelect=True
 AutoSelectLength=-1
+AutoSelectRegex=[uv].
 NoMatchAutoSelectLength=0
 Hint=False
 OrderPolicy=Freq
