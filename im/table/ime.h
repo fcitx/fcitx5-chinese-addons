@@ -170,7 +170,7 @@ FCITX_CONFIGURATION(
     OptionWithAnnotation<int, ToolTipAnnotation> noMatchAutoSelectLength{
         this,
         "NoMatchAutoSelectLength",
-        _("Auto select if current input has no match"),
+        _("Auto select when no match is found"),
         0,
         {},
         {},
@@ -184,8 +184,7 @@ FCITX_CONFIGURATION(
     OptionWithAnnotation<std::string, ToolTipAnnotation> noMatchAutoSelectRegex{
         this,
         "NoMatchAutoSelectRegex",
-        _("Auto select if new input has no match and existing input matches "
-          "regular expression"),
+        _("Regular expression for auto select when no match is found"),
         "",
         {},
         {},
