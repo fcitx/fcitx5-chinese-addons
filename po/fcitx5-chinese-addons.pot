@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-12-15 20:24+0000\n"
+"POT-Creation-Date: 2020-12-16 20:24+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -74,7 +74,7 @@ msgid ""
 "to Fcitx"
 msgstr ""
 
-#: im/table/ime.h:183
+#: im/table/ime.h:206
 msgid ""
 "After committing every character, learn the new phrase based on the input "
 "history. If certain word is seen for multiple times or selected by user "
@@ -90,20 +90,20 @@ msgstr ""
 msgid "Are you sure to delete all dictionaries?"
 msgstr ""
 
-#: im/table/ime.h:178
+#: im/table/ime.h:201
 msgid "Auto phrase length"
 msgstr ""
 
-#: im/table/ime.h:209
+#: im/table/ime.h:232
 msgid "Auto rule set"
 msgstr ""
 
-#: im/table/ime.h:137
+#: im/table/ime.h:147
 msgid "Auto select candidate"
 msgstr ""
 
-#: im/table/ime.h:163
-msgid "Auto select if current input has no match"
+#: im/table/ime.h:173
+msgid "Auto select when no match is found"
 msgstr ""
 
 #: modules/cloudpinyin/cloudpinyin.h:33
@@ -118,7 +118,7 @@ msgstr ""
 msgid "Browse Sogou Cell Dict repository"
 msgstr ""
 
-#: im/table/ime.h:206
+#: im/table/ime.h:229
 msgid "Candidate List orientation"
 msgstr ""
 
@@ -158,7 +158,7 @@ msgstr ""
 msgid "Cloud Pinyin is enabled."
 msgstr ""
 
-#: im/table/ime.h:153
+#: im/table/ime.h:92
 msgid "Commit Invalid Segment"
 msgstr ""
 
@@ -166,7 +166,7 @@ msgstr ""
 msgid "Commit after auto select candidates"
 msgstr ""
 
-#: im/table/ime.h:158
+#: im/table/ime.h:97
 msgid ""
 "Commit the segment that does not exist in the table. This option is useful "
 "for some latin/compose based table."
@@ -229,11 +229,11 @@ msgstr ""
 msgid "Dictionary already exists"
 msgstr ""
 
-#: im/table/ime.h:201
+#: im/table/ime.h:224
 msgid "Display Hint for word"
 msgstr ""
 
-#: im/table/ime.h:203
+#: im/table/ime.h:226
 msgid "Display custom hint"
 msgstr ""
 
@@ -249,7 +249,7 @@ msgid ""
 "toggle it later in configuration."
 msgstr ""
 
-#: im/table/ime.h:103
+#: im/table/ime.h:113
 msgid "Don't sort word shorter than"
 msgstr ""
 
@@ -289,7 +289,7 @@ msgstr ""
 msgid "Enabled Input Methods"
 msgstr ""
 
-#: im/table/ime.h:174
+#: im/table/ime.h:197
 msgid "End key"
 msgstr ""
 
@@ -305,7 +305,7 @@ msgstr ""
 msgid "Error while deleting %1."
 msgstr ""
 
-#: im/table/ime.h:199
+#: im/table/ime.h:222
 msgid "Exact Match"
 msgstr ""
 
@@ -342,7 +342,7 @@ msgstr ""
 msgid "Filter by stroke"
 msgstr ""
 
-#: im/table/ime.h:93
+#: im/table/ime.h:103
 msgid "First candidate as Preedit"
 msgstr ""
 
@@ -406,18 +406,18 @@ msgstr ""
 msgid "Horizontal"
 msgstr ""
 
-#: im/table/ime.h:101
+#: im/table/ime.h:111
 msgid "Icon"
 msgstr ""
 
-#: im/table/ime.h:196
+#: im/table/ime.h:219
 msgid ""
 "If the value less than 0, means this feature is disabled. If auto phrase is "
 "enabled, selecting auto phrase candidate explicitly will still add the word "
 "as a new user phrase."
 msgstr ""
 
-#: im/table/ime.h:91
+#: im/table/ime.h:101
 msgid "Ignore built in punctuation"
 msgstr ""
 
@@ -433,15 +433,15 @@ msgstr ""
 msgid "Input Dictionary Name"
 msgstr ""
 
-#: im/table/ime.h:98 im/pinyin/pinyin.h:144
+#: im/table/ime.h:108 im/pinyin/pinyin.h:144
 msgid "Key to trigger quickphrase"
 msgstr ""
 
-#: im/table/ime.h:200
+#: im/table/ime.h:223
 msgid "Learning"
 msgstr ""
 
-#: im/table/ime.h:141
+#: im/table/ime.h:151
 msgid "Length limit of selecting the only candidate"
 msgstr ""
 
@@ -501,11 +501,11 @@ msgstr ""
 msgid "Number of Sentence"
 msgstr ""
 
-#: im/table/ime.h:104
+#: im/table/ime.h:114
 msgid "Order policy"
 msgstr ""
 
-#: im/table/ime.h:123
+#: im/table/ime.h:133
 msgid ""
 "Order the candidate based on the word you already typed. You may want to "
 "disable this option if you want the candidate order to be stable regardless "
@@ -541,7 +541,7 @@ msgstr ""
 msgid "Prediction Size"
 msgstr ""
 
-#: im/table/ime.h:134
+#: im/table/ime.h:144
 msgid "Prefix key to trigger Pinyin"
 msgstr ""
 
@@ -591,6 +591,14 @@ msgstr ""
 msgid "Punctuation"
 msgstr ""
 
+#: im/table/ime.h:187
+msgid "Regular expression for auto select when no match is found"
+msgstr ""
+
+#: im/table/ime.h:163
+msgid "Regular expression for selecting the only candidate"
+msgstr ""
+
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:44
 #. i18n: ectx: property (text), widget (QPushButton, removeAllButton_)
 #: rc.cpp:21
@@ -598,7 +606,7 @@ msgstr ""
 msgid "Remove &All"
 msgstr ""
 
-#: im/table/ime.h:191
+#: im/table/ime.h:214
 msgid "Save auto phrase after being typed for ... times"
 msgstr ""
 
@@ -670,7 +678,7 @@ msgstr ""
 msgid "Simplified and Traditional Chinese Translation"
 msgstr ""
 
-#: im/table/ime.h:118
+#: im/table/ime.h:128
 msgid "Sort candidates based on current context"
 msgstr ""
 
@@ -737,11 +745,11 @@ msgstr ""
 msgid "Use V to trigger quickphrase"
 msgstr ""
 
-#: im/table/ime.h:89
+#: im/table/ime.h:99
 msgid "Use full width"
 msgstr ""
 
-#: im/table/ime.h:108
+#: im/table/ime.h:118
 msgid "Use system language model"
 msgstr ""
 
@@ -753,20 +761,26 @@ msgstr ""
 msgid "Wanfeng"
 msgstr ""
 
-#: im/table/ime.h:112
+#: im/table/ime.h:122
 msgid ""
 "When available, system language model will be loaded for given language and "
 "provide ability to give better context based order."
 msgstr ""
 
-#: im/table/ime.h:146
+#: im/table/ime.h:156
 msgid ""
 "When current input length is greater than or equal to the limit and there is "
 "only one candidate available, automatically select this candidate. -1 Means "
 "the maximum code length of the table. 0 means this behavior is disabled."
 msgstr ""
 
-#: im/table/ime.h:168
+#: im/table/ime.h:167
+msgid ""
+"When current input matches the regular expression and there is only one "
+"candidate available, automatically select this candidate."
+msgstr ""
+
+#: im/table/ime.h:178
 msgid ""
 "When typing a new character, if the current input length is greater than or "
 "equal to the limit, and the existing segment with the new character does not "
@@ -775,7 +789,15 @@ msgid ""
 "means this behavior is disabled."
 msgstr ""
 
-#: im/table/ime.h:129
+#: im/table/ime.h:192
+msgid ""
+"When typing a new character, if the current input matches the regular "
+"expression and the existing segment with the new character does not have any "
+"matched entries in the table, select the current candidate and then type in "
+"the new character."
+msgstr ""
+
+#: im/table/ime.h:139
 msgid "Wildcard matching Key"
 msgstr ""
 
