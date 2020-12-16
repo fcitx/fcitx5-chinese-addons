@@ -86,6 +86,16 @@ FCITX_CONFIGURATION(
     Option<bool> commitAfterSelect{this, "CommitAfterSelect",
                                    _("Commit after auto select candidates"),
                                    true};
+    OptionWithAnnotation<bool, ToolTipAnnotation> commitInvalidSegment{
+        this,
+        "CommitInvalidSegment",
+        _("Commit Invalid Segment"),
+        false,
+        {},
+        {},
+        ToolTipAnnotation(
+            _("Commit the segment that does not exist in the table. This "
+              "option is useful for some latin/compose based table."))};
     Option<bool> useFullWidth{this, "UseFullWidth", _("Use full width"), true};
     Option<bool> ignorePunc{this, "IgnorePunc",
                             _("Ignore built in punctuation"), false};
@@ -147,16 +157,16 @@ FCITX_CONFIGURATION(
               "and there is only one candidate available, automatically select "
               "this candidate. -1 Means the maximum code length of the table. "
               "0 means this behavior is disabled."))};
-    OptionWithAnnotation<bool, ToolTipAnnotation> commitInvalidSegment{
+    OptionWithAnnotation<std::string, ToolTipAnnotation> autoSelectRegex{
         this,
-        "CommitInvalidSegment",
-        _("Commit Invalid Segment"),
-        false,
+        "AutoSelectRegex",
+        _("Regular expression for selecting the only candidate"),
+        "",
         {},
         {},
-        ToolTipAnnotation(
-            _("Commit the segment that does not exist in the table. This "
-              "option is useful for some latin/compose based table."))};
+        ToolTipAnnotation(_("When current input matches the regular expression "
+                            "and there is only one candidate available, "
+                            "automatically select this candidate."))};
     OptionWithAnnotation<int, ToolTipAnnotation> noMatchAutoSelectLength{
         this,
         "NoMatchAutoSelectLength",
@@ -171,6 +181,20 @@ FCITX_CONFIGURATION(
               "table, select the current candidate and then type in the new "
               "character. -1 means the maximum code length of the table. 0 "
               "means this behavior is disabled."))};
+    OptionWithAnnotation<std::string, ToolTipAnnotation> noMatchAutoSelectRegex{
+        this,
+        "NoMatchAutoSelectRegex",
+        _("Auto select if new input has no match and existing input matches "
+          "regular expression"),
+        "",
+        {},
+        {},
+        ToolTipAnnotation(
+            _("When typing a new character, if the current input matches the "
+              "regular expression and the existing segment "
+              "with the new character does not have any matched entries in the "
+              "table, select the current candidate and then type in the new "
+              "character."))};
     NoSaveOption<KeyList> endKey{this, "EndKey", _("End key")};
     OptionWithAnnotation<int, ToolTipAnnotation> autoPhraseLength{
         this,
