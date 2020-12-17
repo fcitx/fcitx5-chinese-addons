@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-12-16 20:24+0000\n"
+"POT-Creation-Date: 2020-12-17 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: csslayer <wengxt@gmail.com>, 2020\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/fcitx/teams/12005/"
@@ -113,7 +113,7 @@ msgstr "自动选择候选词"
 
 #: im/table/ime.h:173
 msgid "Auto select when no match is found"
-msgstr ""
+msgstr "没有匹配时自动选择"
 
 #: modules/cloudpinyin/cloudpinyin.h:33
 msgid "Backend"
@@ -608,11 +608,11 @@ msgstr "标点"
 
 #: im/table/ime.h:187
 msgid "Regular expression for auto select when no match is found"
-msgstr ""
+msgstr "没有匹配时自动选择的正则表达式"
 
 #: im/table/ime.h:163
 msgid "Regular expression for selecting the only candidate"
-msgstr ""
+msgstr "选择唯一候选词的正则表达式"
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:44
 #. i18n: ectx: property (text), widget (QPushButton, removeAllButton_)
@@ -798,7 +798,7 @@ msgstr ""
 msgid ""
 "When current input matches the regular expression and there is only one "
 "candidate available, automatically select this candidate."
-msgstr ""
+msgstr "当当前输入匹配正则表达式而且只有一个候选词可用时，自动选择这个候选词。"
 
 #: im/table/ime.h:178
 msgid ""
@@ -819,6 +819,8 @@ msgid ""
 "matched entries in the table, select the current candidate and then type in "
 "the new character."
 msgstr ""
+"当输入新字符时，如果当前输入匹配正则表达式并且当前分段加上这个新字符在码表中"
+"没有匹配，将选择当前候选词再输入这个新字符。"
 
 #: im/table/ime.h:139
 msgid "Wildcard matching Key"
