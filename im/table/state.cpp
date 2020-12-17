@@ -879,13 +879,13 @@ bool TableState::handle2nd3rdCandidate(const TableConfig &config,
     // Keep these two values, and reset them in the state
     keyReleased_ = -1;
     keyReleasedIndex_ = -2;
-    const bool isModifier = event.origKey().isModifier();
+    const bool isModifier = event.rawKey().isModifier();
     if (event.isRelease()) {
         int idx = 0;
         for (auto &keyHandler : keyHandlers) {
             if (keyReleased == idx &&
                 keyReleasedIndex ==
-                    event.origKey().keyListIndex(keyHandler.list)) {
+                    event.rawKey().keyListIndex(keyHandler.list)) {
                 if (isModifier) {
                     if (keyHandler.selection < candidateList->size()) {
                         candidateList->candidate(keyHandler.selection)
@@ -904,7 +904,7 @@ bool TableState::handle2nd3rdCandidate(const TableConfig &config,
     if (!event.filtered() && !event.isRelease()) {
         int idx = 0;
         for (auto &keyHandler : keyHandlers) {
-            auto keyIdx = event.origKey().keyListIndex(keyHandler.list);
+            auto keyIdx = event.rawKey().keyListIndex(keyHandler.list);
             if (keyIdx >= 0) {
                 keyReleased_ = idx;
                 keyReleasedIndex_ = keyIdx;

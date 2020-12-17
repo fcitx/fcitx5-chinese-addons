@@ -925,7 +925,7 @@ bool PinyinEngine::handle2nd3rdSelection(KeyEvent &event) {
     // Keep these two values, and reset them in the state
     state->keyReleased_ = -1;
     state->keyReleasedIndex_ = -2;
-    const bool isModifier = event.origKey().isModifier();
+    const bool isModifier = event.rawKey().isModifier();
     if (event.isRelease()) {
         int idx = 0;
         for (auto &keyHandler : keyHandlers) {
