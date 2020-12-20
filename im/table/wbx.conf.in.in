@@ -22,6 +22,7 @@ AutoPhraseLength=4
 SaveAutoPhraseAfter=3
 UseContextRelatedOrder=False
 QuickPhraseText=ABCDEFGHIJLKLMNOPQRSTUVWXYZ
+HintSeparator=
 
 [Table/PrevPage]
 0=Up
