@@ -931,7 +931,7 @@ bool PinyinEngine::handle2nd3rdSelection(KeyEvent &event) {
         for (auto &keyHandler : keyHandlers) {
             if (keyReleased == idx &&
                 keyReleasedIndex ==
-                    event.origKey().keyListIndex(keyHandler.list)) {
+                    event.rawKey().keyListIndex(keyHandler.list)) {
                 if (isModifier) {
                     if (keyHandler.selection < candidateList->size()) {
                         candidateList->candidate(keyHandler.selection)
@@ -950,7 +950,7 @@ bool PinyinEngine::handle2nd3rdSelection(KeyEvent &event) {
     if (!event.filtered() && !event.isRelease()) {
         int idx = 0;
         for (auto &keyHandler : keyHandlers) {
-            auto keyIdx = event.origKey().keyListIndex(keyHandler.list);
+            auto keyIdx = event.rawKey().keyListIndex(keyHandler.list);
             if (keyIdx >= 0) {
                 state->keyReleased_ = idx;
                 state->keyReleasedIndex_ = keyIdx;
@@ -1398,8 +1398,9 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
             std::string text = state->context_.userInput();
             text.append(Key::keySymToUTF8(event.key().sym()));
             doReset(inputContext);
-            quickphrase()->call<IQuickPhrase::trigger>(inputContext, "", text,
-                                                       "", "", Key());
+            quickphrase()->call<IQuickPhrase::trigger>(inputContext, "", "", "",
+                                                       "", Key());
+            quickphrase()->call<IQuickPhrase::setBuffer>(inputContext, text);
 
             return event.filterAndAccept();
         }

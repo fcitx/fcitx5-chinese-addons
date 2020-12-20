@@ -59,6 +59,8 @@ public:
         handle2nd3rdCandidate(config, event);
     }
 
+    auto context() const { return context_.get(); }
+
 private:
     bool handle2nd3rdCandidate(const TableConfig &config, KeyEvent &event);
     bool handleCandidateList(const TableConfig &config, KeyEvent &event);

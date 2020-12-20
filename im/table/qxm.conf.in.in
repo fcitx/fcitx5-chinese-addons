@@ -18,6 +18,7 @@ UseFullWidth=True
 QuickPhraseKey=semicolon
 AutoPhraseLength=4
 SaveAutoPhraseAfter=3
+QuickPhraseText=ABCDEFGHIJLKLMNOPQRSTUVWXYZ
 
 [Table/PrevPage]
 0=Up
