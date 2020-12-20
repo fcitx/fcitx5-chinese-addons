@@ -21,6 +21,7 @@ MatchingKey=?
 AutoPhraseLength=4
 SaveAutoPhraseAfter=-1
 UseContextRelatedOrder=False
+QuickPhraseText=ABCDEFGHIJLKLMNOPQRSTUVWXYZ
 
 [Table/PrevPage]
 0=Up

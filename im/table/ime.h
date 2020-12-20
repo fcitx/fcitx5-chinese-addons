@@ -86,6 +86,9 @@ FCITX_CONFIGURATION(
     Option<bool> commitAfterSelect{this, "CommitAfterSelect",
                                    _("Commit after auto select candidates"),
                                    true};
+    Option<bool> commitWhenDeactivate{
+        this, "CommitWhenDeactivate",
+        _("Commit buffer when deactivating input method"), true};
     OptionWithAnnotation<bool, ToolTipAnnotation> commitInvalidSegment{
         this,
         "CommitInvalidSegment",
@@ -108,6 +111,16 @@ FCITX_CONFIGURATION(
         _("Key to trigger quickphrase"),
         Key{},
         {KeyConstrainFlag::AllowModifierLess}};
+    OptionWithAnnotation<std::string, ToolTipAnnotation> quickphraseText{
+        this,
+        "QuickPhraseText",
+        _("Text to trigger quickphrase"),
+        "",
+        {},
+        {},
+        {_("When a new character is typed, if it matches any character in this "
+           "string, all the existing text will be put into quickphrase "
+           "buffer.")}};
     NoSaveOption<std::string> icon{this, "Icon", _("Icon")};
     Option<int> noSortInputLength{this, "NoSortInputLength",
                                   _("Don't sort word shorter than")};
@@ -144,6 +157,7 @@ FCITX_CONFIGURATION(
                                         _("Prefix key to trigger Pinyin"),
                                         Key(),
                                         {KeyConstrainFlag::AllowModifierLess}};
+
     Option<bool> autoSelect{this, "AutoSelect", _("Auto select candidate")};
     OptionWithAnnotation<int, ToolTipAnnotation> autoSelectLength{
         this,

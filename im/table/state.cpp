@@ -684,8 +684,23 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
     }
 
     auto chr = Key::keySymToUnicode(event.key().sym());
+    auto str = utf8::UCS4ToUTF8(chr);
+
+    if (engine_->quickphrase() && !event.key().hasModifier() &&
+        !config.quickphraseText->empty() &&
+        config.quickphraseText->find(str) != std::string::npos) {
+        std::string text = context_->userInput();
+        text.append(str);
+        reset();
+        engine_->quickphrase()->call<IQuickPhrase::trigger>(inputContext, "",
+                                                            "", "", "", Key());
+        engine_->quickphrase()->call<IQuickPhrase::setBuffer>(inputContext,
+                                                              text);
+        event.filterAndAccept();
+        return;
+    }
     if (!event.key().hasModifier() && chr && context->isValidInput(chr)) {
-        auto str = utf8::UCS4ToUTF8(chr);
+
         {
             CommitAfterSelectWrapper commitAfterSelectRAII(this);
             context->type(str);

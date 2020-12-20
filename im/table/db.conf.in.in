@@ -15,6 +15,7 @@ Hint=True
 OrderPolicy=Freq
 UseFullWidth=True
 QuickPhraseKey=semicolon
+QuickPhraseText=ABCDEFGHIJLKLMNOPQRSTUVWXYZ
 
 [Table/PrevPage]
 0=Up

@@ -16,6 +16,7 @@ OrderPolicy=No
 UseFullWidth=True
 QuickPhraseKey=semicolon
 AutoPhraseLength=-1
+QuickPhraseText=ABCDEFGHIJLKLMNOPQRSTUVWXYZ
 
 [Table/PrevPage]
 0=Up

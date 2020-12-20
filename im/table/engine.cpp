@@ -131,7 +131,10 @@ void TableEngine::reset(const InputMethodEntry &entry,
     auto *state = inputContext->propertyFor(&factory_);
     // The reason that we do not commit here is we want to force the behavior.
     // When client get unfocused, the framework will try to commit the string.
-    state->commitBuffer(true, event.type() == EventType::InputContextFocusOut);
+    if (state->context() && *state->context()->config().commitWhenDeactivate) {
+        state->commitBuffer(true,
+                            event.type() == EventType::InputContextFocusOut);
+    }
     state->reset(&entry);
 }
 
