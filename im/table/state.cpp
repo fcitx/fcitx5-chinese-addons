@@ -687,7 +687,7 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
     auto str = utf8::UCS4ToUTF8(chr);
 
     if (engine_->quickphrase() && !event.key().hasModifier() &&
-        !config.quickphraseText->empty() &&
+        !config.quickphraseText->empty() && !str.empty() &&
         config.quickphraseText->find(str) != std::string::npos) {
         std::string text = context_->userInput();
         text.append(str);
