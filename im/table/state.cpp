@@ -537,6 +537,7 @@ bool TableState::handleLookupPinyinOrModifyDictionaryMode(KeyEvent &event) {
                     context_->dict().wordExists(result, subString.first);
                 if (flag != libime::PhraseFlag::Invalid) {
                     if ((flag == libime::PhraseFlag::User ||
+                         flag == libime::PhraseFlag::None ||
                          flag == libime::PhraseFlag::Auto) &&
                         event.key().check(FcitxKey_Delete)) {
                         context_->mutableDict().removeWord(result,
