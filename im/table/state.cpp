@@ -1034,7 +1034,7 @@ void TableState::updateUI() {
                         context->candidateHint(idx, *config.displayCustomHint);
                 }
                 if (!hint.empty()) {
-                    text.append(" ~ ");
+                    text.append(*config.hintSeparator);
                     text.append(hint);
                 }
                 candidateList->append<TableCandidateWord>(engine_,

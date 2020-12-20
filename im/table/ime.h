@@ -238,6 +238,9 @@ FCITX_CONFIGURATION(
     Option<bool> hint{this, "Hint", _("Display Hint for word")};
     Option<bool> displayCustomHint{this, "DisplayCustomHint",
                                    _("Display custom hint")};
+    Option<std::string> hintSeparator{
+        this, "HintSeparator", _("Separator text between hint and candidate"),
+        " ~ "};
     OptionWithAnnotation<CandidateLayoutHint, CandidateLayoutHintI18NAnnotation>
         candidateLayoutHint{this, "CandidateLayoutHint",
                             _("Candidate List orientation"),
