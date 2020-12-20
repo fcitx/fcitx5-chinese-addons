@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-12-16 20:24+0000\n"
+"POT-Creation-Date: 2020-12-20 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Billy SU <billy4195.su@gmail.com>, 2020\n"
 "Language-Team: Chinese (Taiwan) (https://www.transifex.com/fcitx/teams/12005/"
@@ -26,11 +26,11 @@ msgstr ""
 msgid "\t[Stroke Filtering] "
 msgstr ""
 
-#: im/table/state.cpp:834
+#: im/table/state.cpp:850
 msgid " Return for "
 msgstr "按下 Enter 以"
 
-#: im/table/state.cpp:831
+#: im/table/state.cpp:847
 msgid " for "
 msgstr " 以"
 
@@ -81,7 +81,7 @@ msgid ""
 "to Fcitx"
 msgstr ""
 
-#: im/table/ime.h:206
+#: im/table/ime.h:220
 msgid ""
 "After committing every character, learn the new phrase based on the input "
 "history. If certain word is seen for multiple times or selected by user "
@@ -97,19 +97,19 @@ msgstr "確定刪除 %1？"
 msgid "Are you sure to delete all dictionaries?"
 msgstr "確定刪除所有字典？"
 
-#: im/table/ime.h:201
+#: im/table/ime.h:215
 msgid "Auto phrase length"
 msgstr "自動片語長度"
 
-#: im/table/ime.h:232
+#: im/table/ime.h:249
 msgid "Auto rule set"
 msgstr "自動組字使用規則"
 
-#: im/table/ime.h:147
+#: im/table/ime.h:161
 msgid "Auto select candidate"
 msgstr "自動選擇候選字"
 
-#: im/table/ime.h:173
+#: im/table/ime.h:187
 msgid "Auto select when no match is found"
 msgstr ""
 
@@ -125,7 +125,7 @@ msgstr "冰蟾全息"
 msgid "Browse Sogou Cell Dict repository"
 msgstr "瀏覽搜狗细胞词库"
 
-#: im/table/ime.h:229
+#: im/table/ime.h:246
 msgid "Candidate List orientation"
 msgstr ""
 
@@ -165,7 +165,7 @@ msgstr "已停用雲端拼音。"
 msgid "Cloud Pinyin is enabled."
 msgstr "已啟用雲端拼音。"
 
-#: im/table/ime.h:92
+#: im/table/ime.h:95
 msgid "Commit Invalid Segment"
 msgstr ""
 
@@ -173,7 +173,11 @@ msgstr ""
 msgid "Commit after auto select candidates"
 msgstr ""
 
-#: im/table/ime.h:97
+#: im/table/ime.h:91
+msgid "Commit buffer when deactivating input method"
+msgstr ""
+
+#: im/table/ime.h:100
 msgid ""
 "Commit the segment that does not exist in the table. This option is useful "
 "for some latin/compose based table."
@@ -193,7 +197,7 @@ msgstr "轉換失敗。"
 msgid "Converter crashed."
 msgstr "轉換器當掉了。"
 
-#: im/table/state.cpp:572
+#: im/table/state.cpp:573
 msgid "Could not find pinyin."
 msgstr "找不到拼音。"
 
@@ -236,11 +240,11 @@ msgstr "字典"
 msgid "Dictionary already exists"
 msgstr "字典已存在"
 
-#: im/table/ime.h:224
+#: im/table/ime.h:238
 msgid "Display Hint for word"
 msgstr "顯示單字提示"
 
-#: im/table/ime.h:226
+#: im/table/ime.h:240
 msgid "Display custom hint"
 msgstr "顯示自訂提示"
 
@@ -256,7 +260,7 @@ msgid ""
 "toggle it later in configuration."
 msgstr ""
 
-#: im/table/ime.h:113
+#: im/table/ime.h:126
 msgid "Don't sort word shorter than"
 msgstr ""
 
@@ -296,7 +300,7 @@ msgstr ""
 msgid "Enabled Input Methods"
 msgstr "啟用的輸入法"
 
-#: im/table/ime.h:197
+#: im/table/ime.h:211
 msgid "End key"
 msgstr ""
 
@@ -312,7 +316,7 @@ msgstr ""
 msgid "Error while deleting %1."
 msgstr ""
 
-#: im/table/ime.h:222
+#: im/table/ime.h:236
 msgid "Exact Match"
 msgstr ""
 
@@ -349,7 +353,7 @@ msgstr "檔案操作失敗"
 msgid "Filter by stroke"
 msgstr ""
 
-#: im/table/ime.h:103
+#: im/table/ime.h:106
 msgid "First candidate as Preedit"
 msgstr ""
 
@@ -413,18 +417,18 @@ msgstr ""
 msgid "Horizontal"
 msgstr "水平的"
 
-#: im/table/ime.h:111
+#: im/table/ime.h:124
 msgid "Icon"
 msgstr "圖示"
 
-#: im/table/ime.h:219
+#: im/table/ime.h:233
 msgid ""
 "If the value less than 0, means this feature is disabled. If auto phrase is "
 "enabled, selecting auto phrase candidate explicitly will still add the word "
 "as a new user phrase."
 msgstr ""
 
-#: im/table/ime.h:101
+#: im/table/ime.h:104
 msgid "Ignore built in punctuation"
 msgstr ""
 
@@ -440,15 +444,15 @@ msgstr ""
 msgid "Input Dictionary Name"
 msgstr ""
 
-#: im/table/ime.h:108 im/pinyin/pinyin.h:144
+#: im/table/ime.h:111 im/pinyin/pinyin.h:144
 msgid "Key to trigger quickphrase"
 msgstr ""
 
-#: im/table/ime.h:223
+#: im/table/ime.h:237
 msgid "Learning"
 msgstr "學習"
 
-#: im/table/ime.h:151
+#: im/table/ime.h:165
 msgid "Length limit of selecting the only candidate"
 msgstr ""
 
@@ -508,11 +512,11 @@ msgstr ""
 msgid "Number of Sentence"
 msgstr ""
 
-#: im/table/ime.h:114
+#: im/table/ime.h:127
 msgid "Order policy"
 msgstr ""
 
-#: im/table/ime.h:133
+#: im/table/ime.h:146
 msgid ""
 "Order the candidate based on the word you already typed. You may want to "
 "disable this option if you want the candidate order to be stable regardless "
@@ -536,7 +540,7 @@ msgstr ""
 msgid "PinyinJiajia"
 msgstr ""
 
-#: im/table/state.cpp:558
+#: im/table/state.cpp:559
 msgid "Please use this functionality after typing some text."
 msgstr ""
 
@@ -548,19 +552,19 @@ msgstr ""
 msgid "Prediction Size"
 msgstr ""
 
-#: im/table/ime.h:144
+#: im/table/ime.h:157
 msgid "Prefix key to trigger Pinyin"
 msgstr ""
 
-#: im/table/state.cpp:590
+#: im/table/state.cpp:591
 msgid "Press Backspace to forget."
 msgstr ""
 
-#: im/table/state.cpp:593
+#: im/table/state.cpp:594
 msgid "Press Delete to remove."
 msgstr ""
 
-#: im/table/state.cpp:587
+#: im/table/state.cpp:588
 msgid "Press space to insert."
 msgstr ""
 
@@ -598,11 +602,11 @@ msgstr ""
 msgid "Punctuation"
 msgstr ""
 
-#: im/table/ime.h:187
+#: im/table/ime.h:201
 msgid "Regular expression for auto select when no match is found"
 msgstr ""
 
-#: im/table/ime.h:163
+#: im/table/ime.h:177
 msgid "Regular expression for selecting the only candidate"
 msgstr ""
 
@@ -613,7 +617,7 @@ msgstr ""
 msgid "Remove &All"
 msgstr ""
 
-#: im/table/ime.h:214
+#: im/table/ime.h:228
 msgid "Save auto phrase after being typed for ... times"
 msgstr ""
 
@@ -641,7 +645,7 @@ msgstr ""
 msgid "Select Third Candidate"
 msgstr ""
 
-#: im/table/state.cpp:1055
+#: im/table/state.cpp:1071
 msgid "Select candidate to be removed from history:"
 msgstr ""
 
@@ -651,6 +655,10 @@ msgstr ""
 
 #: im/table/ime.h:79
 msgid "Selection"
+msgstr ""
+
+#: im/table/ime.h:242
+msgid "Separator text between hint and candidate"
 msgstr ""
 
 #: im/pinyin/pinyin.h:81
@@ -685,7 +693,7 @@ msgstr ""
 msgid "Simplified and Traditional Chinese Translation"
 msgstr ""
 
-#: im/table/ime.h:128
+#: im/table/ime.h:141
 msgid "Sort candidates based on current context"
 msgstr ""
 
@@ -707,6 +715,10 @@ msgstr ""
 
 #: gui/pinyindictmanager/filedownloader.cpp:26
 msgid "Temporary file created."
+msgstr ""
+
+#: im/table/ime.h:117
+msgid "Text to trigger quickphrase"
 msgstr ""
 
 #: modules/cloudpinyin/cloudpinyin.h:42
@@ -740,11 +752,11 @@ msgstr ""
 msgid "Type paired punctuations together (e.g. Quote)"
 msgstr ""
 
-#: im/table/state.cpp:564
+#: im/table/state.cpp:565
 msgid "Use Left and Right to select character: "
 msgstr ""
 
-#: im/table/state.cpp:575
+#: im/table/state.cpp:576
 msgid "Use Left and Right to select text. "
 msgstr ""
 
@@ -752,11 +764,11 @@ msgstr ""
 msgid "Use V to trigger quickphrase"
 msgstr ""
 
-#: im/table/ime.h:99
+#: im/table/ime.h:102
 msgid "Use full width"
 msgstr ""
 
-#: im/table/ime.h:118
+#: im/table/ime.h:131
 msgid "Use system language model"
 msgstr ""
 
@@ -768,26 +780,32 @@ msgstr ""
 msgid "Wanfeng"
 msgstr ""
 
-#: im/table/ime.h:122
+#: im/table/ime.h:121
+msgid ""
+"When a new character is typed, if it matches any character in this string, "
+"all the existing text will be put into quickphrase buffer."
+msgstr ""
+
+#: im/table/ime.h:135
 msgid ""
 "When available, system language model will be loaded for given language and "
 "provide ability to give better context based order."
 msgstr ""
 
-#: im/table/ime.h:156
+#: im/table/ime.h:170
 msgid ""
 "When current input length is greater than or equal to the limit and there is "
 "only one candidate available, automatically select this candidate. -1 Means "
 "the maximum code length of the table. 0 means this behavior is disabled."
 msgstr ""
 
-#: im/table/ime.h:167
+#: im/table/ime.h:181
 msgid ""
 "When current input matches the regular expression and there is only one "
 "candidate available, automatically select this candidate."
 msgstr ""
 
-#: im/table/ime.h:178
+#: im/table/ime.h:192
 msgid ""
 "When typing a new character, if the current input length is greater than or "
 "equal to the limit, and the existing segment with the new character does not "
@@ -796,7 +814,7 @@ msgid ""
 "means this behavior is disabled."
 msgstr ""
 
-#: im/table/ime.h:192
+#: im/table/ime.h:206
 msgid ""
 "When typing a new character, if the current input matches the regular "
 "expression and the existing segment with the new character does not have any "
@@ -804,7 +822,7 @@ msgid ""
 "the new character."
 msgstr ""
 
-#: im/table/ime.h:139
+#: im/table/ime.h:152
 msgid "Wildcard matching Key"
 msgstr ""
 
@@ -913,14 +931,14 @@ msgstr ""
 msgid "{0} ({1})"
 msgstr ""
 
-#: im/table/state.cpp:608
+#: im/table/state.cpp:609
 msgid "{0} is not in table."
 msgstr ""
 
-#: im/table/state.cpp:597
+#: im/table/state.cpp:598
 msgid "{0}: No corresponding code."
 msgstr ""
 
-#: im/table/state.cpp:582 im/table/state.cpp:605
+#: im/table/state.cpp:583 im/table/state.cpp:606
 msgid "{0}: {1}"
 msgstr ""
