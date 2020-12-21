@@ -423,13 +423,13 @@ bool TableState::handleForgetWord(KeyEvent &event) {
         event.key().checkKeyList(*engine_->config().forgetWord)) {
         mode_ = TableMode::ForgetWord;
         event.filterAndAccept();
-        updateUI();
+        updateUI(/*keepOldCursor=*/true);
         return true;
     }
     if (mode_ == TableMode::ForgetWord && event.key().check(FcitxKey_Escape)) {
         mode_ = TableMode::Normal;
         event.filterAndAccept();
-        updateUI();
+        updateUI(/*keepOldCursor=*/true);
         return true;
     }
 
@@ -620,16 +620,21 @@ bool TableState::handleLookupPinyinOrModifyDictionaryMode(KeyEvent &event) {
 }
 
 void TableState::forgetCandidateWord(size_t idx) {
+    mode_ = TableMode::Normal;
+    auto oldCode = context_->currentCode();
     auto code = TableContext::code(context_->candidates()[idx]);
     if (!code.empty()) {
         auto word = context_->candidates()[idx].toString();
+        commitBuffer(false);
         context_->mutableDict().removeWord(code, word);
         context_->mutableModel().history().forget(word);
+    } else {
+        return;
     }
     context_->clear();
-    mode_ = TableMode::Normal;
+    context_->type(oldCode);
 
-    updateUI();
+    updateUI(/*keepOldCursor=*/true);
 }
 
 void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
@@ -653,6 +658,17 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         return;
     }
 
+    lastIsPunc_ = false;
+
+    if (handleCandidateList(config, event)) {
+        return;
+    }
+
+    // We have special handling of escape here.
+    if (handleForgetWord(event)) {
+        return;
+    }
+
     if (event.key().check(FcitxKey_Escape)) {
         if (mode_ != TableMode::Normal) {
             event.filterAndAccept();
@@ -666,17 +682,7 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         }
     }
 
-    lastIsPunc_ = false;
-
-    if (handleCandidateList(config, event)) {
-        return;
-    }
-
     if (handlePinyinMode(event)) {
-        return;
-    }
-
-    if (handleForgetWord(event)) {
         return;
     }
 
@@ -1005,7 +1011,21 @@ void TableState::commitAfterSelect(int commitFrom) {
     }
 }
 
-void TableState::updateUI() {
+void TableState::updateUI(bool keepOldCursor) {
+
+    int cursor = 0;
+    if (keepOldCursor) {
+        if (auto candidateList = ic_->inputPanel().candidateList()) {
+            if (auto commonCandidateList =
+                    dynamic_cast<CommonCandidateList *>(candidateList.get())) {
+                cursor = commonCandidateList->globalCursorIndex();
+            }
+        }
+    }
+    if (cursor < 0) {
+        cursor = 0;
+    }
+
     ic_->inputPanel().reset();
 
     auto *context = context_.get();
@@ -1043,7 +1063,8 @@ void TableState::updateUI() {
                 idx++;
             }
             if (candidateList->size()) {
-                candidateList->setGlobalCursorIndex(0);
+                candidateList->setPage(cursor / *config.pageSize);
+                candidateList->setGlobalCursorIndex(cursor);
             }
             inputPanel.setCandidateList(std::move(candidateList));
         }
