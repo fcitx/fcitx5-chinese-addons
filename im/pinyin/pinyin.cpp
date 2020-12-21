@@ -721,7 +721,8 @@ void PinyinEngine::reloadConfig() {
         safeSaveAsIni(config_, "conf/pinyin.conf");
         deferEvent_ = instance_->eventLoop().addDeferEvent([this](
                                                                EventSource *) {
-            if (cloudpinyin() && !*config_.cloudPinyinEnabled) {
+            if (cloudpinyin() && !*config_.cloudPinyinEnabled &&
+                notifications()) {
                 auto key = cloudpinyin()->call<ICloudPinyin::toggleKey>();
 
                 std::string msg;
