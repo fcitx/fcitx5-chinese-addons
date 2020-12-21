@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-12-20 20:24+0000\n"
+"POT-Creation-Date: 2020-12-21 20:28+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: csslayer <wengxt@gmail.com>, 2020\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/fcitx/teams/12005/"
@@ -22,15 +22,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: im/pinyin/pinyin.cpp:1051
+#: im/pinyin/pinyin.cpp:1052
 msgid "\t[Stroke Filtering] "
 msgstr "\t[笔画过滤] "
 
-#: im/table/state.cpp:850
+#: im/table/state.cpp:856
 msgid " Return for "
 msgstr "回车以"
 
-#: im/table/state.cpp:847
+#: im/table/state.cpp:853
 msgid " for "
 msgstr "以"
 
@@ -155,15 +155,15 @@ msgstr "云拼音"
 msgid "Cloud Pinyin Index"
 msgstr "云拼音位置"
 
-#: im/pinyin/pinyin.cpp:892
+#: im/pinyin/pinyin.cpp:893
 msgid "Cloud Pinyin Status"
 msgstr "云拼音状态"
 
-#: im/pinyin/pinyin.cpp:894
+#: im/pinyin/pinyin.cpp:895
 msgid "Cloud Pinyin is disabled."
 msgstr "云拼音已禁用。"
 
-#: im/pinyin/pinyin.cpp:893
+#: im/pinyin/pinyin.cpp:894
 msgid "Cloud Pinyin is enabled."
 msgstr "云拼音已启用。"
 
@@ -177,7 +177,7 @@ msgstr "自动选择候选词之后提交"
 
 #: im/table/ime.h:91
 msgid "Commit buffer when deactivating input method"
-msgstr ""
+msgstr "取消激活输入法时提交输入缓冲区"
 
 #: im/table/ime.h:100
 msgid ""
@@ -250,7 +250,7 @@ msgstr "显示词的提示"
 msgid "Display custom hint"
 msgstr "显示自定义提示"
 
-#: im/pinyin/pinyin.cpp:734
+#: im/pinyin/pinyin.cpp:735
 msgid ""
 "Do you want to enable cloudpinyin now for better prediction? You can always "
 "toggle it later in configuration or by pressing {}."
@@ -258,7 +258,7 @@ msgstr ""
 "您想要启用云拼音以获得更好的预测吗？您也可以稍后在配置中更改设置或者通过按下 "
 "{} 来切换。"
 
-#: im/pinyin/pinyin.cpp:729
+#: im/pinyin/pinyin.cpp:730
 msgid ""
 "Do you want to enable cloudpinyin now for better prediction? You can always "
 "toggle it later in configuration."
@@ -284,7 +284,7 @@ msgstr "启用拆字"
 msgid "Enable Cloud Pinyin"
 msgstr "启用云拼音"
 
-#: im/pinyin/pinyin.cpp:743
+#: im/pinyin/pinyin.cpp:744
 msgid "Enable Cloudpinyin"
 msgstr "启用云拼音"
 
@@ -498,7 +498,7 @@ msgstr "下一页"
 msgid "Next page"
 msgstr "下一页"
 
-#: im/pinyin/pinyin.cpp:740
+#: im/pinyin/pinyin.cpp:741
 msgid "No"
 msgstr "否"
 
@@ -535,7 +535,7 @@ msgstr ""
 msgid "Page size"
 msgstr "页大小"
 
-#: im/pinyin/pinyin.cpp:743 im/pinyin/pinyin.cpp:891
+#: im/pinyin/pinyin.cpp:744 im/pinyin/pinyin.cpp:892
 #: im/pinyin/pinyin-addon.conf.in:3 im/pinyin/pinyin.conf.in:3
 msgid "Pinyin"
 msgstr "拼音"
@@ -576,11 +576,11 @@ msgstr "按下删除键来移除。"
 msgid "Press space to insert."
 msgstr "按下空格键来插入。"
 
-#: im/pinyin/pinyin.cpp:1302
+#: im/pinyin/pinyin.cpp:1303
 msgid "Press {} for {}"
 msgstr "按下 {} 输入 {}"
 
-#: im/pinyin/pinyin.cpp:1299
+#: im/pinyin/pinyin.cpp:1300
 msgid "Press {} for {} and Return for {}"
 msgstr "按下 {} 输入 {}，按下回车输入 {}"
 
@@ -653,7 +653,7 @@ msgstr "选择第二个候选词"
 msgid "Select Third Candidate"
 msgstr "选择第三个候选词"
 
-#: im/table/state.cpp:1071
+#: im/table/state.cpp:1092
 msgid "Select candidate to be removed from history:"
 msgstr "选择要从历史中移除的候选词："
 
@@ -667,7 +667,7 @@ msgstr "选择"
 
 #: im/table/ime.h:242
 msgid "Separator text between hint and candidate"
-msgstr ""
+msgstr "提示和候选词之间的分隔符文本"
 
 #: im/pinyin/pinyin.h:81
 msgid "Show complete pinyin in preedit"
@@ -727,7 +727,7 @@ msgstr "已创建临时文件。"
 
 #: im/table/ime.h:117
 msgid "Text to trigger quickphrase"
-msgstr ""
+msgstr "触发快速输入的文本"
 
 #: modules/cloudpinyin/cloudpinyin.h:42
 msgid ""
@@ -795,6 +795,8 @@ msgid ""
 "When a new character is typed, if it matches any character in this string, "
 "all the existing text will be put into quickphrase buffer."
 msgstr ""
+"当新字符输入时，如果它和这个字符串任意字符匹配，所有的已有文本将会被放到快速"
+"输入中"
 
 #: im/table/ime.h:135
 msgid ""
@@ -860,7 +862,7 @@ msgstr "五笔拼音"
 msgid "Xiaohe"
 msgstr "小鹤"
 
-#: im/pinyin/pinyin.cpp:739
+#: im/pinyin/pinyin.cpp:740
 msgid "Yes"
 msgstr "是"
 
@@ -876,7 +878,7 @@ msgstr "紫光"
 msgid "Ziranma"
 msgstr "自然码"
 
-#: im/pinyin/pinyin.cpp:1103
+#: im/pinyin/pinyin.cpp:1104
 msgid "[Select the word to remove from history]"
 msgstr "[选择要从历史中移除的词]"
 
