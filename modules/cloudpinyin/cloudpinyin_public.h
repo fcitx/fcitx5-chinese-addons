@@ -107,7 +107,7 @@ private:
                     std::chrono::high_resolution_clock::now() - timestamp_)
                     .count();
             if (ms > LOADING_TIME_QUICK_THRESHOLD) {
-                setText(fcitx::Text("\xe2\x98\x81"));
+                setText(fcitx::Text("..."));
                 word_ = std::string();
             } else {
                 modifiable->remove(idx);
