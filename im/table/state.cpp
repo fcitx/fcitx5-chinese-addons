@@ -632,7 +632,10 @@ void TableState::forgetCandidateWord(size_t idx) {
         return;
     }
     context_->clear();
-    context_->type(oldCode);
+    {
+        CommitAfterSelectWrapper commitAfterSelectRAII(this);
+        context_->type(oldCode);
+    }
 
     updateUI(/*keepOldCursor=*/true);
 }
