@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-12-20 20:24+0000\n"
+"POT-Creation-Date: 2020-12-26 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: JungHee Lee <daemul72@gmail.com>, 2020\n"
 "Language-Team: Korean (https://www.transifex.com/fcitx/teams/12005/ko/)\n"
@@ -20,15 +20,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: im/pinyin/pinyin.cpp:1051
+#: im/pinyin/pinyin.cpp:1052
 msgid "\t[Stroke Filtering] "
 msgstr "\t[필획 필터링] "
 
-#: im/table/state.cpp:850
+#: im/table/state.cpp:860
 msgid " Return for "
 msgstr " Return for "
 
-#: im/table/state.cpp:847
+#: im/table/state.cpp:857
 msgid " for "
 msgstr " for "
 
@@ -151,15 +151,15 @@ msgstr "클라우드 병음"
 msgid "Cloud Pinyin Index"
 msgstr "클라우드 병음 일련번호"
 
-#: im/pinyin/pinyin.cpp:892
+#: im/pinyin/pinyin.cpp:893
 msgid "Cloud Pinyin Status"
 msgstr "클라우드 병음 상태"
 
-#: im/pinyin/pinyin.cpp:894
+#: im/pinyin/pinyin.cpp:895
 msgid "Cloud Pinyin is disabled."
 msgstr "클라우드 병음이 비활성화됨."
 
-#: im/pinyin/pinyin.cpp:893
+#: im/pinyin/pinyin.cpp:894
 msgid "Cloud Pinyin is enabled."
 msgstr "클라우드 병음이 활성화되었습니다."
 
@@ -246,13 +246,13 @@ msgstr "단어에 대한 힌트 보이기"
 msgid "Display custom hint"
 msgstr "사용자 지정 힌트 보이기"
 
-#: im/pinyin/pinyin.cpp:734
+#: im/pinyin/pinyin.cpp:735
 msgid ""
 "Do you want to enable cloudpinyin now for better prediction? You can always "
 "toggle it later in configuration or by pressing {}."
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:729
+#: im/pinyin/pinyin.cpp:730
 msgid ""
 "Do you want to enable cloudpinyin now for better prediction? You can always "
 "toggle it later in configuration."
@@ -278,7 +278,7 @@ msgstr "Chaizi 활성화"
 msgid "Enable Cloud Pinyin"
 msgstr "클라우드 병음 사용"
 
-#: im/pinyin/pinyin.cpp:743
+#: im/pinyin/pinyin.cpp:744
 msgid "Enable Cloudpinyin"
 msgstr ""
 
@@ -353,7 +353,7 @@ msgstr "필획으로 필터링"
 
 #: im/table/ime.h:106
 msgid "First candidate as Preedit"
-msgstr ""
+msgstr "사전편집으로 첫 후보"
 
 #: im/table/engine.h:33 im/pinyin/pinyin.h:88
 msgid "Forget word"
@@ -444,7 +444,7 @@ msgstr "입력 사전 이름"
 
 #: im/table/ime.h:111 im/pinyin/pinyin.h:144
 msgid "Key to trigger quickphrase"
-msgstr "QuickPhrase 발동 키"
+msgstr "상용구 전환 키"
 
 #: im/table/ime.h:237
 msgid "Learning"
@@ -452,7 +452,7 @@ msgstr "학습"
 
 #: im/table/ime.h:165
 msgid "Length limit of selecting the only candidate"
-msgstr ""
+msgstr "유일한 후보 선택의 길이 제한"
 
 #: im/table/engine.h:38
 msgid "Lookup pinyin"
@@ -490,7 +490,7 @@ msgstr "다음 페이지"
 msgid "Next page"
 msgstr "다음 페이지"
 
-#: im/pinyin/pinyin.cpp:740
+#: im/pinyin/pinyin.cpp:741
 msgid "No"
 msgstr "아니요"
 
@@ -526,7 +526,7 @@ msgstr ""
 msgid "Page size"
 msgstr "페이지 크기"
 
-#: im/pinyin/pinyin.cpp:743 im/pinyin/pinyin.cpp:891
+#: im/pinyin/pinyin.cpp:744 im/pinyin/pinyin.cpp:892
 #: im/pinyin/pinyin-addon.conf.in:3 im/pinyin/pinyin.conf.in:3
 msgid "Pinyin"
 msgstr "병음"
@@ -553,7 +553,7 @@ msgstr "예측 크기"
 
 #: im/table/ime.h:157
 msgid "Prefix key to trigger Pinyin"
-msgstr "병음 발동을 위한 사전입력 키"
+msgstr "병음 전환할 사전입력 키"
 
 #: im/table/state.cpp:591
 msgid "Press Backspace to forget."
@@ -567,11 +567,11 @@ msgstr "제거하려면 Delete 키를 누르십시오"
 msgid "Press space to insert."
 msgstr "입력하기 위해 스페이스를 누르세요"
 
-#: im/pinyin/pinyin.cpp:1302
+#: im/pinyin/pinyin.cpp:1303
 msgid "Press {} for {}"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1299
+#: im/pinyin/pinyin.cpp:1300
 msgid "Press {} for {} and Return for {}"
 msgstr ""
 
@@ -644,7 +644,7 @@ msgstr "두 번째 후보 선택"
 msgid "Select Third Candidate"
 msgstr "세 번째 후보 선택"
 
-#: im/table/state.cpp:1071
+#: im/table/state.cpp:1096
 msgid "Select candidate to be removed from history:"
 msgstr "기록에서 제거할 후보 선택"
 
@@ -694,11 +694,11 @@ msgstr "간체 / 번체 중국어 번역"
 
 #: im/table/ime.h:141
 msgid "Sort candidates based on current context"
-msgstr ""
+msgstr "현재 컨텍스트를 기준으로 후보 정렬"
 
 #: im/pinyin/pinyin.h:162
 msgid "Strings to trigger quick phrase"
-msgstr ""
+msgstr "상용구를 전환할 문자열"
 
 #: modules/chttrans/chttrans.cpp:75
 msgid "Switch to Simplified Chinese"
@@ -718,7 +718,7 @@ msgstr "임시 파일 생성됨."
 
 #: im/table/ime.h:117
 msgid "Text to trigger quickphrase"
-msgstr ""
+msgstr "상용구를 전환할 텍스트"
 
 #: modules/cloudpinyin/cloudpinyin.h:42
 msgid ""
@@ -761,7 +761,7 @@ msgstr "문장 선택을 위해 좌/우키 사용:"
 
 #: im/pinyin/pinyin.h:148
 msgid "Use V to trigger quickphrase"
-msgstr ""
+msgstr "V를 사용하여 상용구 전환"
 
 #: im/table/ime.h:102
 msgid "Use full width"
@@ -841,7 +841,7 @@ msgstr "Wubi 병음"
 msgid "Xiaohe"
 msgstr "Xiaohe"
 
-#: im/pinyin/pinyin.cpp:739
+#: im/pinyin/pinyin.cpp:740
 msgid "Yes"
 msgstr "예"
 
@@ -857,7 +857,7 @@ msgstr "Ziguang"
 msgid "Ziranma"
 msgstr "지란마"
 
-#: im/pinyin/pinyin.cpp:1103
+#: im/pinyin/pinyin.cpp:1104
 msgid "[Select the word to remove from history]"
 msgstr "[기록에서 삭제할 단어 선택]"
 
