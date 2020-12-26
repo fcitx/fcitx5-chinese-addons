@@ -699,7 +699,8 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
     if (engine_->quickphrase() && !event.key().hasModifier() &&
         !config.quickphraseText->empty() && !str.empty() &&
         config.quickphraseText->find(str) != std::string::npos) {
-        std::string text = context_->userInput();
+        std::string text = context_->currentCode();
+        commitBuffer(false);
         text.append(str);
         reset();
         engine_->quickphrase()->call<IQuickPhrase::trigger>(inputContext, "",
