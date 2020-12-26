@@ -9,6 +9,7 @@
 #include <fcitx-utils/eventdispatcher.h>
 #include <fcitx-utils/log.h>
 #include <fcitx-utils/standardpath.h>
+#include <fcitx-utils/testing.h>
 #include <fcitx/addonmanager.h>
 #include <fcitx/inputmethodmanager.h>
 #include <fcitx/inputpanel.h>
@@ -36,6 +37,7 @@ void scheduleEvent(EventDispatcher *dispatcher, Instance *instance) {
         testfrontend->call<ITestFrontend::pushCommitExpectation>("豚");
         testfrontend->call<ITestFrontend::pushCommitExpectation>("萌豚");
         testfrontend->call<ITestFrontend::pushCommitExpectation>("萌豚");
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("mbA");
         auto uuid =
             testfrontend->call<ITestFrontend::createInputContext>("testapp");
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Control+space"),
@@ -75,6 +77,10 @@ void scheduleEvent(EventDispatcher *dispatcher, Instance *instance) {
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("t"), false);
         // This trigger auto select because it's now user phrase.
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("d"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("m"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("b"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("A"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
 
         dispatcher->schedule([dispatcher, instance]() {
             dispatcher->detach();
@@ -86,25 +92,20 @@ void scheduleEvent(EventDispatcher *dispatcher, Instance *instance) {
 void runInstance() {}
 
 int main() {
-    setenv("SKIP_FCITX_PATH", "1", 1);
-    // Path to library
-    setenv("FCITX_ADDON_DIRS",
-           stringutils::concat(TESTING_BINARY_DIR "/modules/pinyinhelper:",
-                               TESTING_BINARY_DIR "/modules/punctuation:",
-                               TESTING_BINARY_DIR "/im/table:",
-                               StandardPath::fcitxPath("addondir"))
-               .data(),
-           1);
-    setenv("FCITX_DATA_HOME", "/Invalid/Path", 1);
-    setenv("FCITX_CONFIG_HOME", "/Invalid/Path", 1);
-    setenv("FCITX_DATA_DIRS",
-           stringutils::concat(TESTING_BINARY_DIR "/test:" TESTING_BINARY_DIR
-                                                  "/modules:",
-                               StandardPath::fcitxPath("pkgdatadir", "testing"))
-               .data(),
-           1);
+    setupTestingEnvironment(TESTING_BINARY_DIR,
+                            {TESTING_BINARY_DIR "/modules/pinyinhelper",
+                             TESTING_BINARY_DIR "/modules/punctuation",
+                             TESTING_BINARY_DIR "/im/table"},
+                            {TESTING_BINARY_DIR "/test",
+                             TESTING_BINARY_DIR "/modules",
+                             StandardPath::fcitxPath("pkgdatadir")});
     // fcitx::Log::setLogRule("default=5,table=5,libime-table=5");
-    Instance instance(0, nullptr);
+    char arg0[] = "testchttrans";
+    char arg1[] = "--disable=all";
+    char arg2[] = "--enable=testim,testfrontend,table,quickphrase,punctuation,"
+                  "pinyinhelper";
+    char *argv[] = {arg0, arg1, arg2};
+    Instance instance(FCITX_ARRAY_SIZE(argv), argv);
     instance.addonManager().registerDefaultLoader(nullptr);
     EventDispatcher dispatcher;
     dispatcher.attach(&instance.eventLoop());
