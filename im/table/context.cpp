@@ -45,8 +45,7 @@ Text TableContext::preeditText(bool hint, bool clientPreedit) const {
         codeText = hint ? customHint(currentCode()) : currentCode();
     }
 
-    text.append(codeText,
-                {TextFormatFlag::Underline, TextFormatFlag::HighLight});
+    text.append(codeText, {TextFormatFlag::Underline});
 
     if (clientPreedit) {
         text.setCursor(0);
