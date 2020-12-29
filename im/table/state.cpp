@@ -340,7 +340,8 @@ bool TableState::handlePinyinMode(KeyEvent &event) {
                 }
                 reset();
             }
-        } else if (event.key().check(FcitxKey_Return)) {
+        } else if (event.key().check(FcitxKey_Return) ||
+                   event.key().check(FcitxKey_KP_Enter)) {
             auto commit = pinyinModePrefix_ + pinyinModeBuffer_.userInput();
             if (!commit.empty()) {
                 ic_->commitString(commit);
@@ -725,7 +726,8 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
             event.filterAndAccept();
         }
     } else if (!isContextEmpty()) {
-        if (event.key().check(FcitxKey_Return, KeyState::Shift)) {
+        if (event.key().check(FcitxKey_Return, KeyState::Shift) ||
+            event.key().check(FcitxKey_KP_Enter, KeyState::Shift)) {
             if (*config.commitAfterSelect) {
                 commitBuffer(true);
             } else {
@@ -742,7 +744,8 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
                 commitBuffer(false);
             }
             event.filterAndAccept();
-        } else if (event.key().sym() == FcitxKey_Return) {
+        } else if (event.key().sym() == FcitxKey_Return ||
+                   event.key().sym() == FcitxKey_KP_Enter) {
             if (*config.commitAfterSelect) {
                 if (!context->selected()) {
                     event.filterAndAccept();
@@ -823,7 +826,8 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
                 event.key().check(FcitxKey_Delete, KeyState::Ctrl) ||
                 event.key().check(FcitxKey_BackSpace, KeyState::Ctrl) ||
                 event.key().isCursorMove() ||
-                event.key().sym() == FcitxKey_Return) {
+                event.key().sym() == FcitxKey_Return ||
+                event.key().sym() == FcitxKey_KP_Enter) {
                 commitBuffer(false);
             }
         }
