@@ -1071,7 +1071,14 @@ void TableState::updateUI(bool keepOldCursor) {
                 idx++;
             }
             if (candidateList->size()) {
-                candidateList->setPage(cursor / *config.pageSize);
+                auto page = cursor / *config.pageSize;
+                if (page >= candidateList->totalPages()) {
+                    page = candidateList->totalPages() - 1;
+                }
+                candidateList->setPage(page);
+                if (cursor >= candidateList->totalSize()) {
+                    cursor = candidateList->totalSize() - 1;
+                }
                 candidateList->setGlobalCursorIndex(cursor);
             }
             inputPanel.setCandidateList(std::move(candidateList));
