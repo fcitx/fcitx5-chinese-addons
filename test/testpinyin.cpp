@@ -9,6 +9,7 @@
 #include <fcitx-utils/eventdispatcher.h>
 #include <fcitx-utils/log.h>
 #include <fcitx-utils/standardpath.h>
+#include <fcitx-utils/testing.h>
 #include <fcitx/addonmanager.h>
 #include <fcitx/inputmethodmanager.h>
 #include <fcitx/instance.h>
@@ -34,6 +35,9 @@ void scheduleEvent(EventDispatcher *dispatcher, Instance *instance) {
         auto *testfrontend = instance->addonManager().addon("testfrontend");
         auto uuid =
             testfrontend->call<ITestFrontend::createInputContext>("testapp");
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("俺");
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("ni");
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("ni");
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Control+space"),
                                                     false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
@@ -42,7 +46,18 @@ void scheduleEvent(EventDispatcher *dispatcher, Instance *instance) {
         testfrontend->call<ITestFrontend::keyEvent>(
             uuid, Key(FcitxKey_BackSpace), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("p"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("s"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("h"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("p"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("n"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("1"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("n"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("i"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("n"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("i"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("KP_Enter"),
+                                                    false);
 
         dispatcher->schedule([dispatcher, instance]() {
             dispatcher->detach();
@@ -54,25 +69,21 @@ void scheduleEvent(EventDispatcher *dispatcher, Instance *instance) {
 void runInstance() {}
 
 int main() {
-    setenv("SKIP_FCITX_PATH", "1", 1);
-    // Path to library
-    setenv("FCITX_ADDON_DIRS",
-           stringutils::concat(TESTING_BINARY_DIR "/modules/pinyinhelper:",
-                               TESTING_BINARY_DIR "/modules/punctuation:",
-                               TESTING_BINARY_DIR "/im/pinyin:",
-                               StandardPath::fcitxPath("addondir"))
-               .data(),
-           1);
-    setenv("FCITX_DATA_HOME", "/Invalid/Path", 1);
-    setenv("FCITX_CONFIG_HOME", "/Invalid/Path", 1);
-    setenv("FCITX_DATA_DIRS",
-           stringutils::concat(TESTING_BINARY_DIR "/test:" TESTING_BINARY_DIR
-                                                  "/modules:",
-                               StandardPath::fcitxPath("pkgdatadir", "testing"))
-               .data(),
-           1);
+    setupTestingEnvironment(TESTING_BINARY_DIR,
+                            {TESTING_BINARY_DIR "/modules/pinyinhelper",
+                             TESTING_BINARY_DIR "/modules/punctuation",
+                             TESTING_BINARY_DIR "/im/pinyin"},
+                            {TESTING_BINARY_DIR "/test",
+                             TESTING_BINARY_DIR "/modules",
+                             StandardPath::fcitxPath("pkgdatadir")});
+    // fcitx::Log::setLogRule("default=5,table=5,libime-table=5");
+    char arg0[] = "testpinyin";
+    char arg1[] = "--disable=all";
+    char arg2[] = "--enable=testim,testfrontend,pinyin,punctuation,"
+                  "pinyinhelper";
+    char *argv[] = {arg0, arg1, arg2};
     fcitx::Log::setLogRule("default=5,pinyin=5");
-    Instance instance(0, nullptr);
+    Instance instance(FCITX_ARRAY_SIZE(argv), argv);
     instance.addonManager().registerDefaultLoader(nullptr);
     EventDispatcher dispatcher;
     dispatcher.attach(&instance.eventLoop());

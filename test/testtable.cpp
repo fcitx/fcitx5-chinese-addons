@@ -100,7 +100,7 @@ int main() {
                              TESTING_BINARY_DIR "/modules",
                              StandardPath::fcitxPath("pkgdatadir")});
     // fcitx::Log::setLogRule("default=5,table=5,libime-table=5");
-    char arg0[] = "testchttrans";
+    char arg0[] = "testtable";
     char arg1[] = "--disable=all";
     char arg2[] = "--enable=testim,testfrontend,table,quickphrase,punctuation,"
                   "pinyinhelper";
