@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2021-01-12 20:24+0000\n"
+"POT-Creation-Date: 2021-01-13 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: scootergrisen, 2021\n"
 "Language-Team: Danish (https://www.transifex.com/fcitx/teams/12005/da/)\n"
@@ -114,7 +114,7 @@ msgstr "Automatisk valg af kandidat"
 
 #: im/table/ime.h:187
 msgid "Auto select when no match is found"
-msgstr ""
+msgstr "Vælg automatisk når der ikke findes noget match"
 
 #: modules/cloudpinyin/cloudpinyin.h:33
 msgid "Backend"
@@ -178,7 +178,7 @@ msgstr "Udfør efter automatisk valg af kandidater"
 
 #: im/table/ime.h:91
 msgid "Commit buffer when deactivating input method"
-msgstr ""
+msgstr "Udfør buffer ved deaktivering af inputmetode"
 
 #: im/table/ime.h:100
 msgid ""
@@ -627,11 +627,11 @@ msgstr "Tegnsætning"
 
 #: im/table/ime.h:201
 msgid "Regular expression for auto select when no match is found"
-msgstr ""
+msgstr "Regulært udtryk for vælg automatisk når der ikke findes noget match"
 
 #: im/table/ime.h:177
 msgid "Regular expression for selecting the only candidate"
-msgstr ""
+msgstr "Regulært udtryk til at vælge den eneste kandidat"
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:44
 #. i18n: ectx: property (text), widget (QPushButton, removeAllButton_)
@@ -682,7 +682,7 @@ msgstr "Valg"
 
 #: im/table/ime.h:242
 msgid "Separator text between hint and candidate"
-msgstr ""
+msgstr "Separatortekst mellem tip og kandidat"
 
 #: im/pinyin/pinyin.h:81
 msgid "Show complete pinyin in preedit"
@@ -749,6 +749,8 @@ msgid ""
 "The proxy format must be the one that is supported by cURL. Usually it is in "
 "the format of [scheme]://[host]:[port], e.g. http://localhost:1080."
 msgstr ""
+"Proxyformatet skal være et der understøttes af cURL. Typisk er det i "
+"formatet [scheme]://[vært]:[port], f.eks. http://localhost:1080."
 
 #: modules/cloudpinyin/cloudpinyin.h:29
 msgid "Toggle Key"
