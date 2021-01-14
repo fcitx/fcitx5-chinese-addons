@@ -25,6 +25,7 @@
 using namespace fcitx;
 
 #define HEADER_SIZE 12
+#define DELTBL_SIZE 10
 #define BUFLEN 0x1000
 
 #define DESC_START 0x130
@@ -36,16 +37,26 @@ using namespace fcitx;
 #define PINYIN_SIZE 4
 
 template <typename T>
-void readOrAbort(const UnixFD &fd, T *value, int n, const char *error) {
+void readOrAbort(const UnixFD &fd, T *value, int n,
+                 const char *error = nullptr) {
     if (fs::safeRead(fd.fd(), value, n * sizeof(T)) !=
         static_cast<int>(n * sizeof(T))) {
-        FCITX_FATAL() << error;
+        if (error) {
+            FCITX_FATAL() << error;
+        } else {
+            exit(0);
+        }
     }
 }
 
 template <typename T>
-void readOrAbort(const UnixFD &fd, T *value, const char *error) {
+void readOrAbort(const UnixFD &fd, T *value, const char *error = nullptr) {
     return readOrAbort(fd, value, 1, error);
+}
+
+void readInt16(const UnixFD &fd, int16_t *value, const char *error = nullptr) {
+    readOrAbort(fd, &value, error);
+    *value = le16toh(*value);
 }
 
 std::string unicodeToUTF8(const char16_t *value, size_t size) {
@@ -73,6 +84,8 @@ static const char header_str[HEADER_SIZE] = {'\x40', '\x15', '\0',   '\0',
                                              '\x44', '\x43', '\x53', '\x01',
                                              '\x01', '\0',   '\0',   '\0'};
 static const char pinyin_str[PINYIN_SIZE] = {'\x9d', '\x01', '\0', '\0'};
+static const char deltbl_str[HEADER_SIZE] = {
+    '\x45', '\0', '\x4c', '\0', '\x54', '\0', '\x42', '\0', '\x4c', '\0'};
 
 static void usage() {
     puts("scel2org - Convert .scel file to libime compatible file (SEE NOTES "
@@ -93,13 +106,16 @@ static void usage() {
 int main(int argc, char **argv) {
     int c;
     const char *outputFile = nullptr;
+    bool printDel = false;
 
-    while ((c = getopt(argc, argv, "o:h")) != -1) {
+    while ((c = getopt(argc, argv, "o:hd")) != -1) {
         switch (c) {
         case 'o':
             outputFile = optarg;
             break;
-
+        case 'd':
+            printDel = true;
+            break;
         case 'h':
         default:
             usage();
@@ -156,8 +172,8 @@ int main(int argc, char **argv) {
     while (true) {
         int16_t index;
         int16_t count;
-        readOrAbort(fd, &index, "failed to read index");
-        readOrAbort(fd, &count, "failed to read pinyin count");
+        readInt16(fd, &index, "failed to read index");
+        readInt16(fd, &count, "failed to read pinyin count");
 
         std::vector<char> buf;
         buf.resize(count);
@@ -181,16 +197,13 @@ int main(int argc, char **argv) {
         int16_t symcount;
         int16_t count;
         int16_t wordcount;
-        auto readResult = fs::safeRead(fd.fd(), &symcount, sizeof(int16_t));
-        if (readResult == 0) {
+        readInt16(fd, &symcount);
+
+        if (le16toh(symcount) == 0x44) {
             break;
         }
 
-        if (readResult < 0) {
-            FCITX_FATAL() << "Failed to read result";
-        }
-
-        readOrAbort(fd, &count, "Failed to read count");
+        readInt16(fd, &count, "Failed to read count");
 
         wordcount = count / 2;
         std::vector<int16_t> pyindex;
@@ -202,7 +215,7 @@ int main(int argc, char **argv) {
 
         for (s = 0; s < symcount; s++) {
             std::vector<char> buf;
-            readOrAbort(fd, &count, "Failed to read count");
+            readInt16(fd, &count, "Failed to read count");
             buf.resize(count);
             readOrAbort(fd, buf.data(), count, "Failed to read text");
             std::string bufout = unicodeToUTF8(buf.data(), buf.size());
@@ -215,10 +228,33 @@ int main(int argc, char **argv) {
 
             *out << "\t0" << std::endl;
 
-            readOrAbort(fd, &count, "failed to read count");
+            readInt16(fd, &count, "failed to read count");
             buf.resize(count);
             readOrAbort(fd, buf.data(), buf.size(), "failed to read buf");
         }
+    }
+
+    char delTblBuf[DELTBL_SIZE];
+    if (fs::safeRead(fd.fd(), delTblBuf, DELTBL_SIZE) != DELTBL_SIZE ||
+        memcmp(delTblBuf, deltbl_str, DELTBL_SIZE) != 0) {
+        return 0;
+    }
+
+    if (!printDel) {
+        return 0;
+    }
+
+    int16_t delTblCount;
+    readInt16(fd, &delTblCount);
+    for (int i = 0; i < delTblCount; i++) {
+        int16_t count;
+        readInt16(fd, &count);
+        count *= 2;
+        std::vector<char> buf;
+        buf.resize(count);
+        readOrAbort(fd, buf.data(), count, "Failed to read text");
+        std::string bufout = unicodeToUTF8(buf.data(), buf.size());
+        std::cerr << "DEL:" << bufout << std::endl;
     }
 
     return 0;
