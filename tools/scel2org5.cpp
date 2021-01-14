@@ -55,7 +55,7 @@ void readOrAbort(const UnixFD &fd, T *value, const char *error = nullptr) {
 }
 
 void readInt16(const UnixFD &fd, int16_t *value, const char *error = nullptr) {
-    readOrAbort(fd, &value, error);
+    readOrAbort(fd, value, error);
     *value = le16toh(*value);
 }
 
