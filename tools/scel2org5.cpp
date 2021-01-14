@@ -54,7 +54,8 @@ void readOrAbort(const UnixFD &fd, T *value, const char *error = nullptr) {
     return readOrAbort(fd, value, 1, error);
 }
 
-void readInt16(const UnixFD &fd, int16_t *value, const char *error = nullptr) {
+void readUInt16(const UnixFD &fd, uint16_t *value,
+                const char *error = nullptr) {
     readOrAbort(fd, value, error);
     *value = le16toh(*value);
 }
@@ -170,10 +171,10 @@ int main(int argc, char **argv) {
     std::vector<std::string> pys;
 
     while (true) {
-        int16_t index;
-        int16_t count;
-        readInt16(fd, &index, "failed to read index");
-        readInt16(fd, &count, "failed to read pinyin count");
+        uint16_t index;
+        uint16_t count;
+        readUInt16(fd, &index, "failed to read index");
+        readUInt16(fd, &count, "failed to read pinyin count");
 
         std::vector<char> buf;
         buf.resize(count);
@@ -194,28 +195,31 @@ int main(int argc, char **argv) {
     }
 
     while (true) {
-        int16_t symcount;
-        int16_t count;
-        int16_t wordcount;
-        readInt16(fd, &symcount);
+        uint16_t symcount;
+        uint16_t count;
+        uint16_t wordcount;
+        readUInt16(fd, &symcount);
 
         if (le16toh(symcount) == 0x44) {
             break;
         }
 
-        readInt16(fd, &count, "Failed to read count");
+        readUInt16(fd, &count, "Failed to read count");
 
         wordcount = count / 2;
-        std::vector<int16_t> pyindex;
+        std::vector<uint16_t> pyindex;
         pyindex.resize(wordcount);
 
-        readOrAbort(fd, pyindex.data(), wordcount, "Failed to read pyindex");
+        for (uint16_t i = 0; i < wordcount; i++) {
+            readUInt16(fd, &pyindex[i], "Failed to read pyindex");
+            if (pyindex[i] >= pys.size()) {
+                FCITX_FATAL() << "Invalid pinyin index";
+            }
+        }
 
-        int s;
-
-        for (s = 0; s < symcount; s++) {
+        for (uint16_t s = 0; s < symcount; s++) {
             std::vector<char> buf;
-            readInt16(fd, &count, "Failed to read count");
+            readUInt16(fd, &count, "Failed to read count");
             buf.resize(count);
             readOrAbort(fd, buf.data(), count, "Failed to read text");
             std::string bufout = unicodeToUTF8(buf.data(), buf.size());
@@ -228,7 +232,7 @@ int main(int argc, char **argv) {
 
             *out << "\t0" << std::endl;
 
-            readInt16(fd, &count, "failed to read count");
+            readUInt16(fd, &count, "failed to read count");
             buf.resize(count);
             readOrAbort(fd, buf.data(), buf.size(), "failed to read buf");
         }
@@ -244,11 +248,11 @@ int main(int argc, char **argv) {
         return 0;
     }
 
-    int16_t delTblCount;
-    readInt16(fd, &delTblCount);
+    uint16_t delTblCount;
+    readUInt16(fd, &delTblCount);
     for (int i = 0; i < delTblCount; i++) {
-        int16_t count;
-        readInt16(fd, &count);
+        uint16_t count;
+        readUInt16(fd, &count);
         count *= 2;
         std::vector<char> buf;
         buf.resize(count);
