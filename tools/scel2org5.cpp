@@ -200,7 +200,8 @@ int main(int argc, char **argv) {
         uint16_t wordcount;
         readUInt16(fd, &symcount);
 
-        if (le16toh(symcount) == 0x44) {
+        // Just in case we read a invalid value.
+        if (symcount > 10) {
             break;
         }
 
