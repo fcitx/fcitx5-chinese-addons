@@ -3,15 +3,15 @@
 # This file is distributed under the same license as the fcitx5-chinese-addons package.
 #
 # Translators:
-# Omer I.S. <omeritzicschwartz@gmail.com>, 2020
+# Omer I.S. <omeritzicschwartz@gmail.com>, 2021
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-12-20 20:24+0000\n"
+"POT-Creation-Date: 2021-01-15 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
-"Last-Translator: Omer I.S. <omeritzicschwartz@gmail.com>, 2020\n"
+"Last-Translator: Omer I.S. <omeritzicschwartz@gmail.com>, 2021\n"
 "Language-Team: Hebrew (https://www.transifex.com/fcitx/teams/12005/he/)\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
@@ -20,15 +20,15 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % "
 "1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;\n"
 
-#: im/pinyin/pinyin.cpp:1051
+#: im/pinyin/pinyin.cpp:1052
 msgid "\t[Stroke Filtering] "
 msgstr ""
 
-#: im/table/state.cpp:850
+#: im/table/state.cpp:864
 msgid " Return for "
 msgstr ""
 
-#: im/table/state.cpp:847
+#: im/table/state.cpp:861
 msgid " for "
 msgstr ""
 
@@ -151,15 +151,15 @@ msgstr ""
 msgid "Cloud Pinyin Index"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:892
+#: im/pinyin/pinyin.cpp:893
 msgid "Cloud Pinyin Status"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:894
+#: im/pinyin/pinyin.cpp:895
 msgid "Cloud Pinyin is disabled."
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:893
+#: im/pinyin/pinyin.cpp:894
 msgid "Cloud Pinyin is enabled."
 msgstr ""
 
@@ -195,7 +195,7 @@ msgstr ""
 msgid "Converter crashed."
 msgstr ""
 
-#: im/table/state.cpp:573
+#: im/table/state.cpp:574
 msgid "Could not find pinyin."
 msgstr ""
 
@@ -246,13 +246,13 @@ msgstr ""
 msgid "Display custom hint"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:734
+#: im/pinyin/pinyin.cpp:735
 msgid ""
 "Do you want to enable cloudpinyin now for better prediction? You can always "
 "toggle it later in configuration or by pressing {}."
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:729
+#: im/pinyin/pinyin.cpp:730
 msgid ""
 "Do you want to enable cloudpinyin now for better prediction? You can always "
 "toggle it later in configuration."
@@ -278,7 +278,7 @@ msgstr ""
 msgid "Enable Cloud Pinyin"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:743
+#: im/pinyin/pinyin.cpp:744
 msgid "Enable Cloudpinyin"
 msgstr ""
 
@@ -490,7 +490,7 @@ msgstr ""
 msgid "Next page"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:740
+#: im/pinyin/pinyin.cpp:741
 msgid "No"
 msgstr ""
 
@@ -525,10 +525,10 @@ msgstr ""
 msgid "Page size"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:743 im/pinyin/pinyin.cpp:891
+#: im/pinyin/pinyin.cpp:744 im/pinyin/pinyin.cpp:892
 #: im/pinyin/pinyin-addon.conf.in:3 im/pinyin/pinyin.conf.in:3
 msgid "Pinyin"
-msgstr ""
+msgstr "פִּנְיִין"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:90
 msgid "Pinyin dictionary manager"
@@ -538,7 +538,7 @@ msgstr ""
 msgid "PinyinJiajia"
 msgstr ""
 
-#: im/table/state.cpp:559
+#: im/table/state.cpp:560
 msgid "Please use this functionality after typing some text."
 msgstr ""
 
@@ -554,23 +554,23 @@ msgstr ""
 msgid "Prefix key to trigger Pinyin"
 msgstr ""
 
-#: im/table/state.cpp:591
+#: im/table/state.cpp:592
 msgid "Press Backspace to forget."
 msgstr ""
 
-#: im/table/state.cpp:594
+#: im/table/state.cpp:595
 msgid "Press Delete to remove."
 msgstr ""
 
-#: im/table/state.cpp:588
+#: im/table/state.cpp:589
 msgid "Press space to insert."
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1302
+#: im/pinyin/pinyin.cpp:1303
 msgid "Press {} for {}"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1299
+#: im/pinyin/pinyin.cpp:1300
 msgid "Press {} for {} and Return for {}"
 msgstr ""
 
@@ -643,7 +643,7 @@ msgstr ""
 msgid "Select Third Candidate"
 msgstr ""
 
-#: im/table/state.cpp:1071
+#: im/table/state.cpp:1107
 msgid "Select candidate to be removed from history:"
 msgstr ""
 
@@ -750,11 +750,11 @@ msgstr ""
 msgid "Type paired punctuations together (e.g. Quote)"
 msgstr ""
 
-#: im/table/state.cpp:565
+#: im/table/state.cpp:566
 msgid "Use Left and Right to select character: "
 msgstr ""
 
-#: im/table/state.cpp:576
+#: im/table/state.cpp:577
 msgid "Use Left and Right to select text. "
 msgstr ""
 
@@ -840,7 +840,7 @@ msgstr ""
 msgid "Xiaohe"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:739
+#: im/pinyin/pinyin.cpp:740
 msgid "Yes"
 msgstr ""
 
@@ -856,7 +856,7 @@ msgstr ""
 msgid "Ziranma"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1103
+#: im/pinyin/pinyin.cpp:1104
 msgid "[Select the word to remove from history]"
 msgstr ""
 
@@ -929,14 +929,14 @@ msgstr ""
 msgid "{0} ({1})"
 msgstr ""
 
-#: im/table/state.cpp:609
+#: im/table/state.cpp:610
 msgid "{0} is not in table."
 msgstr ""
 
-#: im/table/state.cpp:598
+#: im/table/state.cpp:599
 msgid "{0}: No corresponding code."
 msgstr ""
 
-#: im/table/state.cpp:583 im/table/state.cpp:606
+#: im/table/state.cpp:584 im/table/state.cpp:607
 msgid "{0}: {1}"
 msgstr ""
