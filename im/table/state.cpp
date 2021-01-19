@@ -519,12 +519,18 @@ bool TableState::handleLookupPinyinOrModifyDictionaryMode(KeyEvent &event) {
             std::string result;
             if (context_->dict().generateWithHint(subString.first,
                                                   subString.second, result)) {
-                if (context_->dict().wordExists(result, subString.first) ==
-                    libime::PhraseFlag::Invalid) {
+                auto wordFlag =
+                    context_->dict().wordExists(result, subString.first);
+                if (wordFlag == libime::PhraseFlag::Invalid) {
                     context_->mutableDict().insert(result, subString.first,
                                                    libime::PhraseFlag::User);
                     reset();
                     return true;
+                } else if (wordFlag == libime::PhraseFlag::Auto) {
+                    context_->mutableDict().removeWord(result, subString.first);
+                    context_->mutableDict().insert(result, subString.first,
+                                                   libime::PhraseFlag::User);
+                    reset();
                 }
             }
         } else if (event.key().checkKeyList(std::initializer_list<Key>{
@@ -585,7 +591,8 @@ bool TableState::handleLookupPinyinOrModifyDictionaryMode(KeyEvent &event) {
                                         context_->customHint(result)));
                         auto flag = context_->dict().wordExists(
                             result, subString.first);
-                        if (flag == libime::PhraseFlag::Invalid) {
+                        if (flag == libime::PhraseFlag::Invalid ||
+                            flag == libime::PhraseFlag::Auto) {
                             auxUp.append(_("Press space to insert."));
                         }
                         if (flag != libime::PhraseFlag::Invalid) {
