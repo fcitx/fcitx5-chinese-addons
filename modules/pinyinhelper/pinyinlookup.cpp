@@ -108,6 +108,11 @@ std::vector<std::string> PinyinLookup::lookup(uint32_t hz) {
 }
 
 bool PinyinLookup::load() {
+    if (loaded_) {
+        return loadResult_;
+    }
+    loaded_ = true;
+
     auto file = StandardPath::global().open(
         StandardPath::Type::PkgData, "pinyinhelper/py_table.mb", O_RDONLY);
     if (file.fd() < 0) {
@@ -125,7 +130,7 @@ bool PinyinLookup::load() {
         uint8_t wordLen;
         auto res = read(file.fd(), &wordLen, 1);
         if (res == 0) {
-            return true;
+            break;
         }
         if (res < 0 || wordLen > FCITX_UTF8_MAX_LENGTH) {
             return false;
@@ -155,5 +160,7 @@ bool PinyinLookup::load() {
             data.push_back({buf[0], buf[1], buf[2]});
         }
     }
+    loadResult_ = true;
+    return true;
 }
 } // namespace fcitx

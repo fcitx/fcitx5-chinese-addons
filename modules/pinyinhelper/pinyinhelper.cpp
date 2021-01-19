@@ -23,9 +23,6 @@
 namespace fcitx {
 
 PinyinHelper::PinyinHelper(Instance *instance) : instance_(instance) {
-    lookup_.load();
-    stroke_.load();
-
     // This is ok in the test.
     if (!instance_) {
         return;
@@ -96,7 +93,10 @@ void PinyinHelper::initQuickPhrase() {
 }
 
 std::vector<std::string> PinyinHelper::lookup(uint32_t chr) {
-    return lookup_.lookup(chr);
+    if (lookup_.load()) {
+        return lookup_.lookup(chr);
+    }
+    return {};
 }
 
 std::vector<std::pair<std::string, std::string>>
@@ -105,6 +105,9 @@ PinyinHelper::lookupStroke(const std::string &input, int limit) {
     static const std::map<char, char> py{
         {'h', '1'}, {'s', '2'}, {'p', '3'}, {'n', '4'}, {'z', '5'}};
     if (input.empty()) {
+        return {};
+    }
+    if (!stroke_.load()) {
         return {};
     }
     if (num.count(input[0])) {
@@ -129,10 +132,16 @@ PinyinHelper::lookupStroke(const std::string &input, int limit) {
 }
 
 std::string PinyinHelper::reverseLookupStroke(const std::string &input) {
+    if (!stroke_.load()) {
+        return {};
+    }
     return stroke_.reverseLookup(input);
 }
 
 std::string PinyinHelper::prettyStrokeString(const std::string &input) {
+    if (!stroke_.load()) {
+        return {};
+    }
     return stroke_.prettyString(input);
 }
 
