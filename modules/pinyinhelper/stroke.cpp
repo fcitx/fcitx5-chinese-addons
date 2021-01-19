@@ -21,6 +21,11 @@ namespace fcitx {
 Stroke::Stroke() {}
 
 bool Stroke::load() {
+    if (loaded_) {
+        return loadResult_;
+    }
+    loaded_ = true;
+
     auto file = StandardPath::global().open(
         StandardPath::Type::PkgData, "pinyinhelper/py_stroke.mb", O_RDONLY);
     if (file.fd() < 0) {
@@ -57,6 +62,7 @@ bool Stroke::load() {
         revserseDict_[tokens[1]] = tokens[0];
     }
 
+    loadResult_ = true;
     return true;
 }
 

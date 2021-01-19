@@ -28,6 +28,8 @@ public:
 private:
     libime::DATrie<int32_t> dict_;
     std::unordered_map<std::string, std::string> revserseDict_;
+    bool loaded_ = false;
+    bool loadResult_ = false;
 };
 } // namespace fcitx
 

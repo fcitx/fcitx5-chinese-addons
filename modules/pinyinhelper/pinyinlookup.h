@@ -29,6 +29,8 @@ public:
 
 private:
     std::unordered_map<uint32_t, std::vector<PinyinLookupData>> data_;
+    bool loaded_ = false;
+    bool loadResult_ = false;
 };
 } // namespace fcitx
 
