@@ -19,11 +19,12 @@ FileDownloader::FileDownloader(const QUrl &url, const QString &dest,
 
 void FileDownloader::start() {
     if (!file_.open(QIODevice::WriteOnly)) {
-        emit message(QMessageBox::Warning, _("Create temporary file failed."));
-        emit finished(false);
+        Q_EMIT message(QMessageBox::Warning,
+                       _("Create temporary file failed."));
+        Q_EMIT finished(false);
         return;
     }
-    emit message(QMessageBox::Information, _("Temporary file created."));
+    Q_EMIT message(QMessageBox::Information, _("Temporary file created."));
 
     QNetworkRequest request(url_);
     request.setRawHeader(
@@ -32,11 +33,11 @@ void FileDownloader::start() {
     reply_ = nam_.get(request);
 
     if (!reply_) {
-        emit message(QMessageBox::Warning, _("Failed to create request."));
-        emit finished(false);
+        Q_EMIT message(QMessageBox::Warning, _("Failed to create request."));
+        Q_EMIT finished(false);
         return;
     }
-    emit message(QMessageBox::Information, _("Download started."));
+    Q_EMIT message(QMessageBox::Information, _("Download started."));
 
     connect(reply_, &QNetworkReply::readyRead, this,
             &FileDownloader::readyToRead);
@@ -66,16 +67,16 @@ void FileDownloader::updateProgress(qint64 downloaded, qint64 total) {
         percent = 100;
     }
     if (percent >= progress_ + 10) {
-        emit message(QMessageBox::Information,
-                     QString::fromUtf8(_("%1% Downloaded.")).arg(percent));
+        Q_EMIT message(QMessageBox::Information,
+                       QString::fromUtf8(_("%1% Downloaded.")).arg(percent));
         progress_ = percent;
     }
 }
 
 void FileDownloader::downloadFinished() {
     file_.close();
-    emit message(QMessageBox::Information, _("Download Finished"));
-    emit finished(true);
+    Q_EMIT message(QMessageBox::Information, _("Download Finished"));
+    Q_EMIT finished(true);
 }
 
 } // namespace fcitx

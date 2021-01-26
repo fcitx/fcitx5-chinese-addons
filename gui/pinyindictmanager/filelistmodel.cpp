@@ -58,7 +58,7 @@ bool FileListModel::setData(const QModelIndex &index, const QVariant &value,
     if (role == Qt::CheckStateRole) {
         if (fileList_[index.row()].second != value.toBool()) {
             fileList_[index.row()].second = value.toBool();
-            emit changed();
+            Q_EMIT changed();
             return true;
         }
     }

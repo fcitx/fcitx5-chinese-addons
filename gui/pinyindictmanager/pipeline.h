@@ -23,7 +23,7 @@ public:
     void abort();
     void reset();
 
-signals:
+Q_SIGNALS:
     void finished(bool);
     void messages(const QString &message);
 

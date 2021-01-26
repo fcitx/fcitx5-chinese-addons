@@ -26,7 +26,7 @@ public:
     bool asyncSave() override;
     QString icon() override { return "fcitx-pinyin"; }
 
-private slots:
+private Q_SLOTS:
     void importFromFile();
     void importFromSogou();
     void importFromSogouOnline();

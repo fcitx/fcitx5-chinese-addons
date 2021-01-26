@@ -24,7 +24,7 @@ public:
     void abort() override;
     void cleanUp() override;
 
-private slots:
+private Q_SLOTS:
     void processFinished(int exitCode, QProcess::ExitStatus status);
 
 private:

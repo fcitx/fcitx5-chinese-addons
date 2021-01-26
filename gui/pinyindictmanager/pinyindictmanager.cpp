@@ -81,8 +81,8 @@ void PinyinDictManager::save() {
         this,
         [this]() {
             model_->save();
-            emit changed(false);
-            emit saveFinished();
+            Q_EMIT changed(false);
+            Q_EMIT saveFinished();
         },
         Qt::QueuedConnection);
 }
@@ -377,11 +377,11 @@ void PinyinDictManager::removeDict() {
 }
 
 void PinyinDictManager::clearUserDict() {
-    emit saveSubConfig("fcitx://config/addon/pinyin/clearuserdict");
+    Q_EMIT saveSubConfig("fcitx://config/addon/pinyin/clearuserdict");
 }
 
 void PinyinDictManager::clearAllDict() {
-    emit saveSubConfig("fcitx://config/addon/pinyin/clearalldict");
+    Q_EMIT saveSubConfig("fcitx://config/addon/pinyin/clearalldict");
 }
 
 } // namespace fcitx
