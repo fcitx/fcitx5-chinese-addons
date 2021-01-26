@@ -58,7 +58,7 @@ void Pipeline::emitFinished(bool result) {
     for (auto *job : jobs_) {
         job->cleanUp();
     }
-    emit finished(result);
+    Q_EMIT finished(result);
 }
 
 } // namespace fcitx

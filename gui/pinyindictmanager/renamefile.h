@@ -26,7 +26,7 @@ public:
     void abort() override;
     void cleanUp() override;
 
-private slots:
+private Q_SLOTS:
     void emitFinished(bool result);
 
 private:

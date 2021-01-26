@@ -31,10 +31,10 @@ void RenameFile::cleanUp() {}
 
 void RenameFile::emitFinished(bool result) {
     if (!result) {
-        emit message(QMessageBox::Critical, _("Converter crashed."));
+        Q_EMIT message(QMessageBox::Critical, _("Converter crashed."));
         return;
     }
-    emit finished(result);
+    Q_EMIT finished(result);
 }
 
 } // namespace fcitx

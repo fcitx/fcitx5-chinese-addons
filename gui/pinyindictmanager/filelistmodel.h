@@ -29,7 +29,7 @@ public:
     void save();
     int findFile(const QString &lastFileName);
 
-signals:
+Q_SIGNALS:
     void changed();
 
 private:

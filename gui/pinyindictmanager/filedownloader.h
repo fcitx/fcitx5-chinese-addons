@@ -28,7 +28,7 @@ public:
     void abort() override;
     void cleanUp() override;
 
-public slots:
+public Q_SLOTS:
     void readyToRead();
     void downloadFinished();
     void updateProgress(qint64, qint64);

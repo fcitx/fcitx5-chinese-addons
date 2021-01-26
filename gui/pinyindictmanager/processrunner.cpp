@@ -41,18 +41,18 @@ void ProcessRunner::cleanUp() { QFile::remove(file_); }
 
 void ProcessRunner::processFinished(int exitCode, QProcess::ExitStatus status) {
     if (status == QProcess::CrashExit) {
-        emit message(QMessageBox::Critical, _("Converter crashed."));
-        emit finished(false);
+        Q_EMIT message(QMessageBox::Critical, _("Converter crashed."));
+        Q_EMIT finished(false);
         return;
     }
 
     if (exitCode != 0) {
-        emit message(QMessageBox::Warning, _("Convert failed."));
-        emit finished(false);
+        Q_EMIT message(QMessageBox::Warning, _("Convert failed."));
+        Q_EMIT finished(false);
         return;
     }
 
-    emit finished(true);
+    Q_EMIT finished(true);
 }
 
 } // namespace fcitx
