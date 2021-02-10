@@ -4,15 +4,15 @@
 #
 # Translators:
 # Bon Keun Seo <scobyseo@gmail.com>, 2017
-# JungHee Lee <daemul72@gmail.com>, 2020
+# Bruce Lee <daemul72@gmail.com>, 2021
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-12-26 20:24+0000\n"
+"POT-Creation-Date: 2021-02-10 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
-"Last-Translator: JungHee Lee <daemul72@gmail.com>, 2020\n"
+"Last-Translator: Bruce Lee <daemul72@gmail.com>, 2021\n"
 "Language-Team: Korean (https://www.transifex.com/fcitx/teams/12005/ko/)\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
@@ -24,11 +24,11 @@ msgstr ""
 msgid "\t[Stroke Filtering] "
 msgstr "\t[필획 필터링] "
 
-#: im/table/state.cpp:860
+#: im/table/state.cpp:871
 msgid " Return for "
 msgstr " Return for "
 
-#: im/table/state.cpp:857
+#: im/table/state.cpp:868
 msgid " for "
 msgstr " for "
 
@@ -133,7 +133,7 @@ msgstr "창힐"
 
 #: org.fcitx.Fcitx5.Addon.ChineseAddons.metainfo.xml.in:7
 msgid "Chinese Addons"
-msgstr ""
+msgstr "중국어 애드온"
 
 #: im/pinyin/pinyin.h:132
 msgid "Choose Character from Phrase"
@@ -169,7 +169,7 @@ msgstr "잘못된 세그먼트 커밋"
 
 #: im/table/ime.h:87
 msgid "Commit after auto select candidates"
-msgstr ""
+msgstr "후보 자동 선택 후 커밋"
 
 #: im/table/ime.h:91
 msgid "Commit buffer when deactivating input method"
@@ -195,7 +195,7 @@ msgstr "변환하지 못했습니다."
 msgid "Converter crashed."
 msgstr "변환도구가 충돌했습니다."
 
-#: im/table/state.cpp:573
+#: im/table/state.cpp:580
 msgid "Could not find pinyin."
 msgstr "병음을 찾을 수 없음"
 
@@ -292,7 +292,7 @@ msgstr "예측 사용가능"
 
 #: im/pinyin/pinyin.h:69
 msgid "Enable Spell"
-msgstr ""
+msgstr "맞춤법 활성화"
 
 #: modules/chttrans/chttrans.h:33
 msgid "Enabled Input Methods"
@@ -539,7 +539,7 @@ msgstr "병음 사전 관리도구"
 msgid "PinyinJiajia"
 msgstr "PinyinJiajia"
 
-#: im/table/state.cpp:559
+#: im/table/state.cpp:566
 msgid "Please use this functionality after typing some text."
 msgstr "글자를 입력한 후에 이 기능을 사용하세요."
 
@@ -555,15 +555,15 @@ msgstr "예측 크기"
 msgid "Prefix key to trigger Pinyin"
 msgstr "병음 전환할 사전입력 키"
 
-#: im/table/state.cpp:591
+#: im/table/state.cpp:599
 msgid "Press Backspace to forget."
 msgstr "무시하기 위해 백스페이스를 누르세요."
 
-#: im/table/state.cpp:594
+#: im/table/state.cpp:602
 msgid "Press Delete to remove."
 msgstr "제거하려면 Delete 키를 누르십시오"
 
-#: im/table/state.cpp:588
+#: im/table/state.cpp:596
 msgid "Press space to insert."
 msgstr "입력하기 위해 스페이스를 누르세요"
 
@@ -644,7 +644,7 @@ msgstr "두 번째 후보 선택"
 msgid "Select Third Candidate"
 msgstr "세 번째 후보 선택"
 
-#: im/table/state.cpp:1096
+#: im/table/state.cpp:1114
 msgid "Select candidate to be removed from history:"
 msgstr "기록에서 제거할 후보 선택"
 
@@ -751,11 +751,11 @@ msgstr "번역 엔진"
 msgid "Type paired punctuations together (e.g. Quote)"
 msgstr ""
 
-#: im/table/state.cpp:565
+#: im/table/state.cpp:572
 msgid "Use Left and Right to select character: "
 msgstr "문자 선택을 위해 좌/우키 사용:"
 
-#: im/table/state.cpp:576
+#: im/table/state.cpp:583
 msgid "Use Left and Right to select text. "
 msgstr "문장 선택을 위해 좌/우키 사용:"
 
@@ -926,18 +926,18 @@ msgstr "ue -> ve"
 msgid "z <-> zh"
 msgstr "z <-> zh"
 
-#: im/pinyin/pinyin.cpp:121 modules/pinyinhelper/pinyinhelper.cpp:83
+#: im/pinyin/pinyin.cpp:121 modules/pinyinhelper/pinyinhelper.cpp:80
 msgid "{0} ({1})"
 msgstr "{0} ({1})"
 
-#: im/table/state.cpp:609
+#: im/table/state.cpp:617
 msgid "{0} is not in table."
 msgstr "{0}은 표에 없습니다."
 
-#: im/table/state.cpp:598
+#: im/table/state.cpp:606
 msgid "{0}: No corresponding code."
 msgstr "{0}: 해당 코드가 없음"
 
-#: im/table/state.cpp:583 im/table/state.cpp:606
+#: im/table/state.cpp:590 im/table/state.cpp:614
 msgid "{0}: {1}"
 msgstr "{0}: {1}"
