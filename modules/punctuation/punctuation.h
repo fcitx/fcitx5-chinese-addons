@@ -31,6 +31,21 @@ FCITX_CONFIGURATION(
         _("Type paired punctuations together (e.g. Quote)"), false};
     fcitx::HiddenOption<bool> enabled{this, "Enabled", "Enabled", true};);
 
+FCITX_CONFIGURATION(PunctuationMapEntryConfig,
+                    fcitx::Option<std::string> key{this, "Key", _("Key")};)
+
+FCITX_CONFIGURATION(
+    PunctuationMapConfig,
+    fcitx::OptionWithAnnotation<std::vector<PunctuationMapEntryConfig>,
+                                fcitx::ListDisplayOptionAnnotation>
+        entries{this,
+                "Entries",
+                _("Punctuation map"),
+                {},
+                {},
+                {},
+                fcitx::ListDisplayOptionAnnotation("Key")};);
+
 class PunctuationProfile {
 public:
     PunctuationProfile() {}
@@ -93,6 +108,8 @@ public:
         fcitx::safeSaveAsIni(config_, "conf/punctuation.conf");
     }
     const fcitx::Configuration *getConfig() const override { return &config_; }
+    const fcitx::Configuration *
+    getSubConfig(const std::string &path) const override;
     void setConfig(const fcitx::RawConfig &config) override {
         config_.load(config, true);
         fcitx::safeSaveAsIni(config_, "conf/punctuation.conf");
@@ -125,6 +142,7 @@ private:
         eventWatchers_;
     std::unordered_map<std::string, PunctuationProfile> profiles_;
     PunctuationConfig config_;
+    PunctuationMapConfig punctuationMapConfig_;
     ToggleAction toggleAction_{this};
 };
 

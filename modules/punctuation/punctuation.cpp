@@ -395,4 +395,12 @@ Punctuation::getPunctuation(const std::string &language, uint32_t unicode) {
     return iter->second.getPunctuation(unicode);
 }
 
+const fcitx::Configuration *
+Punctuation::getSubConfig(const std::string &path) const {
+    if (path == "punctuationmap-zh_CN") {
+        return &punctuationMapConfig_;
+    }
+    return nullptr;
+}
+
 FCITX_ADDON_FACTORY(PunctuationFactory);

@@ -155,6 +155,7 @@ FCITX_CONFIGURATION(
         IntConstrain(0, 10)};
     ExternalOption dictmanager{this, "DictManager", _("Dictionaries"),
                                "fcitx://config/addon/pinyin/dictmanager"};
+    SubConfigOption punctuationMap{this, "PunctuationMap", _("Punctuation Map"), "fcitx://config/addon/punctuation/punctuationmap-zh_CN"};
     Option<FuzzyConfig> fuzzyConfig{this, "Fuzzy", _("Fuzzy Pinyin Settings")};
     OptionWithAnnotation<std::vector<std::string>, ToolTipAnnotation>
         quickphraseTrigger{this,
