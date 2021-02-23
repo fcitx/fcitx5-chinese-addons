@@ -64,7 +64,7 @@ public:
     }
 
     bool filled() const { return filled_; }
-    const std::string &word() { return word_; }
+    const std::string &word() const { return word_; }
 
 private:
     static constexpr long int LOADING_TIME_QUICK_THRESHOLD = 300;

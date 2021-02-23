@@ -250,6 +250,34 @@ public:
     size_t idx_;
 };
 
+class CustomCloudPinyinCandidateWord : public CloudPinyinCandidateWord {
+public:
+    CustomCloudPinyinCandidateWord(AddonInstance *cloudpinyin,
+                                   const std::string &pinyin,
+                                   const std::string &selectedSentence,
+                                   InputContext *inputContext,
+                                   CloudPinyinSelectedCallback callback,
+                                   bool isFirst)
+        : CloudPinyinCandidateWord(cloudpinyin, pinyin, selectedSentence,
+                                   inputContext, callback),
+          isFirst_(isFirst) {}
+
+    void select(InputContext *inputContext) const override {
+        if ((!filled() || word().empty()) && isFirst_) {
+            auto candidateList = inputContext->inputPanel().candidateList();
+            for (int i = 0; i < candidateList->size(); i++) {
+                if (&candidateList->candidate(i) != this) {
+                    return candidateList->candidate(i).select(inputContext);
+                }
+            }
+        }
+        CloudPinyinCandidateWord::select(inputContext);
+    }
+
+private:
+    bool isFirst_;
+};
+
 std::unique_ptr<CandidateList>
 PinyinEngine::predictCandidateList(const std::vector<std::string> &words) {
     if (words.empty()) {
@@ -436,7 +464,7 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
         const auto selectedSentence = context.selectedSentence();
 
         /// Create cloud candidate. {{{
-        std::unique_ptr<CloudPinyinCandidateWord> cloud;
+        std::unique_ptr<CustomCloudPinyinCandidateWord> cloud;
         if (*config_.cloudPinyinEnabled && cloudpinyin() &&
             !inputContext->capabilityFlags().testAny(
                 CapabilityFlag::PasswordOrSensitive)) {
@@ -444,10 +472,10 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
             auto fullPinyin = context.useShuangpin()
                                   ? context.candidateFullPinyin(0)
                                   : context.userInput().substr(selectedLength);
-            cloud = std::make_unique<CloudPinyinCandidateWord>(
+            cloud = std::make_unique<CustomCloudPinyinCandidateWord>(
                 cloudpinyin(), fullPinyin, selectedSentence, inputContext,
-                std::bind(&PinyinEngine::cloudPinyinSelected, this, _1, _2,
-                          _3));
+                std::bind(&PinyinEngine::cloudPinyinSelected, this, _1, _2, _3),
+                *config_.cloudPinyinIndex == 1);
         }
         /// }}}
 
