@@ -32,7 +32,10 @@ FCITX_CONFIGURATION(
     fcitx::HiddenOption<bool> enabled{this, "Enabled", "Enabled", true};);
 
 FCITX_CONFIGURATION(PunctuationMapEntryConfig,
-                    fcitx::Option<std::string> key{this, "Key", _("Key")};)
+                    fcitx::Option<std::string> original{this, "Original",
+                                                        _("Original")};
+                    fcitx::Option<std::string> mapResult{this, "MapResult",
+                                                         _("Map Result")};)
 
 FCITX_CONFIGURATION(
     PunctuationMapConfig,
@@ -44,7 +47,7 @@ FCITX_CONFIGURATION(
                 {},
                 {},
                 {},
-                fcitx::ListDisplayOptionAnnotation("Key")};);
+                fcitx::ListDisplayOptionAnnotation("Original")};);
 
 class PunctuationProfile {
 public:
@@ -59,6 +62,7 @@ public:
 
     const std::pair<std::string, std::string> &
     getPunctuation(uint32_t unicode) const;
+    auto getPunctuationMap() const;
 
 private:
     std::unordered_map<uint32_t, std::pair<std::string, std::string>> puncMap_;
@@ -131,6 +135,7 @@ public:
     }
 
     bool inWhiteList(fcitx::InputContext *inputContext) const;
+    void setupPunctuationMapConfig();
 
 private:
     FCITX_ADDON_DEPENDENCY_LOADER(notifications, instance_->addonManager());

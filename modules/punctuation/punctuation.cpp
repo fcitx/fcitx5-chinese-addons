@@ -85,10 +85,16 @@ PunctuationProfile::getPunctuation(uint32_t unicode) const {
     return iter->second;
 }
 
+auto
+PunctuationProfile::getPunctuationMap() const {
+    return &puncMap_;
+}
+
 Punctuation::Punctuation(Instance *instance)
     : instance_(instance),
       factory_([](InputContext &) { return new PunctuationState; }) {
     reloadConfig();
+    setupPunctuationMapConfig();
     if (!instance_) {
         return;
     }
@@ -401,6 +407,19 @@ Punctuation::getSubConfig(const std::string &path) const {
         return &punctuationMapConfig_;
     }
     return nullptr;
+}
+
+void Punctuation::setupPunctuationMapConfig() {
+    auto configValue = punctuationMapConfig_.entries.mutableValue();
+    auto puncMap = profiles_["zh_CN"].getPunctuationMap();
+    for (auto& [key, value]: *puncMap){
+        PunctuationMapEntryConfig entryConfig;
+        std::string punc(1, (char) key);
+        entryConfig.original.setValue(punc);
+        entryConfig.mapResult.setValue(value.first);
+        configValue->emplace_back(entryConfig);
+    }
+    punctuationMapConfig_.syncDefaultValueToCurrent();
 }
 
 FCITX_ADDON_FACTORY(PunctuationFactory);
