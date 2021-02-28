@@ -119,6 +119,7 @@ public:
         fcitx::safeSaveAsIni(config_, "conf/punctuation.conf");
         populateConfig();
     }
+    void setSubConfig();
     void populateConfig();
 
     FCITX_ADDON_EXPORT_FUNCTION(Punctuation, getPunctuation);

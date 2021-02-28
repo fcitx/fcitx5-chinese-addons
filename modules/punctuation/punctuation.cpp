@@ -85,10 +85,7 @@ PunctuationProfile::getPunctuation(uint32_t unicode) const {
     return iter->second;
 }
 
-auto
-PunctuationProfile::getPunctuationMap() const {
-    return &puncMap_;
-}
+auto PunctuationProfile::getPunctuationMap() const { return &puncMap_; }
 
 Punctuation::Punctuation(Instance *instance)
     : instance_(instance),
@@ -412,14 +409,31 @@ Punctuation::getSubConfig(const std::string &path) const {
 void Punctuation::setupPunctuationMapConfig() {
     auto configValue = punctuationMapConfig_.entries.mutableValue();
     auto puncMap = profiles_["zh_CN"].getPunctuationMap();
-    for (auto& [key, value]: *puncMap){
+    for (auto &[key, value] : *puncMap) {
         PunctuationMapEntryConfig entryConfig;
-        std::string punc(1, (char) key);
+        std::string punc(1, (char)key);
         entryConfig.original.setValue(punc);
         entryConfig.mapResult.setValue(value.first);
         configValue->emplace_back(entryConfig);
     }
     punctuationMapConfig_.syncDefaultValueToCurrent();
+}
+
+void Punctuation::setSubConfig() {
+    auto path = stringutils::joinPath("fcitx5", "punctuation", "punc.mb.zh_CN");
+    std::string fileContent;
+    auto entries = punctuationMapConfig_.entries.value();
+    for (auto &entry : entries) {
+        fileContent.append(entry.original.value());
+        fileContent.append(" ");
+        fileContent.append(entry.mapResult.value());
+        fileContent.append("\n");
+    }
+    StandardPath::global().safeSave(
+        StandardPath::Type::Addon, path, [this, fileContent](int fd) {
+            fs::safeWrite(fd, fileContent.c_str(), fileContent.size());
+            return true;
+        });
 }
 
 FCITX_ADDON_FACTORY(PunctuationFactory);
