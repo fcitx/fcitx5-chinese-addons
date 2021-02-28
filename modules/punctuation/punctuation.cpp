@@ -420,7 +420,7 @@ void Punctuation::setupPunctuationMapConfig() {
 }
 
 void Punctuation::setSubConfig() {
-    auto path = stringutils::joinPath("fcitx5", "punctuation", "punc.mb.zh_CN");
+    auto path = stringutils::joinPath("punctuation", "punc.mb.zh_CN");
     std::string fileContent;
     auto entries = punctuationMapConfig_.entries.value();
     for (auto &entry : entries) {
@@ -430,7 +430,7 @@ void Punctuation::setSubConfig() {
         fileContent.append("\n");
     }
     StandardPath::global().safeSave(
-        StandardPath::Type::Addon, path, [this, fileContent](int fd) {
+        StandardPath::Type::PkgData, path, [this, fileContent](int fd) {
             fs::safeWrite(fd, fileContent.c_str(), fileContent.size());
             return true;
         });
