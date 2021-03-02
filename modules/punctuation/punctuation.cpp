@@ -20,7 +20,6 @@
 #include <fcitx/statusarea.h>
 #include <fcitx/userinterfacemanager.h>
 #include <fcntl.h>
-#include <fstream>
 #include <string_view>
 #include <unordered_set>
 
@@ -92,7 +91,7 @@ Punctuation::Punctuation(Instance *instance)
     : instance_(instance),
       factory_([](InputContext &) { return new PunctuationState; }) {
     reloadConfig();
-    setupPunctuationMapConfig();
+    setupPunctuationMapConfig(true);
     if (!instance_) {
         return;
     }
@@ -407,7 +406,7 @@ Punctuation::getSubConfig(const std::string &path) const {
     return nullptr;
 }
 
-void Punctuation::setupPunctuationMapConfig() {
+void Punctuation::setupPunctuationMapConfig(bool isSyncToDefault) {
     auto configValue = punctuationMapConfig_.entries.mutableValue();
     auto puncMap = profiles_["zh_CN"].getPunctuationMap();
     for (auto &[key, value] : *puncMap) {
@@ -417,7 +416,9 @@ void Punctuation::setupPunctuationMapConfig() {
         entryConfig.mapResult.setValue(value.first);
         configValue->emplace_back(entryConfig);
     }
-    punctuationMapConfig_.syncDefaultValueToCurrent();
+    if (isSyncToDefault) {
+        punctuationMapConfig_.syncDefaultValueToCurrent();
+    }
 }
 
 void Punctuation::setSubConfig(const std::string &path,
@@ -444,7 +445,7 @@ void Punctuation::setSubConfig(const std::string &path,
         });
 
     populateConfig();
-    setupPunctuationMapConfig();
+    setupPunctuationMapConfig(false);
 }
 
 FCITX_ADDON_FACTORY(PunctuationFactory);

@@ -137,7 +137,7 @@ public:
     }
 
     bool inWhiteList(fcitx::InputContext *inputContext) const;
-    void setupPunctuationMapConfig();
+    void setupPunctuationMapConfig(bool isSyncToDefault);
 
 private:
     FCITX_ADDON_DEPENDENCY_LOADER(notifications, instance_->addonManager());
