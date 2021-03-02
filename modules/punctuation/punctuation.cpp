@@ -20,6 +20,7 @@
 #include <fcitx/statusarea.h>
 #include <fcitx/userinterfacemanager.h>
 #include <fcntl.h>
+#include <fstream>
 #include <string_view>
 #include <unordered_set>
 
@@ -419,18 +420,25 @@ void Punctuation::setupPunctuationMapConfig() {
     punctuationMapConfig_.syncDefaultValueToCurrent();
 }
 
-void Punctuation::setSubConfig() {
-    auto path = stringutils::joinPath("punctuation", "punc.mb.zh_CN");
+void Punctuation::setSubConfig(const std::string &path,
+                               const fcitx::RawConfig &config) {
+    auto puncPath = stringutils::joinPath("punctuation", "punc.mb.zh_CN");
     std::string fileContent;
+    std::unordered_map<std::string, std::string> originalMaps;
+    punctuationMapConfig_.load(config, true);
     auto entries = punctuationMapConfig_.entries.value();
+    // remove duplicate entry
     for (auto &entry : entries) {
-        fileContent.append(entry.original.value());
+        originalMaps[entry.original.value()] = entry.mapResult.value();
+    }
+    for (auto &originalMap : originalMaps) {
+        fileContent.append(originalMap.first);
         fileContent.append(" ");
-        fileContent.append(entry.mapResult.value());
+        fileContent.append(originalMap.second);
         fileContent.append("\n");
     }
     StandardPath::global().safeSave(
-        StandardPath::Type::PkgData, path, [this, fileContent](int fd) {
+        StandardPath::Type::PkgData, puncPath, [this, fileContent](int fd) {
             fs::safeWrite(fd, fileContent.c_str(), fileContent.size());
             return true;
         });

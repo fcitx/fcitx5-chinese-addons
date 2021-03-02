@@ -119,7 +119,8 @@ public:
         fcitx::safeSaveAsIni(config_, "conf/punctuation.conf");
         populateConfig();
     }
-    void setSubConfig();
+    void setSubConfig(const std::string &path,
+                      const fcitx::RawConfig &config) override;
     void populateConfig();
 
     FCITX_ADDON_EXPORT_FUNCTION(Punctuation, getPunctuation);
