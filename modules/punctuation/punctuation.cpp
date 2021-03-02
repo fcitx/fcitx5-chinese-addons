@@ -442,6 +442,9 @@ void Punctuation::setSubConfig(const std::string &path,
             fs::safeWrite(fd, fileContent.c_str(), fileContent.size());
             return true;
         });
+
+    populateConfig();
+    setupPunctuationMapConfig();
 }
 
 FCITX_ADDON_FACTORY(PunctuationFactory);
