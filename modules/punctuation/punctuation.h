@@ -34,8 +34,10 @@ FCITX_CONFIGURATION(
 FCITX_CONFIGURATION(PunctuationMapEntryConfig,
                     fcitx::Option<std::string> original{this, "Original",
                                                         _("Original")};
-                    fcitx::Option<std::string> mapResult{this, "MapResult",
-                                                         _("Map Result")};)
+                    fcitx::Option<std::string> mapResult1{this, "MapResult1",
+                                                          _("Map Result 1")};
+                    fcitx::Option<std::string> mapResult2{this, "MapResult2",
+                                                          _("Map Result 2")};)
 
 FCITX_CONFIGURATION(
     PunctuationMapConfig,

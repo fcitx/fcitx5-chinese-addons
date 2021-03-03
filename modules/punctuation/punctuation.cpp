@@ -416,7 +416,8 @@ void Punctuation::setupPunctuationMapConfig() {
             PunctuationMapEntryConfig entryConfig;
             std::string punc(1, (char)key);
             entryConfig.original.setValue(punc);
-            entryConfig.mapResult.setValue(value.first);
+            entryConfig.mapResult1.setValue(value.first);
+            entryConfig.mapResult2.setValue(value.second);
             configValue->emplace_back(entryConfig);
         }
     } else {
@@ -436,26 +437,27 @@ void Punctuation::setSubConfig(const std::string &path,
         puncPath = stringutils::joinPath("punctuation", "punc.mb.zh_TW");
     } else {
         FCITX_LOG(Warn) << "path must be punctuationmap-zh_CN or "
-                           "punctuationmap-zh_HK punctuationmap-zh_TW!";
+                           "punctuationmap-zh_HK or punctuationmap-zh_TW!";
         return;
     }
-    std::string fileContent;
     std::unordered_map<std::string, std::string> originalMaps;
     punctuationMapConfig_.load(config, true);
     auto &entries = punctuationMapConfig_.entries.value();
     // remove duplicate entry
     for (auto &entry : entries) {
-        originalMaps[entry.original.value()] = entry.mapResult.value();
-    }
-    for (auto &originalMap : originalMaps) {
-        fileContent.append(originalMap.first);
-        fileContent.append(" ");
-        fileContent.append(originalMap.second);
-        fileContent.append("\n");
+        originalMaps[entry.original.value()] =
+            entry.mapResult1.value() + " " + entry.mapResult2.value();
     }
     StandardPath::global().safeSave(
-        StandardPath::Type::PkgData, puncPath, [this, fileContent](int fd) {
-            fs::safeWrite(fd, fileContent.c_str(), fileContent.size());
+        StandardPath::Type::PkgData, puncPath, [this, originalMaps](int fd) {
+            for (auto &originalMap : originalMaps) {
+                fs::safeWrite(fd, originalMap.first.data(),
+                              originalMap.first.size());
+                fs::safeWrite(fd, " ", sizeof(char));
+                fs::safeWrite(fd, originalMap.second.data(),
+                              originalMap.second.size());
+                fs::safeWrite(fd, "\n", sizeof(char));
+            }
             return true;
         });
 
