@@ -85,13 +85,14 @@ PunctuationProfile::getPunctuation(uint32_t unicode) const {
     return iter->second;
 }
 
-auto PunctuationProfile::getPunctuationMap() const { return &puncMap_; }
+auto PunctuationProfile::getPunctuationMap() const & { return &puncMap_; }
 
 Punctuation::Punctuation(Instance *instance)
     : instance_(instance),
       factory_([](InputContext &) { return new PunctuationState; }) {
     reloadConfig();
-    setupPunctuationMapConfig(true);
+    setupPunctuationMapConfig();
+    punctuationMapConfig_.syncDefaultValueToCurrent();
     if (!instance_) {
         return;
     }
@@ -400,34 +401,48 @@ Punctuation::getPunctuation(const std::string &language, uint32_t unicode) {
 
 const fcitx::Configuration *
 Punctuation::getSubConfig(const std::string &path) const {
-    if (path == "punctuationmap-zh_CN") {
+    if (path == "punctuationmap-zh_CN" || path == "punctuationmap-zh_HK" ||
+        path == "punctuationmap-zh_TW") {
         return &punctuationMapConfig_;
     }
     return nullptr;
 }
 
-void Punctuation::setupPunctuationMapConfig(bool isSyncToDefault) {
+void Punctuation::setupPunctuationMapConfig() {
     auto configValue = punctuationMapConfig_.entries.mutableValue();
-    auto puncMap = profiles_["zh_CN"].getPunctuationMap();
-    for (auto &[key, value] : *puncMap) {
-        PunctuationMapEntryConfig entryConfig;
-        std::string punc(1, (char)key);
-        entryConfig.original.setValue(punc);
-        entryConfig.mapResult.setValue(value.first);
-        configValue->emplace_back(entryConfig);
-    }
-    if (isSyncToDefault) {
-        punctuationMapConfig_.syncDefaultValueToCurrent();
+    if (profiles_.count("zh_CN") > 0) {
+        auto puncMap = profiles_["zh_CN"].getPunctuationMap();
+        for (auto &[key, value] : *puncMap) {
+            PunctuationMapEntryConfig entryConfig;
+            std::string punc(1, (char)key);
+            entryConfig.original.setValue(punc);
+            entryConfig.mapResult.setValue(value.first);
+            configValue->emplace_back(entryConfig);
+        }
+    } else {
+        FCITX_LOG(Warn) << "zh_CN is not load!";
+        return;
     }
 }
 
 void Punctuation::setSubConfig(const std::string &path,
                                const fcitx::RawConfig &config) {
-    auto puncPath = stringutils::joinPath("punctuation", "punc.mb.zh_CN");
+    std::string puncPath;
+    if (path == "punctuationmap-zh_CN") {
+        puncPath = stringutils::joinPath("punctuation", "punc.mb.zh_CN");
+    } else if (path == "punctuationmap-zh_HK") {
+        puncPath = stringutils::joinPath("punctuation", "punc.mb.zh_HK");
+    } else if (path == "punctuationmap-zh_TW") {
+        puncPath = stringutils::joinPath("punctuation", "punc.mb.zh_TW");
+    } else {
+        FCITX_LOG(Warn) << "path must be punctuationmap-zh_CN or "
+                           "punctuationmap-zh_HK punctuationmap-zh_TW!";
+        return;
+    }
     std::string fileContent;
     std::unordered_map<std::string, std::string> originalMaps;
     punctuationMapConfig_.load(config, true);
-    auto entries = punctuationMapConfig_.entries.value();
+    auto &entries = punctuationMapConfig_.entries.value();
     // remove duplicate entry
     for (auto &entry : entries) {
         originalMaps[entry.original.value()] = entry.mapResult.value();
@@ -445,7 +460,7 @@ void Punctuation::setSubConfig(const std::string &path,
         });
 
     populateConfig();
-    setupPunctuationMapConfig(false);
+    setupPunctuationMapConfig();
 }
 
 FCITX_ADDON_FACTORY(PunctuationFactory);

@@ -62,7 +62,7 @@ public:
 
     const std::pair<std::string, std::string> &
     getPunctuation(uint32_t unicode) const;
-    auto getPunctuationMap() const;
+    auto getPunctuationMap() const &;
 
 private:
     std::unordered_map<uint32_t, std::pair<std::string, std::string>> puncMap_;
@@ -112,13 +112,13 @@ public:
         fcitx::safeSaveAsIni(config_, "conf/punctuation.conf");
     }
     const fcitx::Configuration *getConfig() const override { return &config_; }
-    const fcitx::Configuration *
-    getSubConfig(const std::string &path) const override;
     void setConfig(const fcitx::RawConfig &config) override {
         config_.load(config, true);
         fcitx::safeSaveAsIni(config_, "conf/punctuation.conf");
         populateConfig();
     }
+    const fcitx::Configuration *
+    getSubConfig(const std::string &path) const override;
     void setSubConfig(const std::string &path,
                       const fcitx::RawConfig &config) override;
     void populateConfig();
@@ -137,7 +137,7 @@ public:
     }
 
     bool inWhiteList(fcitx::InputContext *inputContext) const;
-    void setupPunctuationMapConfig(bool isSyncToDefault);
+    void setupPunctuationMapConfig();
 
 private:
     FCITX_ADDON_DEPENDENCY_LOADER(notifications, instance_->addonManager());
