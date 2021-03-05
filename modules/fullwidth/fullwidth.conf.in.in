@@ -1,6 +1,7 @@
 [Addon]
 Name=Full width character
 Category=Module
+Version=@PROJECT_VERSION@
 Library=fullwidth
 Type=SharedLibrary
 OnDemand=True

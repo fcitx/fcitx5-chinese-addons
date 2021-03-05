@@ -1,6 +1,7 @@
 [Addon]
 Name=Pinyin
 Category=InputMethod
+Version=@PROJECT_VERSION@
 Library=pinyin
 Type=SharedLibrary
 OnDemand=True

@@ -15,7 +15,8 @@ install(TARGETS pinyin DESTINATION "${CMAKE_INSTALL_LIBDIR}/fcitx5")
 fcitx5_translate_desktop_file(pinyin.conf.in pinyin.conf)
 fcitx5_translate_desktop_file(shuangpin.conf.in shuangpin.conf)
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/pinyin.conf" "${CMAKE_CURRENT_BINARY_DIR}/shuangpin.conf" DESTINATION "${CMAKE_INSTALL_DATADIR}/fcitx5/inputmethod")
-fcitx5_translate_desktop_file(pinyin-addon.conf.in pinyin-addon.conf)
+configure_file(pinyin-addon.conf.in.in pinyin-addon.conf.in)
+fcitx5_translate_desktop_file("${CMAKE_CURRENT_BINARY_DIR}/pinyin-addon.conf.in" pinyin-addon.conf)
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/pinyin-addon.conf" RENAME pinyin.conf DESTINATION "${FCITX_INSTALL_PKGDATADIR}/addon")
 
 add_custom_command(

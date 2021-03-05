@@ -1,6 +1,7 @@
 [Addon]
 Name=Extra Pinyin functionality
 Category=Module
+Version=@PROJECT_VERSION@
 Library=pinyinhelper
 Type=SharedLibrary
 OnDemand=False
