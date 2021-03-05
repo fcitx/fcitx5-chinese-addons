@@ -954,13 +954,12 @@ bool PinyinEngine::handle2nd3rdSelection(KeyEvent &event) {
     // Keep these two values, and reset them in the state
     state->keyReleased_ = -1;
     state->keyReleasedIndex_ = -2;
-    const bool isModifier = event.rawKey().isModifier();
+    const bool isModifier = event.key().isModifier();
     if (event.isRelease()) {
         int idx = 0;
         for (auto &keyHandler : keyHandlers) {
             if (keyReleased == idx &&
-                keyReleasedIndex ==
-                    event.rawKey().keyListIndex(keyHandler.list)) {
+                keyReleasedIndex == event.key().keyListIndex(keyHandler.list)) {
                 if (isModifier) {
                     if (keyHandler.selection < candidateList->size()) {
                         candidateList->candidate(keyHandler.selection)
@@ -979,7 +978,7 @@ bool PinyinEngine::handle2nd3rdSelection(KeyEvent &event) {
     if (!event.filtered() && !event.isRelease()) {
         int idx = 0;
         for (auto &keyHandler : keyHandlers) {
-            auto keyIdx = event.rawKey().keyListIndex(keyHandler.list);
+            auto keyIdx = event.key().keyListIndex(keyHandler.list);
             if (keyIdx >= 0) {
                 state->keyReleased_ = idx;
                 state->keyReleasedIndex_ = keyIdx;
