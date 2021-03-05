@@ -1,10 +1,11 @@
 [Addon]
-Name=Simplified and Traditional Chinese Translation
+Name=Punctuation
 Category=Module
-Library=chttrans
+Version=@PROJECT_VERSION@
+Library=punctuation
 Type=SharedLibrary
-Configurable=True
 OnDemand=True
+Configurable=True
 
 [Addon/OptionalDependencies]
 0=notifications
