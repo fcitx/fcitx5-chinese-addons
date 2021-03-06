@@ -117,13 +117,13 @@ public:
     void setConfig(const fcitx::RawConfig &config) override {
         config_.load(config, true);
         fcitx::safeSaveAsIni(config_, "conf/punctuation.conf");
-        populateConfig();
+        populateConfig(false);
     }
     const fcitx::Configuration *
     getSubConfig(const std::string &path) const override;
     void setSubConfig(const std::string &path,
                       const fcitx::RawConfig &config) override;
-    void populateConfig();
+    void populateConfig(bool isReadSystemConfig);
 
     FCITX_ADDON_EXPORT_FUNCTION(Punctuation, getPunctuation);
     FCITX_ADDON_EXPORT_FUNCTION(Punctuation, pushPunctuation);
@@ -139,7 +139,7 @@ public:
     }
 
     bool inWhiteList(fcitx::InputContext *inputContext) const;
-    void setupPunctuationMapConfig();
+    void setupPunctuationMapConfig(const std::string &lang);
 
 private:
     FCITX_ADDON_DEPENDENCY_LOADER(notifications, instance_->addonManager());
@@ -151,7 +151,7 @@ private:
         eventWatchers_;
     std::unordered_map<std::string, PunctuationProfile> profiles_;
     PunctuationConfig config_;
-    PunctuationMapConfig punctuationMapConfig_;
+    mutable PunctuationMapConfig punctuationMapConfig_;
     ToggleAction toggleAction_{this};
 };
 
