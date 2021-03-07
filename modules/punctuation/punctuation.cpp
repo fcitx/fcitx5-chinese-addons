@@ -272,9 +272,16 @@ void Punctuation::reloadConfig() {
 }
 
 void Punctuation::populateConfig(bool isReadSystemConfig) {
-    auto files = StandardPath::global().multiOpen(
-        StandardPath::Type::PkgData, "punctuation", O_RDONLY,
-        isReadSystemConfig, filter::Prefix("punc.mb."));
+    std::map<std::string, StandardPathFile> files;
+    if (isReadSystemConfig) {
+        files = StandardPath::global().multiOpen(
+            StandardPath::Type::PkgData, "punctuation", O_RDONLY,
+            filter::Prefix("punc.mb."), filter::Not(filter::User()));
+    } else {
+        files = StandardPath::global().multiOpen(StandardPath::Type::PkgData,
+                                                 "punctuation", O_RDONLY,
+                                                 filter::Prefix("punc.mb."));
+    }
 
     auto iter = profiles_.begin();
     while (iter != profiles_.end()) {
@@ -410,6 +417,7 @@ Punctuation::getSubConfig(const std::string &path) const {
     auto lang = getLangByPath(path);
     if (!lang.empty()) {
         const_cast<Punctuation *>(this)->populateConfig(true);
+        const_cast<Punctuation *>(this)->setupPunctuationMapConfig(lang);
         punctuationMapConfig_.syncDefaultValueToCurrent();
         const_cast<Punctuation *>(this)->populateConfig(false);
         const_cast<Punctuation *>(this)->setupPunctuationMapConfig(lang);
@@ -420,6 +428,7 @@ Punctuation::getSubConfig(const std::string &path) const {
 
 void Punctuation::setupPunctuationMapConfig(const std::string &lang) {
     auto configValue = punctuationMapConfig_.entries.mutableValue();
+    configValue->clear();
     if (profiles_.count(lang) > 0) {
         auto puncMap = profiles_[lang].getPunctuationMap();
         for (auto &[key, value] : *puncMap) {
