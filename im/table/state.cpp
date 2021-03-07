@@ -513,7 +513,8 @@ bool TableState::handleLookupPinyinOrModifyDictionaryMode(KeyEvent &event) {
     };
 
     if (!lookupPinyinString_.empty()) {
-        if (event.key().check(FcitxKey_space) &&
+        if ((event.key().check(FcitxKey_space) ||
+             event.key().check(FcitxKey_Return)) &&
             mode_ == TableMode::ModifyDictionary) {
             auto subString = getSubString();
             std::string result;
@@ -593,7 +594,7 @@ bool TableState::handleLookupPinyinOrModifyDictionaryMode(KeyEvent &event) {
                             result, subString.first);
                         if (flag == libime::PhraseFlag::Invalid ||
                             flag == libime::PhraseFlag::Auto) {
-                            auxUp.append(_("Press space to insert."));
+                            auxUp.append(_("Press space or enter to insert."));
                         }
                         if (flag != libime::PhraseFlag::Invalid) {
                             auxUp.append(_("Press Backspace to forget."));
