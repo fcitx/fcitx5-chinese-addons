@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-12-20 20:24+0000\n"
+"POT-Creation-Date: 2021-03-07 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: mar well <m.wellendorf@gmx.de>, 2018\n"
 "Language-Team: German (https://www.transifex.com/fcitx/teams/12005/de/)\n"
@@ -19,15 +19,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: im/pinyin/pinyin.cpp:1051
+#: im/pinyin/pinyin.cpp:1079
 msgid "\t[Stroke Filtering] "
 msgstr ""
 
-#: im/table/state.cpp:850
+#: im/table/state.cpp:872
 msgid " Return for "
 msgstr ""
 
-#: im/table/state.cpp:847
+#: im/table/state.cpp:869
 msgid " for "
 msgstr ""
 
@@ -35,7 +35,7 @@ msgstr ""
 msgid "%1 already exists, do you want to overwrite this dictionary?"
 msgstr "%1 existiert bereits, soll das Wörterbuch überschrieben werden?"
 
-#: gui/pinyindictmanager/filedownloader.cpp:70
+#: gui/pinyindictmanager/filedownloader.cpp:71
 msgid "%1% Downloaded."
 msgstr "%1% Heruntergeladen."
 
@@ -142,7 +142,7 @@ msgstr ""
 msgid "Clear &All Data"
 msgstr "&Alle Daten löschen"
 
-#: modules/cloudpinyin/cloudpinyin.conf.in:3
+#: modules/cloudpinyin/cloudpinyin.conf.in.in:3
 msgid "Cloud Pinyin"
 msgstr "Cloud Pinyin"
 
@@ -150,15 +150,15 @@ msgstr "Cloud Pinyin"
 msgid "Cloud Pinyin Index"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:892
+#: im/pinyin/pinyin.cpp:921
 msgid "Cloud Pinyin Status"
 msgstr "Cloud Pinyin Status"
 
-#: im/pinyin/pinyin.cpp:894
+#: im/pinyin/pinyin.cpp:923
 msgid "Cloud Pinyin is disabled."
 msgstr "Cloud Pinyin ist ausgeschaltet."
 
-#: im/pinyin/pinyin.cpp:893
+#: im/pinyin/pinyin.cpp:922
 msgid "Cloud Pinyin is enabled."
 msgstr "Cloud Pinyin ist eingeschaltet."
 
@@ -194,7 +194,7 @@ msgstr "Konvertierung fehlgeschlagen."
 msgid "Converter crashed."
 msgstr "Konverter abgestürzt."
 
-#: im/table/state.cpp:573
+#: im/table/state.cpp:581
 msgid "Could not find pinyin."
 msgstr "Pinyin kann nicht gefunden werden"
 
@@ -206,7 +206,7 @@ msgstr ""
 "Kopieren des Verzeichnisses fehlgeschlagen. Bitte überprüfen Sie die "
 "Dateiberechtigungen oder ob die Festplatte voll ist."
 
-#: gui/pinyindictmanager/filedownloader.cpp:22
+#: gui/pinyindictmanager/filedownloader.cpp:23
 msgid "Create temporary file failed."
 msgstr "Erstellen der temporären Datei fehlgeschlagen."
 
@@ -249,13 +249,13 @@ msgstr "Hinweis für Wort anzeigen"
 msgid "Display custom hint"
 msgstr "Standardhinweis zeigen"
 
-#: im/pinyin/pinyin.cpp:734
+#: im/pinyin/pinyin.cpp:763
 msgid ""
 "Do you want to enable cloudpinyin now for better prediction? You can always "
 "toggle it later in configuration or by pressing {}."
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:729
+#: im/pinyin/pinyin.cpp:758
 msgid ""
 "Do you want to enable cloudpinyin now for better prediction? You can always "
 "toggle it later in configuration."
@@ -265,11 +265,11 @@ msgstr ""
 msgid "Don't sort word shorter than"
 msgstr ""
 
-#: gui/pinyindictmanager/filedownloader.cpp:77
+#: gui/pinyindictmanager/filedownloader.cpp:78
 msgid "Download Finished"
 msgstr "Download beendet"
 
-#: gui/pinyindictmanager/filedownloader.cpp:39
+#: gui/pinyindictmanager/filedownloader.cpp:40
 msgid "Download started."
 msgstr "Download begonnen."
 
@@ -281,7 +281,7 @@ msgstr ""
 msgid "Enable Cloud Pinyin"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:743
+#: im/pinyin/pinyin.cpp:772
 msgid "Enable Cloudpinyin"
 msgstr ""
 
@@ -321,7 +321,7 @@ msgstr "Fehler beim Löschen von %1."
 msgid "Exact Match"
 msgstr "Genaue Übereinstimmung"
 
-#: modules/pinyinhelper/pinyinhelper.conf.in:3
+#: modules/pinyinhelper/pinyinhelper.conf.in.in:3
 msgid "Extra Pinyin functionality"
 msgstr "Extra Pinyin-Funktionalitat"
 
@@ -329,7 +329,7 @@ msgstr "Extra Pinyin-Funktionalitat"
 msgid "Failed to create directory"
 msgstr "Verzeichnis konnte nicht erstellt werden"
 
-#: gui/pinyindictmanager/filedownloader.cpp:35
+#: gui/pinyindictmanager/filedownloader.cpp:36
 msgid "Failed to create request."
 msgstr "Anforderung fehlgeschlagen."
 
@@ -382,7 +382,7 @@ msgstr "Vollbreite Zeichen sind ausgeschaltet."
 msgid "Full width Character is enabled."
 msgstr "Vollbreite Zeichen sind eingeschlaltet."
 
-#: modules/fullwidth/fullwidth.cpp:70 modules/fullwidth/fullwidth.conf.in:3
+#: modules/fullwidth/fullwidth.cpp:70 modules/fullwidth/fullwidth.conf.in.in:3
 msgid "Full width character"
 msgstr "Vollbreite Zeichen"
 
@@ -493,7 +493,7 @@ msgstr ""
 msgid "Next page"
 msgstr "Nächste Seite"
 
-#: im/pinyin/pinyin.cpp:740
+#: im/pinyin/pinyin.cpp:769
 msgid "No"
 msgstr ""
 
@@ -530,8 +530,8 @@ msgstr ""
 msgid "Page size"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:743 im/pinyin/pinyin.cpp:891
-#: im/pinyin/pinyin-addon.conf.in:3 im/pinyin/pinyin.conf.in:3
+#: im/pinyin/pinyin.cpp:772 im/pinyin/pinyin.cpp:920
+#: im/pinyin/pinyin-addon.conf.in.in:3 im/pinyin/pinyin.conf.in:3
 msgid "Pinyin"
 msgstr "Pinyin"
 
@@ -543,12 +543,12 @@ msgstr "Pinyin-Wörterbuch-Manager"
 msgid "PinyinJiajia"
 msgstr ""
 
-#: im/table/state.cpp:559
+#: im/table/state.cpp:567
 msgid "Please use this functionality after typing some text."
 msgstr ""
 "Bitte benutzen Sie diese Funktionalität nach der Eingabe von etwas Text."
 
-#: im/pinyin/pinyin.cpp:636
+#: im/pinyin/pinyin.cpp:664
 msgid "Prediction"
 msgstr "Autovervollständigen"
 
@@ -560,23 +560,23 @@ msgstr ""
 msgid "Prefix key to trigger Pinyin"
 msgstr "Festgelegte Taste um Pinyin anzuschalten"
 
-#: im/table/state.cpp:591
+#: im/table/state.cpp:600
 msgid "Press Backspace to forget."
 msgstr "Zum vergessen Rücktaste drücken"
 
-#: im/table/state.cpp:594
+#: im/table/state.cpp:603
 msgid "Press Delete to remove."
 msgstr "Zum Entfernen Löschen drücken"
 
-#: im/table/state.cpp:588
-msgid "Press space to insert."
-msgstr "Zum Einfügen Leertaste drücken."
+#: im/table/state.cpp:597
+msgid "Press space or enter to insert."
+msgstr ""
 
-#: im/pinyin/pinyin.cpp:1302
+#: im/pinyin/pinyin.cpp:1330
 msgid "Press {} for {}"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1299
+#: im/pinyin/pinyin.cpp:1327
 msgid "Press {} for {} and Return for {}"
 msgstr ""
 
@@ -602,7 +602,7 @@ msgstr ""
 
 #: modules/punctuation/punctuation.cpp:148
 #: modules/punctuation/punctuation.cpp:150
-#: modules/punctuation/punctuation.conf.in:3
+#: modules/punctuation/punctuation.conf.in.in:3
 msgid "Punctuation"
 msgstr "Interpunktion"
 
@@ -649,7 +649,7 @@ msgstr ""
 msgid "Select Third Candidate"
 msgstr ""
 
-#: im/table/state.cpp:1071
+#: im/table/state.cpp:1114
 msgid "Select candidate to be removed from history:"
 msgstr ""
 
@@ -669,7 +669,7 @@ msgstr ""
 msgid "Show complete pinyin in preedit"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:637
+#: im/pinyin/pinyin.cpp:665
 msgid "Show prediction words"
 msgstr "Wörter der Autovervollständigung anzeigen"
 
@@ -693,7 +693,7 @@ msgstr "Chinesische Kurzzeichen"
 msgid "Simplified Chinese is enabled."
 msgstr "Chinesische Kurzzeichen aktiviert."
 
-#: modules/chttrans/chttrans.cpp:71 modules/chttrans/chttrans.conf.in:3
+#: modules/chttrans/chttrans.cpp:71 modules/chttrans/chttrans.conf.in.in:3
 msgid "Simplified and Traditional Chinese Translation"
 msgstr "Übersetzung simplizifiertes und traditionelles Chinesisch "
 
@@ -713,11 +713,11 @@ msgstr ""
 msgid "Switch to Traditional Chinese"
 msgstr ""
 
-#: im/table/table.conf.in:3
+#: im/table/table.conf.in.in:3
 msgid "Table"
 msgstr "Tabelle"
 
-#: gui/pinyindictmanager/filedownloader.cpp:26
+#: gui/pinyindictmanager/filedownloader.cpp:27
 msgid "Temporary file created."
 msgstr "Temporäre Datei erstellt."
 
@@ -756,11 +756,11 @@ msgstr ""
 msgid "Type paired punctuations together (e.g. Quote)"
 msgstr ""
 
-#: im/table/state.cpp:565
+#: im/table/state.cpp:573
 msgid "Use Left and Right to select character: "
 msgstr "Pfeiltasten Links und Rechts benutzen, um Zeichen auszuwählen"
 
-#: im/table/state.cpp:576
+#: im/table/state.cpp:584
 msgid "Use Left and Right to select text. "
 msgstr "Pfeiltasten Links und Rechts benutzen, um Text auszuwählen"
 
@@ -846,7 +846,7 @@ msgstr "Wubi Pinyin"
 msgid "Xiaohe"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:739
+#: im/pinyin/pinyin.cpp:768
 msgid "Yes"
 msgstr ""
 
@@ -862,7 +862,7 @@ msgstr ""
 msgid "Ziranma"
 msgstr "Ziranma"
 
-#: im/pinyin/pinyin.cpp:1103
+#: im/pinyin/pinyin.cpp:1131
 msgid "[Select the word to remove from history]"
 msgstr ""
 
@@ -931,18 +931,18 @@ msgstr ""
 msgid "z <-> zh"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:121 modules/pinyinhelper/pinyinhelper.cpp:83
+#: im/pinyin/pinyin.cpp:121 modules/pinyinhelper/pinyinhelper.cpp:80
 msgid "{0} ({1})"
 msgstr "{0} ({1})"
 
-#: im/table/state.cpp:609
+#: im/table/state.cpp:618
 msgid "{0} is not in table."
 msgstr "{0} ist nicht in der Tabelle."
 
-#: im/table/state.cpp:598
+#: im/table/state.cpp:607
 msgid "{0}: No corresponding code."
 msgstr "{0}: Kein passender Code"
 
-#: im/table/state.cpp:583 im/table/state.cpp:606
+#: im/table/state.cpp:591 im/table/state.cpp:615
 msgid "{0}: {1}"
 msgstr "{0}: {1}"
