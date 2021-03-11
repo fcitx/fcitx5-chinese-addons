@@ -427,9 +427,9 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
                 CapabilityFlag::PasswordOrSensitive)) {
             state->context_.learn();
         }
+        inputContext->commitString(sentence);
         inputContext->updatePreedit();
         inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
-        inputContext->commitString(sentence);
         if (*config_.predictionEnabled) {
             initPredict(inputContext);
         }
