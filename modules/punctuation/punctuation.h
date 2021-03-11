@@ -64,10 +64,12 @@ public:
 
     const std::pair<std::string, std::string> &
     getPunctuation(uint32_t unicode) const;
-    auto getPunctuationMap() const &;
+    void setupPunctuationMapConfig();
+    PunctuationMapConfig *getPunctuationMapConfig();
 
 private:
     std::unordered_map<uint32_t, std::pair<std::string, std::string>> puncMap_;
+    PunctuationMapConfig punctuationMapConfig_;
 };
 
 class PunctuationState;
@@ -139,7 +141,6 @@ public:
     }
 
     bool inWhiteList(fcitx::InputContext *inputContext) const;
-    void setupPunctuationMapConfig(const std::string &lang);
 
 private:
     FCITX_ADDON_DEPENDENCY_LOADER(notifications, instance_->addonManager());
@@ -151,7 +152,6 @@ private:
         eventWatchers_;
     std::unordered_map<std::string, PunctuationProfile> profiles_;
     PunctuationConfig config_;
-    mutable PunctuationMapConfig punctuationMapConfig_;
     ToggleAction toggleAction_{this};
 };
 
