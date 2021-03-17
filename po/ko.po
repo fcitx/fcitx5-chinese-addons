@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2021-03-07 20:24+0000\n"
+"POT-Creation-Date: 2021-03-17 16:14+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: JungHee Lee <daemul72@gmail.com>, 2021\n"
 "Language-Team: Korean (https://www.transifex.com/fcitx/teams/12005/ko/)\n"
@@ -87,6 +87,10 @@ msgid ""
 "the table. 0 means disable this feature. "
 msgstr ""
 
+#: modules/punctuation/punctuation.h:41
+msgid "Alternative Mapping"
+msgstr ""
+
 #: gui/pinyindictmanager/pinyindictmanager.cpp:363
 msgid "Are you sure to delete %1?"
 msgstr "%1을(를) 삭제하시겠습니까?"
@@ -143,7 +147,7 @@ msgstr "문구에서 문자 선택"
 msgid "Clear &All Data"
 msgstr "모든 데이터 비우기(&A)"
 
-#: modules/cloudpinyin/cloudpinyin.conf.in.in:3
+#: im/pinyin/pinyin.h:156 modules/cloudpinyin/cloudpinyin.conf.in.in:3
 msgid "Cloud Pinyin"
 msgstr "클라우드 병음"
 
@@ -230,7 +234,7 @@ msgstr "대화창"
 msgid "Dianbaoma"
 msgstr "Dianbaoma"
 
-#: im/pinyin/pinyin.h:156
+#: im/pinyin/pinyin.h:148
 msgid "Dictionaries"
 msgstr "사전"
 
@@ -302,8 +306,12 @@ msgstr "활성화된 입력기"
 msgid "End key"
 msgstr "중지  키"
 
-#: im/pinyin/pinyin.h:167
+#: im/pinyin/pinyin.h:176
 msgid "Enter a string from the list will make it enter quickphrase mode."
+msgstr ""
+
+#: modules/punctuation/punctuation.h:49
+msgid "Entries"
 msgstr ""
 
 #: im/table/erbi.conf.in.in:3
@@ -383,19 +391,19 @@ msgstr "전각 문자가 활성화되었습니다."
 msgid "Full width character"
 msgstr "전각 문자"
 
-#: modules/punctuation/punctuation.h:60
+#: modules/punctuation/punctuation.h:88
 msgid "Full width punctuation"
 msgstr "전각 문장부호"
 
-#: modules/punctuation/punctuation.cpp:152
+#: modules/punctuation/punctuation.cpp:230
 msgid "Full width punctuation is disabled."
 msgstr "전각 문장부호 비활성화되었습니다."
 
-#: modules/punctuation/punctuation.cpp:151
+#: modules/punctuation/punctuation.cpp:229
 msgid "Full width punctuation is enabled."
 msgstr "전각 문장부호가 활성화되었습니다."
 
-#: im/pinyin/pinyin.h:158
+#: im/pinyin/pinyin.h:178
 msgid "Fuzzy Pinyin Settings"
 msgstr "불분명한 병음 설정"
 
@@ -403,11 +411,11 @@ msgstr "불분명한 병음 설정"
 msgid "Half width Character"
 msgstr "반각 문자"
 
-#: modules/punctuation/punctuation.h:61
+#: modules/punctuation/punctuation.h:89
 msgid "Half width punctuation"
 msgstr "반각 문장부호"
 
-#: modules/punctuation/punctuation.h:28
+#: modules/punctuation/punctuation.h:29
 msgid "Half width punctuation after latin letter or number"
 msgstr ""
 
@@ -442,7 +450,12 @@ msgstr ""
 msgid "Input Dictionary Name"
 msgstr "입력 사전 이름"
 
-#: im/table/ime.h:111 im/pinyin/pinyin.h:144
+#: modules/punctuation/punctuation.h:38
+msgctxt "Key of the punctuation, e.g. comma"
+msgid "Key"
+msgstr ""
+
+#: im/table/ime.h:111 im/pinyin/pinyin.h:161
 msgid "Key to trigger quickphrase"
 msgstr "상용구 전환 키"
 
@@ -461,6 +474,10 @@ msgstr "병음 검색"
 #: im/pinyin/pinyin.h:33
 msgid "MS"
 msgstr "MS"
+
+#: modules/punctuation/punctuation.h:39
+msgid "Mapping"
+msgstr ""
 
 #: im/pinyin/pinyin.h:46
 msgid "Match partial finals (e -> en, eng, ei)"
@@ -507,7 +524,7 @@ msgstr "사용할 수 없음"
 msgid "Not set"
 msgstr "지정되지 않음"
 
-#: im/pinyin/pinyin.h:150
+#: im/pinyin/pinyin.h:142
 msgid "Number of Sentence"
 msgstr "문장 수"
 
@@ -587,7 +604,7 @@ msgstr "이전 페이지"
 msgid "Prev page"
 msgstr "앞 페이지"
 
-#: im/pinyin/pinyin.h:154
+#: im/pinyin/pinyin.h:146
 msgid "Prompt long word length when input length over (0 for disable)"
 msgstr "입력 길이가 초과될 때 프롬프트 긴 단어 길이(사용안할 경우 0)"
 
@@ -595,11 +612,15 @@ msgstr "입력 길이가 초과될 때 프롬프트 긴 단어 길이(사용안�
 msgid "Proxy"
 msgstr ""
 
-#: modules/punctuation/punctuation.cpp:148
-#: modules/punctuation/punctuation.cpp:150
+#: im/pinyin/pinyin.h:151 modules/punctuation/punctuation.cpp:226
+#: modules/punctuation/punctuation.cpp:228
 #: modules/punctuation/punctuation.conf.in.in:3
 msgid "Punctuation"
 msgstr "문장부호"
+
+#: im/pinyin/pinyin.h:166
+msgid "Quick Phrase"
+msgstr ""
 
 #: im/table/ime.h:201
 msgid "Regular expression for auto select when no match is found"
@@ -688,7 +709,8 @@ msgstr "간체 중국어"
 msgid "Simplified Chinese is enabled."
 msgstr "중국어 간체가 활성화되었습니다."
 
-#: modules/chttrans/chttrans.cpp:71 modules/chttrans/chttrans.conf.in.in:3
+#: im/pinyin/pinyin.h:154 modules/chttrans/chttrans.cpp:71
+#: modules/chttrans/chttrans.conf.in.in:3
 msgid "Simplified and Traditional Chinese Translation"
 msgstr "간체 / 번체 중국어 번역"
 
@@ -696,7 +718,7 @@ msgstr "간체 / 번체 중국어 번역"
 msgid "Sort candidates based on current context"
 msgstr "현재 컨텍스트를 기준으로 후보 정렬"
 
-#: im/pinyin/pinyin.h:162
+#: im/pinyin/pinyin.h:171
 msgid "Strings to trigger quick phrase"
 msgstr "상용구를 전환할 문자열"
 
@@ -731,7 +753,7 @@ msgid "Toggle Key"
 msgstr "전환 키"
 
 #: modules/fullwidth/fullwidth.h:19 modules/chttrans/chttrans.h:31
-#: modules/punctuation/punctuation.h:25
+#: modules/punctuation/punctuation.h:26
 msgid "Toggle key"
 msgstr "전환 키"
 
@@ -747,7 +769,7 @@ msgstr "중국어 번체가 활성화되었습니다."
 msgid "Translate engine"
 msgstr "번역 엔진"
 
-#: modules/punctuation/punctuation.h:31
+#: modules/punctuation/punctuation.h:32
 msgid "Type paired punctuations together (e.g. Quote)"
 msgstr ""
 
@@ -759,7 +781,7 @@ msgstr "문자 선택을 위해 좌/우키 사용:"
 msgid "Use Left and Right to select text. "
 msgstr "문장 선택을 위해 좌/우키 사용:"
 
-#: im/pinyin/pinyin.h:148
+#: im/pinyin/pinyin.h:165
 msgid "Use V to trigger quickphrase"
 msgstr "V를 사용하여 상용구 전환"
 

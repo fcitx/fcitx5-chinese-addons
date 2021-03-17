@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2021-03-07 20:24+0000\n"
+"POT-Creation-Date: 2021-03-17 16:14+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: TotalCaesar659 <x24cm5b8c54q6szxw@yandex.ru>, 2017\n"
 "Language-Team: Russian (https://www.transifex.com/fcitx/teams/12005/ru/)\n"
@@ -88,6 +88,10 @@ msgid ""
 "the table. 0 means disable this feature. "
 msgstr ""
 
+#: modules/punctuation/punctuation.h:41
+msgid "Alternative Mapping"
+msgstr ""
+
 #: gui/pinyindictmanager/pinyindictmanager.cpp:363
 msgid "Are you sure to delete %1?"
 msgstr ""
@@ -144,7 +148,7 @@ msgstr ""
 msgid "Clear &All Data"
 msgstr ""
 
-#: modules/cloudpinyin/cloudpinyin.conf.in.in:3
+#: im/pinyin/pinyin.h:156 modules/cloudpinyin/cloudpinyin.conf.in.in:3
 msgid "Cloud Pinyin"
 msgstr "Cloud Pinyin"
 
@@ -231,7 +235,7 @@ msgstr ""
 msgid "Dianbaoma"
 msgstr ""
 
-#: im/pinyin/pinyin.h:156
+#: im/pinyin/pinyin.h:148
 msgid "Dictionaries"
 msgstr ""
 
@@ -303,8 +307,12 @@ msgstr ""
 msgid "End key"
 msgstr "Клавиша End"
 
-#: im/pinyin/pinyin.h:167
+#: im/pinyin/pinyin.h:176
 msgid "Enter a string from the list will make it enter quickphrase mode."
+msgstr ""
+
+#: modules/punctuation/punctuation.h:49
+msgid "Entries"
 msgstr ""
 
 #: im/table/erbi.conf.in.in:3
@@ -384,19 +392,19 @@ msgstr "Полноширинный символ включен."
 msgid "Full width character"
 msgstr "Полноширинный символ"
 
-#: modules/punctuation/punctuation.h:60
+#: modules/punctuation/punctuation.h:88
 msgid "Full width punctuation"
 msgstr "Полноширинная пунктуация"
 
-#: modules/punctuation/punctuation.cpp:152
+#: modules/punctuation/punctuation.cpp:230
 msgid "Full width punctuation is disabled."
 msgstr "Полноширинная пунктуация отключена."
 
-#: modules/punctuation/punctuation.cpp:151
+#: modules/punctuation/punctuation.cpp:229
 msgid "Full width punctuation is enabled."
 msgstr "Полноширинная пунктуация включена."
 
-#: im/pinyin/pinyin.h:158
+#: im/pinyin/pinyin.h:178
 msgid "Fuzzy Pinyin Settings"
 msgstr ""
 
@@ -404,11 +412,11 @@ msgstr ""
 msgid "Half width Character"
 msgstr "Полуширинный символ"
 
-#: modules/punctuation/punctuation.h:61
+#: modules/punctuation/punctuation.h:89
 msgid "Half width punctuation"
 msgstr "Полуширинная пунктуация"
 
-#: modules/punctuation/punctuation.h:28
+#: modules/punctuation/punctuation.h:29
 msgid "Half width punctuation after latin letter or number"
 msgstr ""
 
@@ -443,7 +451,12 @@ msgstr ""
 msgid "Input Dictionary Name"
 msgstr ""
 
-#: im/table/ime.h:111 im/pinyin/pinyin.h:144
+#: modules/punctuation/punctuation.h:38
+msgctxt "Key of the punctuation, e.g. comma"
+msgid "Key"
+msgstr ""
+
+#: im/table/ime.h:111 im/pinyin/pinyin.h:161
 msgid "Key to trigger quickphrase"
 msgstr "Клавиша для активации быстрой фразы"
 
@@ -461,6 +474,10 @@ msgstr "Изучение пиньинь"
 
 #: im/pinyin/pinyin.h:33
 msgid "MS"
+msgstr ""
+
+#: modules/punctuation/punctuation.h:39
+msgid "Mapping"
 msgstr ""
 
 #: im/pinyin/pinyin.h:46
@@ -507,7 +524,7 @@ msgstr "Недоступно"
 msgid "Not set"
 msgstr ""
 
-#: im/pinyin/pinyin.h:150
+#: im/pinyin/pinyin.h:142
 msgid "Number of Sentence"
 msgstr ""
 
@@ -587,7 +604,7 @@ msgstr ""
 msgid "Prev page"
 msgstr "Предыдущая страница"
 
-#: im/pinyin/pinyin.h:154
+#: im/pinyin/pinyin.h:146
 msgid "Prompt long word length when input length over (0 for disable)"
 msgstr ""
 
@@ -595,11 +612,15 @@ msgstr ""
 msgid "Proxy"
 msgstr ""
 
-#: modules/punctuation/punctuation.cpp:148
-#: modules/punctuation/punctuation.cpp:150
+#: im/pinyin/pinyin.h:151 modules/punctuation/punctuation.cpp:226
+#: modules/punctuation/punctuation.cpp:228
 #: modules/punctuation/punctuation.conf.in.in:3
 msgid "Punctuation"
 msgstr "Пунктуация"
+
+#: im/pinyin/pinyin.h:166
+msgid "Quick Phrase"
+msgstr ""
 
 #: im/table/ime.h:201
 msgid "Regular expression for auto select when no match is found"
@@ -688,7 +709,8 @@ msgstr "Упрощенный китайский"
 msgid "Simplified Chinese is enabled."
 msgstr "Упрощенный китайский включен."
 
-#: modules/chttrans/chttrans.cpp:71 modules/chttrans/chttrans.conf.in.in:3
+#: im/pinyin/pinyin.h:154 modules/chttrans/chttrans.cpp:71
+#: modules/chttrans/chttrans.conf.in.in:3
 msgid "Simplified and Traditional Chinese Translation"
 msgstr "Перевод упрощенного и традиционного китайского"
 
@@ -696,7 +718,7 @@ msgstr "Перевод упрощенного и традиционного ки
 msgid "Sort candidates based on current context"
 msgstr ""
 
-#: im/pinyin/pinyin.h:162
+#: im/pinyin/pinyin.h:171
 msgid "Strings to trigger quick phrase"
 msgstr ""
 
@@ -731,7 +753,7 @@ msgid "Toggle Key"
 msgstr ""
 
 #: modules/fullwidth/fullwidth.h:19 modules/chttrans/chttrans.h:31
-#: modules/punctuation/punctuation.h:25
+#: modules/punctuation/punctuation.h:26
 msgid "Toggle key"
 msgstr ""
 
@@ -747,7 +769,7 @@ msgstr "Традиционный китайский включен."
 msgid "Translate engine"
 msgstr ""
 
-#: modules/punctuation/punctuation.h:31
+#: modules/punctuation/punctuation.h:32
 msgid "Type paired punctuations together (e.g. Quote)"
 msgstr ""
 
@@ -759,7 +781,7 @@ msgstr "Используйте влево и вправо для выбора с
 msgid "Use Left and Right to select text. "
 msgstr "Используйте влево и вправо для выбора текста."
 
-#: im/pinyin/pinyin.h:148
+#: im/pinyin/pinyin.h:165
 msgid "Use V to trigger quickphrase"
 msgstr ""
 
