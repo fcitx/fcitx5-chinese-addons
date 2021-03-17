@@ -138,14 +138,6 @@ FCITX_CONFIGURATION(
         _("Filter by stroke"),
         {Key("grave")},
         KeyListConstrain({KeyConstrainFlag::AllowModifierLess})};
-    Option<Key, KeyConstrain> quickphraseKey{
-        this,
-        "QuickPhraseKey",
-        _("Key to trigger quickphrase"),
-        Key{FcitxKey_semicolon},
-        {KeyConstrainFlag::AllowModifierLess}};
-    Option<bool> useVAsQuickphrase{this, "VAsQuickphrase",
-                                   _("Use V to trigger quickphrase"), true};
     Option<int, IntConstrain> nbest{this, "Number of sentence",
                                     _("Number of Sentence"), 2,
                                     IntConstrain(1, 3)};
@@ -156,9 +148,23 @@ FCITX_CONFIGURATION(
     ExternalOption dictmanager{this, "DictManager", _("Dictionaries"),
                                "fcitx://config/addon/pinyin/dictmanager"};
     SubConfigOption punctuationMap{
-        this, "PunctuationMap", _("Punctuation Map"),
-        "fcitx://config/addon/punctuation/punctuationmap-zh_CN"};
-    Option<FuzzyConfig> fuzzyConfig{this, "Fuzzy", _("Fuzzy Pinyin Settings")};
+        this, "Punctuation", _("Punctuation"),
+        "fcitx://config/addon/punctuation/punctuationmap/zh_CN"};
+    SubConfigOption chttrans{
+        this, "Chttrans", _("Simplified and Traditional Chinese Translation"),
+        "fcitx://config/addon/chttrans"};
+    SubConfigOption cloudpinyin{this, "CloudPinyin", _("Cloud Pinyin"),
+                                "fcitx://config/addon/cloudpinyin"};
+    Option<Key, KeyConstrain> quickphraseKey{
+        this,
+        "QuickPhraseKey",
+        _("Key to trigger quickphrase"),
+        Key{FcitxKey_semicolon},
+        {KeyConstrainFlag::AllowModifierLess}};
+    Option<bool> useVAsQuickphrase{this, "VAsQuickphrase",
+                                   _("Use V to trigger quickphrase"), true};
+    ExternalOption quickphrase{this, "QuickPhrase", _("Quick Phrase"),
+                               "fcitx://config/addon/quickphrase/editor"};
     OptionWithAnnotation<std::vector<std::string>, ToolTipAnnotation>
         quickphraseTrigger{this,
                            "QuickPhrase trigger",
@@ -169,6 +175,7 @@ FCITX_CONFIGURATION(
                            {},
                            {_("Enter a string from the list will make it enter "
                               "quickphrase mode.")}};
+    Option<FuzzyConfig> fuzzyConfig{this, "Fuzzy", _("Fuzzy Pinyin Settings")};
     HiddenOption<bool> firstRun{this, "FirstRun", "FirstRun", true};);
 
 class PinyinState;

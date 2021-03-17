@@ -11,6 +11,7 @@
 #include <fcitx-config/configuration.h>
 #include <fcitx-config/enum.h>
 #include <fcitx-config/iniparser.h>
+#include <fcitx-config/rawconfig.h>
 #include <fcitx-utils/i18n.h>
 #include <fcitx/action.h>
 #include <fcitx/addonfactory.h>
@@ -31,13 +32,13 @@ FCITX_CONFIGURATION(
         _("Type paired punctuations together (e.g. Quote)"), false};
     fcitx::HiddenOption<bool> enabled{this, "Enabled", "Enabled", true};);
 
-FCITX_CONFIGURATION(PunctuationMapEntryConfig,
-                    fcitx::Option<std::string> original{this, "Original",
-                                                        _("Original")};
-                    fcitx::Option<std::string> mapResult1{this, "MapResult1",
-                                                          _("Map Result 1")};
-                    fcitx::Option<std::string> mapResult2{this, "MapResult2",
-                                                          _("Map Result 2")};)
+FCITX_CONFIGURATION(
+    PunctuationMapEntryConfig,
+    fcitx::Option<std::string> key{
+        this, "Key", C_("Key of the punctuation, e.g. comma", "Key")};
+    fcitx::Option<std::string> mapResult1{this, "Mapping", _("Mapping")};
+    fcitx::Option<std::string> mapResult2{this, "AltMapping",
+                                          _("Alternative Mapping")};)
 
 FCITX_CONFIGURATION(
     PunctuationMapConfig,
@@ -45,29 +46,33 @@ FCITX_CONFIGURATION(
                                 fcitx::ListDisplayOptionAnnotation>
         entries{this,
                 "Entries",
-                _("Punctuation map"),
+                _("Entries"),
                 {},
                 {},
                 {},
-                fcitx::ListDisplayOptionAnnotation("Original")};);
+                fcitx::ListDisplayOptionAnnotation("Key")};);
 
 class PunctuationProfile {
 public:
-    PunctuationProfile() {}
-    PunctuationProfile(std::istream &in);
+    PunctuationProfile() = default;
+    PunctuationProfile(const PunctuationProfile &) = delete;
 
-    PunctuationProfile(PunctuationProfile &&) = default;
-    PunctuationProfile(const PunctuationProfile &) = default;
-
-    PunctuationProfile &operator=(PunctuationProfile &&) = default;
-    PunctuationProfile &operator=(const PunctuationProfile &) = default;
+    void loadSystem(std::istream &in);
+    void load(std::istream &in);
+    void set(const fcitx::RawConfig &config);
+    void save(std::string_view lang) const;
+    void resetDefaultValue();
 
     const std::pair<std::string, std::string> &
     getPunctuation(uint32_t unicode) const;
-    void setupPunctuationMapConfig();
-    PunctuationMapConfig *getPunctuationMapConfig();
+    PunctuationMapConfig &config() { return punctuationMapConfig_; }
+    const PunctuationMapConfig &config() const { return punctuationMapConfig_; }
+
+    static constexpr std::string_view profilePrefix = "punc.mb.";
 
 private:
+    void addEntry(uint32_t key, const std::string &value,
+                  const std::string &value2);
     std::unordered_map<uint32_t, std::pair<std::string, std::string>> puncMap_;
     PunctuationMapConfig punctuationMapConfig_;
 };
@@ -119,13 +124,12 @@ public:
     void setConfig(const fcitx::RawConfig &config) override {
         config_.load(config, true);
         fcitx::safeSaveAsIni(config_, "conf/punctuation.conf");
-        populateConfig(false);
     }
     const fcitx::Configuration *
     getSubConfig(const std::string &path) const override;
     void setSubConfig(const std::string &path,
                       const fcitx::RawConfig &config) override;
-    void populateConfig(bool isReadSystemConfig);
+    void loadProfiles();
 
     FCITX_ADDON_EXPORT_FUNCTION(Punctuation, getPunctuation);
     FCITX_ADDON_EXPORT_FUNCTION(Punctuation, pushPunctuation);
