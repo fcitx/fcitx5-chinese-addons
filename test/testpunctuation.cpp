@@ -11,6 +11,8 @@
 #include <iostream>
 
 int main() {
+    setenv("SKIP_FCITX_PATH", "1", 1);
+    setenv("SKIP_FCITX_USER_PATH", "1", 1);
     setenv("FCITX_ADDON_DIRS", TESTING_BINARY_DIR "/modules/punctuation", 1);
     setenv("FCITX_DATA_DIRS",
            TESTING_BINARY_DIR "/modules:" TESTING_SOURCE_DIR "/modules", 1);
@@ -28,6 +30,27 @@ int main() {
     FCITX_ASSERT(
         punctuation->call<fcitx::IPunctuation::getPunctuation>("zh_CN", '"')
             .second == "”");
+
+    fcitx::RawConfig config;
+    config["Entries"]["0"]["Key"] = "*";
+    config["Entries"]["0"]["Mapping"] = "X";
+    config["Entries"]["0"]["AltMapping"] = "";
+    config["Entries"]["1"]["Key"] = "\"";
+    config["Entries"]["1"]["Mapping"] = "「";
+    config["Entries"]["1"]["AltMapping"] = "」";
+    punctuation->setSubConfig("punctuationmap/zh_CN", config);
+    FCITX_ASSERT(
+        punctuation->call<fcitx::IPunctuation::getPunctuation>("zh_CN", '*')
+            .first == "X");
+    FCITX_ASSERT(
+        punctuation->call<fcitx::IPunctuation::getPunctuation>("zh_CN", '"')
+            .first == "「");
+    FCITX_ASSERT(
+        punctuation->call<fcitx::IPunctuation::getPunctuation>("zh_CN", '"')
+            .second == "」");
+    FCITX_ASSERT(
+        punctuation->call<fcitx::IPunctuation::getPunctuation>("zh_CN", ',')
+            .first == "");
 
     return 0;
 }
