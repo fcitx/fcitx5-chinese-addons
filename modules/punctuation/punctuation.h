@@ -31,6 +31,26 @@ FCITX_CONFIGURATION(
         _("Type paired punctuations together (e.g. Quote)"), false};
     fcitx::HiddenOption<bool> enabled{this, "Enabled", "Enabled", true};);
 
+FCITX_CONFIGURATION(PunctuationMapEntryConfig,
+                    fcitx::Option<std::string> original{this, "Original",
+                                                        _("Original")};
+                    fcitx::Option<std::string> mapResult1{this, "MapResult1",
+                                                          _("Map Result 1")};
+                    fcitx::Option<std::string> mapResult2{this, "MapResult2",
+                                                          _("Map Result 2")};)
+
+FCITX_CONFIGURATION(
+    PunctuationMapConfig,
+    fcitx::OptionWithAnnotation<std::vector<PunctuationMapEntryConfig>,
+                                fcitx::ListDisplayOptionAnnotation>
+        entries{this,
+                "Entries",
+                _("Punctuation map"),
+                {},
+                {},
+                {},
+                fcitx::ListDisplayOptionAnnotation("Original")};);
+
 class PunctuationProfile {
 public:
     PunctuationProfile() {}
@@ -44,9 +64,12 @@ public:
 
     const std::pair<std::string, std::string> &
     getPunctuation(uint32_t unicode) const;
+    void setupPunctuationMapConfig();
+    PunctuationMapConfig *getPunctuationMapConfig();
 
 private:
     std::unordered_map<uint32_t, std::pair<std::string, std::string>> puncMap_;
+    PunctuationMapConfig punctuationMapConfig_;
 };
 
 class PunctuationState;
@@ -96,9 +119,13 @@ public:
     void setConfig(const fcitx::RawConfig &config) override {
         config_.load(config, true);
         fcitx::safeSaveAsIni(config_, "conf/punctuation.conf");
-        populateConfig();
+        populateConfig(false);
     }
-    void populateConfig();
+    const fcitx::Configuration *
+    getSubConfig(const std::string &path) const override;
+    void setSubConfig(const std::string &path,
+                      const fcitx::RawConfig &config) override;
+    void populateConfig(bool isReadSystemConfig);
 
     FCITX_ADDON_EXPORT_FUNCTION(Punctuation, getPunctuation);
     FCITX_ADDON_EXPORT_FUNCTION(Punctuation, pushPunctuation);

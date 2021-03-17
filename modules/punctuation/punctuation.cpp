@@ -32,6 +32,13 @@ const std::pair<std::string, std::string> emptyStringPair;
 
 bool dontConvertWhenEn(uint32_t c) { return c == '.' || c == ','; }
 
+std::string getLangByPath(const std::string &path) {
+    if (stringutils::startsWith(path, "punctuationmap-")) {
+        return path.substr(path.find('-') + 1);
+    }
+    return "";
+}
+
 class PunctuationState : public InputContextProperty {
 public:
     std::unordered_map<uint32_t, std::string> lastPuncStack_;
@@ -83,6 +90,24 @@ PunctuationProfile::getPunctuation(uint32_t unicode) const {
         return emptyStringPair;
     }
     return iter->second;
+}
+
+void PunctuationProfile::setupPunctuationMapConfig() {
+    auto configValue = punctuationMapConfig_.entries.mutableValue();
+    configValue->clear();
+
+    for (auto &[key, value] : puncMap_) {
+        PunctuationMapEntryConfig entryConfig;
+        std::string punc(1, (char)key);
+        entryConfig.original.setValue(punc);
+        entryConfig.mapResult1.setValue(value.first);
+        entryConfig.mapResult2.setValue(value.second);
+        configValue->emplace_back(entryConfig);
+    }
+}
+
+PunctuationMapConfig *PunctuationProfile::getPunctuationMapConfig() {
+    return &punctuationMapConfig_;
 }
 
 Punctuation::Punctuation(Instance *instance)
@@ -259,13 +284,21 @@ Punctuation::~Punctuation() {}
 
 void Punctuation::reloadConfig() {
     readAsIni(config_, "conf/punctuation.conf");
-    populateConfig();
+    populateConfig(false);
 }
 
-void Punctuation::populateConfig() {
-    auto files = StandardPath::global().multiOpen(StandardPath::Type::PkgData,
-                                                  "punctuation", O_RDONLY,
-                                                  filter::Prefix("punc.mb."));
+void Punctuation::populateConfig(bool isReadSystemConfig) {
+    std::map<std::string, StandardPathFile> files;
+    if (isReadSystemConfig) {
+        files = StandardPath::global().multiOpen(
+            StandardPath::Type::PkgData, "punctuation", O_RDONLY,
+            filter::Prefix("punc.mb."), filter::Not(filter::User()));
+    } else {
+        files = StandardPath::global().multiOpen(StandardPath::Type::PkgData,
+                                                 "punctuation", O_RDONLY,
+                                                 filter::Prefix("punc.mb."));
+    }
+
     auto iter = profiles_.begin();
     while (iter != profiles_.end()) {
         if (!files.count("punc.mb." + iter->first)) {
@@ -393,6 +426,64 @@ Punctuation::getPunctuation(const std::string &language, uint32_t unicode) {
     }
 
     return iter->second.getPunctuation(unicode);
+}
+
+const fcitx::Configuration *
+Punctuation::getSubConfig(const std::string &path) const {
+    auto lang = getLangByPath(path);
+    if (profiles_.count(lang) > 0) {
+        const_cast<Punctuation *>(this)->populateConfig(true);
+        const_cast<Punctuation *>(this)
+            ->profiles_[lang]
+            .setupPunctuationMapConfig();
+        const_cast<Punctuation *>(this)
+            ->profiles_[lang]
+            .getPunctuationMapConfig()
+            ->syncDefaultValueToCurrent();
+        const_cast<Punctuation *>(this)->populateConfig(false);
+        const_cast<Punctuation *>(this)
+            ->profiles_[lang]
+            .setupPunctuationMapConfig();
+        return const_cast<Punctuation *>(this)
+            ->profiles_[lang]
+            .getPunctuationMapConfig();
+    }
+    return nullptr;
+}
+
+void Punctuation::setSubConfig(const std::string &path,
+                               const fcitx::RawConfig &config) {
+    std::string lang = getLangByPath(path);
+    if (profiles_.count(lang) < 1) {
+        FCITX_LOG(Warn) << "path must be punctuationmap-zh_CN or "
+                           "punctuationmap-zh_HK or punctuationmap-zh_TW!";
+        return;
+    }
+    std::string puncPath =
+        stringutils::joinPath("punctuation", "punc.mb." + lang);
+    std::unordered_map<std::string, std::string> originalMaps;
+    profiles_[lang].getPunctuationMapConfig()->load(config, true);
+    auto &entries = profiles_[lang].getPunctuationMapConfig()->entries.value();
+    // remove duplicate entry
+    for (auto &entry : entries) {
+        originalMaps[entry.original.value()] =
+            entry.mapResult1.value() + " " + entry.mapResult2.value();
+    }
+    StandardPath::global().safeSave(
+        StandardPath::Type::PkgData, puncPath, [this, originalMaps](int fd) {
+            for (auto &originalMap : originalMaps) {
+                fs::safeWrite(fd, originalMap.first.data(),
+                              originalMap.first.size());
+                fs::safeWrite(fd, " ", sizeof(char));
+                fs::safeWrite(fd, originalMap.second.data(),
+                              originalMap.second.size());
+                fs::safeWrite(fd, "\n", sizeof(char));
+            }
+            return true;
+        });
+
+    populateConfig(false);
+    profiles_[lang].setupPunctuationMapConfig();
 }
 
 FCITX_ADDON_FACTORY(PunctuationFactory);
