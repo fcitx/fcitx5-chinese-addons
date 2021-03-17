@@ -381,6 +381,8 @@ void Punctuation::loadProfiles() {
                                never_close_handle);
                 std::istream in(&buffer);
                 profiles_[lang].loadSystem(in);
+            } else {
+                profiles_[lang].resetDefaultValue();
             }
             if (hasUserFile) {
                 boost::iostreams::stream_buffer<

@@ -129,7 +129,6 @@ public:
     getSubConfig(const std::string &path) const override;
     void setSubConfig(const std::string &path,
                       const fcitx::RawConfig &config) override;
-    void loadProfiles();
 
     FCITX_ADDON_EXPORT_FUNCTION(Punctuation, getPunctuation);
     FCITX_ADDON_EXPORT_FUNCTION(Punctuation, pushPunctuation);
@@ -147,6 +146,8 @@ public:
     bool inWhiteList(fcitx::InputContext *inputContext) const;
 
 private:
+    void loadProfiles();
+
     FCITX_ADDON_DEPENDENCY_LOADER(notifications, instance_->addonManager());
 
     fcitx::Instance *instance_;
