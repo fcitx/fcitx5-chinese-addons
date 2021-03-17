@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2021-03-17 16:14+0000\n"
+"POT-Creation-Date: 2021-03-17 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: csslayer <wengxt@gmail.com>, 2021\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/fcitx/teams/12005/"
@@ -93,7 +93,7 @@ msgstr ""
 
 #: modules/punctuation/punctuation.h:41
 msgid "Alternative Mapping"
-msgstr ""
+msgstr "替代映射"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:363
 msgid "Are you sure to delete %1?"
@@ -318,7 +318,7 @@ msgstr "输入列表中的字符将使它进入快速输入模式"
 
 #: modules/punctuation/punctuation.h:49
 msgid "Entries"
-msgstr ""
+msgstr "项目"
 
 #: im/table/erbi.conf.in.in:3
 msgid "Erbi"
@@ -461,7 +461,7 @@ msgstr "输入词典名称"
 #: modules/punctuation/punctuation.h:38
 msgctxt "Key of the punctuation, e.g. comma"
 msgid "Key"
-msgstr ""
+msgstr "按键"
 
 #: im/table/ime.h:111 im/pinyin/pinyin.h:161
 msgid "Key to trigger quickphrase"
@@ -485,7 +485,7 @@ msgstr "微软"
 
 #: modules/punctuation/punctuation.h:39
 msgid "Mapping"
-msgstr ""
+msgstr "映射"
 
 #: im/pinyin/pinyin.h:46
 msgid "Match partial finals (e -> en, eng, ei)"
@@ -629,7 +629,7 @@ msgstr "标点"
 
 #: im/pinyin/pinyin.h:166
 msgid "Quick Phrase"
-msgstr ""
+msgstr "快速输入"
 
 #: im/table/ime.h:201
 msgid "Regular expression for auto select when no match is found"
