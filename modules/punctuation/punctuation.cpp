@@ -28,9 +28,17 @@ using namespace fcitx;
 namespace {
 const std::string emptyString;
 const std::pair<std::string, std::string> emptyStringPair;
-} // namespace
 
 bool dontConvertWhenEn(uint32_t c) { return c == '.' || c == ','; }
+
+std::string langByPath(const std::string &path) {
+    constexpr std::string_view prefix = "punctuationmap/";
+    if (stringutils::startsWith(path, prefix)) {
+        return path.substr(prefix.size());
+    }
+    return "";
+}
+} // namespace
 
 class PunctuationState : public InputContextProperty {
 public:
@@ -43,7 +51,38 @@ public:
     uint32_t notConvertedBackup_ = 0;
 };
 
-PunctuationProfile::PunctuationProfile(std::istream &in) {
+void PunctuationProfile::loadSystem(std::istream &in) {
+    load(in);
+    punctuationMapConfig_.syncDefaultValueToCurrent();
+}
+
+void PunctuationProfile::resetDefaultValue() {
+    punctuationMapConfig_ = PunctuationMapConfig();
+    punctuationMapConfig_.syncDefaultValueToCurrent();
+}
+
+void PunctuationProfile::addEntry(uint32_t key, const std::string &value,
+                                  const std::string &value2) {
+    decltype(puncMap_)::mapped_type p;
+    p.first = value;
+    p.second = value2;
+
+    if (auto [iter, success] = puncMap_.emplace(key, std::move(p)); success) {
+        std::string punc = utf8::UCS4ToUTF8(key);
+        auto configValue = punctuationMapConfig_.entries.mutableValue();
+        configValue->emplace_back();
+        PunctuationMapEntryConfig &entryConfig = configValue->back();
+        entryConfig.key.setValue(punc);
+        entryConfig.mapResult1.setValue(iter->second.first);
+        entryConfig.mapResult2.setValue(iter->second.second);
+    }
+}
+
+void PunctuationProfile::load(std::istream &in) {
+    puncMap_.clear();
+    auto configValue = punctuationMapConfig_.entries.mutableValue();
+    configValue->clear();
+
     std::string strBuf;
     while (std::getline(in, strBuf)) {
         auto pair = stringutils::trimInplace(strBuf);
@@ -67,13 +106,52 @@ PunctuationProfile::PunctuationProfile(std::istream &in) {
             continue;
         }
         auto c = utf8::getChar(tokens[0]);
-        decltype(puncMap_)::mapped_type p;
-        p.first = tokens[1];
-        if (tokens.size() > 2) {
-            p.second = tokens[2];
-        }
-        puncMap_.emplace(c, std::move(p));
+        addEntry(c, tokens[1], tokens.size() > 2 ? tokens[2] : "");
     }
+}
+
+void PunctuationProfile::set(const RawConfig &config) {
+    PunctuationMapConfig newConfig;
+    newConfig.load(config);
+
+    puncMap_.clear();
+    auto configValue = punctuationMapConfig_.entries.mutableValue();
+    configValue->clear();
+
+    const auto &entries = *newConfig.entries;
+    // remove duplicate entry
+    for (auto &entry : entries) {
+        if (entry.key->empty() || entry.mapResult1->empty()) {
+            continue;
+        }
+        if (utf8::lengthValidated(*entry.key) != 1) {
+            continue;
+        }
+        auto c = utf8::getChar(*entry.key);
+
+        addEntry(c, *entry.mapResult1, *entry.mapResult2);
+    }
+}
+
+void PunctuationProfile::save(std::string_view name) const {
+    StandardPath::global().safeSave(
+        StandardPath::Type::PkgData,
+        stringutils::concat("punctuation/", profilePrefix, name),
+        [this](int fd) {
+            for (auto &entry : *punctuationMapConfig_.entries) {
+                fs::safeWrite(fd, entry.key->data(), entry.key->size());
+                fs::safeWrite(fd, " ", sizeof(char));
+                fs::safeWrite(fd, entry.mapResult1->data(),
+                              entry.mapResult1->size());
+                if (!entry.mapResult2->empty()) {
+                    fs::safeWrite(fd, " ", sizeof(char));
+                    fs::safeWrite(fd, entry.mapResult2->data(),
+                                  entry.mapResult2->size());
+                }
+                fs::safeWrite(fd, "\n", sizeof(char));
+            }
+            return true;
+        });
 }
 
 const std::pair<std::string, std::string> &
@@ -259,40 +337,63 @@ Punctuation::~Punctuation() {}
 
 void Punctuation::reloadConfig() {
     readAsIni(config_, "conf/punctuation.conf");
-    populateConfig();
+    loadProfiles();
 }
 
-void Punctuation::populateConfig() {
-    auto files = StandardPath::global().multiOpen(StandardPath::Type::PkgData,
-                                                  "punctuation", O_RDONLY,
-                                                  filter::Prefix("punc.mb."));
+void Punctuation::loadProfiles() {
+    auto systemFiles = StandardPath::global().multiOpen(
+        StandardPath::Type::PkgData, "punctuation", O_RDONLY,
+        filter::Prefix(std::string(PunctuationProfile::profilePrefix)),
+        filter::Not(filter::User()));
+    auto allFiles = StandardPath::global().multiOpen(
+        StandardPath::Type::PkgData, "punctuation", O_RDONLY,
+        filter::Prefix(std::string(PunctuationProfile::profilePrefix)));
+
+    // Remove non-exist profiles.
     auto iter = profiles_.begin();
     while (iter != profiles_.end()) {
-        if (!files.count("punc.mb." + iter->first)) {
+        if (!allFiles.count(stringutils::concat(
+                PunctuationProfile::profilePrefix.size(), iter->first))) {
             iter = profiles_.erase(iter);
         } else {
             iter++;
         }
     }
 
-    for (const auto &file : files) {
-        if (file.first.size() <= 8) {
+    for (const auto &file : allFiles) {
+        if (file.first.size() <= PunctuationProfile::profilePrefix.size()) {
             continue;
         }
-        auto lang = file.first.substr(8);
+        auto lang = file.first.substr(PunctuationProfile::profilePrefix.size());
 
+        auto iter = systemFiles.find(file.first);
+        const bool hasSystemFile = iter != systemFiles.end();
+        bool hasUserFile = true;
+        if (hasSystemFile && iter->second.path() == file.second.path()) {
+            hasUserFile = false;
+        }
         try {
-            boost::iostreams::stream_buffer<
-                boost::iostreams::file_descriptor_source>
-                buffer(file.second.fd(),
-                       boost::iostreams::file_descriptor_flags::
-                           never_close_handle);
-            std::istream in(&buffer);
-            PunctuationProfile newProfile(in);
-            profiles_[lang] = std::move(newProfile);
+            if (hasSystemFile) {
+                boost::iostreams::stream_buffer<
+                    boost::iostreams::file_descriptor_source>
+                    buffer(iter->second.fd(),
+                           boost::iostreams::file_descriptor_flags::
+                               never_close_handle);
+                std::istream in(&buffer);
+                profiles_[lang].loadSystem(in);
+            }
+            if (hasUserFile) {
+                boost::iostreams::stream_buffer<
+                    boost::iostreams::file_descriptor_source>
+                    buffer(file.second.fd(),
+                           boost::iostreams::file_descriptor_flags::
+                               never_close_handle);
+                std::istream in(&buffer);
+                profiles_[lang].load(in);
+            }
         } catch (const std::exception &e) {
-            FCITX_LOG(Warn)
-                << "Error when load profile " << file.first << ": " << e.what();
+            FCITX_WARN() << "Error when load profile " << file.first << ": "
+                         << e.what();
         }
     }
 }
@@ -393,6 +494,29 @@ Punctuation::getPunctuation(const std::string &language, uint32_t unicode) {
     }
 
     return iter->second.getPunctuation(unicode);
+}
+
+const fcitx::Configuration *
+Punctuation::getSubConfig(const std::string &path) const {
+    auto lang = langByPath(path);
+    if (lang.empty()) {
+        return nullptr;
+    }
+    if (auto iter = profiles_.find(lang); iter != profiles_.end()) {
+        return &iter->second.config();
+    }
+    return nullptr;
+}
+
+void Punctuation::setSubConfig(const std::string &path,
+                               const fcitx::RawConfig &config) {
+    std::string lang = langByPath(path);
+    auto iter = profiles_.find(lang);
+    if (iter == profiles_.end()) {
+        return;
+    }
+    iter->second.set(config);
+    iter->second.save(lang);
 }
 
 FCITX_ADDON_FACTORY(PunctuationFactory);
