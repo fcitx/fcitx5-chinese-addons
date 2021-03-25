@@ -201,7 +201,8 @@ int main(int argc, char **argv) {
         readUInt16(fd, &symcount);
 
         // Just in case we read a invalid value.
-        if (symcount > 10) {
+        if (symcount > 128) {
+            FCITX_ERROR() << "Error at offset: " << lseek(fd.fd(), 0, SEEK_CUR);
             break;
         }
 
