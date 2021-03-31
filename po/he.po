@@ -3,15 +3,15 @@
 # This file is distributed under the same license as the fcitx5-chinese-addons package.
 #
 # Translators:
-# Omeritzics Games <omeritzicschwartz@gmail.com>, 2021
+# Omer I.S. <omeritzicschwartz@gmail.com>, 2021
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2021-03-17 16:14+0000\n"
+"POT-Creation-Date: 2021-03-31 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
-"Last-Translator: Omeritzics Games <omeritzicschwartz@gmail.com>, 2021\n"
+"Last-Translator: Omer I.S. <omeritzicschwartz@gmail.com>, 2021\n"
 "Language-Team: Hebrew (https://www.transifex.com/fcitx/teams/12005/he/)\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
@@ -71,7 +71,7 @@ msgstr ""
 
 #: im/pinyin/pinyin.h:34
 msgid "ABC"
-msgstr "אב״ג"
+msgstr "א״ב"
 
 #: org.fcitx.Fcitx5.Addon.ChineseAddons.metainfo.xml.in:8
 msgid ""
@@ -425,7 +425,7 @@ msgstr ""
 
 #: im/table/ime.h:124
 msgid "Icon"
-msgstr ""
+msgstr "סמל"
 
 #: im/table/ime.h:233
 msgid ""
@@ -509,7 +509,7 @@ msgstr ""
 
 #: im/pinyin/pinyin.cpp:769
 msgid "No"
-msgstr ""
+msgstr "לא"
 
 #: gui/pinyindictmanager/browserdialog.cpp:116
 msgid "No browsing outside pinyin.sogou.com, now redirect to home page."
@@ -545,7 +545,7 @@ msgstr ""
 #: im/pinyin/pinyin.cpp:772 im/pinyin/pinyin.cpp:920
 #: im/pinyin/pinyin-addon.conf.in.in:3 im/pinyin/pinyin.conf.in:3
 msgid "Pinyin"
-msgstr "פִּנְיִין"
+msgstr "פיניין:"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:90
 msgid "Pinyin dictionary manager"
