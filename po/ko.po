@@ -4,15 +4,15 @@
 #
 # Translators:
 # Bon Keun Seo <scobyseo@gmail.com>, 2017
-# JungHee Lee <daemul72@gmail.com>, 2021
+# Bruce Lee <daemul72@gmail.com>, 2021
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2021-03-17 16:14+0000\n"
+"POT-Creation-Date: 2021-04-02 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
-"Last-Translator: JungHee Lee <daemul72@gmail.com>, 2021\n"
+"Last-Translator: Bruce Lee <daemul72@gmail.com>, 2021\n"
 "Language-Team: Korean (https://www.transifex.com/fcitx/teams/12005/ko/)\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
@@ -184,6 +184,8 @@ msgid ""
 "Commit the segment that does not exist in the table. This option is useful "
 "for some latin/compose based table."
 msgstr ""
+"테이블에 없는 세그먼트를 커밋합니다. 이 옵션은 일부 라틴/구성 기반 테이블에 "
+"유용합니다."
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:330
 #: gui/pinyindictmanager/pinyindictmanager.cpp:362
@@ -255,12 +257,16 @@ msgid ""
 "Do you want to enable cloudpinyin now for better prediction? You can always "
 "toggle it later in configuration or by pressing {}."
 msgstr ""
+"더 나은 예측을 위해 지금 클라우드 pinin을 활성화하시겠습니까? 나중에 구성하거"
+"나 {}을(를) 눌러 언제든지 전환할 수 있습니다."
 
 #: im/pinyin/pinyin.cpp:758
 msgid ""
 "Do you want to enable cloudpinyin now for better prediction? You can always "
 "toggle it later in configuration."
 msgstr ""
+"더 나은 예측을 위해 지금 클라우드 pinin을 활성화하시겠습니까? 나중에 구성할 "
+"때는 언제든지 전환할 수 있습니다."
 
 #: im/table/ime.h:126
 msgid "Don't sort word shorter than"
@@ -284,7 +290,7 @@ msgstr "클라우드 병음 사용"
 
 #: im/pinyin/pinyin.cpp:772
 msgid "Enable Cloudpinyin"
-msgstr ""
+msgstr "Cloudpinin 활성화"
 
 #: im/pinyin/pinyin.h:70
 msgid "Enable Emoji"
@@ -417,7 +423,7 @@ msgstr "반각 문장부호"
 
 #: modules/punctuation/punctuation.h:29
 msgid "Half width punctuation after latin letter or number"
-msgstr ""
+msgstr "라틴 문자 또는 숫자 뒤의 반각 문장부호"
 
 #: im/table/ime.h:25
 msgid "Horizontal"
@@ -538,6 +544,8 @@ msgid ""
 "disable this option if you want the candidate order to be stable regardless "
 "of the history."
 msgstr ""
+"이미 입력한 단어를 기준으로 후보자를 정렬합니다. 기록과 상관없이 후보 주문을 "
+"안정적으로 유지하려면 이 옵션을 사용하지 않도록 설정할 수 있습니다."
 
 #: im/table/ime.h:83 im/pinyin/pinyin.h:67
 msgid "Page size"
@@ -586,7 +594,7 @@ msgstr ""
 
 #: im/pinyin/pinyin.cpp:1330
 msgid "Press {} for {}"
-msgstr ""
+msgstr "{}을 누릅니다 ({}의 경우)"
 
 #: im/pinyin/pinyin.cpp:1327
 msgid "Press {} for {} and Return for {}"
@@ -679,7 +687,7 @@ msgstr "선택"
 
 #: im/table/ime.h:242
 msgid "Separator text between hint and candidate"
-msgstr ""
+msgstr "힌트와 후보 사이의 구분자 텍스트"
 
 #: im/pinyin/pinyin.h:81
 msgid "Show complete pinyin in preedit"
@@ -812,6 +820,8 @@ msgid ""
 "When available, system language model will be loaded for given language and "
 "provide ability to give better context based order."
 msgstr ""
+"사용 가능한 경우, 시스템 언어 모델은 주어진 언어에 대해 불려오게 되고 더 나"
+"은 컨텍스트 기반 순서를 제공할 수 있는 기능을 제공합니다."
 
 #: im/table/ime.h:170
 msgid ""
