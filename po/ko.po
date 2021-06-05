@@ -4,15 +4,15 @@
 #
 # Translators:
 # Bon Keun Seo <scobyseo@gmail.com>, 2017
-# Bruce Lee <daemul72@gmail.com>, 2021
+# Jung Hee Lee <daemul72@gmail.com>, 2021
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2021-04-02 20:24+0000\n"
+"POT-Creation-Date: 2021-06-05 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
-"Last-Translator: Bruce Lee <daemul72@gmail.com>, 2021\n"
+"Last-Translator: Jung Hee Lee <daemul72@gmail.com>, 2021\n"
 "Language-Team: Korean (https://www.transifex.com/fcitx/teams/12005/ko/)\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
@@ -691,7 +691,7 @@ msgstr "힌트와 후보 사이의 구분자 텍스트"
 
 #: im/pinyin/pinyin.h:81
 msgid "Show complete pinyin in preedit"
-msgstr "사전편집에서 완전한 병음 표시"
+msgstr "사전편집에서 완성형 병음 표시"
 
 #: im/pinyin/pinyin.cpp:665
 msgid "Show prediction words"
