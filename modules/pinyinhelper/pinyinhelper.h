@@ -39,7 +39,11 @@ public:
     FCITX_ADDON_DEPENDENCY_LOADER(clipboard, instance_->addonManager());
 
 private:
+    std::string transform(const std::string &digtal);
+    bool isDigtal(const std::string &digtal);
     void initQuickPhrase();
+
+private:
     Instance *instance_;
     PinyinLookup lookup_;
     Stroke stroke_;
