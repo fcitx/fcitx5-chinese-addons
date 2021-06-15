@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2021-06-05 20:24+0000\n"
+"POT-Creation-Date: 2021-06-15 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Jung Hee Lee <daemul72@gmail.com>, 2021\n"
 "Language-Team: Korean (https://www.transifex.com/fcitx/teams/12005/ko/)\n"
@@ -590,7 +590,7 @@ msgstr "제거하려면 Delete 키를 누르십시오"
 
 #: im/table/state.cpp:597
 msgid "Press space or enter to insert."
-msgstr ""
+msgstr "삽입하려면 스페이스 바를 누르거나 Enter를 누르십시오."
 
 #: im/pinyin/pinyin.cpp:1330
 msgid "Press {} for {}"
@@ -598,7 +598,7 @@ msgstr "{}을 누릅니다 ({}의 경우)"
 
 #: im/pinyin/pinyin.cpp:1327
 msgid "Press {} for {} and Return for {}"
-msgstr ""
+msgstr " {} 키를 ({}의 경우) 누르고 {}의 경우 Return 키를 누릅니다."
 
 #: im/table/ime.h:53 im/pinyin/pinyin.h:106
 msgid "Prev Candidate"
@@ -632,11 +632,11 @@ msgstr ""
 
 #: im/table/ime.h:201
 msgid "Regular expression for auto select when no match is found"
-msgstr ""
+msgstr "일치하는 항목을 찾을 수 없는 경우 자동 선택을 위한 정규식"
 
 #: im/table/ime.h:177
 msgid "Regular expression for selecting the only candidate"
-msgstr ""
+msgstr "후보만 선택하기 위한 정규식"
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:44
 #. i18n: ectx: property (text), widget (QPushButton, removeAllButton_)
@@ -835,6 +835,8 @@ msgid ""
 "When current input matches the regular expression and there is only one "
 "candidate available, automatically select this candidate."
 msgstr ""
+"현재 입력이 정규식과 일치하고 사용할 수 있는 후보가 하나만 있으면 이 후보를 "
+"자동으로 선택합니다."
 
 #: im/table/ime.h:192
 msgid ""
@@ -852,6 +854,8 @@ msgid ""
 "matched entries in the table, select the current candidate and then type in "
 "the new character."
 msgstr ""
+"새 문자를 입력할 때 현재 입력이 정규식과 일치하고 기존 세그먼트에 새 문자가 "
+"있는 항목이 테이블에 없으면 현재 후보를 선택한 다음 새 문자를 입력합니다."
 
 #: im/table/ime.h:152
 msgid "Wildcard matching Key"
