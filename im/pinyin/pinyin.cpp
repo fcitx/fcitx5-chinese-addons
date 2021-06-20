@@ -6,7 +6,9 @@
  */
 
 #include "pinyin.h"
+#ifdef ENABLE_CLOUDPINYIN
 #include "cloudpinyin_public.h"
+#endif
 #include "config.h"
 #ifdef FCITX_HAS_LUA
 #include "luaaddon_public.h"
@@ -250,6 +252,7 @@ public:
     size_t idx_;
 };
 
+#ifdef ENABLE_CLOUDPINYIN
 class CustomCloudPinyinCandidateWord : public CloudPinyinCandidateWord {
 public:
     CustomCloudPinyinCandidateWord(AddonInstance *cloudpinyin,
@@ -277,6 +280,7 @@ public:
 private:
     bool isFirst_;
 };
+#endif
 
 std::unique_ptr<CandidateList>
 PinyinEngine::predictCandidateList(const std::vector<std::string> &words) {
@@ -463,7 +467,8 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
         const auto selectedLength = context.selectedLength();
         const auto selectedSentence = context.selectedSentence();
 
-        /// Create cloud candidate. {{{
+/// Create cloud candidate. {{{
+#ifdef ENABLE_CLOUDPINYIN
         std::unique_ptr<CustomCloudPinyinCandidateWord> cloud;
         if (*config_.cloudPinyinEnabled && cloudpinyin() &&
             !inputContext->capabilityFlags().testAny(
@@ -477,7 +482,8 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
                 std::bind(&PinyinEngine::cloudPinyinSelected, this, _1, _2, _3),
                 *config_.cloudPinyinIndex == 1);
         }
-        /// }}}
+/// }}}
+#endif
 
         /// Create spell candidate {{{
         int engNess;
@@ -495,9 +501,11 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
                 bestSentence = candidates[0].toString();
             }
             for (auto &result : results) {
+#ifdef ENABLE_CLOUDPINYIN
                 if (cloud && cloud->filled() && cloud->word() == result) {
                     cloud.reset();
                 }
+#endif
                 // Pinyin can only return eng when there is no valid option.
                 if (result == bestSentence) {
                     continue;
@@ -547,9 +555,11 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
                     luaCandidateTrigger(inputContext, candidateString);
             }
 #endif
+#ifdef ENABLE_CLOUDPINYIN
             if (cloud && cloud->filled() && cloud->word() == candidateString) {
                 cloud.reset();
             }
+#endif
             candidateList->append<PinyinCandidateWord>(
                 this, Text(std::move(candidateString)), idx);
             for (auto &extraCandidate : extraCandidates) {
@@ -557,6 +567,7 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
             }
             idx++;
             // We don't want to do too much comparision for cloud pinyin.
+#ifdef ENABLE_CLOUDPINYIN
             if (cloud && (!cloud->filled() || !cloud->word().empty()) &&
                 (static_cast<int>(idx) >
                      std::max(*config_.nbest, *config_.cloudPinyinIndex - 1) ||
@@ -567,6 +578,7 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
                 }
                 candidateList->insert(desiredPos, std::move(cloud));
             }
+#endif
             if (!spellCands.empty() && (idx == 1 || idx == candidates.size())) {
                 for (auto &spellCand : spellCands) {
                     candidateList->append(std::move(spellCand));
@@ -747,6 +759,7 @@ void PinyinEngine::reloadConfig() {
     if (*config_.firstRun) {
         config_.firstRun.setValue(false);
         safeSaveAsIni(config_, "conf/pinyin.conf");
+#ifdef ENABLE_CLOUDPINYIN
         deferEvent_ = instance_->eventLoop().addDeferEvent([this](
                                                                EventSource *) {
             if (cloudpinyin() && !*config_.cloudPinyinEnabled &&
@@ -781,6 +794,7 @@ void PinyinEngine::reloadConfig() {
             }
             return true;
         });
+#endif
     }
     ime_->setNBest(*config_.nbest);
     ime_->setPartialLongWordLimit(*config_.longWordLimit);
@@ -909,6 +923,7 @@ void PinyinEngine::deactivate(const fcitx::InputMethodEntry &entry,
     reset(entry, event);
 }
 
+#ifdef ENABLE_CLOUDPINYIN
 bool PinyinEngine::handleCloudpinyinTrigger(KeyEvent &event) {
     if (cloudpinyin() && event.key().checkKeyList(
                              cloudpinyin()->call<ICloudPinyin::toggleKey>())) {
@@ -931,6 +946,7 @@ bool PinyinEngine::handleCloudpinyinTrigger(KeyEvent &event) {
     }
     return false;
 }
+#endif
 
 bool PinyinEngine::handle2nd3rdSelection(KeyEvent &event) {
     auto *inputContext = event.inputContext();
@@ -1372,9 +1388,11 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         return;
     }
 
+#ifdef ENABLE_CLOUDPINYIN
     if (handleCloudpinyinTrigger(event)) {
         return;
     }
+#endif
 
     auto candidateList = inputContext->inputPanel().candidateList();
     bool lastIsPunc = state->lastIsPunc_;
@@ -1652,6 +1670,7 @@ void PinyinEngine::save() {
         });
 }
 
+#ifdef ENABLE_CLOUDPINYIN
 void PinyinEngine::cloudPinyinSelected(InputContext *inputContext,
                                        const std::string &selected,
                                        const std::string &word) {
@@ -1755,6 +1774,7 @@ void PinyinEngine::cloudPinyinSelected(InputContext *inputContext,
 
     inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
 }
+#endif
 } // namespace fcitx
 
 FCITX_ADDON_FACTORY(fcitx::PinyinEngineFactory)

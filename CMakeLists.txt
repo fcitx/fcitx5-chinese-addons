@@ -23,7 +23,9 @@ else()
   set(FMT_TARGET fmt::fmt)
 endif ()
 
-pkg_check_modules(Curl REQUIRED IMPORTED_TARGET "libcurl")
+if (ENABLE_CLOUDPINYIN)
+    pkg_check_modules(Curl REQUIRED IMPORTED_TARGET "libcurl")
+endif()
 
 include("${FCITX_INSTALL_CMAKECONFIG_DIR}/Fcitx5Utils/Fcitx5CompilerSettings.cmake")
 
@@ -37,6 +39,7 @@ option(ENABLE_OPENCC "Enable OpenCC for chttrans" On)
 option(ENABLE_GUI "Enable Configure Gui" On)
 option(ENABLE_BROWSER "Enable built-in browser." On)
 option(USE_WEBKIT "Use WebKit as browser backend." On)
+option(ENABLE_CLOUDPINYIN "Enable Cloud Pinyin (Need libcurl)" OFF)
 
 if (ENABLE_OPENCC)
     find_package(OpenCC REQUIRED)

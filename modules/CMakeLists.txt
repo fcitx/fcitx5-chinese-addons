@@ -1,5 +1,7 @@
 add_subdirectory(chttrans)
 add_subdirectory(punctuation)
 add_subdirectory(fullwidth)
-add_subdirectory(cloudpinyin)
+if (ENABLE_CLOUDPINYIN)
+    add_subdirectory(cloudpinyin)
+endif()
 add_subdirectory(pinyinhelper)

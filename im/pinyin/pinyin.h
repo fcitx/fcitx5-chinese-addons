@@ -220,11 +220,13 @@ public:
     void resetForgetCandidate(InputContext *inputContext);
 
 private:
+#ifdef ENABLE_CLOUDPINYIN
     void cloudPinyinSelected(InputContext *inputContext,
                              const std::string &selected,
                              const std::string &word);
 
     bool handleCloudpinyinTrigger(KeyEvent &event);
+#endif
     bool handle2nd3rdSelection(KeyEvent &event);
     bool handleCandidateList(KeyEvent &event);
     bool handleStrokeFilter(KeyEvent &event);
@@ -258,7 +260,9 @@ private:
     std::unique_ptr<HandlerTableEntry<EventHandler>> event_;
 
     FCITX_ADDON_DEPENDENCY_LOADER(quickphrase, instance_->addonManager());
+#ifdef ENABLE_CLOUDPINYIN
     FCITX_ADDON_DEPENDENCY_LOADER(cloudpinyin, instance_->addonManager());
+#endif
     FCITX_ADDON_DEPENDENCY_LOADER(fullwidth, instance_->addonManager());
     FCITX_ADDON_DEPENDENCY_LOADER(chttrans, instance_->addonManager());
     FCITX_ADDON_DEPENDENCY_LOADER(punctuation, instance_->addonManager());
