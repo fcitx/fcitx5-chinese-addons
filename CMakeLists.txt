@@ -39,7 +39,7 @@ option(ENABLE_OPENCC "Enable OpenCC for chttrans" On)
 option(ENABLE_GUI "Enable Configure Gui" On)
 option(ENABLE_BROWSER "Enable built-in browser." On)
 option(USE_WEBKIT "Use WebKit as browser backend." On)
-option(ENABLE_CLOUDPINYIN "Enable Cloud Pinyin (Need libcurl)" OFF)
+option(ENABLE_CLOUDPINYIN "Enable Cloud Pinyin (Need libcurl)" On)
 
 if (ENABLE_OPENCC)
     find_package(OpenCC REQUIRED)
