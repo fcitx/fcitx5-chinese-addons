@@ -4,15 +4,15 @@
 #
 # Translators:
 # Bon Keun Seo <scobyseo@gmail.com>, 2017
-# Jung Hee Lee <daemul72@gmail.com>, 2021
+# JungHee Lee <daemul72@gmail.com>, 2021
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2021-06-15 20:24+0000\n"
+"POT-Creation-Date: 2021-08-30 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
-"Last-Translator: Jung Hee Lee <daemul72@gmail.com>, 2021\n"
+"Last-Translator: JungHee Lee <daemul72@gmail.com>, 2021\n"
 "Language-Team: Korean (https://www.transifex.com/fcitx/teams/12005/ko/)\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
@@ -318,7 +318,7 @@ msgstr ""
 
 #: modules/punctuation/punctuation.h:49
 msgid "Entries"
-msgstr ""
+msgstr "항목"
 
 #: im/table/erbi.conf.in.in:3
 msgid "Erbi"
@@ -459,7 +459,7 @@ msgstr "입력 사전 이름"
 #: modules/punctuation/punctuation.h:38
 msgctxt "Key of the punctuation, e.g. comma"
 msgid "Key"
-msgstr ""
+msgstr "키"
 
 #: im/table/ime.h:111 im/pinyin/pinyin.h:161
 msgid "Key to trigger quickphrase"
@@ -618,7 +618,7 @@ msgstr "입력 길이가 초과될 때 프롬프트 긴 단어 길이(사용안�
 
 #: modules/cloudpinyin/cloudpinyin.h:38
 msgid "Proxy"
-msgstr ""
+msgstr "프록시"
 
 #: im/pinyin/pinyin.h:151 modules/punctuation/punctuation.cpp:226
 #: modules/punctuation/punctuation.cpp:228
@@ -628,7 +628,7 @@ msgstr "문장부호"
 
 #: im/pinyin/pinyin.h:166
 msgid "Quick Phrase"
-msgstr ""
+msgstr "상용구"
 
 #: im/table/ime.h:201
 msgid "Regular expression for auto select when no match is found"
