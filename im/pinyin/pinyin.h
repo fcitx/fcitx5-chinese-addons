@@ -77,6 +77,9 @@ FCITX_CONFIGURATION(
     Option<bool> showPreeditInApplication{this, "PreeditInApplication",
                                           _("Show preedit within application"),
                                           false};
+    Option<bool> preeditCursorPositionAtBeginning{
+        this, "PreeditCursorPositionAtBeginning",
+        _("Fix embedded preedit cursor at the beginning of the preedit"), true};
     Option<bool> showActualPinyinInPreedit{
         this, "PinyinInPreedit", _("Show complete pinyin in preedit"), false};
     Option<bool> predictionEnabled{this, "Prediction", _("Enable Prediction"),
@@ -234,9 +237,7 @@ private:
     void updateStroke(InputContext *inputContext);
     void updateForgetCandidate(InputContext *inputContext);
 
-    bool showClientPreedit(InputContext *inputContext) const;
-    Text fetchAndSetClientPreedit(InputContext *inputContext,
-                                  const libime::PinyinContext &context) const;
+    void updatePreedit(InputContext *inputContext) const;
 
 #ifdef FCITX_HAS_LUA
     std::vector<std::string>

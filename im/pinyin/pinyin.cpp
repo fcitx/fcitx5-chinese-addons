@@ -395,24 +395,44 @@ PinyinEngine::luaCandidateTrigger(InputContext *ic,
 }
 #endif
 
-bool PinyinEngine::showClientPreedit(InputContext *inputContext) const {
-    return config_.showPreeditInApplication.value() &&
-           inputContext->capabilityFlags().test(CapabilityFlag::Preedit);
-}
-
-Text PinyinEngine::fetchAndSetClientPreedit(
-    InputContext *inputContext, const libime::PinyinContext &context) const {
-    auto preeditWithCursor = context.preeditWithCursor();
-    Text preedit(std::move(preeditWithCursor.first));
-    preedit.setCursor(preeditWithCursor.second);
+void PinyinEngine::updatePreedit(InputContext *inputContext) const {
+    auto *state = inputContext->propertyFor(&factory_);
+    // Use const ref to avoid accidentally change anything.
+    const auto &context = state->context_;
     auto &inputPanel = inputContext->inputPanel();
-    if (showClientPreedit(inputContext)) {
+    auto preeditWithCursor = context.preeditWithCursor();
+    if (inputContext->capabilityFlags().test(CapabilityFlag::Preedit)) {
+        Text preedit;
+        if (*config_.showPreeditInApplication) {
+            if (*config_.preeditCursorPositionAtBeginning) {
+                preedit.append(
+                    preeditWithCursor.first.substr(0, preeditWithCursor.second),
+                    {TextFormatFlag::HighLight, TextFormatFlag::Underline});
+                preedit.append(
+                    preeditWithCursor.first.substr(preeditWithCursor.second),
+                    TextFormatFlag::Underline);
+                preedit.setCursor(0);
+            } else {
+                preedit.append(preeditWithCursor.first,
+                               TextFormatFlag::Underline);
+                preedit.setCursor(preeditWithCursor.second);
+            }
+        } else {
+            preedit.append(context.sentence(), TextFormatFlag::Underline);
+            if (*config_.preeditCursorPositionAtBeginning) {
+                preedit.setCursor(0);
+            } else {
+                preedit.setCursor(context.selectedSentence().size());
+            }
+        }
         inputPanel.setClientPreedit(preedit);
-    } else {
-        inputPanel.setClientPreedit(
-            Text(context.sentence(), TextFormatFlag::Underline));
     }
-    return preedit;
+
+    if (!config_.showPreeditInApplication.value()) {
+        Text preedit(preeditWithCursor.first);
+        preedit.setCursor(preeditWithCursor.second);
+        inputPanel.setPreedit(preedit);
+    }
 }
 
 void PinyinEngine::updateUI(InputContext *inputContext) {
@@ -442,11 +462,8 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
             break;
         }
         // Update Preedit.
+        updatePreedit(inputContext);
         auto &inputPanel = inputContext->inputPanel();
-        Text preedit = fetchAndSetClientPreedit(inputContext, state->context_);
-        if (!showClientPreedit(inputContext)) {
-            inputPanel.setPreedit(preedit);
-        }
         // Update candidate
         const auto &candidates = context.candidates();
         if (candidates.empty()) {
@@ -1074,12 +1091,12 @@ void PinyinEngine::updateStroke(InputContext *inputContext) {
     auto &inputPanel = inputContext->inputPanel();
     inputPanel.reset();
 
-    const auto preeditWithCursor = state->context_.preeditWithCursor();
-    Text preedit = fetchAndSetClientPreedit(inputContext, state->context_);
-    preedit.append(_("\t[Stroke Filtering] "));
-    preedit.append(pinyinhelper()->call<IPinyinHelper::prettyStrokeString>(
+    updatePredict(inputContext);
+    Text aux;
+    aux.append(_("[Stroke Filtering]"));
+    aux.append(pinyinhelper()->call<IPinyinHelper::prettyStrokeString>(
         state->strokeBuffer_.userInput()));
-    inputPanel.setPreedit(preedit);
+    inputPanel.setAuxUp(aux);
 
     auto candidateList = std::make_unique<CommonCandidateList>();
     candidateList->setPageSize(*config_.pageSize);
@@ -1127,7 +1144,7 @@ void PinyinEngine::updateForgetCandidate(InputContext *inputContext) {
     auto &inputPanel = inputContext->inputPanel();
     inputPanel.reset();
 
-    fetchAndSetClientPreedit(inputContext, state->context_);
+    updatePreedit(inputContext);
     Text aux(_("[Select the word to remove from history]"));
     inputPanel.setAuxUp(aux);
 
