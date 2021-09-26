@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2021-09-25 20:24+0000\n"
+"POT-Creation-Date: 2021-09-26 03:27+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: csslayer <wengxt@gmail.com>, 2021\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/fcitx/teams/12005/"
@@ -367,7 +367,7 @@ msgstr "将第一个候选词作为预编辑文本"
 
 #: im/pinyin/pinyin.h:82
 msgid "Fix embedded preedit cursor at the beginning of the preedit"
-msgstr ""
+msgstr "固定嵌入预编辑文本光标在预编辑的开头"
 
 #: im/table/engine.h:33 im/pinyin/pinyin.h:91
 msgid "Forget word"
@@ -906,7 +906,7 @@ msgstr "[选择要从历史中移除的词]"
 
 #: im/pinyin/pinyin.cpp:1096
 msgid "[Stroke Filtering]"
-msgstr ""
+msgstr "[笔画过滤]"
 
 #. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:21
 #. i18n: ectx: property (url), widget (QWebView, webView_)
