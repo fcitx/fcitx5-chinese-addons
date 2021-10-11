@@ -428,7 +428,8 @@ void PinyinEngine::updatePreedit(InputContext *inputContext) const {
         inputPanel.setClientPreedit(preedit);
     }
 
-    if (!config_.showPreeditInApplication.value()) {
+    if (!config_.showPreeditInApplication.value() ||
+        !inputContext->capabilityFlags().test(CapabilityFlag::Preedit)) {
         Text preedit(preeditWithCursor.first);
         preedit.setCursor(preeditWithCursor.second);
         inputPanel.setPreedit(preedit);
