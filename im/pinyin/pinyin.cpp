@@ -1670,6 +1670,17 @@ void PinyinEngine::save() {
         });
 }
 
+std::string PinyinEngine::subMode(const InputMethodEntry &entry,
+                                  InputContext &inputContext) {
+    FCITX_UNUSED(inputContext);
+    if (entry.uniqueName() == "shuangpin" && *config_.showShuangpinMode &&
+        *config_.shuangpinProfile != ShuangpinProfileEnum::Custom) {
+        return ShuangpinProfileEnumI18NAnnotation::toString(
+            *config_.shuangpinProfile);
+    }
+    return {};
+}
+
 void PinyinEngine::cloudPinyinSelected(InputContext *inputContext,
                                        const std::string &selected,
                                        const std::string &word) {

@@ -64,6 +64,8 @@ FCITX_CONFIGURATION(
                          ShuangpinProfileEnumI18NAnnotation>
         shuangpinProfile{this, "ShuangpinProfile", _("Shuangpin Profile"),
                          ShuangpinProfileEnum::Ziranma};
+    Option<bool> showShuangpinMode{this, "ShowShuangpinMode",
+                                   _("Show current shuangpin mode"), true};
     Option<int, IntConstrain> pageSize{this, "PageSize", _("Page size"), 5,
                                        IntConstrain(3, 10)};
     Option<bool> spellEnabled{this, "SpellEnabled", _("Enable Spell"), true};
@@ -198,11 +200,11 @@ public:
     void reloadConfig() override;
     void reset(const InputMethodEntry &entry,
                InputContextEvent &event) override;
-    void setSubConfig(const std::string &path,
-                      const fcitx::RawConfig &) override;
     void doReset(InputContext *inputContext);
     void save() override;
     auto &factory() { return factory_; }
+    std::string subMode(const InputMethodEntry &entry,
+                        InputContext &inputContext) override;
 
     const Configuration *getConfig() const override { return &config_; }
     void setConfig(const RawConfig &config) override {
@@ -210,6 +212,8 @@ public:
         safeSaveAsIni(config_, "conf/pinyin.conf");
         reloadConfig();
     }
+    void setSubConfig(const std::string &path,
+                      const fcitx::RawConfig &) override;
 
     libime::PinyinIME *ime() { return ime_.get(); }
 
