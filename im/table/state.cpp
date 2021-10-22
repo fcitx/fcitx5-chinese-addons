@@ -479,7 +479,8 @@ bool TableState::handleLookupPinyinOrModifyDictionaryMode(KeyEvent &event) {
     }
 
     event.filterAndAccept();
-    if (event.key().check(FcitxKey_Left)) {
+    if (event.key().check(FcitxKey_Left) ||
+        event.key().check(FcitxKey_KP_Left)) {
         needUpdate = true;
         if (lookupPinyinString_.size() != 0) {
             lookupPinyinIndex_ += 1;
@@ -487,7 +488,8 @@ bool TableState::handleLookupPinyinOrModifyDictionaryMode(KeyEvent &event) {
                 lookupPinyinIndex_ = lookupPinyinString_.size() - 1;
             }
         }
-    } else if (event.key().check(FcitxKey_Right)) {
+    } else if (event.key().check(FcitxKey_Right) ||
+               event.key().check(FcitxKey_KP_Right)) {
         needUpdate = true;
         if (lookupPinyinString_.size() != 0) {
             if (lookupPinyinIndex_ >= lookupPinyinString_.size()) {
@@ -514,7 +516,9 @@ bool TableState::handleLookupPinyinOrModifyDictionaryMode(KeyEvent &event) {
 
     if (!lookupPinyinString_.empty()) {
         if ((event.key().check(FcitxKey_space) ||
-             event.key().check(FcitxKey_Return)) &&
+             event.key().check(FcitxKey_Return) ||
+             event.key().check(FcitxKey_KP_Space) ||
+             event.key().check(FcitxKey_KP_Enter)) &&
             mode_ == TableMode::ModifyDictionary) {
             auto subString = getSubString();
             std::string result;
@@ -535,7 +539,8 @@ bool TableState::handleLookupPinyinOrModifyDictionaryMode(KeyEvent &event) {
                 }
             }
         } else if (event.key().checkKeyList(std::initializer_list<Key>{
-                       Key(FcitxKey_BackSpace), Key(FcitxKey_Delete)}) &&
+                       Key(FcitxKey_BackSpace), Key(FcitxKey_Delete),
+                       Key(FcitxKey_KP_Delete)}) &&
                    mode_ == TableMode::ModifyDictionary) {
             auto subString = getSubString();
             std::string result;
@@ -743,7 +748,8 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
                 context->clear();
             }
             event.filterAndAccept();
-        } else if (event.key().check(FcitxKey_Tab)) {
+        } else if (event.key().check(FcitxKey_Tab) ||
+                   event.key().check(FcitxKey_KP_Tab)) {
             {
                 CommitAfterSelectWrapper commitAfterSelectRAII(this);
                 autoSelectCandidate();

@@ -97,13 +97,13 @@ FCITX_CONFIGURATION(
         this,
         "PrevPage",
         _("Prev Page"),
-        {Key(FcitxKey_minus), Key(FcitxKey_Up)},
+        {Key(FcitxKey_minus), Key(FcitxKey_Up), Key(FcitxKey_KP_Up)},
         KeyListConstrain({KeyConstrainFlag::AllowModifierLess})};
     KeyListOption nextPage{
         this,
         "NextPage",
         _("Next Page"),
-        {Key(FcitxKey_equal), Key(FcitxKey_Down)},
+        {Key(FcitxKey_equal), Key(FcitxKey_Down), Key(FcitxKey_KP_Down)},
         KeyListConstrain({KeyConstrainFlag::AllowModifierLess})};
     KeyListOption prevCandidate{
         this,
