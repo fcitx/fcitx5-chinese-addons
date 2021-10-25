@@ -1079,6 +1079,10 @@ void TableState::updateUI(bool keepOldCursor) {
                     text.append(*config.hintSeparator);
                     text.append(hint);
                 }
+                if (!config.markerForAutoPhrase->empty() &&
+                    TableContext::isAuto(candidate.sentence())) {
+                    text.append(*config.markerForAutoPhrase);
+                }
                 candidateList->append<TableCandidateWord>(engine_,
                                                           std::move(text), idx);
                 idx++;
