@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2021-10-22 20:24+0000\n"
+"POT-Creation-Date: 2021-10-25 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Billy SU <billy4195.su@gmail.com>, 2020\n"
 "Language-Team: Chinese (Taiwan) (https://www.transifex.com/fcitx/teams/12005/"
@@ -101,7 +101,7 @@ msgstr "確定刪除所有字典？"
 msgid "Auto phrase length"
 msgstr "自動片語長度"
 
-#: im/table/ime.h:249
+#: im/table/ime.h:252
 msgid "Auto rule set"
 msgstr "自動組字使用規則"
 
@@ -125,7 +125,7 @@ msgstr "冰蟾全息"
 msgid "Browse Sogou Cell Dict repository"
 msgstr "瀏覽搜狗细胞词库"
 
-#: im/table/ime.h:246
+#: im/table/ime.h:249
 msgid "Candidate List orientation"
 msgstr ""
 
@@ -240,11 +240,11 @@ msgstr "字典"
 msgid "Dictionary already exists"
 msgstr "字典已存在"
 
-#: im/table/ime.h:238
+#: im/table/ime.h:241
 msgid "Display Hint for word"
 msgstr "顯示單字提示"
 
-#: im/table/ime.h:240
+#: im/table/ime.h:243
 msgid "Display custom hint"
 msgstr "顯示自訂提示"
 
@@ -320,7 +320,7 @@ msgstr ""
 msgid "Error while deleting %1."
 msgstr ""
 
-#: im/table/ime.h:236
+#: im/table/ime.h:239
 msgid "Exact Match"
 msgstr ""
 
@@ -429,7 +429,7 @@ msgstr "水平的"
 msgid "Icon"
 msgstr "圖示"
 
-#: im/table/ime.h:233
+#: im/table/ime.h:236
 msgid ""
 "If the value less than 0, means this feature is disabled. If auto phrase is "
 "enabled, selecting auto phrase candidate explicitly will still add the word "
@@ -461,7 +461,7 @@ msgstr ""
 msgid "Key to trigger quickphrase"
 msgstr ""
 
-#: im/table/ime.h:237
+#: im/table/ime.h:240
 msgid "Learning"
 msgstr "學習"
 
@@ -479,6 +479,10 @@ msgstr ""
 
 #: modules/punctuation/punctuation.h:39
 msgid "Mapping"
+msgstr ""
+
+#: im/table/ime.h:227
+msgid "Marker for auto phrase in the candidates"
 msgstr ""
 
 #: im/pinyin/pinyin.h:46
@@ -638,7 +642,7 @@ msgstr ""
 msgid "Remove &All"
 msgstr ""
 
-#: im/table/ime.h:228
+#: im/table/ime.h:231
 msgid "Save auto phrase after being typed for ... times"
 msgstr ""
 
@@ -666,7 +670,7 @@ msgstr ""
 msgid "Select Third Candidate"
 msgstr ""
 
-#: im/table/state.cpp:1120
+#: im/table/state.cpp:1124
 msgid "Select candidate to be removed from history:"
 msgstr ""
 
@@ -678,7 +682,7 @@ msgstr ""
 msgid "Selection"
 msgstr ""
 
-#: im/table/ime.h:242
+#: im/table/ime.h:245
 msgid "Separator text between hint and candidate"
 msgstr ""
 
