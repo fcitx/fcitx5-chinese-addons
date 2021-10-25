@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2021-10-22 20:24+0000\n"
+"POT-Creation-Date: 2021-10-25 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: mar well <m.wellendorf@gmx.de>, 2018\n"
 "Language-Team: German (https://www.transifex.com/fcitx/teams/12005/de/)\n"
@@ -98,7 +98,7 @@ msgstr "Sind Sie sicher, dass alle Wörterbücher gelöscht werden sollen?"
 msgid "Auto phrase length"
 msgstr "Länge der Auto-Phrase"
 
-#: im/table/ime.h:249
+#: im/table/ime.h:252
 msgid "Auto rule set"
 msgstr "Satz automatischer Regeln"
 
@@ -122,7 +122,7 @@ msgstr "Bingchan"
 msgid "Browse Sogou Cell Dict repository"
 msgstr "Sogou Wörterbuchverzeichnis für Mobiles durchsuchen"
 
-#: im/table/ime.h:246
+#: im/table/ime.h:249
 msgid "Candidate List orientation"
 msgstr ""
 
@@ -241,11 +241,11 @@ msgstr "Wörterbücher"
 msgid "Dictionary already exists"
 msgstr "Wörterbuch existiert schon"
 
-#: im/table/ime.h:238
+#: im/table/ime.h:241
 msgid "Display Hint for word"
 msgstr "Hinweis für Wort anzeigen"
 
-#: im/table/ime.h:240
+#: im/table/ime.h:243
 msgid "Display custom hint"
 msgstr "Standardhinweis zeigen"
 
@@ -321,7 +321,7 @@ msgstr "Erbi"
 msgid "Error while deleting %1."
 msgstr "Fehler beim Löschen von %1."
 
-#: im/table/ime.h:236
+#: im/table/ime.h:239
 msgid "Exact Match"
 msgstr "Genaue Übereinstimmung"
 
@@ -430,7 +430,7 @@ msgstr ""
 msgid "Icon"
 msgstr "Icon"
 
-#: im/table/ime.h:233
+#: im/table/ime.h:236
 msgid ""
 "If the value less than 0, means this feature is disabled. If auto phrase is "
 "enabled, selecting auto phrase candidate explicitly will still add the word "
@@ -462,7 +462,7 @@ msgstr ""
 msgid "Key to trigger quickphrase"
 msgstr "Trigger Key für QuickPhrase"
 
-#: im/table/ime.h:237
+#: im/table/ime.h:240
 msgid "Learning"
 msgstr "Lernen"
 
@@ -480,6 +480,10 @@ msgstr ""
 
 #: modules/punctuation/punctuation.h:39
 msgid "Mapping"
+msgstr ""
+
+#: im/table/ime.h:227
+msgid "Marker for auto phrase in the candidates"
 msgstr ""
 
 #: im/pinyin/pinyin.h:46
@@ -642,7 +646,7 @@ msgstr ""
 msgid "Remove &All"
 msgstr ""
 
-#: im/table/ime.h:228
+#: im/table/ime.h:231
 msgid "Save auto phrase after being typed for ... times"
 msgstr ""
 
@@ -670,7 +674,7 @@ msgstr ""
 msgid "Select Third Candidate"
 msgstr ""
 
-#: im/table/state.cpp:1120
+#: im/table/state.cpp:1124
 msgid "Select candidate to be removed from history:"
 msgstr ""
 
@@ -682,7 +686,7 @@ msgstr "Scel Datei auswählen"
 msgid "Selection"
 msgstr "Auswahl"
 
-#: im/table/ime.h:242
+#: im/table/ime.h:245
 msgid "Separator text between hint and candidate"
 msgstr ""
 
