@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2021-10-25 20:24+0000\n"
+"POT-Creation-Date: 2021-10-26 07:27+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: csslayer <wengxt@gmail.com>, 2021\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/fcitx/teams/12005/"
@@ -489,7 +489,7 @@ msgstr "映射"
 
 #: im/table/ime.h:227
 msgid "Marker for auto phrase in the candidates"
-msgstr ""
+msgstr "候选词中自动组词的标记符号"
 
 #: im/pinyin/pinyin.h:46
 msgid "Match partial finals (e -> en, eng, ei)"
@@ -700,7 +700,7 @@ msgstr "在预编辑中显示完整拼音"
 
 #: im/pinyin/pinyin.h:68
 msgid "Show current shuangpin mode"
-msgstr ""
+msgstr "显示当前双拼模式"
 
 #: im/pinyin/pinyin.cpp:683
 msgid "Show prediction words"
