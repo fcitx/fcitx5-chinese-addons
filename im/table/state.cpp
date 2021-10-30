@@ -258,6 +258,12 @@ bool TableState::handleCandidateList(const TableConfig &config,
                 event.filterAndAccept();
                 return true;
             }
+            // Only let key go through if it can reach handlePunc.
+            auto c = Key::keySymToUnicode(event.key().sym());
+            if (event.key().hasModifier() || !c) {
+                event.filterAndAccept();
+                return true;
+            }
         } else {
             event.filterAndAccept();
             pageable->prev();
