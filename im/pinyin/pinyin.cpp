@@ -1099,7 +1099,7 @@ void PinyinEngine::updateStroke(InputContext *inputContext) {
     auto &inputPanel = inputContext->inputPanel();
     inputPanel.reset();
 
-    updatePredict(inputContext);
+    updatePreedit(inputContext);
     Text aux;
     aux.append(_("[Stroke Filtering]"));
     aux.append(pinyinhelper()->call<IPinyinHelper::prettyStrokeString>(
