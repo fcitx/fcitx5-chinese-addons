@@ -5,7 +5,6 @@ set(CLOUDPINYIN_SOURCES
 
 add_library(cloudpinyin MODULE ${CLOUDPINYIN_SOURCES})
 target_link_libraries(cloudpinyin Fcitx5::Core Fcitx5::Config PkgConfig::Curl Pthread::Pthread)
-set_target_properties(cloudpinyin PROPERTIES PREFIX "")
 install(TARGETS cloudpinyin DESTINATION "${CMAKE_INSTALL_LIBDIR}/fcitx5")
 configure_file(cloudpinyin.conf.in.in cloudpinyin.conf.in)
 fcitx5_translate_desktop_file("${CMAKE_CURRENT_BINARY_DIR}/cloudpinyin.conf.in" cloudpinyin.conf)

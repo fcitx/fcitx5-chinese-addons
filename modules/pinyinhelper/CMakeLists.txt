@@ -5,7 +5,6 @@ set(PINYINHELPER_SOURCES
 )
 add_library(pinyinhelper MODULE ${PINYINHELPER_SOURCES})
 target_link_libraries(pinyinhelper Fcitx5::Core Fcitx5::Config LibIME::Core Boost::iostreams Fcitx5::Module::QuickPhrase Fcitx5::Module::Clipboard ${FMT_TARGET})
-set_target_properties(pinyinhelper PROPERTIES PREFIX "")
 install(TARGETS pinyinhelper DESTINATION "${CMAKE_INSTALL_LIBDIR}/fcitx5")
 configure_file(pinyinhelper.conf.in.in pinyinhelper.conf.in)
 fcitx5_translate_desktop_file("${CMAKE_CURRENT_BINARY_DIR}/pinyinhelper.conf.in" pinyinhelper.conf)

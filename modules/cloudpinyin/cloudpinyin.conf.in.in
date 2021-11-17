@@ -2,7 +2,7 @@
 Name=Cloud Pinyin
 Category=Module
 Version=@PROJECT_VERSION@
-Library=cloudpinyin
+Library=libcloudpinyin
 Type=SharedLibrary
 OnDemand=True
 Configurable=True

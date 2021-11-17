@@ -2,7 +2,7 @@
 Name=Simplified and Traditional Chinese Translation
 Category=Module
 Version=@PROJECT_VERSION@
-Library=chttrans
+Library=libchttrans
 Type=SharedLibrary
 Configurable=True
 OnDemand=True

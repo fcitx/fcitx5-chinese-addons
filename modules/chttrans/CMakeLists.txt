@@ -9,7 +9,6 @@ target_link_libraries(chttrans Fcitx5::Core Fcitx5::Config Fcitx5::Module::Notif
 if (ENABLE_OPENCC)
     target_link_libraries(chttrans OpenCC::OpenCC)
 endif()
-set_target_properties(chttrans PROPERTIES PREFIX "")
 install(TARGETS chttrans DESTINATION "${CMAKE_INSTALL_LIBDIR}/fcitx5")
 configure_file(chttrans.conf.in.in chttrans.conf.in)
 fcitx5_translate_desktop_file("${CMAKE_CURRENT_BINARY_DIR}/chttrans.conf.in" chttrans.conf)
