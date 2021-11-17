@@ -2,7 +2,7 @@
 Name=Extra Pinyin functionality
 Category=Module
 Version=@PROJECT_VERSION@
-Library=pinyinhelper
+Library=libpinyinhelper
 Type=SharedLibrary
 OnDemand=False
 
