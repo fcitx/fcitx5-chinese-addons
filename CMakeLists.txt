@@ -56,7 +56,7 @@ if (ENABLE_GUI)
 endif()
 
 find_package(Boost 1.61 REQUIRED COMPONENTS iostreams)
-find_package(LibIMEPinyin REQUIRED)
+find_package(LibIMEPinyin 1.0.10 REQUIRED)
 find_package(LibIMETable 1.0.3 REQUIRED)
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.h.in ${CMAKE_CURRENT_BINARY_DIR}/config.h)

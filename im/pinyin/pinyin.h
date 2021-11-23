@@ -210,7 +210,7 @@ public:
     void setConfig(const RawConfig &config) override {
         config_.load(config, true);
         safeSaveAsIni(config_, "conf/pinyin.conf");
-        reloadConfig();
+        populateConfig();
     }
     void setSubConfig(const std::string &path,
                       const fcitx::RawConfig &) override;
@@ -238,6 +238,8 @@ private:
     bool handleForgetCandidate(KeyEvent &event);
     bool handlePunc(KeyEvent &event);
 
+    void populateConfig();
+
     void updateStroke(InputContext *inputContext);
     void updateForgetCandidate(InputContext *inputContext);
 
@@ -247,6 +249,7 @@ private:
     std::vector<std::string>
     luaCandidateTrigger(InputContext *ic, const std::string &candidateString);
 #endif
+    void loadBuiltInDict();
     void loadExtraDict();
     void loadDict(const StandardPathFile &file);
 
