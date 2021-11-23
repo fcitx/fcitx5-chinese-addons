@@ -667,7 +667,9 @@ PinyinEngine::PinyinEngine(Instance *instance)
     } while (0);
 
     ime_->setScoreFilter(1);
+    loadBuiltInDict();
     reloadConfig();
+    loadExtraDict();
     instance_->inputContextManager().registerProperty("pinyinState", &factory_);
     KeySym syms[] = {
         FcitxKey_1, FcitxKey_2, FcitxKey_3, FcitxKey_4, FcitxKey_5,
@@ -714,6 +716,7 @@ void PinyinEngine::loadDict(const StandardPathFile &file) {
         return;
     }
     try {
+        PINYIN_DEBUG() << "Loading pinyin dict " << file.path();
         boost::iostreams::stream_buffer<
             boost::iostreams::file_descriptor_source>
             buffer(file.fd(),
@@ -728,6 +731,23 @@ void PinyinEngine::loadDict(const StandardPathFile &file) {
     }
 }
 
+void PinyinEngine::loadBuiltInDict() {
+    const auto &standardPath = StandardPath::global();
+    {
+        auto file = standardPath.open(StandardPath::Type::PkgData,
+                                      "pinyin/emoji.dict", O_RDONLY);
+        loadDict(file);
+    }
+    {
+        auto file = standardPath.open(StandardPath::Type::PkgData,
+                                      "pinyin/chaizi.dict", O_RDONLY);
+        loadDict(file);
+    }
+    if (ime_->dict()->dictSize() != libime::TrieDictionary::UserDict + 2 + 1) {
+        throw std::runtime_error("Failed to load built-in dictionary");
+    }
+}
+
 void PinyinEngine::loadExtraDict() {
     const auto &standardPath = StandardPath::global();
     auto files = standardPath.multiOpen(StandardPath::Type::PkgData,
@@ -736,19 +756,10 @@ void PinyinEngine::loadExtraDict() {
     auto disableFiles = standardPath.multiOpen(StandardPath::Type::PkgData,
                                                "pinyin/dictionaries", O_RDONLY,
                                                filter::Suffix(".dict.disable"));
-    ime_->dict()->removeAll();
-    if (*config_.emojiEnabled) {
-        auto file = standardPath.open(StandardPath::Type::PkgData,
-                                      "pinyin/emoji.dict", O_RDONLY);
-        loadDict(file);
-    }
-    if (*config_.chaiziEnabled) {
-        auto file = standardPath.open(StandardPath::Type::PkgData,
-                                      "pinyin/chaizi.dict", O_RDONLY);
-        loadDict(file);
-        ime_->dict()->setFlags(ime_->dict()->dictSize() - 1,
-                               libime::PinyinDictFlag::FullMatch);
-    }
+    FCITX_ASSERT(ime_->dict()->dictSize() >=
+                 libime::TrieDictionary::UserDict + 2)
+        << "Dict size: " << ime_->dict()->dictSize();
+    ime_->dict()->removeFrom(libime::TrieDictionary::UserDict + 3);
     for (const auto &file : files) {
         if (disableFiles.count(stringutils::concat(file.first, ".disable"))) {
             PINYIN_DEBUG() << "Dictionary: " << file.first << " is disabled.";
@@ -759,9 +770,7 @@ void PinyinEngine::loadExtraDict() {
     }
 }
 
-void PinyinEngine::reloadConfig() {
-    PINYIN_DEBUG() << "Reload pinyin config.";
-    readAsIni(config_, "conf/pinyin.conf");
+void PinyinEngine::populateConfig() {
     if (*config_.firstRun) {
         config_.firstRun.setValue(false);
         safeSaveAsIni(config_, "conf/pinyin.conf");
@@ -893,8 +902,20 @@ void PinyinEngine::reloadConfig() {
         }
     }
     PINYIN_DEBUG() << "Quick Phrase Trigger Dict: " << quickphraseTriggerDict_;
+    ime_->dict()->setFlags(libime::TrieDictionary::UserDict + 1,
+                           *config_.emojiEnabled
+                               ? libime::PinyinDictFlag::NoFlag
+                               : libime::PinyinDictFlag::Disabled);
+    ime_->dict()->setFlags(libime::TrieDictionary::UserDict + 2,
+                           *config_.chaiziEnabled
+                               ? libime::PinyinDictFlag::FullMatch
+                               : libime::PinyinDictFlag::Disabled);
+}
 
-    loadExtraDict();
+void PinyinEngine::reloadConfig() {
+    PINYIN_DEBUG() << "Reload pinyin config.";
+    readAsIni(config_, "conf/pinyin.conf");
+    populateConfig();
 }
 void PinyinEngine::activate(const fcitx::InputMethodEntry &entry,
                             fcitx::InputContextEvent &event) {
