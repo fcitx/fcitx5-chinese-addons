@@ -394,44 +394,49 @@ PinyinEngine::luaCandidateTrigger(InputContext *ic,
     return result;
 }
 #endif
-
-void PinyinEngine::updatePreedit(InputContext *inputContext) const {
+std::pair<Text, Text> PinyinEngine::preedit(InputContext *inputContext) const {
     auto *state = inputContext->propertyFor(&factory_);
     // Use const ref to avoid accidentally change anything.
     const auto &context = state->context_;
-    auto &inputPanel = inputContext->inputPanel();
     auto preeditWithCursor = context.preeditWithCursor();
-    if (inputContext->capabilityFlags().test(CapabilityFlag::Preedit)) {
-        Text preedit;
-        if (*config_.showPreeditInApplication) {
-            if (*config_.preeditCursorPositionAtBeginning) {
-                preedit.append(
-                    preeditWithCursor.first.substr(0, preeditWithCursor.second),
-                    {TextFormatFlag::HighLight, TextFormatFlag::Underline});
-                preedit.append(
-                    preeditWithCursor.first.substr(preeditWithCursor.second),
-                    TextFormatFlag::Underline);
-                preedit.setCursor(0);
-            } else {
-                preedit.append(preeditWithCursor.first,
-                               TextFormatFlag::Underline);
-                preedit.setCursor(preeditWithCursor.second);
-            }
+    Text clientPreedit;
+    if (*config_.showPreeditInApplication) {
+        if (*config_.preeditCursorPositionAtBeginning) {
+            clientPreedit.append(
+                preeditWithCursor.first.substr(0, preeditWithCursor.second),
+                {TextFormatFlag::HighLight, TextFormatFlag::Underline});
+            clientPreedit.append(
+                preeditWithCursor.first.substr(preeditWithCursor.second),
+                TextFormatFlag::Underline);
+            clientPreedit.setCursor(0);
         } else {
-            preedit.append(context.sentence(), TextFormatFlag::Underline);
-            if (*config_.preeditCursorPositionAtBeginning) {
-                preedit.setCursor(0);
-            } else {
-                preedit.setCursor(context.selectedSentence().size());
-            }
+            clientPreedit.append(preeditWithCursor.first,
+                                 TextFormatFlag::Underline);
+            clientPreedit.setCursor(preeditWithCursor.second);
         }
-        inputPanel.setClientPreedit(preedit);
+    } else {
+        clientPreedit.append(context.sentence(), TextFormatFlag::Underline);
+        if (*config_.preeditCursorPositionAtBeginning) {
+            clientPreedit.setCursor(0);
+        } else {
+            clientPreedit.setCursor(context.selectedSentence().size());
+        }
+    }
+
+    Text preedit(preeditWithCursor.first);
+    preedit.setCursor(preeditWithCursor.second);
+    return {std::move(clientPreedit), std::move(preedit)};
+}
+
+void PinyinEngine::updatePreedit(InputContext *inputContext) const {
+    auto &inputPanel = inputContext->inputPanel();
+    auto [clientPreedit, preedit] = this->preedit(inputContext);
+    if (inputContext->capabilityFlags().test(CapabilityFlag::Preedit)) {
+        inputPanel.setClientPreedit(clientPreedit);
     }
 
     if (!config_.showPreeditInApplication.value() ||
         !inputContext->capabilityFlags().test(CapabilityFlag::Preedit)) {
-        Text preedit(preeditWithCursor.first);
-        preedit.setCursor(preeditWithCursor.second);
         inputPanel.setPreedit(preedit);
     }
 }
@@ -1715,6 +1720,72 @@ std::string PinyinEngine::subMode(const InputMethodEntry &entry,
             *config_.shuangpinProfile);
     }
     return {};
+}
+
+void PinyinEngine::invokeActionImpl(const InputMethodEntry &entry,
+                                    InvokeActionEvent &event) {
+    auto inputContext = event.inputContext();
+    auto *state = inputContext->propertyFor(&factory_);
+    auto &context = state->context_;
+    auto &inputPanel = inputContext->inputPanel();
+    if (event.cursor() < 0 ||
+        event.action() != InvokeActionEvent::Action::LeftClick ||
+        !inputContext->capabilityFlags().test(CapabilityFlag::Preedit)) {
+        return InputMethodEngineV3::invokeActionImpl(entry, event);
+    }
+    auto [clientPreedit, _] = this->preedit(inputContext);
+
+    auto preedit = clientPreedit.toString();
+    size_t cursor = event.cursor();
+    if (inputPanel.clientPreedit().toString() != clientPreedit.toString() ||
+        inputPanel.clientPreedit().cursor() != clientPreedit.cursor() ||
+        cursor > utf8::length(preedit)) {
+        return InputMethodEngineV3::invokeActionImpl(entry, event);
+    }
+
+    event.filter();
+
+    auto preeditWithCursor = context.preeditWithCursor();
+    auto selectedSentence = context.selectedSentence();
+    // The logic here need to match ::preedit()
+    if (*config_.showPreeditInApplication) {
+        if (utf8::length(selectedSentence) > cursor) {
+            // If cursor is with in selected sentence range, cancel until cursor
+            // is covered.
+            do {
+                context.cancel();
+            } while (utf8::length(context.selectedSentence()) > cursor);
+            context.setCursor(context.selectedLength());
+        } else {
+            // If cursor is with in the pinyin range, move to the left most and
+            // then move it around. This is a easy way to cover Shuangpin and
+            // Preedit Mode difference. setCursor should be cheap operation if
+            // it doesn not cancel any selection.
+            context.setCursor(context.selectedLength());
+            while (context.cursor() < context.size()) {
+                auto [preeditText, preeditCursor] = context.preeditWithCursor();
+                if (utf8::length(preeditText.begin(),
+                                 preeditText.begin() + preeditCursor) <
+                    cursor) {
+                    state->context_.setCursor(context.cursor() + 1);
+                } else {
+                    break;
+                }
+            }
+            auto [preeditText, preeditCursor] = context.preeditWithCursor();
+            if (utf8::length(preeditText.begin(),
+                             preeditText.begin() + preeditCursor) > cursor) {
+                state->context_.setCursor(context.cursor() - 1);
+            }
+        }
+    } else {
+        if (utf8::length(selectedSentence) > cursor) {
+            do {
+                context.cancel();
+            } while (utf8::length(context.selectedSentence()) > cursor);
+        }
+    }
+    updateUI(inputContext);
 }
 
 void PinyinEngine::cloudPinyinSelected(InputContext *inputContext,

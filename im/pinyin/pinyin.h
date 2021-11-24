@@ -187,7 +187,7 @@ class PinyinState;
 class EventSourceTime;
 class CandidateList;
 
-class PinyinEngine final : public InputMethodEngine {
+class PinyinEngine final : public InputMethodEngineV3 {
 public:
     PinyinEngine(Instance *instance);
     ~PinyinEngine();
@@ -205,6 +205,8 @@ public:
     auto &factory() { return factory_; }
     std::string subMode(const InputMethodEntry &entry,
                         InputContext &inputContext) override;
+    void invokeActionImpl(const InputMethodEntry &entry,
+                          InvokeActionEvent &event) override;
 
     const Configuration *getConfig() const override { return &config_; }
     void setConfig(const RawConfig &config) override {
@@ -244,6 +246,8 @@ private:
     void updateForgetCandidate(InputContext *inputContext);
 
     void updatePreedit(InputContext *inputContext) const;
+
+    std::pair<Text, Text> preedit(InputContext *inputContext) const;
 
 #ifdef FCITX_HAS_LUA
     std::vector<std::string>
