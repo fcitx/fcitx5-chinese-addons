@@ -283,7 +283,7 @@ private:
 class PinyinEngineFactory : public AddonFactory {
 public:
     AddonInstance *create(AddonManager *manager) override {
-        registerDomain("fcitx5-chinese-addons", FCITX_INSTALL_LOCALEDIR);
+        registerDomain("fcitx5-chinese-addons", nullptr);
         return new PinyinEngine(manager->instance());
     }
 };

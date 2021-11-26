@@ -13,7 +13,7 @@ namespace fcitx {
 
 PinyinDictManagerPlugin::PinyinDictManagerPlugin(QObject *parent)
     : FcitxQtConfigUIPlugin(parent) {
-    registerDomain("fcitx5-chinese-addons", FCITX_INSTALL_LOCALEDIR);
+    registerDomain("fcitx5-chinese-addons", nullptr);
 }
 
 FcitxQtConfigUIWidget *PinyinDictManagerPlugin::create(const QString &key) {
