@@ -18,11 +18,10 @@
 
 namespace fcitx {
 
-FCITX_CONFIG_ENUM(OrderPolicy, No, Freq, Fast);
-FCITX_CONFIG_ENUM_NAME(CandidateLayoutHint, "Not set", "Vertical",
-                       "Horizontal");
-FCITX_CONFIG_ENUM_I18N_ANNOTATION(CandidateLayoutHint, N_("Not set"),
-                                  N_("Vertical"), N_("Horizontal"));
+enum class OrderPolicy { No, Freq, Fast };
+FCITX_CONFIG_ENUM_NAME_WITH_I18N(OrderPolicy, N_("No"), N_("Freq"), N_("Fast"));
+FCITX_CONFIG_ENUM_NAME_WITH_I18N(CandidateLayoutHint, N_("Not set"),
+                                 N_("Vertical"), N_("Horizontal"));
 
 struct NoSaveAnnotation {
     bool skipDescription() { return true; }
@@ -124,7 +123,8 @@ FCITX_CONFIGURATION(
     NoSaveOption<std::string> icon{this, "Icon", _("Icon")};
     Option<int> noSortInputLength{this, "NoSortInputLength",
                                   _("Don't sort word shorter than")};
-    Option<OrderPolicy> orderPolicy{this, "OrderPolicy", _("Order policy")};
+    OptionWithAnnotation<OrderPolicy, OrderPolicyI18NAnnotation> orderPolicy{
+        this, "OrderPolicy", _("Order policy")};
     OptionWithAnnotation<bool, ToolTipAnnotation> useSystemLanguageModel{
         this,
         "UseSystemLanguageModel",
