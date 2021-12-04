@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2021-12-01 20:24+0000\n"
+"POT-Creation-Date: 2021-12-04 15:32+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: csslayer <wengxt@gmail.com>, 2021\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/fcitx/teams/12005/"
@@ -351,7 +351,7 @@ msgstr "获取 runtime 目录失败"
 
 #: im/table/ime.h:22
 msgid "Fast"
-msgstr ""
+msgstr "快速"
 
 #: im/table/ime.h:36
 msgid "File"
@@ -379,7 +379,7 @@ msgstr "忘记词汇"
 
 #: im/table/ime.h:22
 msgid "Freq"
-msgstr ""
+msgstr "频率"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:34
 msgid "From &File"
