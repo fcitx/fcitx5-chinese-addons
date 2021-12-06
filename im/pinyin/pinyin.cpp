@@ -659,6 +659,10 @@ PinyinEngine::PinyinEngine(Instance *instance)
         auto file = standardPath.openUser(StandardPath::Type::PkgData,
                                           "pinyin/user.history", O_RDONLY);
 
+        if (file.fd() < 0) {
+            break;
+        }
+        
         try {
             boost::iostreams::stream_buffer<
                 boost::iostreams::file_descriptor_source>
