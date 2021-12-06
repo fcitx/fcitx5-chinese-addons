@@ -83,10 +83,6 @@ void scheduleEvent(EventDispatcher *dispatcher, Instance *instance) {
 
                 // Test convertTradToSimp
                 std::string word = getTestWord(s);
-                if (word == "時") {
-                    action->activate(keyEvent.inputContext());
-                }
-
                 keyEvent.inputContext()->commitString(word);
                 keyEvent.filterAndAccept();
             }
@@ -97,6 +93,7 @@ void scheduleEvent(EventDispatcher *dispatcher, Instance *instance) {
 
         RawConfig config;
         config.setValueByPath("Engine", "OpenCC");
+        config.setValueByPath("Hotkey/0", "Control+Shift+F");
         chttrans->setConfig(config);
         testfrontend->call<ITestFrontend::pushCommitExpectation>("無");
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
@@ -125,24 +122,22 @@ void scheduleEvent(EventDispatcher *dispatcher, Instance *instance) {
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("d"), false);
 
         // Switch to Trad IM from Sim IM
-        testfrontend->call<ITestFrontend::keyEvent>(
-            uuid, Key("Control+Shift+F"), false);
-        inputmethodgroup.setDefaultInputMethod("trad");
-        instance->inputMethodManager().setGroup(inputmethodgroup);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Control+space"),
                                                     false);
         testfrontend->call<ITestFrontend::pushCommitExpectation>("时");
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("e"), false);
 
         // Test Native engine
-        inputmethodgroup.setDefaultInputMethod("sim");
-        instance->inputMethodManager().setGroup(inputmethodgroup);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Control+space"),
                                                     false);
         config.setValueByPath("Engine", "Native");
-        config.setValueByPath("EnabledIM/0", "sim");
+        FCITX_INFO() << config;
         chttrans->setConfig(config);
         testfrontend->call<ITestFrontend::pushCommitExpectation>("皇後");
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("f"), false);
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("皇后");
+        testfrontend->call<ITestFrontend::keyEvent>(
+            uuid, Key("Control+Shift+F"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("f"), false);
 
         dispatcher->detach();
