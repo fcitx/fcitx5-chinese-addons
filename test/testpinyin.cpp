@@ -68,13 +68,13 @@ void scheduleEvent(EventDispatcher *dispatcher, Instance *instance) {
 void runInstance() {}
 
 int main() {
-    setupTestingEnvironment(TESTING_BINARY_DIR,
-                            {TESTING_BINARY_DIR "/modules/pinyinhelper",
-                             TESTING_BINARY_DIR "/modules/punctuation",
-                             TESTING_BINARY_DIR "/im/pinyin"},
-                            {TESTING_BINARY_DIR "/test",
-                             TESTING_BINARY_DIR "/modules",
-                             StandardPath::fcitxPath("pkgdatadir")});
+    setupTestingEnvironment(
+        TESTING_BINARY_DIR,
+        {TESTING_BINARY_DIR "/modules/pinyinhelper",
+         TESTING_BINARY_DIR "/modules/punctuation",
+         TESTING_BINARY_DIR "/im/pinyin"},
+        {TESTING_BINARY_DIR "/test", TESTING_BINARY_DIR "/im",
+         TESTING_BINARY_DIR "/modules", StandardPath::fcitxPath("pkgdatadir")});
     // fcitx::Log::setLogRule("default=5,table=5,libime-table=5");
     char arg0[] = "testpinyin";
     char arg1[] = "--disable=all";
