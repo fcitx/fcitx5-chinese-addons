@@ -320,6 +320,10 @@ void PinyinEngine::updatePredict(InputContext *inputContext) {
     if (auto candidateList = predictCandidateList(words)) {
         auto &inputPanel = inputContext->inputPanel();
         inputPanel.setCandidateList(std::move(candidateList));
+    } else {
+        // Clear if we can't do predict.
+        // This help other code to detect whether we are in predict.
+        state->predictWords_.clear();
     }
     inputContext->updatePreedit();
     inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
@@ -1452,6 +1456,10 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         inputContext->inputPanel().reset();
         inputContext->updatePreedit();
         inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
+        if (event.key().check(FcitxKey_Escape)) {
+            event.filterAndAccept();
+            return;
+        }
     }
 
     auto checkSp = [this](const KeyEvent &event, PinyinState *state) {
