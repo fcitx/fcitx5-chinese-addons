@@ -1063,8 +1063,10 @@ bool PinyinEngine::handleCandidateList(KeyEvent &event) {
         }
         return true;
     }
-    if (event.key().check(FcitxKey_space) ||
-        event.key().check(FcitxKey_KP_Space)) {
+    auto *state = inputContext->propertyFor(&factory_);
+    if ((event.key().check(FcitxKey_space) ||
+         event.key().check(FcitxKey_KP_Space)) &&
+        state->predictWords_.empty()) {
         if (candidateList->size()) {
             event.filterAndAccept();
             int idx = candidateList->cursorIndex();
