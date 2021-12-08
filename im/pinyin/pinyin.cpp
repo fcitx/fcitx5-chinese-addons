@@ -1898,7 +1898,7 @@ void PinyinEngine::cloudPinyinSelected(InputContext *inputContext,
         state->predictWords_ = words;
         updatePredict(inputContext);
     }
-
+    inputContext->updatePreedit();
     inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
 }
 } // namespace fcitx
