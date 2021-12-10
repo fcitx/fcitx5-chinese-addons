@@ -6,7 +6,10 @@
  */
 
 #include "pinyin.h"
-#include "cloudpinyin_public.h"
+
+// Use reletive path so we don't need import export target.
+// We want to keep cloudpinyin logic but don't call it.
+#include "../../modules/cloudpinyin/cloudpinyin_public.h"
 #include "config.h"
 #ifdef FCITX_HAS_LUA
 #include "luaaddon_public.h"
@@ -729,6 +732,15 @@ PinyinEngine::PinyinEngine(Instance *instance)
             }
             handle2nd3rdSelection(keyEvent);
         });
+
+    checkCloudPinyinAvailable_ =
+        instance_->eventLoop().addDeferEvent([this](EventSource *) {
+            bool hasCloudPinyin = cloudpinyin() != nullptr;
+            config_.cloudPinyinEnabled.annotation().setHidden(!hasCloudPinyin);
+            config_.cloudPinyinIndex.annotation().setHidden(!hasCloudPinyin);
+            checkCloudPinyinAvailable_.reset();
+            return true;
+        });
 }
 
 PinyinEngine::~PinyinEngine() {}
@@ -828,6 +840,7 @@ void PinyinEngine::populateConfig() {
                     },
                     nullptr);
             }
+            deferEvent_.reset();
             return true;
         });
     }
