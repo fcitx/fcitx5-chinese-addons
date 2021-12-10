@@ -738,6 +738,7 @@ PinyinEngine::PinyinEngine(Instance *instance)
             bool hasCloudPinyin = cloudpinyin() != nullptr;
             config_.cloudPinyinEnabled.annotation().setHidden(!hasCloudPinyin);
             config_.cloudPinyinIndex.annotation().setHidden(!hasCloudPinyin);
+            config_.cloudpinyin.setHidden(!hasCloudPinyin);
             checkCloudPinyinAvailable_.reset();
             return true;
         });

@@ -38,6 +38,18 @@ private:
     bool hidden_ = false;
 };
 
+class OptionalHiddenSubConfigOption : public SubConfigOption {
+public:
+    using SubConfigOption::SubConfigOption;
+
+    void setHidden(bool hidden) { hidden_ = hidden; }
+
+    bool skipDescription() const override { return hidden_; }
+
+private:
+    bool hidden_ = false;
+};
+
 FCITX_CONFIG_ENUM(ShuangpinProfileEnum, Ziranma, MS, Ziguang, ABC,
                   Zhongwenzhixing, PinyinJiajia, Xiaohe, Custom)
 
@@ -169,8 +181,9 @@ FCITX_CONFIGURATION(
     SubConfigOption chttrans{
         this, "Chttrans", _("Simplified and Traditional Chinese Translation"),
         "fcitx://config/addon/chttrans"};
-    SubConfigOption cloudpinyin{this, "CloudPinyin", _("Cloud Pinyin"),
-                                "fcitx://config/addon/cloudpinyin"};
+    OptionalHiddenSubConfigOption cloudpinyin{
+        this, "CloudPinyin", _("Cloud Pinyin"),
+        "fcitx://config/addon/cloudpinyin"};
     Option<Key, KeyConstrain> quickphraseKey{
         this,
         "QuickPhraseKey",
