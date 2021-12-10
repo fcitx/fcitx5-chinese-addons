@@ -64,7 +64,9 @@ FCITX_CONFIGURATION(
                          ShuangpinProfileEnumI18NAnnotation>
         shuangpinProfile{this, "ShuangpinProfile", _("Shuangpin Profile"),
                          ShuangpinProfileEnum::Ziranma};
-    Option<int, IntConstrain> pageSize{this, "PageSize", _("Page size"), 5,
+    Option<bool> showShuangpinMode{this, "ShowShuangpinMode",
+                                   _("Show current shuangpin mode"), true};
+    Option<int, IntConstrain> pageSize{this, "PageSize", _("Page size"), 7,
                                        IntConstrain(3, 10)};
     Option<bool> spellEnabled{this, "SpellEnabled", _("Enable Spell"), true};
     Option<bool> emojiEnabled{this, "EmojiEnabled", _("Enable Emoji"), true};
@@ -76,7 +78,10 @@ FCITX_CONFIGURATION(
                                                IntConstrain(1, 10)};
     Option<bool> showPreeditInApplication{this, "PreeditInApplication",
                                           _("Show preedit within application"),
-                                          false};
+                                          true};
+    Option<bool> preeditCursorPositionAtBeginning{
+        this, "PreeditCursorPositionAtBeginning",
+        _("Fix embedded preedit cursor at the beginning of the preedit"), true};
     Option<bool> showActualPinyinInPreedit{
         this, "PinyinInPreedit", _("Show complete pinyin in preedit"), false};
     Option<bool> predictionEnabled{this, "Prediction", _("Enable Prediction"),
@@ -92,13 +97,13 @@ FCITX_CONFIGURATION(
         this,
         "PrevPage",
         _("Prev Page"),
-        {Key(FcitxKey_minus), Key(FcitxKey_Up)},
+        {Key(FcitxKey_minus), Key(FcitxKey_Up), Key(FcitxKey_KP_Up)},
         KeyListConstrain({KeyConstrainFlag::AllowModifierLess})};
     KeyListOption nextPage{
         this,
         "NextPage",
         _("Next Page"),
-        {Key(FcitxKey_equal), Key(FcitxKey_Down)},
+        {Key(FcitxKey_equal), Key(FcitxKey_Down), Key(FcitxKey_KP_Down)},
         KeyListConstrain({KeyConstrainFlag::AllowModifierLess})};
     KeyListOption prevCandidate{
         this,
@@ -182,7 +187,7 @@ class PinyinState;
 class EventSourceTime;
 class CandidateList;
 
-class PinyinEngine final : public InputMethodEngine {
+class PinyinEngine final : public InputMethodEngineV3 {
 public:
     PinyinEngine(Instance *instance);
     ~PinyinEngine();
@@ -195,18 +200,22 @@ public:
     void reloadConfig() override;
     void reset(const InputMethodEntry &entry,
                InputContextEvent &event) override;
-    void setSubConfig(const std::string &path,
-                      const fcitx::RawConfig &) override;
     void doReset(InputContext *inputContext);
     void save() override;
     auto &factory() { return factory_; }
+    std::string subMode(const InputMethodEntry &entry,
+                        InputContext &inputContext) override;
+    void invokeActionImpl(const InputMethodEntry &entry,
+                          InvokeActionEvent &event) override;
 
     const Configuration *getConfig() const override { return &config_; }
     void setConfig(const RawConfig &config) override {
         config_.load(config, true);
         safeSaveAsIni(config_, "conf/pinyin.conf");
-        reloadConfig();
+        populateConfig();
     }
+    void setSubConfig(const std::string &path,
+                      const fcitx::RawConfig &) override;
 
     libime::PinyinIME *ime() { return ime_.get(); }
 
@@ -233,17 +242,20 @@ private:
     bool handleForgetCandidate(KeyEvent &event);
     bool handlePunc(KeyEvent &event);
 
+    void populateConfig();
+
     void updateStroke(InputContext *inputContext);
     void updateForgetCandidate(InputContext *inputContext);
 
-    bool showClientPreedit(InputContext *inputContext) const;
-    Text fetchAndSetClientPreedit(InputContext *inputContext,
-                                  const libime::PinyinContext &context) const;
+    void updatePreedit(InputContext *inputContext) const;
+
+    std::pair<Text, Text> preedit(InputContext *inputContext) const;
 
 #ifdef FCITX_HAS_LUA
     std::vector<std::string>
     luaCandidateTrigger(InputContext *ic, const std::string &candidateString);
 #endif
+    void loadBuiltInDict();
     void loadExtraDict();
     void loadDict(const StandardPathFile &file);
 

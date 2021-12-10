@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.6.0)
-project(fcitx5-chinese-addons VERSION 5.0.6)
+project(fcitx5-chinese-addons VERSION 5.0.9)
 
 find_package(ECM REQUIRED 1.0.0)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
@@ -8,10 +8,9 @@ include(GNUInstallDirs)
 include(ECMSetupVersion)
 include(ECMUninstallTarget)
 
-find_package(Fcitx5Core 5.0.4 REQUIRED)
+find_package(Fcitx5Core 5.0.11 REQUIRED)
 find_package(Fcitx5Module REQUIRED COMPONENTS Notifications QuickPhrase Spell Clipboard TestFrontend TestIM)
 find_package(Fcitx5ModuleLuaAddonLoader)
-find_package(LibIntl REQUIRED)
 find_package(Pthread REQUIRED)
 find_package(PkgConfig REQUIRED)
 find_package(Gettext REQUIRED)
@@ -59,7 +58,7 @@ if (ENABLE_GUI)
 endif()
 
 find_package(Boost 1.61 REQUIRED COMPONENTS iostreams)
-find_package(LibIMEPinyin REQUIRED)
+find_package(LibIMEPinyin 1.0.10 REQUIRED)
 find_package(LibIMETable 1.0.3 REQUIRED)
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.h.in ${CMAKE_CURRENT_BINARY_DIR}/config.h)

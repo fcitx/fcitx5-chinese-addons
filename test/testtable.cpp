@@ -15,7 +15,6 @@
 #include <fcitx/inputpanel.h>
 #include <fcitx/instance.h>
 #include <iostream>
-#include <thread>
 
 using namespace fcitx;
 
@@ -109,9 +108,8 @@ int main() {
     instance.addonManager().registerDefaultLoader(nullptr);
     EventDispatcher dispatcher;
     dispatcher.attach(&instance.eventLoop());
-    std::thread thread(scheduleEvent, &dispatcher, &instance);
+    scheduleEvent(&dispatcher, &instance);
     instance.exec();
-    thread.join();
 
     return 0;
 }

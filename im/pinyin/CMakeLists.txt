@@ -14,7 +14,6 @@ if (TARGET Fcitx5::Module::LuaAddonLoader)
     install(FILES pinyin.lua DESTINATION "${FCITX_INSTALL_PKGDATADIR}/lua/imeapi/extensions")
 endif()
 
-set_target_properties(pinyin PROPERTIES PREFIX "")
 install(TARGETS pinyin DESTINATION "${CMAKE_INSTALL_LIBDIR}/fcitx5")
 fcitx5_translate_desktop_file(pinyin.conf.in pinyin.conf)
 fcitx5_translate_desktop_file(shuangpin.conf.in shuangpin.conf)

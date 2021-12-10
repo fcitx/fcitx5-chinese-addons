@@ -2,7 +2,7 @@
 Name=Punctuation
 Category=Module
 Version=@PROJECT_VERSION@
-Library=punctuation
+Library=libpunctuation
 Type=SharedLibrary
 OnDemand=True
 Configurable=True

@@ -2,7 +2,7 @@
 Name=Pinyin
 Category=InputMethod
 Version=@PROJECT_VERSION@
-Library=pinyin
+Library=libpinyin
 Type=SharedLibrary
 OnDemand=True
 Configurable=True

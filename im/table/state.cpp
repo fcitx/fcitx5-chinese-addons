@@ -258,6 +258,12 @@ bool TableState::handleCandidateList(const TableConfig &config,
                 event.filterAndAccept();
                 return true;
             }
+            // Only let key go through if it can reach handlePunc.
+            auto c = Key::keySymToUnicode(event.key().sym());
+            if (event.key().hasModifier() || !c) {
+                event.filterAndAccept();
+                return true;
+            }
         } else {
             event.filterAndAccept();
             pageable->prev();
@@ -479,7 +485,8 @@ bool TableState::handleLookupPinyinOrModifyDictionaryMode(KeyEvent &event) {
     }
 
     event.filterAndAccept();
-    if (event.key().check(FcitxKey_Left)) {
+    if (event.key().check(FcitxKey_Left) ||
+        event.key().check(FcitxKey_KP_Left)) {
         needUpdate = true;
         if (lookupPinyinString_.size() != 0) {
             lookupPinyinIndex_ += 1;
@@ -487,7 +494,8 @@ bool TableState::handleLookupPinyinOrModifyDictionaryMode(KeyEvent &event) {
                 lookupPinyinIndex_ = lookupPinyinString_.size() - 1;
             }
         }
-    } else if (event.key().check(FcitxKey_Right)) {
+    } else if (event.key().check(FcitxKey_Right) ||
+               event.key().check(FcitxKey_KP_Right)) {
         needUpdate = true;
         if (lookupPinyinString_.size() != 0) {
             if (lookupPinyinIndex_ >= lookupPinyinString_.size()) {
@@ -514,7 +522,9 @@ bool TableState::handleLookupPinyinOrModifyDictionaryMode(KeyEvent &event) {
 
     if (!lookupPinyinString_.empty()) {
         if ((event.key().check(FcitxKey_space) ||
-             event.key().check(FcitxKey_Return)) &&
+             event.key().check(FcitxKey_Return) ||
+             event.key().check(FcitxKey_KP_Space) ||
+             event.key().check(FcitxKey_KP_Enter)) &&
             mode_ == TableMode::ModifyDictionary) {
             auto subString = getSubString();
             std::string result;
@@ -535,7 +545,8 @@ bool TableState::handleLookupPinyinOrModifyDictionaryMode(KeyEvent &event) {
                 }
             }
         } else if (event.key().checkKeyList(std::initializer_list<Key>{
-                       Key(FcitxKey_BackSpace), Key(FcitxKey_Delete)}) &&
+                       Key(FcitxKey_BackSpace), Key(FcitxKey_Delete),
+                       Key(FcitxKey_KP_Delete)}) &&
                    mode_ == TableMode::ModifyDictionary) {
             auto subString = getSubString();
             std::string result;
@@ -743,7 +754,8 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
                 context->clear();
             }
             event.filterAndAccept();
-        } else if (event.key().check(FcitxKey_Tab)) {
+        } else if (event.key().check(FcitxKey_Tab) ||
+                   event.key().check(FcitxKey_KP_Tab)) {
             {
                 CommitAfterSelectWrapper commitAfterSelectRAII(this);
                 autoSelectCandidate();
@@ -856,7 +868,7 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
             commitBuffer(true);
         }
         std::string punc, puncAfter;
-        if (!*context->config().ignorePunc || event.key().isKeyPad()) {
+        if (!*context->config().ignorePunc && !event.key().isKeyPad()) {
             std::tie(punc, puncAfter) =
                 engine_->punctuation()->call<IPunctuation::pushPunctuationV2>(
                     entry.languageCode(), inputContext, chr);
@@ -1072,6 +1084,10 @@ void TableState::updateUI(bool keepOldCursor) {
                 if (!hint.empty()) {
                     text.append(*config.hintSeparator);
                     text.append(hint);
+                }
+                if (!config.markerForAutoPhrase->empty() &&
+                    TableContext::isAuto(candidate.sentence())) {
+                    text.append(*config.markerForAutoPhrase);
                 }
                 candidateList->append<TableCandidateWord>(engine_,
                                                           std::move(text), idx);
