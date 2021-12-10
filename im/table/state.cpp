@@ -476,7 +476,11 @@ bool TableState::handleLookupPinyinOrModifyDictionaryMode(KeyEvent &event) {
                 }
             }
         }
-        FCITX_INFO() << lookupPinyinString_;
+        if (mode_ == TableMode::ModifyDictionary) {
+            if (lookupPinyinIndex_ + 1 < lookupPinyinString_.size()) {
+                lookupPinyinIndex_ = 1;
+            }
+        }
         needUpdate = true;
     } else if (mode_ != TableMode::LookupPinyin &&
                mode_ != TableMode::ModifyDictionary &&
