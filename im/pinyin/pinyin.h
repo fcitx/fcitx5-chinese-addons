@@ -68,6 +68,9 @@ FCITX_CONFIGURATION(
     Option<bool> partialFinal{this, "PartialFinal",
                               _("Match partial finals (e -> en, eng, ei)"),
                               true};
+    Option<bool> partialSp{
+        this, "PartialSp",
+        _("Match partial shuangpin if input length is longer than 4"), false};
     Option<bool> v{this, "V_U", _("u <-> v"), false};
     Option<bool> an{this, "AN_ANG", _("an <-> ang"), false};
     Option<bool> en{this, "EN_ENG", _("en <-> eng"), false};
