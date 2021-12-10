@@ -5,7 +5,7 @@ add_library(pinyin MODULE ${PINYIN_SOURCES})
 target_link_libraries(pinyin Fcitx5::Core Fcitx5::Config LibIME::Pinyin Boost::iostreams Fcitx5::Module::Punctuation Fcitx5::Module::QuickPhrase Fcitx5::Module::Notifications Fcitx5::Module::Spell Fcitx5::Module::PinyinHelper ${FMT_TARGET})
 
 if (ENABLE_CLOUDPINYIN)
-    target_link_libraries(Fcitx5::Module::CloudPinyin)
+    target_link_libraries(pinyin Fcitx5::Module::CloudPinyin)
 endif()
 
 if (TARGET Fcitx5::Module::LuaAddonLoader)
