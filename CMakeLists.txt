@@ -22,8 +22,6 @@ else()
   set(FMT_TARGET fmt::fmt)
 endif ()
 
-pkg_check_modules(Curl REQUIRED IMPORTED_TARGET "libcurl")
-
 include("${FCITX_INSTALL_CMAKECONFIG_DIR}/Fcitx5Utils/Fcitx5CompilerSettings.cmake")
 
 #######################################################################
@@ -36,6 +34,7 @@ option(ENABLE_OPENCC "Enable OpenCC for chttrans" On)
 option(ENABLE_GUI "Enable Configure Gui" On)
 option(ENABLE_BROWSER "Enable built-in browser." On)
 option(USE_WEBKIT "Use WebKit as browser backend." On)
+option(ENABLE_CLOUDPINYIN "Build cloud pinyin addon" On)
 
 if (ENABLE_OPENCC)
     find_package(OpenCC REQUIRED)
@@ -57,6 +56,10 @@ endif()
 find_package(Boost 1.61 REQUIRED COMPONENTS iostreams)
 find_package(LibIMEPinyin 1.0.10 REQUIRED)
 find_package(LibIMETable 1.0.3 REQUIRED)
+
+if (ENABLE_CLOUDPINYIN)
+    pkg_check_modules(Curl REQUIRED IMPORTED_TARGET "libcurl")
+endif()
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.h.in ${CMAKE_CURRENT_BINARY_DIR}/config.h)
 include_directories(${CMAKE_CURRENT_BINARY_DIR})

@@ -27,6 +27,17 @@
 
 namespace fcitx {
 
+struct OptionalHideInDescription {
+    void setHidden(bool hidden) { hidden_ = hidden; }
+
+    bool skipDescription() { return hidden_; }
+    bool skipSave() { return false; }
+    void dumpDescription(RawConfig &) const {}
+
+private:
+    bool hidden_ = false;
+};
+
 FCITX_CONFIG_ENUM(ShuangpinProfileEnum, Ziranma, MS, Ziguang, ABC,
                   Zhongwenzhixing, PinyinJiajia, Xiaohe, Custom)
 
@@ -71,11 +82,11 @@ FCITX_CONFIGURATION(
     Option<bool> spellEnabled{this, "SpellEnabled", _("Enable Spell"), true};
     Option<bool> emojiEnabled{this, "EmojiEnabled", _("Enable Emoji"), true};
     Option<bool> chaiziEnabled{this, "ChaiziEnabled", _("Enable Chaizi"), true};
-    Option<bool> cloudPinyinEnabled{this, "CloudPinyinEnabled",
-                                    _("Enable Cloud Pinyin"), false};
-    Option<int, IntConstrain> cloudPinyinIndex{this, "CloudPinyinIndex",
-                                               _("Cloud Pinyin Index"), 2,
-                                               IntConstrain(1, 10)};
+    OptionWithAnnotation<bool, OptionalHideInDescription> cloudPinyinEnabled{
+        this, "CloudPinyinEnabled", _("Enable Cloud Pinyin"), false};
+    Option<int, IntConstrain, DefaultMarshaller<int>, OptionalHideInDescription>
+        cloudPinyinIndex{this, "CloudPinyinIndex", _("Cloud Pinyin Index"), 2,
+                         IntConstrain(1, 10)};
     Option<bool> showPreeditInApplication{this, "PreeditInApplication",
                                           _("Show preedit within application"),
                                           true};
@@ -267,6 +278,7 @@ private:
     SimpleAction predictionAction_;
     libime::Prediction prediction_;
     std::unique_ptr<EventSource> deferEvent_;
+    std::unique_ptr<EventSource> checkCloudPinyinAvailable_;
     std::unique_ptr<HandlerTableEntry<EventHandler>> event_;
 
     FCITX_ADDON_DEPENDENCY_LOADER(quickphrase, instance_->addonManager());
@@ -278,6 +290,8 @@ private:
     FCITX_ADDON_DEPENDENCY_LOADER(pinyinhelper, instance_->addonManager());
     FCITX_ADDON_DEPENDENCY_LOADER(spell, instance_->addonManager());
     FCITX_ADDON_DEPENDENCY_LOADER(imeapi, instance_->addonManager());
+
+    bool hasCloudPinyin_ = false;
 };
 
 class PinyinEngineFactory : public AddonFactory {
