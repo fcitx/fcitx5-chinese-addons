@@ -633,12 +633,25 @@ PinyinEngine::PinyinEngine(Instance *instance)
         std::make_unique<libime::UserLanguageModel>(
             libime::DefaultLanguageModelResolver::instance()
                 .languageModelFileForLanguage("zh_CN")));
-    ime_->dict()->load(libime::PinyinDictionary::SystemDict,
-                       LIBIME_INSTALL_PKGDATADIR "/sc.dict",
-                       libime::PinyinDictFormat::Binary);
-    prediction_.setUserLanguageModel(ime_->model());
 
     const auto &standardPath = StandardPath::global();
+    auto systemDictFile =
+        standardPath.open(StandardPath::Type::Data, "libime/sc.dict", O_RDONLY);
+    if (systemDictFile.isValid()) {
+        boost::iostreams::stream_buffer<
+            boost::iostreams::file_descriptor_source>
+            buffer(systemDictFile.fd(),
+                   boost::iostreams::file_descriptor_flags::never_close_handle);
+        std::istream in(&buffer);
+        ime_->dict()->load(libime::PinyinDictionary::SystemDict, in,
+                           libime::PinyinDictFormat::Binary);
+    } else {
+        ime_->dict()->load(libime::PinyinDictionary::SystemDict,
+                           LIBIME_INSTALL_PKGDATADIR "/sc.dict",
+                           libime::PinyinDictFormat::Binary);
+    }
+    prediction_.setUserLanguageModel(ime_->model());
+
     do {
         auto file = standardPath.openUser(StandardPath::Type::PkgData,
                                           "pinyin/user.dict", O_RDONLY);
