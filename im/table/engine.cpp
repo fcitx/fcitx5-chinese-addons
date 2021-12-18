@@ -144,13 +144,14 @@ const libime::PinyinDictionary &TableEngine::pinyinDict() {
     if (!pinyinLoaded_) {
         try {
             const auto &standardPath = StandardPath::global();
-            auto systemDictFile =
-                standardPath.open(StandardPath::Type::Data, "libime/sc.dict", O_RDONLY);
+            auto systemDictFile = standardPath.open(StandardPath::Type::Data,
+                                                    "libime/sc.dict", O_RDONLY);
             if (systemDictFile.isValid()) {
                 boost::iostreams::stream_buffer<
                     boost::iostreams::file_descriptor_source>
                     buffer(systemDictFile.fd(),
-                           boost::iostreams::file_descriptor_flags::never_close_handle);
+                           boost::iostreams::file_descriptor_flags::
+                               never_close_handle);
                 std::istream in(&buffer);
                 pinyinDict_.load(libime::PinyinDictionary::SystemDict, in,
                                  libime::PinyinDictFormat::Binary);
