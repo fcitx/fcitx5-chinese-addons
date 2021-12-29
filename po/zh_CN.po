@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2021-12-10 20:24+0000\n"
+"POT-Creation-Date: 2021-12-29 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: csslayer <wengxt@gmail.com>, 2021\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/fcitx/teams/12005/"
@@ -505,7 +505,7 @@ msgstr "匹配不完整的元音 (e -> en, eng, ei)"
 
 #: im/pinyin/pinyin.h:73
 msgid "Match partial shuangpin if input length is longer than 4"
-msgstr ""
+msgstr "输入长度大于 4 时进行部分双拼匹配"
 
 #: modules/cloudpinyin/cloudpinyin.h:32
 msgid "Minimum Pinyin Length"
