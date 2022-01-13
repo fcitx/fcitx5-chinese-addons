@@ -5,15 +5,15 @@
 # Translators:
 # Mingcong Bai <jeffbai@aosc.xyz>, 2018
 # wwj402 <wwj402@gmail.com>, 2018
-# csslayer <wengxt@gmail.com>, 2021
+# csslayer <wengxt@gmail.com>, 2022
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2021-12-29 20:24+0000\n"
+"POT-Creation-Date: 2022-01-13 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
-"Last-Translator: csslayer <wengxt@gmail.com>, 2021\n"
+"Last-Translator: csslayer <wengxt@gmail.com>, 2022\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/fcitx/teams/12005/"
 "zh_CN/)\n"
 "Language: zh_CN\n"
@@ -165,7 +165,7 @@ msgstr "云拼音已禁用。"
 
 #: im/pinyin/pinyin.cpp:998
 msgid "Cloud Pinyin is enabled."
-msgstr "云拼音已启用。"
+msgstr "已启用云拼音。"
 
 #: im/table/ime.h:94
 msgid "Commit Invalid Segment"
@@ -399,7 +399,7 @@ msgstr "全角字符已禁用。"
 
 #: modules/fullwidth/fullwidth.cpp:74
 msgid "Full width Character is enabled."
-msgstr "全角字符已启用。"
+msgstr "已启用全角字符。"
 
 #: modules/fullwidth/fullwidth.cpp:70 modules/fullwidth/fullwidth.conf.in.in:3
 msgid "Full width character"
@@ -415,7 +415,7 @@ msgstr "全角标点已禁用。"
 
 #: modules/punctuation/punctuation.cpp:229
 msgid "Full width punctuation is enabled."
-msgstr "全角标点已启用。"
+msgstr "已启用全角标点。"
 
 #: im/pinyin/pinyin.h:210
 msgid "Fuzzy Pinyin Settings"
@@ -736,7 +736,7 @@ msgstr "简体中文"
 
 #: modules/chttrans/chttrans.cpp:77
 msgid "Simplified Chinese is enabled."
-msgstr "简体中文已启用。"
+msgstr "已启用简体中文。"
 
 #: im/pinyin/pinyin.h:185 modules/chttrans/chttrans.cpp:71
 #: modules/chttrans/chttrans.conf.in.in:3
@@ -794,7 +794,7 @@ msgstr "繁体中文"
 
 #: modules/chttrans/chttrans.cpp:76
 msgid "Traditional Chinese is enabled."
-msgstr "繁体中文已启用。"
+msgstr "已启用繁体中文。"
 
 #: modules/chttrans/chttrans.h:27
 msgid "Translate engine"
