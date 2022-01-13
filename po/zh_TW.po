@@ -6,14 +6,15 @@
 # pan93412 <pan93412@gmail.com>, 2019
 # bruh, 2020
 # Billy SU <billy4195.su@gmail.com>, 2020
+# Steve Nian, 2022
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2021-12-10 20:24+0000\n"
+"POT-Creation-Date: 2022-01-13 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
-"Last-Translator: Billy SU <billy4195.su@gmail.com>, 2020\n"
+"Last-Translator: Steve Nian, 2022\n"
 "Language-Team: Chinese (Taiwan) (https://www.transifex.com/fcitx/teams/12005/"
 "zh_TW/)\n"
 "Language: zh_TW\n"
@@ -87,7 +88,7 @@ msgstr ""
 
 #: modules/punctuation/punctuation.h:41
 msgid "Alternative Mapping"
-msgstr ""
+msgstr "替代映射"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:363
 msgid "Are you sure to delete %1?"
@@ -111,7 +112,7 @@ msgstr "自動選擇候選字"
 
 #: im/table/ime.h:187
 msgid "Auto select when no match is found"
-msgstr ""
+msgstr "沒有匹配時自動選擇"
 
 #: modules/cloudpinyin/cloudpinyin.h:33
 msgid "Backend"
@@ -217,7 +218,7 @@ msgstr "建立暫存檔失敗。請檢查權限或磁碟空間。"
 
 #: im/pinyin/pinyin.h:59
 msgid "Custom"
-msgstr ""
+msgstr "自訂"
 
 #. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:14
 #. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
@@ -286,7 +287,7 @@ msgstr ""
 
 #: im/pinyin/pinyin.h:98
 msgid "Enable Emoji"
-msgstr ""
+msgstr "啟用表情符號"
 
 #: im/pinyin/pinyin.h:113
 msgid "Enable Prediction"
@@ -294,7 +295,7 @@ msgstr "啟用預測功能"
 
 #: im/pinyin/pinyin.h:97
 msgid "Enable Spell"
-msgstr ""
+msgstr "啟用拼寫檢查"
 
 #: modules/chttrans/chttrans.h:33
 msgid "Enabled Input Methods"
@@ -302,7 +303,7 @@ msgstr "啟用的輸入法"
 
 #: im/table/ime.h:211
 msgid "End key"
-msgstr ""
+msgstr "中止鍵"
 
 #: im/pinyin/pinyin.h:208
 msgid "Enter a string from the list will make it enter quickphrase mode."
@@ -314,19 +315,19 @@ msgstr ""
 
 #: im/table/erbi.conf.in.in:3
 msgid "Erbi"
-msgstr ""
+msgstr "二筆"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:372
 msgid "Error while deleting %1."
-msgstr ""
+msgstr "刪除 %1 時出錯"
 
 #: im/table/ime.h:239
 msgid "Exact Match"
-msgstr ""
+msgstr "精確匹配"
 
 #: modules/pinyinhelper/pinyinhelper.conf.in.in:3
 msgid "Extra Pinyin functionality"
-msgstr ""
+msgstr "額外拼音功能"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:110
 msgid "Failed to create directory"
@@ -338,16 +339,16 @@ msgstr "建立請求失敗"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:121
 msgid "Failed to create temp file"
-msgstr ""
+msgstr "建立暫存檔失敗"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:221
 #: gui/pinyindictmanager/pinyindictmanager.cpp:280
 msgid "Failed to get runtime directory"
-msgstr ""
+msgstr "取得 runtime 目錄失敗"
 
 #: im/table/ime.h:22
 msgid "Fast"
-msgstr ""
+msgstr "快速"
 
 #: im/table/ime.h:36
 msgid "File"
@@ -359,11 +360,11 @@ msgstr "檔案操作失敗"
 
 #: im/pinyin/pinyin.h:169
 msgid "Filter by stroke"
-msgstr ""
+msgstr "按筆劃過濾"
 
 #: im/table/ime.h:105
 msgid "First candidate as Preedit"
-msgstr ""
+msgstr "將第一個候選詞作為預編輯文字"
 
 #: im/pinyin/pinyin.h:110
 msgid "Fix embedded preedit cursor at the beginning of the preedit"
@@ -419,15 +420,15 @@ msgstr ""
 
 #: modules/fullwidth/fullwidth.h:30
 msgid "Half width Character"
-msgstr ""
+msgstr "半形字元"
 
 #: modules/punctuation/punctuation.h:89
 msgid "Half width punctuation"
-msgstr ""
+msgstr "半形符號"
 
 #: modules/punctuation/punctuation.h:29
 msgid "Half width punctuation after latin letter or number"
-msgstr ""
+msgstr "在字母或數字之後輸入半形符號"
 
 #: im/table/ime.h:24
 msgid "Horizontal"
