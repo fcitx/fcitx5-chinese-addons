@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2022-01-14 20:24+0000\n"
+"POT-Creation-Date: 2022-01-15 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Ettore Atalan <atalanttore@googlemail.com>, 2022\n"
 "Language-Team: German (https://www.transifex.com/fcitx/teams/12005/de/)\n"
@@ -292,7 +292,7 @@ msgstr "Emoji aktivieren"
 
 #: im/pinyin/pinyin.h:113
 msgid "Enable Prediction"
-msgstr ""
+msgstr "Vorhersage aktivieren"
 
 #: im/pinyin/pinyin.h:97
 msgid "Enable Spell"
@@ -300,7 +300,7 @@ msgstr ""
 
 #: modules/chttrans/chttrans.h:33
 msgid "Enabled Input Methods"
-msgstr ""
+msgstr "Aktivierte Eingabemethoden"
 
 #: im/table/ime.h:211
 msgid "End key"
@@ -312,7 +312,7 @@ msgstr ""
 
 #: modules/punctuation/punctuation.h:49
 msgid "Entries"
-msgstr ""
+msgstr "Einträge"
 
 #: im/table/erbi.conf.in.in:3
 msgid "Erbi"
@@ -349,7 +349,7 @@ msgstr "Laufzeitverzeichnis konnte nicht gefunden werden"
 
 #: im/table/ime.h:22
 msgid "Fast"
-msgstr ""
+msgstr "Schnell"
 
 #: im/table/ime.h:36
 msgid "File"
@@ -373,11 +373,11 @@ msgstr ""
 
 #: im/table/engine.h:33 im/pinyin/pinyin.h:119
 msgid "Forget word"
-msgstr ""
+msgstr "Wort vergessen"
 
 #: im/table/ime.h:22
 msgid "Freq"
-msgstr ""
+msgstr "Freq."
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:34
 msgid "From &File"
@@ -465,7 +465,7 @@ msgstr "Name des Eingabewörterbuchs"
 #: modules/punctuation/punctuation.h:38
 msgctxt "Key of the punctuation, e.g. comma"
 msgid "Key"
-msgstr ""
+msgstr "Taste"
 
 #: im/table/ime.h:110 im/pinyin/pinyin.h:193
 msgid "Key to trigger quickphrase"
@@ -489,7 +489,7 @@ msgstr "MS"
 
 #: modules/punctuation/punctuation.h:39
 msgid "Mapping"
-msgstr ""
+msgstr "Zuordnung"
 
 #: im/table/ime.h:227
 msgid "Marker for auto phrase in the candidates"
@@ -588,7 +588,7 @@ msgstr "Autovervollständigen"
 
 #: im/pinyin/pinyin.h:116
 msgid "Prediction Size"
-msgstr ""
+msgstr "Vorhersagegröße"
 
 #: im/table/ime.h:157
 msgid "Prefix key to trigger Pinyin"
@@ -608,7 +608,7 @@ msgstr ""
 
 #: im/pinyin/pinyin.cpp:1415
 msgid "Press {} for {}"
-msgstr ""
+msgstr "{} für {} drücken"
 
 #: im/pinyin/pinyin.cpp:1412
 msgid "Press {} for {} and Return for {}"
@@ -632,7 +632,7 @@ msgstr ""
 
 #: modules/cloudpinyin/cloudpinyin.h:38
 msgid "Proxy"
-msgstr ""
+msgstr "Proxy"
 
 #: im/pinyin/pinyin.h:182 modules/punctuation/punctuation.cpp:226
 #: modules/punctuation/punctuation.cpp:228
@@ -669,11 +669,11 @@ msgstr "Scel Datei (*.scel)"
 
 #: im/pinyin/pinyin.h:149
 msgid "Select 2nd Candidate"
-msgstr ""
+msgstr "2. Kandidaten auswählen"
 
 #: im/pinyin/pinyin.h:156
 msgid "Select 3rd Candidate"
-msgstr ""
+msgstr "3. Kandidaten auswählen"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:157
 msgid "Select Dictionary File"
@@ -701,7 +701,7 @@ msgstr "Auswahl"
 
 #: im/table/ime.h:245
 msgid "Separator text between hint and candidate"
-msgstr ""
+msgstr "Trenntext zwischen Hinweis und Kandidat"
 
 #: im/pinyin/pinyin.h:112
 msgid "Show complete pinyin in preedit"
@@ -781,7 +781,7 @@ msgstr ""
 #: modules/fullwidth/fullwidth.h:19 modules/chttrans/chttrans.h:31
 #: modules/punctuation/punctuation.h:26
 msgid "Toggle key"
-msgstr ""
+msgstr "Taste umschalten"
 
 #: modules/chttrans/chttrans.h:77
 msgid "Traditional Chinese"
@@ -793,7 +793,7 @@ msgstr "Chinesische Langzeichen aktiviert."
 
 #: modules/chttrans/chttrans.h:27
 msgid "Translate engine"
-msgstr ""
+msgstr "Übersetzungsmaschine"
 
 #: modules/punctuation/punctuation.h:32
 msgid "Type paired punctuations together (e.g. Quote)"
@@ -817,7 +817,7 @@ msgstr "Verwende Vollbreite Form der Zeichen"
 
 #: im/table/ime.h:131
 msgid "Use system language model"
-msgstr ""
+msgstr "Systemsprachmodell verwenden"
 
 #: im/table/ime.h:24
 msgid "Vertical"
