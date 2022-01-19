@@ -853,15 +853,20 @@ void PinyinEngine::populateConfig() {
     if (*config_.shuangpinProfile == ShuangpinProfileEnum::Custom) {
         auto file = StandardPath::global().open(StandardPath::Type::PkgConfig,
                                                 "pinyin/sp.dat", O_RDONLY);
-        try {
-            boost::iostreams::stream_buffer<
-                boost::iostreams::file_descriptor_source>
-                buffer(file.fd(), boost::iostreams::file_descriptor_flags::
-                                      never_close_handle);
-            std::istream in(&buffer);
-            ime_->setShuangpinProfile(
-                std::make_shared<libime::ShuangpinProfile>(in));
-        } catch (const std::exception &) {
+        if (file.isValid()) {
+            try {
+                boost::iostreams::stream_buffer<
+                    boost::iostreams::file_descriptor_source>
+                    buffer(file.fd(), boost::iostreams::file_descriptor_flags::
+                                          never_close_handle);
+                std::istream in(&buffer);
+                ime_->setShuangpinProfile(
+                    std::make_shared<libime::ShuangpinProfile>(in));
+            } catch (const std::exception &e) {
+                PINYIN_ERROR() << e.what();
+            }
+        } else {
+            PINYIN_ERROR() << "Failed to open shuangpin profile.";
         }
     } else {
         libime::ShuangpinBuiltinProfile profile;
@@ -883,6 +888,12 @@ void PinyinEngine::populateConfig() {
         }
         ime_->setShuangpinProfile(
             std::make_shared<libime::ShuangpinProfile>(profile));
+    }
+
+    // Always set a profile to avoid crash.
+    if (!ime_->shuangpinProfile()) {
+        ime_->setShuangpinProfile(std::make_shared<libime::ShuangpinProfile>(
+            libime::ShuangpinBuiltinProfile::Ziranma));
     }
 
     libime::PinyinFuzzyFlags flags;
