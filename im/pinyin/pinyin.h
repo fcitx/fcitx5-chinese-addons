@@ -122,7 +122,7 @@ FCITX_CONFIGURATION(
     KeyListOption prevPage{
         this,
         "PrevPage",
-        _("Prev Page"),
+        _("Previous Page"),
         {Key(FcitxKey_minus), Key(FcitxKey_Up), Key(FcitxKey_KP_Up)},
         KeyListConstrain({KeyConstrainFlag::AllowModifierLess})};
     KeyListOption nextPage{
@@ -134,7 +134,7 @@ FCITX_CONFIGURATION(
     KeyListOption prevCandidate{
         this,
         "PrevCandidate",
-        _("Prev Candidate"),
+        _("Previous Candidate"),
         {Key("Shift+Tab")},
         KeyListConstrain({KeyConstrainFlag::AllowModifierLess})};
     KeyListOption nextCandidate{
@@ -170,7 +170,7 @@ FCITX_CONFIGURATION(
         {Key("grave")},
         KeyListConstrain({KeyConstrainFlag::AllowModifierLess})};
     Option<int, IntConstrain> nbest{this, "Number of sentence",
-                                    _("Number of Sentence"), 2,
+                                    _("Number of Sentences"), 2,
                                     IntConstrain(1, 3)};
     Option<int, IntConstrain> longWordLimit{
         this, "LongWordLengthLimit",
