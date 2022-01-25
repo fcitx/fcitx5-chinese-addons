@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2021-12-10 20:24+0000\n"
+"POT-Creation-Date: 2022-01-25 20:25+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: scootergrisen, 2021\n"
 "Language-Team: Danish (https://www.transifex.com/fcitx/teams/12005/da/)\n"
@@ -156,15 +156,15 @@ msgstr "Skypinyin"
 msgid "Cloud Pinyin Index"
 msgstr "Skypinyin-indeks"
 
-#: im/pinyin/pinyin.cpp:997
+#: im/pinyin/pinyin.cpp:1008
 msgid "Cloud Pinyin Status"
 msgstr "Status for skypinyin"
 
-#: im/pinyin/pinyin.cpp:999
+#: im/pinyin/pinyin.cpp:1010
 msgid "Cloud Pinyin is disabled."
 msgstr "Skypinyin er deaktiveret."
 
-#: im/pinyin/pinyin.cpp:998
+#: im/pinyin/pinyin.cpp:1009
 msgid "Cloud Pinyin is enabled."
 msgstr "Skypinyin er aktiveret."
 
@@ -561,8 +561,8 @@ msgid "Not set"
 msgstr "Ikke sat"
 
 #: im/pinyin/pinyin.h:173
-msgid "Number of Sentence"
-msgstr "Antal sætninger"
+msgid "Number of Sentences"
+msgstr ""
 
 #: im/table/ime.h:127
 msgid "Order policy"
@@ -582,7 +582,7 @@ msgstr ""
 msgid "Page size"
 msgstr "Sidestørrelse"
 
-#: im/pinyin/pinyin.cpp:834 im/pinyin/pinyin.cpp:996
+#: im/pinyin/pinyin.cpp:834 im/pinyin/pinyin.cpp:1007
 #: im/pinyin/pinyin-addon.conf.in.in:3 im/pinyin/pinyin.conf.in:3
 msgid "Pinyin"
 msgstr "Pinyin"
@@ -623,25 +623,29 @@ msgstr "Tryk på Delete for at flytte."
 msgid "Press space or enter to insert."
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1415
+#: im/pinyin/pinyin.cpp:1426
 msgid "Press {} for {}"
 msgstr "Tryk på {} for {}"
 
-#: im/pinyin/pinyin.cpp:1412
+#: im/pinyin/pinyin.cpp:1423
 msgid "Press {} for {} and Return for {}"
 msgstr "Tryk på {} for {} og Retur for {}"
 
-#: im/table/ime.h:52 im/pinyin/pinyin.h:137
+#: im/table/ime.h:52
 msgid "Prev Candidate"
 msgstr "Forrige kandidat"
-
-#: im/pinyin/pinyin.h:125
-msgid "Prev Page"
-msgstr "Forrige side"
 
 #: im/table/ime.h:40
 msgid "Prev page"
 msgstr "Forrige side"
+
+#: im/pinyin/pinyin.h:137
+msgid "Previous Candidate"
+msgstr ""
+
+#: im/pinyin/pinyin.h:125
+msgid "Previous Page"
+msgstr ""
 
 #: im/pinyin/pinyin.h:177
 msgid "Prompt long word length when input length over (0 for disable)"
@@ -936,11 +940,11 @@ msgstr "Ziguang"
 msgid "Ziranma"
 msgstr "Ziranma"
 
-#: im/pinyin/pinyin.cpp:1216
+#: im/pinyin/pinyin.cpp:1227
 msgid "[Select the word to remove from history]"
 msgstr "[vælg det ord som skal fjernes fra historik]"
 
-#: im/pinyin/pinyin.cpp:1164
+#: im/pinyin/pinyin.cpp:1175
 msgid "[Stroke Filtering]"
 msgstr ""
 

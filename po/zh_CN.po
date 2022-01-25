@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2022-01-13 20:24+0000\n"
+"POT-Creation-Date: 2022-01-25 20:25+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: csslayer <wengxt@gmail.com>, 2022\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/fcitx/teams/12005/"
@@ -155,15 +155,15 @@ msgstr "云拼音"
 msgid "Cloud Pinyin Index"
 msgstr "云拼音位置"
 
-#: im/pinyin/pinyin.cpp:997
+#: im/pinyin/pinyin.cpp:1008
 msgid "Cloud Pinyin Status"
 msgstr "云拼音状态"
 
-#: im/pinyin/pinyin.cpp:999
+#: im/pinyin/pinyin.cpp:1010
 msgid "Cloud Pinyin is disabled."
 msgstr "云拼音已禁用。"
 
-#: im/pinyin/pinyin.cpp:998
+#: im/pinyin/pinyin.cpp:1009
 msgid "Cloud Pinyin is enabled."
 msgstr "已启用云拼音。"
 
@@ -548,8 +548,8 @@ msgid "Not set"
 msgstr "未设置"
 
 #: im/pinyin/pinyin.h:173
-msgid "Number of Sentence"
-msgstr "句子数量"
+msgid "Number of Sentences"
+msgstr ""
 
 #: im/table/ime.h:127
 msgid "Order policy"
@@ -568,7 +568,7 @@ msgstr ""
 msgid "Page size"
 msgstr "页大小"
 
-#: im/pinyin/pinyin.cpp:834 im/pinyin/pinyin.cpp:996
+#: im/pinyin/pinyin.cpp:834 im/pinyin/pinyin.cpp:1007
 #: im/pinyin/pinyin-addon.conf.in.in:3 im/pinyin/pinyin.conf.in:3
 msgid "Pinyin"
 msgstr "拼音"
@@ -609,25 +609,29 @@ msgstr "按下删除键来移除。"
 msgid "Press space or enter to insert."
 msgstr "按下空格或回车键来插入。"
 
-#: im/pinyin/pinyin.cpp:1415
+#: im/pinyin/pinyin.cpp:1426
 msgid "Press {} for {}"
 msgstr "按下 {} 输入 {}"
 
-#: im/pinyin/pinyin.cpp:1412
+#: im/pinyin/pinyin.cpp:1423
 msgid "Press {} for {} and Return for {}"
 msgstr "按下 {} 输入 {}，按下回车输入 {}"
 
-#: im/table/ime.h:52 im/pinyin/pinyin.h:137
+#: im/table/ime.h:52
 msgid "Prev Candidate"
 msgstr "上一个候选词"
-
-#: im/pinyin/pinyin.h:125
-msgid "Prev Page"
-msgstr "上一页"
 
 #: im/table/ime.h:40
 msgid "Prev page"
 msgstr "上一页"
+
+#: im/pinyin/pinyin.h:137
+msgid "Previous Candidate"
+msgstr ""
+
+#: im/pinyin/pinyin.h:125
+msgid "Previous Page"
+msgstr ""
 
 #: im/pinyin/pinyin.h:177
 msgid "Prompt long word length when input length over (0 for disable)"
@@ -920,11 +924,11 @@ msgstr "紫光"
 msgid "Ziranma"
 msgstr "自然码"
 
-#: im/pinyin/pinyin.cpp:1216
+#: im/pinyin/pinyin.cpp:1227
 msgid "[Select the word to remove from history]"
 msgstr "[选择要从历史中移除的词]"
 
-#: im/pinyin/pinyin.cpp:1164
+#: im/pinyin/pinyin.cpp:1175
 msgid "[Stroke Filtering]"
 msgstr "[笔画过滤]"
 
