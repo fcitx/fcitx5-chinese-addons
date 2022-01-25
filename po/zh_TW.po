@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2022-01-13 20:24+0000\n"
+"POT-Creation-Date: 2022-01-25 20:25+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Steve Nian, 2022\n"
 "Language-Team: Chinese (Taiwan) (https://www.transifex.com/fcitx/teams/12005/"
@@ -154,15 +154,15 @@ msgstr "雲端拼音"
 msgid "Cloud Pinyin Index"
 msgstr "雲端拼音索引"
 
-#: im/pinyin/pinyin.cpp:997
+#: im/pinyin/pinyin.cpp:1008
 msgid "Cloud Pinyin Status"
 msgstr "雲端拼音狀態"
 
-#: im/pinyin/pinyin.cpp:999
+#: im/pinyin/pinyin.cpp:1010
 msgid "Cloud Pinyin is disabled."
 msgstr "已停用雲端拼音。"
 
-#: im/pinyin/pinyin.cpp:998
+#: im/pinyin/pinyin.cpp:1009
 msgid "Cloud Pinyin is enabled."
 msgstr "已啟用雲端拼音。"
 
@@ -543,7 +543,7 @@ msgid "Not set"
 msgstr ""
 
 #: im/pinyin/pinyin.h:173
-msgid "Number of Sentence"
+msgid "Number of Sentences"
 msgstr ""
 
 #: im/table/ime.h:127
@@ -561,7 +561,7 @@ msgstr ""
 msgid "Page size"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:834 im/pinyin/pinyin.cpp:996
+#: im/pinyin/pinyin.cpp:834 im/pinyin/pinyin.cpp:1007
 #: im/pinyin/pinyin-addon.conf.in.in:3 im/pinyin/pinyin.conf.in:3
 msgid "Pinyin"
 msgstr ""
@@ -602,24 +602,28 @@ msgstr ""
 msgid "Press space or enter to insert."
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1415
+#: im/pinyin/pinyin.cpp:1426
 msgid "Press {} for {}"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1412
+#: im/pinyin/pinyin.cpp:1423
 msgid "Press {} for {} and Return for {}"
 msgstr ""
 
-#: im/table/ime.h:52 im/pinyin/pinyin.h:137
+#: im/table/ime.h:52
 msgid "Prev Candidate"
-msgstr ""
-
-#: im/pinyin/pinyin.h:125
-msgid "Prev Page"
 msgstr ""
 
 #: im/table/ime.h:40
 msgid "Prev page"
+msgstr ""
+
+#: im/pinyin/pinyin.h:137
+msgid "Previous Candidate"
+msgstr ""
+
+#: im/pinyin/pinyin.h:125
+msgid "Previous Page"
 msgstr ""
 
 #: im/pinyin/pinyin.h:177
@@ -901,11 +905,11 @@ msgstr ""
 msgid "Ziranma"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1216
+#: im/pinyin/pinyin.cpp:1227
 msgid "[Select the word to remove from history]"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1164
+#: im/pinyin/pinyin.cpp:1175
 msgid "[Stroke Filtering]"
 msgstr ""
 
