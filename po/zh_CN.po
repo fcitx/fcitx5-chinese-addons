@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2022-01-25 20:25+0000\n"
+"POT-Creation-Date: 2022-01-26 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: csslayer <wengxt@gmail.com>, 2022\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/fcitx/teams/12005/"
@@ -549,7 +549,7 @@ msgstr "未设置"
 
 #: im/pinyin/pinyin.h:173
 msgid "Number of Sentences"
-msgstr ""
+msgstr "句子数量"
 
 #: im/table/ime.h:127
 msgid "Order policy"
@@ -627,11 +627,11 @@ msgstr "上一页"
 
 #: im/pinyin/pinyin.h:137
 msgid "Previous Candidate"
-msgstr ""
+msgstr "上一个候选词"
 
 #: im/pinyin/pinyin.h:125
 msgid "Previous Page"
-msgstr ""
+msgstr "上一页"
 
 #: im/pinyin/pinyin.h:177
 msgid "Prompt long word length when input length over (0 for disable)"
