@@ -8,7 +8,8 @@ target_link_libraries(pinyinhelper Fcitx5::Core Fcitx5::Config LibIME::Core Boos
 install(TARGETS pinyinhelper DESTINATION "${CMAKE_INSTALL_LIBDIR}/fcitx5")
 configure_file(pinyinhelper.conf.in.in pinyinhelper.conf.in)
 fcitx5_translate_desktop_file("${CMAKE_CURRENT_BINARY_DIR}/pinyinhelper.conf.in" pinyinhelper.conf)
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/pinyinhelper.conf" DESTINATION "${FCITX_INSTALL_PKGDATADIR}/addon")
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/pinyinhelper.conf" DESTINATION "${FCITX_INSTALL_PKGDATADIR}/addon"
+        COMPONENT config)
 
 fcitx5_export_module(PinyinHelper TARGET pinyinhelper BUILD_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}" HEADERS pinyinhelper_public.h INSTALL)
 

@@ -13,7 +13,9 @@ target_link_libraries(punctuation Fcitx5::Core Fcitx5::Config Boost::iostreams F
 install(TARGETS punctuation DESTINATION "${CMAKE_INSTALL_LIBDIR}/fcitx5")
 configure_file(punctuation.conf.in.in punctuation.conf.in)
 fcitx5_translate_desktop_file("${CMAKE_CURRENT_BINARY_DIR}/punctuation.conf.in" punctuation.conf)
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/punctuation.conf" DESTINATION "${FCITX_INSTALL_PKGDATADIR}/addon")
-install(FILES ${PUNCTUATION_DATA_FILES} DESTINATION "${CMAKE_INSTALL_DATADIR}/fcitx5/punctuation")
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/punctuation.conf" DESTINATION "${FCITX_INSTALL_PKGDATADIR}/addon"
+        COMPONENT config)
+install(FILES ${PUNCTUATION_DATA_FILES} DESTINATION "${CMAKE_INSTALL_DATADIR}/fcitx5/punctuation"
+        COMPONENT config)
 
 fcitx5_export_module(Punctuation TARGET punctuation BUILD_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}" HEADERS punctuation_public.h INSTALL)
