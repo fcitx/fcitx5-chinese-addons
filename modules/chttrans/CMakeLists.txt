@@ -12,5 +12,6 @@ endif()
 install(TARGETS chttrans DESTINATION "${CMAKE_INSTALL_LIBDIR}/fcitx5")
 configure_file(chttrans.conf.in.in chttrans.conf.in)
 fcitx5_translate_desktop_file("${CMAKE_CURRENT_BINARY_DIR}/chttrans.conf.in" chttrans.conf)
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/chttrans.conf" DESTINATION "${FCITX_INSTALL_PKGDATADIR}/addon")
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/chttrans.conf" DESTINATION "${FCITX_INSTALL_PKGDATADIR}/addon"
+        COMPONENT config)
 install(FILES gbks2t.tab DESTINATION "${CMAKE_INSTALL_DATADIR}/fcitx5/chttrans")
