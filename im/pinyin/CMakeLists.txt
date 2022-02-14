@@ -7,7 +7,8 @@ target_link_libraries(pinyin Fcitx5::Core Fcitx5::Config LibIME::Pinyin Boost::i
 if (TARGET Fcitx5::Module::LuaAddonLoader)
     target_compile_definitions(pinyin PRIVATE -DFCITX_HAS_LUA)
     target_link_libraries(pinyin Fcitx5::Module::LuaAddonLoader)
-    install(FILES pinyin.lua DESTINATION "${FCITX_INSTALL_PKGDATADIR}/lua/imeapi/extensions")
+    install(FILES pinyin.lua DESTINATION "${FCITX_INSTALL_PKGDATADIR}/lua/imeapi/extensions"
+            COMPONENT config)
 endif()
 
 install(TARGETS pinyin DESTINATION "${CMAKE_INSTALL_LIBDIR}/fcitx5")
