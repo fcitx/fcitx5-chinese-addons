@@ -7,14 +7,15 @@
 # bruh, 2020
 # Billy SU <billy4195.su@gmail.com>, 2020
 # Steve Nian, 2022
+# 菘菘 <rrt467778@gmail.com>, 2022
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2022-01-25 20:25+0000\n"
+"POT-Creation-Date: 2022-03-19 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
-"Last-Translator: Steve Nian, 2022\n"
+"Last-Translator: 菘菘 <rrt467778@gmail.com>, 2022\n"
 "Language-Team: Chinese (Taiwan) (https://www.transifex.com/fcitx/teams/12005/"
 "zh_TW/)\n"
 "Language: zh_TW\n"
@@ -76,7 +77,7 @@ msgstr "ABC"
 msgid ""
 "Add support for Pinyin, Table and many other Chinese related functionality "
 "to Fcitx"
-msgstr ""
+msgstr "增加對拼音，碼表，以及其他許多中文相關的功能到 Fcitx"
 
 #: im/table/ime.h:220
 msgid ""
@@ -85,6 +86,8 @@ msgid ""
 "once, it will be added as user phrase. -1 means the maximum code length of "
 "the table. 0 means disable this feature. "
 msgstr ""
+"每個字符提交之後，根據輸入紀錄學習新詞組。 如果特定的詞出現多次或者被使用者選"
+"中一次，它將被添加為使用者詞組。 -1 表示碼碼表最大長度，0 表示停用這個功能。"
 
 #: modules/punctuation/punctuation.h:41
 msgid "Alternative Mapping"
@@ -128,7 +131,7 @@ msgstr "瀏覽搜狗细胞词库"
 
 #: im/table/ime.h:249
 msgid "Candidate List orientation"
-msgstr ""
+msgstr "候選詞清單配置"
 
 #: im/table/cangjie.conf.in.in:3
 msgid "Cangjie"
