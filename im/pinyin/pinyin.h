@@ -290,6 +290,7 @@ private:
     std::unordered_map<std::string, std::unordered_set<uint32_t>>
         quickphraseTriggerDict_;
     KeyList selectionKeys_;
+    KeyList numpadSelectionKeys_;
     FactoryFor<PinyinState> factory_;
     SimpleAction predictionAction_;
     libime::Prediction prediction_;
