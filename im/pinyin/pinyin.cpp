@@ -654,6 +654,9 @@ PinyinEngine::PinyinEngine(Instance *instance)
     KeySym syms[] = {
         FcitxKey_1, FcitxKey_2, FcitxKey_3, FcitxKey_4, FcitxKey_5,
         FcitxKey_6, FcitxKey_7, FcitxKey_8, FcitxKey_9, FcitxKey_0,
+        FcitxKey_KP_1, FcitxKey_KP_2, FcitxKey_KP_3, FcitxKey_KP_4,
+        FcitxKey_KP_5, FcitxKey_KP_6, FcitxKey_KP_7, FcitxKey_KP_8,
+        FcitxKey_KP_9, FcitxKey_KP_0,
     };
 
     KeyStates states;
@@ -1008,6 +1011,9 @@ bool PinyinEngine::handleCandidateList(KeyEvent &event) {
         return false;
     }
     int idx = event.key().keyListIndex(selectionKeys_);
+    if(idx >= 10) {
+        idx = idx - 10;
+    }
     if (idx >= 0) {
         event.filterAndAccept();
         if (idx < candidateList->size()) {
