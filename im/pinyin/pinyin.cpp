@@ -707,8 +707,9 @@ PinyinEngine::PinyinEngine(Instance *instance)
     }
 
     KeySym numpadsyms[] = {
-        FcitxKey_KP_1, FcitxKey_KP_2, FcitxKey_KP_3, FcitxKey_KP_4, FcitxKey_KP_5,
-        FcitxKey_KP_6, FcitxKey_KP_7, FcitxKey_KP_8, FcitxKey_KP_9, FcitxKey_KP_0,
+        FcitxKey_KP_1, FcitxKey_KP_2, FcitxKey_KP_3, FcitxKey_KP_4,
+        FcitxKey_KP_5, FcitxKey_KP_6, FcitxKey_KP_7, FcitxKey_KP_8,
+        FcitxKey_KP_9, FcitxKey_KP_0,
     };
 
     KeyStates numpadStates;
@@ -1105,7 +1106,7 @@ bool PinyinEngine::handleCandidateList(KeyEvent &event) {
         return false;
     }
     int idx = event.key().keyListIndex(selectionKeys_);
-    if(idx == -1) {
+    if (idx == -1 && *config_.useKeypadAsSelectionKey) {
         idx = event.key().keyListIndex(numpadSelectionKeys_);
     }
     if (idx >= 0) {
