@@ -157,6 +157,8 @@ FCITX_CONFIGURATION(
         {},
         KeyListConstrain({KeyConstrainFlag::AllowModifierLess,
                           KeyConstrainFlag::AllowModifierOnly})};
+    Option<bool> useKeypadAsSelectionKey{
+        this, "UseKeypadAsSelection", _("Use Keypad as Selection key"), false};
     KeyListOption selectCharFromPhrase{
         this,
         "ChooseCharFromPhrase",
