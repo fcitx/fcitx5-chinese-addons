@@ -706,6 +706,16 @@ PinyinEngine::PinyinEngine(Instance *instance)
         selectionKeys_.emplace_back(sym, states);
     }
 
+    KeySym numpadsyms[] = {
+        FcitxKey_KP_1, FcitxKey_KP_2, FcitxKey_KP_3, FcitxKey_KP_4, FcitxKey_KP_5,
+        FcitxKey_KP_6, FcitxKey_KP_7, FcitxKey_KP_8, FcitxKey_KP_9, FcitxKey_KP_0,
+    };
+
+    KeyStates numpadStates;
+    for (auto sym : numpadsyms) {
+        numpadSelectionKeys_.emplace_back(sym, numpadStates);
+    }
+
     predictionAction_.setShortText(_("Prediction"));
     predictionAction_.setLongText(_("Show prediction words"));
     predictionAction_.setIcon(*config_.predictionEnabled
@@ -1095,6 +1105,9 @@ bool PinyinEngine::handleCandidateList(KeyEvent &event) {
         return false;
     }
     int idx = event.key().keyListIndex(selectionKeys_);
+    if(idx == -1) {
+        idx = event.key().keyListIndex(numpadSelectionKeys_);
+    }
     if (idx >= 0) {
         event.filterAndAccept();
         if (idx < candidateList->size()) {
