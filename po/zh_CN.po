@@ -6,14 +6,15 @@
 # Mingcong Bai <jeffbai@aosc.xyz>, 2018
 # wwj402 <wwj402@gmail.com>, 2018
 # csslayer <wengxt@gmail.com>, 2022
+# rocka, 2022
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2022-03-23 20:24+0000\n"
+"POT-Creation-Date: 2022-03-25 04:31+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
-"Last-Translator: csslayer <wengxt@gmail.com>, 2022\n"
+"Last-Translator: rocka, 2022\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/fcitx/teams/12005/"
 "zh_CN/)\n"
 "Language: zh_CN\n"
@@ -810,7 +811,7 @@ msgstr "同时输入成对标点 (例如引号)"
 
 #: im/pinyin/pinyin.h:161
 msgid "Use Keypad as Selection key"
-msgstr ""
+msgstr "使用数字键盘选词"
 
 #: im/table/state.cpp:588
 msgid "Use Left and Right to select character: "
