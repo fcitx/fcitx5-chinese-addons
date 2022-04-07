@@ -25,7 +25,7 @@
 using namespace fcitx;
 
 #define HEADER_SIZE 12
-#define DELTBL_SIZE 10
+#define DELTBL_SIZE 8
 #define BUFLEN 0x1000
 
 #define DESC_START 0x130
@@ -85,8 +85,8 @@ static const char header_str[HEADER_SIZE] = {'\x40', '\x15', '\0',   '\0',
                                              '\x44', '\x43', '\x53', '\x01',
                                              '\x01', '\0',   '\0',   '\0'};
 static const char pinyin_str[PINYIN_SIZE] = {'\x9d', '\x01', '\0', '\0'};
-static const char deltbl_str[HEADER_SIZE] = {
-    '\x45', '\0', '\x4c', '\0', '\x54', '\0', '\x42', '\0', '\x4c', '\0'};
+static const char deltbl_str[DELTBL_SIZE] = {'\x4c', '\0', '\x54', '\0',
+                                             '\x42', '\0', '\x4c', '\0'};
 
 static void usage() {
     puts("scel2org - Convert .scel file to libime compatible file (SEE NOTES "
@@ -194,6 +194,7 @@ int main(int argc, char **argv) {
         }
     }
 
+    bool mightBeDelTbl = false;
     while (true) {
         uint16_t symcount;
         uint16_t count;
@@ -207,6 +208,11 @@ int main(int argc, char **argv) {
         }
 
         readUInt16(fd, &count, "Failed to read count");
+
+        if (symcount == 0x44 && count == 0x45) {
+            mightBeDelTbl = true;
+            break;
+        }
 
         wordcount = count / 2;
         std::vector<uint16_t> pyindex;
@@ -238,6 +244,10 @@ int main(int argc, char **argv) {
             buf.resize(count);
             readOrAbort(fd, buf.data(), buf.size(), "failed to read buf");
         }
+    }
+
+    if (!mightBeDelTbl) {
+        return 0;
     }
 
     char delTblBuf[DELTBL_SIZE];
