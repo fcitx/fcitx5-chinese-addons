@@ -3,16 +3,16 @@
 # This file is distributed under the same license as the fcitx5-chinese-addons package.
 #
 # Translators:
-# Junghee Lee <daemul72@gmail.com>, 2021
 # Bon Keun Seo <scobyseo@gmail.com>, 2021
+# Junghee Lee <daemul72@gmail.com>, 2022
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2022-03-23 20:24+0000\n"
+"POT-Creation-Date: 2022-04-09 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
-"Last-Translator: Bon Keun Seo <scobyseo@gmail.com>, 2021\n"
+"Last-Translator: Junghee Lee <daemul72@gmail.com>, 2022\n"
 "Language-Team: Korean (https://www.transifex.com/fcitx/teams/12005/ko/)\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
@@ -73,7 +73,7 @@ msgstr "ABC"
 msgid ""
 "Add support for Pinyin, Table and many other Chinese related functionality "
 "to Fcitx"
-msgstr "Pinyin, 표 및 중국어와 관련된 기능 지원을 Fcitx에 추가"
+msgstr "Fcitx에 병음, 표 및 기타 많은 한어 관련 기능에 대한 지원 추가"
 
 #: im/table/ime.h:220
 msgid ""
@@ -82,9 +82,9 @@ msgid ""
 "once, it will be added as user phrase. -1 means the maximum code length of "
 "the table. 0 means disable this feature. "
 msgstr ""
-"모든 글자를 커밋한 후, 입력 기록을 통해 문구를 학습합니다. 어떤 단어가 여러 "
-"번 나타나거나 사용자에 의해 선택되면, 사용자 문구에 포함됩니다. -1로 설정하"
-"면 테이블의 최대 크기까지 지원하며, 0으로 설정하면 이 기능을 끕니다."
+"모든 글자를 입력완료한 후, 입력 기록을 통해 문구를 학습합니다. 어떤 단어가 여"
+"러 번 나타나거나 사용자에 의해 선택되면, 사용자 문구에 포함됩니다. -1로 설정"
+"하면 테이블의 최대 크기까지 지원하며, 0으로 설정하면 이 기능을 끕니다."
 
 #: modules/punctuation/punctuation.h:41
 msgid "Alternative Mapping"
@@ -136,7 +136,7 @@ msgstr "창힐"
 
 #: org.fcitx.Fcitx5.Addon.ChineseAddons.metainfo.xml.in:7
 msgid "Chinese Addons"
-msgstr "중국어 애드온"
+msgstr "한어 애드온"
 
 #: im/pinyin/pinyin.h:165
 msgid "Choose Character from Phrase"
@@ -168,23 +168,23 @@ msgstr "클라우드 병음이 활성화되었습니다."
 
 #: im/table/ime.h:94
 msgid "Commit Invalid Segment"
-msgstr "잘못된 세그먼트 커밋"
+msgstr "잘못된 세그먼트 입력완료"
 
 #: im/table/ime.h:86
 msgid "Commit after auto select candidates"
-msgstr "후보 자동 선택 후 커밋"
+msgstr "후보 자동 선택 후 입력완료"
 
 #: im/table/ime.h:90
 msgid "Commit buffer when deactivating input method"
-msgstr "입력기 비활성화 시 입력 버퍼 커밋"
+msgstr "입력기 비활성화 시 버퍼 입력완료"
 
 #: im/table/ime.h:99
 msgid ""
 "Commit the segment that does not exist in the table. This option is useful "
 "for some latin/compose based table."
 msgstr ""
-"테이블에 없는 세그먼트를 커밋합니다. 이 옵션은 일부 라틴/구성 기반 테이블에 "
-"유용합니다."
+"표에 없는 세그먼트를 입력완료합니다. 이 옵션은 일부 라틴어/작성 기반 표에 유"
+"용합니다."
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:330
 #: gui/pinyindictmanager/pinyindictmanager.cpp:362
@@ -354,7 +354,7 @@ msgstr "런타임 디렉토리를 가져 오지 못했습니다"
 
 #: im/table/ime.h:22
 msgid "Fast"
-msgstr ""
+msgstr "빠름"
 
 #: im/table/ime.h:36
 msgid "File"
@@ -382,7 +382,7 @@ msgstr "단어 잊기"
 
 #: im/table/ime.h:22
 msgid "Freq"
-msgstr ""
+msgstr "빈도"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:34
 msgid "From &File"
@@ -500,7 +500,7 @@ msgstr "매핑"
 
 #: im/table/ime.h:227
 msgid "Marker for auto phrase in the candidates"
-msgstr ""
+msgstr "후보의 자동 문구에 대한 표식"
 
 #: im/pinyin/pinyin.h:69
 msgid "Match partial finals (e -> en, eng, ei)"
@@ -508,7 +508,7 @@ msgstr "부분 접미사 매칭 (e -> en, eng, ei)"
 
 #: im/pinyin/pinyin.h:73
 msgid "Match partial shuangpin if input length is longer than 4"
-msgstr ""
+msgstr "입력 길이가 4보다 긴 경우 일부의 이중자획 일치"
 
 #: modules/cloudpinyin/cloudpinyin.h:32
 msgid "Minimum Pinyin Length"
@@ -565,8 +565,8 @@ msgid ""
 "disable this option if you want the candidate order to be stable regardless "
 "of the history."
 msgstr ""
-"이미 입력한 단어를 기준으로 후보자를 정렬합니다. 기록과 상관없이 후보 주문을 "
-"안정적으로 유지하려면 이 옵션을 사용하지 않도록 설정할 수 있습니다."
+"이미 입력한 단어를 기준으로 후보를 정렬합니다. 기록과 상관없이 후보 순서를 안"
+"정적으로 유지하려면 이 옵션을 사용하지 않도록 설정할 수 있습니다."
 
 #: im/table/ime.h:82 im/pinyin/pinyin.h:95
 msgid "Page size"
@@ -720,7 +720,7 @@ msgstr "사전편집에서 완성형 병음 표시"
 
 #: im/pinyin/pinyin.h:94
 msgid "Show current shuangpin mode"
-msgstr ""
+msgstr "현재 이중자획 모드 표시"
 
 #: im/pinyin/pinyin.cpp:721
 msgid "Show prediction words"
@@ -732,24 +732,24 @@ msgstr "응용프로그램 내에서 사전편집 표시"
 
 #: im/pinyin/shuangpin.conf.in:3
 msgid "Shuangpin"
-msgstr "이중병음"
+msgstr "이중자획"
 
 #: im/pinyin/pinyin.h:91
 msgid "Shuangpin Profile"
-msgstr "이중병음 프로필"
+msgstr "이중자획 프로필"
 
 #: modules/chttrans/chttrans.h:78
 msgid "Simplified Chinese"
-msgstr "간체 중국어"
+msgstr "간화자"
 
 #: modules/chttrans/chttrans.cpp:77
 msgid "Simplified Chinese is enabled."
-msgstr "중국어 간체가 활성화되었습니다."
+msgstr "간화자가 활성화되었습니다."
 
 #: im/pinyin/pinyin.h:187 modules/chttrans/chttrans.cpp:71
 #: modules/chttrans/chttrans.conf.in.in:3
 msgid "Simplified and Traditional Chinese Translation"
-msgstr "간체 / 번체 중국어 번역"
+msgstr "간화자 및 정체자 번역"
 
 #: im/table/ime.h:141
 msgid "Sort candidates based on current context"
@@ -761,11 +761,11 @@ msgstr "상용구를 전환할 문자열"
 
 #: modules/chttrans/chttrans.cpp:75
 msgid "Switch to Simplified Chinese"
-msgstr "중국어 간체로 전환"
+msgstr "간화자로 전환"
 
 #: modules/chttrans/chttrans.cpp:74
 msgid "Switch to Traditional Chinese"
-msgstr "중국어 번체로 전환"
+msgstr "정체자로 전환"
 
 #: im/table/table.conf.in.in:3
 msgid "Table"
@@ -798,11 +798,11 @@ msgstr "전환 키"
 
 #: modules/chttrans/chttrans.h:77
 msgid "Traditional Chinese"
-msgstr "번체 중국어"
+msgstr "정체자"
 
 #: modules/chttrans/chttrans.cpp:76
 msgid "Traditional Chinese is enabled."
-msgstr "중국어 번체가 활성화되었습니다."
+msgstr "정체자가 활성화되었습니다."
 
 #: modules/chttrans/chttrans.h:27
 msgid "Translate engine"
@@ -936,7 +936,7 @@ msgstr "[기록에서 삭제할 단어 선택]"
 
 #: im/pinyin/pinyin.cpp:1189
 msgid "[Stroke Filtering]"
-msgstr ""
+msgstr "[필획 필터링]"
 
 #. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:21
 #. i18n: ectx: property (url), widget (QWebView, webView_)
