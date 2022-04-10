@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2022-04-09 20:24+0000\n"
+"POT-Creation-Date: 2022-04-10 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Junghee Lee <daemul72@gmail.com>, 2022\n"
 "Language-Team: Korean (https://www.transifex.com/fcitx/teams/12005/ko/)\n"
@@ -45,11 +45,11 @@ msgstr "Sogou Cell 사전 온라인 찾아보기(&B)"
 #: rc.cpp:24
 #, kde-format
 msgid "&Clear Dict"
-msgstr "사전 비우기(&C)"
+msgstr "사전 지우기(&C)"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:44
 msgid "&Clear User Data"
-msgstr "사용자 데이터 비우기(&C)"
+msgstr "사용자 데이터 지우기(&C)"
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:22
 #. i18n: ectx: property (text), widget (QPushButton, importButton_)
@@ -73,7 +73,7 @@ msgstr "ABC"
 msgid ""
 "Add support for Pinyin, Table and many other Chinese related functionality "
 "to Fcitx"
-msgstr "Fcitx에 병음, 표 및 기타 많은 한어 관련 기능에 대한 지원 추가"
+msgstr "Fcitx에 Pinyin, 표 및 기타 많은 한어 관련 기능에 대한 지원 추가"
 
 #: im/table/ime.h:220
 msgid ""
@@ -144,27 +144,27 @@ msgstr "문구에서 문자 선택"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:45
 msgid "Clear &All Data"
-msgstr "모든 데이터 비우기(&A)"
+msgstr "모든 데이터 지우기(&A)"
 
 #: im/pinyin/pinyin.h:190 modules/cloudpinyin/cloudpinyin.conf.in.in:3
 msgid "Cloud Pinyin"
-msgstr "클라우드 병음"
+msgstr "Cloud Pinyin"
 
 #: im/pinyin/pinyin.h:103
 msgid "Cloud Pinyin Index"
-msgstr "클라우드 병음 일련번호"
+msgstr "Cloud Pinyin 일련번호"
 
 #: im/pinyin/pinyin.cpp:1019
 msgid "Cloud Pinyin Status"
-msgstr "클라우드 병음 상태"
+msgstr "Cloud Pinyin 상태"
 
 #: im/pinyin/pinyin.cpp:1021
 msgid "Cloud Pinyin is disabled."
-msgstr "클라우드 병음이 비활성화됨."
+msgstr "Cloud Pinyin이 비활성화됨."
 
 #: im/pinyin/pinyin.cpp:1020
 msgid "Cloud Pinyin is enabled."
-msgstr "클라우드 병음이 활성화되었습니다."
+msgstr "Cloud Pinyin이 활성화되었습니다."
 
 #: im/table/ime.h:94
 msgid "Commit Invalid Segment"
@@ -202,13 +202,13 @@ msgstr "변환도구가 충돌했습니다."
 
 #: im/table/state.cpp:596
 msgid "Could not find pinyin."
-msgstr "병음을 찾을 수 없음"
+msgstr "Pinyin을 찾을 수 없음"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:111
 #: gui/pinyindictmanager/pinyindictmanager.cpp:222
 #: gui/pinyindictmanager/pinyindictmanager.cpp:281
 msgid "Create directory failed. Please check the permission or disk space."
-msgstr "디렉토리 생성에 실패했습니다. 권한 또는 디스크 공간을 확인하십시오."
+msgstr "디렉토리 생성에 실패했습니다. 권한 또는 디스크 공간을 확인합니다."
 
 #: gui/pinyindictmanager/filedownloader.cpp:23
 msgid "Create temporary file failed."
@@ -216,7 +216,7 @@ msgstr "임시 파일 생성에 실패했습니다."
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:122
 msgid "Creating temp file failed. Please check the permission or disk space."
-msgstr "임시 파일을 만들지 못했습니다. 권한 또는 디스크 공간을 확인하십시오."
+msgstr "임시 파일을 만들지 못했습니다. 권한 또는 디스크 공간을 확인합니다."
 
 #: im/pinyin/pinyin.h:59
 msgid "Custom"
@@ -256,20 +256,20 @@ msgid ""
 "Do you want to enable cloudpinyin now for better prediction? You can always "
 "toggle it later in configuration or by pressing {}."
 msgstr ""
-"더 나은 예측을 위해 지금 클라우드 pinin을 활성화하시겠습니까? 나중에 구성하거"
-"나 {}을(를) 눌러 언제든지 전환할 수 있습니다."
+"더 나은 예측을 위해 지금 Cloud pinin을 활성화하시겠습니까? 나중에 구성하거나 "
+"{} 키를 눌러 언제든지 전환할 수 있습니다."
 
 #: im/pinyin/pinyin.cpp:831
 msgid ""
 "Do you want to enable cloudpinyin now for better prediction? You can always "
 "toggle it later in configuration."
 msgstr ""
-"더 나은 예측을 위해 지금 클라우드 pinin을 활성화하시겠습니까? 나중에 구성할 "
-"때는 언제든지 전환할 수 있습니다."
+"더 나은 예측을 위해 지금 Cloud pinin을 활성화하시겠습니까? 나중에 구성할 때"
+"는 언제든지 전환할 수 있습니다."
 
 #: im/table/ime.h:125
 msgid "Don't sort word shorter than"
-msgstr "다음보다 짧은 단어를 정렬하지 마십시오"
+msgstr "다음보다 짧은 단어를 정렬하지 않음"
 
 #: gui/pinyindictmanager/filedownloader.cpp:78
 msgid "Download Finished"
@@ -285,7 +285,7 @@ msgstr "Chaizi 활성화"
 
 #: im/pinyin/pinyin.h:101
 msgid "Enable Cloud Pinyin"
-msgstr "클라우드 병음 사용"
+msgstr "Cloud Pinyin 사용"
 
 #: im/pinyin/pinyin.cpp:845
 msgid "Enable Cloudpinyin"
@@ -333,7 +333,7 @@ msgstr "정확한 일치"
 
 #: modules/pinyinhelper/pinyinhelper.conf.in.in:3
 msgid "Extra Pinyin functionality"
-msgstr "추가 병음 기능"
+msgstr "추가 Pinyin 기능"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:110
 msgid "Failed to create directory"
@@ -422,7 +422,7 @@ msgstr "전각 문장부호가 활성화되었습니다."
 
 #: im/pinyin/pinyin.h:212
 msgid "Fuzzy Pinyin Settings"
-msgstr "불분명한 병음 설정"
+msgstr "불분명한 Pinyin 설정"
 
 #: modules/fullwidth/fullwidth.h:30
 msgid "Half width Character"
@@ -476,7 +476,7 @@ msgstr "키"
 
 #: im/table/ime.h:110 im/pinyin/pinyin.h:195
 msgid "Key to trigger quickphrase"
-msgstr "상용구 전환 키"
+msgstr "상용구를 트리거할 키"
 
 #: im/table/ime.h:240
 msgid "Learning"
@@ -488,7 +488,7 @@ msgstr "유일한 후보 선택의 길이 제한"
 
 #: im/table/engine.h:38
 msgid "Lookup pinyin"
-msgstr "병음 검색"
+msgstr "Pinyin 검색"
 
 #: im/pinyin/pinyin.h:56
 msgid "MS"
@@ -512,7 +512,7 @@ msgstr "입력 길이가 4보다 긴 경우 일부의 이중자획 일치"
 
 #: modules/cloudpinyin/cloudpinyin.h:32
 msgid "Minimum Pinyin Length"
-msgstr "최소 병음 문자 수"
+msgstr "최소 Pinyin 문자 수"
 
 #: im/table/engine.h:28
 msgid "Modify dictionary"
@@ -553,7 +553,7 @@ msgstr "지정되지 않음"
 
 #: im/pinyin/pinyin.h:175
 msgid "Number of Sentences"
-msgstr ""
+msgstr "문장 수"
 
 #: im/table/ime.h:127
 msgid "Order policy"
@@ -575,11 +575,11 @@ msgstr "페이지 크기"
 #: im/pinyin/pinyin.cpp:845 im/pinyin/pinyin.cpp:1018
 #: im/pinyin/pinyin-addon.conf.in.in:3 im/pinyin/pinyin.conf.in:3
 msgid "Pinyin"
-msgstr "병음"
+msgstr "Pinyin"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:90
 msgid "Pinyin dictionary manager"
-msgstr "병음 사전 관리도구"
+msgstr "Pinyin 사전 관리도구"
 
 #: im/pinyin/pinyin.h:58
 msgid "PinyinJiajia"
@@ -599,19 +599,19 @@ msgstr "예측 크기"
 
 #: im/table/ime.h:157
 msgid "Prefix key to trigger Pinyin"
-msgstr "병음 전환할 사전입력 키"
+msgstr "Pinyin를 트리거할 전위 키"
 
 #: im/table/state.cpp:615
 msgid "Press Backspace to forget."
-msgstr "무시하기 위해 백스페이스를 누르세요."
+msgstr "무시하려면 백스페이스 키를 누릅니다."
 
 #: im/table/state.cpp:618
 msgid "Press Delete to remove."
-msgstr "제거하려면 Delete 키를 누르십시오"
+msgstr "제거하려면 Delete 키를 누릅니다"
 
 #: im/table/state.cpp:612
 msgid "Press space or enter to insert."
-msgstr "삽입하려면 스페이스 바를 누르거나 Enter를 누르십시오."
+msgstr "스페이스 키를 누르거나 Enter 키를 눌러 삽입합니다."
 
 #: im/pinyin/pinyin.cpp:1440
 msgid "Press {} for {}"
@@ -631,11 +631,11 @@ msgstr "앞 페이지"
 
 #: im/pinyin/pinyin.h:137
 msgid "Previous Candidate"
-msgstr ""
+msgstr "이전 후보"
 
 #: im/pinyin/pinyin.h:125
 msgid "Previous Page"
-msgstr ""
+msgstr "이전 페이지"
 
 #: im/pinyin/pinyin.h:179
 msgid "Prompt long word length when input length over (0 for disable)"
@@ -716,7 +716,7 @@ msgstr "힌트와 후보 사이의 구분자 텍스트"
 
 #: im/pinyin/pinyin.h:112
 msgid "Show complete pinyin in preedit"
-msgstr "사전편집에서 완성형 병음 표시"
+msgstr "사전편집에서 완성형 Pinyin 표시"
 
 #: im/pinyin/pinyin.h:94
 msgid "Show current shuangpin mode"
@@ -757,7 +757,7 @@ msgstr "현재 컨텍스트를 기준으로 후보 정렬"
 
 #: im/pinyin/pinyin.h:205
 msgid "Strings to trigger quick phrase"
-msgstr "상용구를 전환할 문자열"
+msgstr "상용구를 트리거할 문자열"
 
 #: modules/chttrans/chttrans.cpp:75
 msgid "Switch to Simplified Chinese"
@@ -777,7 +777,7 @@ msgstr "임시 파일 생성됨."
 
 #: im/table/ime.h:116
 msgid "Text to trigger quickphrase"
-msgstr "상용구를 전환할 텍스트"
+msgstr "상용구를 트리거할 텍스트"
 
 #: modules/cloudpinyin/cloudpinyin.h:42
 msgid ""
@@ -814,19 +814,19 @@ msgstr "짝이 있는 문장부호를 함께 입력 (예: 따옴표)"
 
 #: im/pinyin/pinyin.h:161
 msgid "Use Keypad as Selection key"
-msgstr ""
+msgstr "키패드를 선택 키로 사용"
 
 #: im/table/state.cpp:588
 msgid "Use Left and Right to select character: "
-msgstr "문자 선택을 위해 좌/우키 사용:"
+msgstr "왼쪽 및 오른쪽 키를 사용하여 문자 선택:"
 
 #: im/table/state.cpp:599
 msgid "Use Left and Right to select text. "
-msgstr "문장 선택을 위해 좌/우키 사용:"
+msgstr "왼쪽 및 오른쪽 키를 사용하여 텍스트를 선택합니다."
 
 #: im/pinyin/pinyin.h:199
 msgid "Use V to trigger quickphrase"
-msgstr "V를 사용하여 상용구 전환"
+msgstr "V 키를 사용하여 상용구 트리거"
 
 #: im/table/ime.h:101
 msgid "Use full width"
@@ -866,6 +866,9 @@ msgid ""
 "only one candidate available, automatically select this candidate. -1 Means "
 "the maximum code length of the table. 0 means this behavior is disabled."
 msgstr ""
+"현재 입력 문자 수가 제한보다 크거나 같고 사용 가능한 후보가 하나만 있는 경우 "
+"이 후보를 자동으로 선택합니다. -1 테이블의 최대 코드 길이를 의미합니다. 0은 "
+"이 동작이 비활성화되었음을 의미합니다."
 
 #: im/table/ime.h:181
 msgid ""
@@ -883,6 +886,10 @@ msgid ""
 "type in the new character. -1 means the maximum code length of the table. 0 "
 "means this behavior is disabled."
 msgstr ""
+"새 문자를 입력할 때 현재 입력 문자 수가 제한보다 크거나 같고 새 문자가 있는 "
+"기존 세그먼트에 테이블에 일치하는 항목이 없으면 현재 후보를 선택한 다음 새 문"
+"자를 입력합니다. -1은 테이블의 최대 코드 길이를 의미합니다. 0은 이 동작이 비"
+"활성화되었음을 의미합니다."
 
 #: im/table/ime.h:206
 msgid ""
@@ -908,7 +915,7 @@ msgstr "Wubi"
 
 #: im/table/wbpy.conf.in.in:3
 msgid "Wubi Pinyin"
-msgstr "Wubi 병음"
+msgstr "Wubi Pinyin"
 
 #: im/pinyin/pinyin.h:59
 msgid "Xiaohe"
