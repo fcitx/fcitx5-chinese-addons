@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2022-04-10 20:24+0000\n"
+"POT-Creation-Date: 2022-04-13 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Junghee Lee <daemul72@gmail.com>, 2022\n"
 "Language-Team: Korean (https://www.transifex.com/fcitx/teams/12005/ko/)\n"
@@ -82,8 +82,8 @@ msgid ""
 "once, it will be added as user phrase. -1 means the maximum code length of "
 "the table. 0 means disable this feature. "
 msgstr ""
-"모든 글자를 입력완료한 후, 입력 기록을 통해 문구를 학습합니다. 어떤 단어가 여"
-"러 번 나타나거나 사용자에 의해 선택되면, 사용자 문구에 포함됩니다. -1로 설정"
+"모든 글자를 입력완료한 후, 입력 기록을 통해 구문을 학습합니다. 어떤 단어가 여"
+"러 번 나타나거나 사용자에 의해 선택되면, 사용자 구문에 포함됩니다. -1로 설정"
 "하면 테이블의 최대 크기까지 지원하며, 0으로 설정하면 이 기능을 끕니다."
 
 #: modules/punctuation/punctuation.h:41
@@ -100,7 +100,7 @@ msgstr "모든 사전을 삭제하시겠습니까?"
 
 #: im/table/ime.h:215
 msgid "Auto phrase length"
-msgstr "자동 문구 문자 수"
+msgstr "자동 구문 문자 수"
 
 #: im/table/ime.h:252
 msgid "Auto rule set"
@@ -140,7 +140,7 @@ msgstr "한어 애드온"
 
 #: im/pinyin/pinyin.h:165
 msgid "Choose Character from Phrase"
-msgstr "문구에서 문자 선택"
+msgstr "구문에서 문자 선택"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:45
 msgid "Clear &All Data"
@@ -450,8 +450,8 @@ msgid ""
 "enabled, selecting auto phrase candidate explicitly will still add the word "
 "as a new user phrase."
 msgstr ""
-"0보다 작은 값이면 이 기능을 끕니다. 자동 문구 사용 시, 자동 문구 후보를 명시"
-"적으로 선택하여 새 사용자 문구에 추가할 수 있습니다."
+"0보다 작은 값이면 이 기능을 끕니다. 자동 구문 사용 시, 자동 구문 후보를 명시"
+"적으로 선택하여 새 사용자 구문에 추가할 수 있습니다."
 
 #: im/table/ime.h:103
 msgid "Ignore built in punctuation"
@@ -500,7 +500,7 @@ msgstr "매핑"
 
 #: im/table/ime.h:227
 msgid "Marker for auto phrase in the candidates"
-msgstr "후보의 자동 문구에 대한 표식"
+msgstr "후보의 자동 구문에 대한 표식"
 
 #: im/pinyin/pinyin.h:69
 msgid "Match partial finals (e -> en, eng, ei)"
@@ -672,7 +672,7 @@ msgstr "모두 제거(&A)"
 
 #: im/table/ime.h:231
 msgid "Save auto phrase after being typed for ... times"
-msgstr "자동 문구가 ...번 입력되면 저장"
+msgstr "자동 구문가 ...번 입력되면 저장"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:198
 msgid "Scel file (*.scel)"
