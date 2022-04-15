@@ -1130,6 +1130,17 @@ bool PinyinEngine::handleCandidateList(KeyEvent &event) {
             return true;
         }
     }
+#ifdef ANDROID
+    if ((event.key().check(FcitxKey_BackSpace) ||
+         event.key().check(FcitxKey_Delete)) &&
+        !state->predictWords_.empty()) {
+        event.filterAndAccept();
+        inputContext->inputPanel().reset();
+        inputContext->updatePreedit();
+        inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
+        return true;
+    }
+#endif
 
     if (event.key().checkKeyList(*config_.prevPage)) {
         auto *pageable = candidateList->toPageable();
