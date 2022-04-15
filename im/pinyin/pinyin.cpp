@@ -1362,7 +1362,8 @@ bool PinyinEngine::handleForgetCandidate(KeyEvent &event) {
     auto candidateList = inputContext->inputPanel().candidateList();
     auto *state = inputContext->propertyFor(&factory_);
     if (state->mode_ == PinyinMode::Normal) {
-        if (candidateList && candidateList->size() && candidateList->toBulk() &&
+        if (state->predictWords_.empty() && candidateList &&
+            candidateList->size() && candidateList->toBulk() &&
             event.key().checkKeyList(*config_.forgetWord)) {
             resetForgetCandidate(inputContext);
             state->forgetCandidateList_ = candidateList;
