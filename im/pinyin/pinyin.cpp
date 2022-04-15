@@ -1511,7 +1511,12 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         inputContext->inputPanel().reset();
         inputContext->updatePreedit();
         inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
-        if (event.key().check(FcitxKey_Escape)) {
+        if (event.key().check(FcitxKey_Escape)
+#ifdef ANDROID
+         || event.key().check(FcitxKey_BackSpace)
+         || event.key().check(FcitxKey_Delete)
+#endif
+        ) {
             event.filterAndAccept();
             return;
         }
