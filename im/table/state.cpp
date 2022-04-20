@@ -735,7 +735,19 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         return;
     }
     if (!event.key().hasModifier() && chr && context->isValidInput(chr)) {
-
+        auto candidateList = ic_->inputPanel().candidateList();
+        auto autoSelectHint = 0;
+        if (candidateList && candidateList->size()) {
+            int idx = candidateList->cursorIndex();
+            if (idx >= 0) {
+                auto cand = dynamic_cast<const TableCandidateWord *>(
+                    &candidateList->candidate(idx));
+                if (cand) {
+                    autoSelectHint = cand->idx_;
+                }
+            }
+        }
+        context->setAutoSelectIndex(autoSelectHint);
         {
             CommitAfterSelectWrapper commitAfterSelectRAII(this);
             context->type(str);
