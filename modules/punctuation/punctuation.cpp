@@ -187,15 +187,17 @@ Punctuation::Punctuation(Instance *instance)
                 state->lastIsEngOrDigit_ = '\0';
             }
         });
-    auto processKeyEvent = [this](const KeyEventBase &event) {
-        const auto &keyEvent = static_cast<const ForwardKeyEvent &>(event);
+    auto processKeyEvent = [this](const KeyEventBase &keyEvent) {
         auto *state = keyEvent.inputContext()->propertyFor(&factory_);
         if (keyEvent.isRelease()) {
             return;
         }
-        if (!event.accepted()) {
+        if (!keyEvent.accepted()) {
             if (keyEvent.key().isUAZ() || keyEvent.key().isLAZ() ||
-                keyEvent.key().isDigit()) {
+                keyEvent.key().isDigit() ||
+                (keyEvent.key().sym() >= FcitxKey_KP_0 &&
+                 keyEvent.key().sym() <= FcitxKey_KP_9 &&
+                 !keyEvent.key().hasModifier())) {
                 state->lastIsEngOrDigit_ =
                     Key::keySymToUnicode(keyEvent.key().sym());
             } else {
