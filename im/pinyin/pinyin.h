@@ -61,7 +61,7 @@ FCITX_CONFIG_ENUM_I18N_ANNOTATION(ShuangpinProfileEnum, N_("Ziranma"), N_("MS"),
 FCITX_CONFIGURATION(
     FuzzyConfig, Option<bool> ue{this, "VE_UE", _("ue -> ve"), true};
     Option<bool> ng{this, "CommonTypo", _("gn -> ng"), true};
-    Option<bool> iong{this, "CommonTypo", _("ion <-> iong"), true};
+    Option<bool> iong{this, "CommonTypo", _("ion -> iong"), true};
     Option<bool> inner{this, "Inner", _("Inner Segment (xian -> xi'an)"), true};
     Option<bool> innerShort{this, "InnerShort",
                             _("Inner Segment for Short Pinyin (qie -> qi'e)"),
