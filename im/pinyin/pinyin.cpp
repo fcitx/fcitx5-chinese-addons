@@ -923,7 +923,6 @@ void PinyinEngine::populateConfig() {
     SET_FUZZY_FLAG(an, AN_ANG)
     SET_FUZZY_FLAG(en, EN_ENG)
     SET_FUZZY_FLAG(ian, IAN_IANG)
-    SET_FUZZY_FLAG(iong, CommonTypo)
     SET_FUZZY_FLAG(in, IN_ING)
     SET_FUZZY_FLAG(ou, U_OU)
     SET_FUZZY_FLAG(uan, UAN_UANG)
