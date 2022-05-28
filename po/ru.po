@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2022-03-25 20:24+0000\n"
+"POT-Creation-Date: 2022-05-28 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Dmitry <dmitrydmitry761@gmail.com>, 2022\n"
 "Language-Team: Russian (https://www.transifex.com/fcitx/teams/12005/ru/)\n"
@@ -22,11 +22,11 @@ msgstr ""
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
 "%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: im/table/state.cpp:888
+#: im/table/state.cpp:900
 msgid " Return for "
 msgstr "Возврат в"
 
-#: im/table/state.cpp:885
+#: im/table/state.cpp:897
 msgid " for "
 msgstr "в"
 
@@ -190,6 +190,10 @@ msgid ""
 msgstr ""
 "Зафиксируйте сегмент, которого нет в таблице. Эта опция полезна для "
 "некоторых таблиц на основе латиницы/композиции."
+
+#: im/pinyin/pinyin.h:63
+msgid "Common Typo"
+msgstr ""
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:330
 #: gui/pinyindictmanager/pinyindictmanager.cpp:362
@@ -423,11 +427,11 @@ msgstr "Полноширинный символ"
 msgid "Full width punctuation"
 msgstr "Полноширинная пунктуация"
 
-#: modules/punctuation/punctuation.cpp:230
+#: modules/punctuation/punctuation.cpp:232
 msgid "Full width punctuation is disabled."
 msgstr "Полноширинная пунктуация отключена."
 
-#: modules/punctuation/punctuation.cpp:229
+#: modules/punctuation/punctuation.cpp:231
 msgid "Full width punctuation is enabled."
 msgstr "Полноширинная пунктуация включена."
 
@@ -627,11 +631,11 @@ msgstr "Нажмите Delete, чтобы удалить."
 msgid "Press space or enter to insert."
 msgstr "Нажмите пробел или enter, чтобы вставить."
 
-#: im/pinyin/pinyin.cpp:1440
+#: im/pinyin/pinyin.cpp:1441
 msgid "Press {} for {}"
 msgstr "Нажмите {} для {}"
 
-#: im/pinyin/pinyin.cpp:1437
+#: im/pinyin/pinyin.cpp:1438
 msgid "Press {} for {} and Return for {}"
 msgstr "Нажмите {} для {} и Return для {}"
 
@@ -661,8 +665,8 @@ msgstr ""
 msgid "Proxy"
 msgstr "Прокси"
 
-#: im/pinyin/pinyin.h:184 modules/punctuation/punctuation.cpp:226
-#: modules/punctuation/punctuation.cpp:228
+#: im/pinyin/pinyin.h:184 modules/punctuation/punctuation.cpp:228
+#: modules/punctuation/punctuation.cpp:230
 #: modules/punctuation/punctuation.conf.in.in:3
 msgid "Punctuation"
 msgstr "Пунктуация"
@@ -715,7 +719,7 @@ msgstr "Выберите второй кандидат"
 msgid "Select Third Candidate"
 msgstr "Выберите третий кандидат"
 
-#: im/table/state.cpp:1134
+#: im/table/state.cpp:1146
 msgid "Select candidate to be removed from history:"
 msgstr "Выберите кандидат для удаления из истории:"
 
@@ -988,10 +992,6 @@ msgstr "en <-> eng"
 #: im/pinyin/pinyin.h:82
 msgid "f <-> h"
 msgstr "f <-> h"
-
-#: im/pinyin/pinyin.h:63
-msgid "gn -> ng"
-msgstr "gn -> ng"
 
 #: im/pinyin/pinyin.h:77
 msgid "ian <-> iang"

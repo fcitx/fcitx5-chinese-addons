@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2022-03-25 04:31+0000\n"
+"POT-Creation-Date: 2022-05-28 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: rocka, 2022\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/fcitx/teams/12005/"
@@ -23,11 +23,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: im/table/state.cpp:888
+#: im/table/state.cpp:900
 msgid " Return for "
 msgstr "回车以"
 
-#: im/table/state.cpp:885
+#: im/table/state.cpp:897
 msgid " for "
 msgstr "以"
 
@@ -185,6 +185,10 @@ msgid ""
 "Commit the segment that does not exist in the table. This option is useful "
 "for some latin/compose based table."
 msgstr "提交不存在于码表中的内容。这个选项对于某些拉丁/组合的码表更有用。"
+
+#: im/pinyin/pinyin.h:63
+msgid "Common Typo"
+msgstr ""
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:330
 #: gui/pinyindictmanager/pinyindictmanager.cpp:362
@@ -410,11 +414,11 @@ msgstr "全角字符"
 msgid "Full width punctuation"
 msgstr "全角标点"
 
-#: modules/punctuation/punctuation.cpp:230
+#: modules/punctuation/punctuation.cpp:232
 msgid "Full width punctuation is disabled."
 msgstr "全角标点已禁用。"
 
-#: modules/punctuation/punctuation.cpp:229
+#: modules/punctuation/punctuation.cpp:231
 msgid "Full width punctuation is enabled."
 msgstr "已启用全角标点。"
 
@@ -610,11 +614,11 @@ msgstr "按下删除键来移除。"
 msgid "Press space or enter to insert."
 msgstr "按下空格或回车键来插入。"
 
-#: im/pinyin/pinyin.cpp:1440
+#: im/pinyin/pinyin.cpp:1441
 msgid "Press {} for {}"
 msgstr "按下 {} 输入 {}"
 
-#: im/pinyin/pinyin.cpp:1437
+#: im/pinyin/pinyin.cpp:1438
 msgid "Press {} for {} and Return for {}"
 msgstr "按下 {} 输入 {}，按下回车输入 {}"
 
@@ -642,8 +646,8 @@ msgstr "输入长于...时提示长词 (设置为 0 时禁用)"
 msgid "Proxy"
 msgstr "代理"
 
-#: im/pinyin/pinyin.h:184 modules/punctuation/punctuation.cpp:226
-#: modules/punctuation/punctuation.cpp:228
+#: im/pinyin/pinyin.h:184 modules/punctuation/punctuation.cpp:228
+#: modules/punctuation/punctuation.cpp:230
 #: modules/punctuation/punctuation.conf.in.in:3
 msgid "Punctuation"
 msgstr "标点"
@@ -695,7 +699,7 @@ msgstr "选择第二个候选词"
 msgid "Select Third Candidate"
 msgstr "选择第三个候选词"
 
-#: im/table/state.cpp:1134
+#: im/table/state.cpp:1146
 msgid "Select candidate to be removed from history:"
 msgstr "选择要从历史中移除的候选词："
 
@@ -961,10 +965,6 @@ msgstr "en <-> eng"
 #: im/pinyin/pinyin.h:82
 msgid "f <-> h"
 msgstr "f <-> h"
-
-#: im/pinyin/pinyin.h:63
-msgid "gn -> ng"
-msgstr "gn -> ng"
 
 #: im/pinyin/pinyin.h:77
 msgid "ian <-> iang"
