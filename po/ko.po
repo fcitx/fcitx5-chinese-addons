@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2022-04-13 20:24+0000\n"
+"POT-Creation-Date: 2022-05-28 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Junghee Lee <daemul72@gmail.com>, 2022\n"
 "Language-Team: Korean (https://www.transifex.com/fcitx/teams/12005/ko/)\n"
@@ -20,11 +20,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: im/table/state.cpp:888
+#: im/table/state.cpp:900
 msgid " Return for "
 msgstr " Return for "
 
-#: im/table/state.cpp:885
+#: im/table/state.cpp:897
 msgid " for "
 msgstr " for "
 
@@ -185,6 +185,10 @@ msgid ""
 msgstr ""
 "표에 없는 세그먼트를 입력완료합니다. 이 옵션은 일부 라틴어/작성 기반 표에 유"
 "용합니다."
+
+#: im/pinyin/pinyin.h:63
+msgid "Common Typo"
+msgstr ""
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:330
 #: gui/pinyindictmanager/pinyindictmanager.cpp:362
@@ -412,11 +416,11 @@ msgstr "전각 문자"
 msgid "Full width punctuation"
 msgstr "전각 문장부호"
 
-#: modules/punctuation/punctuation.cpp:230
+#: modules/punctuation/punctuation.cpp:232
 msgid "Full width punctuation is disabled."
 msgstr "전각 문장부호 비활성화되었습니다."
 
-#: modules/punctuation/punctuation.cpp:229
+#: modules/punctuation/punctuation.cpp:231
 msgid "Full width punctuation is enabled."
 msgstr "전각 문장부호가 활성화되었습니다."
 
@@ -613,11 +617,11 @@ msgstr "제거하려면 Delete 키를 누릅니다"
 msgid "Press space or enter to insert."
 msgstr "스페이스 키를 누르거나 Enter 키를 눌러 삽입합니다."
 
-#: im/pinyin/pinyin.cpp:1440
+#: im/pinyin/pinyin.cpp:1441
 msgid "Press {} for {}"
 msgstr "{}을 누릅니다 ({}의 경우)"
 
-#: im/pinyin/pinyin.cpp:1437
+#: im/pinyin/pinyin.cpp:1438
 msgid "Press {} for {} and Return for {}"
 msgstr " {} 키를 ({}의 경우) 누르고 {}의 경우 Return 키를 누릅니다."
 
@@ -645,8 +649,8 @@ msgstr "입력 길이가 초과될 때 프롬프트 긴 단어 길이(사용안�
 msgid "Proxy"
 msgstr "프록시"
 
-#: im/pinyin/pinyin.h:184 modules/punctuation/punctuation.cpp:226
-#: modules/punctuation/punctuation.cpp:228
+#: im/pinyin/pinyin.h:184 modules/punctuation/punctuation.cpp:228
+#: modules/punctuation/punctuation.cpp:230
 #: modules/punctuation/punctuation.conf.in.in:3
 msgid "Punctuation"
 msgstr "문장부호"
@@ -698,7 +702,7 @@ msgstr "두 번째 후보 선택"
 msgid "Select Third Candidate"
 msgstr "세 번째 후보 선택"
 
-#: im/table/state.cpp:1134
+#: im/table/state.cpp:1146
 msgid "Select candidate to be removed from history:"
 msgstr "기록에서 제거할 후보 선택"
 
@@ -969,10 +973,6 @@ msgstr "en <-> eng"
 #: im/pinyin/pinyin.h:82
 msgid "f <-> h"
 msgstr "f <-> h"
-
-#: im/pinyin/pinyin.h:63
-msgid "gn -> ng"
-msgstr "gn -> ng"
 
 #: im/pinyin/pinyin.h:77
 msgid "ian <-> iang"

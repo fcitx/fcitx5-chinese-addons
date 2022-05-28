@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2022-03-23 20:24+0000\n"
+"POT-Creation-Date: 2022-05-28 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Omer I.S. <omeritzicschwartz@gmail.com>, 2021\n"
 "Language-Team: Hebrew (https://www.transifex.com/fcitx/teams/12005/he/)\n"
@@ -20,11 +20,11 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % "
 "1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;\n"
 
-#: im/table/state.cpp:888
+#: im/table/state.cpp:900
 msgid " Return for "
 msgstr ""
 
-#: im/table/state.cpp:885
+#: im/table/state.cpp:897
 msgid " for "
 msgstr ""
 
@@ -179,6 +179,10 @@ msgstr ""
 msgid ""
 "Commit the segment that does not exist in the table. This option is useful "
 "for some latin/compose based table."
+msgstr ""
+
+#: im/pinyin/pinyin.h:63
+msgid "Common Typo"
 msgstr ""
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:330
@@ -403,11 +407,11 @@ msgstr ""
 msgid "Full width punctuation"
 msgstr ""
 
-#: modules/punctuation/punctuation.cpp:230
+#: modules/punctuation/punctuation.cpp:232
 msgid "Full width punctuation is disabled."
 msgstr ""
 
-#: modules/punctuation/punctuation.cpp:229
+#: modules/punctuation/punctuation.cpp:231
 msgid "Full width punctuation is enabled."
 msgstr ""
 
@@ -599,11 +603,11 @@ msgstr ""
 msgid "Press space or enter to insert."
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1440
+#: im/pinyin/pinyin.cpp:1441
 msgid "Press {} for {}"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1437
+#: im/pinyin/pinyin.cpp:1438
 msgid "Press {} for {} and Return for {}"
 msgstr ""
 
@@ -631,8 +635,8 @@ msgstr ""
 msgid "Proxy"
 msgstr ""
 
-#: im/pinyin/pinyin.h:184 modules/punctuation/punctuation.cpp:226
-#: modules/punctuation/punctuation.cpp:228
+#: im/pinyin/pinyin.h:184 modules/punctuation/punctuation.cpp:228
+#: modules/punctuation/punctuation.cpp:230
 #: modules/punctuation/punctuation.conf.in.in:3
 msgid "Punctuation"
 msgstr ""
@@ -684,7 +688,7 @@ msgstr ""
 msgid "Select Third Candidate"
 msgstr ""
 
-#: im/table/state.cpp:1134
+#: im/table/state.cpp:1146
 msgid "Select candidate to be removed from history:"
 msgstr ""
 
@@ -937,10 +941,6 @@ msgstr ""
 
 #: im/pinyin/pinyin.h:82
 msgid "f <-> h"
-msgstr ""
-
-#: im/pinyin/pinyin.h:63
-msgid "gn -> ng"
 msgstr ""
 
 #: im/pinyin/pinyin.h:77

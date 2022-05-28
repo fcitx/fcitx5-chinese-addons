@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2022-03-23 20:24+0000\n"
+"POT-Creation-Date: 2022-05-28 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: scootergrisen, 2021\n"
 "Language-Team: Danish (https://www.transifex.com/fcitx/teams/12005/da/)\n"
@@ -19,11 +19,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: im/table/state.cpp:888
+#: im/table/state.cpp:900
 msgid " Return for "
 msgstr " Retur for "
 
-#: im/table/state.cpp:885
+#: im/table/state.cpp:897
 msgid " for "
 msgstr " for "
 
@@ -187,6 +187,10 @@ msgid ""
 msgstr ""
 "Udfør det segment som ikke findes i tabellen. Valgmuligheden er nyttig til "
 "nogle latinske/sammensætningsbaserede tabeller."
+
+#: im/pinyin/pinyin.h:63
+msgid "Common Typo"
+msgstr ""
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:330
 #: gui/pinyindictmanager/pinyindictmanager.cpp:362
@@ -419,11 +423,11 @@ msgstr "Fuld tegnbredde"
 msgid "Full width punctuation"
 msgstr "Tegnsætning i fuld bredde"
 
-#: modules/punctuation/punctuation.cpp:230
+#: modules/punctuation/punctuation.cpp:232
 msgid "Full width punctuation is disabled."
 msgstr "Tegnsætning i fuld bredde er deaktiveret."
 
-#: modules/punctuation/punctuation.cpp:229
+#: modules/punctuation/punctuation.cpp:231
 msgid "Full width punctuation is enabled."
 msgstr "Tegnsætning i fuld bredde er aktiveret."
 
@@ -623,11 +627,11 @@ msgstr "Tryk på Delete for at flytte."
 msgid "Press space or enter to insert."
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1440
+#: im/pinyin/pinyin.cpp:1441
 msgid "Press {} for {}"
 msgstr "Tryk på {} for {}"
 
-#: im/pinyin/pinyin.cpp:1437
+#: im/pinyin/pinyin.cpp:1438
 msgid "Press {} for {} and Return for {}"
 msgstr "Tryk på {} for {} og Retur for {}"
 
@@ -656,8 +660,8 @@ msgstr ""
 msgid "Proxy"
 msgstr "Proxy"
 
-#: im/pinyin/pinyin.h:184 modules/punctuation/punctuation.cpp:226
-#: modules/punctuation/punctuation.cpp:228
+#: im/pinyin/pinyin.h:184 modules/punctuation/punctuation.cpp:228
+#: modules/punctuation/punctuation.cpp:230
 #: modules/punctuation/punctuation.conf.in.in:3
 msgid "Punctuation"
 msgstr "Tegnsætning"
@@ -709,7 +713,7 @@ msgstr "Vælg anden kandidat"
 msgid "Select Third Candidate"
 msgstr "Vælg tredje kandidat"
 
-#: im/table/state.cpp:1134
+#: im/table/state.cpp:1146
 msgid "Select candidate to be removed from history:"
 msgstr "Vælg kandidat som skal fjernes fra historik:"
 
@@ -976,10 +980,6 @@ msgstr "en <-> eng"
 #: im/pinyin/pinyin.h:82
 msgid "f <-> h"
 msgstr "f <-> h"
-
-#: im/pinyin/pinyin.h:63
-msgid "gn -> ng"
-msgstr "gn -> ng"
 
 #: im/pinyin/pinyin.h:77
 msgid "ian <-> iang"
