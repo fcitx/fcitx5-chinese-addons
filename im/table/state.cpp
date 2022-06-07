@@ -183,7 +183,7 @@ void TableState::pushLastCommit(const std::string &code,
             singleCharString += chr;
             codeHints.push_back(code);
         }
-        TABLE_DEBUG() << "learnAutoPhrase " << singleCharString << codeHints;
+        TABLE_DEBUG() << "learnAutoPhrase " << autoPhraseBuffer_ << " " << singleCharString << codeHints;
         context_->learnAutoPhrase(singleCharString, codeHints);
     } else {
         autoPhraseBuffer_.clear();

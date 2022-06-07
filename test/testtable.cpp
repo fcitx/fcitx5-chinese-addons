@@ -15,6 +15,7 @@
 #include <fcitx/inputpanel.h>
 #include <fcitx/instance.h>
 #include <iostream>
+#include <fcitx/inputmethodengine.h>
 
 using namespace fcitx;
 
@@ -23,7 +24,7 @@ void scheduleEvent(EventDispatcher *dispatcher, Instance *instance) {
         auto *table = instance->addonManager().addon("table", true);
         FCITX_ASSERT(table);
     });
-    dispatcher->schedule([dispatcher, instance]() {
+    dispatcher->schedule([instance]() {
         auto defaultGroup = instance->inputMethodManager().currentGroup();
         defaultGroup.inputMethodList().clear();
         defaultGroup.inputMethodList().push_back(
@@ -76,10 +77,63 @@ void scheduleEvent(EventDispatcher *dispatcher, Instance *instance) {
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("t"), false);
         // This trigger auto select because it's now user phrase.
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("d"), false);
+        // Test auto quickphrase
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("m"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("b"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("A"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
+    });
+    dispatcher->schedule([dispatcher, instance]() {
+        auto defaultGroup = instance->inputMethodManager().currentGroup();
+        defaultGroup.inputMethodList().clear();
+        defaultGroup.inputMethodList().push_back(
+            InputMethodGroupItem("keyboard-us"));
+        defaultGroup.inputMethodList().push_back(InputMethodGroupItem("wbx"));
+        defaultGroup.setDefaultInputMethod("");
+        instance->inputMethodManager().setGroup(defaultGroup);
+        auto *table = instance->addonManager().addon("table", true);
+        RawConfig config;
+        auto wbxConfig = reinterpret_cast<InputMethodEngine *>(table)->getConfigForInputMethod(*instance->inputMethodManager().entry("wbx"));
+        wbxConfig->save(config);
+        config.setValueByPath("AutoPhraseWithPhrase", "True");
+        reinterpret_cast<InputMethodEngine *>(table)->setConfigForInputMethod(*instance->inputMethodManager().entry("wbx"), config);
+        auto *testfrontend = instance->addonManager().addon("testfrontend");
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("工");
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("工");
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("工工");
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("工工工工");
+        auto uuid =
+            testfrontend->call<ITestFrontend::createInputContext>("testapp");
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Control+space"),
+                                                    false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
+        auto ic = instance->inputContextManager().findByUUID(uuid);
+
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
+        ic->updateUserInterface(fcitx::UserInterfaceComponent::InputPanel,
+                                true);
+        // This a trigger auto commit.
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
+        // Select 工工
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("3"), false);
+
+        // Auto phrase should learn 工工工工
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
+        // This comma trigger only match commit.
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("5"), false);
+
 
         dispatcher->schedule([dispatcher, instance]() {
             dispatcher->detach();
@@ -98,7 +152,7 @@ int main() {
                             {TESTING_BINARY_DIR "/test",
                              TESTING_BINARY_DIR "/modules",
                              StandardPath::fcitxPath("pkgdatadir")});
-    // fcitx::Log::setLogRule("default=5,table=5,libime-table=5");
+    fcitx::Log::setLogRule("default=5,table=5,libime-table=5");
     char arg0[] = "testtable";
     char arg1[] = "--disable=all";
     char arg2[] = "--enable=testim,testfrontend,table,quickphrase,punctuation,"
