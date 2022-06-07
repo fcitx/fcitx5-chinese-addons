@@ -156,23 +156,37 @@ void TableState::pushLastCommit(const std::string &code,
     TABLE_DEBUG() << "TableState::pushLastCommit " << lastSegment
                   << " code: " << code;
     constexpr size_t limit = 10;
-    const auto length = utf8::length(lastSegment);
-    if (length == 1) {
-        lastSingleCharCommit_.emplace_back(code, lastSegment);
-        while (lastSingleCharCommit_.size() > limit) {
-            lastSingleCharCommit_.pop_front();
+    const auto length = utf8::lengthValidated(lastSegment);
+    // Sanity check.
+    if (length <= 0 || length == utf8::INVALID_LENGTH) {
+        return;
+    }
+
+    if (length == 1 || *context_->config().autoPhraseWithPhrase) {
+        // Single character is with code as hint
+        if (length == 1) {
+            autoPhraseBuffer_.emplace_back(code, lastSegment);
+        } else {
+            auto range = fcitx::utf8::MakeUTF8CharRange(lastSegment);
+            for (auto iter = std::begin(range); iter != std::end(range);
+                 iter++) {
+                autoPhraseBuffer_.emplace_back("", iter.view());
+            }
+        }
+        while (autoPhraseBuffer_.size() > limit) {
+            autoPhraseBuffer_.pop_front();
         }
 
         std::string singleCharString;
         std::vector<std::string> codeHints;
-        for (const auto &[code, chr] : lastSingleCharCommit_) {
+        for (const auto &[code, chr] : autoPhraseBuffer_) {
             singleCharString += chr;
             codeHints.push_back(code);
         }
         TABLE_DEBUG() << "learnAutoPhrase " << singleCharString << codeHints;
         context_->learnAutoPhrase(singleCharString, codeHints);
     } else {
-        lastSingleCharCommit_.clear();
+        autoPhraseBuffer_.clear();
     }
 
     if (length == 1) {

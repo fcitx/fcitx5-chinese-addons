@@ -222,6 +222,15 @@ FCITX_CONFIGURATION(
               "or selected by user once, it will be added as user phrase. -1 "
               "means the maximum code length of the table. 0 means disable "
               "this feature. "))};
+    OptionWithAnnotation<bool, ToolTipAnnotation> autoPhraseWithPhrase{
+        this,
+        "AutoPhraseWithPhrase",
+        _("Learn auto phrase with phrase"),
+        true,
+        {},
+        {},
+        ToolTipAnnotation(_("Whether to learn new phrase from other phrases or "
+                            "just single characters."))};
     Option<std::string> markerForAutoPhrase{
         this, "MarkerForAutoPhrase",
         _("Marker for auto phrase in the candidates"), "*"};
