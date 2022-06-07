@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2022-05-28 20:24+0000\n"
+"POT-Creation-Date: 2022-06-07 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Ettore Atalan <atalanttore@googlemail.com>, 2022\n"
 "Language-Team: German (https://www.transifex.com/fcitx/teams/12005/de/)\n"
@@ -20,11 +20,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: im/table/state.cpp:900
+#: im/table/state.cpp:914
 msgid " Return for "
 msgstr ""
 
-#: im/table/state.cpp:897
+#: im/table/state.cpp:911
 msgid " for "
 msgstr "für"
 
@@ -99,7 +99,7 @@ msgstr "Sind Sie sicher, dass alle Wörterbücher gelöscht werden sollen?"
 msgid "Auto phrase length"
 msgstr "Länge der Auto-Phrase"
 
-#: im/table/ime.h:252
+#: im/table/ime.h:261
 msgid "Auto rule set"
 msgstr "Satz automatischer Regeln"
 
@@ -123,7 +123,7 @@ msgstr "Bingchan"
 msgid "Browse Sogou Cell Dict repository"
 msgstr "Sogou Wörterbuchverzeichnis für Mobiles durchsuchen"
 
-#: im/table/ime.h:249
+#: im/table/ime.h:258
 msgid "Candidate List orientation"
 msgstr ""
 
@@ -199,7 +199,7 @@ msgstr "Konvertierung fehlgeschlagen."
 msgid "Converter crashed."
 msgstr "Konverter abgestürzt."
 
-#: im/table/state.cpp:596
+#: im/table/state.cpp:610
 msgid "Could not find pinyin."
 msgstr "Pinyin kann nicht gefunden werden"
 
@@ -246,11 +246,11 @@ msgstr "Wörterbücher"
 msgid "Dictionary already exists"
 msgstr "Wörterbuch existiert schon"
 
-#: im/table/ime.h:241
+#: im/table/ime.h:250
 msgid "Display Hint for word"
 msgstr "Hinweis für Wort anzeigen"
 
-#: im/table/ime.h:243
+#: im/table/ime.h:252
 msgid "Display custom hint"
 msgstr "Standardhinweis zeigen"
 
@@ -326,7 +326,7 @@ msgstr "Erbi"
 msgid "Error while deleting %1."
 msgstr "Fehler beim Löschen von %1."
 
-#: im/table/ime.h:239
+#: im/table/ime.h:248
 msgid "Exact Match"
 msgstr "Genaue Übereinstimmung"
 
@@ -443,7 +443,7 @@ msgstr "Horizontal"
 msgid "Icon"
 msgstr "Icon"
 
-#: im/table/ime.h:236
+#: im/table/ime.h:245
 msgid ""
 "If the value less than 0, means this feature is disabled. If auto phrase is "
 "enabled, selecting auto phrase candidate explicitly will still add the word "
@@ -475,7 +475,11 @@ msgstr "Taste"
 msgid "Key to trigger quickphrase"
 msgstr "Trigger Key für QuickPhrase"
 
-#: im/table/ime.h:240
+#: im/table/ime.h:228
+msgid "Learn auto phrase with phrase"
+msgstr ""
+
+#: im/table/ime.h:249
 msgid "Learning"
 msgstr "Lernen"
 
@@ -495,7 +499,7 @@ msgstr "MS"
 msgid "Mapping"
 msgstr "Zuordnung"
 
-#: im/table/ime.h:227
+#: im/table/ime.h:236
 msgid "Marker for auto phrase in the candidates"
 msgstr ""
 
@@ -581,7 +585,7 @@ msgstr "Pinyin-Wörterbuch-Manager"
 msgid "PinyinJiajia"
 msgstr ""
 
-#: im/table/state.cpp:582
+#: im/table/state.cpp:596
 msgid "Please use this functionality after typing some text."
 msgstr ""
 "Bitte benutzen Sie diese Funktionalität nach der Eingabe von etwas Text."
@@ -598,15 +602,15 @@ msgstr "Vorhersagegröße"
 msgid "Prefix key to trigger Pinyin"
 msgstr "Festgelegte Taste um Pinyin anzuschalten"
 
-#: im/table/state.cpp:615
+#: im/table/state.cpp:629
 msgid "Press Backspace to forget."
 msgstr "Zum vergessen Rücktaste drücken"
 
-#: im/table/state.cpp:618
+#: im/table/state.cpp:632
 msgid "Press Delete to remove."
 msgstr "Zum Entfernen Löschen drücken"
 
-#: im/table/state.cpp:612
+#: im/table/state.cpp:626
 msgid "Press space or enter to insert."
 msgstr ""
 
@@ -667,7 +671,7 @@ msgstr ""
 msgid "Remove &All"
 msgstr "&Alle entfernen"
 
-#: im/table/ime.h:231
+#: im/table/ime.h:240
 msgid "Save auto phrase after being typed for ... times"
 msgstr ""
 
@@ -695,7 +699,7 @@ msgstr ""
 msgid "Select Third Candidate"
 msgstr ""
 
-#: im/table/state.cpp:1146
+#: im/table/state.cpp:1160
 msgid "Select candidate to be removed from history:"
 msgstr ""
 
@@ -707,7 +711,7 @@ msgstr "Scel Datei auswählen"
 msgid "Selection"
 msgstr "Auswahl"
 
-#: im/table/ime.h:245
+#: im/table/ime.h:254
 msgid "Separator text between hint and candidate"
 msgstr "Trenntext zwischen Hinweis und Kandidat"
 
@@ -811,11 +815,11 @@ msgstr ""
 msgid "Use Keypad as Selection key"
 msgstr ""
 
-#: im/table/state.cpp:588
+#: im/table/state.cpp:602
 msgid "Use Left and Right to select character: "
 msgstr "Pfeiltasten Links und Rechts benutzen, um Zeichen auszuwählen"
 
-#: im/table/state.cpp:599
+#: im/table/state.cpp:613
 msgid "Use Left and Right to select text. "
 msgstr "Pfeiltasten Links und Rechts benutzen, um Text auszuwählen"
 
@@ -879,6 +883,11 @@ msgid ""
 "expression and the existing segment with the new character does not have any "
 "matched entries in the table, select the current candidate and then type in "
 "the new character."
+msgstr ""
+
+#: im/table/ime.h:232
+msgid ""
+"Whether to learn new phrase from other phrases or just single characters."
 msgstr ""
 
 #: im/table/ime.h:152
@@ -990,14 +999,14 @@ msgstr ""
 msgid "{0} ({1})"
 msgstr "{0} ({1})"
 
-#: im/table/state.cpp:633
+#: im/table/state.cpp:647
 msgid "{0} is not in table."
 msgstr "{0} ist nicht in der Tabelle."
 
-#: im/table/state.cpp:622
+#: im/table/state.cpp:636
 msgid "{0}: No corresponding code."
 msgstr "{0}: Kein passender Code"
 
-#: im/table/state.cpp:606 im/table/state.cpp:630
+#: im/table/state.cpp:620 im/table/state.cpp:644
 msgid "{0}: {1}"
 msgstr "{0}: {1}"

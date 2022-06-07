@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2022-05-28 20:24+0000\n"
+"POT-Creation-Date: 2022-06-07 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Robert Antoni Buj Gelonch <rbuj@fedoraproject.org>, 2017\n"
 "Language-Team: Catalan (https://www.transifex.com/fcitx/teams/12005/ca/)\n"
@@ -19,11 +19,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: im/table/state.cpp:900
+#: im/table/state.cpp:914
 msgid " Return for "
 msgstr ""
 
-#: im/table/state.cpp:897
+#: im/table/state.cpp:911
 msgid " for "
 msgstr ""
 
@@ -98,7 +98,7 @@ msgstr ""
 msgid "Auto phrase length"
 msgstr ""
 
-#: im/table/ime.h:252
+#: im/table/ime.h:261
 msgid "Auto rule set"
 msgstr ""
 
@@ -122,7 +122,7 @@ msgstr ""
 msgid "Browse Sogou Cell Dict repository"
 msgstr ""
 
-#: im/table/ime.h:249
+#: im/table/ime.h:258
 msgid "Candidate List orientation"
 msgstr ""
 
@@ -198,7 +198,7 @@ msgstr ""
 msgid "Converter crashed."
 msgstr ""
 
-#: im/table/state.cpp:596
+#: im/table/state.cpp:610
 msgid "Could not find pinyin."
 msgstr "No s'ha pogut trobar el pinyin."
 
@@ -241,11 +241,11 @@ msgstr ""
 msgid "Dictionary already exists"
 msgstr ""
 
-#: im/table/ime.h:241
+#: im/table/ime.h:250
 msgid "Display Hint for word"
 msgstr "Mostra els suggeriments per a la paraula"
 
-#: im/table/ime.h:243
+#: im/table/ime.h:252
 msgid "Display custom hint"
 msgstr "Mostra el suggeriment personalitzat"
 
@@ -321,7 +321,7 @@ msgstr ""
 msgid "Error while deleting %1."
 msgstr ""
 
-#: im/table/ime.h:239
+#: im/table/ime.h:248
 msgid "Exact Match"
 msgstr "Coincidència exacta"
 
@@ -438,7 +438,7 @@ msgstr ""
 msgid "Icon"
 msgstr "Icona"
 
-#: im/table/ime.h:236
+#: im/table/ime.h:245
 msgid ""
 "If the value less than 0, means this feature is disabled. If auto phrase is "
 "enabled, selecting auto phrase candidate explicitly will still add the word "
@@ -470,7 +470,11 @@ msgstr ""
 msgid "Key to trigger quickphrase"
 msgstr ""
 
-#: im/table/ime.h:240
+#: im/table/ime.h:228
+msgid "Learn auto phrase with phrase"
+msgstr ""
+
+#: im/table/ime.h:249
 msgid "Learning"
 msgstr ""
 
@@ -490,7 +494,7 @@ msgstr ""
 msgid "Mapping"
 msgstr ""
 
-#: im/table/ime.h:227
+#: im/table/ime.h:236
 msgid "Marker for auto phrase in the candidates"
 msgstr ""
 
@@ -574,7 +578,7 @@ msgstr ""
 msgid "PinyinJiajia"
 msgstr ""
 
-#: im/table/state.cpp:582
+#: im/table/state.cpp:596
 msgid "Please use this functionality after typing some text."
 msgstr ""
 
@@ -590,15 +594,15 @@ msgstr ""
 msgid "Prefix key to trigger Pinyin"
 msgstr ""
 
-#: im/table/state.cpp:615
+#: im/table/state.cpp:629
 msgid "Press Backspace to forget."
 msgstr ""
 
-#: im/table/state.cpp:618
+#: im/table/state.cpp:632
 msgid "Press Delete to remove."
 msgstr ""
 
-#: im/table/state.cpp:612
+#: im/table/state.cpp:626
 msgid "Press space or enter to insert."
 msgstr ""
 
@@ -659,7 +663,7 @@ msgstr ""
 msgid "Remove &All"
 msgstr ""
 
-#: im/table/ime.h:231
+#: im/table/ime.h:240
 msgid "Save auto phrase after being typed for ... times"
 msgstr ""
 
@@ -687,7 +691,7 @@ msgstr ""
 msgid "Select Third Candidate"
 msgstr ""
 
-#: im/table/state.cpp:1146
+#: im/table/state.cpp:1160
 msgid "Select candidate to be removed from history:"
 msgstr ""
 
@@ -699,7 +703,7 @@ msgstr ""
 msgid "Selection"
 msgstr "Selecció"
 
-#: im/table/ime.h:245
+#: im/table/ime.h:254
 msgid "Separator text between hint and candidate"
 msgstr ""
 
@@ -803,11 +807,11 @@ msgstr ""
 msgid "Use Keypad as Selection key"
 msgstr ""
 
-#: im/table/state.cpp:588
+#: im/table/state.cpp:602
 msgid "Use Left and Right to select character: "
 msgstr "Utilitza dret i esquerre per seleccionar el caràcter:"
 
-#: im/table/state.cpp:599
+#: im/table/state.cpp:613
 msgid "Use Left and Right to select text. "
 msgstr "Utilitza dret i esquerre per seleccionar el text:"
 
@@ -871,6 +875,11 @@ msgid ""
 "expression and the existing segment with the new character does not have any "
 "matched entries in the table, select the current candidate and then type in "
 "the new character."
+msgstr ""
+
+#: im/table/ime.h:232
+msgid ""
+"Whether to learn new phrase from other phrases or just single characters."
 msgstr ""
 
 #: im/table/ime.h:152
@@ -982,14 +991,14 @@ msgstr ""
 msgid "{0} ({1})"
 msgstr "{0} ({1})"
 
-#: im/table/state.cpp:633
+#: im/table/state.cpp:647
 msgid "{0} is not in table."
 msgstr "{0} no està a la taula."
 
-#: im/table/state.cpp:622
+#: im/table/state.cpp:636
 msgid "{0}: No corresponding code."
 msgstr "{0}: sense codi corresponent."
 
-#: im/table/state.cpp:606 im/table/state.cpp:630
+#: im/table/state.cpp:620 im/table/state.cpp:644
 msgid "{0}: {1}"
 msgstr "{0}: {1}"

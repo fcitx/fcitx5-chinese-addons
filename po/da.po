@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2022-05-28 20:24+0000\n"
+"POT-Creation-Date: 2022-06-07 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: scootergrisen, 2021\n"
 "Language-Team: Danish (https://www.transifex.com/fcitx/teams/12005/da/)\n"
@@ -19,11 +19,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: im/table/state.cpp:900
+#: im/table/state.cpp:914
 msgid " Return for "
 msgstr " Retur for "
 
-#: im/table/state.cpp:897
+#: im/table/state.cpp:911
 msgid " for "
 msgstr " for "
 
@@ -104,7 +104,7 @@ msgstr "Er du sikker på, at du vil slette alle ordbøger?"
 msgid "Auto phrase length"
 msgstr "Automatisk fraselængde"
 
-#: im/table/ime.h:252
+#: im/table/ime.h:261
 msgid "Auto rule set"
 msgstr "Automatisk sæt af regel"
 
@@ -128,7 +128,7 @@ msgstr "Bingchan"
 msgid "Browse Sogou Cell Dict repository"
 msgstr "Gennemse Sogou Cell-ordbogsarkiv"
 
-#: im/table/ime.h:249
+#: im/table/ime.h:258
 msgid "Candidate List orientation"
 msgstr "Orientering for kandidatliste"
 
@@ -206,7 +206,7 @@ msgstr "Konvertering mislykkedes."
 msgid "Converter crashed."
 msgstr "Konverter holdt op med at virke."
 
-#: im/table/state.cpp:596
+#: im/table/state.cpp:610
 msgid "Could not find pinyin."
 msgstr "Kunne ikke finde pinyin."
 
@@ -253,11 +253,11 @@ msgstr "Ordbøger"
 msgid "Dictionary already exists"
 msgstr "Ordbog findes allerede"
 
-#: im/table/ime.h:241
+#: im/table/ime.h:250
 msgid "Display Hint for word"
 msgstr "Vis tip for ord"
 
-#: im/table/ime.h:243
+#: im/table/ime.h:252
 msgid "Display custom hint"
 msgstr "Vis tilpasset tip"
 
@@ -338,7 +338,7 @@ msgstr "Erbi"
 msgid "Error while deleting %1."
 msgstr "Fejl ved sletning af %1."
 
-#: im/table/ime.h:239
+#: im/table/ime.h:248
 msgid "Exact Match"
 msgstr "Præcist match"
 
@@ -455,7 +455,7 @@ msgstr "Vandret"
 msgid "Icon"
 msgstr "Ikon"
 
-#: im/table/ime.h:236
+#: im/table/ime.h:245
 msgid ""
 "If the value less than 0, means this feature is disabled. If auto phrase is "
 "enabled, selecting auto phrase candidate explicitly will still add the word "
@@ -490,7 +490,11 @@ msgstr ""
 msgid "Key to trigger quickphrase"
 msgstr "Tast til at udløse hurtigfrase"
 
-#: im/table/ime.h:240
+#: im/table/ime.h:228
+msgid "Learn auto phrase with phrase"
+msgstr ""
+
+#: im/table/ime.h:249
 msgid "Learning"
 msgstr "Læring"
 
@@ -510,7 +514,7 @@ msgstr "MS"
 msgid "Mapping"
 msgstr ""
 
-#: im/table/ime.h:227
+#: im/table/ime.h:236
 msgid "Marker for auto phrase in the candidates"
 msgstr ""
 
@@ -599,7 +603,7 @@ msgstr "Pinyin-ordbogshåndtering"
 msgid "PinyinJiajia"
 msgstr "PinyinJiajia"
 
-#: im/table/state.cpp:582
+#: im/table/state.cpp:596
 msgid "Please use this functionality after typing some text."
 msgstr "Brug venligst denne funktionalitet efter du har skrevet noget tekst."
 
@@ -615,15 +619,15 @@ msgstr "Størrelse på forudsigelse"
 msgid "Prefix key to trigger Pinyin"
 msgstr "Præfikstast til at udløse Pinyin"
 
-#: im/table/state.cpp:615
+#: im/table/state.cpp:629
 msgid "Press Backspace to forget."
 msgstr "Tryk på Backspace for at glemme."
 
-#: im/table/state.cpp:618
+#: im/table/state.cpp:632
 msgid "Press Delete to remove."
 msgstr "Tryk på Delete for at flytte."
 
-#: im/table/state.cpp:612
+#: im/table/state.cpp:626
 msgid "Press space or enter to insert."
 msgstr ""
 
@@ -685,7 +689,7 @@ msgstr "Regulært udtryk til at vælge den eneste kandidat"
 msgid "Remove &All"
 msgstr "Fjern &alle"
 
-#: im/table/ime.h:231
+#: im/table/ime.h:240
 msgid "Save auto phrase after being typed for ... times"
 msgstr "Gem automatisk frase efter den er blevet skrevet ... gange"
 
@@ -713,7 +717,7 @@ msgstr "Vælg anden kandidat"
 msgid "Select Third Candidate"
 msgstr "Vælg tredje kandidat"
 
-#: im/table/state.cpp:1146
+#: im/table/state.cpp:1160
 msgid "Select candidate to be removed from history:"
 msgstr "Vælg kandidat som skal fjernes fra historik:"
 
@@ -725,7 +729,7 @@ msgstr "Vælg scel-fil"
 msgid "Selection"
 msgstr "Valg"
 
-#: im/table/ime.h:245
+#: im/table/ime.h:254
 msgid "Separator text between hint and candidate"
 msgstr "Separatortekst mellem tip og kandidat"
 
@@ -831,11 +835,11 @@ msgstr "Skriv tegnsætningspar sammen (f.eks. citat)"
 msgid "Use Keypad as Selection key"
 msgstr ""
 
-#: im/table/state.cpp:588
+#: im/table/state.cpp:602
 msgid "Use Left and Right to select character: "
 msgstr "Brug venstre og højre til at vælge tegn: "
 
-#: im/table/state.cpp:599
+#: im/table/state.cpp:613
 msgid "Use Left and Right to select text. "
 msgstr "Brug venstre og højre til at vælge tekst. "
 
@@ -910,6 +914,11 @@ msgid ""
 "expression and the existing segment with the new character does not have any "
 "matched entries in the table, select the current candidate and then type in "
 "the new character."
+msgstr ""
+
+#: im/table/ime.h:232
+msgid ""
+"Whether to learn new phrase from other phrases or just single characters."
 msgstr ""
 
 #: im/table/ime.h:152
@@ -1021,14 +1030,14 @@ msgstr "z <-> zh"
 msgid "{0} ({1})"
 msgstr "{0} ({1})"
 
-#: im/table/state.cpp:633
+#: im/table/state.cpp:647
 msgid "{0} is not in table."
 msgstr "{0} er ikke i tabellen."
 
-#: im/table/state.cpp:622
+#: im/table/state.cpp:636
 msgid "{0}: No corresponding code."
 msgstr "{0}: Ingen tilhørende kode."
 
-#: im/table/state.cpp:606 im/table/state.cpp:630
+#: im/table/state.cpp:620 im/table/state.cpp:644
 msgid "{0}: {1}"
 msgstr "{0}: {1}"
