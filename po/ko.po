@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2022-05-28 20:24+0000\n"
+"POT-Creation-Date: 2022-06-07 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Junghee Lee <daemul72@gmail.com>, 2022\n"
 "Language-Team: Korean (https://www.transifex.com/fcitx/teams/12005/ko/)\n"
@@ -20,11 +20,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: im/table/state.cpp:900
+#: im/table/state.cpp:914
 msgid " Return for "
 msgstr " Return for "
 
-#: im/table/state.cpp:897
+#: im/table/state.cpp:911
 msgid " for "
 msgstr " for "
 
@@ -102,7 +102,7 @@ msgstr "모든 사전을 삭제하시겠습니까?"
 msgid "Auto phrase length"
 msgstr "자동 구문 문자 수"
 
-#: im/table/ime.h:252
+#: im/table/ime.h:261
 msgid "Auto rule set"
 msgstr "자동 규칙 모음"
 
@@ -126,7 +126,7 @@ msgstr "Bingchan"
 msgid "Browse Sogou Cell Dict repository"
 msgstr "Sogou 셀 사전 저장소 찾아보기"
 
-#: im/table/ime.h:249
+#: im/table/ime.h:258
 msgid "Candidate List orientation"
 msgstr "후보 목록 방향"
 
@@ -204,7 +204,7 @@ msgstr "변환하지 못했습니다."
 msgid "Converter crashed."
 msgstr "변환도구가 충돌했습니다."
 
-#: im/table/state.cpp:596
+#: im/table/state.cpp:610
 msgid "Could not find pinyin."
 msgstr "Pinyin을 찾을 수 없음"
 
@@ -247,11 +247,11 @@ msgstr "사전"
 msgid "Dictionary already exists"
 msgstr "사전이 이미 존재합니다"
 
-#: im/table/ime.h:241
+#: im/table/ime.h:250
 msgid "Display Hint for word"
 msgstr "단어에 대한 힌트 보이기"
 
-#: im/table/ime.h:243
+#: im/table/ime.h:252
 msgid "Display custom hint"
 msgstr "사용자 지정 힌트 보이기"
 
@@ -331,7 +331,7 @@ msgstr "Erbi"
 msgid "Error while deleting %1."
 msgstr "%1을 삭제하는 중 오류 발생"
 
-#: im/table/ime.h:239
+#: im/table/ime.h:248
 msgid "Exact Match"
 msgstr "정확한 일치"
 
@@ -448,7 +448,7 @@ msgstr "가로 방향"
 msgid "Icon"
 msgstr "아이콘"
 
-#: im/table/ime.h:236
+#: im/table/ime.h:245
 msgid ""
 "If the value less than 0, means this feature is disabled. If auto phrase is "
 "enabled, selecting auto phrase candidate explicitly will still add the word "
@@ -482,7 +482,11 @@ msgstr "키"
 msgid "Key to trigger quickphrase"
 msgstr "상용구를 트리거할 키"
 
-#: im/table/ime.h:240
+#: im/table/ime.h:228
+msgid "Learn auto phrase with phrase"
+msgstr ""
+
+#: im/table/ime.h:249
 msgid "Learning"
 msgstr "학습"
 
@@ -502,7 +506,7 @@ msgstr "MS"
 msgid "Mapping"
 msgstr "매핑"
 
-#: im/table/ime.h:227
+#: im/table/ime.h:236
 msgid "Marker for auto phrase in the candidates"
 msgstr "후보의 자동 구문에 대한 표식"
 
@@ -589,7 +593,7 @@ msgstr "Pinyin 사전 관리도구"
 msgid "PinyinJiajia"
 msgstr "PinyinJiajia"
 
-#: im/table/state.cpp:582
+#: im/table/state.cpp:596
 msgid "Please use this functionality after typing some text."
 msgstr "글자를 입력한 후에 이 기능을 사용하세요."
 
@@ -605,15 +609,15 @@ msgstr "예측 크기"
 msgid "Prefix key to trigger Pinyin"
 msgstr "Pinyin를 트리거할 전위 키"
 
-#: im/table/state.cpp:615
+#: im/table/state.cpp:629
 msgid "Press Backspace to forget."
 msgstr "무시하려면 백스페이스 키를 누릅니다."
 
-#: im/table/state.cpp:618
+#: im/table/state.cpp:632
 msgid "Press Delete to remove."
 msgstr "제거하려면 Delete 키를 누릅니다"
 
-#: im/table/state.cpp:612
+#: im/table/state.cpp:626
 msgid "Press space or enter to insert."
 msgstr "스페이스 키를 누르거나 Enter 키를 눌러 삽입합니다."
 
@@ -674,7 +678,7 @@ msgstr "후보만 선택하기 위한 정규식"
 msgid "Remove &All"
 msgstr "모두 제거(&A)"
 
-#: im/table/ime.h:231
+#: im/table/ime.h:240
 msgid "Save auto phrase after being typed for ... times"
 msgstr "자동 구문가 ...번 입력되면 저장"
 
@@ -702,7 +706,7 @@ msgstr "두 번째 후보 선택"
 msgid "Select Third Candidate"
 msgstr "세 번째 후보 선택"
 
-#: im/table/state.cpp:1146
+#: im/table/state.cpp:1160
 msgid "Select candidate to be removed from history:"
 msgstr "기록에서 제거할 후보 선택"
 
@@ -714,7 +718,7 @@ msgstr "scel 파일 선택"
 msgid "Selection"
 msgstr "선택"
 
-#: im/table/ime.h:245
+#: im/table/ime.h:254
 msgid "Separator text between hint and candidate"
 msgstr "힌트와 후보 사이의 구분자 텍스트"
 
@@ -820,11 +824,11 @@ msgstr "짝이 있는 문장부호를 함께 입력 (예: 따옴표)"
 msgid "Use Keypad as Selection key"
 msgstr "키패드를 선택 키로 사용"
 
-#: im/table/state.cpp:588
+#: im/table/state.cpp:602
 msgid "Use Left and Right to select character: "
 msgstr "왼쪽 및 오른쪽 키를 사용하여 문자 선택:"
 
-#: im/table/state.cpp:599
+#: im/table/state.cpp:613
 msgid "Use Left and Right to select text. "
 msgstr "왼쪽 및 오른쪽 키를 사용하여 텍스트를 선택합니다."
 
@@ -904,6 +908,11 @@ msgid ""
 msgstr ""
 "새 문자를 입력할 때 현재 입력이 정규식과 일치하고 기존 세그먼트에 새 문자가 "
 "있는 항목이 테이블에 없으면 현재 후보를 선택한 다음 새 문자를 입력합니다."
+
+#: im/table/ime.h:232
+msgid ""
+"Whether to learn new phrase from other phrases or just single characters."
+msgstr ""
 
 #: im/table/ime.h:152
 msgid "Wildcard matching Key"
@@ -1014,14 +1023,14 @@ msgstr "z <-> zh"
 msgid "{0} ({1})"
 msgstr "{0} ({1})"
 
-#: im/table/state.cpp:633
+#: im/table/state.cpp:647
 msgid "{0} is not in table."
 msgstr "{0}은 표에 없습니다."
 
-#: im/table/state.cpp:622
+#: im/table/state.cpp:636
 msgid "{0}: No corresponding code."
 msgstr "{0}: 해당 코드가 없음"
 
-#: im/table/state.cpp:606 im/table/state.cpp:630
+#: im/table/state.cpp:620 im/table/state.cpp:644
 msgid "{0}: {1}"
 msgstr "{0}: {1}"
