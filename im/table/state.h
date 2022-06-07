@@ -81,7 +81,7 @@ private:
     std::string lastContext_;
     std::list<std::pair<std::string, std::string>> lastCommit_;
     std::string lastSegment_;
-    std::list<std::pair<std::string, std::string>> lastSingleCharCommit_;
+    std::list<std::pair<std::string, std::string>> autoPhraseBuffer_;
     std::unique_ptr<TableContext> context_;
 
     int keyReleased_ = -1;
