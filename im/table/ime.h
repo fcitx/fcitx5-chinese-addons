@@ -226,7 +226,7 @@ FCITX_CONFIGURATION(
         this,
         "AutoPhraseWithPhrase",
         _("Learn auto phrase with phrase"),
-        true,
+        false,
         {},
         {},
         ToolTipAnnotation(_("Whether to learn new phrase from other phrases or "

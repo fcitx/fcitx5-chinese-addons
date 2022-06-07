@@ -19,6 +19,7 @@ QuickPhraseKey=semicolon
 PinyinKey=[
 MatchingKey=?
 AutoPhraseLength=4
+AutoPhraseWithPhrase=False
 SaveAutoPhraseAfter=-1
 UseContextRelatedOrder=False
 QuickPhraseText=ABCDEFGHIJLKLMNOPQRSTUVWXYZ
