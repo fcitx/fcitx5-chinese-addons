@@ -5,16 +5,16 @@
 # Translators:
 # Mingcong Bai <jeffbai@aosc.xyz>, 2018
 # wwj402 <wwj402@gmail.com>, 2018
-# rocka, 2022
 # csslayer <wengxt@gmail.com>, 2022
+# rocka, 2022
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2022-06-07 20:24+0000\n"
+"POT-Creation-Date: 2022-06-08 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
-"Last-Translator: csslayer <wengxt@gmail.com>, 2022\n"
+"Last-Translator: rocka, 2022\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/fcitx/teams/12005/"
 "zh_CN/)\n"
 "Language: zh_CN\n"
@@ -482,7 +482,7 @@ msgstr "快速输入的触发键"
 
 #: im/table/ime.h:228
 msgid "Learn auto phrase with phrase"
-msgstr ""
+msgstr "词组参与自组词"
 
 #: im/table/ime.h:249
 msgid "Learning"
@@ -904,7 +904,7 @@ msgstr ""
 #: im/table/ime.h:232
 msgid ""
 "Whether to learn new phrase from other phrases or just single characters."
-msgstr ""
+msgstr "是否从其它词组，或仅从单字学习自组词"
 
 #: im/table/ime.h:152
 msgid "Wildcard matching Key"
