@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2022-06-07 20:24+0000\n"
+"POT-Creation-Date: 2022-06-09 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Dmitry <dmitrydmitry761@gmail.com>, 2022\n"
 "Language-Team: Russian (https://www.transifex.com/fcitx/teams/12005/ru/)\n"
@@ -496,7 +496,7 @@ msgstr "Клавиша для активации быстрой фразы"
 
 #: im/table/ime.h:228
 msgid "Learn auto phrase with phrase"
-msgstr ""
+msgstr "Выучить автофразу с помощью фразы"
 
 #: im/table/ime.h:249
 msgid "Learning"
@@ -931,7 +931,7 @@ msgstr ""
 #: im/table/ime.h:232
 msgid ""
 "Whether to learn new phrase from other phrases or just single characters."
-msgstr ""
+msgstr "Учить ли новую фразу из других фраз или только отдельных символов."
 
 #: im/table/ime.h:152
 msgid "Wildcard matching Key"
