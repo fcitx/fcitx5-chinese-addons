@@ -11,11 +11,11 @@
 #include <fcitx-utils/standardpath.h>
 #include <fcitx-utils/testing.h>
 #include <fcitx/addonmanager.h>
+#include <fcitx/inputmethodengine.h>
 #include <fcitx/inputmethodmanager.h>
 #include <fcitx/inputpanel.h>
 #include <fcitx/instance.h>
 #include <iostream>
-#include <fcitx/inputmethodengine.h>
 
 using namespace fcitx;
 
@@ -93,10 +93,13 @@ void scheduleEvent(EventDispatcher *dispatcher, Instance *instance) {
         instance->inputMethodManager().setGroup(defaultGroup);
         auto *table = instance->addonManager().addon("table", true);
         RawConfig config;
-        auto wbxConfig = reinterpret_cast<InputMethodEngine *>(table)->getConfigForInputMethod(*instance->inputMethodManager().entry("wbx"));
+        auto wbxConfig = reinterpret_cast<InputMethodEngine *>(table)
+                             ->getConfigForInputMethod(
+                                 *instance->inputMethodManager().entry("wbx"));
         wbxConfig->save(config);
         config.setValueByPath("AutoPhraseWithPhrase", "True");
-        reinterpret_cast<InputMethodEngine *>(table)->setConfigForInputMethod(*instance->inputMethodManager().entry("wbx"), config);
+        reinterpret_cast<InputMethodEngine *>(table)->setConfigForInputMethod(
+            *instance->inputMethodManager().entry("wbx"), config);
         auto *testfrontend = instance->addonManager().addon("testfrontend");
         testfrontend->call<ITestFrontend::pushCommitExpectation>("工");
         testfrontend->call<ITestFrontend::pushCommitExpectation>("工");
@@ -133,7 +136,6 @@ void scheduleEvent(EventDispatcher *dispatcher, Instance *instance) {
         // This comma trigger only match commit.
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("5"), false);
-
 
         dispatcher->schedule([dispatcher, instance]() {
             dispatcher->detach();

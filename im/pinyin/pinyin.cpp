@@ -176,8 +176,8 @@ public:
             return;
         }
 
-        if (index_ < state->context_.candidates().size()) {
-            const auto &sentence = state->context_.candidates()[index_];
+        if (index_ < state->context_.candidatesToCursor().size()) {
+            const auto &sentence = state->context_.candidatesToCursor()[index_];
             // If this is a word, remove it from user dict.
             if (sentence.size() == 1) {
                 auto py = state->context_.candidateFullPinyin(index_);
@@ -242,10 +242,10 @@ public:
     void select(InputContext *inputContext) const override {
         auto *state = inputContext->propertyFor(&engine_->factory());
         auto &context = state->context_;
-        if (idx_ >= context.candidates().size()) {
+        if (idx_ >= context.candidatesToCursor().size()) {
             return;
         }
-        context.select(idx_);
+        context.selectCandidatesToCursor(idx_);
         engine_->updateUI(inputContext);
     }
 
@@ -478,7 +478,7 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
         updatePreedit(inputContext);
         auto &inputPanel = inputContext->inputPanel();
         // Update candidate
-        const auto &candidates = context.candidates();
+        const auto &candidates = context.candidatesToCursor();
         if (candidates.empty()) {
             break;
         }
@@ -493,11 +493,14 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
         const auto selectedLength = context.selectedLength();
         const auto selectedSentence = context.selectedSentence();
 
+        const bool fullResult = (context.cursor() == context.size() ||
+                                 context.cursor() == context.selectedLength());
         /// Create cloud candidate. {{{
         std::unique_ptr<CustomCloudPinyinCandidateWord> cloud;
         if (*config_.cloudPinyinEnabled && cloudpinyin() &&
             !inputContext->capabilityFlags().testAny(
-                CapabilityFlag::PasswordOrSensitive)) {
+                CapabilityFlag::PasswordOrSensitive) &&
+            fullResult) {
             using namespace std::placeholders;
             auto fullPinyin = context.useShuangpin()
                                   ? context.candidateFullPinyin(0)
@@ -514,7 +517,7 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
         auto parsedPy =
             state->context_.preedit(libime::PinyinPreeditMode::RawText);
         std::vector<std::unique_ptr<SpellCandidateWord>> spellCands;
-        if (*config_.spellEnabled && spell() &&
+        if (*config_.spellEnabled && spell() && fullResult &&
             (engNess = englishNess(parsedPy, context.useShuangpin()))) {
             auto py = context.userInput().substr(selectedLength);
             auto results = spell()->call<ISpell::hintWithProvider>(
@@ -570,7 +573,7 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
             if (selectedLength == 0 &&
                 static_cast<int>(idx) <
                     std::max(*config_.nbest, *config_.pageSize) &&
-                imeapi() &&
+                imeapi() && fullResult &&
                 candidate.sentence().back()->to()->index() ==
                     context.userInput().size()) {
                 extraCandidates =
@@ -1251,8 +1254,11 @@ void PinyinEngine::updateForgetCandidate(InputContext *inputContext) {
         const auto &candidate = origCandidateList->candidateFromAll(i);
         if (const auto *pyCandidate =
                 dynamic_cast<const PinyinCandidateWord *>(&candidate)) {
-            if (pyCandidate->idx_ >= state->context_.candidates().size() ||
-                state->context_.candidateFullPinyin(pyCandidate->idx_)
+            if (pyCandidate->idx_ >=
+                    state->context_.candidatesToCursor().size() ||
+                state->context_
+                    .candidateFullPinyin(
+                        state->context_.candidatesToCursor()[pyCandidate->idx_])
                     .empty()) {
                 continue;
             }
