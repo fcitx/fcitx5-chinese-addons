@@ -47,7 +47,7 @@ Text TableContext::preeditText(bool hint, bool clientPreedit) const {
 
     text.append(codeText, {TextFormatFlag::Underline});
 
-    if (clientPreedit) {
+    if (clientPreedit && *config_.preeditCursorPositionAtBeginning) {
         text.setCursor(0);
     } else {
         text.setCursor(text.textLength());
