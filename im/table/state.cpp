@@ -316,7 +316,8 @@ bool TableState::handleCandidateList(const TableConfig &config,
 
 bool TableState::handlePinyinMode(KeyEvent &event) {
     auto *context = context_.get();
-    const auto &pinyinKey = *context->config().pinyinKey;
+    const auto &config = context_->config();
+    const auto &pinyinKey = *config.pinyinKey;
     if (pinyinKey.sym() == FcitxKey_None) {
         return false;
     }
@@ -379,7 +380,6 @@ bool TableState::handlePinyinMode(KeyEvent &event) {
     if (!pinyinModeBuffer_.empty()) {
         const auto &dict = engine_->pinyinDict();
         const auto &lm = engine_->pinyinModel();
-        const auto &config = context_->config();
         auto pinyin = libime::PinyinEncoder::encodeOneUserPinyin(
             pinyinModeBuffer_.userInput());
 
@@ -424,7 +424,11 @@ bool TableState::handlePinyinMode(KeyEvent &event) {
     preeditText.append(pinyinModePrefix_);
     preeditText.append(pinyinModeBuffer_.userInput());
     if (ic_->capabilityFlags().test(CapabilityFlag::Preedit)) {
-        preeditText.setCursor(0);
+        if (*config.preeditCursorPositionAtBeginning) {
+            preeditText.setCursor(0);
+        } else {
+            preeditText.setCursor(preeditText.textLength());
+        }
         inputPanel.setClientPreedit(preeditText);
     } else {
         preeditText.setCursor(preeditText.textLength());
