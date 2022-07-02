@@ -7,7 +7,7 @@
 
 #include "pinyin.h"
 
-// Use reletive path so we don't need import export target.
+// Use relative path so we don't need import export target.
 // We want to keep cloudpinyin logic but don't call it.
 #include "../../modules/cloudpinyin/cloudpinyin_public.h"
 #include "config.h"
@@ -53,7 +53,7 @@ FCITX_DEFINE_LOG_CATEGORY(pinyin, "pinyin");
 #define PINYIN_DEBUG() FCITX_LOGC(pinyin, Debug)
 #define PINYIN_ERROR() FCITX_LOGC(pinyin, Error)
 
-bool consumePreifx(std::string_view &view, std::string_view prefix) {
+bool consumePrefix(std::string_view &view, std::string_view prefix) {
     if (boost::starts_with(view, prefix)) {
         view.remove_prefix(prefix.size());
         return true;
@@ -589,7 +589,7 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
                 candidateList->append<ExtraCandidateWord>(this, extraCandidate);
             }
             idx++;
-            // We don't want to do too much comparision for cloud pinyin.
+            // We don't want to do too much comparison for cloud pinyin.
             if (cloud && (!cloud->filled() || !cloud->word().empty()) &&
                 (static_cast<int>(idx) >
                      std::max(*config_.nbest, *config_.cloudPinyinIndex - 1) ||
@@ -1316,7 +1316,7 @@ bool PinyinEngine::handleStrokeFilter(KeyEvent &event) {
     }
 
     event.filterAndAccept();
-    // Skip all key combinition.
+    // Skip all key combination.
     if (event.key().states().testAny(KeyState::SimpleMask)) {
         return true;
     }
@@ -1386,7 +1386,7 @@ bool PinyinEngine::handleForgetCandidate(KeyEvent &event) {
     }
 
     event.filterAndAccept();
-    // Skip all key combinition.
+    // Skip all key combination.
     if (event.key().states().testAny(KeyState::SimpleMask)) {
         return true;
     }
@@ -1520,8 +1520,8 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
         if (event.key().check(FcitxKey_Escape)
 #ifdef ANDROID
-            || event.key().check(FcitxKey_BackSpace) ||
-            event.key().check(FcitxKey_Delete)
+            || event.key().check(FcitxKey_BackSpace)
+            || event.key().check(FcitxKey_Delete)
 #endif
         ) {
             event.filterAndAccept();
@@ -1835,7 +1835,7 @@ void PinyinEngine::invokeActionImpl(const InputMethodEntry &entry,
             // If cursor is with in the pinyin range, move to the left most and
             // then move it around. This is a easy way to cover Shuangpin and
             // Preedit Mode difference. setCursor should be cheap operation if
-            // it doesn not cancel any selection.
+            // it does not cancel any selection.
             context.setCursor(context.selectedLength());
             while (context.cursor() < context.size()) {
                 auto [preeditText, preeditCursor] = context.preeditWithCursor();
@@ -1889,7 +1889,7 @@ void PinyinEngine::cloudPinyinSelected(InputContext *inputContext,
             auto end = bestSentence.end();
             while (iter != end) {
                 auto consumed = wordView;
-                if (!consumePreifx(consumed, (*iter)->word())) {
+                if (!consumePrefix(consumed, (*iter)->word())) {
                     break;
                 }
                 if (!(*iter)->word().empty()) {
