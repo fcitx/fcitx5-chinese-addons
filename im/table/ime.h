@@ -105,8 +105,7 @@ FCITX_CONFIGURATION(
                                          _("First candidate as Preedit"),
                                          false};
     Option<bool> preeditCursorPositionAtBeginning{
-        this,
-        "PreeditCursorPositionAtBeginning",
+        this, "PreeditCursorPositionAtBeginning",
         _("Fix embedded preedit cursor at the beginning of the preedit"),
 #ifdef ANDROID
         false
