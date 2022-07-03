@@ -113,7 +113,7 @@ FCITX_CONFIGURATION(
 #else
         true
 #endif
-        };
+    };
     Option<bool> showActualPinyinInPreedit{
         this, "PinyinInPreedit", _("Show complete pinyin in preedit"), false};
     Option<bool> predictionEnabled{this, "Prediction", _("Enable Prediction"),
