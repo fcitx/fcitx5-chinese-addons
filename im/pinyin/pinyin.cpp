@@ -792,7 +792,19 @@ void PinyinEngine::loadBuiltInDict() {
                                       "pinyin/chaizi.dict", O_RDONLY);
         loadDict(file);
     }
-    if (ime_->dict()->dictSize() != libime::TrieDictionary::UserDict + 2 + 1) {
+    {
+        auto file = standardPath.open(StandardPath::Type::Data,
+                                      "libime/extb.dict", O_RDONLY);
+        // Try again with absolute libime path.
+        if (!file.isValid()) {
+            file = standardPath.open(StandardPath::Type::Data,
+                                     LIBIME_INSTALL_PKGDATADIR "/extb.dict",
+                                     O_RDONLY);
+        }
+        loadDict(file);
+    }
+    if (ime_->dict()->dictSize() !=
+        libime::TrieDictionary::UserDict + 1 + NumBuiltInDict) {
         throw std::runtime_error("Failed to load built-in dictionary");
     }
 }
@@ -806,9 +818,10 @@ void PinyinEngine::loadExtraDict() {
                                                "pinyin/dictionaries", O_RDONLY,
                                                filter::Suffix(".dict.disable"));
     FCITX_ASSERT(ime_->dict()->dictSize() >=
-                 libime::TrieDictionary::UserDict + 2)
+                 libime::TrieDictionary::UserDict + NumBuiltInDict + 1)
         << "Dict size: " << ime_->dict()->dictSize();
-    ime_->dict()->removeFrom(libime::TrieDictionary::UserDict + 3);
+    ime_->dict()->removeFrom(libime::TrieDictionary::UserDict + NumBuiltInDict +
+                             1);
     for (const auto &file : files) {
         if (disableFiles.count(stringutils::concat(file.first, ".disable"))) {
             PINYIN_DEBUG() << "Dictionary: " << file.first << " is disabled.";
@@ -971,6 +984,10 @@ void PinyinEngine::populateConfig() {
     ime_->dict()->setFlags(libime::TrieDictionary::UserDict + 2,
                            *config_.chaiziEnabled
                                ? libime::PinyinDictFlag::FullMatch
+                               : libime::PinyinDictFlag::Disabled);
+    ime_->dict()->setFlags(libime::TrieDictionary::UserDict + 3,
+                           *config_.extBEnabled
+                               ? libime::PinyinDictFlag::NoFlag
                                : libime::PinyinDictFlag::Disabled);
 }
 

@@ -142,25 +142,32 @@ void TableEngine::save() { ime_->saveAll(); }
 
 const libime::PinyinDictionary &TableEngine::pinyinDict() {
     if (!pinyinLoaded_) {
-        try {
-            const auto &standardPath = StandardPath::global();
-            auto systemDictFile = standardPath.open(StandardPath::Type::Data,
-                                                    "libime/sc.dict", O_RDONLY);
-            if (systemDictFile.isValid()) {
+        std::string_view dicts[] = {"sc.dict", "extb.dict"};
+        static_assert(FCITX_ARRAY_SIZE(dicts) <=
+                      libime::PinyinDictionary::UserDict + 1);
+        for (size_t i = 0; i < FCITX_ARRAY_SIZE(dicts); i++) {
+            try {
+                const auto &standardPath = StandardPath::global();
+                auto systemDictFile = standardPath.open(
+                    StandardPath::Type::Data,
+                    stringutils::joinPath("libime", dicts[i]), O_RDONLY);
+                if (!systemDictFile.isValid()) {
+                    systemDictFile = standardPath.open(
+                        StandardPath::Type::Data,
+                        stringutils::joinPath(LIBIME_INSTALL_PKGDATADIR,
+                                              dicts[i]),
+                        O_RDONLY);
+                }
+
                 boost::iostreams::stream_buffer<
                     boost::iostreams::file_descriptor_source>
                     buffer(systemDictFile.fd(),
                            boost::iostreams::file_descriptor_flags::
                                never_close_handle);
                 std::istream in(&buffer);
-                pinyinDict_.load(libime::PinyinDictionary::SystemDict, in,
-                                 libime::PinyinDictFormat::Binary);
-            } else {
-                pinyinDict_.load(libime::PinyinDictionary::SystemDict,
-                                 LIBIME_INSTALL_PKGDATADIR "/sc.dict",
-                                 libime::PinyinDictFormat::Binary);
+                pinyinDict_.load(i, in, libime::PinyinDictFormat::Binary);
+            } catch (const std::exception &) {
             }
-        } catch (const std::exception &) {
         }
         pinyinLoaded_ = true;
     }
