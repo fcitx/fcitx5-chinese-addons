@@ -27,6 +27,12 @@
 
 namespace fcitx {
 
+#ifdef ANDROID
+static constexpr bool isAndroid = true;
+#else
+static constexpr bool isAndroid = false;
+#endif
+
 struct OptionalHideInDescription {
     void setHidden(bool hidden) { hidden_ = hidden; }
 
@@ -97,6 +103,9 @@ FCITX_CONFIGURATION(
     Option<bool> spellEnabled{this, "SpellEnabled", _("Enable Spell"), true};
     Option<bool> emojiEnabled{this, "EmojiEnabled", _("Enable Emoji"), true};
     Option<bool> chaiziEnabled{this, "ChaiziEnabled", _("Enable Chaizi"), true};
+    Option<bool> extBEnabled{this, "ExtBEnabled",
+                             _("Enable Characters in Unicode CJK Extension B"),
+                             !isAndroid};
     OptionWithAnnotation<bool, OptionalHideInDescription> cloudPinyinEnabled{
         this, "CloudPinyinEnabled", _("Enable Cloud Pinyin"), false};
     Option<int, IntConstrain, DefaultMarshaller<int>, OptionalHideInDescription>
@@ -108,12 +117,7 @@ FCITX_CONFIGURATION(
     Option<bool> preeditCursorPositionAtBeginning{
         this, "PreeditCursorPositionAtBeginning",
         _("Fix embedded preedit cursor at the beginning of the preedit"),
-#ifdef ANDROID
-        false
-#else
-        true
-#endif
-    };
+        !isAndroid};
     Option<bool> showActualPinyinInPreedit{
         this, "PinyinInPreedit", _("Show complete pinyin in preedit"), false};
     Option<bool> predictionEnabled{this, "Prediction", _("Enable Prediction"),
@@ -317,6 +321,8 @@ private:
     FCITX_ADDON_DEPENDENCY_LOADER(imeapi, instance_->addonManager());
 
     bool hasCloudPinyin_ = false;
+
+    static constexpr size_t NumBuiltInDict = 3;
 };
 
 class PinyinEngineFactory : public AddonFactory {
