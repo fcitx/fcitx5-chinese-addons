@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2022-06-08 20:24+0000\n"
+"POT-Creation-Date: 2022-07-06 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: rocka, 2022\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/fcitx/teams/12005/"
@@ -23,11 +23,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: im/table/state.cpp:914
+#: im/table/state.cpp:919
 msgid " Return for "
 msgstr "回车以"
 
-#: im/table/state.cpp:911
+#: im/table/state.cpp:916
 msgid " for "
 msgstr "以"
 
@@ -68,7 +68,7 @@ msgstr "导入(&I)"
 msgid "&Remove"
 msgstr "移除(&R)"
 
-#: im/pinyin/pinyin.h:57
+#: im/pinyin/pinyin.h:63
 msgid "ABC"
 msgstr "智能ABC"
 
@@ -78,7 +78,7 @@ msgid ""
 "to Fcitx"
 msgstr "增加对拼音，码表，以及其他许多中文相关的功能到 Fcitx"
 
-#: im/table/ime.h:220
+#: im/table/ime.h:229
 msgid ""
 "After committing every character, learn the new phrase based on the input "
 "history. If certain word is seen for multiple times or selected by user "
@@ -100,19 +100,19 @@ msgstr "您确定要删除 %1？"
 msgid "Are you sure to delete all dictionaries?"
 msgstr "您确定要删除所有字典吗？"
 
-#: im/table/ime.h:215
+#: im/table/ime.h:224
 msgid "Auto phrase length"
 msgstr "自动词组长度"
 
-#: im/table/ime.h:261
+#: im/table/ime.h:270
 msgid "Auto rule set"
 msgstr "自动组词使用规则"
 
-#: im/table/ime.h:161
+#: im/table/ime.h:170
 msgid "Auto select candidate"
 msgstr "自动选择候选词"
 
-#: im/table/ime.h:187
+#: im/table/ime.h:196
 msgid "Auto select when no match is found"
 msgstr "没有匹配时自动选择"
 
@@ -128,7 +128,7 @@ msgstr "冰蟾全息"
 msgid "Browse Sogou Cell Dict repository"
 msgstr "浏览搜狗细胞词库"
 
-#: im/table/ime.h:258
+#: im/table/ime.h:267
 msgid "Candidate List orientation"
 msgstr "候选词列表方向"
 
@@ -140,7 +140,7 @@ msgstr "仓颉"
 msgid "Chinese Addons"
 msgstr "中文附加组件"
 
-#: im/pinyin/pinyin.h:165
+#: im/pinyin/pinyin.h:175
 msgid "Choose Character from Phrase"
 msgstr "以词定字"
 
@@ -148,23 +148,23 @@ msgstr "以词定字"
 msgid "Clear &All Data"
 msgstr "清理所有数据(&A)"
 
-#: im/pinyin/pinyin.h:190 modules/cloudpinyin/cloudpinyin.conf.in.in:3
+#: im/pinyin/pinyin.h:200 modules/cloudpinyin/cloudpinyin.conf.in.in:3
 msgid "Cloud Pinyin"
 msgstr "云拼音"
 
-#: im/pinyin/pinyin.h:103
+#: im/pinyin/pinyin.h:112
 msgid "Cloud Pinyin Index"
 msgstr "云拼音位置"
 
-#: im/pinyin/pinyin.cpp:1019
+#: im/pinyin/pinyin.cpp:1039
 msgid "Cloud Pinyin Status"
 msgstr "云拼音状态"
 
-#: im/pinyin/pinyin.cpp:1021
+#: im/pinyin/pinyin.cpp:1041
 msgid "Cloud Pinyin is disabled."
 msgstr "云拼音已禁用。"
 
-#: im/pinyin/pinyin.cpp:1020
+#: im/pinyin/pinyin.cpp:1040
 msgid "Cloud Pinyin is enabled."
 msgstr "已启用云拼音。"
 
@@ -186,7 +186,7 @@ msgid ""
 "for some latin/compose based table."
 msgstr "提交不存在于码表中的内容。这个选项对于某些拉丁/组合的码表更有用。"
 
-#: im/pinyin/pinyin.h:63
+#: im/pinyin/pinyin.h:69
 msgid "Common Typo"
 msgstr "常见错误"
 
@@ -204,7 +204,7 @@ msgstr "转换失败。"
 msgid "Converter crashed."
 msgstr "转换器崩溃。"
 
-#: im/table/state.cpp:610
+#: im/table/state.cpp:615
 msgid "Could not find pinyin."
 msgstr "无法找到拼音。"
 
@@ -222,7 +222,7 @@ msgstr "创建临时文件失败。"
 msgid "Creating temp file failed. Please check the permission or disk space."
 msgstr "创建临时文件失败。请检查权限或磁盘空间。"
 
-#: im/pinyin/pinyin.h:59
+#: im/pinyin/pinyin.h:65
 msgid "Custom"
 msgstr "自定义"
 
@@ -239,7 +239,7 @@ msgstr "对话框"
 msgid "Dianbaoma"
 msgstr "电报码"
 
-#: im/pinyin/pinyin.h:181
+#: im/pinyin/pinyin.h:191
 msgid "Dictionaries"
 msgstr "词典"
 
@@ -247,15 +247,15 @@ msgstr "词典"
 msgid "Dictionary already exists"
 msgstr "词典已经存在"
 
-#: im/table/ime.h:250
+#: im/table/ime.h:259
 msgid "Display Hint for word"
 msgstr "显示词的提示"
 
-#: im/table/ime.h:252
+#: im/table/ime.h:261
 msgid "Display custom hint"
 msgstr "显示自定义提示"
 
-#: im/pinyin/pinyin.cpp:836
+#: im/pinyin/pinyin.cpp:852
 msgid ""
 "Do you want to enable cloudpinyin now for better prediction? You can always "
 "toggle it later in configuration or by pressing {}."
@@ -263,13 +263,13 @@ msgstr ""
 "您想要启用云拼音以获得更好的预测吗？您也可以稍后在配置中更改设置或者通过按下 "
 "{} 来切换。"
 
-#: im/pinyin/pinyin.cpp:831
+#: im/pinyin/pinyin.cpp:847
 msgid ""
 "Do you want to enable cloudpinyin now for better prediction? You can always "
 "toggle it later in configuration."
 msgstr "您想要启用云拼音以获得更好的预测吗？您也可以稍后在配置中更改设置。"
 
-#: im/table/ime.h:125
+#: im/table/ime.h:134
 msgid "Don't sort word shorter than"
 msgstr "不对短于...的词排序"
 
@@ -281,27 +281,31 @@ msgstr "下载已完成"
 msgid "Download started."
 msgstr "下载已开始。"
 
-#: im/pinyin/pinyin.h:99
+#: im/pinyin/pinyin.h:105
 msgid "Enable Chaizi"
 msgstr "启用拆字"
 
-#: im/pinyin/pinyin.h:101
+#: im/pinyin/pinyin.h:107
+msgid "Enable Characters in Unicode CJK Extension B"
+msgstr ""
+
+#: im/pinyin/pinyin.h:110
 msgid "Enable Cloud Pinyin"
 msgstr "启用云拼音"
 
-#: im/pinyin/pinyin.cpp:845
+#: im/pinyin/pinyin.cpp:861
 msgid "Enable Cloudpinyin"
 msgstr "启用云拼音"
 
-#: im/pinyin/pinyin.h:98
+#: im/pinyin/pinyin.h:104
 msgid "Enable Emoji"
 msgstr "启用颜文字"
 
-#: im/pinyin/pinyin.h:113
+#: im/pinyin/pinyin.h:123
 msgid "Enable Prediction"
 msgstr "启用预测"
 
-#: im/pinyin/pinyin.h:97
+#: im/pinyin/pinyin.h:103
 msgid "Enable Spell"
 msgstr "启用拼写检查"
 
@@ -309,11 +313,11 @@ msgstr "启用拼写检查"
 msgid "Enabled Input Methods"
 msgstr "启用的输入法"
 
-#: im/table/ime.h:211
+#: im/table/ime.h:220
 msgid "End key"
 msgstr "中止键"
 
-#: im/pinyin/pinyin.h:210
+#: im/pinyin/pinyin.h:220
 msgid "Enter a string from the list will make it enter quickphrase mode."
 msgstr "输入列表中的字符将使它进入快速输入模式"
 
@@ -329,7 +333,7 @@ msgstr "二笔"
 msgid "Error while deleting %1."
 msgstr "删除 %1 时出错。"
 
-#: im/table/ime.h:248
+#: im/table/ime.h:257
 msgid "Exact Match"
 msgstr "精确匹配"
 
@@ -366,7 +370,7 @@ msgstr "文件"
 msgid "File Operation Failed"
 msgstr "文件操作失败"
 
-#: im/pinyin/pinyin.h:171
+#: im/pinyin/pinyin.h:181
 msgid "Filter by stroke"
 msgstr "按笔画过滤"
 
@@ -374,11 +378,11 @@ msgstr "按笔画过滤"
 msgid "First candidate as Preedit"
 msgstr "将第一个候选词作为预编辑文本"
 
-#: im/pinyin/pinyin.h:110
+#: im/table/ime.h:109 im/pinyin/pinyin.h:119
 msgid "Fix embedded preedit cursor at the beginning of the preedit"
 msgstr "固定嵌入预编辑文本光标在预编辑的开头"
 
-#: im/table/engine.h:33 im/pinyin/pinyin.h:119
+#: im/table/engine.h:33 im/pinyin/pinyin.h:129
 msgid "Forget word"
 msgstr "忘记词汇"
 
@@ -422,7 +426,7 @@ msgstr "全角标点已禁用。"
 msgid "Full width punctuation is enabled."
 msgstr "已启用全角标点。"
 
-#: im/pinyin/pinyin.h:212
+#: im/pinyin/pinyin.h:222
 msgid "Fuzzy Pinyin Settings"
 msgstr "模糊音设置"
 
@@ -442,11 +446,11 @@ msgstr "字母或者数字之后输入半角标点"
 msgid "Horizontal"
 msgstr "横向"
 
-#: im/table/ime.h:123
+#: im/table/ime.h:132
 msgid "Icon"
 msgstr "图标"
 
-#: im/table/ime.h:245
+#: im/table/ime.h:254
 msgid ""
 "If the value less than 0, means this feature is disabled. If auto phrase is "
 "enabled, selecting auto phrase candidate explicitly will still add the word "
@@ -459,11 +463,11 @@ msgstr ""
 msgid "Ignore built in punctuation"
 msgstr "忽略内置标点"
 
-#: im/pinyin/pinyin.h:64
+#: im/pinyin/pinyin.h:70
 msgid "Inner Segment (xian -> xi'an)"
 msgstr "内模糊音节 (xian -> xi'an)"
 
-#: im/pinyin/pinyin.h:66
+#: im/pinyin/pinyin.h:72
 msgid "Inner Segment for Short Pinyin (qie -> qi'e)"
 msgstr "短拼音的内模糊音节 (qie -> qi'e)"
 
@@ -476,19 +480,19 @@ msgctxt "Key of the punctuation, e.g. comma"
 msgid "Key"
 msgstr "按键"
 
-#: im/table/ime.h:110 im/pinyin/pinyin.h:195
+#: im/table/ime.h:119 im/pinyin/pinyin.h:205
 msgid "Key to trigger quickphrase"
 msgstr "快速输入的触发键"
 
-#: im/table/ime.h:228
+#: im/table/ime.h:237
 msgid "Learn auto phrase with phrase"
 msgstr "词组参与自组词"
 
-#: im/table/ime.h:249
+#: im/table/ime.h:258
 msgid "Learning"
 msgstr "学习"
 
-#: im/table/ime.h:165
+#: im/table/ime.h:174
 msgid "Length limit of selecting the only candidate"
 msgstr "选择唯一候选词的长度限制"
 
@@ -496,7 +500,7 @@ msgstr "选择唯一候选词的长度限制"
 msgid "Lookup pinyin"
 msgstr "查找拼音"
 
-#: im/pinyin/pinyin.h:56
+#: im/pinyin/pinyin.h:62
 msgid "MS"
 msgstr "微软"
 
@@ -504,15 +508,15 @@ msgstr "微软"
 msgid "Mapping"
 msgstr "映射"
 
-#: im/table/ime.h:236
+#: im/table/ime.h:245
 msgid "Marker for auto phrase in the candidates"
 msgstr "候选词中自动组词的标记符号"
 
-#: im/pinyin/pinyin.h:69
+#: im/pinyin/pinyin.h:75
 msgid "Match partial finals (e -> en, eng, ei)"
 msgstr "匹配不完整的元音 (e -> en, eng, ei)"
 
-#: im/pinyin/pinyin.h:73
+#: im/pinyin/pinyin.h:79
 msgid "Match partial shuangpin if input length is longer than 4"
 msgstr "输入长度大于 4 时进行部分双拼匹配"
 
@@ -528,11 +532,11 @@ msgstr "修改词典"
 msgid "New Dictionary Name:"
 msgstr "新词典名称："
 
-#: im/table/ime.h:58 im/pinyin/pinyin.h:143
+#: im/table/ime.h:58 im/pinyin/pinyin.h:153
 msgid "Next Candidate"
 msgstr "下一个候选词"
 
-#: im/pinyin/pinyin.h:131
+#: im/pinyin/pinyin.h:141
 msgid "Next Page"
 msgstr "下一页"
 
@@ -540,7 +544,7 @@ msgstr "下一页"
 msgid "Next page"
 msgstr "下一页"
 
-#: im/table/ime.h:22 im/pinyin/pinyin.cpp:842
+#: im/table/ime.h:22 im/pinyin/pinyin.cpp:858
 msgid "No"
 msgstr "否"
 
@@ -556,15 +560,15 @@ msgstr "不可用"
 msgid "Not set"
 msgstr "未设置"
 
-#: im/pinyin/pinyin.h:175
+#: im/pinyin/pinyin.h:185
 msgid "Number of Sentences"
 msgstr "句子数量"
 
-#: im/table/ime.h:127
+#: im/table/ime.h:136
 msgid "Order policy"
 msgstr "排序规则"
 
-#: im/table/ime.h:146
+#: im/table/ime.h:155
 msgid ""
 "Order the candidate based on the word you already typed. You may want to "
 "disable this option if you want the candidate order to be stable regardless "
@@ -573,11 +577,11 @@ msgstr ""
 "根据已经输入的内容对候选词进行排序。如果想要候选词顺序与输入历史无关，则需要"
 "禁用这个选项。"
 
-#: im/table/ime.h:82 im/pinyin/pinyin.h:95
+#: im/table/ime.h:82 im/pinyin/pinyin.h:101
 msgid "Page size"
 msgstr "页大小"
 
-#: im/pinyin/pinyin.cpp:845 im/pinyin/pinyin.cpp:1018
+#: im/pinyin/pinyin.cpp:861 im/pinyin/pinyin.cpp:1038
 #: im/pinyin/pinyin-addon.conf.in.in:3 im/pinyin/pinyin.conf.in:3
 msgid "Pinyin"
 msgstr "拼音"
@@ -586,43 +590,43 @@ msgstr "拼音"
 msgid "Pinyin dictionary manager"
 msgstr "拼音词典管理器"
 
-#: im/pinyin/pinyin.h:58
+#: im/pinyin/pinyin.h:64
 msgid "PinyinJiajia"
 msgstr "拼音加加"
 
-#: im/table/state.cpp:596
+#: im/table/state.cpp:601
 msgid "Please use this functionality after typing some text."
 msgstr "请在输入一些文字之后再使用这个功能。"
 
-#: im/pinyin/pinyin.cpp:720
+#: im/pinyin/pinyin.cpp:723
 msgid "Prediction"
 msgstr "预测"
 
-#: im/pinyin/pinyin.h:116
+#: im/pinyin/pinyin.h:126
 msgid "Prediction Size"
 msgstr "预测个数"
 
-#: im/table/ime.h:157
+#: im/table/ime.h:166
 msgid "Prefix key to trigger Pinyin"
 msgstr "触发拼音的前缀键"
 
-#: im/table/state.cpp:629
+#: im/table/state.cpp:634
 msgid "Press Backspace to forget."
 msgstr "按下退格键以忘记。"
 
-#: im/table/state.cpp:632
+#: im/table/state.cpp:637
 msgid "Press Delete to remove."
 msgstr "按下删除键来移除。"
 
-#: im/table/state.cpp:626
+#: im/table/state.cpp:631
 msgid "Press space or enter to insert."
 msgstr "按下空格或回车键来插入。"
 
-#: im/pinyin/pinyin.cpp:1441
+#: im/pinyin/pinyin.cpp:1464
 msgid "Press {} for {}"
 msgstr "按下 {} 输入 {}"
 
-#: im/pinyin/pinyin.cpp:1438
+#: im/pinyin/pinyin.cpp:1461
 msgid "Press {} for {} and Return for {}"
 msgstr "按下 {} 输入 {}，按下回车输入 {}"
 
@@ -634,15 +638,15 @@ msgstr "上一个候选词"
 msgid "Prev page"
 msgstr "上一页"
 
-#: im/pinyin/pinyin.h:137
+#: im/pinyin/pinyin.h:147
 msgid "Previous Candidate"
 msgstr "上一个候选词"
 
-#: im/pinyin/pinyin.h:125
+#: im/pinyin/pinyin.h:135
 msgid "Previous Page"
 msgstr "上一页"
 
-#: im/pinyin/pinyin.h:179
+#: im/pinyin/pinyin.h:189
 msgid "Prompt long word length when input length over (0 for disable)"
 msgstr "输入长于...时提示长词 (设置为 0 时禁用)"
 
@@ -650,21 +654,21 @@ msgstr "输入长于...时提示长词 (设置为 0 时禁用)"
 msgid "Proxy"
 msgstr "代理"
 
-#: im/pinyin/pinyin.h:184 modules/punctuation/punctuation.cpp:228
+#: im/pinyin/pinyin.h:194 modules/punctuation/punctuation.cpp:228
 #: modules/punctuation/punctuation.cpp:230
 #: modules/punctuation/punctuation.conf.in.in:3
 msgid "Punctuation"
 msgstr "标点"
 
-#: im/pinyin/pinyin.h:200
+#: im/pinyin/pinyin.h:210
 msgid "Quick Phrase"
 msgstr "快速输入"
 
-#: im/table/ime.h:201
+#: im/table/ime.h:210
 msgid "Regular expression for auto select when no match is found"
 msgstr "没有匹配时自动选择的正则表达式"
 
-#: im/table/ime.h:177
+#: im/table/ime.h:186
 msgid "Regular expression for selecting the only candidate"
 msgstr "选择唯一候选词的正则表达式"
 
@@ -675,7 +679,7 @@ msgstr "选择唯一候选词的正则表达式"
 msgid "Remove &All"
 msgstr "移除全部(&A)"
 
-#: im/table/ime.h:240
+#: im/table/ime.h:249
 msgid "Save auto phrase after being typed for ... times"
 msgstr "在输入...次后保存自动组词"
 
@@ -683,11 +687,11 @@ msgstr "在输入...次后保存自动组词"
 msgid "Scel file (*.scel)"
 msgstr "Scel 文件 (*.scel)"
 
-#: im/pinyin/pinyin.h:149
+#: im/pinyin/pinyin.h:159
 msgid "Select 2nd Candidate"
 msgstr "选择第 2 个候选词"
 
-#: im/pinyin/pinyin.h:156
+#: im/pinyin/pinyin.h:166
 msgid "Select 3rd Candidate"
 msgstr "选择第 3 个候选词"
 
@@ -703,7 +707,7 @@ msgstr "选择第二个候选词"
 msgid "Select Third Candidate"
 msgstr "选择第三个候选词"
 
-#: im/table/state.cpp:1160
+#: im/table/state.cpp:1165
 msgid "Select candidate to be removed from history:"
 msgstr "选择要从历史中移除的候选词："
 
@@ -715,23 +719,23 @@ msgstr "选择 scel 文件"
 msgid "Selection"
 msgstr "选择"
 
-#: im/table/ime.h:254
+#: im/table/ime.h:263
 msgid "Separator text between hint and candidate"
 msgstr "提示和候选词之间的分隔符文本"
 
-#: im/pinyin/pinyin.h:112
+#: im/pinyin/pinyin.h:122
 msgid "Show complete pinyin in preedit"
 msgstr "在预编辑中显示完整拼音"
 
-#: im/pinyin/pinyin.h:94
+#: im/pinyin/pinyin.h:100
 msgid "Show current shuangpin mode"
 msgstr "显示当前双拼模式"
 
-#: im/pinyin/pinyin.cpp:721
+#: im/pinyin/pinyin.cpp:724
 msgid "Show prediction words"
 msgstr "显示联想词组"
 
-#: im/pinyin/pinyin.h:106
+#: im/pinyin/pinyin.h:115
 msgid "Show preedit within application"
 msgstr "在程序中显示预编辑文本"
 
@@ -739,7 +743,7 @@ msgstr "在程序中显示预编辑文本"
 msgid "Shuangpin"
 msgstr "双拼"
 
-#: im/pinyin/pinyin.h:91
+#: im/pinyin/pinyin.h:97
 msgid "Shuangpin Profile"
 msgstr "双拼方案"
 
@@ -751,16 +755,16 @@ msgstr "简体中文"
 msgid "Simplified Chinese is enabled."
 msgstr "已启用简体中文。"
 
-#: im/pinyin/pinyin.h:187 modules/chttrans/chttrans.cpp:71
+#: im/pinyin/pinyin.h:197 modules/chttrans/chttrans.cpp:71
 #: modules/chttrans/chttrans.conf.in.in:3
 msgid "Simplified and Traditional Chinese Translation"
 msgstr "简繁转换"
 
-#: im/table/ime.h:141
+#: im/table/ime.h:150
 msgid "Sort candidates based on current context"
 msgstr "根据当前上下文排序候选词"
 
-#: im/pinyin/pinyin.h:205
+#: im/pinyin/pinyin.h:215
 msgid "Strings to trigger quick phrase"
 msgstr "触发快速输入的字符串"
 
@@ -780,7 +784,7 @@ msgstr "码表"
 msgid "Temporary file created."
 msgstr "已创建临时文件。"
 
-#: im/table/ime.h:116
+#: im/table/ime.h:125
 msgid "Text to trigger quickphrase"
 msgstr "触发快速输入的文本"
 
@@ -817,19 +821,19 @@ msgstr "转换引擎"
 msgid "Type paired punctuations together (e.g. Quote)"
 msgstr "同时输入成对标点 (例如引号)"
 
-#: im/pinyin/pinyin.h:161
+#: im/pinyin/pinyin.h:171
 msgid "Use Keypad as Selection key"
 msgstr "使用数字键盘选词"
 
-#: im/table/state.cpp:602
+#: im/table/state.cpp:607
 msgid "Use Left and Right to select character: "
 msgstr "使用左右键来选择字符："
 
-#: im/table/state.cpp:613
+#: im/table/state.cpp:618
 msgid "Use Left and Right to select text. "
 msgstr "使用左右键来选择字符。"
 
-#: im/pinyin/pinyin.h:199
+#: im/pinyin/pinyin.h:209
 msgid "Use V to trigger quickphrase"
 msgstr "使用 V 来触发快速输入"
 
@@ -837,7 +841,7 @@ msgstr "使用 V 来触发快速输入"
 msgid "Use full width"
 msgstr "使用全角字符"
 
-#: im/table/ime.h:131
+#: im/table/ime.h:140
 msgid "Use system language model"
 msgstr "使用系统语言模型"
 
@@ -849,7 +853,7 @@ msgstr "纵向"
 msgid "Wanfeng"
 msgstr "晚风"
 
-#: im/table/ime.h:120
+#: im/table/ime.h:129
 msgid ""
 "When a new character is typed, if it matches any character in this string, "
 "all the existing text will be put into quickphrase buffer."
@@ -857,14 +861,14 @@ msgstr ""
 "当新字符输入时，如果它和这个字符串任意字符匹配，所有的已有文本将会被放到快速"
 "输入中"
 
-#: im/table/ime.h:135
+#: im/table/ime.h:144
 msgid ""
 "When available, system language model will be loaded for given language and "
 "provide ability to give better context based order."
 msgstr ""
 "当系统语言模型可用时，将会根据对应语言加载并提供更好的基于上下文的排序。"
 
-#: im/table/ime.h:170
+#: im/table/ime.h:179
 msgid ""
 "When current input length is greater than or equal to the limit and there is "
 "only one candidate available, automatically select this candidate. -1 Means "
@@ -873,13 +877,13 @@ msgstr ""
 "当当前的输入长度大于等于限制并且只有一个候选词可用时，自动选择这个候选词。-1 "
 "表示码表的最大码长。0 表示禁用这个行为。"
 
-#: im/table/ime.h:181
+#: im/table/ime.h:190
 msgid ""
 "When current input matches the regular expression and there is only one "
 "candidate available, automatically select this candidate."
 msgstr "当当前输入匹配正则表达式而且只有一个候选词可用时，自动选择这个候选词。"
 
-#: im/table/ime.h:192
+#: im/table/ime.h:201
 msgid ""
 "When typing a new character, if the current input length is greater than or "
 "equal to the limit, and the existing segment with the new character does not "
@@ -891,7 +895,7 @@ msgstr ""
 "新字符在码表中没有匹配，将选择当前候选词再输入这个新字符。-1 表示码表的最大码"
 "长。0 表示禁用这个行为。"
 
-#: im/table/ime.h:206
+#: im/table/ime.h:215
 msgid ""
 "When typing a new character, if the current input matches the regular "
 "expression and the existing segment with the new character does not have any "
@@ -901,12 +905,12 @@ msgstr ""
 "当输入新字符时，如果当前输入匹配正则表达式并且当前分段加上这个新字符在码表中"
 "没有匹配，将选择当前候选词再输入这个新字符。"
 
-#: im/table/ime.h:232
+#: im/table/ime.h:241
 msgid ""
 "Whether to learn new phrase from other phrases or just single characters."
 msgstr "是否从其它词组，或仅从单字学习自组词"
 
-#: im/table/ime.h:152
+#: im/table/ime.h:161
 msgid "Wildcard matching Key"
 msgstr "模糊键"
 
@@ -922,31 +926,31 @@ msgstr "五笔字型"
 msgid "Wubi Pinyin"
 msgstr "五笔拼音"
 
-#: im/pinyin/pinyin.h:59
+#: im/pinyin/pinyin.h:65
 msgid "Xiaohe"
 msgstr "小鹤"
 
-#: im/pinyin/pinyin.cpp:841
+#: im/pinyin/pinyin.cpp:857
 msgid "Yes"
 msgstr "是"
 
-#: im/pinyin/pinyin.h:58
+#: im/pinyin/pinyin.h:64
 msgid "Zhongwenzhixing"
 msgstr "中文之星"
 
-#: im/pinyin/pinyin.h:57
+#: im/pinyin/pinyin.h:63
 msgid "Ziguang"
 msgstr "紫光"
 
-#: im/pinyin/pinyin.h:56 im/table/zrm.conf.in.in:3
+#: im/pinyin/pinyin.h:62 im/table/zrm.conf.in.in:3
 msgid "Ziranma"
 msgstr "自然码"
 
-#: im/pinyin/pinyin.cpp:1241
+#: im/pinyin/pinyin.cpp:1261
 msgid "[Select the word to remove from history]"
 msgstr "[选择要从历史中移除的词]"
 
-#: im/pinyin/pinyin.cpp:1189
+#: im/pinyin/pinyin.cpp:1209
 msgid "[Stroke Filtering]"
 msgstr "[笔画过滤]"
 
@@ -959,55 +963,55 @@ msgstr "[笔画过滤]"
 msgid "about:blank"
 msgstr "about:blank"
 
-#: im/pinyin/pinyin.h:75
+#: im/pinyin/pinyin.h:81
 msgid "an <-> ang"
 msgstr "an <-> ang"
 
-#: im/pinyin/pinyin.h:81
+#: im/pinyin/pinyin.h:87
 msgid "c <-> ch"
 msgstr "c <-> ch"
 
-#: im/pinyin/pinyin.h:76
+#: im/pinyin/pinyin.h:82
 msgid "en <-> eng"
 msgstr "en <-> eng"
 
-#: im/pinyin/pinyin.h:82
+#: im/pinyin/pinyin.h:88
 msgid "f <-> h"
 msgstr "f <-> h"
 
-#: im/pinyin/pinyin.h:77
+#: im/pinyin/pinyin.h:83
 msgid "ian <-> iang"
 msgstr "ian <-> iang"
 
-#: im/pinyin/pinyin.h:78
+#: im/pinyin/pinyin.h:84
 msgid "in <-> ing"
 msgstr "in <-> ing"
 
-#: im/pinyin/pinyin.h:83
+#: im/pinyin/pinyin.h:89
 msgid "l <-> n"
 msgstr "l <-> n"
 
-#: im/pinyin/pinyin.h:84
+#: im/pinyin/pinyin.h:90
 msgid "s <-> sh"
 msgstr "s <-> sh"
 
-#: im/pinyin/pinyin.h:79
+#: im/pinyin/pinyin.h:85
 msgid "u <-> ou"
 msgstr "u <-> ou"
 
-#: im/pinyin/pinyin.h:74
+#: im/pinyin/pinyin.h:80
 msgid "u <-> v"
 msgstr "u <-> v"
 
-#: im/pinyin/pinyin.h:80
+#: im/pinyin/pinyin.h:86
 msgid "uan <-> uang"
 msgstr "uan <-> uang"
 
-#: im/pinyin/pinyin.h:62
+#: im/pinyin/pinyin.h:68
 msgid "ue -> ve"
 msgstr "ue -> ve"
 
-#: im/pinyin/pinyin.h:85
+#: im/pinyin/pinyin.h:91
 msgid "z <-> zh"
 msgstr "z <-> zh"
 
@@ -1015,14 +1019,14 @@ msgstr "z <-> zh"
 msgid "{0} ({1})"
 msgstr "{0} ({1})"
 
-#: im/table/state.cpp:647
+#: im/table/state.cpp:652
 msgid "{0} is not in table."
 msgstr "{0} 不在码表中。"
 
-#: im/table/state.cpp:636
+#: im/table/state.cpp:641
 msgid "{0}: No corresponding code."
 msgstr "{0}：没有对应的码。"
 
-#: im/table/state.cpp:620 im/table/state.cpp:644
+#: im/table/state.cpp:625 im/table/state.cpp:649
 msgid "{0}: {1}"
 msgstr "{0}：{1}"
