@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2022-07-06 20:24+0000\n"
+"POT-Creation-Date: 2022-07-07 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Dmitry <dmitrydmitry761@gmail.com>, 2022\n"
 "Language-Team: Russian (https://www.transifex.com/fcitx/teams/12005/ru/)\n"
@@ -298,7 +298,7 @@ msgstr "Включить Chaizi"
 
 #: im/pinyin/pinyin.h:107
 msgid "Enable Characters in Unicode CJK Extension B"
-msgstr ""
+msgstr "Включить символы в Юникоде CJK Расширение B"
 
 #: im/pinyin/pinyin.h:110
 msgid "Enable Cloud Pinyin"

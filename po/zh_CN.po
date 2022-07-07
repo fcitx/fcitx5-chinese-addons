@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2022-07-06 20:24+0000\n"
+"POT-Creation-Date: 2022-07-07 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: rocka, 2022\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/fcitx/teams/12005/"
@@ -287,7 +287,7 @@ msgstr "启用拆字"
 
 #: im/pinyin/pinyin.h:107
 msgid "Enable Characters in Unicode CJK Extension B"
-msgstr ""
+msgstr "启用 Unicode CJK 拓展区 B 中的字符"
 
 #: im/pinyin/pinyin.h:110
 msgid "Enable Cloud Pinyin"
