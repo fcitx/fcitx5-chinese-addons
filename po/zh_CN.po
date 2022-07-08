@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2022-07-07 20:24+0000\n"
+"POT-Creation-Date: 2022-07-08 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: rocka, 2022\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/fcitx/teams/12005/"
@@ -148,7 +148,7 @@ msgstr "以词定字"
 msgid "Clear &All Data"
 msgstr "清理所有数据(&A)"
 
-#: im/pinyin/pinyin.h:200 modules/cloudpinyin/cloudpinyin.conf.in.in:3
+#: im/pinyin/pinyin.h:202 modules/cloudpinyin/cloudpinyin.conf.in.in:3
 msgid "Cloud Pinyin"
 msgstr "云拼音"
 
@@ -239,7 +239,7 @@ msgstr "对话框"
 msgid "Dianbaoma"
 msgstr "电报码"
 
-#: im/pinyin/pinyin.h:191
+#: im/pinyin/pinyin.h:193
 msgid "Dictionaries"
 msgstr "词典"
 
@@ -317,7 +317,7 @@ msgstr "启用的输入法"
 msgid "End key"
 msgstr "中止键"
 
-#: im/pinyin/pinyin.h:220
+#: im/pinyin/pinyin.h:222
 msgid "Enter a string from the list will make it enter quickphrase mode."
 msgstr "输入列表中的字符将使它进入快速输入模式"
 
@@ -370,7 +370,7 @@ msgstr "文件"
 msgid "File Operation Failed"
 msgstr "文件操作失败"
 
-#: im/pinyin/pinyin.h:181
+#: im/pinyin/pinyin.h:183
 msgid "Filter by stroke"
 msgstr "按笔画过滤"
 
@@ -426,7 +426,7 @@ msgstr "全角标点已禁用。"
 msgid "Full width punctuation is enabled."
 msgstr "已启用全角标点。"
 
-#: im/pinyin/pinyin.h:222
+#: im/pinyin/pinyin.h:224
 msgid "Fuzzy Pinyin Settings"
 msgstr "模糊音设置"
 
@@ -480,7 +480,7 @@ msgctxt "Key of the punctuation, e.g. comma"
 msgid "Key"
 msgstr "按键"
 
-#: im/table/ime.h:119 im/pinyin/pinyin.h:205
+#: im/table/ime.h:119 im/pinyin/pinyin.h:207
 msgid "Key to trigger quickphrase"
 msgstr "快速输入的触发键"
 
@@ -560,7 +560,7 @@ msgstr "不可用"
 msgid "Not set"
 msgstr "未设置"
 
-#: im/pinyin/pinyin.h:185
+#: im/pinyin/pinyin.h:187
 msgid "Number of Sentences"
 msgstr "句子数量"
 
@@ -646,7 +646,7 @@ msgstr "上一个候选词"
 msgid "Previous Page"
 msgstr "上一页"
 
-#: im/pinyin/pinyin.h:189
+#: im/pinyin/pinyin.h:191
 msgid "Prompt long word length when input length over (0 for disable)"
 msgstr "输入长于...时提示长词 (设置为 0 时禁用)"
 
@@ -654,13 +654,13 @@ msgstr "输入长于...时提示长词 (设置为 0 时禁用)"
 msgid "Proxy"
 msgstr "代理"
 
-#: im/pinyin/pinyin.h:194 modules/punctuation/punctuation.cpp:228
+#: im/pinyin/pinyin.h:196 modules/punctuation/punctuation.cpp:228
 #: modules/punctuation/punctuation.cpp:230
 #: modules/punctuation/punctuation.conf.in.in:3
 msgid "Punctuation"
 msgstr "标点"
 
-#: im/pinyin/pinyin.h:210
+#: im/pinyin/pinyin.h:212
 msgid "Quick Phrase"
 msgstr "快速输入"
 
@@ -755,7 +755,7 @@ msgstr "简体中文"
 msgid "Simplified Chinese is enabled."
 msgstr "已启用简体中文。"
 
-#: im/pinyin/pinyin.h:197 modules/chttrans/chttrans.cpp:71
+#: im/pinyin/pinyin.h:199 modules/chttrans/chttrans.cpp:71
 #: modules/chttrans/chttrans.conf.in.in:3
 msgid "Simplified and Traditional Chinese Translation"
 msgstr "简繁转换"
@@ -764,7 +764,7 @@ msgstr "简繁转换"
 msgid "Sort candidates based on current context"
 msgstr "根据当前上下文排序候选词"
 
-#: im/pinyin/pinyin.h:215
+#: im/pinyin/pinyin.h:217
 msgid "Strings to trigger quick phrase"
 msgstr "触发快速输入的字符串"
 
@@ -821,6 +821,10 @@ msgstr "转换引擎"
 msgid "Type paired punctuations together (e.g. Quote)"
 msgstr "同时输入成对标点 (例如引号)"
 
+#: im/pinyin/pinyin.h:179
+msgid "Use BackSpace to cancel the selection"
+msgstr ""
+
 #: im/pinyin/pinyin.h:171
 msgid "Use Keypad as Selection key"
 msgstr "使用数字键盘选词"
@@ -833,7 +837,7 @@ msgstr "使用左右键来选择字符："
 msgid "Use Left and Right to select text. "
 msgstr "使用左右键来选择字符。"
 
-#: im/pinyin/pinyin.h:209
+#: im/pinyin/pinyin.h:211
 msgid "Use V to trigger quickphrase"
 msgstr "使用 V 来触发快速输入"
 

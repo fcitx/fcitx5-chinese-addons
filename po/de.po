@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2022-07-06 20:24+0000\n"
+"POT-Creation-Date: 2022-07-08 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Ettore Atalan <atalanttore@googlemail.com>, 2022\n"
 "Language-Team: German (https://www.transifex.com/fcitx/teams/12005/de/)\n"
@@ -143,7 +143,7 @@ msgstr ""
 msgid "Clear &All Data"
 msgstr "&Alle Daten löschen"
 
-#: im/pinyin/pinyin.h:200 modules/cloudpinyin/cloudpinyin.conf.in.in:3
+#: im/pinyin/pinyin.h:202 modules/cloudpinyin/cloudpinyin.conf.in.in:3
 msgid "Cloud Pinyin"
 msgstr "Cloud Pinyin"
 
@@ -238,7 +238,7 @@ msgstr "Dialog"
 msgid "Dianbaoma"
 msgstr "Dianbaoma"
 
-#: im/pinyin/pinyin.h:191
+#: im/pinyin/pinyin.h:193
 msgid "Dictionaries"
 msgstr "Wörterbücher"
 
@@ -314,7 +314,7 @@ msgstr "Aktivierte Eingabemethoden"
 msgid "End key"
 msgstr ""
 
-#: im/pinyin/pinyin.h:220
+#: im/pinyin/pinyin.h:222
 msgid "Enter a string from the list will make it enter quickphrase mode."
 msgstr ""
 
@@ -367,7 +367,7 @@ msgstr "Datei"
 msgid "File Operation Failed"
 msgstr "Dateioperation gescheitert"
 
-#: im/pinyin/pinyin.h:181
+#: im/pinyin/pinyin.h:183
 msgid "Filter by stroke"
 msgstr ""
 
@@ -423,7 +423,7 @@ msgstr "Vollbreite Interpunktion ist ausgeschaltet."
 msgid "Full width punctuation is enabled."
 msgstr "Vollbreite Satzzeichen ist aktiviert."
 
-#: im/pinyin/pinyin.h:222
+#: im/pinyin/pinyin.h:224
 msgid "Fuzzy Pinyin Settings"
 msgstr ""
 
@@ -475,7 +475,7 @@ msgctxt "Key of the punctuation, e.g. comma"
 msgid "Key"
 msgstr "Taste"
 
-#: im/table/ime.h:119 im/pinyin/pinyin.h:205
+#: im/table/ime.h:119 im/pinyin/pinyin.h:207
 msgid "Key to trigger quickphrase"
 msgstr "Trigger Key für QuickPhrase"
 
@@ -557,7 +557,7 @@ msgstr "Nicht verfügbar"
 msgid "Not set"
 msgstr "Nicht festgelegt"
 
-#: im/pinyin/pinyin.h:185
+#: im/pinyin/pinyin.h:187
 msgid "Number of Sentences"
 msgstr ""
 
@@ -642,7 +642,7 @@ msgstr ""
 msgid "Previous Page"
 msgstr ""
 
-#: im/pinyin/pinyin.h:189
+#: im/pinyin/pinyin.h:191
 msgid "Prompt long word length when input length over (0 for disable)"
 msgstr ""
 
@@ -650,13 +650,13 @@ msgstr ""
 msgid "Proxy"
 msgstr "Proxy"
 
-#: im/pinyin/pinyin.h:194 modules/punctuation/punctuation.cpp:228
+#: im/pinyin/pinyin.h:196 modules/punctuation/punctuation.cpp:228
 #: modules/punctuation/punctuation.cpp:230
 #: modules/punctuation/punctuation.conf.in.in:3
 msgid "Punctuation"
 msgstr "Interpunktion"
 
-#: im/pinyin/pinyin.h:210
+#: im/pinyin/pinyin.h:212
 msgid "Quick Phrase"
 msgstr ""
 
@@ -751,7 +751,7 @@ msgstr "Chinesische Kurzzeichen"
 msgid "Simplified Chinese is enabled."
 msgstr "Chinesische Kurzzeichen aktiviert."
 
-#: im/pinyin/pinyin.h:197 modules/chttrans/chttrans.cpp:71
+#: im/pinyin/pinyin.h:199 modules/chttrans/chttrans.cpp:71
 #: modules/chttrans/chttrans.conf.in.in:3
 msgid "Simplified and Traditional Chinese Translation"
 msgstr "Übersetzung simplizifiertes und traditionelles Chinesisch "
@@ -760,7 +760,7 @@ msgstr "Übersetzung simplizifiertes und traditionelles Chinesisch "
 msgid "Sort candidates based on current context"
 msgstr ""
 
-#: im/pinyin/pinyin.h:215
+#: im/pinyin/pinyin.h:217
 msgid "Strings to trigger quick phrase"
 msgstr ""
 
@@ -815,6 +815,10 @@ msgstr "Übersetzungsmaschine"
 msgid "Type paired punctuations together (e.g. Quote)"
 msgstr ""
 
+#: im/pinyin/pinyin.h:179
+msgid "Use BackSpace to cancel the selection"
+msgstr ""
+
 #: im/pinyin/pinyin.h:171
 msgid "Use Keypad as Selection key"
 msgstr ""
@@ -827,7 +831,7 @@ msgstr "Pfeiltasten Links und Rechts benutzen, um Zeichen auszuwählen"
 msgid "Use Left and Right to select text. "
 msgstr "Pfeiltasten Links und Rechts benutzen, um Text auszuwählen"
 
-#: im/pinyin/pinyin.h:209
+#: im/pinyin/pinyin.h:211
 msgid "Use V to trigger quickphrase"
 msgstr ""
 
