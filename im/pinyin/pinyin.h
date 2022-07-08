@@ -219,6 +219,8 @@ FCITX_CONFIGURATION(
                            {},
                            {_("Enter a string from the list will make it enter "
                               "quickphrase mode.")}};
+    Option<bool> useBackSpaceToUnselect{this, "useBackSpaceToUnselect",
+                               _("Use the backspace key to unselect"), true};
     Option<FuzzyConfig> fuzzyConfig{this, "Fuzzy", _("Fuzzy Pinyin Settings")};
     HiddenOption<bool> firstRun{this, "FirstRun", "FirstRun", true};);
 
