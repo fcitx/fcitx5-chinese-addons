@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2022-07-08 20:24+0000\n"
+"POT-Creation-Date: 2022-07-09 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Dmitry <dmitrydmitry761@gmail.com>, 2022\n"
 "Language-Team: Russian (https://www.transifex.com/fcitx/teams/12005/ru/)\n"
@@ -843,7 +843,7 @@ msgstr "Вводите парные знаки препинания вместе
 
 #: im/pinyin/pinyin.h:179
 msgid "Use BackSpace to cancel the selection"
-msgstr ""
+msgstr "Использовать BackSpace, чтобы отменить выбор"
 
 #: im/pinyin/pinyin.h:171
 msgid "Use Keypad as Selection key"
