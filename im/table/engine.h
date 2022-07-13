@@ -10,6 +10,7 @@
 #include "ime.h"
 #include <fcitx-config/configuration.h>
 #include <fcitx-config/iniparser.h>
+#include <fcitx/action.h>
 #include <fcitx/addonfactory.h>
 #include <fcitx/addonmanager.h>
 #include <fcitx/inputcontextproperty.h>
@@ -37,7 +38,12 @@ FCITX_CONFIGURATION(TableGlobalConfig,
                                                "LookupPinyinKey",
                                                _("Lookup pinyin"),
                                                {Key("Control+Alt+E")},
-                                               KeyListConstrain()};);
+                                               KeyListConstrain()};
+                    Option<bool> predictionEnabled{
+                        this, "Prediction", _("Enable Prediction"), false};
+                    Option<int, IntConstrain> predictionSize{
+                        this, "PredictionSize", _("Prediction Size"), 10,
+                        IntConstrain(3, 20)};);
 
 class TableEngine final : public InputMethodEngine {
 public:
@@ -62,7 +68,7 @@ public:
     const Configuration *getConfig() const override { return &config_; }
     void setConfig(const RawConfig &config) override {
         config_.load(config, true);
-        safeSaveAsIni(config_, "conf/table.conf");
+        saveConfig();
     }
 
     const Configuration *
@@ -83,10 +89,12 @@ private:
     void cloudTableSelected(InputContext *inputContext,
                             const std::string &selected,
                             const std::string &word);
+    void saveConfig() { safeSaveAsIni(config_, "conf/table.conf"); }
 
     Instance *instance_;
     std::unique_ptr<TableIME> ime_;
     std::vector<std::unique_ptr<HandlerTableEntry<EventHandler>>> events_;
+    SimpleAction predictionAction_;
     FactoryFor<TableState> factory_;
 
     TableGlobalConfig config_;

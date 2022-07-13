@@ -319,7 +319,8 @@ void PinyinEngine::updatePredict(InputContext *inputContext) {
     inputContext->inputPanel().reset();
 
     auto *state = inputContext->propertyFor(&factory_);
-    auto words = prediction_.predict(state->predictWords_, *config_.pageSize);
+    auto words =
+        prediction_.predict(state->predictWords_, *config_.predictionSize);
     if (auto candidateList = predictCandidateList(words)) {
         auto &inputPanel = inputContext->inputPanel();
         inputPanel.setCandidateList(std::move(candidateList));
@@ -1597,7 +1598,8 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
     } else if (!state->context_.empty()) {
         // key to handle when it is not empty.
         if (event.key().check(FcitxKey_BackSpace)) {
-            if (*config_.useBackSpaceToUnselect && state->context_.selectedLength()) {
+            if (*config_.useBackSpaceToUnselect &&
+                state->context_.selectedLength()) {
                 state->context_.cancel();
             } else {
                 state->context_.backspace();

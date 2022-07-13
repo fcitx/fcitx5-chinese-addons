@@ -11,26 +11,30 @@ namespace fcitx {
 TableContext::TableContext(libime::TableBasedDictionary &dict,
                            const TableConfig &config,
                            libime::UserLanguageModel &model)
-    : libime::TableContext(dict, model), config_(config) {}
+    : libime::TableContext(dict, model), config_(config),
+      prediction_(std::make_unique<libime::Prediction>()) {
+    prediction_->setUserLanguageModel(&model);
+}
 
 Text TableContext::preeditText(bool hint, bool clientPreedit) const {
     Text text;
+    TextFormatFlag format =
+        clientPreedit ? TextFormatFlag::Underline : TextFormatFlag::NoFlag;
     if (!*config_.commitAfterSelect) {
         for (size_t i = 0, e = selectedSize(); i < e; i++) {
             auto seg = selectedSegment(i);
             if (std::get<bool>(seg)) {
-                text.append(std::get<std::string>(seg),
-                            {TextFormatFlag::Underline});
+                text.append(std::get<std::string>(seg), {format});
             } else {
                 auto segText = hint ? customHint(std::get<std::string>(seg))
                                     : std::get<std::string>(seg);
                 TextFormatFlags flags;
                 if (*config_.commitInvalidSegment) {
                     segText = stringutils::concat("(", segText, ")");
-                    flags = TextFormatFlag::Underline;
+                    flags = format;
                 } else {
                     flags = {TextFormatFlag::DontCommit, TextFormatFlag::Strike,
-                             TextFormatFlag::Underline};
+                             format};
                 }
 
                 text.append(segText, flags);
@@ -45,7 +49,7 @@ Text TableContext::preeditText(bool hint, bool clientPreedit) const {
         codeText = hint ? customHint(currentCode()) : currentCode();
     }
 
-    text.append(codeText, {TextFormatFlag::Underline});
+    text.append(codeText, {format});
 
     if (clientPreedit && *config_.preeditCursorPositionAtBeginning) {
         text.setCursor(0);

@@ -175,8 +175,9 @@ FCITX_CONFIGURATION(
         _("Choose Character from Phrase"),
         {Key("["), Key("]")},
         KeyListConstrain({KeyConstrainFlag::AllowModifierLess})};
-    Option<bool> useBackSpaceToUnselect{this, "BackSpaceToUnselect",
-                               _("Use BackSpace to cancel the selection"), true};
+    Option<bool> useBackSpaceToUnselect{
+        this, "BackSpaceToUnselect", _("Use BackSpace to cancel the selection"),
+        true};
     KeyListOption selectByStroke{
         this,
         "FilterByStroke",
