@@ -61,7 +61,7 @@ public:
         if (context->selected()) {
             state->commitBuffer(true);
         }
-        state->updateUI();
+        state->updateUI(/*keepOldCursor=*/false, /*maybePredict=*/true);
     }
 
     TableEngine *engine_;
@@ -94,7 +94,7 @@ public:
         auto *state = inputContext->propertyFor(&engine_->factory());
         inputContext->commitString(word_);
         state->pushLastCommit("", word_);
-        state->reset();
+        state->resetAndPredict();
     }
 
     TableEngine *engine_;
@@ -224,6 +224,79 @@ void TableState::reset(const InputMethodEntry *entry) {
     keyReleasedIndex_ = -2;
 }
 
+class TablePredictCandidateWord : public CandidateWord {
+public:
+    TablePredictCandidateWord(TableState *state, std::string word)
+        : CandidateWord(Text(word)), state_(state), word_(std::move(word)) {}
+
+    void select(InputContext *inputContext) const override {
+        state_->commitBuffer(true);
+        inputContext->commitString(word_);
+        state_->pushLastCommit("", word_);
+        state_->resetAndPredict();
+    }
+
+    TableState *state_;
+    std::string word_;
+};
+
+std::unique_ptr<CandidateList>
+TableState::predictCandidateList(const std::vector<std::string> &words) {
+    if (words.empty()) {
+        return nullptr;
+    }
+    auto candidateList = std::make_unique<CommonCandidateList>();
+    for (const auto &word : words) {
+        candidateList->append<TablePredictCandidateWord>(this, word);
+    }
+    candidateList->setSelectionKey(*context_->config().selection);
+    candidateList->setPageSize(*context_->config().pageSize);
+    if (candidateList->size()) {
+        candidateList->setGlobalCursorIndex(0);
+    }
+    return candidateList;
+}
+
+void TableState::resetAndPredict() {
+    reset();
+    predict();
+}
+
+void TableState::predict() {
+    if (!context_ || !context_->prediction() ||
+        !*engine_->config().predictionEnabled) {
+        return;
+    }
+
+    std::string predictWord;
+    if (*context_->config().commitAfterSelect) {
+        predictWord = lastSegment_;
+    } else {
+        if (context_->selected()) {
+            auto [segment, valid] =
+                context_->selectedSegment(context_->selectedSize() - 1);
+            if (!valid) {
+                return;
+            }
+            predictWord = segment;
+        } else if (context_->empty()) {
+            predictWord = lastSegment_;
+        }
+    }
+
+    if (predictWord.empty()) {
+        return;
+    }
+    std::vector<std::string> predictWords = {predictWord};
+    auto words = context_->prediction()->predict(
+        predictWords, *engine_->config().predictionSize);
+    if (auto candidateList = predictCandidateList(words)) {
+        auto &inputPanel = ic_->inputPanel();
+        inputPanel.setCandidateList(std::move(candidateList));
+    }
+    ic_->updateUserInterface(UserInterfaceComponent::InputPanel);
+}
+
 bool TableState::isContextEmpty() const {
     if (!context_) {
         return true;
@@ -248,8 +321,8 @@ bool TableState::autoSelectCandidate() {
     return false;
 }
 
-bool TableState::handleCandidateList(const TableConfig &config,
-                                     KeyEvent &event) {
+bool TableState::handleCandidateList(const TableConfig &config, KeyEvent &event,
+                                     bool &needUpdate) {
     auto *inputContext = event.inputContext();
     // check if we can select candidate.
     auto candidateList = inputContext->inputPanel().candidateList();
@@ -311,6 +384,13 @@ bool TableState::handleCandidateList(const TableConfig &config,
         }
     }
 
+    // Non candidate key for predict candidate should clear it.
+    if (dynamic_cast<const TablePredictCandidateWord *>(
+            &candidateList->candidate(0))) {
+        inputContext->inputPanel().setCandidateList(nullptr);
+        needUpdate = true;
+    }
+
     return false;
 }
 
@@ -329,6 +409,7 @@ bool TableState::handlePinyinMode(KeyEvent &event) {
                 return false;
             }
         }
+        // This is to flush all the pending buffer.
         commitBuffer(true);
         mode_ = TableMode::Pinyin;
         event.filterAndAccept();
@@ -442,20 +523,22 @@ bool TableState::handlePinyinMode(KeyEvent &event) {
 bool TableState::handleForgetWord(KeyEvent &event) {
     auto *inputContext = event.inputContext();
     auto candidateList = inputContext->inputPanel().candidateList();
-    if (!candidateList || candidateList->size() == 0) {
+    if (!candidateList || candidateList->size() == 0 ||
+        !dynamic_cast<const TableCandidateWord *>(
+            &candidateList->candidate(0))) {
         return false;
     }
     if (mode_ == TableMode::Normal &&
         event.key().checkKeyList(*engine_->config().forgetWord)) {
         mode_ = TableMode::ForgetWord;
         event.filterAndAccept();
-        updateUI(/*keepOldCursor=*/true);
+        updateUI(/*keepOldCursor=*/true, /*maybePredict=*/false);
         return true;
     }
     if (mode_ == TableMode::ForgetWord && event.key().check(FcitxKey_Escape)) {
         mode_ = TableMode::Normal;
         event.filterAndAccept();
-        updateUI(/*keepOldCursor=*/true);
+        updateUI(/*keepOldCursor=*/true, /*maybePredict=*/false);
         return true;
     }
 
@@ -480,6 +563,7 @@ bool TableState::handleLookupPinyinOrModifyDictionaryMode(KeyEvent &event) {
             return false;
         }
 
+        // Flush pending buffer.
         commitBuffer(false);
         lookupPinyinIndex_ = 0;
         lookupPinyinString_.assign(lastCommit_.begin(), lastCommit_.end());
@@ -680,7 +764,7 @@ void TableState::forgetCandidateWord(size_t idx) {
         context_->type(oldCode);
     }
 
-    updateUI(/*keepOldCursor=*/true);
+    updateUI(/*keepOldCursor=*/true, /*maybePredict=*/false);
 }
 
 void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
@@ -706,7 +790,7 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
 
     lastIsPunc_ = false;
 
-    if (handleCandidateList(config, event)) {
+    if (handleCandidateList(config, event, needUpdate)) {
         return;
     }
 
@@ -736,6 +820,7 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         return;
     }
 
+    bool maybePredict = false;
     auto chr = Key::keySymToUnicode(event.key().sym());
     auto str = utf8::UCS4ToUTF8(chr);
 
@@ -743,6 +828,7 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         !config.quickphraseText->empty() && !str.empty() &&
         config.quickphraseText->find(str) != std::string::npos) {
         std::string text = context_->currentCode();
+        // Need to flush buffer before entering quick phrase.
         commitBuffer(false);
         text.append(str);
         reset();
@@ -778,10 +864,12 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
             context->backspace();
         } else {
             event.filterAndAccept();
+            maybePredict = true;
         }
     } else if (!isContextEmpty()) {
         if (event.key().check(FcitxKey_Return, KeyState::Shift) ||
             event.key().check(FcitxKey_KP_Enter, KeyState::Shift)) {
+            // This key is used to type long auto select buffer.
             if (*config.commitAfterSelect) {
                 commitBuffer(true);
             } else {
@@ -795,10 +883,11 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
                 CommitAfterSelectWrapper commitAfterSelectRAII(this);
                 autoSelectCandidate();
             }
+            event.filterAndAccept();
             if (context->selected()) {
                 commitBuffer(false);
+                maybePredict = true;
             }
-            event.filterAndAccept();
         } else if (event.key().sym() == FcitxKey_Return ||
                    event.key().sym() == FcitxKey_KP_Enter) {
             if (*config.commitAfterSelect) {
@@ -819,7 +908,7 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
                      context->selectedSegment(context->selectedSize() - 1)) ||
                  *config.commitInvalidSegment)) {
                 commitBuffer(false);
-                updateUI();
+                updateUI(/*keepOldCursor=*/false, /*maybePredict=*/false);
                 return;
             }
             if (event.key().check(FcitxKey_BackSpace, KeyState::Ctrl)) {
@@ -875,6 +964,8 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         if (event.filtered()) {
             break;
         }
+
+        // no reason to keep buffer if we move cursor.
         if (*context->config().commitAfterSelect && isContextEmpty()) {
             if (event.key().check(FcitxKey_Delete) ||
                 event.key().check(FcitxKey_BackSpace) ||
@@ -901,6 +992,7 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         // if current key will produce some string, select the candidate.
         if (!autoSelectCandidate()) {
             commitBuffer(true);
+            needUpdate = true;
         }
         std::string punc, puncAfter;
         if (!*context->config().ignorePunc && !event.key().isKeyPad()) {
@@ -938,7 +1030,7 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
     } while (0);
 
     if ((event.filtered() && event.accepted()) || needUpdate) {
-        updateUI();
+        updateUI(/*keepOldCursor=*/false, /*maybePredict=*/maybePredict);
     }
 }
 
@@ -1073,7 +1165,7 @@ void TableState::commitAfterSelect(int commitFrom) {
     }
 }
 
-void TableState::updateUI(bool keepOldCursor) {
+void TableState::updateUI(bool keepOldCursor, bool maybePredict) {
 
     int cursor = 0;
     if (keepOldCursor) {
@@ -1095,9 +1187,9 @@ void TableState::updateUI(bool keepOldCursor) {
         return;
     }
     const auto &config = context->config();
+    auto &inputPanel = ic_->inputPanel();
     if (!context->userInput().empty()) {
         auto candidates = context->candidates();
-        auto &inputPanel = ic_->inputPanel();
         if (!candidates.empty()) {
             auto candidateList = std::make_unique<CommonCandidateList>();
             size_t idx = 0;
@@ -1164,6 +1256,10 @@ void TableState::updateUI(bool keepOldCursor) {
             inputPanel.setAuxUp(
                 Text(_("Select candidate to be removed from history:")));
         }
+    }
+    if (maybePredict && !inputPanel.candidateList() &&
+        (context->selected() || isContextEmpty())) {
+        predict();
     }
     ic_->updatePreedit();
     ic_->updateUserInterface(UserInterfaceComponent::InputPanel);

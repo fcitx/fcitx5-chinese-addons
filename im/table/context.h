@@ -28,8 +28,16 @@ public:
 
     Text preeditText(bool hint, bool clientPreedit) const;
 
+    libime::Prediction *prediction() const {
+        if (!model().languageModelFile()) {
+            return nullptr;
+        }
+        return prediction_.get();
+    }
+
 private:
     const TableConfig &config_;
+    std::unique_ptr<libime::Prediction> prediction_;
 };
 } // namespace fcitx
 

@@ -36,11 +36,13 @@ public:
     TableContext *updateContext(const InputMethodEntry *entry);
     void release();
     void reset(const InputMethodEntry *entry = nullptr);
+    void resetAndPredict();
+    void predict();
 
     void keyEvent(const InputMethodEntry &entry, KeyEvent &event);
 
     void commitBuffer(bool commitCode, bool noRealCommit = false);
-    void updateUI(bool keepOldCursor = false);
+    void updateUI(bool keepOldCursor, bool maybePredict);
     void pushLastCommit(const std::string &code,
                         const std::string &lastSegment);
 
@@ -63,13 +65,16 @@ public:
 
 private:
     bool handle2nd3rdCandidate(const TableConfig &config, KeyEvent &event);
-    bool handleCandidateList(const TableConfig &config, KeyEvent &event);
+    bool handleCandidateList(const TableConfig &config, KeyEvent &event,
+                             bool &needUpdate);
     bool handleForgetWord(KeyEvent &event);
     bool handlePinyinMode(KeyEvent &event);
     bool handleLookupPinyinOrModifyDictionaryMode(KeyEvent &event);
 
     bool isContextEmpty() const;
     bool autoSelectCandidate();
+    std::unique_ptr<CandidateList>
+    predictCandidateList(const std::vector<std::string> &words);
     std::string commitSegements(size_t from, size_t to);
 
     TableMode mode_ = TableMode::Normal;

@@ -12,6 +12,7 @@
 #include <fcitx-utils/i18n.h>
 #include <fcitx-utils/log.h>
 #include <fcitx/candidatelist.h>
+#include <libime/core/prediction.h>
 #include <libime/core/userlanguagemodel.h>
 #include <libime/table/tablebaseddictionary.h>
 #include <tuple>

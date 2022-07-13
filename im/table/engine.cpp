@@ -69,6 +69,20 @@ TableEngine::TableEngine(Instance *instance)
             auto *state = inputContext->propertyFor(&factory_);
             state->handle2nd3rdCandidate(keyEvent);
         }));
+
+    predictionAction_.setShortText(_("Prediction"));
+    predictionAction_.setLongText(_("Show prediction words"));
+    predictionAction_.connect<SimpleAction::Activated>(
+        [this](InputContext *ic) {
+            config_.predictionEnabled.setValue(!(*config_.predictionEnabled));
+            saveConfig();
+            predictionAction_.setIcon(*config_.predictionEnabled
+                                          ? "fcitx-remind-active"
+                                          : "fcitx-remind-inactive");
+            predictionAction_.update(ic);
+        });
+    instance_->userInterfaceManager().registerAction("table-prediction",
+                                                     &predictionAction_);
 }
 
 TableEngine::~TableEngine() {}
@@ -96,6 +110,13 @@ void TableEngine::activate(const fcitx::InputMethodEntry &entry,
             inputContext->statusArea().addAction(StatusGroup::InputMethod,
                                                  action);
         }
+    }
+    if (context && context->prediction()) {
+        predictionAction_.setIcon(*config_.predictionEnabled
+                                      ? "fcitx-remind-active"
+                                      : "fcitx-remind-inactive");
+        inputContext->statusArea().addAction(StatusGroup::InputMethod,
+                                             &predictionAction_);
     }
 }
 
