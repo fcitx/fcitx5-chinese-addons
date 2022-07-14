@@ -82,6 +82,9 @@ FCITX_CONFIGURATION(
          Key(FcitxKey_9), Key(FcitxKey_0)}};
     Option<int, IntConstrain> pageSize{this, "PageSize", _("Page size"), 5,
                                        IntConstrain(3, 10)};
+    SubConfigOption punctuationMap{this, "TableGlobal",
+                                   _("Table Global Options"),
+                                   "fcitx://config/addon/table"};
     // Fcitx 4 default behavior.
     Option<bool> commitAfterSelect{this, "CommitAfterSelect",
                                    _("Commit after auto select candidates"),
