@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2022-07-14 20:25+0000\n"
+"POT-Creation-Date: 2022-07-15 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Dmitry <dmitrydmitry761@gmail.com>, 2022\n"
 "Language-Team: Russian (https://www.transifex.com/fcitx/teams/12005/ru/)\n"
@@ -802,7 +802,7 @@ msgstr "Таблица"
 
 #: im/table/ime.h:86
 msgid "Table Global Options"
-msgstr ""
+msgstr "Глобальные параметры таблицы"
 
 #: gui/pinyindictmanager/filedownloader.cpp:27
 msgid "Temporary file created."

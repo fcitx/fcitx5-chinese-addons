@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2022-07-14 20:25+0000\n"
+"POT-Creation-Date: 2022-07-15 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: rocka, 2022\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/fcitx/teams/12005/"
@@ -380,7 +380,7 @@ msgstr "将第一个候选词作为预编辑文本"
 
 #: im/table/ime.h:113 im/pinyin/pinyin.h:119
 msgid "Fix embedded preedit cursor at the beginning of the preedit"
-msgstr "固定嵌入预编辑文本光标在预编辑的开头"
+msgstr "将嵌入预编辑文本的光标固定在开头"
 
 #: im/table/engine.h:34 im/pinyin/pinyin.h:129
 msgid "Forget word"
@@ -782,7 +782,7 @@ msgstr "码表"
 
 #: im/table/ime.h:86
 msgid "Table Global Options"
-msgstr ""
+msgstr "码表全局选项"
 
 #: gui/pinyindictmanager/filedownloader.cpp:27
 msgid "Temporary file created."
