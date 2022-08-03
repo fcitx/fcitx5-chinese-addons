@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2022-07-14 20:25+0000\n"
+"POT-Creation-Date: 2022-08-03 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Ettore Atalan <atalanttore@googlemail.com>, 2022\n"
 "Language-Team: German (https://www.transifex.com/fcitx/teams/12005/de/)\n"
@@ -559,6 +559,14 @@ msgstr "Nicht festgelegt"
 
 #: im/pinyin/pinyin.h:188
 msgid "Number of Sentences"
+msgstr ""
+
+#: modules/chttrans/chttrans.h:37
+msgid "OpenCC profile for Simplified to Traditional"
+msgstr ""
+
+#: modules/chttrans/chttrans.h:40
+msgid "OpenCC profile for Traditional to Simplified"
 msgstr ""
 
 #: im/table/ime.h:140

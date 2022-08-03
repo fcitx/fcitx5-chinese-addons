@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2022-07-14 20:25+0000\n"
+"POT-Creation-Date: 2022-08-03 20:24+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -548,6 +548,14 @@ msgstr ""
 
 #: im/pinyin/pinyin.h:188
 msgid "Number of Sentences"
+msgstr ""
+
+#: modules/chttrans/chttrans.h:37
+msgid "OpenCC profile for Simplified to Traditional"
+msgstr ""
+
+#: modules/chttrans/chttrans.h:40
+msgid "OpenCC profile for Traditional to Simplified"
 msgstr ""
 
 #: im/table/ime.h:140
