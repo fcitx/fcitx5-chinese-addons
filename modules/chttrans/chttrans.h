@@ -34,10 +34,10 @@ FCITX_CONFIGURATION(
 #ifdef ENABLE_OPENCC
     fcitx::Option<std::string> openCCS2TProfile{
         this, "OpenCCS2TProfile",
-        "OpenCC profile for Simplified to Traditional", ""};
+        _("OpenCC profile for Simplified to Traditional"), ""};
     fcitx::Option<std::string> openCCT2SProfile{
         this, "OpenCCT2SProfile",
-        "OpenCC profile for Traditional to Simplified", ""};
+        _("OpenCC profile for Traditional to Simplified"), ""};
 #endif
 );
 
