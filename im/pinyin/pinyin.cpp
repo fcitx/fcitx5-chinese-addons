@@ -436,6 +436,20 @@ std::pair<Text, Text> PinyinEngine::preedit(InputContext *inputContext) const {
     return {std::move(clientPreedit), std::move(preedit)};
 }
 
+std::string
+PinyinEngine::preeditCommitString(InputContext *inputContext) const {
+    auto *state = inputContext->propertyFor(&factory_);
+    // Use const ref to avoid accidentally change anything.
+    const auto &context = state->context_;
+
+    const auto &userInput = context.userInput();
+    const auto selectedLength = context.selectedLength();
+
+    return context.selectedSentence() +
+           userInput.substr(selectedLength,
+                            userInput.length() - selectedLength);
+}
+
 void PinyinEngine::updatePreedit(InputContext *inputContext) const {
     auto &inputPanel = inputContext->inputPanel();
     auto [clientPreedit, preedit] = this->preedit(inputContext);
@@ -1674,7 +1688,7 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
             event.filterAndAccept();
         } else if (event.key().sym() == FcitxKey_Return ||
                    event.key().sym() == FcitxKey_KP_Enter) {
-            inputContext->commitString(state->context_.userInput());
+            inputContext->commitString(preeditCommitString(inputContext));
             state->context_.clear();
             event.filterAndAccept();
         } else if (int idx =
