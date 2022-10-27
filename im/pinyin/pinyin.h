@@ -290,6 +290,7 @@ private:
     void updatePreedit(InputContext *inputContext) const;
 
     std::pair<Text, Text> preedit(InputContext *inputContext) const;
+    std::string preeditCommitString(InputContext *inputContext) const;
 
 #ifdef FCITX_HAS_LUA
     std::vector<std::string>
