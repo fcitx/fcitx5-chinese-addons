@@ -4,15 +4,15 @@
 #
 # Translators:
 # Bon Keun Seo <scobyseo@gmail.com>, 2021
-# Junghee Lee <daemul72@gmail.com>, 2022
+# JungHee Lee <daemul72@gmail.com>, 2022
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2022-08-03 20:24+0000\n"
+"POT-Creation-Date: 2022-10-29 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
-"Last-Translator: Junghee Lee <daemul72@gmail.com>, 2022\n"
+"Last-Translator: JungHee Lee <daemul72@gmail.com>, 2022\n"
 "Language-Team: Korean (https://www.transifex.com/fcitx/teams/12005/ko/)\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
@@ -154,15 +154,15 @@ msgstr "Cloud Pinyin"
 msgid "Cloud Pinyin Index"
 msgstr "Cloud Pinyin 일련번호"
 
-#: im/pinyin/pinyin.cpp:1040
+#: im/pinyin/pinyin.cpp:1054
 msgid "Cloud Pinyin Status"
 msgstr "Cloud Pinyin 상태"
 
-#: im/pinyin/pinyin.cpp:1042
+#: im/pinyin/pinyin.cpp:1056
 msgid "Cloud Pinyin is disabled."
 msgstr "Cloud Pinyin이 비활성화됨."
 
-#: im/pinyin/pinyin.cpp:1041
+#: im/pinyin/pinyin.cpp:1055
 msgid "Cloud Pinyin is enabled."
 msgstr "Cloud Pinyin이 활성화되었습니다."
 
@@ -255,7 +255,7 @@ msgstr "단어에 대한 힌트 보이기"
 msgid "Display custom hint"
 msgstr "사용자 지정 힌트 보이기"
 
-#: im/pinyin/pinyin.cpp:853
+#: im/pinyin/pinyin.cpp:867
 msgid ""
 "Do you want to enable cloudpinyin now for better prediction? You can always "
 "toggle it later in configuration or by pressing {}."
@@ -263,7 +263,7 @@ msgstr ""
 "더 나은 예측을 위해 지금 Cloud pinin을 활성화하시겠습니까? 나중에 구성하거나 "
 "{} 키를 눌러 언제든지 전환할 수 있습니다."
 
-#: im/pinyin/pinyin.cpp:848
+#: im/pinyin/pinyin.cpp:862
 msgid ""
 "Do you want to enable cloudpinyin now for better prediction? You can always "
 "toggle it later in configuration."
@@ -295,7 +295,7 @@ msgstr ""
 msgid "Enable Cloud Pinyin"
 msgstr "Cloud Pinyin 사용"
 
-#: im/pinyin/pinyin.cpp:862
+#: im/pinyin/pinyin.cpp:876
 msgid "Enable Cloudpinyin"
 msgstr "Cloudpinin 활성화"
 
@@ -546,7 +546,7 @@ msgstr "다음 페이지"
 msgid "Next page"
 msgstr "다음 페이지"
 
-#: im/table/ime.h:23 im/pinyin/pinyin.cpp:859
+#: im/table/ime.h:23 im/pinyin/pinyin.cpp:873
 msgid "No"
 msgstr "아니요"
 
@@ -561,7 +561,7 @@ msgstr "사용할 수 없음"
 
 #: im/table/ime.h:24
 msgid "Not set"
-msgstr "지정되지 않음"
+msgstr "설정되지 않음"
 
 #: im/pinyin/pinyin.h:188
 msgid "Number of Sentences"
@@ -592,7 +592,7 @@ msgstr ""
 msgid "Page size"
 msgstr "페이지 크기"
 
-#: im/pinyin/pinyin.cpp:862 im/pinyin/pinyin.cpp:1039
+#: im/pinyin/pinyin.cpp:876 im/pinyin/pinyin.cpp:1053
 #: im/pinyin/pinyin-addon.conf.in.in:3 im/pinyin/pinyin.conf.in:3
 msgid "Pinyin"
 msgstr "Pinyin"
@@ -609,7 +609,7 @@ msgstr "PinyinJiajia"
 msgid "Please use this functionality after typing some text."
 msgstr "글자를 입력한 후에 이 기능을 사용하세요."
 
-#: im/table/engine.cpp:73 im/pinyin/pinyin.cpp:724
+#: im/table/engine.cpp:73 im/pinyin/pinyin.cpp:738
 msgid "Prediction"
 msgstr "예측"
 
@@ -633,11 +633,11 @@ msgstr "제거하려면 Delete 키를 누릅니다"
 msgid "Press space or enter to insert."
 msgstr "스페이스 키를 누르거나 Enter 키를 눌러 삽입합니다."
 
-#: im/pinyin/pinyin.cpp:1465
+#: im/pinyin/pinyin.cpp:1479
 msgid "Press {} for {}"
 msgstr "{}을 누릅니다 ({}의 경우)"
 
-#: im/pinyin/pinyin.cpp:1462
+#: im/pinyin/pinyin.cpp:1476
 msgid "Press {} for {} and Return for {}"
 msgstr " {} 키를 ({}의 경우) 누르고 {}의 경우 Return 키를 누릅니다."
 
@@ -742,7 +742,7 @@ msgstr "사전편집에서 완성형 Pinyin 표시"
 msgid "Show current shuangpin mode"
 msgstr "현재 이중자획 모드 표시"
 
-#: im/table/engine.cpp:74 im/pinyin/pinyin.cpp:725
+#: im/table/engine.cpp:74 im/pinyin/pinyin.cpp:739
 msgid "Show prediction words"
 msgstr "예상 단어 표시"
 
@@ -954,7 +954,7 @@ msgstr "Wubi Pinyin"
 msgid "Xiaohe"
 msgstr "Xiaohe"
 
-#: im/pinyin/pinyin.cpp:858
+#: im/pinyin/pinyin.cpp:872
 msgid "Yes"
 msgstr "예"
 
@@ -970,11 +970,11 @@ msgstr "Ziguang"
 msgid "Ziranma"
 msgstr "지란마"
 
-#: im/pinyin/pinyin.cpp:1262
+#: im/pinyin/pinyin.cpp:1276
 msgid "[Select the word to remove from history]"
 msgstr "[기록에서 삭제할 단어 선택]"
 
-#: im/pinyin/pinyin.cpp:1210
+#: im/pinyin/pinyin.cpp:1224
 msgid "[Stroke Filtering]"
 msgstr "[필획 필터링]"
 
