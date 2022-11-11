@@ -56,6 +56,12 @@ private:
     bool hidden_ = false;
 };
 
+enum class SwitchInputMethodBehavior { Clear, CommitPreedit, CommitDefault };
+
+FCITX_CONFIG_ENUM_NAME_WITH_I18N(SwitchInputMethodBehavior, N_("Clear"),
+                                 N_("Commit current preedit"),
+                                 N_("Commit default selection"))
+
 FCITX_CONFIG_ENUM(ShuangpinProfileEnum, Ziranma, MS, Ziguang, ABC,
                   Zhongwenzhixing, PinyinJiajia, Xiaohe, Custom)
 
@@ -124,6 +130,11 @@ FCITX_CONFIGURATION(
                                    false};
     Option<int, IntConstrain> predictionSize{
         this, "PredictionSize", _("Prediction Size"), 10, IntConstrain(3, 20)};
+    OptionWithAnnotation<SwitchInputMethodBehavior,
+                         SwitchInputMethodBehaviorI18NAnnotation>
+        switchInputMethodBehavior{this, "SwitchInputMethodBehavior",
+                                  _("Action when switching input method"),
+                                  SwitchInputMethodBehavior::CommitPreedit};
     KeyListOption forgetWord{this,
                              "ForgetWord",
                              _("Forget word"),

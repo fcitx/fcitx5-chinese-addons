@@ -1033,12 +1033,34 @@ void PinyinEngine::activate(const fcitx::InputMethodEntry &entry,
 void PinyinEngine::deactivate(const fcitx::InputMethodEntry &entry,
                               fcitx::InputContextEvent &event) {
     auto *inputContext = event.inputContext();
-    if (event.type() == EventType::InputContextSwitchInputMethod) {
-        auto *state = inputContext->propertyFor(&factory_);
-        if (!state->context_.empty()) {
-            inputContext->commitString(state->context_.userInput());
+    do {
+        if (event.type() != EventType::InputContextSwitchInputMethod) {
+            break;
         }
-    }
+        auto *state = inputContext->propertyFor(&factory_);
+        if (state->context_.empty()) {
+            break;
+        }
+
+        switch (*config_.switchInputMethodBehavior) {
+        case SwitchInputMethodBehavior::CommitPreedit:
+            inputContext->commitString(preeditCommitString(inputContext));
+            break;
+        case SwitchInputMethodBehavior::CommitDefault: {
+            auto candidateList = inputContext->inputPanel().candidateList();
+            if (candidateList->size()) {
+                int idx = candidateList->cursorIndex();
+                if (idx < 0) {
+                    idx = 0;
+                }
+                candidateList->candidate(idx).select(inputContext);
+            }
+            break;
+        }
+        case SwitchInputMethodBehavior::Clear:
+            break;
+        }
+    } while (0);
     reset(entry, event);
 }
 
