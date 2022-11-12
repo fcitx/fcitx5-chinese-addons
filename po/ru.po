@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2022-11-11 20:25+0000\n"
+"POT-Creation-Date: 2022-11-12 20:25+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Dmitry <dmitrydmitry761@gmail.com>, 2022\n"
 "Language-Team: Russian (https://www.transifex.com/fcitx/teams/12005/ru/)\n"
@@ -73,7 +73,7 @@ msgstr "ABC"
 
 #: im/pinyin/pinyin.h:136
 msgid "Action when switching input method"
-msgstr ""
+msgstr "Действие при переключении метода ввода"
 
 #: org.fcitx.Fcitx5.Addon.ChineseAddons.metainfo.xml.in:8
 msgid ""
@@ -153,7 +153,7 @@ msgstr "Выберите символ из фразы"
 
 #: im/pinyin/pinyin.h:61
 msgid "Clear"
-msgstr ""
+msgstr "Очистить"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:45
 msgid "Clear &All Data"
@@ -167,15 +167,15 @@ msgstr "Cloud Pinyin"
 msgid "Cloud Pinyin Index"
 msgstr "Индекс Cloud Pinyin"
 
-#: im/pinyin/pinyin.cpp:1076
+#: im/pinyin/pinyin.cpp:1069
 msgid "Cloud Pinyin Status"
 msgstr "Статус Cloud Pinyin"
 
-#: im/pinyin/pinyin.cpp:1078
+#: im/pinyin/pinyin.cpp:1071
 msgid "Cloud Pinyin is disabled."
 msgstr "Cloud Pinyin отключен."
 
-#: im/pinyin/pinyin.cpp:1077
+#: im/pinyin/pinyin.cpp:1070
 msgid "Cloud Pinyin is enabled."
 msgstr "Cloud Pinyin включен."
 
@@ -193,11 +193,11 @@ msgstr "Фиксировать буфер при деактивации мето
 
 #: im/pinyin/pinyin.h:62
 msgid "Commit current preedit"
-msgstr ""
+msgstr "Подтвердить текущее предварительное редактирование"
 
 #: im/pinyin/pinyin.h:63
 msgid "Commit default selection"
-msgstr ""
+msgstr "Подтвердить выбор по умолчанию"
 
 #: im/table/ime.h:103
 msgid ""
@@ -622,7 +622,7 @@ msgstr ""
 msgid "Page size"
 msgstr "Размер страницы"
 
-#: im/pinyin/pinyin.cpp:876 im/pinyin/pinyin.cpp:1075
+#: im/pinyin/pinyin.cpp:876 im/pinyin/pinyin.cpp:1068
 #: im/pinyin/pinyin-addon.conf.in.in:3 im/pinyin/pinyin.conf.in:3
 msgid "Pinyin"
 msgstr "Пиньинь"
@@ -663,11 +663,11 @@ msgstr "Нажмите Delete, чтобы удалить."
 msgid "Press space or enter to insert."
 msgstr "Нажмите пробел или enter, чтобы вставить."
 
-#: im/pinyin/pinyin.cpp:1501
+#: im/pinyin/pinyin.cpp:1494
 msgid "Press {} for {}"
 msgstr "Нажмите {} для {}"
 
-#: im/pinyin/pinyin.cpp:1498
+#: im/pinyin/pinyin.cpp:1491
 msgid "Press {} for {} and Return for {}"
 msgstr "Нажмите {} для {} и Return для {}"
 
@@ -1005,11 +1005,11 @@ msgstr "Ziguang"
 msgid "Ziranma"
 msgstr "Цзыжаньма"
 
-#: im/pinyin/pinyin.cpp:1298
+#: im/pinyin/pinyin.cpp:1291
 msgid "[Select the word to remove from history]"
 msgstr "[Выберите слово для удаления из истории]"
 
-#: im/pinyin/pinyin.cpp:1246
+#: im/pinyin/pinyin.cpp:1239
 msgid "[Stroke Filtering]"
 msgstr "[Фильтрация штрихов]"
 

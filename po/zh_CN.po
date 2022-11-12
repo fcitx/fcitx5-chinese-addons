@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2022-11-11 20:25+0000\n"
+"POT-Creation-Date: 2022-11-12 20:25+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: csslayer <wengxt@gmail.com>, 2022\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/fcitx/teams/12005/"
@@ -74,7 +74,7 @@ msgstr "智能ABC"
 
 #: im/pinyin/pinyin.h:136
 msgid "Action when switching input method"
-msgstr ""
+msgstr "切换输入法时的行为"
 
 #: org.fcitx.Fcitx5.Addon.ChineseAddons.metainfo.xml.in:8
 msgid ""
@@ -150,7 +150,7 @@ msgstr "以词定字"
 
 #: im/pinyin/pinyin.h:61
 msgid "Clear"
-msgstr ""
+msgstr "清空"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:45
 msgid "Clear &All Data"
@@ -164,15 +164,15 @@ msgstr "云拼音"
 msgid "Cloud Pinyin Index"
 msgstr "云拼音位置"
 
-#: im/pinyin/pinyin.cpp:1076
+#: im/pinyin/pinyin.cpp:1069
 msgid "Cloud Pinyin Status"
 msgstr "云拼音状态"
 
-#: im/pinyin/pinyin.cpp:1078
+#: im/pinyin/pinyin.cpp:1071
 msgid "Cloud Pinyin is disabled."
 msgstr "云拼音已禁用。"
 
-#: im/pinyin/pinyin.cpp:1077
+#: im/pinyin/pinyin.cpp:1070
 msgid "Cloud Pinyin is enabled."
 msgstr "已启用云拼音。"
 
@@ -190,11 +190,11 @@ msgstr "取消激活输入法时提交输入缓冲区"
 
 #: im/pinyin/pinyin.h:62
 msgid "Commit current preedit"
-msgstr ""
+msgstr "提交当前预编辑"
 
 #: im/pinyin/pinyin.h:63
 msgid "Commit default selection"
-msgstr ""
+msgstr "提交默认选择"
 
 #: im/table/ime.h:103
 msgid ""
@@ -605,7 +605,7 @@ msgstr ""
 msgid "Page size"
 msgstr "页大小"
 
-#: im/pinyin/pinyin.cpp:876 im/pinyin/pinyin.cpp:1075
+#: im/pinyin/pinyin.cpp:876 im/pinyin/pinyin.cpp:1068
 #: im/pinyin/pinyin-addon.conf.in.in:3 im/pinyin/pinyin.conf.in:3
 msgid "Pinyin"
 msgstr "拼音"
@@ -646,11 +646,11 @@ msgstr "按下删除键来移除。"
 msgid "Press space or enter to insert."
 msgstr "按下空格或回车键来插入。"
 
-#: im/pinyin/pinyin.cpp:1501
+#: im/pinyin/pinyin.cpp:1494
 msgid "Press {} for {}"
 msgstr "按下 {} 输入 {}"
 
-#: im/pinyin/pinyin.cpp:1498
+#: im/pinyin/pinyin.cpp:1491
 msgid "Press {} for {} and Return for {}"
 msgstr "按下 {} 输入 {}，按下回车输入 {}"
 
@@ -978,11 +978,11 @@ msgstr "紫光"
 msgid "Ziranma"
 msgstr "自然码"
 
-#: im/pinyin/pinyin.cpp:1298
+#: im/pinyin/pinyin.cpp:1291
 msgid "[Select the word to remove from history]"
 msgstr "[选择要从历史中移除的词]"
 
-#: im/pinyin/pinyin.cpp:1246
+#: im/pinyin/pinyin.cpp:1239
 msgid "[Stroke Filtering]"
 msgstr "[笔画过滤]"
 
