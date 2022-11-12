@@ -1047,14 +1047,7 @@ void PinyinEngine::deactivate(const fcitx::InputMethodEntry &entry,
             inputContext->commitString(preeditCommitString(inputContext));
             break;
         case SwitchInputMethodBehavior::CommitDefault: {
-            auto candidateList = inputContext->inputPanel().candidateList();
-            if (candidateList->size()) {
-                int idx = candidateList->cursorIndex();
-                if (idx < 0) {
-                    idx = 0;
-                }
-                candidateList->candidate(idx).select(inputContext);
-            }
+            inputContext->commitString(state->context_.sentence());
             break;
         }
         case SwitchInputMethodBehavior::Clear:
