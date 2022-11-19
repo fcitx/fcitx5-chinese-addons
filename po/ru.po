@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2022-11-12 20:25+0000\n"
+"POT-Creation-Date: 2022-11-19 20:25+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Dmitry <dmitrydmitry761@gmail.com>, 2022\n"
 "Language-Team: Russian (https://www.transifex.com/fcitx/teams/12005/ru/)\n"
@@ -80,8 +80,8 @@ msgid ""
 "Add support for Pinyin, Table and many other Chinese related functionality "
 "to Fcitx"
 msgstr ""
-"Добавьте в Fcitx поддержку Pinyin, таблиц и многих других функций, связанных "
-"с китайским языком."
+"Добавьте в Fcitx поддержку Пиньинь, таблиц и многих других функций, "
+"связанных с китайским языком."
 
 #: im/table/ime.h:233
 msgid ""
@@ -227,7 +227,7 @@ msgstr "Сбой конвертера."
 
 #: im/table/state.cpp:699
 msgid "Could not find pinyin."
-msgstr "Не удается найти пиньинь."
+msgstr "Не удается найти Пиньинь."
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:111
 #: gui/pinyindictmanager/pinyindictmanager.cpp:222
@@ -366,7 +366,7 @@ msgstr "Точное совпадение"
 
 #: modules/pinyinhelper/pinyinhelper.conf.in.in:3
 msgid "Extra Pinyin functionality"
-msgstr "Дополнительная функциональность пиньинь"
+msgstr "Дополнительная функциональность Пиньинь"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:110
 msgid "Failed to create directory"
@@ -457,7 +457,7 @@ msgstr "Полноширинная пунктуация включена."
 
 #: im/pinyin/pinyin.h:236
 msgid "Fuzzy Pinyin Settings"
-msgstr "Нечёткие настройки Pinyin"
+msgstr "Нечёткие настройки Пиньинь"
 
 #: modules/fullwidth/fullwidth.h:30
 msgid "Half width Character"
@@ -499,7 +499,7 @@ msgstr "Внутренний сегмент (xian -> xi'an)"
 
 #: im/pinyin/pinyin.h:78
 msgid "Inner Segment for Short Pinyin (qie -> qi'e)"
-msgstr "Внутренний сегмент для короткого Pinyin (qie -> qi'e)"
+msgstr "Внутренний сегмент для короткого Пиньинь (qie -> qi'e)"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:97
 msgid "Input Dictionary Name"
@@ -528,7 +528,7 @@ msgstr "Ограничение по длине выбора единственн
 
 #: im/table/engine.h:39
 msgid "Lookup pinyin"
-msgstr "Изучение пиньинь"
+msgstr "Изучение Пиньинь"
 
 #: im/pinyin/pinyin.h:68
 msgid "MS"
@@ -552,7 +552,7 @@ msgstr "Совпадение с частичным shuangpin, если длин�
 
 #: modules/cloudpinyin/cloudpinyin.h:32
 msgid "Minimum Pinyin Length"
-msgstr "Минимальная длина Pinyin"
+msgstr "Минимальная длина Пиньинь"
 
 #: im/table/engine.h:29
 msgid "Modify dictionary"
@@ -629,7 +629,7 @@ msgstr "Пиньинь"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:90
 msgid "Pinyin dictionary manager"
-msgstr "Менеджер словаря Pinyin"
+msgstr "Менеджер словаря Пиньинь"
 
 #: im/pinyin/pinyin.h:70
 msgid "PinyinJiajia"
@@ -649,7 +649,7 @@ msgstr "Размер предсказания"
 
 #: im/table/ime.h:170
 msgid "Prefix key to trigger Pinyin"
-msgstr "Клавиша-префикс для активации пиньинь"
+msgstr "Клавиша-префикс для активации Пиньинь"
 
 #: im/table/state.cpp:718
 msgid "Press Backspace to forget."
@@ -769,7 +769,7 @@ msgstr "Текст-разделитель между подсказкой и к�
 
 #: im/pinyin/pinyin.h:128
 msgid "Show complete pinyin in preedit"
-msgstr "Показать полный pinyin в предварительном редактировании"
+msgstr "Показать полный Пиньинь в предварительном редактировании"
 
 #: im/pinyin/pinyin.h:106
 msgid "Show current shuangpin mode"
