@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2022-11-19 20:25+0000\n"
+"POT-Creation-Date: 2022-12-17 20:25+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Dmitry <dmitrydmitry761@gmail.com>, 2022\n"
 "Language-Team: Russian (https://www.transifex.com/fcitx/teams/12005/ru/)\n"
@@ -22,11 +22,11 @@ msgstr ""
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
 "(n%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: im/table/state.cpp:1011
+#: im/table/state.cpp:1012
 msgid " Return for "
 msgstr "Возврат в"
 
-#: im/table/state.cpp:1008
+#: im/table/state.cpp:1009
 msgid " for "
 msgstr "в"
 
@@ -95,6 +95,10 @@ msgstr ""
 "пользователем один раз, оно будет добавлено как пользовательская фраза. -1 "
 "означает максимальную длину кода таблицы. 0 означает отключить эту функцию."
 
+#: im/table/ime.h:274
+msgid "Allow use keypad key as table input"
+msgstr ""
+
 #: modules/punctuation/punctuation.h:41
 msgid "Alternative Mapping"
 msgstr "Альтернативное отображение"
@@ -111,7 +115,7 @@ msgstr "Вы уверены, что хотите удалить все слов�
 msgid "Auto phrase length"
 msgstr "Автоматически устанавливать длину фразы"
 
-#: im/table/ime.h:274
+#: im/table/ime.h:276
 msgid "Auto rule set"
 msgstr "Автоматически устанавливать правила"
 
@@ -167,15 +171,15 @@ msgstr "Cloud Pinyin"
 msgid "Cloud Pinyin Index"
 msgstr "Индекс Cloud Pinyin"
 
-#: im/pinyin/pinyin.cpp:1069
+#: im/pinyin/pinyin.cpp:1071
 msgid "Cloud Pinyin Status"
 msgstr "Статус Cloud Pinyin"
 
-#: im/pinyin/pinyin.cpp:1071
+#: im/pinyin/pinyin.cpp:1073
 msgid "Cloud Pinyin is disabled."
 msgstr "Cloud Pinyin отключен."
 
-#: im/pinyin/pinyin.cpp:1070
+#: im/pinyin/pinyin.cpp:1072
 msgid "Cloud Pinyin is enabled."
 msgstr "Cloud Pinyin включен."
 
@@ -280,7 +284,7 @@ msgstr "Показывать подсказку для слова"
 msgid "Display custom hint"
 msgstr "Показывать собственную подсказку"
 
-#: im/pinyin/pinyin.cpp:867
+#: im/pinyin/pinyin.cpp:869
 msgid ""
 "Do you want to enable cloudpinyin now for better prediction? You can always "
 "toggle it later in configuration or by pressing {}."
@@ -288,7 +292,7 @@ msgstr ""
 "Вы хотите включить cloudpinyin сейчас для более точного прогнозирования? Вы "
 "всегда можете переключить его позже в настройках или нажав {}."
 
-#: im/pinyin/pinyin.cpp:862
+#: im/pinyin/pinyin.cpp:864
 msgid ""
 "Do you want to enable cloudpinyin now for better prediction? You can always "
 "toggle it later in configuration."
@@ -320,7 +324,7 @@ msgstr "Включить символы в Юникоде CJK Расширени
 msgid "Enable Cloud Pinyin"
 msgstr "Включить Cloud Pinyin"
 
-#: im/pinyin/pinyin.cpp:876
+#: im/pinyin/pinyin.cpp:878
 msgid "Enable Cloudpinyin"
 msgstr "Включить Cloudpinyin"
 
@@ -574,7 +578,7 @@ msgstr "Следующая Страница"
 msgid "Next page"
 msgstr "Следующая страница"
 
-#: im/table/ime.h:23 im/pinyin/pinyin.cpp:873
+#: im/table/ime.h:23 im/pinyin/pinyin.cpp:875
 msgid "No"
 msgstr "Нет"
 
@@ -622,7 +626,7 @@ msgstr ""
 msgid "Page size"
 msgstr "Размер страницы"
 
-#: im/pinyin/pinyin.cpp:876 im/pinyin/pinyin.cpp:1068
+#: im/pinyin/pinyin.cpp:878 im/pinyin/pinyin.cpp:1070
 #: im/pinyin/pinyin-addon.conf.in.in:3 im/pinyin/pinyin.conf.in:3
 msgid "Pinyin"
 msgstr "Пиньинь"
@@ -639,7 +643,7 @@ msgstr "PinyinJiajia"
 msgid "Please use this functionality after typing some text."
 msgstr "Пожалуйста, используйте эту функцию после набора текста."
 
-#: im/table/engine.cpp:73 im/pinyin/pinyin.cpp:738
+#: im/table/engine.cpp:73 im/pinyin/pinyin.cpp:740
 msgid "Prediction"
 msgstr "Предсказание"
 
@@ -663,11 +667,11 @@ msgstr "Нажмите Delete, чтобы удалить."
 msgid "Press space or enter to insert."
 msgstr "Нажмите пробел или enter, чтобы вставить."
 
-#: im/pinyin/pinyin.cpp:1494
+#: im/pinyin/pinyin.cpp:1496
 msgid "Press {} for {}"
 msgstr "Нажмите {} для {}"
 
-#: im/pinyin/pinyin.cpp:1491
+#: im/pinyin/pinyin.cpp:1493
 msgid "Press {} for {} and Return for {}"
 msgstr "Нажмите {} для {} и Return для {}"
 
@@ -751,7 +755,7 @@ msgstr "Выберите второй кандидат"
 msgid "Select Third Candidate"
 msgstr "Выберите третий кандидат"
 
-#: im/table/state.cpp:1257
+#: im/table/state.cpp:1258
 msgid "Select candidate to be removed from history:"
 msgstr "Выберите кандидат для удаления из истории:"
 
@@ -775,7 +779,7 @@ msgstr "Показать полный Пиньинь в предваритель
 msgid "Show current shuangpin mode"
 msgstr "Показать текущий режим shuangpin"
 
-#: im/table/engine.cpp:74 im/pinyin/pinyin.cpp:739
+#: im/table/engine.cpp:74 im/pinyin/pinyin.cpp:741
 msgid "Show prediction words"
 msgstr "Показать слова-предсказания"
 
@@ -989,7 +993,7 @@ msgstr "Wubi Pinyin"
 msgid "Xiaohe"
 msgstr "Xiaohe"
 
-#: im/pinyin/pinyin.cpp:872
+#: im/pinyin/pinyin.cpp:874
 msgid "Yes"
 msgstr "Да"
 
@@ -1005,11 +1009,11 @@ msgstr "Ziguang"
 msgid "Ziranma"
 msgstr "Цзыжаньма"
 
-#: im/pinyin/pinyin.cpp:1291
+#: im/pinyin/pinyin.cpp:1293
 msgid "[Select the word to remove from history]"
 msgstr "[Выберите слово для удаления из истории]"
 
-#: im/pinyin/pinyin.cpp:1239
+#: im/pinyin/pinyin.cpp:1241
 msgid "[Stroke Filtering]"
 msgstr "[Фильтрация штрихов]"
 

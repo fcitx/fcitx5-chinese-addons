@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2022-12-06 20:25+0000\n"
+"POT-Creation-Date: 2022-12-17 20:25+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: mar well <m.wellendorf@gmx.de>, 2022\n"
 "Language-Team: German (https://www.transifex.com/fcitx/teams/12005/de/)\n"
@@ -20,11 +20,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: im/table/state.cpp:1011
+#: im/table/state.cpp:1012
 msgid " Return for "
 msgstr ""
 
-#: im/table/state.cpp:1008
+#: im/table/state.cpp:1009
 msgid " for "
 msgstr "für"
 
@@ -87,6 +87,10 @@ msgid ""
 "the table. 0 means disable this feature. "
 msgstr ""
 
+#: im/table/ime.h:274
+msgid "Allow use keypad key as table input"
+msgstr ""
+
 #: modules/punctuation/punctuation.h:41
 msgid "Alternative Mapping"
 msgstr ""
@@ -103,7 +107,7 @@ msgstr "Sind Sie sicher, dass alle Wörterbücher gelöscht werden sollen?"
 msgid "Auto phrase length"
 msgstr "Länge der Auto-Phrase"
 
-#: im/table/ime.h:274
+#: im/table/ime.h:276
 msgid "Auto rule set"
 msgstr "Satz automatischer Regeln"
 
@@ -727,7 +731,7 @@ msgstr ""
 msgid "Select Third Candidate"
 msgstr ""
 
-#: im/table/state.cpp:1257
+#: im/table/state.cpp:1258
 msgid "Select candidate to be removed from history:"
 msgstr ""
 

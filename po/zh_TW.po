@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2022-12-16 20:25+0000\n"
+"POT-Creation-Date: 2022-12-17 20:25+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Neko ◣ 0xFF, 2022\n"
 "Language-Team: Chinese (Taiwan) (https://www.transifex.com/fcitx/teams/12005/"
@@ -25,11 +25,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: im/table/state.cpp:1011
+#: im/table/state.cpp:1012
 msgid " Return for "
 msgstr "按下 Enter 以"
 
-#: im/table/state.cpp:1008
+#: im/table/state.cpp:1009
 msgid " for "
 msgstr " 以"
 
@@ -94,6 +94,10 @@ msgstr ""
 "每個字符提交之後，根據輸入紀錄學習新詞組。 如果特定的詞出現多次或者被使用者選"
 "中一次，它將被添加為使用者詞組。 -1 表示碼碼表最大長度，0 表示停用這個功能。"
 
+#: im/table/ime.h:274
+msgid "Allow use keypad key as table input"
+msgstr ""
+
 #: modules/punctuation/punctuation.h:41
 msgid "Alternative Mapping"
 msgstr "替代映射"
@@ -110,7 +114,7 @@ msgstr "確定刪除所有字典？"
 msgid "Auto phrase length"
 msgstr "自動片語長度"
 
-#: im/table/ime.h:274
+#: im/table/ime.h:276
 msgid "Auto rule set"
 msgstr "自動組字使用規則"
 
@@ -206,7 +210,7 @@ msgstr ""
 
 #: im/pinyin/pinyin.h:75
 msgid "Common Typo"
-msgstr ""
+msgstr "常見錯誤"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:330
 #: gui/pinyindictmanager/pinyindictmanager.cpp:362
@@ -339,7 +343,7 @@ msgstr ""
 
 #: modules/punctuation/punctuation.h:49
 msgid "Entries"
-msgstr ""
+msgstr "項目"
 
 #: im/table/erbi.conf.in.in:3
 msgid "Erbi"
@@ -404,7 +408,7 @@ msgstr ""
 
 #: im/table/ime.h:23
 msgid "Freq"
-msgstr ""
+msgstr "頻率"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:34
 msgid "From &File"
@@ -492,7 +496,7 @@ msgstr ""
 #: modules/punctuation/punctuation.h:38
 msgctxt "Key of the punctuation, e.g. comma"
 msgid "Key"
-msgstr ""
+msgstr "按键"
 
 #: im/table/ime.h:123 im/pinyin/pinyin.h:219
 msgid "Key to trigger quickphrase"
@@ -520,7 +524,7 @@ msgstr ""
 
 #: modules/punctuation/punctuation.h:39
 msgid "Mapping"
-msgstr ""
+msgstr "映射"
 
 #: im/table/ime.h:249
 msgid "Marker for auto phrase in the candidates"
@@ -576,7 +580,7 @@ msgstr ""
 
 #: im/pinyin/pinyin.h:199
 msgid "Number of Sentences"
-msgstr ""
+msgstr "句子數量"
 
 #: modules/chttrans/chttrans.h:37
 msgid "OpenCC profile for Simplified to Traditional"
@@ -640,7 +644,7 @@ msgstr ""
 
 #: im/table/state.cpp:715
 msgid "Press space or enter to insert."
-msgstr ""
+msgstr "按下空白鍵或Enter鍵進行插入。"
 
 #: im/pinyin/pinyin.cpp:1496
 msgid "Press {} for {}"
@@ -660,11 +664,11 @@ msgstr "上一頁"
 
 #: im/pinyin/pinyin.h:158
 msgid "Previous Candidate"
-msgstr ""
+msgstr "上一個候選字"
 
 #: im/pinyin/pinyin.h:146
 msgid "Previous Page"
-msgstr ""
+msgstr "上一頁"
 
 #: im/pinyin/pinyin.h:203
 msgid "Prompt long word length when input length over (0 for disable)"
@@ -727,7 +731,7 @@ msgstr ""
 msgid "Select Third Candidate"
 msgstr ""
 
-#: im/table/state.cpp:1257
+#: im/table/state.cpp:1258
 msgid "Select candidate to be removed from history:"
 msgstr ""
 
@@ -802,7 +806,7 @@ msgstr "碼表"
 
 #: im/table/ime.h:86
 msgid "Table Global Options"
-msgstr ""
+msgstr "碼表全域選項"
 
 #: gui/pinyindictmanager/filedownloader.cpp:27
 msgid "Temporary file created."
@@ -849,7 +853,7 @@ msgstr ""
 
 #: im/pinyin/pinyin.h:182
 msgid "Use Keypad as Selection key"
-msgstr ""
+msgstr "使用數字鍵盤選擇候選字詞"
 
 #: im/table/state.cpp:691
 msgid "Use Left and Right to select character: "
@@ -924,7 +928,7 @@ msgstr ""
 #: im/table/ime.h:245
 msgid ""
 "Whether to learn new phrase from other phrases or just single characters."
-msgstr ""
+msgstr "是要從其他短語中學習新短語還是只學習單個字符。"
 
 #: im/table/ime.h:165
 msgid "Wildcard matching Key"
