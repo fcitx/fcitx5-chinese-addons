@@ -270,6 +270,8 @@ FCITX_CONFIGURATION(
         candidateLayoutHint{this, "CandidateLayoutHint",
                             _("Candidate List orientation"),
                             CandidateLayoutHint::NotSet};
+    Option<bool> keypadAsInput{this, "KeypadAsInput",
+                               _("Allow use keypad key as table input"), false};
     NoSaveOption<std::vector<std::string>> autoRuleSet{this, "AutoRuleSet",
                                                        _("Auto rule set")};);
 
