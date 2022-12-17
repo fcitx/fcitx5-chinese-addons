@@ -839,7 +839,8 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         event.filterAndAccept();
         return;
     }
-    if (!event.key().hasModifier() && chr && context->isValidInput(chr)) {
+    if (!event.key().hasModifier() && chr && context->isValidInput(chr) &&
+        (!event.key().isKeyPad() || *config.keypadAsInput)) {
         auto candidateList = ic_->inputPanel().candidateList();
         auto autoSelectHint = 0;
         if (candidateList && candidateList->size()) {
