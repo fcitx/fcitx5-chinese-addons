@@ -33,16 +33,19 @@ static constexpr bool isAndroid = true;
 static constexpr bool isAndroid = false;
 #endif
 
-struct OptionalHideInDescription {
+template <typename Base = NoAnnotation>
+struct OptionalHideInDescriptionBase : public Base {
     void setHidden(bool hidden) { hidden_ = hidden; }
 
     bool skipDescription() { return hidden_; }
-    bool skipSave() { return false; }
-    void dumpDescription(RawConfig &) const {}
+    using Base::dumpDescription;
+    using Base::skipSave;
 
 private:
     bool hidden_ = false;
 };
+
+using OptionalHideInDescription = OptionalHideInDescriptionBase<>;
 
 class OptionalHiddenSubConfigOption : public SubConfigOption {
 public:
@@ -80,7 +83,7 @@ FCITX_CONFIGURATION(
     Option<bool> partialFinal{this, "PartialFinal",
                               _("Match partial finals (e -> en, eng, ei)"),
                               true};
-    Option<bool> partialSp{
+    OptionWithAnnotation<bool, OptionalHideInDescription> partialSp{
         this, "PartialSp",
         _("Match partial shuangpin if input length is longer than 4"), false};
     Option<bool> v{this, "V_U", _("u <-> v"), false};
@@ -98,12 +101,13 @@ FCITX_CONFIGURATION(
 
 FCITX_CONFIGURATION(
     PinyinEngineConfig,
-    OptionWithAnnotation<ShuangpinProfileEnum,
-                         ShuangpinProfileEnumI18NAnnotation>
+    OptionWithAnnotation<
+        ShuangpinProfileEnum,
+        OptionalHideInDescriptionBase<ShuangpinProfileEnumI18NAnnotation>>
         shuangpinProfile{this, "ShuangpinProfile", _("Shuangpin Profile"),
                          ShuangpinProfileEnum::Ziranma};
-    Option<bool> showShuangpinMode{this, "ShowShuangpinMode",
-                                   _("Show current shuangpin mode"), true};
+    OptionWithAnnotation<bool, OptionalHideInDescription> showShuangpinMode{
+        this, "ShowShuangpinMode", _("Show current shuangpin mode"), true};
     Option<int, IntConstrain> pageSize{this, "PageSize", _("Page size"), 7,
                                        IntConstrain(3, 10)};
     Option<bool> spellEnabled{this, "SpellEnabled", _("Enable Spell"), true};
@@ -261,12 +265,16 @@ public:
     void invokeActionImpl(const InputMethodEntry &entry,
                           InvokeActionEvent &event) override;
 
-    const Configuration *getConfig() const override { return &config_; }
+    const Configuration *getConfig() const override;
+    const Configuration *
+    getConfigForInputMethod(const InputMethodEntry &entry) const override;
+
     void setConfig(const RawConfig &config) override {
         config_.load(config, true);
         safeSaveAsIni(config_, "conf/pinyin.conf");
         populateConfig();
     }
+
     void setSubConfig(const std::string &path,
                       const fcitx::RawConfig &) override;
 
@@ -313,6 +321,7 @@ private:
 
     Instance *instance_;
     PinyinEngineConfig config_;
+    PinyinEngineConfig pyConfig_;
     std::unique_ptr<libime::PinyinIME> ime_;
     std::unordered_map<std::string, std::unordered_set<uint32_t>>
         quickphraseTriggerDict_;

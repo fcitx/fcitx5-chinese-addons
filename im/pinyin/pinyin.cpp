@@ -764,6 +764,10 @@ PinyinEngine::PinyinEngine(Instance *instance)
             handle2nd3rdSelection(keyEvent);
         });
 
+    pyConfig_.shuangpinProfile.annotation().setHidden(true);
+    pyConfig_.showShuangpinMode.annotation().setHidden(true);
+    pyConfig_.fuzzyConfig->partialSp.annotation().setHidden(true);
+
     checkCloudPinyinAvailable_ =
         instance_->eventLoop().addDeferEvent([this](EventSource *) {
             bool hasCloudPinyin = cloudpinyin() != nullptr;
@@ -1006,6 +1010,8 @@ void PinyinEngine::populateConfig() {
                            *config_.extBEnabled
                                ? libime::PinyinDictFlag::NoFlag
                                : libime::PinyinDictFlag::Disabled);
+
+    pyConfig_ = config_;
 }
 
 void PinyinEngine::reloadConfig() {
@@ -1845,6 +1851,17 @@ std::string PinyinEngine::subMode(const InputMethodEntry &entry,
             *config_.shuangpinProfile);
     }
     return {};
+}
+
+const Configuration *PinyinEngine::getConfig() const { return &config_; }
+
+const Configuration *
+PinyinEngine::getConfigForInputMethod(const InputMethodEntry &entry) const {
+    // Hide shuangpin options.
+    if (entry.uniqueName() == "pinyin") {
+        return &pyConfig_;
+    }
+    return &config_;
 }
 
 void PinyinEngine::invokeActionImpl(const InputMethodEntry &entry,
