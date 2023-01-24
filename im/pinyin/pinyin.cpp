@@ -771,9 +771,11 @@ PinyinEngine::PinyinEngine(Instance *instance)
     checkCloudPinyinAvailable_ =
         instance_->eventLoop().addDeferEvent([this](EventSource *) {
             bool hasCloudPinyin = cloudpinyin() != nullptr;
-            config_.cloudPinyinEnabled.annotation().setHidden(!hasCloudPinyin);
-            config_.cloudPinyinIndex.annotation().setHidden(!hasCloudPinyin);
-            config_.cloudpinyin.setHidden(!hasCloudPinyin);
+            for (auto *configPtr : {&config_, &pyConfig_}) {
+                configPtr->cloudPinyinEnabled.annotation().setHidden(!hasCloudPinyin);
+                configPtr->cloudPinyinIndex.annotation().setHidden(!hasCloudPinyin);
+                configPtr->cloudpinyin.setHidden(!hasCloudPinyin);
+            }
             checkCloudPinyinAvailable_.reset();
             return true;
         });
