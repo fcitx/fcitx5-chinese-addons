@@ -737,7 +737,9 @@ PinyinEngine::PinyinEngine(Instance *instance)
         numpadSelectionKeys_.emplace_back(sym, numpadStates);
     }
 
-    predictionAction_.setShortText(_("Prediction"));
+    predictionAction_.setShortText(*config_.predictionEnabled
+                                       ? _("Prediction Enabled")
+                                       : _("Prediction Disabled"));
     predictionAction_.setLongText(_("Show prediction words"));
     predictionAction_.setIcon(*config_.predictionEnabled
                                   ? "fcitx-remind-active"
@@ -745,6 +747,9 @@ PinyinEngine::PinyinEngine(Instance *instance)
     predictionAction_.connect<SimpleAction::Activated>(
         [this](InputContext *ic) {
             config_.predictionEnabled.setValue(!(*config_.predictionEnabled));
+            predictionAction_.setShortText(*config_.predictionEnabled
+                                               ? _("Prediction Enabled")
+                                               : _("Prediction Disabled"));
             predictionAction_.setIcon(*config_.predictionEnabled
                                           ? "fcitx-remind-active"
                                           : "fcitx-remind-inactive");
@@ -772,8 +777,10 @@ PinyinEngine::PinyinEngine(Instance *instance)
         instance_->eventLoop().addDeferEvent([this](EventSource *) {
             bool hasCloudPinyin = cloudpinyin() != nullptr;
             for (auto *configPtr : {&config_, &pyConfig_}) {
-                configPtr->cloudPinyinEnabled.annotation().setHidden(!hasCloudPinyin);
-                configPtr->cloudPinyinIndex.annotation().setHidden(!hasCloudPinyin);
+                configPtr->cloudPinyinEnabled.annotation().setHidden(
+                    !hasCloudPinyin);
+                configPtr->cloudPinyinIndex.annotation().setHidden(
+                    !hasCloudPinyin);
                 configPtr->cloudpinyin.setHidden(!hasCloudPinyin);
             }
             checkCloudPinyinAvailable_.reset();
