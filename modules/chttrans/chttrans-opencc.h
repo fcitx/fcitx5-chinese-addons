@@ -17,6 +17,8 @@ public:
 
     void updateConfig(const ChttransConfig &config) override;
 
+    std::string locateProfile(const std::string &);
+
 protected:
     bool loadOnce(const ChttransConfig &config) override;
 

@@ -5,10 +5,21 @@
  *
  */
 #include "chttrans-opencc.h"
+#include <fcitx-utils/standardpath.h>
+#include <fcitx-utils/stringutils.h>
+
+using namespace fcitx;
 
 bool OpenCCBackend::loadOnce(const ChttransConfig &config) {
     updateConfig(config);
     return true;
+}
+
+std::string OpenCCBackend::locateProfile(const std::string &profile) {
+    auto profilePath = StandardPath::global().locate(
+        StandardPath::Type::Data, stringutils::joinPath("opencc", profile)
+    );
+    return profilePath.empty() ? profile : profilePath;
 }
 
 void OpenCCBackend::updateConfig(const ChttransConfig &config) {
@@ -16,9 +27,10 @@ void OpenCCBackend::updateConfig(const ChttransConfig &config) {
     if (s2tProfile.empty()) {
         s2tProfile = OPENCC_DEFAULT_CONFIG_SIMP_TO_TRAD;
     }
+    auto s2tProfilePath = locateProfile(s2tProfile);
 
     try {
-        auto s2t = std::make_unique<opencc::SimpleConverter>(s2tProfile);
+        auto s2t = std::make_unique<opencc::SimpleConverter>(s2tProfilePath);
         s2t_ = std::move(s2t);
     } catch (const std::exception &e) {
     }
@@ -27,8 +39,10 @@ void OpenCCBackend::updateConfig(const ChttransConfig &config) {
     if (t2sProfile.empty()) {
         t2sProfile = OPENCC_DEFAULT_CONFIG_TRAD_TO_SIMP;
     }
+    auto t2sProfilePath = locateProfile(t2sProfile);
+
     try {
-        auto t2s = std::make_unique<opencc::SimpleConverter>(t2sProfile);
+        auto t2s = std::make_unique<opencc::SimpleConverter>(t2sProfilePath);
         t2s_ = std::move(t2s);
     } catch (const std::exception &e) {
     }
