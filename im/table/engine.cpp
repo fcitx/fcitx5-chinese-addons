@@ -70,12 +70,17 @@ TableEngine::TableEngine(Instance *instance)
             state->handle2nd3rdCandidate(keyEvent);
         }));
 
-    predictionAction_.setShortText(_("Prediction"));
+    predictionAction_.setShortText(*config_.predictionEnabled
+                                       ? _("Prediction Enabled")
+                                       : _("Prediction Disabled"));
     predictionAction_.setLongText(_("Show prediction words"));
     predictionAction_.connect<SimpleAction::Activated>(
         [this](InputContext *ic) {
             config_.predictionEnabled.setValue(!(*config_.predictionEnabled));
             saveConfig();
+            predictionAction_.setShortText(*config_.predictionEnabled
+                                               ? _("Prediction Enabled")
+                                               : _("Prediction Disabled"));
             predictionAction_.setIcon(*config_.predictionEnabled
                                           ? "fcitx-remind-active"
                                           : "fcitx-remind-inactive");
