@@ -4,15 +4,15 @@
 #
 # Translators:
 # TotalCaesar659 <x24cm5b8c54q6szxw@yandex.ru>, 2017
-# Dmitry <dmitrydmitry761@gmail.com>, 2022
+# Dmitry <dmitrydmitry761@gmail.com>, 2023
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2023-02-13 22:18+0000\n"
+"POT-Creation-Date: 2023-02-18 13:01+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
-"Last-Translator: Dmitry <dmitrydmitry761@gmail.com>, 2022\n"
+"Last-Translator: Dmitry <dmitrydmitry761@gmail.com>, 2023\n"
 "Language-Team: Russian (https://www.transifex.com/fcitx/teams/12005/ru/)\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -646,12 +646,12 @@ msgstr "Пожалуйста, используйте эту функцию по�
 #: im/table/engine.cpp:75 im/table/engine.cpp:83 im/pinyin/pinyin.cpp:742
 #: im/pinyin/pinyin.cpp:752
 msgid "Prediction Disabled"
-msgstr ""
+msgstr "Предсказание отключено"
 
 #: im/table/engine.cpp:74 im/table/engine.cpp:82 im/pinyin/pinyin.cpp:741
 #: im/pinyin/pinyin.cpp:751
 msgid "Prediction Enabled"
-msgstr ""
+msgstr "Предсказание включено"
 
 #: im/table/engine.h:45 im/pinyin/pinyin.h:136
 msgid "Prediction Size"
