@@ -104,8 +104,7 @@ public:
     }
     void populateConfig();
 
-    bool needConvert(fcitx::InputContext *inputContext);
-    ChttransIMType convertType(fcitx::InputContext *inputContext);
+    ChttransIMType convertType(fcitx::InputContext *inputContext) const;
     std::string convert(ChttransIMType type, const std::string &str);
     void toggle(fcitx::InputContext *ic);
 
@@ -121,6 +120,7 @@ private:
     std::unordered_map<ChttransEngine, std::unique_ptr<ChttransBackend>,
                        fcitx::EnumHash>
         backends_;
+    ChttransBackend *currentBackend_ = nullptr;
     std::unordered_set<std::string> enabledIM_;
     fcitx::ScopedConnection outputFilterConn_;
     fcitx::ScopedConnection commitFilterConn_;

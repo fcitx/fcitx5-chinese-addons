@@ -83,11 +83,17 @@ Chttrans::Chttrans(fcitx::Instance *instance) : instance_(instance) {
         });
     outputFilterConn_ = instance_->connect<Instance::OutputFilter>(
         [this](InputContext *inputContext, Text &text) {
-            if (!toggleAction_.isParent(&inputContext->statusArea()) ||
-                !needConvert(inputContext)) {
+            // Short cut for empty string.
+            if (text.size() <= 0) {
+                return;
+            }
+            if (!toggleAction_.isParent(&inputContext->statusArea())) {
                 return;
             }
             auto type = convertType(inputContext);
+            if (type == ChttransIMType::Other) {
+                return;
+            }
             auto oldString = text.toString();
             auto oldLength = utf8::lengthValidated(oldString);
             if (oldLength == utf8::INVALID_LENGTH) {
@@ -99,21 +105,27 @@ Chttrans::Chttrans(fcitx::Instance *instance) : instance_(instance) {
                 return;
             }
             Text newText;
-            size_t off = 0;
-            size_t remainLength = newLength;
-            for (size_t i = 0; i < text.size(); i++) {
-                auto segmentLength = utf8::length(text.stringAt(i));
-                if (remainLength < segmentLength) {
-                    segmentLength = remainLength;
+            // Short cut for most common case, the text contains only one
+            // string.
+            if (text.size() == 1) {
+                newText.append(std::move(newString), text.formatAt(0));
+            } else {
+                size_t off = 0;
+                size_t remainLength = newLength;
+                for (size_t i = 0; i < text.size(); i++) {
+                    auto segmentLength = utf8::length(text.stringAt(i));
+                    if (remainLength < segmentLength) {
+                        segmentLength = remainLength;
+                    }
+                    remainLength -= segmentLength;
+                    size_t segmentByteLength = utf8::ncharByteLength(
+                        newString.begin() + off, segmentLength);
+                    newText.append(newString.substr(off, segmentByteLength),
+                                   text.formatAt(i));
+                    off = off + segmentByteLength;
                 }
-                remainLength -= segmentLength;
-                size_t segmentByteLength = utf8::ncharByteLength(
-                    newString.begin() + off, segmentLength);
-                newText.append(newString.substr(off, segmentByteLength),
-                               text.formatAt(i));
-                off = off + segmentByteLength;
             }
-            if (text.cursor() >= 0) {
+            if (text.cursor() > 0) {
                 auto length = utf8::length(oldString, 0, text.cursor());
                 if (length > newLength) {
                     length = newLength;
@@ -127,11 +139,13 @@ Chttrans::Chttrans(fcitx::Instance *instance) : instance_(instance) {
         });
     commitFilterConn_ = instance_->connect<Instance::CommitFilter>(
         [this](InputContext *inputContext, std::string &str) {
-            if (!toggleAction_.isParent(&inputContext->statusArea()) ||
-                !needConvert(inputContext)) {
+            if (!toggleAction_.isParent(&inputContext->statusArea())) {
                 return;
             }
             auto type = convertType(inputContext);
+            if (type == ChttransIMType::Other) {
+                return;
+            }
             str = convert(type, str);
         });
 }
@@ -169,6 +183,21 @@ void Chttrans::populateConfig() {
             backend.second->updateConfig(config_);
         }
     }
+#ifdef ENABLE_OPENCC
+    auto engine = config_.engine.value();
+#else
+    auto engine = ChttransEngine::Native;
+#endif
+
+    auto iter = backends_.find(engine);
+    if (iter == backends_.end() && engine != ChttransEngine::Native) {
+        iter = backends_.find(ChttransEngine::Native);
+    }
+    if (iter == backends_.end()) {
+        currentBackend_ = nullptr;
+    } else {
+        currentBackend_ = iter->second.get();
+    }
 }
 
 void Chttrans::syncToConfig() {
@@ -185,41 +214,17 @@ void Chttrans::save() {
 }
 
 std::string Chttrans::convert(ChttransIMType type, const std::string &str) {
-#ifdef ENABLE_OPENCC
-    auto engine = config_.engine.value();
-#else
-    auto engine = ChttransEngine::Native;
-#endif
-
-    auto iter = backends_.find(engine);
-    if (iter == backends_.end()) {
-        iter = backends_.find(ChttransEngine::Native);
-    }
-    if (iter == backends_.end() || !iter->second->load(config_)) {
+    if (!currentBackend_ || !currentBackend_->load(config_)) {
         return str;
     }
 
     if (type == ChttransIMType::Trad) {
-        return iter->second->convertSimpToTrad(str);
+        return currentBackend_->convertSimpToTrad(str);
     }
-    return iter->second->convertTradToSimp(str);
+    return currentBackend_->convertTradToSimp(str);
 }
 
-bool Chttrans::needConvert(fcitx::InputContext *inputContext) {
-    auto *engine = instance_->inputMethodEngine(inputContext);
-    const auto *entry = instance_->inputMethodEntry(inputContext);
-    if (!engine || !entry) {
-        return false;
-    }
-    auto type = inputMethodType(*entry);
-    if (type == ChttransIMType::Other) {
-        return false;
-    }
-
-    return enabledIM_.count(entry->uniqueName());
-}
-
-ChttransIMType Chttrans::convertType(fcitx::InputContext *inputContext) {
+ChttransIMType Chttrans::convertType(fcitx::InputContext *inputContext) const {
     auto *engine = instance_->inputMethodEngine(inputContext);
     const auto *entry = instance_->inputMethodEntry(inputContext);
     if (!engine || !entry) {
@@ -231,8 +236,9 @@ ChttransIMType Chttrans::convertType(fcitx::InputContext *inputContext) {
     }
 
     if (!enabledIM_.count(entry->uniqueName())) {
-        return type;
+        return ChttransIMType::Other;
     }
+
     return type == ChttransIMType::Simp ? ChttransIMType::Trad
                                         : ChttransIMType::Simp;
 }
