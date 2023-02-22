@@ -17,8 +17,7 @@ bool OpenCCBackend::loadOnce(const ChttransConfig &config) {
 
 std::string OpenCCBackend::locateProfile(const std::string &profile) {
     auto profilePath = StandardPath::global().locate(
-        StandardPath::Type::Data, stringutils::joinPath("opencc", profile)
-    );
+        StandardPath::Type::Data, stringutils::joinPath("opencc", profile));
     return profilePath.empty() ? profile : profilePath;
 }
 
