@@ -36,13 +36,13 @@ static ChttransIMType inputMethodType(const InputMethodEntry &entry) {
 Chttrans::Chttrans(fcitx::Instance *instance) : instance_(instance) {
     instance_->userInterfaceManager().registerAction("chttrans",
                                                      &toggleAction_);
-    reloadConfig();
 #ifdef ENABLE_OPENCC
     backends_.emplace(ChttransEngine::OpenCC,
                       std::make_unique<OpenCCBackend>());
 #endif
     backends_.emplace(ChttransEngine::Native,
                       std::make_unique<NativeBackend>());
+    reloadConfig();
 
     eventHandler_ = instance_->watchEvent(
         EventType::InputContextKeyEvent, EventWatcherPhase::Default,
