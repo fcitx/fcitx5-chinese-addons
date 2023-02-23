@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>371</width>
-    <height>419</height>
+    <width>494</width>
+    <height>356</height>
    </rect>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
@@ -52,11 +52,21 @@
      <item>
       <widget class="QPushButton" name="clearDictButton_">
        <property name="text">
-        <string>&amp;Clear Dict</string>
+        <string>&amp;Clear Dictionary</string>
        </property>
        <property name="icon">
         <iconset theme="document-revert">
          <normaloff>.</normaloff>.</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="openDirectoryButton_">
+       <property name="text">
+        <string>&amp;Open User Data Directory</string>
+       </property>
+       <property name="icon">
+        <iconset theme="inode-directory"/>
        </property>
       </widget>
      </item>
