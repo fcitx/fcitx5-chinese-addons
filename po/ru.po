@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2023-02-18 13:01+0000\n"
+"POT-Creation-Date: 2023-02-23 20:25+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Dmitry <dmitrydmitry761@gmail.com>, 2023\n"
 "Language-Team: Russian (https://www.transifex.com/fcitx/teams/12005/ru/)\n"
@@ -30,7 +30,7 @@ msgstr "Возврат в"
 msgid " for "
 msgstr "в"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:138
+#: gui/pinyindictmanager/pinyindictmanager.cpp:140
 msgid "%1 already exists, do you want to overwrite this dictionary?"
 msgstr "%1 уже существует, вы хотите перезаписать этот словарь?"
 
@@ -46,8 +46,8 @@ msgstr "&Просмотреть словарь Sogou Cell в интернете"
 #. i18n: ectx: property (text), widget (QPushButton, clearDictButton_)
 #: rc.cpp:24
 #, kde-format
-msgid "&Clear Dict"
-msgstr "&Очистить словарь"
+msgid "&Clear Dictionary"
+msgstr ""
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:44
 msgid "&Clear User Data"
@@ -59,6 +59,13 @@ msgstr "&Очистить данные пользователя"
 #, kde-format
 msgid "&Import"
 msgstr "&Импорт"
+
+#. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:66
+#. i18n: ectx: property (text), widget (QPushButton, openDirectoryButton_)
+#: rc.cpp:27
+#, kde-format
+msgid "&Open User Data Directory"
+msgstr ""
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:33
 #. i18n: ectx: property (text), widget (QPushButton, removeButton_)
@@ -103,11 +110,11 @@ msgstr "Разрешить использовать клавиатуру в ка
 msgid "Alternative Mapping"
 msgstr "Альтернативное отображение"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:363
+#: gui/pinyindictmanager/pinyindictmanager.cpp:365
 msgid "Are you sure to delete %1?"
 msgstr "Действительно удалить %1?"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:331
+#: gui/pinyindictmanager/pinyindictmanager.cpp:333
 msgid "Are you sure to delete all dictionaries?"
 msgstr "Вы уверены, что хотите удалить все словари?"
 
@@ -215,8 +222,8 @@ msgstr ""
 msgid "Common Typo"
 msgstr "Обычная опечатка"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:330
-#: gui/pinyindictmanager/pinyindictmanager.cpp:362
+#: gui/pinyindictmanager/pinyindictmanager.cpp:332
+#: gui/pinyindictmanager/pinyindictmanager.cpp:364
 msgid "Confirm deletion"
 msgstr "Подтвердите удаление"
 
@@ -233,9 +240,9 @@ msgstr "Сбой конвертера."
 msgid "Could not find pinyin."
 msgstr "Не удается найти Пиньинь."
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:111
-#: gui/pinyindictmanager/pinyindictmanager.cpp:222
-#: gui/pinyindictmanager/pinyindictmanager.cpp:281
+#: gui/pinyindictmanager/pinyindictmanager.cpp:113
+#: gui/pinyindictmanager/pinyindictmanager.cpp:224
+#: gui/pinyindictmanager/pinyindictmanager.cpp:283
 msgid "Create directory failed. Please check the permission or disk space."
 msgstr ""
 "Не удалось создать каталог. Пожалуйста, проверьте разрешение или место на "
@@ -245,7 +252,7 @@ msgstr ""
 msgid "Create temporary file failed."
 msgstr "Не удалось создать временный файл."
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:122
+#: gui/pinyindictmanager/pinyindictmanager.cpp:124
 msgid "Creating temp file failed. Please check the permission or disk space."
 msgstr ""
 "Не удалось создать временный файл. Пожалуйста, проверьте разрешение или "
@@ -272,7 +279,7 @@ msgstr "Дяньбаома"
 msgid "Dictionaries"
 msgstr "Словари"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:137
+#: gui/pinyindictmanager/pinyindictmanager.cpp:139
 msgid "Dictionary already exists"
 msgstr "Словарь уже существует"
 
@@ -360,7 +367,7 @@ msgstr "Записи"
 msgid "Erbi"
 msgstr "Erbi"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:372
+#: gui/pinyindictmanager/pinyindictmanager.cpp:374
 msgid "Error while deleting %1."
 msgstr "Ошибка при удалении %1."
 
@@ -372,7 +379,7 @@ msgstr "Точное совпадение"
 msgid "Extra Pinyin functionality"
 msgstr "Дополнительная функциональность Пиньинь"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:110
+#: gui/pinyindictmanager/pinyindictmanager.cpp:112
 msgid "Failed to create directory"
 msgstr "Не удалось создать каталог"
 
@@ -380,12 +387,12 @@ msgstr "Не удалось создать каталог"
 msgid "Failed to create request."
 msgstr "Не удалось создать запрос."
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:121
+#: gui/pinyindictmanager/pinyindictmanager.cpp:123
 msgid "Failed to create temp file"
 msgstr "Не удалось создать временный файл"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:221
-#: gui/pinyindictmanager/pinyindictmanager.cpp:280
+#: gui/pinyindictmanager/pinyindictmanager.cpp:223
+#: gui/pinyindictmanager/pinyindictmanager.cpp:282
 msgid "Failed to get runtime directory"
 msgstr "Не удалось получить каталог среды выполнения"
 
@@ -397,7 +404,7 @@ msgstr "Быстро"
 msgid "File"
 msgstr "Файл"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:371
+#: gui/pinyindictmanager/pinyindictmanager.cpp:373
 msgid "File Operation Failed"
 msgstr "Сбой операции с файлом"
 
@@ -505,7 +512,7 @@ msgstr "Внутренний сегмент (xian -> xi'an)"
 msgid "Inner Segment for Short Pinyin (qie -> qi'e)"
 msgstr "Внутренний сегмент для короткого Пиньинь (qie -> qi'e)"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:97
+#: gui/pinyindictmanager/pinyindictmanager.cpp:99
 msgid "Input Dictionary Name"
 msgstr "Ввести имя словаря"
 
@@ -562,7 +569,7 @@ msgstr "Минимальная длина Пиньинь"
 msgid "Modify dictionary"
 msgstr "Изменить словарь"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:97
+#: gui/pinyindictmanager/pinyindictmanager.cpp:99
 msgid "New Dictionary Name:"
 msgstr "Новое имя словаря:"
 
@@ -631,7 +638,7 @@ msgstr "Размер страницы"
 msgid "Pinyin"
 msgstr "Пиньинь"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:90
+#: gui/pinyindictmanager/pinyindictmanager.cpp:92
 msgid "Pinyin dictionary manager"
 msgstr "Менеджер словаря Пиньинь"
 
@@ -737,7 +744,7 @@ msgstr "Удалить все"
 msgid "Save auto phrase after being typed for ... times"
 msgstr "Сохранять автофразу после набора ... раз"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:198
+#: gui/pinyindictmanager/pinyindictmanager.cpp:200
 msgid "Scel file (*.scel)"
 msgstr "Файл SCEL (*.scel)"
 
@@ -749,7 +756,7 @@ msgstr "Выберите 2-й кандидат"
 msgid "Select 3rd Candidate"
 msgstr "Выберите 3-й кандидат"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:157
+#: gui/pinyindictmanager/pinyindictmanager.cpp:159
 msgid "Select Dictionary File"
 msgstr "Выбрать файл словаря"
 
@@ -765,7 +772,7 @@ msgstr "Выберите третий кандидат"
 msgid "Select candidate to be removed from history:"
 msgstr "Выберите кандидат для удаления из истории:"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:198
+#: gui/pinyindictmanager/pinyindictmanager.cpp:200
 msgid "Select scel file"
 msgstr "Выбрать файл scel"
 
@@ -805,11 +812,11 @@ msgstr "Профиль Shuangpin"
 msgid "Simplified Chinese"
 msgstr "Упрощенный китайский"
 
-#: modules/chttrans/chttrans.cpp:77
+#: modules/chttrans/chttrans.cpp:76
 msgid "Simplified Chinese is enabled."
 msgstr "Упрощенный китайский включен."
 
-#: im/pinyin/pinyin.h:215 modules/chttrans/chttrans.cpp:71
+#: im/pinyin/pinyin.h:215 modules/chttrans/chttrans.cpp:70
 #: modules/chttrans/chttrans.conf.in.in:3
 msgid "Simplified and Traditional Chinese Translation"
 msgstr "Перевод упрощенного и традиционного китайского"
@@ -822,11 +829,11 @@ msgstr "Сортировка кандидатов на основе текуще
 msgid "Strings to trigger quick phrase"
 msgstr "Строки для запуска быстрой фразы"
 
-#: modules/chttrans/chttrans.cpp:75
+#: modules/chttrans/chttrans.cpp:74
 msgid "Switch to Simplified Chinese"
 msgstr "Переключиться на Китайский Упрощенный"
 
-#: modules/chttrans/chttrans.cpp:74
+#: modules/chttrans/chttrans.cpp:73
 msgid "Switch to Traditional Chinese"
 msgstr "Переключиться на Китайский Традиционный"
 
@@ -867,7 +874,7 @@ msgstr "Клавиша переключения"
 msgid "Traditional Chinese"
 msgstr "Традиционный китайский"
 
-#: modules/chttrans/chttrans.cpp:76
+#: modules/chttrans/chttrans.cpp:75
 msgid "Traditional Chinese is enabled."
 msgstr "Традиционный китайский включен."
 

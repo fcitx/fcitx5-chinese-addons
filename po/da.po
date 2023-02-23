@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2023-02-13 22:18+0000\n"
+"POT-Creation-Date: 2023-02-23 20:25+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: scootergrisen, 2021\n"
 "Language-Team: Danish (https://www.transifex.com/fcitx/teams/12005/da/)\n"
@@ -27,7 +27,7 @@ msgstr " Retur for "
 msgid " for "
 msgstr " for "
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:138
+#: gui/pinyindictmanager/pinyindictmanager.cpp:140
 msgid "%1 already exists, do you want to overwrite this dictionary?"
 msgstr "%1 findes allerede, vil du overskrive ordbogen?"
 
@@ -43,8 +43,8 @@ msgstr "&Gennemse Sogou Cell-ordbog online"
 #. i18n: ectx: property (text), widget (QPushButton, clearDictButton_)
 #: rc.cpp:24
 #, kde-format
-msgid "&Clear Dict"
-msgstr "&Ryd ordbog"
+msgid "&Clear Dictionary"
+msgstr ""
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:44
 msgid "&Clear User Data"
@@ -56,6 +56,13 @@ msgstr "&Ryd brugerdata"
 #, kde-format
 msgid "&Import"
 msgstr "&Importér"
+
+#. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:66
+#. i18n: ectx: property (text), widget (QPushButton, openDirectoryButton_)
+#: rc.cpp:27
+#, kde-format
+msgid "&Open User Data Directory"
+msgstr ""
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:33
 #. i18n: ectx: property (text), widget (QPushButton, removeButton_)
@@ -100,11 +107,11 @@ msgstr ""
 msgid "Alternative Mapping"
 msgstr ""
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:363
+#: gui/pinyindictmanager/pinyindictmanager.cpp:365
 msgid "Are you sure to delete %1?"
 msgstr "Er du sikker på, at du vil slette %1?"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:331
+#: gui/pinyindictmanager/pinyindictmanager.cpp:333
 msgid "Are you sure to delete all dictionaries?"
 msgstr "Er du sikker på, at du vil slette alle ordbøger?"
 
@@ -212,8 +219,8 @@ msgstr ""
 msgid "Common Typo"
 msgstr ""
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:330
-#: gui/pinyindictmanager/pinyindictmanager.cpp:362
+#: gui/pinyindictmanager/pinyindictmanager.cpp:332
+#: gui/pinyindictmanager/pinyindictmanager.cpp:364
 msgid "Confirm deletion"
 msgstr "Bekræft sletning"
 
@@ -230,9 +237,9 @@ msgstr "Konverter holdt op med at virke."
 msgid "Could not find pinyin."
 msgstr "Kunne ikke finde pinyin."
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:111
-#: gui/pinyindictmanager/pinyindictmanager.cpp:222
-#: gui/pinyindictmanager/pinyindictmanager.cpp:281
+#: gui/pinyindictmanager/pinyindictmanager.cpp:113
+#: gui/pinyindictmanager/pinyindictmanager.cpp:224
+#: gui/pinyindictmanager/pinyindictmanager.cpp:283
 msgid "Create directory failed. Please check the permission or disk space."
 msgstr ""
 "Oprettelse af mappe mislykkedes. Tjek venligst at du har rettighed eller at "
@@ -242,7 +249,7 @@ msgstr ""
 msgid "Create temporary file failed."
 msgstr "Oprettelse af midlertidig fil mislykkedes."
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:122
+#: gui/pinyindictmanager/pinyindictmanager.cpp:124
 msgid "Creating temp file failed. Please check the permission or disk space."
 msgstr ""
 "Oprettelse af midlertidig fil mislykkedes. Tjek venligst at du har rettighed "
@@ -269,7 +276,7 @@ msgstr "Dianbaoma"
 msgid "Dictionaries"
 msgstr "Ordbøger"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:137
+#: gui/pinyindictmanager/pinyindictmanager.cpp:139
 msgid "Dictionary already exists"
 msgstr "Ordbog findes allerede"
 
@@ -358,7 +365,7 @@ msgstr ""
 msgid "Erbi"
 msgstr "Erbi"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:372
+#: gui/pinyindictmanager/pinyindictmanager.cpp:374
 msgid "Error while deleting %1."
 msgstr "Fejl ved sletning af %1."
 
@@ -370,7 +377,7 @@ msgstr "Præcist match"
 msgid "Extra Pinyin functionality"
 msgstr "Ekstra Pinyin-funktionalitet"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:110
+#: gui/pinyindictmanager/pinyindictmanager.cpp:112
 msgid "Failed to create directory"
 msgstr "Kunne ikke oprette mappe"
 
@@ -378,12 +385,12 @@ msgstr "Kunne ikke oprette mappe"
 msgid "Failed to create request."
 msgstr "Kunne ikke oprette anmodning."
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:121
+#: gui/pinyindictmanager/pinyindictmanager.cpp:123
 msgid "Failed to create temp file"
 msgstr "Kunne ikke oprette midlertidig fil"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:221
-#: gui/pinyindictmanager/pinyindictmanager.cpp:280
+#: gui/pinyindictmanager/pinyindictmanager.cpp:223
+#: gui/pinyindictmanager/pinyindictmanager.cpp:282
 msgid "Failed to get runtime directory"
 msgstr "Kunne ikke hente runtime-mappe"
 
@@ -395,7 +402,7 @@ msgstr ""
 msgid "File"
 msgstr "Fil"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:371
+#: gui/pinyindictmanager/pinyindictmanager.cpp:373
 msgid "File Operation Failed"
 msgstr "Filhandling mislykkedes"
 
@@ -501,7 +508,7 @@ msgstr "Indre segment (xian -> xi'an)"
 msgid "Inner Segment for Short Pinyin (qie -> qi'e)"
 msgstr "Indre segment for kort Pinyin (qie -> qi'e)"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:97
+#: gui/pinyindictmanager/pinyindictmanager.cpp:99
 msgid "Input Dictionary Name"
 msgstr "Input ordbogsnavn"
 
@@ -558,7 +565,7 @@ msgstr "Maksimum længde for Pinyin"
 msgid "Modify dictionary"
 msgstr "Rediger ordbog"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:97
+#: gui/pinyindictmanager/pinyindictmanager.cpp:99
 msgid "New Dictionary Name:"
 msgstr "Nyt ordbogsnavn:"
 
@@ -627,7 +634,7 @@ msgstr "Sidestørrelse"
 msgid "Pinyin"
 msgstr "Pinyin"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:90
+#: gui/pinyindictmanager/pinyindictmanager.cpp:92
 msgid "Pinyin dictionary manager"
 msgstr "Pinyin-ordbogshåndtering"
 
@@ -731,7 +738,7 @@ msgstr "Fjern &alle"
 msgid "Save auto phrase after being typed for ... times"
 msgstr "Gem automatisk frase efter den er blevet skrevet ... gange"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:198
+#: gui/pinyindictmanager/pinyindictmanager.cpp:200
 msgid "Scel file (*.scel)"
 msgstr "Scel-fil (*.scel)"
 
@@ -743,7 +750,7 @@ msgstr "Vælg anden kandidat"
 msgid "Select 3rd Candidate"
 msgstr "Vælg tredje kandidat"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:157
+#: gui/pinyindictmanager/pinyindictmanager.cpp:159
 msgid "Select Dictionary File"
 msgstr "Vælg ordbogsfil"
 
@@ -759,7 +766,7 @@ msgstr "Vælg tredje kandidat"
 msgid "Select candidate to be removed from history:"
 msgstr "Vælg kandidat som skal fjernes fra historik:"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:198
+#: gui/pinyindictmanager/pinyindictmanager.cpp:200
 msgid "Select scel file"
 msgstr "Vælg scel-fil"
 
@@ -799,11 +806,11 @@ msgstr "Shuangpin-profil"
 msgid "Simplified Chinese"
 msgstr "Forenklet kinesisk"
 
-#: modules/chttrans/chttrans.cpp:77
+#: modules/chttrans/chttrans.cpp:76
 msgid "Simplified Chinese is enabled."
 msgstr "Forenklet kinesisk er aktiveret."
 
-#: im/pinyin/pinyin.h:215 modules/chttrans/chttrans.cpp:71
+#: im/pinyin/pinyin.h:215 modules/chttrans/chttrans.cpp:70
 #: modules/chttrans/chttrans.conf.in.in:3
 msgid "Simplified and Traditional Chinese Translation"
 msgstr "Oversættelse af forenklet og traditionel kinesisk"
@@ -816,11 +823,11 @@ msgstr "Sortér kandidater baseret på nuværende kontekst"
 msgid "Strings to trigger quick phrase"
 msgstr "Strenge til at udløse hurtigfrase"
 
-#: modules/chttrans/chttrans.cpp:75
+#: modules/chttrans/chttrans.cpp:74
 msgid "Switch to Simplified Chinese"
 msgstr "Skift til forenklet kinesisk"
 
-#: modules/chttrans/chttrans.cpp:74
+#: modules/chttrans/chttrans.cpp:73
 msgid "Switch to Traditional Chinese"
 msgstr "Skift til traditionel kinesisk"
 
@@ -861,7 +868,7 @@ msgstr "Tast til at skifte"
 msgid "Traditional Chinese"
 msgstr "Traditionel kinesisk"
 
-#: modules/chttrans/chttrans.cpp:76
+#: modules/chttrans/chttrans.cpp:75
 msgid "Traditional Chinese is enabled."
 msgstr "Traditionel kinesisk er aktiveret."
 

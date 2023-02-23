@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2023-02-13 22:18+0000\n"
+"POT-Creation-Date: 2023-02-23 20:25+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: mar well <m.wellendorf@gmx.de>, 2022\n"
 "Language-Team: German (https://www.transifex.com/fcitx/teams/12005/de/)\n"
@@ -28,7 +28,7 @@ msgstr ""
 msgid " for "
 msgstr "für"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:138
+#: gui/pinyindictmanager/pinyindictmanager.cpp:140
 msgid "%1 already exists, do you want to overwrite this dictionary?"
 msgstr "%1 existiert bereits, soll das Wörterbuch überschrieben werden?"
 
@@ -44,7 +44,7 @@ msgstr "&Sogou Wörterbuchverzeichnis für Mobiles Online durchsuchen"
 #. i18n: ectx: property (text), widget (QPushButton, clearDictButton_)
 #: rc.cpp:24
 #, kde-format
-msgid "&Clear Dict"
+msgid "&Clear Dictionary"
 msgstr ""
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:44
@@ -57,6 +57,13 @@ msgstr "&Nutzerdaten löschen"
 #, kde-format
 msgid "&Import"
 msgstr "&Importieren"
+
+#. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:66
+#. i18n: ectx: property (text), widget (QPushButton, openDirectoryButton_)
+#: rc.cpp:27
+#, kde-format
+msgid "&Open User Data Directory"
+msgstr ""
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:33
 #. i18n: ectx: property (text), widget (QPushButton, removeButton_)
@@ -95,11 +102,11 @@ msgstr ""
 msgid "Alternative Mapping"
 msgstr ""
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:363
+#: gui/pinyindictmanager/pinyindictmanager.cpp:365
 msgid "Are you sure to delete %1?"
 msgstr "Sind Sie sicher, dass %1 gelöscht werden soll?"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:331
+#: gui/pinyindictmanager/pinyindictmanager.cpp:333
 msgid "Are you sure to delete all dictionaries?"
 msgstr "Sind Sie sicher, dass alle Wörterbücher gelöscht werden sollen?"
 
@@ -205,8 +212,8 @@ msgstr ""
 msgid "Common Typo"
 msgstr ""
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:330
-#: gui/pinyindictmanager/pinyindictmanager.cpp:362
+#: gui/pinyindictmanager/pinyindictmanager.cpp:332
+#: gui/pinyindictmanager/pinyindictmanager.cpp:364
 msgid "Confirm deletion"
 msgstr "Löschen bestätigen"
 
@@ -223,9 +230,9 @@ msgstr "Konverter abgestürzt."
 msgid "Could not find pinyin."
 msgstr "Pinyin kann nicht gefunden werden"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:111
-#: gui/pinyindictmanager/pinyindictmanager.cpp:222
-#: gui/pinyindictmanager/pinyindictmanager.cpp:281
+#: gui/pinyindictmanager/pinyindictmanager.cpp:113
+#: gui/pinyindictmanager/pinyindictmanager.cpp:224
+#: gui/pinyindictmanager/pinyindictmanager.cpp:283
 msgid "Create directory failed. Please check the permission or disk space."
 msgstr ""
 "Kopieren des Verzeichnisses fehlgeschlagen. Bitte überprüfen Sie die "
@@ -235,7 +242,7 @@ msgstr ""
 msgid "Create temporary file failed."
 msgstr "Erstellen der temporären Datei fehlgeschlagen."
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:122
+#: gui/pinyindictmanager/pinyindictmanager.cpp:124
 msgid "Creating temp file failed. Please check the permission or disk space."
 msgstr ""
 "Kopieren der temporären Datei fehlgeschlagen. Bitte überprüfen Sie die "
@@ -262,7 +269,7 @@ msgstr "Dianbaoma"
 msgid "Dictionaries"
 msgstr "Wörterbücher"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:137
+#: gui/pinyindictmanager/pinyindictmanager.cpp:139
 msgid "Dictionary already exists"
 msgstr "Wörterbuch existiert schon"
 
@@ -346,7 +353,7 @@ msgstr "Einträge"
 msgid "Erbi"
 msgstr "Erbi"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:372
+#: gui/pinyindictmanager/pinyindictmanager.cpp:374
 msgid "Error while deleting %1."
 msgstr "Fehler beim Löschen von %1."
 
@@ -358,7 +365,7 @@ msgstr "Genaue Übereinstimmung"
 msgid "Extra Pinyin functionality"
 msgstr "Extra Pinyin-Funktionalitat"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:110
+#: gui/pinyindictmanager/pinyindictmanager.cpp:112
 msgid "Failed to create directory"
 msgstr "Verzeichnis konnte nicht erstellt werden"
 
@@ -366,12 +373,12 @@ msgstr "Verzeichnis konnte nicht erstellt werden"
 msgid "Failed to create request."
 msgstr "Anforderung fehlgeschlagen."
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:121
+#: gui/pinyindictmanager/pinyindictmanager.cpp:123
 msgid "Failed to create temp file"
 msgstr "Erstellen der temporären Datei fehlgeschlagen"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:221
-#: gui/pinyindictmanager/pinyindictmanager.cpp:280
+#: gui/pinyindictmanager/pinyindictmanager.cpp:223
+#: gui/pinyindictmanager/pinyindictmanager.cpp:282
 msgid "Failed to get runtime directory"
 msgstr "Laufzeitverzeichnis konnte nicht gefunden werden"
 
@@ -383,7 +390,7 @@ msgstr "Schnell"
 msgid "File"
 msgstr "Datei"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:371
+#: gui/pinyindictmanager/pinyindictmanager.cpp:373
 msgid "File Operation Failed"
 msgstr "Dateioperation gescheitert"
 
@@ -486,7 +493,7 @@ msgstr ""
 msgid "Inner Segment for Short Pinyin (qie -> qi'e)"
 msgstr ""
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:97
+#: gui/pinyindictmanager/pinyindictmanager.cpp:99
 msgid "Input Dictionary Name"
 msgstr "Name des Eingabewörterbuchs"
 
@@ -543,7 +550,7 @@ msgstr "Minimale Pinyin Länge"
 msgid "Modify dictionary"
 msgstr "Wörterbuch ändern"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:97
+#: gui/pinyindictmanager/pinyindictmanager.cpp:99
 msgid "New Dictionary Name:"
 msgstr "Neuer Wörterbuchname:"
 
@@ -609,7 +616,7 @@ msgstr "Seitengröße"
 msgid "Pinyin"
 msgstr "Pinyin"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:90
+#: gui/pinyindictmanager/pinyindictmanager.cpp:92
 msgid "Pinyin dictionary manager"
 msgstr "Pinyin-Wörterbuch-Manager"
 
@@ -713,7 +720,7 @@ msgstr "&Alle entfernen"
 msgid "Save auto phrase after being typed for ... times"
 msgstr ""
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:198
+#: gui/pinyindictmanager/pinyindictmanager.cpp:200
 msgid "Scel file (*.scel)"
 msgstr "Scel Datei (*.scel)"
 
@@ -725,7 +732,7 @@ msgstr "2. Kandidaten auswählen"
 msgid "Select 3rd Candidate"
 msgstr "3. Kandidaten auswählen"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:157
+#: gui/pinyindictmanager/pinyindictmanager.cpp:159
 msgid "Select Dictionary File"
 msgstr "Wörterbuchdatei auswählen"
 
@@ -741,7 +748,7 @@ msgstr ""
 msgid "Select candidate to be removed from history:"
 msgstr ""
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:198
+#: gui/pinyindictmanager/pinyindictmanager.cpp:200
 msgid "Select scel file"
 msgstr "Scel Datei auswählen"
 
@@ -781,11 +788,11 @@ msgstr ""
 msgid "Simplified Chinese"
 msgstr "Chinesische Kurzzeichen"
 
-#: modules/chttrans/chttrans.cpp:77
+#: modules/chttrans/chttrans.cpp:76
 msgid "Simplified Chinese is enabled."
 msgstr "Chinesische Kurzzeichen aktiviert."
 
-#: im/pinyin/pinyin.h:215 modules/chttrans/chttrans.cpp:71
+#: im/pinyin/pinyin.h:215 modules/chttrans/chttrans.cpp:70
 #: modules/chttrans/chttrans.conf.in.in:3
 msgid "Simplified and Traditional Chinese Translation"
 msgstr "Übersetzung simplizifiertes und traditionelles Chinesisch "
@@ -798,11 +805,11 @@ msgstr ""
 msgid "Strings to trigger quick phrase"
 msgstr ""
 
-#: modules/chttrans/chttrans.cpp:75
+#: modules/chttrans/chttrans.cpp:74
 msgid "Switch to Simplified Chinese"
 msgstr ""
 
-#: modules/chttrans/chttrans.cpp:74
+#: modules/chttrans/chttrans.cpp:73
 msgid "Switch to Traditional Chinese"
 msgstr ""
 
@@ -841,7 +848,7 @@ msgstr "Taste umschalten"
 msgid "Traditional Chinese"
 msgstr "Chinesische Langzeichen"
 
-#: modules/chttrans/chttrans.cpp:76
+#: modules/chttrans/chttrans.cpp:75
 msgid "Traditional Chinese is enabled."
 msgstr "Chinesische Langzeichen aktiviert."
 
