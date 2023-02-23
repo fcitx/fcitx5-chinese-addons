@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2023-02-13 22:18+0000\n"
+"POT-Creation-Date: 2023-02-23 20:25+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Neko ◣ 0xFF, 2022\n"
 "Language-Team: Chinese (Taiwan) (https://www.transifex.com/fcitx/teams/12005/"
@@ -33,7 +33,7 @@ msgstr "按下 Enter 以"
 msgid " for "
 msgstr " 以"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:138
+#: gui/pinyindictmanager/pinyindictmanager.cpp:140
 msgid "%1 already exists, do you want to overwrite this dictionary?"
 msgstr "%1 已存在，是否覆寫此字典？"
 
@@ -49,8 +49,8 @@ msgstr "線上瀏覽搜狗细胞词库(&B)"
 #. i18n: ectx: property (text), widget (QPushButton, clearDictButton_)
 #: rc.cpp:24
 #, kde-format
-msgid "&Clear Dict"
-msgstr "清空字典(&C)"
+msgid "&Clear Dictionary"
+msgstr ""
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:44
 msgid "&Clear User Data"
@@ -62,6 +62,13 @@ msgstr "清空使用者資訊(&C)"
 #, kde-format
 msgid "&Import"
 msgstr "匯入(&I)"
+
+#. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:66
+#. i18n: ectx: property (text), widget (QPushButton, openDirectoryButton_)
+#: rc.cpp:27
+#, kde-format
+msgid "&Open User Data Directory"
+msgstr ""
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:33
 #. i18n: ectx: property (text), widget (QPushButton, removeButton_)
@@ -102,11 +109,11 @@ msgstr ""
 msgid "Alternative Mapping"
 msgstr "替代映射"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:363
+#: gui/pinyindictmanager/pinyindictmanager.cpp:365
 msgid "Are you sure to delete %1?"
 msgstr "確定刪除 %1？"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:331
+#: gui/pinyindictmanager/pinyindictmanager.cpp:333
 msgid "Are you sure to delete all dictionaries?"
 msgstr "確定刪除所有字典？"
 
@@ -212,8 +219,8 @@ msgstr ""
 msgid "Common Typo"
 msgstr "常見錯誤"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:330
-#: gui/pinyindictmanager/pinyindictmanager.cpp:362
+#: gui/pinyindictmanager/pinyindictmanager.cpp:332
+#: gui/pinyindictmanager/pinyindictmanager.cpp:364
 msgid "Confirm deletion"
 msgstr "確定刪除"
 
@@ -230,9 +237,9 @@ msgstr "轉換器當掉了。"
 msgid "Could not find pinyin."
 msgstr "找不到拼音。"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:111
-#: gui/pinyindictmanager/pinyindictmanager.cpp:222
-#: gui/pinyindictmanager/pinyindictmanager.cpp:281
+#: gui/pinyindictmanager/pinyindictmanager.cpp:113
+#: gui/pinyindictmanager/pinyindictmanager.cpp:224
+#: gui/pinyindictmanager/pinyindictmanager.cpp:283
 msgid "Create directory failed. Please check the permission or disk space."
 msgstr "建立目錄失敗。請檢查權限或磁碟空間。"
 
@@ -240,7 +247,7 @@ msgstr "建立目錄失敗。請檢查權限或磁碟空間。"
 msgid "Create temporary file failed."
 msgstr "建立暫存檔失敗。"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:122
+#: gui/pinyindictmanager/pinyindictmanager.cpp:124
 msgid "Creating temp file failed. Please check the permission or disk space."
 msgstr "建立暫存檔失敗。請檢查權限或磁碟空間。"
 
@@ -265,7 +272,7 @@ msgstr "電報碼"
 msgid "Dictionaries"
 msgstr "字典"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:137
+#: gui/pinyindictmanager/pinyindictmanager.cpp:139
 msgid "Dictionary already exists"
 msgstr "字典已存在"
 
@@ -349,7 +356,7 @@ msgstr "項目"
 msgid "Erbi"
 msgstr "二筆"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:372
+#: gui/pinyindictmanager/pinyindictmanager.cpp:374
 msgid "Error while deleting %1."
 msgstr "刪除 %1 時出錯"
 
@@ -361,7 +368,7 @@ msgstr "精確匹配"
 msgid "Extra Pinyin functionality"
 msgstr "額外拼音功能"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:110
+#: gui/pinyindictmanager/pinyindictmanager.cpp:112
 msgid "Failed to create directory"
 msgstr "建立資料夾失敗"
 
@@ -369,12 +376,12 @@ msgstr "建立資料夾失敗"
 msgid "Failed to create request."
 msgstr "建立請求失敗"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:121
+#: gui/pinyindictmanager/pinyindictmanager.cpp:123
 msgid "Failed to create temp file"
 msgstr "建立暫存檔失敗"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:221
-#: gui/pinyindictmanager/pinyindictmanager.cpp:280
+#: gui/pinyindictmanager/pinyindictmanager.cpp:223
+#: gui/pinyindictmanager/pinyindictmanager.cpp:282
 msgid "Failed to get runtime directory"
 msgstr "取得 runtime 目錄失敗"
 
@@ -386,7 +393,7 @@ msgstr "快速"
 msgid "File"
 msgstr "檔案"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:371
+#: gui/pinyindictmanager/pinyindictmanager.cpp:373
 msgid "File Operation Failed"
 msgstr "檔案操作失敗"
 
@@ -489,7 +496,7 @@ msgstr ""
 msgid "Inner Segment for Short Pinyin (qie -> qi'e)"
 msgstr ""
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:97
+#: gui/pinyindictmanager/pinyindictmanager.cpp:99
 msgid "Input Dictionary Name"
 msgstr ""
 
@@ -546,7 +553,7 @@ msgstr ""
 msgid "Modify dictionary"
 msgstr "修改詞典"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:97
+#: gui/pinyindictmanager/pinyindictmanager.cpp:99
 msgid "New Dictionary Name:"
 msgstr ""
 
@@ -610,7 +617,7 @@ msgstr ""
 msgid "Pinyin"
 msgstr "拼音"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:90
+#: gui/pinyindictmanager/pinyindictmanager.cpp:92
 msgid "Pinyin dictionary manager"
 msgstr ""
 
@@ -713,7 +720,7 @@ msgstr ""
 msgid "Save auto phrase after being typed for ... times"
 msgstr ""
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:198
+#: gui/pinyindictmanager/pinyindictmanager.cpp:200
 msgid "Scel file (*.scel)"
 msgstr ""
 
@@ -725,7 +732,7 @@ msgstr ""
 msgid "Select 3rd Candidate"
 msgstr ""
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:157
+#: gui/pinyindictmanager/pinyindictmanager.cpp:159
 msgid "Select Dictionary File"
 msgstr ""
 
@@ -741,7 +748,7 @@ msgstr ""
 msgid "Select candidate to be removed from history:"
 msgstr ""
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:198
+#: gui/pinyindictmanager/pinyindictmanager.cpp:200
 msgid "Select scel file"
 msgstr ""
 
@@ -781,11 +788,11 @@ msgstr ""
 msgid "Simplified Chinese"
 msgstr "簡體中文"
 
-#: modules/chttrans/chttrans.cpp:77
+#: modules/chttrans/chttrans.cpp:76
 msgid "Simplified Chinese is enabled."
 msgstr "已啟用簡體中文。"
 
-#: im/pinyin/pinyin.h:215 modules/chttrans/chttrans.cpp:71
+#: im/pinyin/pinyin.h:215 modules/chttrans/chttrans.cpp:70
 #: modules/chttrans/chttrans.conf.in.in:3
 msgid "Simplified and Traditional Chinese Translation"
 msgstr "簡繁轉换"
@@ -798,11 +805,11 @@ msgstr ""
 msgid "Strings to trigger quick phrase"
 msgstr ""
 
-#: modules/chttrans/chttrans.cpp:75
+#: modules/chttrans/chttrans.cpp:74
 msgid "Switch to Simplified Chinese"
 msgstr ""
 
-#: modules/chttrans/chttrans.cpp:74
+#: modules/chttrans/chttrans.cpp:73
 msgid "Switch to Traditional Chinese"
 msgstr ""
 
@@ -841,7 +848,7 @@ msgstr ""
 msgid "Traditional Chinese"
 msgstr ""
 
-#: modules/chttrans/chttrans.cpp:76
+#: modules/chttrans/chttrans.cpp:75
 msgid "Traditional Chinese is enabled."
 msgstr "已啟用繁體中文。"
 
