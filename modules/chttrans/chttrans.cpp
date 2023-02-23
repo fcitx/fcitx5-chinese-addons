@@ -236,7 +236,7 @@ ChttransIMType Chttrans::convertType(fcitx::InputContext *inputContext) const {
     }
 
     if (!enabledIM_.count(entry->uniqueName())) {
-        return ChttransIMType::Other;
+        return type;
     }
 
     return type == ChttransIMType::Simp ? ChttransIMType::Trad
