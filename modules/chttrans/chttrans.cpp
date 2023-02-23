@@ -23,7 +23,7 @@
 
 using namespace fcitx;
 
-static ChttransIMType inputMethodType(const InputMethodEntry &entry) {
+static ChttransIMType inputMethodEntryType(const InputMethodEntry &entry) {
     if (entry.languageCode() == "zh_CN") {
         return ChttransIMType::Simp;
     }
@@ -52,29 +52,28 @@ Chttrans::Chttrans(fcitx::Instance *instance) : instance_(instance) {
                 return;
             }
             auto *ic = keyEvent.inputContext();
-            auto *engine = instance_->inputMethodEngine(ic);
-            const auto *entry = instance_->inputMethodEntry(ic);
-            if (!engine || !entry ||
-                !toggleAction_.isParent(&ic->statusArea())) {
+            if (!toggleAction_.isParent(&ic->statusArea())) {
                 return;
             }
-            auto type = inputMethodType(*entry);
+            auto type = currentType(ic);
             if (type == ChttransIMType::Other) {
                 return;
             }
             if (keyEvent.key().checkKeyList(config_.hotkey.value())) {
                 toggle(ic);
-                bool tradEnabled = convertType(ic) == ChttransIMType::Trad;
+                // Note that type is old value before toggle, we simply try to
+                // avoid recalculation.
+                bool isTraditional = (type != ChttransIMType::Trad);
                 if (notifications()) {
                     notifications()->call<INotifications::showTip>(
                         "fcitx-chttrans-toggle",
                         _("Simplified and Traditional Chinese Translation"),
-                        tradEnabled ? "fcitx-chttrans-active"
-                                    : "fcitx-chttrans-inactive",
-                        tradEnabled ? _("Switch to Traditional Chinese")
-                                    : _("Switch to Simplified Chinese"),
-                        tradEnabled ? _("Traditional Chinese is enabled.")
-                                    : _("Simplified Chinese is enabled."),
+                        isTraditional ? "fcitx-chttrans-active"
+                                      : "fcitx-chttrans-inactive",
+                        isTraditional ? _("Switch to Traditional Chinese")
+                                      : _("Switch to Simplified Chinese"),
+                        isTraditional ? _("Traditional Chinese is enabled.")
+                                      : _("Simplified Chinese is enabled."),
                         -1);
                 }
                 keyEvent.filterAndAccept();
@@ -151,15 +150,14 @@ Chttrans::Chttrans(fcitx::Instance *instance) : instance_(instance) {
 }
 
 void Chttrans::toggle(InputContext *ic) {
-    auto *engine = instance_->inputMethodEngine(ic);
-    const auto *entry = instance_->inputMethodEntry(ic);
-    if (!engine || !entry || !toggleAction_.isParent(&ic->statusArea())) {
+    if (!toggleAction_.isParent(&ic->statusArea())) {
         return;
     }
-    auto type = inputMethodType(*entry);
+    auto type = inputMethodType(ic);
     if (type == ChttransIMType::Other) {
         return;
     }
+    const auto *entry = instance_->inputMethodEntry(ic);
     if (enabledIM_.count(entry->uniqueName())) {
         enabledIM_.erase(entry->uniqueName());
     } else {
@@ -167,6 +165,8 @@ void Chttrans::toggle(InputContext *ic) {
     }
     syncToConfig();
     toggleAction_.update(ic);
+    ic->updateUserInterface(fcitx::UserInterfaceComponent::InputPanel);
+    ic->updatePreedit();
 }
 
 void Chttrans::reloadConfig() {
@@ -224,19 +224,42 @@ std::string Chttrans::convert(ChttransIMType type, const std::string &str) {
     return currentBackend_->convertTradToSimp(str);
 }
 
-ChttransIMType Chttrans::convertType(fcitx::InputContext *inputContext) const {
+ChttransIMType
+Chttrans::inputMethodType(fcitx::InputContext *inputContext) const {
     auto *engine = instance_->inputMethodEngine(inputContext);
     const auto *entry = instance_->inputMethodEntry(inputContext);
     if (!engine || !entry) {
         return ChttransIMType::Other;
     }
-    auto type = inputMethodType(*entry);
+    return inputMethodEntryType(*entry);
+}
+
+ChttransIMType Chttrans::convertType(fcitx::InputContext *inputContext) const {
+    auto type = inputMethodType(inputContext);
     if (type == ChttransIMType::Other) {
         return ChttransIMType::Other;
     }
 
+    const auto *entry = instance_->inputMethodEntry(inputContext);
+    assert(entry);
     if (!enabledIM_.count(entry->uniqueName())) {
         return ChttransIMType::Other;
+    }
+
+    return type == ChttransIMType::Simp ? ChttransIMType::Trad
+                                        : ChttransIMType::Simp;
+}
+
+ChttransIMType Chttrans::currentType(fcitx::InputContext *inputContext) const {
+    auto type = inputMethodType(inputContext);
+    if (type == ChttransIMType::Other) {
+        return ChttransIMType::Other;
+    }
+
+    const auto *entry = instance_->inputMethodEntry(inputContext);
+    assert(entry);
+    if (!enabledIM_.count(entry->uniqueName())) {
+        return type;
     }
 
     return type == ChttransIMType::Simp ? ChttransIMType::Trad
