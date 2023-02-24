@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2023-02-23 20:25+0000\n"
+"POT-Creation-Date: 2023-02-24 20:25+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Dmitry <dmitrydmitry761@gmail.com>, 2023\n"
 "Language-Team: Russian (https://www.transifex.com/fcitx/teams/12005/ru/)\n"
@@ -47,7 +47,7 @@ msgstr "&Просмотреть словарь Sogou Cell в интернете"
 #: rc.cpp:24
 #, kde-format
 msgid "&Clear Dictionary"
-msgstr ""
+msgstr "&Очистить Словарь"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:44
 msgid "&Clear User Data"
@@ -65,7 +65,7 @@ msgstr "&Импорт"
 #: rc.cpp:27
 #, kde-format
 msgid "&Open User Data Directory"
-msgstr ""
+msgstr "&Открыть каталог пользовательских данных"
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:33
 #. i18n: ectx: property (text), widget (QPushButton, removeButton_)
