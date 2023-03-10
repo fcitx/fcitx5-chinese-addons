@@ -5,16 +5,16 @@
 # Translators:
 # Mingcong Bai <jeffbai@aosc.xyz>, 2018
 # wwj402 <wwj402@gmail.com>, 2018
-# csslayer <wengxt@gmail.com>, 2022
 # rocka, 2023
+# csslayer <wengxt@gmail.com>, 2023
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2023-02-23 20:25+0000\n"
+"POT-Creation-Date: 2023-03-10 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
-"Last-Translator: rocka, 2023\n"
+"Last-Translator: csslayer <wengxt@gmail.com>, 2023\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/fcitx/teams/12005/"
 "zh_CN/)\n"
 "Language: zh_CN\n"
@@ -48,7 +48,7 @@ msgstr "在线浏览搜狗细胞词典(&B)"
 #: rc.cpp:24
 #, kde-format
 msgid "&Clear Dictionary"
-msgstr ""
+msgstr "清空词库(&C)"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:44
 msgid "&Clear User Data"
@@ -66,7 +66,7 @@ msgstr "导入(&I)"
 #: rc.cpp:27
 #, kde-format
 msgid "&Open User Data Directory"
-msgstr ""
+msgstr "打开用户数据目录(&O)"
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:33
 #. i18n: ectx: property (text), widget (QPushButton, removeButton_)
