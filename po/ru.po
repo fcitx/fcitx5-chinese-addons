@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2023-02-24 20:25+0000\n"
+"POT-Creation-Date: 2023-03-23 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Dmitry <dmitrydmitry761@gmail.com>, 2023\n"
 "Language-Team: Russian (https://www.transifex.com/fcitx/teams/12005/ru/)\n"
@@ -321,7 +321,7 @@ msgstr "Загрузка началась."
 
 #: im/pinyin/pinyin.h:115
 msgid "Enable Chaizi"
-msgstr "Включить Chaizi"
+msgstr "Включить Чайцзы"
 
 #: im/pinyin/pinyin.h:117
 msgid "Enable Characters in Unicode CJK Extension B"
@@ -365,7 +365,7 @@ msgstr "Записи"
 
 #: im/table/erbi.conf.in.in:3
 msgid "Erbi"
-msgstr "Erbi"
+msgstr "Эрби"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:374
 msgid "Error while deleting %1."
@@ -644,7 +644,7 @@ msgstr "Менеджер словаря Пиньинь"
 
 #: im/pinyin/pinyin.h:73
 msgid "PinyinJiajia"
-msgstr "PinyinJiajia"
+msgstr "ПиньиньЦзяцзя"
 
 #: im/table/state.cpp:685
 msgid "Please use this functionality after typing some text."
@@ -806,7 +806,7 @@ msgstr "Шуанпинь"
 
 #: im/pinyin/pinyin.h:107
 msgid "Shuangpin Profile"
-msgstr "Профиль Shuangpin"
+msgstr "Профиль Шуанпинь"
 
 #: modules/chttrans/chttrans.h:78
 msgid "Simplified Chinese"
@@ -996,11 +996,11 @@ msgstr "Неверная ссылка"
 
 #: im/table/wbx.conf.in.in:3
 msgid "Wubi"
-msgstr "Wubi"
+msgstr "Уби"
 
 #: im/table/wbpy.conf.in.in:3
 msgid "Wubi Pinyin"
-msgstr "Wubi Pinyin"
+msgstr "Уби Пиньинь"
 
 #: im/pinyin/pinyin.h:74
 msgid "Xiaohe"
