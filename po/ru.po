@@ -10,10 +10,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2023-03-24 20:24+0000\n"
+"POT-Creation-Date: 2023-04-12 14:26+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Dmitry <dmitrydmitry761@gmail.com>, 2023\n"
-"Language-Team: Russian (https://www.transifex.com/fcitx/teams/12005/ru/)\n"
+"Language-Team: Russian (https://app.transifex.com/fcitx/teams/12005/ru/)\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -559,7 +559,7 @@ msgstr "Частичное  совпадение окончаний (e -> en, en
 
 #: im/pinyin/pinyin.h:88
 msgid "Match partial shuangpin if input length is longer than 4"
-msgstr "Совпадение с частичным shuangpin, если длина ввода больше 4"
+msgstr "Совпадение с частичным двойным пиньинем, если длина ввода больше 4"
 
 #: modules/cloudpinyin/cloudpinyin.h:32
 msgid "Minimum Pinyin Length"
@@ -790,7 +790,7 @@ msgstr "Показать полный Пиньинь в предваритель
 
 #: im/pinyin/pinyin.h:110
 msgid "Show current shuangpin mode"
-msgstr "Показать текущий режим shuangpin"
+msgstr "Показать текущий режим шуанпинь"
 
 #: im/table/engine.cpp:76 im/pinyin/pinyin.cpp:743
 msgid "Show prediction words"
