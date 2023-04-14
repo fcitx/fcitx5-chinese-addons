@@ -27,11 +27,13 @@ void OpenCCBackend::updateConfig(const ChttransConfig &config) {
         s2tProfile = OPENCC_DEFAULT_CONFIG_SIMP_TO_TRAD;
     }
     auto s2tProfilePath = locateProfile(s2tProfile);
+    FCITX_DEBUG() << "s2tProfilePath: " << s2tProfilePath;
 
     try {
         auto s2t = std::make_unique<opencc::SimpleConverter>(s2tProfilePath);
         s2t_ = std::move(s2t);
     } catch (const std::exception &e) {
+        FCITX_WARN() << "exception when loading s2t profile: " << e.what();
     }
 
     auto t2sProfile = *config.openCCT2SProfile;
@@ -39,11 +41,13 @@ void OpenCCBackend::updateConfig(const ChttransConfig &config) {
         t2sProfile = OPENCC_DEFAULT_CONFIG_TRAD_TO_SIMP;
     }
     auto t2sProfilePath = locateProfile(t2sProfile);
+    FCITX_DEBUG() << "t2sProfilePath: " << t2sProfilePath;
 
     try {
         auto t2s = std::make_unique<opencc::SimpleConverter>(t2sProfilePath);
         t2s_ = std::move(t2s);
     } catch (const std::exception &e) {
+        FCITX_WARN() << "exception when loading t2s profile: " << e.what();
     }
 }
 
