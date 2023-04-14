@@ -21,7 +21,7 @@ enum class TableMode {
     LookupPinyin,
 };
 
-class EventSourceTime;
+struct EventSourceTime;
 
 class TableState : public InputContextProperty {
 public:

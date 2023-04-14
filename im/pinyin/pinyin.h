@@ -238,10 +238,10 @@ FCITX_CONFIGURATION(
                            {_("Enter a string from the list will make it enter "
                               "quickphrase mode.")}};
     Option<FuzzyConfig> fuzzyConfig{this, "Fuzzy", _("Fuzzy Pinyin Settings")};
-    HiddenOption<bool> firstRun{this, "FirstRun", "FirstRun", true};);
+    HiddenOption<bool> firstRun{this, "FirstRun", "FirstRun", true};)
 
 class PinyinState;
-class EventSourceTime;
+struct EventSourceTime;
 class CandidateList;
 
 class PinyinEngine final : public InputMethodEngineV3 {
@@ -343,8 +343,6 @@ private:
     FCITX_ADDON_DEPENDENCY_LOADER(pinyinhelper, instance_->addonManager());
     FCITX_ADDON_DEPENDENCY_LOADER(spell, instance_->addonManager());
     FCITX_ADDON_DEPENDENCY_LOADER(imeapi, instance_->addonManager());
-
-    bool hasCloudPinyin_ = false;
 
     static constexpr size_t NumBuiltInDict = 3;
 };
