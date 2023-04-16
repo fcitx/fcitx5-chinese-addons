@@ -18,7 +18,6 @@
 #include "pinyinhelper_public.h"
 #include "punctuation_public.h"
 #include "spell_public.h"
-#include <boost/algorithm/string.hpp>
 #include <boost/iostreams/device/file_descriptor.hpp>
 #include <boost/iostreams/stream.hpp>
 #include <fcitx-config/iniparser.h>
@@ -54,7 +53,7 @@ FCITX_DEFINE_LOG_CATEGORY(pinyin, "pinyin");
 #define PINYIN_ERROR() FCITX_LOGC(pinyin, Error)
 
 bool consumePrefix(std::string_view &view, std::string_view prefix) {
-    if (boost::starts_with(view, prefix)) {
+    if (stringutils::startsWith(view, prefix)) {
         view.remove_prefix(prefix.size());
         return true;
     }
@@ -83,7 +82,7 @@ public:
 
     std::unique_ptr<EventSourceTime> cancelLastEvent_;
 
-    std::vector<std::string> predictWords_;
+    std::optional<std::vector<std::string>> predictWords_;
 
     int keyReleased_ = -1;
     int keyReleasedIndex_ = -2;
@@ -97,14 +96,17 @@ public:
     void select(InputContext *inputContext) const override {
         inputContext->commitString(word_);
         auto *state = inputContext->propertyFor(&engine_->factory());
-        state->predictWords_.push_back(word_);
+        if (!state->predictWords_) {
+            state->predictWords_.emplace();
+        }
+        auto &predictWords = *state->predictWords_;
+        predictWords.push_back(word_);
         // Max history size.
         constexpr size_t maxHistorySize = 5;
-        if (state->predictWords_.size() > maxHistorySize) {
-            state->predictWords_.erase(state->predictWords_.begin(),
-                                       state->predictWords_.begin() +
-                                           state->predictWords_.size() -
-                                           maxHistorySize);
+        if (predictWords.size() > maxHistorySize) {
+            predictWords.erase(predictWords.begin(), predictWords.begin() +
+                                                         predictWords.size() -
+                                                         maxHistorySize);
         }
         engine_->updatePredict(inputContext);
     }
@@ -311,7 +313,7 @@ void PinyinEngine::initPredict(InputContext *inputContext) {
         auto &inputPanel = inputContext->inputPanel();
         inputPanel.setCandidateList(std::move(candidateList));
     } else {
-        state->predictWords_.clear();
+        state->predictWords_.reset();
     }
     inputContext->updatePreedit();
     inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
@@ -321,15 +323,16 @@ void PinyinEngine::updatePredict(InputContext *inputContext) {
     inputContext->inputPanel().reset();
 
     auto *state = inputContext->propertyFor(&factory_);
+    assert(state->predictWords_.has_value());
     auto words =
-        prediction_.predict(state->predictWords_, *config_.predictionSize);
+        prediction_.predict(*state->predictWords_, *config_.predictionSize);
     if (auto candidateList = predictCandidateList(words)) {
         auto &inputPanel = inputContext->inputPanel();
         inputPanel.setCandidateList(std::move(candidateList));
     } else {
         // Clear if we can't do predict.
         // This help other code to detect whether we are in predict.
-        state->predictWords_.clear();
+        state->predictWords_.reset();
     }
     inputContext->updatePreedit();
     inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
@@ -1186,7 +1189,7 @@ bool PinyinEngine::handleCandidateList(KeyEvent &event) {
     auto *state = inputContext->propertyFor(&factory_);
     if ((event.key().check(FcitxKey_space) ||
          event.key().check(FcitxKey_KP_Space)) &&
-        state->predictWords_.empty()) {
+        !state->predictWords_) {
         if (candidateList->size()) {
             event.filterAndAccept();
             int idx = candidateList->cursorIndex();
@@ -1432,8 +1435,8 @@ bool PinyinEngine::handleForgetCandidate(KeyEvent &event) {
     auto candidateList = inputContext->inputPanel().candidateList();
     auto *state = inputContext->propertyFor(&factory_);
     if (state->mode_ == PinyinMode::Normal) {
-        if (state->predictWords_.empty() && candidateList &&
-            candidateList->size() && candidateList->toBulk() &&
+        if (!state->predictWords_ && candidateList && candidateList->size() &&
+            candidateList->toBulk() &&
             event.key().checkKeyList(*config_.forgetWord)) {
             resetForgetCandidate(inputContext);
             state->forgetCandidateList_ = candidateList;
@@ -1577,8 +1580,8 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
     // In prediction, as long as it's not candidate selection, clear, then
     // fallback
     // to remaining operation.
-    if (!state->predictWords_.empty()) {
-        state->predictWords_.clear();
+    if (state->predictWords_) {
+        state->predictWords_.reset();
         inputContext->inputPanel().reset();
         inputContext->updatePreedit();
         inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
@@ -1805,7 +1808,7 @@ void PinyinEngine::doReset(InputContext *inputContext) {
     resetForgetCandidate(inputContext);
     state->mode_ = PinyinMode::Normal;
     state->context_.clear();
-    state->predictWords_.clear();
+    state->predictWords_.reset();
     inputContext->inputPanel().reset();
     inputContext->updatePreedit();
     inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
@@ -1946,13 +1949,18 @@ void PinyinEngine::cloudPinyinSelected(InputContext *inputContext,
     auto words = state->context_.selectedWords();
     // This ensure us to convert pinyin to the right one.
     auto preedit = state->context_.preedit(libime::PinyinPreeditMode::RawText);
+    // preedit is "selected sentence" + Pinyin.
     do {
+        // Validate selected is still the same.
         if (!stringutils::startsWith(preedit, selected)) {
+            words.clear();
             break;
         }
+        // Get segmented pinyin.
         preedit = preedit.substr(selected.size());
         auto pinyins = stringutils::split(preedit, " '");
         std::string_view wordView = word;
+        // Check word length matches pinyin length.
         if (pinyins.empty() || pinyins.size() != utf8::length(word)) {
             break;
         }
@@ -2036,7 +2044,7 @@ void PinyinEngine::cloudPinyinSelected(InputContext *inputContext,
     inputContext->commitString(selected + word);
     inputContext->inputPanel().reset();
     if (*config_.predictionEnabled) {
-        state->predictWords_ = words;
+        state->predictWords_ = std::move(words);
         updatePredict(inputContext);
     }
     inputContext->updatePreedit();
