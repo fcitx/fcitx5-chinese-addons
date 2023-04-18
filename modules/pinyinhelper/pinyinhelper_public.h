@@ -13,6 +13,10 @@
 
 FCITX_ADDON_DECLARE_FUNCTION(PinyinHelper, lookup,
                              std::vector<std::string>(uint32_t));
+/* return with fullpinyin (in form of ü), pinyin with tone, and tone */
+FCITX_ADDON_DECLARE_FUNCTION(
+    PinyinHelper, fullLookup,
+    std::vector<std::tuple<std::string, std::string, int>>(uint32_t));
 FCITX_ADDON_DECLARE_FUNCTION(PinyinHelper, lookupStroke,
                              std::vector<std::pair<std::string, std::string>>(
                                  const std::string &, int limit));
