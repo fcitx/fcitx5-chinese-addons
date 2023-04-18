@@ -8,13 +8,16 @@
 #include "pinyinhelper_public.h"
 #include "punctuation_public.h"
 #include "quickphrase_public.h"
+#include <algorithm>
 #include <fcitx-utils/event.h>
+#include <fcitx-utils/stringutils.h>
 #include <fcitx-utils/utf8.h>
 #include <fcitx/inputcontext.h>
 #include <fcitx/inputpanel.h>
 #include <fmt/format.h>
 #include <libime/core/historybigram.h>
 #include <libime/pinyin/pinyinencoder.h>
+#include <libime/pinyin/shuangpinprofile.h>
 
 namespace fcitx {
 
@@ -692,9 +695,46 @@ bool TableState::handleLookupPinyinOrModifyDictionaryMode(KeyEvent &event) {
                 auxUp.append(utf8::UCS4ToUTF8(chr));
                 inputPanel.setAuxUp(auxUp);
                 auto result =
-                    engine_->pinyinhelper()->call<IPinyinHelper::lookup>(chr);
+                    engine_->pinyinhelper()->call<IPinyinHelper::fullLookup>(
+                        chr);
                 if (!result.empty()) {
-                    inputPanel.setAuxDown(Text(stringutils::join(result, " ")));
+                    std::string text;
+                    bool first = true;
+                    std::map<std::string, std::vector<std::string>> resultMap;
+                    for (const auto &[toned, fullPinyin, _] : result) {
+                        resultMap[fullPinyin].push_back(toned);
+                    }
+
+                    for (const auto &[fullPinyin, tones] : resultMap) {
+                        if (first) {
+                            first = false;
+                        } else {
+                            text.append(C_("Pinyin lookup delimeter", ", "));
+                        }
+
+                        std::vector<std::string_view> sp;
+                        if (auto *reverseShuangPinTable =
+                                engine_->reverseShuangPinTable()) {
+                            const auto normalizedFullPinyin =
+                                stringutils::replaceAll(fullPinyin, "ü", "v");
+                            auto [iter, end] =
+                                reverseShuangPinTable->equal_range(
+                                    normalizedFullPinyin);
+                            for (; iter != end; ++iter) {
+                                sp.push_back(iter->second);
+                            }
+                        }
+
+                        const auto allTones = stringutils::join(tones, " ");
+                        if (sp.empty()) {
+                            text.append(allTones);
+                        } else {
+                            text.append(fmt::format(
+                                C_("Pinyin & Shuangpin", "{0} ({1})"), allTones,
+                                stringutils::join(sp, " ")));
+                        }
+                    }
+                    inputPanel.setAuxDown(Text(text));
                 } else {
                     inputPanel.setAuxDown(Text(_("Could not find pinyin.")));
                 }

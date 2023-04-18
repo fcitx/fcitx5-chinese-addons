@@ -26,6 +26,8 @@ public:
 
     bool load();
     std::vector<std::string> lookup(uint32_t hz);
+    std::vector<std::tuple<std::string, std::string, int>>
+    fullLookup(uint32_t hz);
 
 private:
     std::unordered_map<uint32_t, std::vector<PinyinLookupData>> data_;

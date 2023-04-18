@@ -99,6 +99,14 @@ std::vector<std::string> PinyinHelper::lookup(uint32_t chr) {
     return {};
 }
 
+std::vector<std::tuple<std::string, std::string, int>>
+PinyinHelper::fullLookup(uint32_t chr) {
+    if (lookup_.load()) {
+        return lookup_.fullLookup(chr);
+    }
+    return {};
+}
+
 std::vector<std::pair<std::string, std::string>>
 PinyinHelper::lookupStroke(const std::string &input, int limit) {
     static const std::set<char> num{'1', '2', '3', '4', '5'};

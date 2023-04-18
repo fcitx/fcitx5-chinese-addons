@@ -10,6 +10,7 @@
 #include <fcitx-utils/log.h>
 #include <fcitx-utils/macros.h>
 #include <fcitx-utils/standardpath.h>
+#include <fcitx-utils/stringutils.h>
 #include <fcitx-utils/utf8.h>
 #include <fcntl.h>
 #include <string_view>
@@ -98,11 +99,27 @@ std::vector<std::string> PinyinLookup::lookup(uint32_t hz) {
         if (c.empty() && v.empty()) {
             continue;
         }
-        result.emplace_back();
-        auto &str = result.back();
-        str.reserve(c.size() + v.size());
-        str.append(c.begin(), c.end());
-        str.append(v.begin(), v.end());
+        result.emplace_back(stringutils::concat(c, v));
+    }
+    return result;
+}
+
+std::vector<std::tuple<std::string, std::string, int>>
+PinyinLookup::fullLookup(uint32_t hz) {
+    auto iter = data_.find(hz);
+    if (iter == data_.end()) {
+        return {};
+    }
+    std::vector<std::tuple<std::string, std::string, int>> result;
+    for (const auto &data : iter->second) {
+        auto c = py_enhance_get_konsonant(data.consonant);
+        auto v = py_enhance_get_vokal(data.vocal, data.tone);
+        if (c.empty() && v.empty()) {
+            continue;
+        }
+        auto noToneV = py_enhance_get_vokal(data.vocal, 0);
+        result.emplace_back(stringutils::concat(c, v),
+                            stringutils::concat(c, noToneV), data.tone);
     }
     return result;
 }
