@@ -15,6 +15,7 @@
 #include <fcitx/action.h>
 #include <fcitx/addonfactory.h>
 #include <fcitx/addonmanager.h>
+#include <fcitx/event.h>
 #include <fcitx/inputcontextproperty.h>
 #include <fcitx/inputmethodengine.h>
 #include <fcitx/instance.h>
@@ -297,6 +298,7 @@ private:
     bool handleCloudpinyinTrigger(KeyEvent &event);
     bool handle2nd3rdSelection(KeyEvent &event);
     bool handleCandidateList(KeyEvent &event);
+    bool handleNextPage(KeyEvent &event);
     bool handleStrokeFilter(KeyEvent &event);
     bool handleForgetCandidate(KeyEvent &event);
     bool handlePunc(KeyEvent &event);

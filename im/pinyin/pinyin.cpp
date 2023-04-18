@@ -11,6 +11,7 @@
 // We want to keep cloudpinyin logic but don't call it.
 #include "../../modules/cloudpinyin/cloudpinyin_public.h"
 #include "config.h"
+#include <fcitx/event.h>
 #ifdef FCITX_HAS_LUA
 #include "luaaddon_public.h"
 #endif
@@ -1223,10 +1224,7 @@ bool PinyinEngine::handleCandidateList(KeyEvent &event) {
         }
     }
 
-    if (event.key().checkKeyList(*config_.nextPage)) {
-        event.filterAndAccept();
-        candidateList->toPageable()->next();
-        inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
+    if (handleNextPage(event)) {
         return true;
     }
 
@@ -1245,6 +1243,18 @@ bool PinyinEngine::handleCandidateList(KeyEvent &event) {
             event.filterAndAccept();
             return true;
         }
+    }
+    return false;
+}
+
+bool PinyinEngine::handleNextPage(KeyEvent &event) {
+    auto *inputContext = event.inputContext();
+    auto candidateList = inputContext->inputPanel().candidateList();
+    if (event.key().checkKeyList(*config_.nextPage)) {
+        event.filterAndAccept();
+        candidateList->toPageable()->next();
+        inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
+        return true;
     }
     return false;
 }
@@ -1372,6 +1382,8 @@ bool PinyinEngine::handleStrokeFilter(KeyEvent &event) {
             state->strokeCandidateList_ = candidateList;
             state->mode_ = PinyinMode::StrokeFilter;
             updateStroke(inputContext);
+            handleNextPage(event);
+
             event.filterAndAccept();
             return true;
         }
@@ -1383,6 +1395,9 @@ bool PinyinEngine::handleStrokeFilter(KeyEvent &event) {
     }
 
     event.filterAndAccept();
+    if (handleCandidateList(event)) {
+        return true;
+    }
     // Skip all key combination.
     if (event.key().states().testAny(KeyState::SimpleMask)) {
         return true;
@@ -1564,12 +1579,12 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
     bool lastIsPunc = state->lastIsPunc_;
     state->lastIsPunc_ = false;
 
-    // handle number key selection and prev/next page/candidate.
-    if (handleCandidateList(event)) {
+    if (handleStrokeFilter(event)) {
         return;
     }
 
-    if (handleStrokeFilter(event)) {
+    // handle number key selection and prev/next page/candidate.
+    if (handleCandidateList(event)) {
         return;
     }
 
