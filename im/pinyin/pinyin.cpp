@@ -1395,6 +1395,18 @@ bool PinyinEngine::handleStrokeFilter(KeyEvent &event) {
     }
 
     event.filterAndAccept();
+    // A special case that allow prev page to quit stroke filtering.
+    if ((state->strokeBuffer_.empty() &&
+         event.key().checkKeyList(*config_.prevPage))) {
+        auto candidateList = inputContext->inputPanel().candidateList();
+        if (candidateList && candidateList->toPageable() &&
+            candidateList->toPageable()->currentPage() <= 1) {
+            resetStroke(inputContext);
+            updateUI(inputContext);
+            return true;
+        }
+    }
+
     if (handleCandidateList(event)) {
         return true;
     }
