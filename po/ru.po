@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2023-04-19 20:24+0000\n"
+"POT-Creation-Date: 2023-04-20 20:29+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Dmitry <dmitrydmitry761@gmail.com>, 2023\n"
 "Language-Team: Russian (https://app.transifex.com/fcitx/teams/12005/ru/)\n"
@@ -77,7 +77,7 @@ msgstr "&Удалить"
 #: im/table/state.cpp:712
 msgctxt "Pinyin lookup delimeter"
 msgid ", "
-msgstr ""
+msgstr ", "
 
 #: im/table/engine.h:41 im/pinyin/pinyin.h:73
 msgid "ABC"
@@ -294,7 +294,7 @@ msgstr "Показывать подсказку для слова"
 
 #: im/table/engine.h:64
 msgid "Display Shuangpin when looking up pinyin"
-msgstr ""
+msgstr "Отображать Шуанпинь при поиске Пиньинь"
 
 #: im/table/ime.h:265
 msgid "Display custom hint"
@@ -302,7 +302,7 @@ msgstr "Показывать собственную подсказку"
 
 #: im/table/engine.h:40
 msgid "Do not display"
-msgstr ""
+msgstr "Не отображать"
 
 #: im/pinyin/pinyin.cpp:886
 msgid ""
@@ -552,7 +552,7 @@ msgstr "Ограничение по длине выбора единственн
 
 #: im/table/engine.h:58
 msgid "Look up pinyin"
-msgstr ""
+msgstr "Искать Пиньинь"
 
 #: im/table/engine.h:40 im/pinyin/pinyin.h:72
 msgid "MS"
@@ -693,11 +693,11 @@ msgstr "Нажмите Delete, чтобы удалить."
 msgid "Press space or enter to insert."
 msgstr "Нажмите пробел или enter, чтобы вставить."
 
-#: im/pinyin/pinyin.cpp:1529
+#: im/pinyin/pinyin.cpp:1541
 msgid "Press {} for {}"
 msgstr "Нажмите {} для {}"
 
-#: im/pinyin/pinyin.cpp:1526
+#: im/pinyin/pinyin.cpp:1538
 msgid "Press {} for {} and Return for {}"
 msgstr "Нажмите {} для {} и Return для {}"
 
@@ -1111,7 +1111,7 @@ msgstr "{0} ({1})"
 #: im/table/state.cpp:733
 msgctxt "Pinyin & Shuangpin"
 msgid "{0} ({1})"
-msgstr ""
+msgstr "{0} ({1})"
 
 #: im/table/state.cpp:776
 msgid "{0} is not in table."
