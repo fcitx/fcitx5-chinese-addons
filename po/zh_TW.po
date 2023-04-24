@@ -9,14 +9,15 @@
 # Steve Nian, 2022
 # 菘菘 <rrt467778@gmail.com>, 2022
 # Neko ◣ 0xFF, 2022
+# Lau YeeYu, 2023
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2023-04-19 20:24+0000\n"
+"POT-Creation-Date: 2023-04-24 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
-"Last-Translator: Neko ◣ 0xFF, 2022\n"
+"Last-Translator: Lau YeeYu, 2023\n"
 "Language-Team: Chinese (Taiwan) (https://app.transifex.com/fcitx/teams/12005/"
 "zh_TW/)\n"
 "Language: zh_TW\n"
@@ -436,7 +437,7 @@ msgstr ""
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:35
 msgid "From &Sogou Cell Dictionary File"
-msgstr ""
+msgstr "來自搜狗細胞詞典檔案（&S）"
 
 #: modules/fullwidth/fullwidth.cpp:73 modules/fullwidth/fullwidth.h:29
 msgid "Full width Character"
@@ -460,11 +461,11 @@ msgstr "全形符號"
 
 #: modules/punctuation/punctuation.cpp:232
 msgid "Full width punctuation is disabled."
-msgstr ""
+msgstr "全形標點已禁用。"
 
 #: modules/punctuation/punctuation.cpp:231
 msgid "Full width punctuation is enabled."
-msgstr ""
+msgstr "全形標點已啟用。"
 
 #: im/pinyin/pinyin.h:241
 msgid "Fuzzy Pinyin Settings"
@@ -511,7 +512,7 @@ msgstr ""
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:99
 msgid "Input Dictionary Name"
-msgstr ""
+msgstr "輸入字典名稱"
 
 #: modules/punctuation/punctuation.h:38
 msgctxt "Key of the punctuation, e.g. comma"
@@ -520,7 +521,7 @@ msgstr "按键"
 
 #: im/table/ime.h:123 im/pinyin/pinyin.h:224
 msgid "Key to trigger quickphrase"
-msgstr ""
+msgstr "快速輸入的觸發按鍵"
 
 #: im/table/ime.h:241
 msgid "Learn auto phrase with phrase"
@@ -592,7 +593,7 @@ msgstr ""
 
 #: im/table/engine.cpp:207
 msgid "Not available"
-msgstr ""
+msgstr "尚不可用"
 
 #: im/table/ime.h:24
 msgid "Not set"
@@ -640,7 +641,7 @@ msgstr ""
 
 #: im/table/state.cpp:688
 msgid "Please use this functionality after typing some text."
-msgstr ""
+msgstr "請在輸入一些文字後再使用此功能。"
 
 #: im/table/engine.cpp:81 im/table/engine.cpp:89 im/pinyin/pinyin.cpp:746
 #: im/pinyin/pinyin.cpp:756
@@ -662,21 +663,21 @@ msgstr "前綴鍵觸發拼音"
 
 #: im/table/state.cpp:758
 msgid "Press Backspace to forget."
-msgstr ""
+msgstr "按下退格鍵以忘記。"
 
 #: im/table/state.cpp:761
 msgid "Press Delete to remove."
-msgstr ""
+msgstr "按下刪除鍵以移除。"
 
 #: im/table/state.cpp:755
 msgid "Press space or enter to insert."
 msgstr "按下空白鍵或Enter鍵進行插入。"
 
-#: im/pinyin/pinyin.cpp:1529
+#: im/pinyin/pinyin.cpp:1541
 msgid "Press {} for {}"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1526
+#: im/pinyin/pinyin.cpp:1538
 msgid "Press {} for {} and Return for {}"
 msgstr ""
 
@@ -783,7 +784,7 @@ msgstr ""
 
 #: im/table/engine.cpp:82 im/pinyin/pinyin.cpp:747
 msgid "Show prediction words"
-msgstr ""
+msgstr "顯示預測字詞"
 
 #: im/pinyin/pinyin.h:126
 msgid "Show preedit within application"
@@ -859,7 +860,7 @@ msgstr ""
 
 #: modules/chttrans/chttrans.h:77
 msgid "Traditional Chinese"
-msgstr ""
+msgstr "繁體中文"
 
 #: modules/chttrans/chttrans.cpp:75
 msgid "Traditional Chinese is enabled."
@@ -883,11 +884,11 @@ msgstr "使用數字鍵盤選擇候選字詞"
 
 #: im/table/state.cpp:694
 msgid "Use Left and Right to select character: "
-msgstr ""
+msgstr "使用左右鍵來選擇字符："
 
 #: im/table/state.cpp:742
 msgid "Use Left and Right to select text. "
-msgstr ""
+msgstr "使用左右鍵以選擇字符。"
 
 #: im/pinyin/pinyin.h:228
 msgid "Use V to trigger quickphrase"
@@ -895,7 +896,7 @@ msgstr ""
 
 #: im/table/ime.h:105
 msgid "Use full width"
-msgstr ""
+msgstr "使用全形字符"
 
 #: im/table/ime.h:144
 msgid "Use system language model"
@@ -907,7 +908,7 @@ msgstr ""
 
 #: im/table/wanfeng.conf.in.in:3
 msgid "Wanfeng"
-msgstr ""
+msgstr "晚風"
 
 #: im/table/ime.h:133
 msgid ""
@@ -1072,11 +1073,11 @@ msgstr ""
 
 #: im/table/state.cpp:776
 msgid "{0} is not in table."
-msgstr ""
+msgstr "{0} 不在碼表中。"
 
 #: im/table/state.cpp:765
 msgid "{0}: No corresponding code."
-msgstr ""
+msgstr "{0}：無對應的碼。"
 
 #: im/table/state.cpp:749 im/table/state.cpp:773
 msgid "{0}: {1}"

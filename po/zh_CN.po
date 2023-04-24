@@ -7,14 +7,15 @@
 # wwj402 <wwj402@gmail.com>, 2018
 # rocka, 2023
 # csslayer <wengxt@gmail.com>, 2023
+# Lau YeeYu, 2023
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2023-04-19 20:24+0000\n"
+"POT-Creation-Date: 2023-04-24 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
-"Last-Translator: csslayer <wengxt@gmail.com>, 2023\n"
+"Last-Translator: Lau YeeYu, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/fcitx/teams/12005/"
 "zh_CN/)\n"
 "Language: zh_CN\n"
@@ -78,7 +79,7 @@ msgstr "移除(&R)"
 #: im/table/state.cpp:712
 msgctxt "Pinyin lookup delimeter"
 msgid ", "
-msgstr ""
+msgstr "，"
 
 #: im/table/engine.h:41 im/pinyin/pinyin.h:73
 msgid "ABC"
@@ -285,7 +286,7 @@ msgstr "显示词的提示"
 
 #: im/table/engine.h:64
 msgid "Display Shuangpin when looking up pinyin"
-msgstr ""
+msgstr "查找拼音时显示双拼"
 
 #: im/table/ime.h:265
 msgid "Display custom hint"
@@ -293,7 +294,7 @@ msgstr "显示自定义提示"
 
 #: im/table/engine.h:40
 msgid "Do not display"
-msgstr ""
+msgstr "不要显示"
 
 #: im/pinyin/pinyin.cpp:886
 msgid ""
@@ -538,7 +539,7 @@ msgstr "选择唯一候选词的长度限制"
 
 #: im/table/engine.h:58
 msgid "Look up pinyin"
-msgstr ""
+msgstr "查找拼音"
 
 #: im/table/engine.h:40 im/pinyin/pinyin.h:72
 msgid "MS"
@@ -676,11 +677,11 @@ msgstr "按下删除键来移除。"
 msgid "Press space or enter to insert."
 msgstr "按下空格或回车键来插入。"
 
-#: im/pinyin/pinyin.cpp:1529
+#: im/pinyin/pinyin.cpp:1541
 msgid "Press {} for {}"
 msgstr "按下 {} 输入 {}"
 
-#: im/pinyin/pinyin.cpp:1526
+#: im/pinyin/pinyin.cpp:1538
 msgid "Press {} for {} and Return for {}"
 msgstr "按下 {} 输入 {}，按下回车输入 {}"
 
@@ -1084,7 +1085,7 @@ msgstr "{0} ({1})"
 #: im/table/state.cpp:733
 msgctxt "Pinyin & Shuangpin"
 msgid "{0} ({1})"
-msgstr ""
+msgstr "{0}（{1}）"
 
 #: im/table/state.cpp:776
 msgid "{0} is not in table."
