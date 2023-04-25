@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2023-04-24 20:24+0000\n"
+"POT-Creation-Date: 2023-04-25 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Lau YeeYu, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/fcitx/teams/12005/"
@@ -1085,7 +1085,7 @@ msgstr "{0} ({1})"
 #: im/table/state.cpp:733
 msgctxt "Pinyin & Shuangpin"
 msgid "{0} ({1})"
-msgstr "{0}（{1}）"
+msgstr "{0} ({1})"
 
 #: im/table/state.cpp:776
 msgid "{0} is not in table."
