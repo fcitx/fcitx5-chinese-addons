@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2023-04-25 20:24+0000\n"
+"POT-Creation-Date: 2023-04-28 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Lau YeeYu, 2023\n"
 "Language-Team: Chinese (Taiwan) (https://app.transifex.com/fcitx/teams/12005/"
@@ -205,7 +205,7 @@ msgstr "自動選擇候選詞後提交"
 
 #: im/table/ime.h:94
 msgid "Commit buffer when deactivating input method"
-msgstr ""
+msgstr "在取消激活輸入法時提交輸入緩衝區"
 
 #: im/pinyin/pinyin.h:66
 msgid "Commit current preedit"
@@ -529,7 +529,7 @@ msgstr "快速輸入的觸發按鍵"
 
 #: im/table/ime.h:241
 msgid "Learn auto phrase with phrase"
-msgstr ""
+msgstr "詞組參與自組詞"
 
 #: im/table/ime.h:262
 msgid "Learning"
@@ -553,7 +553,7 @@ msgstr "映射"
 
 #: im/table/ime.h:249
 msgid "Marker for auto phrase in the candidates"
-msgstr ""
+msgstr "候選詞中自動組詞的標記符號"
 
 #: im/pinyin/pinyin.h:85
 msgid "Match partial finals (e -> en, eng, ei)"
@@ -923,6 +923,8 @@ msgid ""
 "When a new character is typed, if it matches any character in this string, "
 "all the existing text will be put into quickphrase buffer."
 msgstr ""
+"輸入新字符時，若此字符與字符串中任何字符匹配，所有已有文本將會被放到快速輸入"
+"緩衝區中。"
 
 #: im/table/ime.h:148
 msgid ""
@@ -943,7 +945,7 @@ msgstr ""
 msgid ""
 "When current input matches the regular expression and there is only one "
 "candidate available, automatically select this candidate."
-msgstr ""
+msgstr "目前的輸入匹配正則表達式且只有一個可用候選詞時，自動選擇此候選詞。"
 
 #: im/table/ime.h:205
 msgid ""
@@ -953,6 +955,9 @@ msgid ""
 "type in the new character. -1 means the maximum code length of the table. 0 "
 "means this behavior is disabled."
 msgstr ""
+"輸入新字符時，如果當前輸入長度大於等於此限制，且當前分段加上此字符在碼表中無"
+"匹配，將選擇當前候選詞，在輸入新字符。-1 表示碼表的最大碼長。0 表示禁用此行"
+"為。"
 
 #: im/table/ime.h:219
 msgid ""
@@ -961,6 +966,8 @@ msgid ""
 "matched entries in the table, select the current candidate and then type in "
 "the new character."
 msgstr ""
+"輸入新字符時，如果目前的輸入匹配正則表達式且目前分段加上此新字符在碼表中無匹"
+"配，將選擇目前候選詞，再輸入新字符。"
 
 #: im/table/ime.h:245
 msgid ""
