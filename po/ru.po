@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2023-04-20 20:29+0000\n"
+"POT-Creation-Date: 2023-05-06 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Dmitry <dmitrydmitry761@gmail.com>, 2023\n"
 "Language-Team: Russian (https://app.transifex.com/fcitx/teams/12005/ru/)\n"
@@ -24,11 +24,11 @@ msgstr ""
 
 #: im/table/state.cpp:1052
 msgid " Return for "
-msgstr "Возврат в"
+msgstr " Возврат к "
 
 #: im/table/state.cpp:1049
 msgid " for "
-msgstr "в"
+msgstr " к "
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:140
 msgid "%1 already exists, do you want to overwrite this dictionary?"
@@ -699,7 +699,7 @@ msgstr "Нажмите {} для {}"
 
 #: im/pinyin/pinyin.cpp:1538
 msgid "Press {} for {} and Return for {}"
-msgstr "Нажмите {} для {} и Return для {}"
+msgstr "Нажать {} для {} и вернуться для {}"
 
 #: im/table/ime.h:53
 msgid "Prev Candidate"
