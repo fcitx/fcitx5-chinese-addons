@@ -37,3 +37,7 @@ add_executable(testtable testtable.cpp)
 target_link_libraries(testtable Fcitx5::Core Fcitx5::Module::TestFrontend)
 add_dependencies(testtable table copy-addon copy-im)
 add_test(NAME testtable COMMAND testtable)
+
+add_executable(testcustomphrase testcustomphrase.cpp)
+target_link_libraries(testcustomphrase customphrase)
+add_test(NAME testcustomphrase COMMAND testcustomphrase)

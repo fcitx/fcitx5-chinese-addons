@@ -1,8 +1,15 @@
 set(PINYIN_SOURCES
     pinyin.cpp
 )
+
+add_library(customphrase OBJECT customphrase.cpp)
+set_target_properties(customphrase PROPERTIES
+  POSITION_INDEPENDENT_CODE ON)
+target_include_directories(customphrase INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(customphrase Fcitx5::Utils LibIME::Core)
+
 add_library(pinyin MODULE ${PINYIN_SOURCES})
-target_link_libraries(pinyin Fcitx5::Core Fcitx5::Config LibIME::Pinyin Boost::iostreams Fcitx5::Module::Punctuation Fcitx5::Module::QuickPhrase Fcitx5::Module::Notifications Fcitx5::Module::Spell Fcitx5::Module::PinyinHelper ${FMT_TARGET})
+target_link_libraries(pinyin customphrase Fcitx5::Core Fcitx5::Config LibIME::Pinyin Boost::iostreams Fcitx5::Module::Punctuation Fcitx5::Module::QuickPhrase Fcitx5::Module::Notifications Fcitx5::Module::Spell Fcitx5::Module::PinyinHelper ${FMT_TARGET})
 
 if (TARGET Fcitx5::Module::LuaAddonLoader)
     target_compile_definitions(pinyin PRIVATE -DFCITX_HAS_LUA)
