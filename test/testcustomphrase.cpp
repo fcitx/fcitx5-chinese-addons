@@ -1,5 +1,6 @@
 #include "customphrase.h"
 #include <fcitx-utils/log.h>
+#include <fstream>
 #include <sstream>
 #include <string_view>
 
@@ -27,13 +28,31 @@ void test_basic() {
 
     CustomPhraseDict dict;
     dict.load(ss);
-    auto result = dict.lookup("mmm");
+    auto *result = dict.lookup("mmm");
     FCITX_ASSERT(result);
     FCITX_ASSERT(result->size() == 1);
 
+    std::stringstream stream;
+    dict.save(stream);
+    std::string output = stream.str();
+    std::cout << output << std::endl;
+
+    dict.load(stream);
+
     std::stringstream sout;
     dict.save(sout);
-    std::cout << sout.str() << std::endl;
+    std::string output2 = sout.str();
+    std::cout << output2 << std::endl;
+    FCITX_ASSERT(output == output2);
+
+    result = dict.lookup("a");
+    FCITX_ASSERT(result);
+    FCITX_ASSERT(result->size() == 1);
+    FCITX_ASSERT((*result)[0].order() == 1);
+    FCITX_ASSERT((*result)[0].value() == "ABC");
 }
 
-int main() { test_basic(); }
+int main() {
+    test_basic();
+    return 0;
+}

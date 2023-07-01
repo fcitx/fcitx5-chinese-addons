@@ -138,6 +138,25 @@ private:
     std::string hz_;
 };
 
+class CustomPhraseCandidateWord : public CandidateWord {
+public:
+    CustomPhraseCandidateWord(PinyinEngine *engine, CustomPhrase phrase)
+        : engine_(engine), phrase_(std::move(phrase)) {
+        setText(Text(phrase_.value()));
+    }
+
+    void select(InputContext *inputContext) const override {
+        inputContext->commitString(phrase_.value());
+        engine_->doReset(inputContext);
+    }
+
+    int order() const { return phrase_.order(); }
+
+private:
+    PinyinEngine *engine_;
+    CustomPhrase phrase_;
+};
+
 class StrokeFilterCandidateWord : public CandidateWord {
 public:
     StrokeFilterCandidateWord(PinyinEngine *engine, Text text, int index)
@@ -583,6 +602,19 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
         }
         /// }}}
 
+        /// Create custom phrase candidate {{{
+        std::vector<std::unique_ptr<CustomPhraseCandidateWord>> customCands;
+        if (auto *results = customPhrase_.lookup(context.userInput())) {
+            for (const auto &result : *results) {
+                customCands.push_back(
+                    std::make_unique<CustomPhraseCandidateWord>(this, result));
+            }
+        }
+        /// }}}
+
+        auto customCandsIter = customCands.begin(),
+             customCandsEnd = customCands.end();
+
         size_t idx = 0;
         for (const auto &candidate : candidates) {
             auto candidateString = candidate.toString();
@@ -640,6 +672,14 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
                     desiredPos += 1;
                 }
                 strokeCands.clear();
+            }
+
+            while (customCandsIter != customCandsEnd &&
+                   (*customCandsIter)->order() - 1 >=
+                       candidateList->totalSize()) {
+                candidateList->insert((*customCandsIter)->order() - 1,
+                                      std::move(*customCandsIter));
+                ++customCandsIter;
             }
         }
         candidateList->setSelectionKey(selectionKeys_);
@@ -863,6 +903,26 @@ void PinyinEngine::loadExtraDict() {
         }
         PINYIN_DEBUG() << "Loading extra dictionary: " << file.first;
         loadDict(file.second);
+    }
+}
+
+void PinyinEngine::loadCustomPhrase() {
+    const auto &standardPath = StandardPath::global();
+    auto file = standardPath.open(StandardPath::Type::PkgData,
+                                  "pinyin/customphrase", O_RDONLY);
+    if (!file.isValid()) {
+        return;
+    }
+
+    try {
+        boost::iostreams::stream_buffer<
+            boost::iostreams::file_descriptor_source>
+            buffer(file.fd(),
+                   boost::iostreams::file_descriptor_flags::never_close_handle);
+        std::istream in(&buffer);
+        customPhrase_.load(in);
+    } catch (const std::exception &e) {
+        PINYIN_ERROR() << e.what();
     }
 }
 
@@ -1821,6 +1881,8 @@ void PinyinEngine::setSubConfig(const std::string &path, const RawConfig &) {
     } else if (path == "clearalldict") {
         ime_->dict()->clear(libime::PinyinDictionary::UserDict);
         ime_->model()->history().clear();
+    } else if (path == "customphrase") {
+        loadCustomPhrase();
     }
 }
 

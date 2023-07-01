@@ -17,6 +17,23 @@
 
 namespace fcitx {
 
+void normalizeData(std::vector<CustomPhrase> &data) {
+    std::stable_sort(data.begin(), data.end(),
+                     [](const CustomPhrase &lhs, const CustomPhrase &rhs) {
+                         return lhs.order() < rhs.order();
+                     });
+
+    int currentOrder = data.front().order();
+    for (auto iter = std::next(data.begin()); iter != data.end(); ++iter) {
+        if (currentOrder > 0) {
+            if (iter->order() <= currentOrder) {
+                iter->setOrder(currentOrder + 1);
+            }
+        }
+        currentOrder = iter->order();
+    }
+}
+
 std::optional<int> parseInt(std::string_view input) {
     int out;
     const std::from_chars_result result =
@@ -80,6 +97,7 @@ bool isComment(std::string_view line) {
 CustomPhraseDict::CustomPhraseDict() {}
 
 void CustomPhraseDict::load(std::istream &in, bool loadDisabled) {
+    clear();
     std::string line;
     // Line looks like
     // [a-z]+,[-][0-9]+=phrase
@@ -112,7 +130,9 @@ void CustomPhraseDict::load(std::istream &in, bool loadDisabled) {
             std::string value{data};
             if (value.size() >= 2 && stringutils::startsWith(value, '"') &&
                 stringutils::endsWith(value, '"')) {
-                stringutils::unescape(value, true);
+                if (auto unescape = stringutils::unescapeForValue(value)) {
+                    value = unescape.value();
+                }
             }
             auto index = index_.exactMatchSearch(key);
             if (index_.isNoValue(index)) {
@@ -142,6 +162,9 @@ void CustomPhraseDict::load(std::istream &in, bool loadDisabled) {
         }
     }
     cleanUpMultiline();
+    for (auto &data : data_) {
+        normalizeData(data);
+    }
 }
 
 const std::vector<CustomPhrase> *
@@ -156,17 +179,34 @@ CustomPhraseDict::lookup(std::string_view key) const {
 
 void CustomPhraseDict::save(std::ostream &out) const {
     std::string buf;
-    index_.foreach(
-        [&out, &buf, this](uint32_t value, size_t _len,
-                           libime::DATrie<uint32_t>::position_type pos) {
-            index_.suffix(buf, _len, pos);
-            for (const auto &phrase : data_[value]) {
-                out << buf << "," << phrase.order() << "="
-                    << fcitx::stringutils::escapeForValue(phrase.value())
-                    << std::endl;
+    index_.foreach([&out, &buf,
+                    this](uint32_t value, size_t _len,
+                          libime::DATrie<uint32_t>::position_type pos) {
+        index_.suffix(buf, _len, pos);
+        for (const auto &phrase : data_[value]) {
+            auto escaped = fcitx::stringutils::escapeForValue(phrase.value());
+            out << buf << "," << phrase.order() << "=";
+            if (escaped.size() != phrase.value().size()) {
+                // Always quote escaped value.
+                if (escaped.front() != '"') {
+                    out << '"';
+                }
+                out << escaped;
+                if (escaped.back() != '"') {
+                    out << '"';
+                }
+            } else {
+                out << phrase.value();
             }
-            return true;
-        });
+            out << std::endl;
+        }
+        return true;
+    });
+}
+
+void CustomPhraseDict::clear() {
+    index_.clear();
+    data_.clear();
 }
 
 } // namespace fcitx

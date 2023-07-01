@@ -21,7 +21,7 @@ public:
 
     int order() const { return order_; }
     const std::string &value() const { return value_; }
-
+    void setOrder(int order) { order_ = order; }
     std::string &mutableValue() { return value_; }
 
 private:
@@ -35,6 +35,7 @@ public:
 
     void load(std::istream &in, bool loadDisabled = false);
     void save(std::ostream &out) const;
+    void clear();
 
     const std::vector<CustomPhrase> *lookup(std::string_view key) const;
 
