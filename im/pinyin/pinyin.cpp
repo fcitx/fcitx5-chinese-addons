@@ -674,13 +674,22 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
                 strokeCands.clear();
             }
 
-            while (customCandsIter != customCandsEnd &&
-                   (*customCandsIter)->order() - 1 >=
-                       candidateList->totalSize()) {
-                candidateList->insert((*customCandsIter)->order() - 1,
-                                      std::move(*customCandsIter));
+            while (customCandsIter != customCandsEnd) {
+                auto order = (*customCandsIter)->order() - 1;
+                if (order > candidateList->totalSize()) {
+                    break;
+                }
+                candidateList->insert(order, std::move(*customCandsIter));
                 ++customCandsIter;
             }
+        }
+        while (customCandsIter != customCandsEnd) {
+            auto order = (*customCandsIter)->order() - 1;
+            if (order > candidateList->totalSize()) {
+                order = candidateList->totalSize();
+            }
+            candidateList->insert(order, std::move(*customCandsIter));
+            ++customCandsIter;
         }
         candidateList->setSelectionKey(selectionKeys_);
         if (candidateList->size()) {
@@ -759,6 +768,7 @@ PinyinEngine::PinyinEngine(Instance *instance)
     loadBuiltInDict();
     reloadConfig();
     loadExtraDict();
+    loadCustomPhrase();
     instance_->inputContextManager().registerProperty("pinyinState", &factory_);
     KeySym syms[] = {
         FcitxKey_1, FcitxKey_2, FcitxKey_3, FcitxKey_4, FcitxKey_5,

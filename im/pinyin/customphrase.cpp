@@ -209,4 +209,12 @@ void CustomPhraseDict::clear() {
     data_.clear();
 }
 
+std::string evaluate(const CustomPhrase &phrase) {
+    if (stringutils::startsWith(phrase.value(), "#")) {
+        return phrase.value();
+    }
+    std::string_view content = phrase.value();
+    content = content.substr(1);
+}
+
 } // namespace fcitx
