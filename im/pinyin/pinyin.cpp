@@ -11,7 +11,11 @@
 // We want to keep cloudpinyin logic but don't call it.
 #include "../../modules/cloudpinyin/cloudpinyin_public.h"
 #include "config.h"
+#include <ctime>
+#include <fcitx-utils/stringutils.h>
 #include <fcitx/event.h>
+#include <string>
+#include <unordered_map>
 #ifdef FCITX_HAS_LUA
 #include "luaaddon_public.h"
 #endif
@@ -35,6 +39,7 @@
 #include <fcitx/inputpanel.h>
 #include <fcitx/userinterfacemanager.h>
 #include <fcntl.h>
+#include <fmt/chrono.h>
 #include <fmt/format.h>
 #include <libime/core/historybigram.h>
 #include <libime/core/prediction.h>
@@ -140,21 +145,22 @@ private:
 
 class CustomPhraseCandidateWord : public CandidateWord {
 public:
-    CustomPhraseCandidateWord(PinyinEngine *engine, CustomPhrase phrase)
-        : engine_(engine), phrase_(std::move(phrase)) {
-        setText(Text(phrase_.value()));
+    CustomPhraseCandidateWord(PinyinEngine *engine, int order,
+                              std::string value)
+        : engine_(engine), order_(order) {
+        setText(Text(std::move(value)));
     }
 
     void select(InputContext *inputContext) const override {
-        inputContext->commitString(phrase_.value());
+        inputContext->commitString(text().toString());
         engine_->doReset(inputContext);
     }
 
-    int order() const { return phrase_.order(); }
+    int order() const { return order_; }
 
 private:
     PinyinEngine *engine_;
-    CustomPhrase phrase_;
+    int order_;
 };
 
 class StrokeFilterCandidateWord : public CandidateWord {
@@ -607,7 +613,12 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
         if (auto *results = customPhrase_.lookup(context.userInput())) {
             for (const auto &result : *results) {
                 customCands.push_back(
-                    std::make_unique<CustomPhraseCandidateWord>(this, result));
+                    std::make_unique<CustomPhraseCandidateWord>(
+                        this, result.order(),
+                        result.evaluate(
+                            [this, inputContext](std::string_view key) {
+                                return evaluateCustomPhrase(inputContext, key);
+                            })));
             }
         }
         /// }}}
@@ -673,7 +684,6 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
                 }
                 strokeCands.clear();
             }
-
             while (customCandsIter != customCandsEnd) {
                 auto order = (*customCandsIter)->order() - 1;
                 if (order > candidateList->totalSize()) {
@@ -699,6 +709,23 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
     } while (0);
     inputContext->updatePreedit();
     inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
+}
+
+std::string PinyinEngine::evaluateCustomPhrase(InputContext *inputContext,
+                                               std::string_view key) {
+    auto result = CustomPhrase::builtinEvaluator(key);
+    if (!result.empty()) {
+        return result;
+    }
+    if (stringutils::startsWith(key, "lua:")) {
+        RawConfig config;
+        auto ret = imeapi()->call<ILuaAddon::invokeLuaFunction>(
+            inputContext, std::string(key.substr(4)), config);
+        if (!ret.value().empty()) {
+            return ret.value();
+        }
+    }
+    return "";
 }
 
 PinyinEngine::PinyinEngine(Instance *instance)

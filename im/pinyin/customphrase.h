@@ -24,6 +24,11 @@ public:
     void setOrder(int order) { order_ = order; }
     std::string &mutableValue() { return value_; }
 
+    std::string evaluate(const std::function<std::string(std::string_view key)>
+                             &evaluator) const;
+
+    static std::string builtinEvaluator(std::string_view key);
+
 private:
     int order_ = -1;
     std::string value_;

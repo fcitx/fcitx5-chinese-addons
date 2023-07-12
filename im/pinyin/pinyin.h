@@ -24,6 +24,7 @@
 #include <libime/pinyin/pinyincontext.h>
 #include <libime/pinyin/pinyinime.h>
 #include <memory>
+#include <string_view>
 #include <unordered_map>
 #include <unordered_set>
 
@@ -303,6 +304,9 @@ private:
     bool handleStrokeFilter(KeyEvent &event);
     bool handleForgetCandidate(KeyEvent &event);
     bool handlePunc(KeyEvent &event);
+
+    std::string evaluateCustomPhrase(InputContext *inputContext,
+                                     std::string_view key);
 
     void populateConfig();
 
