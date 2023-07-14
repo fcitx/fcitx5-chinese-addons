@@ -68,7 +68,7 @@ public:
     const std::string &word() const { return word_; }
 
 private:
-    static constexpr long int LOADING_TIME_QUICK_THRESHOLD = 300;
+    static constexpr long int LOADING_TIME_QUICK_THRESHOLD = 1000;
 
     void fill(const std::string &hanzi) {
         setText(fcitx::Text(hanzi));
@@ -110,6 +110,7 @@ private:
             if (ms > LOADING_TIME_QUICK_THRESHOLD) {
                 setText(fcitx::Text("\xe2\x98\x81"));
                 word_ = std::string();
+                setPlaceHolder(true);
             } else {
                 modifiable->remove(idx);
             }
