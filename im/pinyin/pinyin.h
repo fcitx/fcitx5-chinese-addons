@@ -7,6 +7,7 @@
 #ifndef _PINYIN_PINYIN_H_
 #define _PINYIN_PINYIN_H_
 
+#include "customphrase.h"
 #include <fcitx-config/configuration.h>
 #include <fcitx-config/iniparser.h>
 #include <fcitx-utils/event.h>
@@ -23,6 +24,7 @@
 #include <libime/pinyin/pinyincontext.h>
 #include <libime/pinyin/pinyinime.h>
 #include <memory>
+#include <string_view>
 #include <unordered_map>
 #include <unordered_set>
 
@@ -303,6 +305,9 @@ private:
     bool handleForgetCandidate(KeyEvent &event);
     bool handlePunc(KeyEvent &event);
 
+    std::string evaluateCustomPhrase(InputContext *inputContext,
+                                     std::string_view key);
+
     void populateConfig();
 
     void updateStroke(InputContext *inputContext);
@@ -319,6 +324,7 @@ private:
 #endif
     void loadBuiltInDict();
     void loadExtraDict();
+    void loadCustomPhrase();
     void loadDict(const StandardPathFile &file);
 
     Instance *instance_;
@@ -335,6 +341,7 @@ private:
     std::unique_ptr<EventSource> deferEvent_;
     std::unique_ptr<EventSource> checkCloudPinyinAvailable_;
     std::unique_ptr<HandlerTableEntry<EventHandler>> event_;
+    CustomPhraseDict customPhrase_;
 
     FCITX_ADDON_DEPENDENCY_LOADER(quickphrase, instance_->addonManager());
     FCITX_ADDON_DEPENDENCY_LOADER(cloudpinyin, instance_->addonManager());

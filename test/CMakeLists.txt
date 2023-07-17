@@ -37,3 +37,8 @@ add_executable(testtable testtable.cpp)
 target_link_libraries(testtable Fcitx5::Core Fcitx5::Module::TestFrontend)
 add_dependencies(testtable table copy-addon copy-im)
 add_test(NAME testtable COMMAND testtable)
+
+add_executable(testcustomphrase testcustomphrase.cpp ../im/pinyin/customphrase.cpp)
+target_compile_definitions(testcustomphrase PRIVATE "-DFCITX_CUSTOM_PHRASE_TEST")
+target_link_libraries(testcustomphrase Fcitx5::Utils LibIME::Core ${FMT_TARGET})
+add_test(NAME testcustomphrase COMMAND testcustomphrase)

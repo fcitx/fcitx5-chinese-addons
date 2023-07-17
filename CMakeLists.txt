@@ -8,7 +8,7 @@ include(GNUInstallDirs)
 include(ECMSetupVersion)
 include(ECMUninstallTarget)
 
-find_package(Fcitx5Core 5.0.11 REQUIRED)
+find_package(Fcitx5Core 5.0.24 REQUIRED)
 find_package(Fcitx5Module REQUIRED COMPONENTS Notifications QuickPhrase Spell Clipboard TestFrontend TestIM)
 find_package(Fcitx5ModuleLuaAddonLoader)
 find_package(Pthread REQUIRED)
@@ -54,7 +54,7 @@ if (ENABLE_GUI)
 endif()
 
 find_package(Boost 1.61 REQUIRED COMPONENTS iostreams)
-find_package(LibIMEPinyin 1.0.14 REQUIRED)
+find_package(LibIMEPinyin 1.0.18 REQUIRED)
 find_package(LibIMETable 1.0.12 REQUIRED)
 
 if (ENABLE_CLOUDPINYIN)
