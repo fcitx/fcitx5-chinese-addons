@@ -19,6 +19,7 @@
 #include <string>
 #include <string_view>
 #include <unordered_map>
+#include <unordered_set>
 #ifdef FCITX_HAS_LUA
 #include "luaaddon_public.h"
 #endif
@@ -567,6 +568,7 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
 
         std::list<std::unique_ptr<PinyinAbstractExtraCandidateWordInterface>>
             extraCandidates;
+        std::unordered_set<std::string> customCandidateSet;
         /// Create custom phrase candidate {{{
         do {
             if (selectedLength > 0 || !fullResult) {
@@ -577,13 +579,21 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
                 break;
             }
             for (const auto &result : *results) {
+
+                auto phrase =
+                    result.evaluate([this, inputContext](std::string_view key) {
+                        return evaluateCustomPhrase(inputContext, key);
+                    });
+                if (context.candidatesToCursorSet().count(phrase)) {
+                    continue;
+                }
+                if (customCandidateSet.count(phrase)) {
+                    continue;
+                }
+                customCandidateSet.insert(phrase);
                 extraCandidates.push_back(
                     std::make_unique<CustomPhraseCandidateWord>(
-                        this, result.order() - 1,
-                        result.evaluate(
-                            [this, inputContext](std::string_view key) {
-                                return evaluateCustomPhrase(inputContext, key);
-                            })));
+                        this, result.order() - 1, std::move(phrase)));
             }
         } while (0);
         /// }}}
@@ -602,25 +612,16 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
                 cloudpinyin(), fullPinyin, selectedSentence, inputContext,
                 std::bind(&PinyinEngine::cloudPinyinSelected, this, _1, _2, _3),
                 *config_.cloudPinyinIndex - 1);
-            if (!cand->filled() || !cand->word().empty()) {
+            if (!cand->filled() ||
+                (!cand->word().empty() &&
+                 !customCandidateSet.count(cand->word()) &&
+                 !context.candidatesToCursorSet().count(cand->word()))) {
+                customCandidateSet.insert(cand->word());
                 extraCandidates.push_back(std::move(cand));
                 cloud = std::prev(extraCandidates.end());
             }
         }
         /// }}}
-
-        auto maybeClearDuplicateCloudPinyinCandidate =
-            [&cloud, &extraCandidates](std::string_view word) {
-                if (!cloud) {
-                    return;
-                }
-                auto *cloudCand = static_cast<CustomCloudPinyinCandidateWord *>(
-                    (*cloud)->get());
-                if (cloudCand->filled() && cloudCand->word() == word) {
-                    extraCandidates.erase(*cloud);
-                    cloud.reset();
-                }
-            };
 
         /// Create spell candidate {{{
         int engNess;
@@ -637,9 +638,8 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
             }
             int position = 1;
             for (auto &result : results) {
-                maybeClearDuplicateCloudPinyinCandidate(result);
-                // Pinyin can only return eng when there is no valid option.
-                if (result == bestSentence) {
+                if (customCandidateSet.count(result) ||
+                    context.candidatesToCursorSet().count(result)) {
                     continue;
                 }
                 extraCandidates.push_back(std::make_unique<SpellCandidateWord>(
@@ -674,6 +674,7 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
         }
         /// }}}
 
+        // We expect stable sort here.
         extraCandidates.sort([](const auto &lhs, const auto &rhs) {
             return lhs->order() < rhs->order();
         });
@@ -723,7 +724,6 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
                     luaCandidateTrigger(inputContext, candidateString);
             }
 #endif
-            maybeClearDuplicateCloudPinyinCandidate(candidateString);
             candidateList->append<PinyinCandidateWord>(
                 this, Text(std::move(candidateString)), idx);
             for (auto &extraCandidate : luaExtraCandidates) {
