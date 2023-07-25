@@ -17,6 +17,7 @@
 #include <fcitx/addonfactory.h>
 #include <fcitx/addonmanager.h>
 #include <fcitx/event.h>
+#include <fcitx/inputcontext.h>
 #include <fcitx/inputcontextproperty.h>
 #include <fcitx/inputmethodengine.h>
 #include <fcitx/instance.h>
@@ -260,7 +261,7 @@ public:
     void reloadConfig() override;
     void reset(const InputMethodEntry &entry,
                InputContextEvent &event) override;
-    void doReset(InputContext *inputContext);
+    void doReset(InputContext *inputContext) const;
     void save() override;
     auto &factory() { return factory_; }
     std::string subMode(const InputMethodEntry &entry,
@@ -289,8 +290,8 @@ public:
     predictCandidateList(const std::vector<std::string> &words);
     void updateUI(InputContext *inputContext);
 
-    void resetStroke(InputContext *inputContext);
-    void resetForgetCandidate(InputContext *inputContext);
+    void resetStroke(InputContext *inputContext) const;
+    void resetForgetCandidate(InputContext *inputContext) const;
 
 private:
     void cloudPinyinSelected(InputContext *inputContext,
@@ -304,6 +305,7 @@ private:
     bool handleStrokeFilter(KeyEvent &event);
     bool handleForgetCandidate(KeyEvent &event);
     bool handlePunc(KeyEvent &event);
+    bool handlePuncCandidate(KeyEvent &event);
 
     std::string evaluateCustomPhrase(InputContext *inputContext,
                                      std::string_view key);
@@ -314,6 +316,10 @@ private:
     void updateForgetCandidate(InputContext *inputContext);
 
     void updatePreedit(InputContext *inputContext) const;
+    void updatePuncCandidate(InputContext *inputContext,
+                             const std::string &original,
+                             const std::vector<std::string> &candidates) const;
+    void updatePuncPreedit(InputContext *inputContext) const;
 
     std::pair<Text, Text> preedit(InputContext *inputContext) const;
     std::string preeditCommitString(InputContext *inputContext) const;

@@ -22,6 +22,7 @@
 #include <fcntl.h>
 #include <string_view>
 #include <unordered_set>
+#include <vector>
 
 using namespace fcitx;
 
@@ -63,19 +64,18 @@ void PunctuationProfile::resetDefaultValue() {
 
 void PunctuationProfile::addEntry(uint32_t key, const std::string &value,
                                   const std::string &value2) {
-    decltype(puncMap_)::mapped_type p;
+    decltype(puncMap_)::mapped_type::value_type p;
     p.first = value;
     p.second = value2;
+    puncMap_[key].push_back(p);
 
-    if (auto [iter, success] = puncMap_.emplace(key, std::move(p)); success) {
-        std::string punc = utf8::UCS4ToUTF8(key);
-        auto configValue = punctuationMapConfig_.entries.mutableValue();
-        configValue->emplace_back();
-        PunctuationMapEntryConfig &entryConfig = configValue->back();
-        entryConfig.key.setValue(punc);
-        entryConfig.mapResult1.setValue(iter->second.first);
-        entryConfig.mapResult2.setValue(iter->second.second);
-    }
+    std::string punc = utf8::UCS4ToUTF8(key);
+    auto configValue = punctuationMapConfig_.entries.mutableValue();
+    configValue->emplace_back();
+    PunctuationMapEntryConfig &entryConfig = configValue->back();
+    entryConfig.key.setValue(punc);
+    entryConfig.mapResult1.setValue(value);
+    entryConfig.mapResult2.setValue(value2);
 }
 
 void PunctuationProfile::load(std::istream &in) {
@@ -160,7 +160,28 @@ PunctuationProfile::getPunctuation(uint32_t unicode) const {
     if (iter == puncMap_.end()) {
         return emptyStringPair;
     }
-    return iter->second;
+    return iter->second[0];
+}
+
+std::vector<std::string>
+PunctuationProfile::getPunctuations(uint32_t unicode) const {
+    auto iter = puncMap_.find(unicode);
+    if (iter == puncMap_.end()) {
+        return {};
+    }
+    // Return only first if the result size is 1.
+    // This allows single paired symbol to work.
+    if (iter->second.size() == 1) {
+        return {iter->second[0].first};
+    }
+    std::vector<std::string> result;
+    for (auto &punc : iter->second) {
+        result.push_back(punc.first);
+        if (!punc.second.empty()) {
+            result.push_back(punc.second);
+        }
+    }
+    return result;
 }
 
 Punctuation::Punctuation(Instance *instance)
@@ -486,6 +507,19 @@ const std::string &Punctuation::cancelLast(const std::string &language,
     return emptyString;
 }
 
+std::vector<std::string>
+Punctuation::getPunctuationCandidates(const std::string &language,
+                                      uint32_t unicode) {
+    if (!enabled()) {
+        return {};
+    }
+    auto iter = profiles_.find(language);
+    if (iter == profiles_.end()) {
+        return {emptyString, emptyString};
+    }
+    return getPunctuations(language, unicode);
+}
+
 const std::pair<std::string, std::string> &
 Punctuation::getPunctuation(const std::string &language, uint32_t unicode) {
     if (!*config_.enabled) {
@@ -498,6 +532,20 @@ Punctuation::getPunctuation(const std::string &language, uint32_t unicode) {
     }
 
     return iter->second.getPunctuation(unicode);
+}
+
+std::vector<std::string>
+Punctuation::getPunctuations(const std::string &language, uint32_t unicode) {
+    if (!*config_.enabled) {
+        return {};
+    }
+
+    auto iter = profiles_.find(language);
+    if (iter == profiles_.end()) {
+        return {};
+    }
+
+    return iter->second.getPunctuations(unicode);
 }
 
 const fcitx::Configuration *
