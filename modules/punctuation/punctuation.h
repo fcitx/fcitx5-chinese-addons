@@ -17,6 +17,7 @@
 #include <fcitx/addonfactory.h>
 #include <fcitx/addoninstance.h>
 #include <fcitx/addonmanager.h>
+#include <fcitx/inputcontext.h>
 #include <fcitx/inputcontextproperty.h>
 #include <fcitx/instance.h>
 
@@ -65,6 +66,7 @@ public:
 
     const std::pair<std::string, std::string> &
     getPunctuation(uint32_t unicode) const;
+    std::vector<std::string> getPunctuations(uint32_t unicode) const;
     PunctuationMapConfig &config() { return punctuationMapConfig_; }
     const PunctuationMapConfig &config() const { return punctuationMapConfig_; }
 
@@ -73,7 +75,9 @@ public:
 private:
     void addEntry(uint32_t key, const std::string &value,
                   const std::string &value2);
-    std::unordered_map<uint32_t, std::pair<std::string, std::string>> puncMap_;
+    std::unordered_map<uint32_t,
+                       std::vector<std::pair<std::string, std::string>>>
+        puncMap_;
     PunctuationMapConfig punctuationMapConfig_;
 };
 
@@ -107,6 +111,8 @@ public:
 
     const std::pair<std::string, std::string> &
     getPunctuation(const std::string &language, uint32_t unicode);
+    std::vector<std::string> getPunctuations(const std::string &language,
+                                             uint32_t unicode);
     const std::string &pushPunctuation(const std::string &language,
                                        fcitx::InputContext *ic,
                                        uint32_t unicode);
@@ -115,6 +121,8 @@ public:
                       uint32_t unicode);
     const std::string &cancelLast(const std::string &language,
                                   fcitx::InputContext *ic);
+    std::vector<std::string>
+    getPunctuationCandidates(const std::string &language, uint32_t unicode);
 
     void reloadConfig() override;
     void save() override {
@@ -134,6 +142,7 @@ public:
     FCITX_ADDON_EXPORT_FUNCTION(Punctuation, pushPunctuation);
     FCITX_ADDON_EXPORT_FUNCTION(Punctuation, pushPunctuationV2);
     FCITX_ADDON_EXPORT_FUNCTION(Punctuation, cancelLast);
+    FCITX_ADDON_EXPORT_FUNCTION(Punctuation, getPunctuationCandidates)
 
     bool enabled() const { return *config_.enabled; }
     void setEnabled(bool enabled, fcitx::InputContext *ic) {

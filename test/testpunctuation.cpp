@@ -8,6 +8,7 @@
 #include "testdir.h"
 #include <fcitx-utils/log.h>
 #include <fcitx/addonmanager.h>
+#include <fcitx/inputcontext.h>
 #include <iostream>
 
 int main() {
@@ -30,7 +31,9 @@ int main() {
     FCITX_ASSERT(
         punctuation->call<fcitx::IPunctuation::getPunctuation>("zh_CN", '"')
             .second == "”");
-
+    FCITX_ASSERT(
+        punctuation->call<fcitx::IPunctuation::getPunctuationCandidates>(
+            "zh_CN", '#') == std::vector<std::string>{"#", "＃"});
     fcitx::RawConfig config;
     config["Entries"]["0"]["Key"] = "*";
     config["Entries"]["0"]["Mapping"] = "X";

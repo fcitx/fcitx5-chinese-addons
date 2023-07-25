@@ -19,6 +19,7 @@ enum class TableMode {
     ForgetWord,
     Pinyin,
     LookupPinyin,
+    Punctuation,
 };
 
 class EventSourceTime;
@@ -43,6 +44,10 @@ public:
 
     void commitBuffer(bool commitCode, bool noRealCommit = false);
     void updateUI(bool keepOldCursor, bool maybePredict);
+    void updatePuncCandidate(InputContext *inputContext,
+                             const std::string &original,
+                             const std::vector<std::string> &candidates);
+    void updatePuncPreedit(InputContext *inputContext);
     void pushLastCommit(const std::string &code,
                         const std::string &lastSegment);
 
@@ -65,6 +70,7 @@ public:
 
 private:
     bool handle2nd3rdCandidate(const TableConfig &config, KeyEvent &event);
+    bool handlePuncCandidate(const TableConfig &config, KeyEvent &event);
     bool handleCandidateList(const TableConfig &config, KeyEvent &event,
                              bool &needUpdate);
     bool handleForgetWord(KeyEvent &event);
