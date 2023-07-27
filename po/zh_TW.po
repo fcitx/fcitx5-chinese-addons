@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2023-07-26 20:24+0000\n"
+"POT-Creation-Date: 2023-07-27 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Lau YeeYu, 2023\n"
 "Language-Team: Chinese (Taiwan) (https://app.transifex.com/fcitx/teams/12005/"
@@ -183,15 +183,15 @@ msgstr "雲端拼音"
 msgid "Cloud Pinyin Index"
 msgstr "雲端拼音索引"
 
-#: im/pinyin/pinyin.cpp:1369
+#: im/pinyin/pinyin.cpp:1366
 msgid "Cloud Pinyin Status"
 msgstr "雲端拼音狀態"
 
-#: im/pinyin/pinyin.cpp:1371
+#: im/pinyin/pinyin.cpp:1368
 msgid "Cloud Pinyin is disabled."
 msgstr "已停用雲端拼音。"
 
-#: im/pinyin/pinyin.cpp:1370
+#: im/pinyin/pinyin.cpp:1367
 msgid "Cloud Pinyin is enabled."
 msgstr "已啟用雲端拼音。"
 
@@ -632,7 +632,7 @@ msgstr ""
 msgid "Page size"
 msgstr "頁面大小"
 
-#: im/pinyin/pinyin.cpp:1102 im/pinyin/pinyin.cpp:1368
+#: im/pinyin/pinyin.cpp:1102 im/pinyin/pinyin.cpp:1365
 #: im/pinyin/pinyin-addon.conf.in.in:3 im/pinyin/pinyin.conf.in:3
 msgid "Pinyin"
 msgstr "拼音"
@@ -679,11 +679,11 @@ msgstr "按下刪除鍵以移除。"
 msgid "Press space or enter to insert."
 msgstr "按下空白鍵或Enter鍵進行插入。"
 
-#: im/pinyin/pinyin.cpp:1829
+#: im/pinyin/pinyin.cpp:1826
 msgid "Press {} for {}"
 msgstr "按下 {} 以輸入 {}"
 
-#: im/pinyin/pinyin.cpp:1826
+#: im/pinyin/pinyin.cpp:1823
 msgid "Press {} for {} and Return for {}"
 msgstr "按下 {} 以輸入 {}， 按下確認鍵以輸入 {}"
 
@@ -764,7 +764,7 @@ msgstr "選擇第二個候選詞"
 msgid "Select Third Candidate"
 msgstr "選擇第三個候選詞"
 
-#: im/table/state.cpp:1425
+#: im/table/state.cpp:1422
 msgid "Select candidate to be removed from history:"
 msgstr "選擇要從歷史中移除的候選詞："
 
@@ -1010,11 +1010,11 @@ msgstr "紫光"
 msgid "Ziranma"
 msgstr "自然碼"
 
-#: im/pinyin/pinyin.cpp:1600
+#: im/pinyin/pinyin.cpp:1597
 msgid "[Select the word to remove from history]"
 msgstr "[選擇要從歷史中移除的字詞]"
 
-#: im/pinyin/pinyin.cpp:1548
+#: im/pinyin/pinyin.cpp:1545
 msgid "[Stroke Filtering]"
 msgstr "[筆畫過濾]"
 
@@ -1081,7 +1081,7 @@ msgstr "z <-> zh"
 
 #: im/table/state.cpp:115 im/pinyin/pinyin.cpp:199
 msgid "{0} (Half)"
-msgstr ""
+msgstr "{0}（半形）"
 
 #: im/pinyin/pinyin.cpp:158 modules/pinyinhelper/pinyinhelper.cpp:80
 msgid "{0} ({1})"
