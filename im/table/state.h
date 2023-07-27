@@ -22,7 +22,7 @@ enum class TableMode {
     Punctuation,
 };
 
-class EventSourceTime;
+struct EventSourceTime;
 
 class TableState : public InputContextProperty {
 public:
