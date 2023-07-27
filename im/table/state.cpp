@@ -1261,10 +1261,7 @@ bool TableState::handlePuncCandidate(const TableConfig &config,
 
     auto index = candidateList->cursorIndex();
     if (index >= 0) {
-        auto text = candidateList->candidate(index).text();
-        inputContext->inputPanel().reset();
-        inputContext->updatePreedit();
-        inputContext->commitString(text.toString());
+        candidateList->candidate(index).select(inputContext);
     }
 
     reset();
