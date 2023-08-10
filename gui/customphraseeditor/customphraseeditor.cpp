@@ -5,11 +5,17 @@
  *
  */
 #include "customphraseeditor.h"
+#include "customphrasemodel.h"
+#include <QStyledItemDelegate>
 
 namespace fcitx {
 
+class Delegate : public QStyledItemDelegate {
+    Q_OBJECT
+};
+
 CustomPhraseEditor::CustomPhraseEditor(QWidget *parent)
-    : FcitxQtConfigUIWidget(parent) {
+    : FcitxQtConfigUIWidget(parent), model_(new CustomPhraseModel(this)) {
     setupUi(this);
 
     connect(addButton_, &QPushButton::clicked, this,
@@ -18,9 +24,21 @@ CustomPhraseEditor::CustomPhraseEditor(QWidget *parent)
             &CustomPhraseEditor::removePhrase);
     connect(clearButton_, &QPushButton::clicked, this,
             &CustomPhraseEditor::clear);
+
+    tableView_->setModel(model_);
+    tableView_->horizontalHeader()->setSectionResizeMode(
+        CustomPhraseModel::Column_Enable, QHeaderView::ResizeToContents);
+    tableView_->horizontalHeader()->setSectionResizeMode(
+        CustomPhraseModel::Column_Key, QHeaderView::ResizeToContents);
+    tableView_->horizontalHeader()->setSectionResizeMode(
+        CustomPhraseModel::Column_Phrase, QHeaderView::Stretch);
+    tableView_->horizontalHeader()->setSectionResizeMode(
+        CustomPhraseModel::Column_Order, QHeaderView::ResizeToContents);
+
+    load();
 }
 
-void CustomPhraseEditor::load() {}
+void CustomPhraseEditor::load() { model_->load(); }
 
 void CustomPhraseEditor::save() {}
 
@@ -41,3 +59,5 @@ void CustomPhraseEditor::clear() {}
 void CustomPhraseEditor::importFromFile() {}
 
 } // namespace fcitx
+
+#include "customphraseeditor.moc"

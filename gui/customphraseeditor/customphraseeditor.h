@@ -7,6 +7,7 @@
 #ifndef _CUSTOMPHRASEEDITOR_CUSTOMPHRASEEDITOR_H_
 #define _CUSTOMPHRASEEDITOR_CUSTOMPHRASEEDITOR_H_
 
+#include "customphrasemodel.h"
 #include "ui_customphraseeditor.h"
 #include <fcitxqtconfiguiwidget.h>
 
@@ -38,7 +39,7 @@ private:
     QAction *importFromSogouOnline_;
     QAction *clearUserDictAction_;
     QAction *clearAllDataAction_;
-    ;
+    CustomPhraseModel *model_;
 };
 
 } // namespace fcitx

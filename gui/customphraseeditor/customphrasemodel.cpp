@@ -4,20 +4,26 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later
  *
  */
-#include "model.h"
+#include "customphrasemodel.h"
 #include <QApplication>
 #include <QFile>
 #include <QFutureWatcher>
 #include <QtConcurrentRun>
+#include <boost/iostreams/device/file_descriptor.hpp>
+#include <boost/iostreams/stream_buffer.hpp>
 #include <fcitx-utils/i18n.h>
 #include <fcitx-utils/standardpath.h>
 #include <fcitx-utils/utf8.h>
 #include <fcntl.h>
+#include <qfuturewatcher.h>
+#include <qnamespace.h>
 
 namespace fcitx {
 
+constexpr char customPhraseFileName[] = "pinyin/customphrase";
+
 CustomPhraseModel::CustomPhraseModel(QObject *parent)
-    : QAbstractTableModel(parent), needSave_(false), futureWatcher_(0) {}
+    : QAbstractTableModel(parent), needSave_(false) {}
 
 CustomPhraseModel::~CustomPhraseModel() {}
 
@@ -26,11 +32,11 @@ bool CustomPhraseModel::needSave() { return needSave_; }
 QVariant CustomPhraseModel::headerData(int section, Qt::Orientation orientation,
                                        int role) const {
     if (orientation == Qt::Horizontal && role == Qt::DisplayRole) {
-        if (section == 0)
+        if (section == Column_Key) {
             return _("Key");
-        else if (section == 1)
+        } else if (section == Column_Phrase) {
             return _("Phrase");
-        else if (section == 2) {
+        } else if (section == Column_Order) {
             return _("Order");
         }
     }
@@ -44,26 +50,33 @@ int CustomPhraseModel::rowCount(const QModelIndex &parent) const {
 
 int CustomPhraseModel::columnCount(const QModelIndex &parent) const {
     Q_UNUSED(parent);
-    return 3;
+    return 4;
 }
 
 QVariant CustomPhraseModel::data(const QModelIndex &index, int role) const {
     do {
+        if (role == Qt::CheckStateRole && index.column() == Column_Enable) {
+            return list_[index.row()].enabled ? Qt::Checked : Qt::Unchecked;
+        }
         if ((role == Qt::DisplayRole || role == Qt::EditRole) &&
             index.row() < list_.count()) {
-            if (index.column() == 0) {
-                return list_[index.row()].first;
-            } else if (index.column() == 1) {
-                return list_[index.row()].second;
+            if (index.column() == Column_Key) {
+                return list_[index.row()].key;
+            } else if (index.column() == Column_Phrase) {
+                return list_[index.row()].value;
+            } else if (index.column() == Column_Order) {
+                return qAbs(list_[index.row()].order);
             }
         }
     } while (0);
     return QVariant();
 }
 
-void CustomPhraseModel::addItem(const QString &macro, const QString &word) {
+void CustomPhraseModel::addItem(const QString &key, const QString &word,
+                                int order, bool enabled) {
     beginInsertRows(QModelIndex(), list_.size(), list_.size());
-    list_.append(QPair<QString, QString>(macro, word));
+    list_.append(CustomPhraseItem{
+        .key = key, .value = word, .order = order, .enabled = enabled});
     endInsertRows();
     setNeedSave(true);
 }
@@ -71,8 +84,6 @@ void CustomPhraseModel::addItem(const QString &macro, const QString &word) {
 void CustomPhraseModel::deleteItem(int row) {
     if (row >= list_.count())
         return;
-    QPair<QString, QString> item = list_.at(row);
-    QString key = item.first;
     beginRemoveRows(QModelIndex(), row, row);
     list_.removeAt(row);
     endRemoveRows();
@@ -80,8 +91,9 @@ void CustomPhraseModel::deleteItem(int row) {
 }
 
 void CustomPhraseModel::deleteAllItem() {
-    if (list_.count())
+    if (list_.count()) {
         setNeedSave(true);
+    }
     beginResetModel();
     list_.clear();
     endResetModel();
@@ -91,22 +103,40 @@ Qt::ItemFlags CustomPhraseModel::flags(const QModelIndex &index) const {
     if (!index.isValid())
         return {};
 
+    if (index.column() == Column_Enable) {
+        return Qt::ItemIsEnabled | Qt::ItemIsUserCheckable |
+               Qt::ItemIsSelectable;
+    }
     return Qt::ItemIsEditable | Qt::ItemIsEnabled | Qt::ItemIsSelectable;
 }
 
 bool CustomPhraseModel::setData(const QModelIndex &index, const QVariant &value,
                                 int role) {
-    if (role != Qt::EditRole)
-        return false;
-
-    if (index.column() == 0) {
-        list_[index.row()].first = value.toString();
+    if (role == Qt::CheckStateRole && index.column() == Column_Enable) {
+        list_[index.row()].enabled = value.toBool();
 
         Q_EMIT dataChanged(index, index);
         setNeedSave(true);
         return true;
-    } else if (index.column() == 1) {
-        list_[index.row()].second = value.toString();
+    }
+
+    if (role != Qt::EditRole)
+        return false;
+
+    if (index.column() == Column_Key) {
+        list_[index.row()].key = value.toString();
+
+        Q_EMIT dataChanged(index, index);
+        setNeedSave(true);
+        return true;
+    } else if (index.column() == Column_Phrase) {
+        list_[index.row()].value = value.toString();
+
+        Q_EMIT dataChanged(index, index);
+        setNeedSave(true);
+        return true;
+    } else if (index.column() == Column_Order) {
+        list_[index.row()].order = value.toInt();
 
         Q_EMIT dataChanged(index, index);
         setNeedSave(true);
@@ -115,27 +145,23 @@ bool CustomPhraseModel::setData(const QModelIndex &index, const QVariant &value,
         return false;
 }
 
-void CustomPhraseModel::load(const QString &file, bool append) {
+void CustomPhraseModel::load() {
     if (futureWatcher_) {
         return;
     }
 
     beginResetModel();
-    if (!append) {
-        list_.clear();
-        setNeedSave(false);
-    } else
-        setNeedSave(true);
-    futureWatcher_ = new QFutureWatcher<QStringPairList>(this);
-    futureWatcher_->setFuture(QtConcurrent::run<QStringPairList>(
-        this, &CustomPhraseModel::parse, file));
+    setNeedSave(false);
+    futureWatcher_ = new QFutureWatcher<QList<CustomPhraseItem>>(this);
+    futureWatcher_->setFuture(QtConcurrent::run<QList<CustomPhraseItem>>(
+        &CustomPhraseModel::parse, QLatin1String(customPhraseFileName)));
     connect(futureWatcher_, &QFutureWatcherBase::finished, this,
             &CustomPhraseModel::loadFinished);
 }
 
-QStringPairList CustomPhraseModel::parse(const QString &file) {
+QList<CustomPhraseItem> CustomPhraseModel::parse(const QString &file) {
     QByteArray fileNameArray = file.toLocal8Bit();
-    QStringPairList list;
+    QList<CustomPhraseItem> list;
 
     do {
         auto fp = fcitx::StandardPath::global().open(
@@ -144,25 +170,23 @@ QStringPairList CustomPhraseModel::parse(const QString &file) {
         if (fp.fd() < 0)
             break;
 
-        QFile file;
-        if (!file.open(fp.fd(), QFile::ReadOnly)) {
-            break;
-        }
-        QByteArray line;
-        while (!(line = file.readLine()).isNull()) {
-            auto l = line.toStdString();
-            auto parsed = parseLine(l);
-            if (!parsed)
-                continue;
-            auto [key, value] = *parsed;
-            if (key.empty() || value.empty()) {
-                continue;
-            }
-            list_.append(
-                {QString::fromStdString(key), QString::fromStdString(value)});
-        }
-
-        file.close();
+        boost::iostreams::stream_buffer<
+            boost::iostreams::file_descriptor_source>
+            buffer(fp.fd(),
+                   boost::iostreams::file_descriptor_flags::never_close_handle);
+        std::istream in(&buffer);
+        CustomPhraseDict dict;
+        dict.load(in, /*loadDisabled=*/true);
+        dict.foreach(
+            [&list](const std::string &key, std::vector<CustomPhrase> &items) {
+                for (const auto &item : items) {
+                    list.append(CustomPhraseItem{
+                        .key = QString::fromStdString(key),
+                        .value = QString::fromStdString(item.value()),
+                        .order = qAbs(item.order()),
+                        .enabled = item.order() >= 0});
+                }
+            });
     } while (0);
 
     return list;
@@ -172,64 +196,31 @@ void CustomPhraseModel::loadFinished() {
     list_.append(futureWatcher_->future().result());
     endResetModel();
     futureWatcher_->deleteLater();
-    futureWatcher_ = 0;
+    futureWatcher_ = nullptr;
 }
 
 QFutureWatcher<bool> *CustomPhraseModel::save(const QString &file) {
     QFutureWatcher<bool> *futureWatcher = new QFutureWatcher<bool>(this);
-    futureWatcher->setFuture(QtConcurrent::run<bool>(
-        this, &CustomPhraseModel::saveData, file, list_));
+    futureWatcher->setFuture(
+        QtConcurrent::run<bool>(&CustomPhraseModel::saveData, file, list_));
     connect(futureWatcher, &QFutureWatcherBase::finished, this,
             &CustomPhraseModel::saveFinished);
     return futureWatcher;
 }
 
-void CustomPhraseModel::saveData(QTextStream &dev) {
-    for (int i = 0; i < list_.size(); i++) {
-        dev << list_[i].first << "\t" << escapeValue(list_[i].second) << "\n";
-    }
-}
-
-void CustomPhraseModel::loadData(QTextStream &stream) {
-    beginResetModel();
-    list_.clear();
-    setNeedSave(true);
-    QString s;
-    while (!(s = stream.readLine()).isNull()) {
-        auto line = s.toStdString();
-        auto parsed = parseLine(line);
-        if (!parsed)
-            continue;
-        auto [key, value] = *parsed;
-        if (key.empty() || value.empty()) {
-            continue;
-        }
-        list_.append(
-            {QString::fromStdString(key), QString::fromStdString(value)});
-    }
-    endResetModel();
-}
-
 bool CustomPhraseModel::saveData(const QString &file,
-                                 const QStringPairList &list) {
+                                 const QList<CustomPhraseItem> &list) {
     QByteArray filenameArray = file.toLocal8Bit();
-    fs::makePath(stringutils::joinPath(
-        StandardPath::global().userDirectory(StandardPath::Type::PkgData),
-        QUICK_PHRASE_CONFIG_DIR));
     return StandardPath::global().safeSave(
         StandardPath::Type::PkgData, filenameArray.constData(),
         [&list](int fd) {
-            QFile tempFile;
-            if (!tempFile.open(fd, QIODevice::WriteOnly)) {
-                return false;
-            }
-            for (int i = 0; i < list.size(); i++) {
-                tempFile.write(list[i].first.toUtf8());
-                tempFile.write("\t");
-                tempFile.write(escapeValue(list[i].second).toUtf8());
-                tempFile.write("\n");
-            }
-            tempFile.close();
+            boost::iostreams::stream_buffer<
+                boost::iostreams::file_descriptor_source>
+                buffer(fd, boost::iostreams::file_descriptor_flags::
+                               never_close_handle);
+            std::ostream out(&buffer);
+            CustomPhraseDict dict;
+            dict.save(out);
             return true;
         });
 }
