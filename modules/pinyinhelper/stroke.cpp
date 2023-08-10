@@ -91,7 +91,7 @@ Stroke::lookup(std::string_view input, int limit) {
         q;
 
     // First lets check if the stroke is already a prefix of single word.
-    position_type onlyMatch = decltype(dict_)::NO_PATH;
+    std::optional<position_type> onlyMatch;
     size_t onlyMatchLength = 0;
     auto addResult = [&result, &resultSet](std::string stroke, std::string hz) {
         if (resultSet.insert(hz).second) {
@@ -101,16 +101,16 @@ Stroke::lookup(std::string_view input, int limit) {
 
     if (dict_.foreach(input, [&onlyMatch, &onlyMatchLength](int32_t, size_t len,
                                                             uint64_t pos) {
-            if (!decltype(dict_)::isNoPath(onlyMatch)) {
+            if (onlyMatch) {
                 return false;
             }
             onlyMatch = pos;
             onlyMatchLength = len;
             return true;
         })) {
-        if (decltype(dict_)::isValid(onlyMatch)) {
+        if (onlyMatch) {
             std::string buf;
-            dict_.suffix(buf, input.size() + onlyMatchLength, onlyMatch);
+            dict_.suffix(buf, input.size() + onlyMatchLength, *onlyMatch);
             if (auto idx = buf.find_last_of('|'); idx != std::string::npos) {
                 addResult(buf.substr(idx + 1), buf.substr(0, idx));
             }
