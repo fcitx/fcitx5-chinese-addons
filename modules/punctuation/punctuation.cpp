@@ -515,7 +515,7 @@ Punctuation::getPunctuationCandidates(const std::string &language,
     }
     auto iter = profiles_.find(language);
     if (iter == profiles_.end()) {
-        return {emptyString, emptyString};
+        return {};
     }
     return getPunctuations(language, unicode);
 }
