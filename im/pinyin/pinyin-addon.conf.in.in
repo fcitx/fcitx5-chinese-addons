@@ -8,14 +8,14 @@ OnDemand=True
 Configurable=True
 
 [Addon/Dependencies]
-0=punctuation
+0=punctuation:@PROJECT_VERSION@
 
 [Addon/OptionalDependencies]
-0=fullwidth
+0=fullwidth:@PROJECT_VERSION@
 1=quickphrase
-2=cloudpinyin
+2=cloudpinyin:@PROJECT_VERSION@
 3=notifications
 4=spell
-5=pinyinhelper
-6=chttrans
+5=pinyinhelper:@PROJECT_VERSION@
+6=chttrans:@PROJECT_VERSION@
 7=imeapi

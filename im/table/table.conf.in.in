@@ -8,10 +8,10 @@ Configurable=True
 Version=@PROJECT_VERSION@
 
 [Addon/Dependencies]
-0=punctuation
-1=pinyinhelper
+0=punctuation:@PROJECT_VERSION@
+1=pinyinhelper:@PROJECT_VERSION@
 
 [Addon/OptionalDependencies]
-0=fullwidth
+0=fullwidth:@PROJECT_VERSION@
 1=quickphrase
 
