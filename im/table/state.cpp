@@ -943,6 +943,9 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
                 // This means it is not a valid start, make it go through the
                 // punc.
                 context->backspace();
+                // This should clear all candidates.
+                inputContext->inputPanel().reset();
+                needUpdate = true;
             } else {
                 event.filterAndAccept();
                 maybePredict = true;
