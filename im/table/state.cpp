@@ -1227,19 +1227,6 @@ bool TableState::handlePuncCandidate(const TableConfig &config,
         return true;
     }
 
-    if ((event.key().check(FcitxKey_space) ||
-         event.key().check(FcitxKey_KP_Space))) {
-        if (candidateList->size()) {
-            event.filterAndAccept();
-            int idx = candidateList->cursorIndex();
-            if (idx < 0) {
-                idx = 0;
-            }
-            candidateList->candidate(idx).select(inputContext);
-            return true;
-        }
-    }
-
     if (auto *movable = candidateList->toCursorMovable()) {
         if (event.key().checkKeyList(*config.nextCandidate)) {
             movable->nextCandidate();
