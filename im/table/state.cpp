@@ -1019,8 +1019,11 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
             } else if (!context->selected()) {
                 // key to handle when it is not empty.
                 if (event.key().check(FcitxKey_space)) {
-                    autoSelectCandidate();
-                    return event.filterAndAccept();
+                    if (!autoSelectCandidate()) {
+                        commitBuffer(true);
+                        needUpdate = true;
+                    }
+                    event.filterAndAccept();
                 }
             }
         } else if (event.key().check(FcitxKey_BackSpace) && lastIsPunc) {
