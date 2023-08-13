@@ -34,7 +34,6 @@ private Q_SLOTS:
     void openExternal();
 
 private:
-    void reload();
     void updated();
     void connectFileWatcher();
     void disconnectFileWatcher();
