@@ -210,8 +210,10 @@ FCITX_CONFIGURATION(
         this, "LongWordLengthLimit",
         _("Prompt long word length when input length over (0 for disable)"), 4,
         IntConstrain(0, 10)};
-    ExternalOption dictmanager{this, "DictManager", _("Dictionaries"),
+    ExternalOption dictmanager{this, "DictManager", _("Manage Dictionaries"),
                                "fcitx://config/addon/pinyin/dictmanager"};
+    ExternalOption customphrase{this, "CustomPhrase", _("Manage Custom Phrase"),
+                               "fcitx://config/addon/pinyin/customphraseeditor"};
     SubConfigOption punctuationMap{
         this, "Punctuation", _("Punctuation"),
         "fcitx://config/addon/punctuation/punctuationmap/zh_CN"};
