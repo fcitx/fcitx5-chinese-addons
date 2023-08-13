@@ -164,10 +164,6 @@ QString CustomPhraseEditor::title() { return _("Custom Phrase Editor"); }
 
 bool CustomPhraseEditor::asyncSave() { return true; }
 
-void CustomPhraseEditor::reload() {
-    saveSubConfig("fcitx://config/addon/pinyin/customphraseeditor");
-}
-
 void CustomPhraseEditor::addPhrase() {
     EditorDialog *dialog = new EditorDialog(this);
     dialog->setAttribute(Qt::WA_DeleteOnClose, true);
@@ -209,6 +205,8 @@ void CustomPhraseEditor::updated() {
             this, _("File updated"),
             _("Do you want to reload custom phrase from disk?"))) {
         load();
+        // Trigger a reload on fcitx
+        saveSubConfig("fcitx://config/addon/pinyin/customphrase");
     } else {
         Q_EMIT changed(true);
     }
