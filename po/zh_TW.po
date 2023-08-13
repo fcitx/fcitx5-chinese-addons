@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2023-07-27 20:24+0000\n"
+"POT-Creation-Date: 2023-08-13 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Lau YeeYu, 2023\n"
 "Language-Team: Chinese (Taiwan) (https://app.transifex.com/fcitx/teams/12005/"
@@ -26,11 +26,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: im/table/state.cpp:1110
+#: im/table/state.cpp:1116
 msgid " Return for "
 msgstr "按下 Enter 以"
 
-#: im/table/state.cpp:1107
+#: im/table/state.cpp:1113
 msgid " for "
 msgstr " 以"
 
@@ -42,13 +42,27 @@ msgstr "%1 已存在，是否覆寫此字典？"
 msgid "%1% Downloaded."
 msgstr "已下載 %1%。"
 
+#. i18n: file: gui/customphraseeditor/customphraseeditor.ui:41
+#. i18n: ectx: property (text), widget (QPushButton, addButton_)
+#: rc.cpp:9
+#, kde-format
+msgid "&Add"
+msgstr ""
+
 #: gui/pinyindictmanager/pinyindictmanager.cpp:37
 msgid "&Browse Sogou Cell Dictionary Online"
 msgstr "線上瀏覽搜狗细胞词库(&B)"
 
+#. i18n: file: gui/customphraseeditor/customphraseeditor.ui:84
+#. i18n: ectx: property (text), widget (QPushButton, clearButton_)
+#: rc.cpp:21
+#, kde-format
+msgid "&Clear"
+msgstr ""
+
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:55
 #. i18n: ectx: property (text), widget (QPushButton, clearDictButton_)
-#: rc.cpp:24
+#: rc.cpp:45
 #, kde-format
 msgid "&Clear Dictionary"
 msgstr "清空詞庫(&C)"
@@ -57,26 +71,42 @@ msgstr "清空詞庫(&C)"
 msgid "&Clear User Data"
 msgstr "清空使用者資訊(&C)"
 
+#. i18n: file: gui/customphraseeditor/customphraseeditor.ui:73
+#. i18n: ectx: property (text), widget (QPushButton, externalEditor_)
+#: rc.cpp:18
+#, kde-format
+msgid "&External Editor"
+msgstr ""
+
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:22
 #. i18n: ectx: property (text), widget (QPushButton, importButton_)
-#: rc.cpp:15
+#: rc.cpp:36
 #, kde-format
 msgid "&Import"
 msgstr "匯入(&I)"
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:66
 #. i18n: ectx: property (text), widget (QPushButton, openDirectoryButton_)
-#: rc.cpp:27
+#: rc.cpp:48
 #, kde-format
 msgid "&Open User Data Directory"
 msgstr "打開使用者數據資料夾(&O)"
 
+#. i18n: file: gui/customphraseeditor/customphraseeditor.ui:52
+#. i18n: ectx: property (text), widget (QPushButton, removeButton_)
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:33
 #. i18n: ectx: property (text), widget (QPushButton, removeButton_)
-#: rc.cpp:18
+#: rc.cpp:12 rc.cpp:39
 #, kde-format
 msgid "&Remove"
 msgstr "移除(&R)"
+
+#. i18n: file: gui/customphraseeditor/customphraseeditor.ui:63
+#. i18n: ectx: property (text), widget (QPushButton, helpButton_)
+#: rc.cpp:15
+#, kde-format
+msgid "&Usage"
+msgstr ""
 
 #: im/table/state.cpp:746
 msgctxt "Pinyin lookup delimeter"
@@ -90,6 +120,13 @@ msgstr "ABC"
 #: im/pinyin/pinyin.h:144
 msgid "Action when switching input method"
 msgstr "切換輸入法時的行為"
+
+#. i18n: file: gui/customphraseeditor/editordialog.ui:14
+#. i18n: ectx: property (windowTitle), widget (QDialog, EditorDialog)
+#: rc.cpp:3
+#, kde-format
+msgid "Add Phrase"
+msgstr ""
 
 #: org.fcitx.Fcitx5.Addon.ChineseAddons.metainfo.xml.in:8
 msgid ""
@@ -156,8 +193,8 @@ msgid "Candidate List orientation"
 msgstr "候選詞清單配置"
 
 #: im/table/cangjie.conf.in.in:3
-msgid "Cangjie"
-msgstr "倉頡"
+msgid "Cangjie (Simplified Chinese)"
+msgstr ""
 
 #: org.fcitx.Fcitx5.Addon.ChineseAddons.metainfo.xml.in:7
 msgid "Chinese Addons"
@@ -175,7 +212,7 @@ msgstr "清除"
 msgid "Clear &All Data"
 msgstr "清空所有資料(&A)"
 
-#: im/pinyin/pinyin.h:222 modules/cloudpinyin/cloudpinyin.conf.in.in:3
+#: im/pinyin/pinyin.h:224 modules/cloudpinyin/cloudpinyin.conf.in.in:3
 msgid "Cloud Pinyin"
 msgstr "雲端拼音"
 
@@ -183,15 +220,15 @@ msgstr "雲端拼音"
 msgid "Cloud Pinyin Index"
 msgstr "雲端拼音索引"
 
-#: im/pinyin/pinyin.cpp:1366
+#: im/pinyin/pinyin.cpp:1353
 msgid "Cloud Pinyin Status"
 msgstr "雲端拼音狀態"
 
-#: im/pinyin/pinyin.cpp:1368
+#: im/pinyin/pinyin.cpp:1355
 msgid "Cloud Pinyin is disabled."
 msgstr "已停用雲端拼音。"
 
-#: im/pinyin/pinyin.cpp:1367
+#: im/pinyin/pinyin.cpp:1354
 msgid "Cloud Pinyin is enabled."
 msgstr "已啟用雲端拼音。"
 
@@ -261,11 +298,15 @@ msgstr "建立暫存檔失敗。請檢查權限或磁碟空間。"
 msgid "Custom"
 msgstr "自訂"
 
+#: gui/customphraseeditor/customphraseeditor.cpp:163
+msgid "Custom Phrase Editor"
+msgstr ""
+
 #. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:14
 #. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
 #. i18n: file: gui/pinyindictmanager/browserdialog.ui:14
 #. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
-#: rc.cpp:3 rc.cpp:9
+#: rc.cpp:24 rc.cpp:30
 #, kde-format
 msgid "Dialog"
 msgstr "對話框"
@@ -273,10 +314,6 @@ msgstr "對話框"
 #: im/table/db.conf.in.in:3
 msgid "Dianbaoma"
 msgstr "電報碼"
-
-#: im/pinyin/pinyin.h:213
-msgid "Dictionaries"
-msgstr "字典"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:139
 msgid "Dictionary already exists"
@@ -311,6 +348,10 @@ msgid ""
 "Do you want to enable cloudpinyin now for better prediction? You can always "
 "toggle it later in configuration."
 msgstr "您想要啟用雲拼音以獲得更好的預測嗎？您也可以稍後在配置中更改。"
+
+#: gui/customphraseeditor/customphraseeditor.cpp:206
+msgid "Do you want to reload custom phrase from disk?"
+msgstr ""
 
 #: im/table/ime.h:138
 msgid "Don't sort word shorter than"
@@ -360,7 +401,7 @@ msgstr "啟用的輸入法"
 msgid "End key"
 msgstr "中止鍵"
 
-#: im/pinyin/pinyin.h:242
+#: im/pinyin/pinyin.h:244
 msgid "Enter a string from the list will make it enter quickphrase mode."
 msgstr "輸入列表中的字符會進入快速輸入模式。"
 
@@ -412,6 +453,10 @@ msgstr "檔案"
 #: gui/pinyindictmanager/pinyindictmanager.cpp:373
 msgid "File Operation Failed"
 msgstr "檔案操作失敗"
+
+#: gui/customphraseeditor/customphraseeditor.cpp:205
+msgid "File updated"
+msgstr ""
 
 #: im/pinyin/pinyin.h:203
 msgid "Filter by stroke"
@@ -469,7 +514,7 @@ msgstr "全形標點已禁用。"
 msgid "Full width punctuation is enabled."
 msgstr "全形標點已啟用。"
 
-#: im/pinyin/pinyin.h:244
+#: im/pinyin/pinyin.h:246
 msgid "Fuzzy Pinyin Settings"
 msgstr "模糊音設定"
 
@@ -518,12 +563,16 @@ msgstr "短拼音的內模糊音節 (qie -> qi'e)"
 msgid "Input Dictionary Name"
 msgstr "輸入字典名稱"
 
+#: gui/customphraseeditor/customphrasemodel.cpp:83
+msgid "Key"
+msgstr ""
+
 #: modules/punctuation/punctuation.h:39
 msgctxt "Key of the punctuation, e.g. comma"
 msgid "Key"
 msgstr "按键"
 
-#: im/table/ime.h:123 im/pinyin/pinyin.h:227
+#: im/table/ime.h:123 im/pinyin/pinyin.h:229
 msgid "Key to trigger quickphrase"
 msgstr "快速輸入的觸發按鍵"
 
@@ -546,6 +595,14 @@ msgstr "查找拼音"
 #: im/table/engine.h:40 im/pinyin/pinyin.h:75
 msgid "MS"
 msgstr "微軟"
+
+#: im/pinyin/pinyin.h:215
+msgid "Manage Custom Phrase"
+msgstr ""
+
+#: im/pinyin/pinyin.h:213
+msgid "Manage Dictionaries"
+msgstr ""
 
 #: modules/punctuation/punctuation.h:40
 msgid "Mapping"
@@ -615,6 +672,10 @@ msgstr "簡轉繁的 OpenCC 配置"
 msgid "OpenCC profile for Traditional to Simplified"
 msgstr "繁轉簡的 OpenCC 配置"
 
+#: gui/customphraseeditor/customphrasemodel.cpp:87
+msgid "Order"
+msgstr ""
+
 #: im/table/ime.h:140
 msgid "Order policy"
 msgstr "排序規則"
@@ -628,11 +689,22 @@ msgstr ""
 "根據已輸入的內容對候選詞排序。如果想要候選詞順序與輸入歷史無關，請禁用此選"
 "項。"
 
+#. i18n: file: gui/customphraseeditor/editordialog.ui:55
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:6
+#, kde-format
+msgid "Order:"
+msgstr ""
+
 #: im/table/ime.h:83 im/pinyin/pinyin.h:115
 msgid "Page size"
 msgstr "頁面大小"
 
-#: im/pinyin/pinyin.cpp:1102 im/pinyin/pinyin.cpp:1365
+#: gui/customphraseeditor/customphrasemodel.cpp:85
+msgid "Phrase"
+msgstr ""
+
+#: im/pinyin/pinyin.cpp:1102 im/pinyin/pinyin.cpp:1352
 #: im/pinyin/pinyin-addon.conf.in.in:3 im/pinyin/pinyin.conf.in:3
 msgid "Pinyin"
 msgstr "拼音"
@@ -679,11 +751,11 @@ msgstr "按下刪除鍵以移除。"
 msgid "Press space or enter to insert."
 msgstr "按下空白鍵或Enter鍵進行插入。"
 
-#: im/pinyin/pinyin.cpp:1826
+#: im/pinyin/pinyin.cpp:1813
 msgid "Press {} for {}"
 msgstr "按下 {} 以輸入 {}"
 
-#: im/pinyin/pinyin.cpp:1823
+#: im/pinyin/pinyin.cpp:1810
 msgid "Press {} for {} and Return for {}"
 msgstr "按下 {} 以輸入 {}， 按下確認鍵以輸入 {}"
 
@@ -711,13 +783,13 @@ msgstr "當輸入長於...時顯示長詞 (设置为 0 时禁用)"
 msgid "Proxy"
 msgstr "網路代理"
 
-#: im/pinyin/pinyin.h:216 modules/punctuation/punctuation.cpp:249
+#: im/pinyin/pinyin.h:218 modules/punctuation/punctuation.cpp:249
 #: modules/punctuation/punctuation.cpp:251
 #: modules/punctuation/punctuation.conf.in.in:3
 msgid "Punctuation"
 msgstr "標點"
 
-#: im/pinyin/pinyin.h:232
+#: im/pinyin/pinyin.h:234
 msgid "Quick Phrase"
 msgstr "快速輸入"
 
@@ -731,7 +803,7 @@ msgstr "選擇唯一候選詞的正則表達式"
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:44
 #. i18n: ectx: property (text), widget (QPushButton, removeAllButton_)
-#: rc.cpp:21
+#: rc.cpp:42
 #, kde-format
 msgid "Remove &All"
 msgstr "移除全部(&A)"
@@ -764,7 +836,7 @@ msgstr "選擇第二個候選詞"
 msgid "Select Third Candidate"
 msgstr "選擇第三個候選詞"
 
-#: im/table/state.cpp:1422
+#: im/table/state.cpp:1415
 msgid "Select candidate to be removed from history:"
 msgstr "選擇要從歷史中移除的候選詞："
 
@@ -812,7 +884,7 @@ msgstr "簡體中文"
 msgid "Simplified Chinese is enabled."
 msgstr "已啟用簡體中文。"
 
-#: im/pinyin/pinyin.h:219 modules/chttrans/chttrans.cpp:70
+#: im/pinyin/pinyin.h:221 modules/chttrans/chttrans.cpp:70
 #: modules/chttrans/chttrans.conf.in.in:3
 msgid "Simplified and Traditional Chinese Translation"
 msgstr "簡繁轉换"
@@ -821,7 +893,7 @@ msgstr "簡繁轉换"
 msgid "Sort candidates based on current context"
 msgstr "依據上下文排序候選詞"
 
-#: im/pinyin/pinyin.h:237
+#: im/pinyin/pinyin.h:239
 msgid "Strings to trigger quick phrase"
 msgstr "觸發快速輸入的字符串"
 
@@ -849,6 +921,20 @@ msgstr "已建立暫存檔。"
 msgid "Text to trigger quickphrase"
 msgstr "觸發快速輸入的文本"
 
+#: gui/customphraseeditor/customphrasemodel.cpp:26
+msgctxt "Please ensure the line width is around 80 character width"
+msgid ""
+"The line should be in format key,order=value\n"
+"If value is multiline, you may either write is as\n"
+"key,order=\n"
+"line1\n"
+"line2\n"
+"...\n"
+"lineN\n"
+"Or, write it as key,order=\"line1\\nline2...\\nlineN\"\n"
+"The comment line is started with # or ;.\n"
+msgstr ""
+
 #: modules/cloudpinyin/cloudpinyin.h:42
 msgid ""
 "The proxy format must be the one that is supported by cURL. Usually it is in "
@@ -856,6 +942,37 @@ msgid ""
 msgstr ""
 "網路代理的格式必須是 cURL 支援的格式。通常的格式是 [協議]://[主機]:[通訊埠]，"
 "例如 http://localhost:1080。"
+
+#: gui/customphraseeditor/customphrasemodel.cpp:39
+msgctxt "Please ensure the line width is around 80 character width"
+msgid ""
+"There are built-in functions that can be used to produce dynamic\n"
+"text at runtime, including:\n"
+"$year Current year, e.g. 1990, 2003.\n"
+"$year_yy Current year in two-digit, e.g. 90, 03.\n"
+"$month Current month, e.g. 1, 2, 3..., 12.\n"
+"$month_mm Current month in two digit, e.g. 01, 02, ... 12.\n"
+"$day Current day of month, e.g. 1, 2, 3..., 31.\n"
+"$day_dd Current day of month in two digit, e.g. 01, 02, ... 31.\n"
+"$weekday Current weekday, e.g. 1, 2, 3, ... 7.\n"
+"$fullhour Current 24-hour, e.g. 00, 01, 02, ..., 23.\n"
+"$halfhour Current 12-hour, 01, 02, 03, ..., 12.\n"
+"$ampm Current AM or PM.\n"
+"$minute Current minute, e.g. 00, 01, ..., 59\n"
+"$second Current second, e.g. 00, 01, ..., 59\n"
+"$year_cn Current year in Chinese, e.g. 一九九零, 二零零三.\n"
+"$year_yy_cn Current year in two digit Chinese, e.g. 九零, 零三.\n"
+"$month_cn Current month in Chinese, e.g. 一月, 二月, ... 十二月.\n"
+"$day_cn Current day in Chinese, e.g. 一, 二, ... 三十一.\n"
+"$fullhour_cn Current 24-hour in Chinese, e.g. 零, 一, 二, ... 二十三.\n"
+"$halfhour_cn Current 12-hour in Chinese, e.g. 一, 二, ... 十二.\n"
+"$ampm_cn Current AM, PM in Chinese, 上午 or 下午.\n"
+"$minute_cn Current minute in Chinese, 零, 一, 二, ... 五十九.\n"
+"$second_cn Current second in Chinese, 零, 一, 二, ... 五十九.\n"
+"\n"
+"If lua is installed, the function defined in imeapi can be invoked \n"
+"with ${lua:function_name}.\n"
+msgstr ""
 
 #: modules/cloudpinyin/cloudpinyin.h:29
 msgid "Toggle Key"
@@ -882,6 +999,10 @@ msgstr "轉換引擎"
 msgid "Type paired punctuations together (e.g. Quote)"
 msgstr "輸入成對標點 (例如引號)"
 
+#: gui/customphraseeditor/customphraseeditor.cpp:126
+msgid "Usage"
+msgstr ""
+
 #: im/pinyin/pinyin.h:198
 msgid "Use BackSpace to cancel the selection"
 msgstr "使用退格鍵以取消選詞"
@@ -898,7 +1019,7 @@ msgstr "使用左右鍵來選擇字符："
 msgid "Use Left and Right to select text. "
 msgstr "使用左右鍵以選擇字符。"
 
-#: im/pinyin/pinyin.h:231
+#: im/pinyin/pinyin.h:233
 msgid "Use V to trigger quickphrase"
 msgstr "使用 V 以觸發快速輸入"
 
@@ -1010,11 +1131,11 @@ msgstr "紫光"
 msgid "Ziranma"
 msgstr "自然碼"
 
-#: im/pinyin/pinyin.cpp:1597
+#: im/pinyin/pinyin.cpp:1584
 msgid "[Select the word to remove from history]"
 msgstr "[選擇要從歷史中移除的字詞]"
 
-#: im/pinyin/pinyin.cpp:1545
+#: im/pinyin/pinyin.cpp:1532
 msgid "[Stroke Filtering]"
 msgstr "[筆畫過濾]"
 
@@ -1022,7 +1143,7 @@ msgstr "[筆畫過濾]"
 #. i18n: ectx: property (url), widget (QWebView, webView_)
 #. i18n: file: gui/pinyindictmanager/browserdialog.ui:21
 #. i18n: ectx: property (url), widget (QWebEngineView, webView_)
-#: rc.cpp:6 rc.cpp:12
+#: rc.cpp:27 rc.cpp:33
 #, kde-format
 msgid "about:blank"
 msgstr "about:blank"
