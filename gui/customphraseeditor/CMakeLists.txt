@@ -2,6 +2,7 @@ set(CUSTOMPHRASEEDITOR_SOURCES
   main.cpp
   customphraseeditor.cpp
   customphrasemodel.cpp
+  editordialog.cpp
   ../../im/pinyin/customphrase.cpp
   )
 

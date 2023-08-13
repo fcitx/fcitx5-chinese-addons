@@ -13,6 +13,7 @@
 #include <boost/iostreams/stream_buffer.hpp>
 #include <fcitx-utils/i18n.h>
 #include <fcitx-utils/standardpath.h>
+#include <fcitx-utils/stringutils.h>
 #include <fcitx-utils/utf8.h>
 #include <fcntl.h>
 #include <qfuturewatcher.h>
@@ -20,7 +21,53 @@
 
 namespace fcitx {
 
-constexpr char customPhraseFileName[] = "pinyin/customphrase";
+std::string_view multilineComment =
+    NC_("Please ensure the line width is around 80 character width",
+        R"foo(The line should be in format key,order=value
+If value is multiline, you may either write is as
+key,order=
+line1
+line2
+...
+lineN
+Or, write it as key,order="line1\nline2...\nlineN"
+The comment line is started with # or ;.
+)foo");
+
+std::string_view usageComment =
+    NC_("Please ensure the line width is around 80 character width",
+        R"foo(There are built-in functions that can be used to produce dynamic
+text at runtime, including:
+$year Current year, e.g. 1990, 2003.
+$year_yy Current year in two-digit, e.g. 90, 03.
+$month Current month, e.g. 1, 2, 3..., 12.
+$month_mm Current month in two digit, e.g. 01, 02, ... 12.
+$day Current day of month, e.g. 1, 2, 3..., 31.
+$day_dd Current day of month in two digit, e.g. 01, 02, ... 31.
+$weekday Current weekday, e.g. 1, 2, 3, ... 7.
+$fullhour Current 24-hour, e.g. 00, 01, 02, ..., 23.
+$halfhour Current 12-hour, 01, 02, 03, ..., 12.
+$ampm Current AM or PM.
+$minute Current minute, e.g. 00, 01, ..., 59
+$second Current second, e.g. 00, 01, ..., 59
+$year_cn Current year in Chinese, e.g. 一九九零, 二零零三.
+$year_yy_cn Current year in two digit Chinese, e.g. 九零, 零三.
+$month_cn Current month in Chinese, e.g. 一月, 二月, ... 十二月.
+$day_cn Current day in Chinese, e.g. 一, 二, ... 三十一.
+$fullhour_cn Current 24-hour in Chinese, e.g. 零, 一, 二, ... 二十三.
+$halfhour_cn Current 12-hour in Chinese, e.g. 一, 二, ... 十二.
+$ampm_cn Current AM, PM in Chinese, 上午 or 下午.
+$minute_cn Current minute in Chinese, 零, 一, 二, ... 五十九.
+$second_cn Current second in Chinese, 零, 一, 二, ... 五十九.
+
+If lua is installed, the function defined in imeapi can be invoked 
+with ${lua:function_name}.
+)foo");
+
+std::string customPhraseHelpMessage() {
+    return C_("Please ensure the line width is around 80 character width",
+              std::string(usageComment));
+}
 
 CustomPhraseModel::CustomPhraseModel(QObject *parent)
     : QAbstractTableModel(parent), needSave_(false) {}
@@ -82,7 +129,7 @@ void CustomPhraseModel::addItem(const QString &key, const QString &word,
 }
 
 void CustomPhraseModel::deleteItem(int row) {
-    if (row >= list_.count())
+    if (row >= list_.count() || row < 0)
         return;
     beginRemoveRows(QModelIndex(), row, row);
     list_.removeAt(row);
@@ -141,8 +188,8 @@ bool CustomPhraseModel::setData(const QModelIndex &index, const QVariant &value,
         Q_EMIT dataChanged(index, index);
         setNeedSave(true);
         return true;
-    } else
-        return false;
+    }
+    return false;
 }
 
 void CustomPhraseModel::load() {
@@ -193,16 +240,17 @@ QList<CustomPhraseItem> CustomPhraseModel::parse(const QString &file) {
 }
 
 void CustomPhraseModel::loadFinished() {
-    list_.append(futureWatcher_->future().result());
+    list_ = futureWatcher_->future().result();
     endResetModel();
     futureWatcher_->deleteLater();
     futureWatcher_ = nullptr;
 }
 
-QFutureWatcher<bool> *CustomPhraseModel::save(const QString &file) {
+QFutureWatcher<bool> *CustomPhraseModel::save() {
     QFutureWatcher<bool> *futureWatcher = new QFutureWatcher<bool>(this);
     futureWatcher->setFuture(
-        QtConcurrent::run<bool>(&CustomPhraseModel::saveData, file, list_));
+        QtConcurrent::run<bool>(&CustomPhraseModel::saveData,
+                                QLatin1String(customPhraseFileName), list_));
     connect(futureWatcher, &QFutureWatcherBase::finished, this,
             &CustomPhraseModel::saveFinished);
     return futureWatcher;
@@ -215,11 +263,28 @@ bool CustomPhraseModel::saveData(const QString &file,
         StandardPath::Type::PkgData, filenameArray.constData(),
         [&list](int fd) {
             boost::iostreams::stream_buffer<
-                boost::iostreams::file_descriptor_source>
+                boost::iostreams::file_descriptor_sink>
                 buffer(fd, boost::iostreams::file_descriptor_flags::
                                never_close_handle);
             std::ostream out(&buffer);
+            auto printMultilineComment = [](std::ostream &out,
+                                            std::string_view text) {
+                for (const auto &line : stringutils::split(
+                         text, "\n", stringutils::SplitBehavior::KeepEmpty)) {
+                    out << "# " << line << "\n";
+                }
+            };
+            printMultilineComment(
+                out,
+                C_("Please ensure the line width is around 80 character width",
+                   std::string(multilineComment)));
+            printMultilineComment(out, customPhraseHelpMessage());
+            out << "\n";
             CustomPhraseDict dict;
+            for (const auto &item : list) {
+                dict.addPhrase(item.key.toStdString(), item.value.toStdString(),
+                               item.order * (item.enabled ? 1 : -1));
+            }
             dict.save(out);
             return true;
         });

@@ -44,7 +44,7 @@ public:
                  bool enabled);
     void deleteItem(int row);
     void deleteAllItem();
-    QFutureWatcher<bool> *save(const QString &file);
+    QFutureWatcher<bool> *save();
     bool needSave();
     void load();
 
@@ -64,6 +64,11 @@ private:
     bool needSave_ = false;
     QFutureWatcher<QList<CustomPhraseItem>> *futureWatcher_ = nullptr;
 };
+
+std::string customPhraseHelpMessage();
+
+static inline constexpr char customPhraseFileName[] = "pinyin/customphrase";
+
 } // namespace fcitx
 
 #endif // _CUSTOMPHRASEEDITOR_MODEL_H_

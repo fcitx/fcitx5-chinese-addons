@@ -415,6 +415,20 @@ CustomPhraseDict::lookup(std::string_view key) const {
     return &data_[index];
 }
 
+void CustomPhraseDict::addPhrase(std::string_view key, std::string_view value,
+                                 int order) {
+    auto index = index_.exactMatchSearch(key);
+    if (index_.isNoValue(index)) {
+        if (data_.size() >= std::numeric_limits<int32_t>::max()) {
+            return;
+        }
+        index = data_.size();
+        index_.set(key, index);
+        data_.push_back({});
+    }
+    data_[index].push_back(CustomPhrase(order, std::string(value)));
+}
+
 void CustomPhraseDict::save(std::ostream &out) const {
     std::string buf;
     index_.foreach([&out, &buf,

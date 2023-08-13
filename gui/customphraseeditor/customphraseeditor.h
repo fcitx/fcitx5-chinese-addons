@@ -9,6 +9,7 @@
 
 #include "customphrasemodel.h"
 #include "ui_customphraseeditor.h"
+#include <QFileSystemWatcher>
 #include <fcitxqtconfiguiwidget.h>
 
 namespace fcitx {
@@ -26,20 +27,21 @@ public:
     QString icon() override { return "fcitx-pinyin"; }
 
 private Q_SLOTS:
-    void importFromFile();
     void addPhrase();
+    void addPhraseAccepted();
     void removePhrase();
     void clear();
+    void openExternal();
 
 private:
     void reload();
+    void updated();
+    void connectFileWatcher();
+    void disconnectFileWatcher();
 
-    QAction *importFromFileAction_;
-    QAction *importFromSogou_;
-    QAction *importFromSogouOnline_;
-    QAction *clearUserDictAction_;
-    QAction *clearAllDataAction_;
     CustomPhraseModel *model_;
+    QFileSystemWatcher watcher_;
+    QString userFile_;
 };
 
 } // namespace fcitx

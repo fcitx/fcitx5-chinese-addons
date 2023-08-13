@@ -47,23 +47,33 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="batchEditButton_">
-       <property name="text">
-        <string>Batch &amp;Edit</string>
-       </property>
-       <property name="icon">
-        <iconset theme="document-edit">
-         <normaloff>.</normaloff>.</iconset>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QPushButton" name="removeButton_">
        <property name="text">
         <string>&amp;Remove</string>
        </property>
        <property name="icon">
         <iconset theme="list-remove">
+         <normaloff>.</normaloff>.</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="helpButton_">
+       <property name="text">
+        <string>&amp;Usage</string>
+       </property>
+       <property name="icon">
+        <iconset theme="dialog-question"/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="externalEditor_">
+       <property name="text">
+        <string>&amp;External Editor</string>
+       </property>
+       <property name="icon">
+        <iconset theme="document-edit">
          <normaloff>.</normaloff>.</iconset>
        </property>
       </widget>
