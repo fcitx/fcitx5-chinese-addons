@@ -8,6 +8,7 @@
 #include <fcitx-utils/macros.h>
 #include <libime/core/datrie.h>
 #include <string>
+#include <string_view>
 #include <vector>
 
 namespace fcitx {
@@ -43,6 +44,20 @@ public:
     void clear();
 
     const std::vector<CustomPhrase> *lookup(std::string_view key) const;
+
+    void addPhrase(std::string_view key, std::string_view value, int order);
+
+    template <typename T>
+    void foreach(const T &callback) {
+        std::string buf;
+        index_.foreach([this, &buf, &callback](
+                           uint32_t index, size_t len,
+                           libime::DATrie<uint32_t>::position_type pos) {
+            index_.suffix(buf, len, pos);
+            callback(buf, data_[index]);
+            return true;
+        });
+    }
 
 private:
     libime::DATrie<uint32_t> index_;
