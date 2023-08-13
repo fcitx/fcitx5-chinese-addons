@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2023-07-28 20:24+0000\n"
+"POT-Creation-Date: 2023-08-13 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Dmitry <dmitrydmitry761@gmail.com>, 2023\n"
 "Language-Team: Russian (https://app.transifex.com/fcitx/teams/12005/ru/)\n"
@@ -22,11 +22,11 @@ msgstr ""
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
 "(n%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: im/table/state.cpp:1110
+#: im/table/state.cpp:1116
 msgid " Return for "
 msgstr " Возврат к "
 
-#: im/table/state.cpp:1107
+#: im/table/state.cpp:1113
 msgid " for "
 msgstr " к "
 
@@ -38,13 +38,27 @@ msgstr "%1 уже существует, вы хотите перезаписат
 msgid "%1% Downloaded."
 msgstr "%1% загружен."
 
+#. i18n: file: gui/customphraseeditor/customphraseeditor.ui:41
+#. i18n: ectx: property (text), widget (QPushButton, addButton_)
+#: rc.cpp:9
+#, kde-format
+msgid "&Add"
+msgstr ""
+
 #: gui/pinyindictmanager/pinyindictmanager.cpp:37
 msgid "&Browse Sogou Cell Dictionary Online"
 msgstr "&Просмотреть словарь Sogou Cell в интернете"
 
+#. i18n: file: gui/customphraseeditor/customphraseeditor.ui:84
+#. i18n: ectx: property (text), widget (QPushButton, clearButton_)
+#: rc.cpp:21
+#, kde-format
+msgid "&Clear"
+msgstr ""
+
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:55
 #. i18n: ectx: property (text), widget (QPushButton, clearDictButton_)
-#: rc.cpp:24
+#: rc.cpp:45
 #, kde-format
 msgid "&Clear Dictionary"
 msgstr "&Очистить Словарь"
@@ -53,26 +67,42 @@ msgstr "&Очистить Словарь"
 msgid "&Clear User Data"
 msgstr "&Очистить данные пользователя"
 
+#. i18n: file: gui/customphraseeditor/customphraseeditor.ui:73
+#. i18n: ectx: property (text), widget (QPushButton, externalEditor_)
+#: rc.cpp:18
+#, kde-format
+msgid "&External Editor"
+msgstr ""
+
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:22
 #. i18n: ectx: property (text), widget (QPushButton, importButton_)
-#: rc.cpp:15
+#: rc.cpp:36
 #, kde-format
 msgid "&Import"
 msgstr "&Импорт"
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:66
 #. i18n: ectx: property (text), widget (QPushButton, openDirectoryButton_)
-#: rc.cpp:27
+#: rc.cpp:48
 #, kde-format
 msgid "&Open User Data Directory"
 msgstr "&Открыть каталог пользовательских данных"
 
+#. i18n: file: gui/customphraseeditor/customphraseeditor.ui:52
+#. i18n: ectx: property (text), widget (QPushButton, removeButton_)
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:33
 #. i18n: ectx: property (text), widget (QPushButton, removeButton_)
-#: rc.cpp:18
+#: rc.cpp:12 rc.cpp:39
 #, kde-format
 msgid "&Remove"
 msgstr "&Удалить"
+
+#. i18n: file: gui/customphraseeditor/customphraseeditor.ui:63
+#. i18n: ectx: property (text), widget (QPushButton, helpButton_)
+#: rc.cpp:15
+#, kde-format
+msgid "&Usage"
+msgstr ""
 
 #: im/table/state.cpp:746
 msgctxt "Pinyin lookup delimeter"
@@ -86,6 +116,13 @@ msgstr "ABC"
 #: im/pinyin/pinyin.h:144
 msgid "Action when switching input method"
 msgstr "Действие при переключении метода ввода"
+
+#. i18n: file: gui/customphraseeditor/editordialog.ui:14
+#. i18n: ectx: property (windowTitle), widget (QDialog, EditorDialog)
+#: rc.cpp:3
+#, kde-format
+msgid "Add Phrase"
+msgstr ""
 
 #: org.fcitx.Fcitx5.Addon.ChineseAddons.metainfo.xml.in:8
 msgid ""
@@ -156,8 +193,8 @@ msgid "Candidate List orientation"
 msgstr "Ориентация списка кандидатов"
 
 #: im/table/cangjie.conf.in.in:3
-msgid "Cangjie"
-msgstr "Цанцзе"
+msgid "Cangjie (Simplified Chinese)"
+msgstr ""
 
 #: org.fcitx.Fcitx5.Addon.ChineseAddons.metainfo.xml.in:7
 msgid "Chinese Addons"
@@ -175,7 +212,7 @@ msgstr "Очистить"
 msgid "Clear &All Data"
 msgstr "Очистить &Все данные"
 
-#: im/pinyin/pinyin.h:222 modules/cloudpinyin/cloudpinyin.conf.in.in:3
+#: im/pinyin/pinyin.h:224 modules/cloudpinyin/cloudpinyin.conf.in.in:3
 msgid "Cloud Pinyin"
 msgstr "Cloud Pinyin"
 
@@ -183,15 +220,15 @@ msgstr "Cloud Pinyin"
 msgid "Cloud Pinyin Index"
 msgstr "Индекс Cloud Pinyin"
 
-#: im/pinyin/pinyin.cpp:1366
+#: im/pinyin/pinyin.cpp:1353
 msgid "Cloud Pinyin Status"
 msgstr "Статус Cloud Pinyin"
 
-#: im/pinyin/pinyin.cpp:1368
+#: im/pinyin/pinyin.cpp:1355
 msgid "Cloud Pinyin is disabled."
 msgstr "Cloud Pinyin отключен."
 
-#: im/pinyin/pinyin.cpp:1367
+#: im/pinyin/pinyin.cpp:1354
 msgid "Cloud Pinyin is enabled."
 msgstr "Cloud Pinyin включен."
 
@@ -267,11 +304,15 @@ msgstr ""
 msgid "Custom"
 msgstr "Пользовательский"
 
+#: gui/customphraseeditor/customphraseeditor.cpp:163
+msgid "Custom Phrase Editor"
+msgstr ""
+
 #. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:14
 #. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
 #. i18n: file: gui/pinyindictmanager/browserdialog.ui:14
 #. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
-#: rc.cpp:3 rc.cpp:9
+#: rc.cpp:24 rc.cpp:30
 #, kde-format
 msgid "Dialog"
 msgstr "Диалог"
@@ -279,10 +320,6 @@ msgstr "Диалог"
 #: im/table/db.conf.in.in:3
 msgid "Dianbaoma"
 msgstr "Дяньбаома"
-
-#: im/pinyin/pinyin.h:213
-msgid "Dictionaries"
-msgstr "Словари"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:139
 msgid "Dictionary already exists"
@@ -319,6 +356,10 @@ msgid ""
 msgstr ""
 "Вы хотите включить cloudpinyin сейчас для более точного прогнозирования? Вы "
 "всегда можете переключить его позже в настройках."
+
+#: gui/customphraseeditor/customphraseeditor.cpp:206
+msgid "Do you want to reload custom phrase from disk?"
+msgstr ""
 
 #: im/table/ime.h:138
 msgid "Don't sort word shorter than"
@@ -368,7 +409,7 @@ msgstr "Включенные методы ввода"
 msgid "End key"
 msgstr "Клавиша End"
 
-#: im/pinyin/pinyin.h:242
+#: im/pinyin/pinyin.h:244
 msgid "Enter a string from the list will make it enter quickphrase mode."
 msgstr "Введите строку из списка, и она перейдет в режим быстрой фразы."
 
@@ -420,6 +461,10 @@ msgstr "Файл"
 #: gui/pinyindictmanager/pinyindictmanager.cpp:373
 msgid "File Operation Failed"
 msgstr "Сбой операции с файлом"
+
+#: gui/customphraseeditor/customphraseeditor.cpp:205
+msgid "File updated"
+msgstr ""
 
 #: im/pinyin/pinyin.h:203
 msgid "Filter by stroke"
@@ -479,7 +524,7 @@ msgstr "Полноширинная пунктуация отключена."
 msgid "Full width punctuation is enabled."
 msgstr "Полноширинная пунктуация включена."
 
-#: im/pinyin/pinyin.h:244
+#: im/pinyin/pinyin.h:246
 msgid "Fuzzy Pinyin Settings"
 msgstr "Нечёткие настройки Пиньинь"
 
@@ -529,12 +574,16 @@ msgstr "Внутренний сегмент для короткого Пиньи
 msgid "Input Dictionary Name"
 msgstr "Ввести имя словаря"
 
+#: gui/customphraseeditor/customphrasemodel.cpp:83
+msgid "Key"
+msgstr ""
+
 #: modules/punctuation/punctuation.h:39
 msgctxt "Key of the punctuation, e.g. comma"
 msgid "Key"
 msgstr "Клавиша"
 
-#: im/table/ime.h:123 im/pinyin/pinyin.h:227
+#: im/table/ime.h:123 im/pinyin/pinyin.h:229
 msgid "Key to trigger quickphrase"
 msgstr "Клавиша для активации быстрой фразы"
 
@@ -557,6 +606,14 @@ msgstr "Искать Пиньинь"
 #: im/table/engine.h:40 im/pinyin/pinyin.h:75
 msgid "MS"
 msgstr "MS"
+
+#: im/pinyin/pinyin.h:215
+msgid "Manage Custom Phrase"
+msgstr ""
+
+#: im/pinyin/pinyin.h:213
+msgid "Manage Dictionaries"
+msgstr ""
 
 #: modules/punctuation/punctuation.h:40
 msgid "Mapping"
@@ -628,6 +685,10 @@ msgstr "Профиль OpenCC для перехода с упрощенного 
 msgid "OpenCC profile for Traditional to Simplified"
 msgstr "Профиль OpenCC для перехода от традиционного к упрощенному китайскому"
 
+#: gui/customphraseeditor/customphrasemodel.cpp:87
+msgid "Order"
+msgstr ""
+
 #: im/table/ime.h:140
 msgid "Order policy"
 msgstr "Политика порядка"
@@ -642,11 +703,22 @@ msgstr ""
 "отключить эту опцию, если хотите, чтобы ордер-кандидат был стабильным "
 "независимо от истории."
 
+#. i18n: file: gui/customphraseeditor/editordialog.ui:55
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:6
+#, kde-format
+msgid "Order:"
+msgstr ""
+
 #: im/table/ime.h:83 im/pinyin/pinyin.h:115
 msgid "Page size"
 msgstr "Размер страницы"
 
-#: im/pinyin/pinyin.cpp:1102 im/pinyin/pinyin.cpp:1365
+#: gui/customphraseeditor/customphrasemodel.cpp:85
+msgid "Phrase"
+msgstr ""
+
+#: im/pinyin/pinyin.cpp:1102 im/pinyin/pinyin.cpp:1352
 #: im/pinyin/pinyin-addon.conf.in.in:3 im/pinyin/pinyin.conf.in:3
 msgid "Pinyin"
 msgstr "Пиньинь"
@@ -693,11 +765,11 @@ msgstr "Нажмите Delete, чтобы удалить."
 msgid "Press space or enter to insert."
 msgstr "Нажмите пробел или enter, чтобы вставить."
 
-#: im/pinyin/pinyin.cpp:1826
+#: im/pinyin/pinyin.cpp:1813
 msgid "Press {} for {}"
 msgstr "Нажмите {} для {}"
 
-#: im/pinyin/pinyin.cpp:1823
+#: im/pinyin/pinyin.cpp:1810
 msgid "Press {} for {} and Return for {}"
 msgstr "Нажать {} для {} и вернуться для {}"
 
@@ -727,13 +799,13 @@ msgstr ""
 msgid "Proxy"
 msgstr "Прокси"
 
-#: im/pinyin/pinyin.h:216 modules/punctuation/punctuation.cpp:249
+#: im/pinyin/pinyin.h:218 modules/punctuation/punctuation.cpp:249
 #: modules/punctuation/punctuation.cpp:251
 #: modules/punctuation/punctuation.conf.in.in:3
 msgid "Punctuation"
 msgstr "Пунктуация"
 
-#: im/pinyin/pinyin.h:232
+#: im/pinyin/pinyin.h:234
 msgid "Quick Phrase"
 msgstr "Быстрая фраза"
 
@@ -748,7 +820,7 @@ msgstr "Регулярное выражение для выбора единст
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:44
 #. i18n: ectx: property (text), widget (QPushButton, removeAllButton_)
-#: rc.cpp:21
+#: rc.cpp:42
 #, kde-format
 msgid "Remove &All"
 msgstr "Удалить все"
@@ -781,7 +853,7 @@ msgstr "Выберите второй кандидат"
 msgid "Select Third Candidate"
 msgstr "Выберите третий кандидат"
 
-#: im/table/state.cpp:1422
+#: im/table/state.cpp:1415
 msgid "Select candidate to be removed from history:"
 msgstr "Выберите кандидат для удаления из истории:"
 
@@ -829,7 +901,7 @@ msgstr "Упрощенный китайский"
 msgid "Simplified Chinese is enabled."
 msgstr "Упрощенный китайский включен."
 
-#: im/pinyin/pinyin.h:219 modules/chttrans/chttrans.cpp:70
+#: im/pinyin/pinyin.h:221 modules/chttrans/chttrans.cpp:70
 #: modules/chttrans/chttrans.conf.in.in:3
 msgid "Simplified and Traditional Chinese Translation"
 msgstr "Перевод упрощенного и традиционного китайского"
@@ -838,7 +910,7 @@ msgstr "Перевод упрощенного и традиционного ки
 msgid "Sort candidates based on current context"
 msgstr "Сортировка кандидатов на основе текущего контекста"
 
-#: im/pinyin/pinyin.h:237
+#: im/pinyin/pinyin.h:239
 msgid "Strings to trigger quick phrase"
 msgstr "Строки для запуска быстрой фразы"
 
@@ -866,6 +938,20 @@ msgstr "Создан временный файл"
 msgid "Text to trigger quickphrase"
 msgstr "Текст для запуска быстрой фразы"
 
+#: gui/customphraseeditor/customphrasemodel.cpp:26
+msgctxt "Please ensure the line width is around 80 character width"
+msgid ""
+"The line should be in format key,order=value\n"
+"If value is multiline, you may either write is as\n"
+"key,order=\n"
+"line1\n"
+"line2\n"
+"...\n"
+"lineN\n"
+"Or, write it as key,order=\"line1\\nline2...\\nlineN\"\n"
+"The comment line is started with # or ;.\n"
+msgstr ""
+
 #: modules/cloudpinyin/cloudpinyin.h:42
 msgid ""
 "The proxy format must be the one that is supported by cURL. Usually it is in "
@@ -873,6 +959,37 @@ msgid ""
 msgstr ""
 "Формат прокси должен быть тем, который поддерживается cURL. Обычно это "
 "формат [scheme]://[host]:[port], e.g. http://localhost:1080."
+
+#: gui/customphraseeditor/customphrasemodel.cpp:39
+msgctxt "Please ensure the line width is around 80 character width"
+msgid ""
+"There are built-in functions that can be used to produce dynamic\n"
+"text at runtime, including:\n"
+"$year Current year, e.g. 1990, 2003.\n"
+"$year_yy Current year in two-digit, e.g. 90, 03.\n"
+"$month Current month, e.g. 1, 2, 3..., 12.\n"
+"$month_mm Current month in two digit, e.g. 01, 02, ... 12.\n"
+"$day Current day of month, e.g. 1, 2, 3..., 31.\n"
+"$day_dd Current day of month in two digit, e.g. 01, 02, ... 31.\n"
+"$weekday Current weekday, e.g. 1, 2, 3, ... 7.\n"
+"$fullhour Current 24-hour, e.g. 00, 01, 02, ..., 23.\n"
+"$halfhour Current 12-hour, 01, 02, 03, ..., 12.\n"
+"$ampm Current AM or PM.\n"
+"$minute Current minute, e.g. 00, 01, ..., 59\n"
+"$second Current second, e.g. 00, 01, ..., 59\n"
+"$year_cn Current year in Chinese, e.g. 一九九零, 二零零三.\n"
+"$year_yy_cn Current year in two digit Chinese, e.g. 九零, 零三.\n"
+"$month_cn Current month in Chinese, e.g. 一月, 二月, ... 十二月.\n"
+"$day_cn Current day in Chinese, e.g. 一, 二, ... 三十一.\n"
+"$fullhour_cn Current 24-hour in Chinese, e.g. 零, 一, 二, ... 二十三.\n"
+"$halfhour_cn Current 12-hour in Chinese, e.g. 一, 二, ... 十二.\n"
+"$ampm_cn Current AM, PM in Chinese, 上午 or 下午.\n"
+"$minute_cn Current minute in Chinese, 零, 一, 二, ... 五十九.\n"
+"$second_cn Current second in Chinese, 零, 一, 二, ... 五十九.\n"
+"\n"
+"If lua is installed, the function defined in imeapi can be invoked \n"
+"with ${lua:function_name}.\n"
+msgstr ""
 
 #: modules/cloudpinyin/cloudpinyin.h:29
 msgid "Toggle Key"
@@ -899,6 +1016,10 @@ msgstr "Механизм перевода"
 msgid "Type paired punctuations together (e.g. Quote)"
 msgstr "Вводите парные знаки препинания вместе (e.g. Quote)"
 
+#: gui/customphraseeditor/customphraseeditor.cpp:126
+msgid "Usage"
+msgstr ""
+
 #: im/pinyin/pinyin.h:198
 msgid "Use BackSpace to cancel the selection"
 msgstr "Использовать BackSpace, чтобы отменить выбор"
@@ -915,7 +1036,7 @@ msgstr "Используйте влево и вправо для выбора с
 msgid "Use Left and Right to select text. "
 msgstr "Используйте влево и вправо для выбора текста."
 
-#: im/pinyin/pinyin.h:231
+#: im/pinyin/pinyin.h:233
 msgid "Use V to trigger quickphrase"
 msgstr "Использовать V для переключения быстрой фразы"
 
@@ -1035,11 +1156,11 @@ msgstr "Цзыгуан"
 msgid "Ziranma"
 msgstr "Цзыжаньма"
 
-#: im/pinyin/pinyin.cpp:1597
+#: im/pinyin/pinyin.cpp:1584
 msgid "[Select the word to remove from history]"
 msgstr "[Выберите слово для удаления из истории]"
 
-#: im/pinyin/pinyin.cpp:1545
+#: im/pinyin/pinyin.cpp:1532
 msgid "[Stroke Filtering]"
 msgstr "[Фильтрация штрихов]"
 
@@ -1047,7 +1168,7 @@ msgstr "[Фильтрация штрихов]"
 #. i18n: ectx: property (url), widget (QWebView, webView_)
 #. i18n: file: gui/pinyindictmanager/browserdialog.ui:21
 #. i18n: ectx: property (url), widget (QWebEngineView, webView_)
-#: rc.cpp:6 rc.cpp:12
+#: rc.cpp:27 rc.cpp:33
 #, kde-format
 msgid "about:blank"
 msgstr "о:пусто"
