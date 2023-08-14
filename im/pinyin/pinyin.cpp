@@ -660,9 +660,6 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
                     result.evaluate([this, inputContext](std::string_view key) {
                         return evaluateCustomPhrase(inputContext, key);
                     });
-                if (context.candidatesToCursorSet().count(phrase)) {
-                    continue;
-                }
                 if (customCandidateSet.count(phrase)) {
                     continue;
                 }
@@ -782,9 +779,12 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
             }
         };
 
-        size_t idx = 0;
-        for (const auto &candidate : candidates) {
+        for (size_t idx = 0, end = candidates.size(); idx < end; idx++) {
+            const auto &candidate = candidates[idx];
             auto candidateString = candidate.toString();
+            if (customCandidateSet.count(candidateString)) {
+                continue;
+            }
             std::vector<std::string> luaExtraCandidates;
 #ifdef FCITX_HAS_LUA
             // To invoke lua trigger, we need "raw full sentence". Also, check
@@ -805,7 +805,6 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
             for (auto &extraCandidate : luaExtraCandidates) {
                 candidateList->append<ExtraCandidateWord>(this, extraCandidate);
             }
-            idx++;
 
             maybeApplyExtraCandidates(false);
         }
