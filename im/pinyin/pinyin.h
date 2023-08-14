@@ -213,7 +213,7 @@ FCITX_CONFIGURATION(
     ExternalOption dictmanager{this, "DictManager", _("Manage Dictionaries"),
                                "fcitx://config/addon/pinyin/dictmanager"};
     ExternalOption customphrase{this, "CustomPhrase", _("Manage Custom Phrase"),
-                               "fcitx://config/addon/pinyin/customphrase"};
+                                "fcitx://config/addon/pinyin/customphrase"};
     SubConfigOption punctuationMap{
         this, "Punctuation", _("Punctuation"),
         "fcitx://config/addon/punctuation/punctuationmap/zh_CN"};
