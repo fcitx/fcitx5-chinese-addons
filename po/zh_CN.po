@@ -6,16 +6,16 @@
 # Mingcong Bai <jeffbai@aosc.xyz>, 2018
 # wwj402 <wwj402@gmail.com>, 2018
 # rocka, 2023
-# Lau YeeYu, 2023
 # csslayer <wengxt@gmail.com>, 2023
+# Lau YeeYu, 2023
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2023-08-13 20:24+0000\n"
+"POT-Creation-Date: 2023-08-14 17:04+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
-"Last-Translator: csslayer <wengxt@gmail.com>, 2023\n"
+"Last-Translator: Lau YeeYu, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/fcitx/teams/12005/"
 "zh_CN/)\n"
 "Language: zh_CN\n"
@@ -45,7 +45,7 @@ msgstr "%1%已下载"
 #: rc.cpp:9
 #, kde-format
 msgid "&Add"
-msgstr ""
+msgstr "添加(&A)"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:37
 msgid "&Browse Sogou Cell Dictionary Online"
@@ -56,7 +56,7 @@ msgstr "在线浏览搜狗细胞词典(&B)"
 #: rc.cpp:21
 #, kde-format
 msgid "&Clear"
-msgstr ""
+msgstr "清空(&C)"
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:55
 #. i18n: ectx: property (text), widget (QPushButton, clearDictButton_)
@@ -74,7 +74,7 @@ msgstr "清理用户数据(&C)"
 #: rc.cpp:18
 #, kde-format
 msgid "&External Editor"
-msgstr ""
+msgstr "外部编辑器(&E)"
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:22
 #. i18n: ectx: property (text), widget (QPushButton, importButton_)
@@ -104,7 +104,7 @@ msgstr "移除(&R)"
 #: rc.cpp:15
 #, kde-format
 msgid "&Usage"
-msgstr ""
+msgstr "用法(&U)"
 
 #: im/table/state.cpp:746
 msgctxt "Pinyin lookup delimeter"
@@ -124,7 +124,7 @@ msgstr "切换输入法时的行为"
 #: rc.cpp:3
 #, kde-format
 msgid "Add Phrase"
-msgstr ""
+msgstr "添加词组"
 
 #: org.fcitx.Fcitx5.Addon.ChineseAddons.metainfo.xml.in:8
 msgid ""
@@ -192,7 +192,7 @@ msgstr "候选词列表方向"
 
 #: im/table/cangjie.conf.in.in:3
 msgid "Cangjie (Simplified Chinese)"
-msgstr ""
+msgstr "仓颉（简体中文）"
 
 #: org.fcitx.Fcitx5.Addon.ChineseAddons.metainfo.xml.in:7
 msgid "Chinese Addons"
@@ -298,7 +298,7 @@ msgstr "自定义"
 
 #: gui/customphraseeditor/customphraseeditor.cpp:163
 msgid "Custom Phrase Editor"
-msgstr ""
+msgstr "自定义词组编辑器"
 
 #. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:14
 #. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
@@ -349,7 +349,7 @@ msgstr "您想要启用云拼音以获得更好的预测吗？您也可以稍后
 
 #: gui/customphraseeditor/customphraseeditor.cpp:206
 msgid "Do you want to reload custom phrase from disk?"
-msgstr ""
+msgstr "是否希望从硬盘重新加载自定义词组？"
 
 #: im/table/ime.h:138
 msgid "Don't sort word shorter than"
@@ -454,7 +454,7 @@ msgstr "文件操作失败"
 
 #: gui/customphraseeditor/customphraseeditor.cpp:205
 msgid "File updated"
-msgstr ""
+msgstr "文件已上传"
 
 #: im/pinyin/pinyin.h:203
 msgid "Filter by stroke"
@@ -563,7 +563,7 @@ msgstr "输入词典名称"
 
 #: gui/customphraseeditor/customphrasemodel.cpp:83
 msgid "Key"
-msgstr ""
+msgstr "键"
 
 #: modules/punctuation/punctuation.h:39
 msgctxt "Key of the punctuation, e.g. comma"
@@ -596,11 +596,11 @@ msgstr "微软"
 
 #: im/pinyin/pinyin.h:215
 msgid "Manage Custom Phrase"
-msgstr ""
+msgstr "管理自定义词组"
 
 #: im/pinyin/pinyin.h:213
 msgid "Manage Dictionaries"
-msgstr ""
+msgstr "管理字典"
 
 #: modules/punctuation/punctuation.h:40
 msgid "Mapping"
@@ -672,7 +672,7 @@ msgstr "繁转简的 OpenCC 配置"
 
 #: gui/customphraseeditor/customphrasemodel.cpp:87
 msgid "Order"
-msgstr ""
+msgstr "顺序"
 
 #: im/table/ime.h:140
 msgid "Order policy"
@@ -692,7 +692,7 @@ msgstr ""
 #: rc.cpp:6
 #, kde-format
 msgid "Order:"
-msgstr ""
+msgstr "顺序："
 
 #: im/table/ime.h:83 im/pinyin/pinyin.h:115
 msgid "Page size"
@@ -700,7 +700,7 @@ msgstr "页大小"
 
 #: gui/customphraseeditor/customphrasemodel.cpp:85
 msgid "Phrase"
-msgstr ""
+msgstr "词组："
 
 #: im/pinyin/pinyin.cpp:1102 im/pinyin/pinyin.cpp:1352
 #: im/pinyin/pinyin-addon.conf.in.in:3 im/pinyin/pinyin.conf.in:3
@@ -932,6 +932,16 @@ msgid ""
 "Or, write it as key,order=\"line1\\nline2...\\nlineN\"\n"
 "The comment line is started with # or ;.\n"
 msgstr ""
+"每一条应当以「键,顺序=值」的格式填写。\n"
+"如果值有多行，你可以写成\n"
+"键,顺序=\n"
+"第 1 行\n"
+"第 2 行\n"
+"...\n"
+"第 n 行\n"
+"或者写成\n"
+"键,顺序=\"第 1 行\\n第 2 行\\n...\\n第 n 行\"\n"
+"注释行以「#」或「;」开头。\n"
 
 #: modules/cloudpinyin/cloudpinyin.h:42
 msgid ""
@@ -971,6 +981,31 @@ msgid ""
 "If lua is installed, the function defined in imeapi can be invoked \n"
 "with ${lua:function_name}.\n"
 msgstr ""
+"有一些内建函数可以用来生成动态文本，包括：\n"
+"$year：当前年份，如 1990，2003。\n"
+"$year_yy：当前年份的后两位，如 90，03。\n"
+"$month：当前月份，如 1，2，3，...，12。\n"
+"$month_mm：当前月份（始终保持两位数字），如 01，02，...，12。\n"
+"$day：当前月份中的第几天，如 1，2，3，...，31。\n"
+"$day_dd：当前月份中的第几天（始终保持两位数字），如 1，2，3，...，31。\n"
+"$weekday：星期几，如 1，2，3，...，7。\n"
+"$fullhour：小时（24 小时制），如 00，01，02，...，23。\n"
+"$halfhour：小时（12 小时制），如 01，02，03，...，12。\n"
+"$ampm：当前是 AM 还是 PM。\n"
+"$minute：当前的分钟，如 00，01，...，59。\n"
+"$second：当前的秒数，如 00，01，...，59。\n"
+"$year_cn：当前中文年份，如一九九零，二零零三。\n"
+"$year_yy_cn：当前中文年份的后两位，如九零, 零三。\n"
+"$month_cn：当前中文月份，如一月，二月，...，十二月。\n"
+"$day_cn：当前月份中的第几天（中文），一，二，...，三十一。\n"
+"$fullhour_cn：当前中文小时（24 小时制），如零，一，二，...，二十三。\n"
+"$halfhour_cn：当前中文小时（12 小时制），如一，二，...，十二。\n"
+"$ampm_cn：当前是上午还是下午（中文），如上午，下午。\n"
+"$minute_cn：当前中文分钟，如零，一，二，...，五十九。\n"
+"$second_cn：当前中文秒数，如零，一，二，...，五十九。\n"
+"\n"
+"如果已经安装 lua，在 imeapi 中定义的函数将会以 ${lua:function_name} 的方式调"
+"用。\n"
 
 #: modules/cloudpinyin/cloudpinyin.h:29
 msgid "Toggle Key"
@@ -999,7 +1034,7 @@ msgstr "同时输入成对标点 (例如引号)"
 
 #: gui/customphraseeditor/customphraseeditor.cpp:126
 msgid "Usage"
-msgstr ""
+msgstr "用法"
 
 #: im/pinyin/pinyin.h:198
 msgid "Use BackSpace to cancel the selection"

@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2023-08-13 20:24+0000\n"
+"POT-Creation-Date: 2023-08-14 17:04+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Lau YeeYu, 2023\n"
 "Language-Team: Chinese (Taiwan) (https://app.transifex.com/fcitx/teams/12005/"
@@ -47,7 +47,7 @@ msgstr "已下載 %1%。"
 #: rc.cpp:9
 #, kde-format
 msgid "&Add"
-msgstr ""
+msgstr "新增(&A)"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:37
 msgid "&Browse Sogou Cell Dictionary Online"
@@ -58,7 +58,7 @@ msgstr "線上瀏覽搜狗细胞词库(&B)"
 #: rc.cpp:21
 #, kde-format
 msgid "&Clear"
-msgstr ""
+msgstr "清除(&C)"
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:55
 #. i18n: ectx: property (text), widget (QPushButton, clearDictButton_)
@@ -76,7 +76,7 @@ msgstr "清空使用者資訊(&C)"
 #: rc.cpp:18
 #, kde-format
 msgid "&External Editor"
-msgstr ""
+msgstr "外部編輯器(&E)"
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:22
 #. i18n: ectx: property (text), widget (QPushButton, importButton_)
@@ -106,7 +106,7 @@ msgstr "移除(&R)"
 #: rc.cpp:15
 #, kde-format
 msgid "&Usage"
-msgstr ""
+msgstr "用法(&U)"
 
 #: im/table/state.cpp:746
 msgctxt "Pinyin lookup delimeter"
@@ -126,7 +126,7 @@ msgstr "切換輸入法時的行為"
 #: rc.cpp:3
 #, kde-format
 msgid "Add Phrase"
-msgstr ""
+msgstr "新增字詞"
 
 #: org.fcitx.Fcitx5.Addon.ChineseAddons.metainfo.xml.in:8
 msgid ""
@@ -194,7 +194,7 @@ msgstr "候選詞清單配置"
 
 #: im/table/cangjie.conf.in.in:3
 msgid "Cangjie (Simplified Chinese)"
-msgstr ""
+msgstr "倉頡（簡體中文）"
 
 #: org.fcitx.Fcitx5.Addon.ChineseAddons.metainfo.xml.in:7
 msgid "Chinese Addons"
@@ -300,7 +300,7 @@ msgstr "自訂"
 
 #: gui/customphraseeditor/customphraseeditor.cpp:163
 msgid "Custom Phrase Editor"
-msgstr ""
+msgstr "自定字词編輯器"
 
 #. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:14
 #. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
@@ -351,7 +351,7 @@ msgstr "您想要啟用雲拼音以獲得更好的預測嗎？您也可以稍後
 
 #: gui/customphraseeditor/customphraseeditor.cpp:206
 msgid "Do you want to reload custom phrase from disk?"
-msgstr ""
+msgstr "是否希望從硬碟重新加載自定字詞？"
 
 #: im/table/ime.h:138
 msgid "Don't sort word shorter than"
@@ -456,7 +456,7 @@ msgstr "檔案操作失敗"
 
 #: gui/customphraseeditor/customphraseeditor.cpp:205
 msgid "File updated"
-msgstr ""
+msgstr "檔案已上载"
 
 #: im/pinyin/pinyin.h:203
 msgid "Filter by stroke"
@@ -565,7 +565,7 @@ msgstr "輸入字典名稱"
 
 #: gui/customphraseeditor/customphrasemodel.cpp:83
 msgid "Key"
-msgstr ""
+msgstr "鍵"
 
 #: modules/punctuation/punctuation.h:39
 msgctxt "Key of the punctuation, e.g. comma"
@@ -598,11 +598,11 @@ msgstr "微軟"
 
 #: im/pinyin/pinyin.h:215
 msgid "Manage Custom Phrase"
-msgstr ""
+msgstr "管理自定字詞"
 
 #: im/pinyin/pinyin.h:213
 msgid "Manage Dictionaries"
-msgstr ""
+msgstr "管理詞典"
 
 #: modules/punctuation/punctuation.h:40
 msgid "Mapping"
@@ -674,7 +674,7 @@ msgstr "繁轉簡的 OpenCC 配置"
 
 #: gui/customphraseeditor/customphrasemodel.cpp:87
 msgid "Order"
-msgstr ""
+msgstr "順序"
 
 #: im/table/ime.h:140
 msgid "Order policy"
@@ -694,7 +694,7 @@ msgstr ""
 #: rc.cpp:6
 #, kde-format
 msgid "Order:"
-msgstr ""
+msgstr "順序："
 
 #: im/table/ime.h:83 im/pinyin/pinyin.h:115
 msgid "Page size"
@@ -702,7 +702,7 @@ msgstr "頁面大小"
 
 #: gui/customphraseeditor/customphrasemodel.cpp:85
 msgid "Phrase"
-msgstr ""
+msgstr "字詞"
 
 #: im/pinyin/pinyin.cpp:1102 im/pinyin/pinyin.cpp:1352
 #: im/pinyin/pinyin-addon.conf.in.in:3 im/pinyin/pinyin.conf.in:3
@@ -934,6 +934,16 @@ msgid ""
 "Or, write it as key,order=\"line1\\nline2...\\nlineN\"\n"
 "The comment line is started with # or ;.\n"
 msgstr ""
+"每一條應當以「鍵,順序=值」的格式填寫。\n"
+"如果值有多行，你可以寫成\n"
+"鍵,順序=\n"
+"第 1 行\n"
+"第 2 行\n"
+"...\n"
+"第 n 行\n"
+"或者寫成\n"
+"鍵,順序=\"第 1 行\\n第 2 行\\n...\\n第 n 行\"\n"
+"註釋行以「#」或「;」開頭。\n"
 
 #: modules/cloudpinyin/cloudpinyin.h:42
 msgid ""
@@ -973,6 +983,31 @@ msgid ""
 "If lua is installed, the function defined in imeapi can be invoked \n"
 "with ${lua:function_name}.\n"
 msgstr ""
+"有一些內建函數可以用於生成動態文本，包括：\n"
+"$year：目前年份，如 1990，2003。\n"
+"$year_yy：目前年份的後兩位，如 90，03。\n"
+"$month：目前月份，如 1，2，3，...，12。\n"
+"$month_mm：目前月份（始終保持兩位數字），如 01，02，...，12。\n"
+"$day：目前月份中的第幾天，如 1，2，3，...，31。\n"
+"$day_dd：目前月份中的第幾天（始終保持兩位數字），如 1，2，3，...，31。\n"
+"$weekday：週幾，如 1，2，3，...，7。\n"
+"$fullhour：小时（24 小時制），如 00，01，02，...，23。\n"
+"$halfhour：小时（12 小時制），如 01，02，03，...，12。\n"
+"$ampm：目前是 AM 還是 PM。\n"
+"$minute：目前的分鐘，如 00，01，...，59。\n"
+"$second：目前的秒數，如 00，01，...，59。\n"
+"$year_cn：目前中文年份，如一九九零，二零零三。\n"
+"$year_yy_cn：目前中文年份的後兩位，如九零, 零三。\n"
+"$month_cn：目前中文月份，如一月，二月，...，十二月。\n"
+"$day_cn：目前月份中的第幾天（中文），一，二，...，三十一。\n"
+"$fullhour_cn：目前中文小時（24 小時制），如零，一，二，...，二十三。\n"
+"$halfhour_cn：目前中文小時（12 小時制），如一，二，...，十二。\n"
+"$ampm_cn：目前是上午還是下午（中文），如上午，下午。\n"
+"$minute_cn：目前中文分鐘，如零，一，二，...，五十九。\n"
+"$second_cn：目前中文秒數，如零，一，二，...，五十九。\n"
+"\n"
+"如果已經安裝 lua，在 imeapi 中定义的定義的函數將會以 ${lua:function_name} 的"
+"方式調用。\n"
 
 #: modules/cloudpinyin/cloudpinyin.h:29
 msgid "Toggle Key"
@@ -1001,7 +1036,7 @@ msgstr "輸入成對標點 (例如引號)"
 
 #: gui/customphraseeditor/customphraseeditor.cpp:126
 msgid "Usage"
-msgstr ""
+msgstr "用法"
 
 #: im/pinyin/pinyin.h:198
 msgid "Use BackSpace to cancel the selection"
