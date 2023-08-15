@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2023-08-13 20:24+0000\n"
+"POT-Creation-Date: 2023-08-15 05:57+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Aaron Muir Hamilton <aaron@correspondwith.me>, 2022\n"
 "Language-Team: Japanese (https://app.transifex.com/fcitx/teams/12005/ja/)\n"
@@ -212,15 +212,15 @@ msgstr ""
 msgid "Cloud Pinyin Index"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1353
+#: im/pinyin/pinyin.cpp:1352
 msgid "Cloud Pinyin Status"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1355
+#: im/pinyin/pinyin.cpp:1354
 msgid "Cloud Pinyin is disabled."
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1354
+#: im/pinyin/pinyin.cpp:1353
 msgid "Cloud Pinyin is enabled."
 msgstr ""
 
@@ -327,13 +327,13 @@ msgstr ""
 msgid "Do not display"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1093
+#: im/pinyin/pinyin.cpp:1092
 msgid ""
 "Do you want to enable cloudpinyin now for better prediction? You can always "
 "toggle it later in configuration or by pressing {}."
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1088
+#: im/pinyin/pinyin.cpp:1087
 msgid ""
 "Do you want to enable cloudpinyin now for better prediction? You can always "
 "toggle it later in configuration."
@@ -367,7 +367,7 @@ msgstr ""
 msgid "Enable Cloud Pinyin"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1102
+#: im/pinyin/pinyin.cpp:1101
 msgid "Enable Cloudpinyin"
 msgstr ""
 
@@ -535,6 +535,40 @@ msgid ""
 "as a new user phrase."
 msgstr ""
 
+#: gui/customphraseeditor/customphrasemodel.cpp:39
+msgctxt "Please ensure the line width is around 80 character width"
+msgid ""
+"If you want to produce dynamic content, you may set the phrase to\n"
+"start with symbol \"#\". The phrase may contain variable name like\n"
+"$name or ${name}. For example, you can write: sj,2=#$fullhour:$minute\n"
+"to produce current 24-hour time with sj.\n"
+"Built-in functions include:\n"
+"$year Current year, e.g. 1990, 2003.\n"
+"$year_yy Current year in two-digit, e.g. 90, 03.\n"
+"$month Current month, e.g. 1, 2, 3..., 12.\n"
+"$month_mm Current month in two digit, e.g. 01, 02, ... 12.\n"
+"$day Current day of month, e.g. 1, 2, 3..., 31.\n"
+"$day_dd Current day of month in two digit, e.g. 01, 02, ... 31.\n"
+"$weekday Current weekday, e.g. 1, 2, 3, ... 7.\n"
+"$fullhour Current 24-hour, e.g. 00, 01, 02, ..., 23.\n"
+"$halfhour Current 12-hour, 01, 02, 03, ..., 12.\n"
+"$ampm Current AM or PM.\n"
+"$minute Current minute, e.g. 00, 01, ..., 59\n"
+"$second Current second, e.g. 00, 01, ..., 59\n"
+"$year_cn Current year in Chinese, e.g. 一九九零, 二零零三.\n"
+"$year_yy_cn Current year in two digit Chinese, e.g. 九零, 零三.\n"
+"$month_cn Current month in Chinese, e.g. 一月, 二月, ... 十二月.\n"
+"$day_cn Current day in Chinese, e.g. 一, 二, ... 三十一.\n"
+"$fullhour_cn Current 24-hour in Chinese, e.g. 零, 一, 二, ... 二十三.\n"
+"$halfhour_cn Current 12-hour in Chinese, e.g. 一, 二, ... 十二.\n"
+"$ampm_cn Current AM, PM in Chinese, 上午 or 下午.\n"
+"$minute_cn Current minute in Chinese, 零, 一, 二, ... 五十九.\n"
+"$second_cn Current second in Chinese, 零, 一, 二, ... 五十九.\n"
+"\n"
+"If lua is installed, the function defined in imeapi can be invoked \n"
+"with ${lua:function_name}.\n"
+msgstr ""
+
 #: im/table/ime.h:107
 msgid "Ignore built in punctuation"
 msgstr ""
@@ -551,7 +585,7 @@ msgstr ""
 msgid "Input Dictionary Name"
 msgstr ""
 
-#: gui/customphraseeditor/customphrasemodel.cpp:83
+#: gui/customphraseeditor/customphrasemodel.cpp:86
 msgid "Key"
 msgstr ""
 
@@ -632,7 +666,7 @@ msgstr "次のページ"
 msgid "Next page"
 msgstr "次のページ"
 
-#: im/table/ime.h:23 im/pinyin/pinyin.cpp:1099
+#: im/table/ime.h:23 im/pinyin/pinyin.cpp:1098
 msgid "No"
 msgstr ""
 
@@ -660,7 +694,7 @@ msgstr ""
 msgid "OpenCC profile for Traditional to Simplified"
 msgstr ""
 
-#: gui/customphraseeditor/customphrasemodel.cpp:87
+#: gui/customphraseeditor/customphrasemodel.cpp:90
 msgid "Order"
 msgstr ""
 
@@ -686,11 +720,11 @@ msgstr ""
 msgid "Page size"
 msgstr ""
 
-#: gui/customphraseeditor/customphrasemodel.cpp:85
+#: gui/customphraseeditor/customphrasemodel.cpp:88
 msgid "Phrase"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1102 im/pinyin/pinyin.cpp:1352
+#: im/pinyin/pinyin.cpp:1101 im/pinyin/pinyin.cpp:1351
 #: im/pinyin/pinyin-addon.conf.in.in:3 im/pinyin/pinyin.conf.in:3
 msgid "Pinyin"
 msgstr ""
@@ -707,13 +741,13 @@ msgstr ""
 msgid "Please use this functionality after typing some text."
 msgstr ""
 
-#: im/table/engine.cpp:81 im/table/engine.cpp:89 im/pinyin/pinyin.cpp:933
-#: im/pinyin/pinyin.cpp:943
+#: im/table/engine.cpp:81 im/table/engine.cpp:89 im/pinyin/pinyin.cpp:932
+#: im/pinyin/pinyin.cpp:942
 msgid "Prediction Disabled"
 msgstr ""
 
-#: im/table/engine.cpp:80 im/table/engine.cpp:88 im/pinyin/pinyin.cpp:932
-#: im/pinyin/pinyin.cpp:942
+#: im/table/engine.cpp:80 im/table/engine.cpp:88 im/pinyin/pinyin.cpp:931
+#: im/pinyin/pinyin.cpp:941
 msgid "Prediction Enabled"
 msgstr ""
 
@@ -737,11 +771,11 @@ msgstr ""
 msgid "Press space or enter to insert."
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1813
+#: im/pinyin/pinyin.cpp:1812
 msgid "Press {} for {}"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1810
+#: im/pinyin/pinyin.cpp:1809
 msgid "Press {} for {} and Return for {}"
 msgstr ""
 
@@ -846,7 +880,7 @@ msgstr ""
 msgid "Show current shuangpin mode"
 msgstr ""
 
-#: im/table/engine.cpp:82 im/pinyin/pinyin.cpp:934
+#: im/table/engine.cpp:82 im/pinyin/pinyin.cpp:933
 msgid "Show prediction words"
 msgstr ""
 
@@ -925,37 +959,6 @@ msgstr ""
 msgid ""
 "The proxy format must be the one that is supported by cURL. Usually it is in "
 "the format of [scheme]://[host]:[port], e.g. http://localhost:1080."
-msgstr ""
-
-#: gui/customphraseeditor/customphrasemodel.cpp:39
-msgctxt "Please ensure the line width is around 80 character width"
-msgid ""
-"There are built-in functions that can be used to produce dynamic\n"
-"text at runtime, including:\n"
-"$year Current year, e.g. 1990, 2003.\n"
-"$year_yy Current year in two-digit, e.g. 90, 03.\n"
-"$month Current month, e.g. 1, 2, 3..., 12.\n"
-"$month_mm Current month in two digit, e.g. 01, 02, ... 12.\n"
-"$day Current day of month, e.g. 1, 2, 3..., 31.\n"
-"$day_dd Current day of month in two digit, e.g. 01, 02, ... 31.\n"
-"$weekday Current weekday, e.g. 1, 2, 3, ... 7.\n"
-"$fullhour Current 24-hour, e.g. 00, 01, 02, ..., 23.\n"
-"$halfhour Current 12-hour, 01, 02, 03, ..., 12.\n"
-"$ampm Current AM or PM.\n"
-"$minute Current minute, e.g. 00, 01, ..., 59\n"
-"$second Current second, e.g. 00, 01, ..., 59\n"
-"$year_cn Current year in Chinese, e.g. 一九九零, 二零零三.\n"
-"$year_yy_cn Current year in two digit Chinese, e.g. 九零, 零三.\n"
-"$month_cn Current month in Chinese, e.g. 一月, 二月, ... 十二月.\n"
-"$day_cn Current day in Chinese, e.g. 一, 二, ... 三十一.\n"
-"$fullhour_cn Current 24-hour in Chinese, e.g. 零, 一, 二, ... 二十三.\n"
-"$halfhour_cn Current 12-hour in Chinese, e.g. 一, 二, ... 十二.\n"
-"$ampm_cn Current AM, PM in Chinese, 上午 or 下午.\n"
-"$minute_cn Current minute in Chinese, 零, 一, 二, ... 五十九.\n"
-"$second_cn Current second in Chinese, 零, 一, 二, ... 五十九.\n"
-"\n"
-"If lua is installed, the function defined in imeapi can be invoked \n"
-"with ${lua:function_name}.\n"
 msgstr ""
 
 #: modules/cloudpinyin/cloudpinyin.h:29
@@ -1090,7 +1093,7 @@ msgstr ""
 msgid "Xiaohe"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1098
+#: im/pinyin/pinyin.cpp:1097
 msgid "Yes"
 msgstr ""
 
@@ -1106,11 +1109,11 @@ msgstr ""
 msgid "Ziranma"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1584
+#: im/pinyin/pinyin.cpp:1583
 msgid "[Select the word to remove from history]"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1532
+#: im/pinyin/pinyin.cpp:1531
 msgid "[Stroke Filtering]"
 msgstr ""
 

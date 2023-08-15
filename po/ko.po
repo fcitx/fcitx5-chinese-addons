@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2023-08-13 20:24+0000\n"
+"POT-Creation-Date: 2023-08-15 05:57+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Junghee Lee <daemul72@gmail.com>, 2022\n"
 "Language-Team: Korean (https://app.transifex.com/fcitx/teams/12005/ko/)\n"
@@ -215,15 +215,15 @@ msgstr "Cloud Pinyin"
 msgid "Cloud Pinyin Index"
 msgstr "Cloud Pinyin 일련번호"
 
-#: im/pinyin/pinyin.cpp:1353
+#: im/pinyin/pinyin.cpp:1352
 msgid "Cloud Pinyin Status"
 msgstr "Cloud Pinyin 상태"
 
-#: im/pinyin/pinyin.cpp:1355
+#: im/pinyin/pinyin.cpp:1354
 msgid "Cloud Pinyin is disabled."
 msgstr "Cloud Pinyin이 비활성화됨."
 
-#: im/pinyin/pinyin.cpp:1354
+#: im/pinyin/pinyin.cpp:1353
 msgid "Cloud Pinyin is enabled."
 msgstr "Cloud Pinyin이 활성화되었습니다."
 
@@ -332,7 +332,7 @@ msgstr "사용자 지정 힌트 보이기"
 msgid "Do not display"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1093
+#: im/pinyin/pinyin.cpp:1092
 msgid ""
 "Do you want to enable cloudpinyin now for better prediction? You can always "
 "toggle it later in configuration or by pressing {}."
@@ -340,7 +340,7 @@ msgstr ""
 "더 나은 예측을 위해 지금 Cloud pinin을 활성화하시겠습니까? 나중에 구성하거나 "
 "{} 키를 눌러 언제든지 전환할 수 있습니다."
 
-#: im/pinyin/pinyin.cpp:1088
+#: im/pinyin/pinyin.cpp:1087
 msgid ""
 "Do you want to enable cloudpinyin now for better prediction? You can always "
 "toggle it later in configuration."
@@ -376,7 +376,7 @@ msgstr ""
 msgid "Enable Cloud Pinyin"
 msgstr "Cloud Pinyin 사용"
 
-#: im/pinyin/pinyin.cpp:1102
+#: im/pinyin/pinyin.cpp:1101
 msgid "Enable Cloudpinyin"
 msgstr "Cloudpinin 활성화"
 
@@ -546,6 +546,40 @@ msgstr ""
 "0보다 작은 값이면 이 기능을 끕니다. 자동 구문 사용 시, 자동 구문 후보를 명시"
 "적으로 선택하여 새 사용자 구문에 추가할 수 있습니다."
 
+#: gui/customphraseeditor/customphrasemodel.cpp:39
+msgctxt "Please ensure the line width is around 80 character width"
+msgid ""
+"If you want to produce dynamic content, you may set the phrase to\n"
+"start with symbol \"#\". The phrase may contain variable name like\n"
+"$name or ${name}. For example, you can write: sj,2=#$fullhour:$minute\n"
+"to produce current 24-hour time with sj.\n"
+"Built-in functions include:\n"
+"$year Current year, e.g. 1990, 2003.\n"
+"$year_yy Current year in two-digit, e.g. 90, 03.\n"
+"$month Current month, e.g. 1, 2, 3..., 12.\n"
+"$month_mm Current month in two digit, e.g. 01, 02, ... 12.\n"
+"$day Current day of month, e.g. 1, 2, 3..., 31.\n"
+"$day_dd Current day of month in two digit, e.g. 01, 02, ... 31.\n"
+"$weekday Current weekday, e.g. 1, 2, 3, ... 7.\n"
+"$fullhour Current 24-hour, e.g. 00, 01, 02, ..., 23.\n"
+"$halfhour Current 12-hour, 01, 02, 03, ..., 12.\n"
+"$ampm Current AM or PM.\n"
+"$minute Current minute, e.g. 00, 01, ..., 59\n"
+"$second Current second, e.g. 00, 01, ..., 59\n"
+"$year_cn Current year in Chinese, e.g. 一九九零, 二零零三.\n"
+"$year_yy_cn Current year in two digit Chinese, e.g. 九零, 零三.\n"
+"$month_cn Current month in Chinese, e.g. 一月, 二月, ... 十二月.\n"
+"$day_cn Current day in Chinese, e.g. 一, 二, ... 三十一.\n"
+"$fullhour_cn Current 24-hour in Chinese, e.g. 零, 一, 二, ... 二十三.\n"
+"$halfhour_cn Current 12-hour in Chinese, e.g. 一, 二, ... 十二.\n"
+"$ampm_cn Current AM, PM in Chinese, 上午 or 下午.\n"
+"$minute_cn Current minute in Chinese, 零, 一, 二, ... 五十九.\n"
+"$second_cn Current second in Chinese, 零, 一, 二, ... 五十九.\n"
+"\n"
+"If lua is installed, the function defined in imeapi can be invoked \n"
+"with ${lua:function_name}.\n"
+msgstr ""
+
 #: im/table/ime.h:107
 msgid "Ignore built in punctuation"
 msgstr "기본 구두점 무시"
@@ -562,7 +596,7 @@ msgstr "짧은 Pinyin을 위한 내부 세그먼트 (qie -> qi'e)"
 msgid "Input Dictionary Name"
 msgstr "입력 사전 이름"
 
-#: gui/customphraseeditor/customphrasemodel.cpp:83
+#: gui/customphraseeditor/customphrasemodel.cpp:86
 msgid "Key"
 msgstr ""
 
@@ -643,7 +677,7 @@ msgstr "다음 페이지"
 msgid "Next page"
 msgstr "다음 페이지"
 
-#: im/table/ime.h:23 im/pinyin/pinyin.cpp:1099
+#: im/table/ime.h:23 im/pinyin/pinyin.cpp:1098
 msgid "No"
 msgstr "아니요"
 
@@ -672,7 +706,7 @@ msgstr ""
 msgid "OpenCC profile for Traditional to Simplified"
 msgstr ""
 
-#: gui/customphraseeditor/customphrasemodel.cpp:87
+#: gui/customphraseeditor/customphrasemodel.cpp:90
 msgid "Order"
 msgstr ""
 
@@ -700,11 +734,11 @@ msgstr ""
 msgid "Page size"
 msgstr "페이지 크기"
 
-#: gui/customphraseeditor/customphrasemodel.cpp:85
+#: gui/customphraseeditor/customphrasemodel.cpp:88
 msgid "Phrase"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1102 im/pinyin/pinyin.cpp:1352
+#: im/pinyin/pinyin.cpp:1101 im/pinyin/pinyin.cpp:1351
 #: im/pinyin/pinyin-addon.conf.in.in:3 im/pinyin/pinyin.conf.in:3
 msgid "Pinyin"
 msgstr "Pinyin"
@@ -721,13 +755,13 @@ msgstr "PinyinJiajia"
 msgid "Please use this functionality after typing some text."
 msgstr "글자를 입력한 후에 이 기능을 사용하세요."
 
-#: im/table/engine.cpp:81 im/table/engine.cpp:89 im/pinyin/pinyin.cpp:933
-#: im/pinyin/pinyin.cpp:943
+#: im/table/engine.cpp:81 im/table/engine.cpp:89 im/pinyin/pinyin.cpp:932
+#: im/pinyin/pinyin.cpp:942
 msgid "Prediction Disabled"
 msgstr ""
 
-#: im/table/engine.cpp:80 im/table/engine.cpp:88 im/pinyin/pinyin.cpp:932
-#: im/pinyin/pinyin.cpp:942
+#: im/table/engine.cpp:80 im/table/engine.cpp:88 im/pinyin/pinyin.cpp:931
+#: im/pinyin/pinyin.cpp:941
 msgid "Prediction Enabled"
 msgstr ""
 
@@ -751,11 +785,11 @@ msgstr "제거하려면 Delete 키를 누릅니다"
 msgid "Press space or enter to insert."
 msgstr "스페이스 키를 누르거나 Enter 키를 눌러 삽입합니다."
 
-#: im/pinyin/pinyin.cpp:1813
+#: im/pinyin/pinyin.cpp:1812
 msgid "Press {} for {}"
 msgstr "{}을 누릅니다 ({}의 경우)"
 
-#: im/pinyin/pinyin.cpp:1810
+#: im/pinyin/pinyin.cpp:1809
 msgid "Press {} for {} and Return for {}"
 msgstr " {} 키를 ({}의 경우) 누르고 {}의 경우 Return 키를 누릅니다."
 
@@ -860,7 +894,7 @@ msgstr "사전편집에서 완성형 Pinyin 표시"
 msgid "Show current shuangpin mode"
 msgstr "현재 이중자획 모드 표시"
 
-#: im/table/engine.cpp:82 im/pinyin/pinyin.cpp:934
+#: im/table/engine.cpp:82 im/pinyin/pinyin.cpp:933
 msgid "Show prediction words"
 msgstr "예상 단어 표시"
 
@@ -942,37 +976,6 @@ msgid ""
 msgstr ""
 "프록시 형식은 cURL이 지원하는 형식이어야 합니다. 통상적으로 [scheme]://"
 "[host]:[port] 형식입니다. 예: http://localhost:1080"
-
-#: gui/customphraseeditor/customphrasemodel.cpp:39
-msgctxt "Please ensure the line width is around 80 character width"
-msgid ""
-"There are built-in functions that can be used to produce dynamic\n"
-"text at runtime, including:\n"
-"$year Current year, e.g. 1990, 2003.\n"
-"$year_yy Current year in two-digit, e.g. 90, 03.\n"
-"$month Current month, e.g. 1, 2, 3..., 12.\n"
-"$month_mm Current month in two digit, e.g. 01, 02, ... 12.\n"
-"$day Current day of month, e.g. 1, 2, 3..., 31.\n"
-"$day_dd Current day of month in two digit, e.g. 01, 02, ... 31.\n"
-"$weekday Current weekday, e.g. 1, 2, 3, ... 7.\n"
-"$fullhour Current 24-hour, e.g. 00, 01, 02, ..., 23.\n"
-"$halfhour Current 12-hour, 01, 02, 03, ..., 12.\n"
-"$ampm Current AM or PM.\n"
-"$minute Current minute, e.g. 00, 01, ..., 59\n"
-"$second Current second, e.g. 00, 01, ..., 59\n"
-"$year_cn Current year in Chinese, e.g. 一九九零, 二零零三.\n"
-"$year_yy_cn Current year in two digit Chinese, e.g. 九零, 零三.\n"
-"$month_cn Current month in Chinese, e.g. 一月, 二月, ... 十二月.\n"
-"$day_cn Current day in Chinese, e.g. 一, 二, ... 三十一.\n"
-"$fullhour_cn Current 24-hour in Chinese, e.g. 零, 一, 二, ... 二十三.\n"
-"$halfhour_cn Current 12-hour in Chinese, e.g. 一, 二, ... 十二.\n"
-"$ampm_cn Current AM, PM in Chinese, 上午 or 下午.\n"
-"$minute_cn Current minute in Chinese, 零, 一, 二, ... 五十九.\n"
-"$second_cn Current second in Chinese, 零, 一, 二, ... 五十九.\n"
-"\n"
-"If lua is installed, the function defined in imeapi can be invoked \n"
-"with ${lua:function_name}.\n"
-msgstr ""
 
 #: modules/cloudpinyin/cloudpinyin.h:29
 msgid "Toggle Key"
@@ -1121,7 +1124,7 @@ msgstr "Wubi Pinyin"
 msgid "Xiaohe"
 msgstr "Xiaohe"
 
-#: im/pinyin/pinyin.cpp:1098
+#: im/pinyin/pinyin.cpp:1097
 msgid "Yes"
 msgstr "예"
 
@@ -1137,11 +1140,11 @@ msgstr "Ziguang"
 msgid "Ziranma"
 msgstr "지란마"
 
-#: im/pinyin/pinyin.cpp:1584
+#: im/pinyin/pinyin.cpp:1583
 msgid "[Select the word to remove from history]"
 msgstr "[기록에서 삭제할 단어 선택]"
 
-#: im/pinyin/pinyin.cpp:1532
+#: im/pinyin/pinyin.cpp:1531
 msgid "[Stroke Filtering]"
 msgstr "[필획 필터링]"
 
