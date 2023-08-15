@@ -1057,6 +1057,7 @@ void PinyinEngine::loadCustomPhrase() {
     auto file = standardPath.open(StandardPath::Type::PkgData,
                                   "pinyin/customphrase", O_RDONLY);
     if (!file.isValid()) {
+        customPhrase_.clear();
         return;
     }
 
