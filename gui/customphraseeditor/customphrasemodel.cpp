@@ -36,8 +36,11 @@ The comment line is started with # or ;.
 
 std::string_view usageComment =
     NC_("Please ensure the line width is around 80 character width",
-        R"foo(There are built-in functions that can be used to produce dynamic
-text at runtime, including:
+        R"foo(If you want to produce dynamic content, you may set the phrase to
+start with symbol "#". The phrase may contain variable name like
+$name or ${name}. For example, you can write: sj,2=#$fullhour:$minute
+to produce current 24-hour time with sj.
+Built-in functions include:
 $year Current year, e.g. 1990, 2003.
 $year_yy Current year in two-digit, e.g. 90, 03.
 $month Current month, e.g. 1, 2, 3..., 12.
