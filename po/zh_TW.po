@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2023-08-15 05:57+0000\n"
+"POT-Creation-Date: 2023-08-15 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Lau YeeYu, 2023\n"
 "Language-Team: Chinese (Taiwan) (https://app.transifex.com/fcitx/teams/12005/"
@@ -220,15 +220,15 @@ msgstr "雲端拼音"
 msgid "Cloud Pinyin Index"
 msgstr "雲端拼音索引"
 
-#: im/pinyin/pinyin.cpp:1352
+#: im/pinyin/pinyin.cpp:1353
 msgid "Cloud Pinyin Status"
 msgstr "雲端拼音狀態"
 
-#: im/pinyin/pinyin.cpp:1354
+#: im/pinyin/pinyin.cpp:1355
 msgid "Cloud Pinyin is disabled."
 msgstr "已停用雲端拼音。"
 
-#: im/pinyin/pinyin.cpp:1353
+#: im/pinyin/pinyin.cpp:1354
 msgid "Cloud Pinyin is enabled."
 msgstr "已啟用雲端拼音。"
 
@@ -335,7 +335,7 @@ msgstr "顯示自訂提示"
 msgid "Do not display"
 msgstr "不要顯示"
 
-#: im/pinyin/pinyin.cpp:1092
+#: im/pinyin/pinyin.cpp:1093
 msgid ""
 "Do you want to enable cloudpinyin now for better prediction? You can always "
 "toggle it later in configuration or by pressing {}."
@@ -343,7 +343,7 @@ msgstr ""
 "您想要啟用雲拼音以獲得更好的預測嗎？您也可以稍後在配置中更改或按下 {} 來切"
 "換。"
 
-#: im/pinyin/pinyin.cpp:1087
+#: im/pinyin/pinyin.cpp:1088
 msgid ""
 "Do you want to enable cloudpinyin now for better prediction? You can always "
 "toggle it later in configuration."
@@ -377,7 +377,7 @@ msgstr "啟用 Unicode CJK 擴充區 B 中的字符"
 msgid "Enable Cloud Pinyin"
 msgstr "啟用雲端拼音"
 
-#: im/pinyin/pinyin.cpp:1101
+#: im/pinyin/pinyin.cpp:1102
 msgid "Enable Cloudpinyin"
 msgstr "啟用雲端拼音"
 
@@ -580,6 +580,35 @@ msgid ""
 "If lua is installed, the function defined in imeapi can be invoked \n"
 "with ${lua:function_name}.\n"
 msgstr ""
+"如果需要生成動態內容，您可以考慮將字詞以符號「#」開頭。\n"
+"字詞中可以包含如 $name 或者 $(name) 這樣的變數名。\n"
+"例如，您可以使用「sj,2=#$fullhour:$minute」來使 sj 生成當前的 24 小時制時"
+"間。\n"
+"內建函數包括：\n"
+"$year：目前年份，如 1990，2003。\n"
+"$year_yy：目前年份的後兩位，如 90，03。\n"
+"$month：目前月份，如 1，2，3，...，12。\n"
+"$month_mm：目前月份（始終保持兩位數字），如 01，02，...，12。\n"
+"$day：目前月份中的第幾天，如 1，2，3，...，31。\n"
+"$day_dd：目前月份中的第幾天（始終保持兩位數字），如 1，2，3，...，31。\n"
+"$weekday：週幾，如 1，2，3，...，7。\n"
+"$fullhour：小时（24 小時制），如 00，01，02，...，23。\n"
+"$halfhour：小时（12 小時制），如 01，02，03，...，12。\n"
+"$ampm：目前是 AM 還是 PM。\n"
+"$minute：目前的分鐘，如 00，01，...，59。\n"
+"$second：目前的秒數，如 00，01，...，59。\n"
+"$year_cn：目前中文年份，如一九九零，二零零三。\n"
+"$year_yy_cn：目前中文年份的後兩位，如九零, 零三。\n"
+"$month_cn：目前中文月份，如一月，二月，...，十二月。\n"
+"$day_cn：目前月份中的第幾天（中文），一，二，...，三十一。\n"
+"$fullhour_cn：目前中文小時（24 小時制），如零，一，二，...，二十三。\n"
+"$halfhour_cn：目前中文小時（12 小時制），如一，二，...，十二。\n"
+"$ampm_cn：目前是上午還是下午（中文），如上午，下午。\n"
+"$minute_cn：目前中文分鐘，如零，一，二，...，五十九。\n"
+"$second_cn：目前中文秒數，如零，一，二，...，五十九。\n"
+"\n"
+"如果已經安裝 lua，在 imeapi 中定义的定義的函數將會以 ${lua:function_name} 的"
+"方式調用。\n"
 
 #: im/table/ime.h:107
 msgid "Ignore built in punctuation"
@@ -678,7 +707,7 @@ msgstr "下一頁"
 msgid "Next page"
 msgstr "下一頁"
 
-#: im/table/ime.h:23 im/pinyin/pinyin.cpp:1098
+#: im/table/ime.h:23 im/pinyin/pinyin.cpp:1099
 msgid "No"
 msgstr "取消"
 
@@ -738,7 +767,7 @@ msgstr "頁面大小"
 msgid "Phrase"
 msgstr "字詞"
 
-#: im/pinyin/pinyin.cpp:1101 im/pinyin/pinyin.cpp:1351
+#: im/pinyin/pinyin.cpp:1102 im/pinyin/pinyin.cpp:1352
 #: im/pinyin/pinyin-addon.conf.in.in:3 im/pinyin/pinyin.conf.in:3
 msgid "Pinyin"
 msgstr "拼音"
@@ -785,11 +814,11 @@ msgstr "按下刪除鍵以移除。"
 msgid "Press space or enter to insert."
 msgstr "按下空白鍵或Enter鍵進行插入。"
 
-#: im/pinyin/pinyin.cpp:1812
+#: im/pinyin/pinyin.cpp:1813
 msgid "Press {} for {}"
 msgstr "按下 {} 以輸入 {}"
 
-#: im/pinyin/pinyin.cpp:1809
+#: im/pinyin/pinyin.cpp:1810
 msgid "Press {} for {} and Return for {}"
 msgstr "按下 {} 以輸入 {}， 按下確認鍵以輸入 {}"
 
@@ -1128,7 +1157,7 @@ msgstr "五筆拼音"
 msgid "Xiaohe"
 msgstr "小鶴"
 
-#: im/pinyin/pinyin.cpp:1097
+#: im/pinyin/pinyin.cpp:1098
 msgid "Yes"
 msgstr "確定"
 
@@ -1144,11 +1173,11 @@ msgstr "紫光"
 msgid "Ziranma"
 msgstr "自然碼"
 
-#: im/pinyin/pinyin.cpp:1583
+#: im/pinyin/pinyin.cpp:1584
 msgid "[Select the word to remove from history]"
 msgstr "[選擇要從歷史中移除的字詞]"
 
-#: im/pinyin/pinyin.cpp:1531
+#: im/pinyin/pinyin.cpp:1532
 msgid "[Stroke Filtering]"
 msgstr "[筆畫過濾]"
 
