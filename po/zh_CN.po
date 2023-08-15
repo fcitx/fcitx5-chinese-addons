@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2023-08-15 05:57+0000\n"
+"POT-Creation-Date: 2023-08-15 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: csslayer <wengxt@gmail.com>, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/fcitx/teams/12005/"
@@ -218,15 +218,15 @@ msgstr "云拼音"
 msgid "Cloud Pinyin Index"
 msgstr "云拼音位置"
 
-#: im/pinyin/pinyin.cpp:1352
+#: im/pinyin/pinyin.cpp:1353
 msgid "Cloud Pinyin Status"
 msgstr "云拼音状态"
 
-#: im/pinyin/pinyin.cpp:1354
+#: im/pinyin/pinyin.cpp:1355
 msgid "Cloud Pinyin is disabled."
 msgstr "云拼音已禁用。"
 
-#: im/pinyin/pinyin.cpp:1353
+#: im/pinyin/pinyin.cpp:1354
 msgid "Cloud Pinyin is enabled."
 msgstr "已启用云拼音。"
 
@@ -333,7 +333,7 @@ msgstr "显示自定义提示"
 msgid "Do not display"
 msgstr "不要显示"
 
-#: im/pinyin/pinyin.cpp:1092
+#: im/pinyin/pinyin.cpp:1093
 msgid ""
 "Do you want to enable cloudpinyin now for better prediction? You can always "
 "toggle it later in configuration or by pressing {}."
@@ -341,7 +341,7 @@ msgstr ""
 "您想要启用云拼音以获得更好的预测吗？您也可以稍后在配置中更改设置或者通过按下 "
 "{} 来切换。"
 
-#: im/pinyin/pinyin.cpp:1087
+#: im/pinyin/pinyin.cpp:1088
 msgid ""
 "Do you want to enable cloudpinyin now for better prediction? You can always "
 "toggle it later in configuration."
@@ -375,7 +375,7 @@ msgstr "启用 Unicode CJK 拓展区 B 中的字符"
 msgid "Enable Cloud Pinyin"
 msgstr "启用云拼音"
 
-#: im/pinyin/pinyin.cpp:1101
+#: im/pinyin/pinyin.cpp:1102
 msgid "Enable Cloudpinyin"
 msgstr "启用云拼音"
 
@@ -578,6 +578,35 @@ msgid ""
 "If lua is installed, the function defined in imeapi can be invoked \n"
 "with ${lua:function_name}.\n"
 msgstr ""
+"如果您想要生成动态内容，您可以考虑将词组设置为由符号“#”开头。\n"
+"词组课包含如 $name 或者 ${name} 这样的变量名。\n"
+"例如，您可以使用：sj,2=#$fullhour,$minute 从而使 sj 生成当前的 24 小时时"
+"间。\n"
+"内建函数包括：\n"
+"$year：当前年份，如 1990，2003。\n"
+"$year_yy：当前年份的后两位，如 90，03。\n"
+"$month：当前月份，如 1，2，3，...，12。\n"
+"$month_mm：当前两位数字的月份，如 01，02，...，12。\n"
+"$day：当前日期，如 1，2，3，...，31。\n"
+"$day_dd：当前两位数字的日期，如 1，2，3，...，31。\n"
+"$weekday：星期，如 1，2，3，...，7。\n"
+"$fullhour：小时（24 小时制），如 00，01，02，...，23。\n"
+"$halfhour：小时（12 小时制），如 01，02，03，...，12。\n"
+"$ampm：当前是 AM 还是 PM。\n"
+"$minute：当前的分钟，如 00，01，...，59。\n"
+"$second：当前的秒数，如 00，01，...，59。\n"
+"$year_cn：当前中文年份，如一九九零，二零零三。\n"
+"$year_yy_cn：当前两位数中文年份，如九零, 零三。\n"
+"$month_cn：当前中文月份，如一月，二月，...，十二月。\n"
+"$day_cn：当前中文日期，一，二，...，三十一。\n"
+"$fullhour_cn：当前中文24 小时制小时，如零，一，二，...，二十三。\n"
+"$halfhour_cn：当前中文12 小时制小时，如一，二，...，十二。\n"
+"$ampm_cn：当前是上午还是下午，如上午，下午。\n"
+"$minute_cn：当前中文分钟，如零，一，二，...，五十九。\n"
+"$second_cn：当前中文秒数，如零，一，二，...，五十九。\n"
+"\n"
+"如果已经安装 lua，在 imeapi 中定义的函数将会以 ${lua:function_name} 的方式调"
+"用。\n"
 
 #: im/table/ime.h:107
 msgid "Ignore built in punctuation"
@@ -676,7 +705,7 @@ msgstr "下一页"
 msgid "Next page"
 msgstr "下一页"
 
-#: im/table/ime.h:23 im/pinyin/pinyin.cpp:1098
+#: im/table/ime.h:23 im/pinyin/pinyin.cpp:1099
 msgid "No"
 msgstr "否"
 
@@ -736,7 +765,7 @@ msgstr "页大小"
 msgid "Phrase"
 msgstr "词组："
 
-#: im/pinyin/pinyin.cpp:1101 im/pinyin/pinyin.cpp:1351
+#: im/pinyin/pinyin.cpp:1102 im/pinyin/pinyin.cpp:1352
 #: im/pinyin/pinyin-addon.conf.in.in:3 im/pinyin/pinyin.conf.in:3
 msgid "Pinyin"
 msgstr "拼音"
@@ -783,11 +812,11 @@ msgstr "按下删除键来移除。"
 msgid "Press space or enter to insert."
 msgstr "按下空格或回车键来插入。"
 
-#: im/pinyin/pinyin.cpp:1812
+#: im/pinyin/pinyin.cpp:1813
 msgid "Press {} for {}"
 msgstr "按下 {} 输入 {}"
 
-#: im/pinyin/pinyin.cpp:1809
+#: im/pinyin/pinyin.cpp:1810
 msgid "Press {} for {} and Return for {}"
 msgstr "按下 {} 输入 {}，按下回车输入 {}"
 
@@ -1127,7 +1156,7 @@ msgstr "五笔拼音"
 msgid "Xiaohe"
 msgstr "小鹤"
 
-#: im/pinyin/pinyin.cpp:1097
+#: im/pinyin/pinyin.cpp:1098
 msgid "Yes"
 msgstr "是"
 
@@ -1143,11 +1172,11 @@ msgstr "紫光"
 msgid "Ziranma"
 msgstr "自然码"
 
-#: im/pinyin/pinyin.cpp:1583
+#: im/pinyin/pinyin.cpp:1584
 msgid "[Select the word to remove from history]"
 msgstr "[选择要从历史中移除的词]"
 
-#: im/pinyin/pinyin.cpp:1531
+#: im/pinyin/pinyin.cpp:1532
 msgid "[Stroke Filtering]"
 msgstr "[笔画过滤]"
 
