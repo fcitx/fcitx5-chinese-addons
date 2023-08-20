@@ -826,6 +826,8 @@ std::string PinyinEngine::evaluateCustomPhrase(InputContext *inputContext,
     if (!result.empty()) {
         return result;
     }
+
+#ifdef FCITX_HAS_LUA
     if (stringutils::startsWith(key, "lua:")) {
         RawConfig config;
         auto ret = imeapi()->call<ILuaAddon::invokeLuaFunction>(
@@ -834,6 +836,7 @@ std::string PinyinEngine::evaluateCustomPhrase(InputContext *inputContext,
             return ret.value();
         }
     }
+#endif
     return "";
 }
 
