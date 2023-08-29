@@ -1269,6 +1269,18 @@ void PinyinEngine::deactivate(const fcitx::InputMethodEntry &entry,
             break;
         }
         auto *state = inputContext->propertyFor(&factory_);
+        if (state->mode_ == PinyinMode::Punctuation) {
+            auto candidateList = inputContext->inputPanel().candidateList();
+            if (!candidateList) {
+                break;
+            }
+            auto index = candidateList->cursorIndex();
+            if (index >= 0) {
+                candidateList->candidate(index).select(inputContext);
+            }
+            break;
+        }
+
         if (state->context_.empty()) {
             break;
         }
