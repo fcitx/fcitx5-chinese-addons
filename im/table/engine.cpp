@@ -225,9 +225,20 @@ void TableEngine::reset(const InputMethodEntry &entry,
     auto *inputContext = event.inputContext();
 
     auto *state = inputContext->propertyFor(&factory_);
-    // The reason that we do not commit here is we want to force the behavior.
-    // When client get unfocused, the framework will try to commit the string.
-    if (state->context() && *state->context()->config().commitWhenDeactivate) {
+
+    if (state->mode() == TableMode::Punctuation) {
+        auto candidateList = inputContext->inputPanel().candidateList();
+        if (candidateList && event.type() != EventType::InputContextFocusOut) {
+            auto index = candidateList->cursorIndex();
+            if (index >= 0) {
+                candidateList->candidate(index).select(inputContext);
+            }
+        }
+    } else if (state->context() &&
+               *state->context()->config().commitWhenDeactivate) {
+        // The reason that we do not commit here is we want to force the
+        // behavior. When client get unfocused, the framework will try to commit
+        // the string.
         state->commitBuffer(true,
                             event.type() == EventType::InputContextFocusOut);
     }
