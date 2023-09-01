@@ -232,13 +232,15 @@ int main(int argc, char **argv) {
             readOrAbort(fd, buf.data(), count, "Failed to read text");
             std::string bufout = unicodeToUTF8(buf.data(), buf.size());
 
-            *out << bufout << "\t";
-            *out << pys[pyindex[0]];
-            for (auto i = 1; i < wordcount; i++) {
-                *out << '\'' << pys[pyindex[i]];
-            }
+            if (wordcount > 0) {
+                *out << bufout << "\t";
+                *out << pys[pyindex[0]];
+                for (auto i = 1; i < wordcount; i++) {
+                    *out << '\'' << pys[pyindex[i]];
+                }
 
-            *out << "\t0" << std::endl;
+                *out << "\t0" << std::endl;
+            }
 
             readUInt16(fd, &count, "failed to read count");
             buf.resize(count);
