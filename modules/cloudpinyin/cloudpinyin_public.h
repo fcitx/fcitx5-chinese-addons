@@ -91,28 +91,43 @@ private:
         }
 
         int idx = -1;
-        bool dup = false;
+        std::optional<int> dupIndex;
         for (auto i = 0, e = modifiable->totalSize(); i < e; i++) {
             const auto &candidate = modifiable->candidateFromAll(i);
             if (static_cast<CandidateWord *>(this) == &candidate) {
                 idx = i;
             } else {
-                if (!dup && text().toString() == candidate.text().toString()) {
-                    dup = true;
+                if (!dupIndex &&
+                    text().toString() == candidate.text().toString()) {
+                    dupIndex = i;
                 }
             }
         }
-        if (idx >= 0 && (dup || word_.empty())) {
+        if (idx >= 0 && (dupIndex || word_.empty())) {
             auto ms =
                 std::chrono::duration_cast<std::chrono::milliseconds>(
                     std::chrono::high_resolution_clock::now() - timestamp_)
                     .count();
-            if (ms > LOADING_TIME_QUICK_THRESHOLD) {
-                setText(fcitx::Text("\xe2\x98\x81"));
-                word_ = std::string();
-                setPlaceHolder(true);
+            // If user make cloudpinyin to be the default one, we should prefer
+            // to move the dup to current.
+            if (idx == 0) {
+                if (dupIndex) {
+                    modifiable->remove(0);
+                    modifiable->move(dupIndex.value() - 1, 0);
+                } else {
+                    // result is empty.
+                    // Remove empty.
+                    modifiable->remove(0);
+                }
+
             } else {
-                modifiable->remove(idx);
+                if (ms > LOADING_TIME_QUICK_THRESHOLD) {
+                    setText(fcitx::Text("\xe2\x98\x81"));
+                    word_ = std::string();
+                    setPlaceHolder(true);
+                } else {
+                    modifiable->remove(idx);
+                }
             }
         }
         // use stack variable inputContext, because it may be removed already
