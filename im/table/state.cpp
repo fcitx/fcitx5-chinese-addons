@@ -937,7 +937,7 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
                 CommitAfterSelectWrapper commitAfterSelectRAII(this);
                 context->type(str);
             }
-            if (context->candidates().empty() &&
+            if (!context->dict().hasMatchingWords(context->currentCode()) &&
                 ((*config.commitAfterSelect && context->currentCode() == str) ||
                  (!*config.commitAfterSelect && context->userInput() == str))) {
                 // This means it is not a valid start, make it go through the
