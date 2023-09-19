@@ -12,6 +12,7 @@
 #include <fcitx-utils/event.h>
 #include <fcitx-utils/stringutils.h>
 #include <fcitx-utils/utf8.h>
+#include <fcitx/event.h>
 #include <fcitx/inputcontext.h>
 #include <fcitx/inputpanel.h>
 #include <fmt/core.h>
@@ -254,6 +255,8 @@ void TableState::reset(const InputMethodEntry *entry) {
 
     keyReleased_ = -1;
     keyReleasedIndex_ = -2;
+    // Since we also to compose, just reset compose all together
+    engine_->instance()->resetCompose(ic_);
 }
 
 class TablePredictCandidateWord : public CandidateWord {
@@ -864,6 +867,28 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
 
     if (handlePuncCandidate(config, event)) {
         return;
+    }
+
+    if ((mode_ == TableMode::Normal || mode_ == TableMode::Pinyin) &&
+        !event.key().hasModifier()) {
+        auto compose = engine_->instance()->processComposeString(
+            inputContext, event.key().sym());
+        if (!compose) {
+            // invalid compose or in the middle of compose.
+            event.filterAndAccept();
+            return;
+        }
+        // Handle the key just like punc select.
+        if (!compose->empty()) {
+            // if current key will produce some string, select the candidate.
+            if (!autoSelectCandidate()) {
+                commitBuffer(true);
+            }
+            inputContext->commitString(*compose);
+            reset();
+            event.filterAndAccept();
+            return;
+        }
     }
 
     lastIsPunc_ = false;
