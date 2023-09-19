@@ -1847,6 +1847,50 @@ bool PinyinEngine::handlePunc(KeyEvent &event) {
     return false;
 }
 
+bool PinyinEngine::handleCompose(KeyEvent &event) {
+    auto *inputContext = event.inputContext();
+    auto *state = inputContext->propertyFor(&factory_);
+    if (event.key().hasModifier() || state->mode_ != PinyinMode::Normal) {
+        return false;
+    }
+    auto candidateList = inputContext->inputPanel().candidateList();
+    if (event.filtered()) {
+        return false;
+    }
+    auto compose =
+        instance_->processComposeString(inputContext, event.key().sym());
+    if (!compose) {
+        // invalid compose or in the middle of compose.
+        event.filterAndAccept();
+        return true;
+    }
+    // Handle the key just like punc select.
+    if (!compose->empty()) {
+        // Reset predict in case we are in predict.
+        resetPredict(inputContext);
+        // punc like auto selection.
+        auto candidateList = inputContext->inputPanel().candidateList();
+        if (candidateList && candidateList->size()) {
+            candidateList->candidate(0).select(inputContext);
+        }
+        inputContext->commitString(*compose);
+        event.filterAndAccept();
+        return true;
+    }
+    return false;
+}
+
+void PinyinEngine::resetPredict(InputContext *inputContext) {
+    auto *state = inputContext->propertyFor(&factory_);
+    if (!state->predictWords_) {
+        return;
+    }
+    state->predictWords_.reset();
+    inputContext->inputPanel().reset();
+    inputContext->updatePreedit();
+    inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
+}
+
 void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
     FCITX_UNUSED(entry);
     PINYIN_DEBUG() << "Pinyin receive key: " << event.key() << " "
@@ -1886,6 +1930,10 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         return;
     }
 
+    if (handleCompose(event)) {
+        return;
+    }
+
     // handle number key selection and prev/next page/candidate.
     if (handleCandidateList(event)) {
         return;
@@ -1899,10 +1947,7 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
     // fallback
     // to remaining operation.
     if (state->predictWords_) {
-        state->predictWords_.reset();
-        inputContext->inputPanel().reset();
-        inputContext->updatePreedit();
-        inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
+        resetPredict(inputContext);
         if (event.key().check(FcitxKey_Escape)
 #ifdef ANDROID
             || event.key().check(FcitxKey_BackSpace) ||
@@ -2136,6 +2181,7 @@ void PinyinEngine::doReset(InputContext *inputContext) const {
 
     state->keyReleased_ = -1;
     state->keyReleasedIndex_ = -2;
+    instance_->resetCompose(inputContext);
 }
 
 void PinyinEngine::save() {

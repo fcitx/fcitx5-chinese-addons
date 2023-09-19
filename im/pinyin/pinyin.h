@@ -308,6 +308,8 @@ private:
     bool handleForgetCandidate(KeyEvent &event);
     bool handlePunc(KeyEvent &event);
     bool handlePuncCandidate(KeyEvent &event);
+    bool handleCompose(KeyEvent &event);
+    void resetPredict(InputContext *inputContext);
 
     std::string evaluateCustomPhrase(InputContext *inputContext,
                                      std::string_view key);
