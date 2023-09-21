@@ -9,7 +9,7 @@ include(ECMSetupVersion)
 include(ECMUninstallTarget)
 
 find_package(Fcitx5Core 5.0.24 REQUIRED)
-find_package(Fcitx5Module REQUIRED COMPONENTS Notifications QuickPhrase Spell Clipboard TestFrontend TestIM)
+find_package(Fcitx5Module REQUIRED COMPONENTS Notifications QuickPhrase Spell Clipboard)
 find_package(Fcitx5ModuleLuaAddonLoader)
 find_package(Pthread REQUIRED)
 find_package(PkgConfig REQUIRED)
@@ -79,6 +79,8 @@ endif()
 add_subdirectory(icon)
 
 if (ENABLE_TEST)
+    find_package(Fcitx5ModuleTestFrontend REQUIRED)
+    find_package(Fcitx5ModuleTestIM REQUIRED)
     enable_testing()
     add_subdirectory(test)
 
