@@ -64,6 +64,7 @@ void populateOptions(libime::TableBasedDictionary *dict,
     options.setAutoRuleSet(std::unordered_set<std::string>(
         root.config->autoRuleSet->begin(), root.config->autoRuleSet->end()));
     options.setLanguageCode(*root.im->languageCode);
+    options.setSortByCodeLength(*root.config->sortByCodeLength);
 
     dict->setTableOptions(options);
 }
