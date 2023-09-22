@@ -54,7 +54,7 @@ endif()
 
 find_package(Boost 1.61 REQUIRED COMPONENTS iostreams)
 find_package(LibIMEPinyin 1.0.18 REQUIRED)
-find_package(LibIMETable 1.0.12 REQUIRED)
+find_package(LibIMETable 1.1.2 REQUIRED)
 
 if (ENABLE_CLOUDPINYIN)
     pkg_check_modules(Curl REQUIRED IMPORTED_TARGET "libcurl")
