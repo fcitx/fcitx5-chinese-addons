@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2023-09-22 20:24+0000\n"
+"POT-Creation-Date: 2023-09-23 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Lau YeeYu, 2023\n"
 "Language-Team: Chinese (Taiwan) (https://app.transifex.com/fcitx/teams/12005/"
@@ -957,7 +957,7 @@ msgstr "簡繁轉换"
 
 #: im/table/ime.h:139
 msgid "Sort candidate by code length"
-msgstr ""
+msgstr "按碼長排序候選詞"
 
 #: im/table/ime.h:155
 msgid "Sort candidates based on current context"
