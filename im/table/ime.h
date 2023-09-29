@@ -136,7 +136,8 @@ FCITX_CONFIGURATION(
     NoSaveOption<std::string> icon{this, "Icon", _("Icon")};
     Option<int> noSortInputLength{this, "NoSortInputLength",
                                   _("Don't sort word shorter than")};
-    Option<bool> sortByCodeLength{this, "SortByCodeLength", _("Sort candidate by code length"), true};
+    Option<bool> sortByCodeLength{this, "SortByCodeLength",
+                                  _("Sort candidate by code length"), true};
     OptionWithAnnotation<OrderPolicy, OrderPolicyI18NAnnotation> orderPolicy{
         this, "OrderPolicy", _("Order policy")};
     OptionWithAnnotation<bool, ToolTipAnnotation> useSystemLanguageModel{
