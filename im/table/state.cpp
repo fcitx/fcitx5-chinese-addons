@@ -10,6 +10,7 @@
 #include "quickphrase_public.h"
 #include <algorithm>
 #include <fcitx-utils/event.h>
+#include <fcitx-utils/keysym.h>
 #include <fcitx-utils/stringutils.h>
 #include <fcitx-utils/utf8.h>
 #include <fcitx/event.h>
@@ -356,8 +357,10 @@ bool TableState::autoSelectCandidate() {
     return false;
 }
 
-bool TableState::handleCandidateList(const TableConfig &config, KeyEvent &event,
-                                     bool &needUpdate) {
+bool TableState::handleCandidateList(const TableConfig &config, KeyEvent &event) {
+    if (event.isVirtual()) {
+        return false;
+    }
     auto *inputContext = event.inputContext();
     // check if we can select candidate.
     auto candidateList = inputContext->inputPanel().candidateList();
@@ -417,13 +420,6 @@ bool TableState::handleCandidateList(const TableConfig &config, KeyEvent &event,
             event.filterAndAccept();
             return true;
         }
-    }
-
-    // Non candidate key for predict candidate should clear it.
-    if (dynamic_cast<const TablePredictCandidateWord *>(
-            &candidateList->candidate(0))) {
-        inputContext->inputPanel().setCandidateList(nullptr);
-        needUpdate = true;
     }
 
     return false;
@@ -893,8 +889,15 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
 
     lastIsPunc_ = false;
 
-    if (handleCandidateList(config, event, needUpdate)) {
+    if (handleCandidateList(config, event)) {
         return;
+    }
+
+    // Non candidate key for predict candidate should clear it.
+    if (inputContext->inputPanel().candidateList() && dynamic_cast<const TablePredictCandidateWord *>(
+            &inputContext->inputPanel().candidateList()->candidate(0))) {
+        inputContext->inputPanel().setCandidateList(nullptr);
+        needUpdate = true;
     }
 
     // We have special handling of escape here.
@@ -1249,31 +1252,34 @@ bool TableState::handlePuncCandidate(const TableConfig &config,
         reset();
         return true;
     }
-    int idx = event.key().keyListIndex(config.selection.value());
-    if (idx >= 0) {
-        event.filterAndAccept();
-        if (idx < candidateList->size()) {
-            candidateList->candidate(idx).select(inputContext);
-        }
-        return true;
-    }
 
-    if (auto *movable = candidateList->toCursorMovable()) {
-        if (event.key().checkKeyList(*config.nextCandidate)) {
-            movable->nextCandidate();
-            updatePuncPreedit(inputContext);
-            inputContext->updateUserInterface(
-                UserInterfaceComponent::InputPanel);
+    if (!event.isVirtual()) {
+        int idx = event.key().keyListIndex(config.selection.value());
+        if (idx >= 0) {
             event.filterAndAccept();
+            if (idx < candidateList->size()) {
+                candidateList->candidate(idx).select(inputContext);
+            }
             return true;
         }
-        if (event.key().checkKeyList(*config.prevCandidate)) {
-            movable->prevCandidate();
-            updatePuncPreedit(inputContext);
-            inputContext->updateUserInterface(
-                UserInterfaceComponent::InputPanel);
-            event.filterAndAccept();
-            return true;
+
+        if (auto *movable = candidateList->toCursorMovable()) {
+            if (event.key().checkKeyList(*config.nextCandidate)) {
+                movable->nextCandidate();
+                updatePuncPreedit(inputContext);
+                inputContext->updateUserInterface(
+                    UserInterfaceComponent::InputPanel);
+                event.filterAndAccept();
+                return true;
+            }
+            if (event.key().checkKeyList(*config.prevCandidate)) {
+                movable->prevCandidate();
+                updatePuncPreedit(inputContext);
+                inputContext->updateUserInterface(
+                    UserInterfaceComponent::InputPanel);
+                event.filterAndAccept();
+                return true;
+            }
         }
     }
 

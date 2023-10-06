@@ -71,8 +71,7 @@ public:
 private:
     bool handle2nd3rdCandidate(const TableConfig &config, KeyEvent &event);
     bool handlePuncCandidate(const TableConfig &config, KeyEvent &event);
-    bool handleCandidateList(const TableConfig &config, KeyEvent &event,
-                             bool &needUpdate);
+    bool handleCandidateList(const TableConfig &config, KeyEvent &event);
     bool handleForgetWord(KeyEvent &event);
     bool handlePinyinMode(KeyEvent &event);
     bool handleLookupPinyinOrModifyDictionaryMode(KeyEvent &event);

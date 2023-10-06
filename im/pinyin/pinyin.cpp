@@ -13,6 +13,7 @@
 #include "config.h"
 #include "punctuation.h"
 #include <ctime>
+#include <fcitx-utils/keysym.h>
 #include <fcitx-utils/keysymgen.h>
 #include <fcitx-utils/stringutils.h>
 #include <fcitx/candidatelist.h>
@@ -1316,34 +1317,36 @@ bool PinyinEngine::handlePuncCandidate(KeyEvent &event) {
         doReset(inputContext);
         return true;
     }
-    int idx = event.key().keyListIndex(selectionKeys_);
-    if (idx == -1 && *config_.useKeypadAsSelectionKey) {
-        idx = event.key().keyListIndex(numpadSelectionKeys_);
-    }
-    if (idx >= 0) {
-        event.filterAndAccept();
-        if (idx < candidateList->size()) {
-            candidateList->candidate(idx).select(inputContext);
+    if (!event.isVirtual()) {
+        int idx = event.key().keyListIndex(selectionKeys_);
+        if (idx == -1 && *config_.useKeypadAsSelectionKey) {
+            idx = event.key().keyListIndex(numpadSelectionKeys_);
         }
-        return true;
-    }
+        if (idx >= 0) {
+            event.filterAndAccept();
+            if (idx < candidateList->size()) {
+                candidateList->candidate(idx).select(inputContext);
+            }
+            return true;
+        }
 
-    if (auto *movable = candidateList->toCursorMovable()) {
-        if (event.key().checkKeyList(*config_.nextCandidate)) {
-            movable->nextCandidate();
-            updatePuncPreedit(inputContext);
-            inputContext->updateUserInterface(
-                UserInterfaceComponent::InputPanel);
-            event.filterAndAccept();
-            return true;
-        }
-        if (event.key().checkKeyList(*config_.prevCandidate)) {
-            movable->prevCandidate();
-            updatePuncPreedit(inputContext);
-            inputContext->updateUserInterface(
-                UserInterfaceComponent::InputPanel);
-            event.filterAndAccept();
-            return true;
+        if (auto *movable = candidateList->toCursorMovable()) {
+            if (event.key().checkKeyList(*config_.nextCandidate)) {
+                movable->nextCandidate();
+                updatePuncPreedit(inputContext);
+                inputContext->updateUserInterface(
+                    UserInterfaceComponent::InputPanel);
+                event.filterAndAccept();
+                return true;
+            }
+            if (event.key().checkKeyList(*config_.prevCandidate)) {
+                movable->prevCandidate();
+                updatePuncPreedit(inputContext);
+                inputContext->updateUserInterface(
+                    UserInterfaceComponent::InputPanel);
+                event.filterAndAccept();
+                return true;
+            }
         }
     }
 
@@ -1454,17 +1457,6 @@ bool PinyinEngine::handleCandidateList(KeyEvent &event) {
     if (!candidateList) {
         return false;
     }
-    int idx = event.key().keyListIndex(selectionKeys_);
-    if (idx == -1 && *config_.useKeypadAsSelectionKey) {
-        idx = event.key().keyListIndex(numpadSelectionKeys_);
-    }
-    if (idx >= 0) {
-        event.filterAndAccept();
-        if (idx < candidateList->size()) {
-            candidateList->candidate(idx).select(inputContext);
-        }
-        return true;
-    }
     auto *state = inputContext->propertyFor(&factory_);
     if ((event.key().check(FcitxKey_space) ||
          event.key().check(FcitxKey_KP_Space)) &&
@@ -1478,6 +1470,22 @@ bool PinyinEngine::handleCandidateList(KeyEvent &event) {
             candidateList->candidate(idx).select(inputContext);
             return true;
         }
+    }
+
+    if (event.isVirtual()) {
+        return false;
+    }
+
+    int idx = event.key().keyListIndex(selectionKeys_);
+    if (idx == -1 && *config_.useKeypadAsSelectionKey) {
+        idx = event.key().keyListIndex(numpadSelectionKeys_);
+    }
+    if (idx >= 0) {
+        event.filterAndAccept();
+        if (idx < candidateList->size()) {
+            candidateList->candidate(idx).select(inputContext);
+        }
+        return true;
     }
 
     if (event.key().checkKeyList(*config_.prevPage)) {
