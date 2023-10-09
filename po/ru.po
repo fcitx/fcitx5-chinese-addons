@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2023-10-08 20:24+0000\n"
+"POT-Creation-Date: 2023-10-09 20:36+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Dmitry <dmitrydmitry761@gmail.com>, 2023\n"
 "Language-Team: Russian (https://app.transifex.com/fcitx/teams/12005/ru/)\n"
@@ -134,7 +134,7 @@ msgstr ""
 
 #: im/pinyin/pinyin.h:83
 msgid "Advanced Typo"
-msgstr ""
+msgstr "Cложная опечатка"
 
 #: im/table/ime.h:235
 msgid ""
@@ -266,7 +266,7 @@ msgstr ""
 
 #: im/pinyin/pinyin.h:82
 msgid "Common Typo"
-msgstr "Обычная опечатка"
+msgstr "Распространённая опечатка"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:332
 #: gui/pinyindictmanager/pinyindictmanager.cpp:364
