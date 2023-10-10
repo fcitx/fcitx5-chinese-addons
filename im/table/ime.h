@@ -11,6 +11,7 @@
 #include <fcitx-config/enum.h>
 #include <fcitx-utils/i18n.h>
 #include <fcitx-utils/log.h>
+#include <fcitx-utils/misc.h>
 #include <fcitx/candidatelist.h>
 #include <libime/core/prediction.h>
 #include <libime/core/userlanguagemodel.h>
@@ -111,12 +112,7 @@ FCITX_CONFIGURATION(
     Option<bool> preeditCursorPositionAtBeginning{
         this, "PreeditCursorPositionAtBeginning",
         _("Fix embedded preedit cursor at the beginning of the preedit"),
-#ifdef ANDROID
-        false
-#else
-        true
-#endif
-    };
+        !isAndroid()};
     Option<Key, KeyConstrain> quickphrase{
         this,
         "QuickPhraseKey",

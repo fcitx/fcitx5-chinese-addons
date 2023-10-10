@@ -12,6 +12,7 @@
 #include <fcitx-config/iniparser.h>
 #include <fcitx-utils/event.h>
 #include <fcitx-utils/i18n.h>
+#include <fcitx-utils/misc.h>
 #include <fcitx-utils/standardpath.h>
 #include <fcitx/action.h>
 #include <fcitx/addonfactory.h>
@@ -30,12 +31,6 @@
 #include <unordered_set>
 
 namespace fcitx {
-
-#ifdef ANDROID
-static constexpr bool isAndroid = true;
-#else
-static constexpr bool isAndroid = false;
-#endif
 
 template <typename Base = NoAnnotation>
 struct OptionalHideInDescriptionBase : public Base {
@@ -120,7 +115,7 @@ FCITX_CONFIGURATION(
     Option<bool> chaiziEnabled{this, "ChaiziEnabled", _("Enable Chaizi"), true};
     Option<bool> extBEnabled{this, "ExtBEnabled",
                              _("Enable Characters in Unicode CJK Extension B"),
-                             !isAndroid};
+                             !isAndroid()};
     OptionWithAnnotation<bool, OptionalHideInDescription> cloudPinyinEnabled{
         this, "CloudPinyinEnabled", _("Enable Cloud Pinyin"), false};
     Option<int, IntConstrain, DefaultMarshaller<int>, OptionalHideInDescription>
@@ -132,7 +127,7 @@ FCITX_CONFIGURATION(
     Option<bool> preeditCursorPositionAtBeginning{
         this, "PreeditCursorPositionAtBeginning",
         _("Fix embedded preedit cursor at the beginning of the preedit"),
-        !isAndroid};
+        !isAndroid()};
     Option<bool> showActualPinyinInPreedit{
         this, "PinyinInPreedit", _("Show complete pinyin in preedit"), false};
     Option<bool> predictionEnabled{this, "Prediction", _("Enable Prediction"),
