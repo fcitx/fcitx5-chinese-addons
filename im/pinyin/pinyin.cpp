@@ -1957,12 +1957,9 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
     // to remaining operation.
     if (state->predictWords_) {
         resetPredict(inputContext);
-        if (event.key().check(FcitxKey_Escape)
-#ifdef ANDROID
-            || event.key().check(FcitxKey_BackSpace) ||
-            event.key().check(FcitxKey_Delete)
-#endif
-        ) {
+        if (event.key().check(FcitxKey_Escape) ||
+            (isAndroid() && event.key().check(FcitxKey_BackSpace)) ||
+            event.key().check(FcitxKey_Delete)) {
             event.filterAndAccept();
             return;
         }
