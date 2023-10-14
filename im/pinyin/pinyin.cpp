@@ -1176,7 +1176,7 @@ void PinyinEngine::populateConfig() {
     }
     SET_FUZZY_FLAG(ue, VE_UE)
     SET_FUZZY_FLAG(commonTypo, CommonTypo)
-    SET_FUZZY_FLAG(advancedTypo, AdvancedTypo)
+    SET_FUZZY_FLAG(commonTypo, AdvancedTypo)
     SET_FUZZY_FLAG(inner, Inner)
     SET_FUZZY_FLAG(innerShort, InnerShort)
     SET_FUZZY_FLAG(partialFinal, PartialFinal)
