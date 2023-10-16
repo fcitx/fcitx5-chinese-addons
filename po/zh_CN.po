@@ -6,16 +6,16 @@
 # Mingcong Bai <jeffbai@aosc.xyz>, 2018
 # wwj402 <wwj402@gmail.com>, 2018
 # Lau YeeYu, 2023
-# csslayer <wengxt@gmail.com>, 2023
 # rocka, 2023
+# csslayer <wengxt@gmail.com>, 2023
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2023-10-14 20:24+0000\n"
+"POT-Creation-Date: 2023-10-16 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
-"Last-Translator: rocka, 2023\n"
+"Last-Translator: csslayer <wengxt@gmail.com>, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/fcitx/teams/12005/"
 "zh_CN/)\n"
 "Language: zh_CN\n"
@@ -34,7 +34,7 @@ msgstr "以"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:140
 msgid "%1 already exists, do you want to overwrite this dictionary?"
-msgstr "%1 已存在，是否要覆盖这个词典？"
+msgstr "%1 已存在，是否要覆盖这个词库？"
 
 #: gui/pinyindictmanager/filedownloader.cpp:71
 msgid "%1% Downloaded."
@@ -49,7 +49,7 @@ msgstr "添加(&A)"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:37
 msgid "&Browse Sogou Cell Dictionary Online"
-msgstr "在线浏览搜狗细胞词典(&B)"
+msgstr "在线浏览搜狗细胞词库(&B)"
 
 #. i18n: file: gui/customphraseeditor/customphraseeditor.ui:84
 #. i18n: ectx: property (text), widget (QPushButton, clearButton_)
@@ -156,7 +156,7 @@ msgstr "您确定要删除 %1？"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:333
 msgid "Are you sure to delete all dictionaries?"
-msgstr "您确定要删除所有字典吗？"
+msgstr "您确定要删除所有词库吗？"
 
 #: im/table/ime.h:226
 msgid "Auto phrase length"
@@ -315,7 +315,7 @@ msgstr "电报码"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:139
 msgid "Dictionary already exists"
-msgstr "词典已经存在"
+msgstr "词库已经存在"
 
 #: im/table/ime.h:261
 msgid "Display Hint for word"
@@ -483,7 +483,7 @@ msgstr "从文件(&F)"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:35
 msgid "From &Sogou Cell Dictionary File"
-msgstr "来自搜狗细胞词典文件(&S)"
+msgstr "来自搜狗细胞词库文件(&S)"
 
 #: modules/fullwidth/fullwidth.cpp:73 modules/fullwidth/fullwidth.h:29
 msgid "Full width Character"
@@ -623,7 +623,7 @@ msgstr "短拼音的内模糊音节 (qie -> qi'e)"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:99
 msgid "Input Dictionary Name"
-msgstr "输入词典名称"
+msgstr "输入词库名称"
 
 #: gui/customphraseeditor/customphrasemodel.cpp:86
 msgid "Key"
@@ -664,7 +664,7 @@ msgstr "管理自定义词组"
 
 #: im/pinyin/pinyin.h:208
 msgid "Manage Dictionaries"
-msgstr "管理字典"
+msgstr "管理词库"
 
 #: modules/punctuation/punctuation.h:40
 msgid "Mapping"
@@ -692,7 +692,7 @@ msgstr "修改词典"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:99
 msgid "New Dictionary Name:"
-msgstr "新词典名称："
+msgstr "新词库名称："
 
 #: im/table/ime.h:60 im/pinyin/pinyin.h:167
 msgid "Next Candidate"
@@ -773,7 +773,7 @@ msgstr "拼音"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:92
 msgid "Pinyin dictionary manager"
-msgstr "拼音词典管理器"
+msgstr "拼音词库管理器"
 
 #: im/table/engine.h:42 im/pinyin/pinyin.h:72
 msgid "PinyinJiajia"
@@ -890,7 +890,7 @@ msgstr "选择第 3 个候选词"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:159
 msgid "Select Dictionary File"
-msgstr "选择词典文件"
+msgstr "选择词库文件"
 
 #: im/table/ime.h:66
 msgid "Select Second Candidate"
