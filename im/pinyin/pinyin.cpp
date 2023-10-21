@@ -1844,11 +1844,22 @@ bool PinyinEngine::handlePunc(KeyEvent &event) {
     }
     if (!punc.empty()) {
         event.filterAndAccept();
-        inputContext->commitString(punc + puncAfter);
-        if (size_t length = utf8::lengthValidated(puncAfter);
-            length != 0 && length != utf8::INVALID_LENGTH) {
-            for (size_t i = 0; i < length; i++) {
-                inputContext->forwardKey(Key(FcitxKey_Left));
+        auto paired = punc + puncAfter;
+        if (inputContext->capabilityFlags()
+            .test(CapabilityFlag::CommitStringWithCursor)) {
+            if (size_t length = utf8::lengthValidated(punc);
+                length != 0 && length != utf8::INVALID_LENGTH) {
+                inputContext->commitStringWithCursor(paired, length);
+            } else {
+                inputContext->commitString(paired);
+            }
+        } else {
+            inputContext->commitString(paired);
+            if (size_t length = utf8::lengthValidated(puncAfter);
+                length != 0 && length != utf8::INVALID_LENGTH) {
+                for (size_t i = 0; i < length; i++) {
+                    inputContext->forwardKey(Key(FcitxKey_Left));
+                }
             }
         }
     }
