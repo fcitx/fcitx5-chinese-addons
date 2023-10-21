@@ -164,6 +164,12 @@ void TableEngine::populateConfig() {
     }
 }
 
+void TableEngine::setSubConfig(const std::string &path, const RawConfig &) {
+    if (path == "reloaddict") {
+        reloadDict();
+    }
+}
+
 void TableEngine::activate(const fcitx::InputMethodEntry &entry,
                            fcitx::InputContextEvent &event) {
     auto *inputContext = event.inputContext();
@@ -300,6 +306,16 @@ void TableEngine::setConfigForInputMethod(const InputMethodEntry &entry,
                                           const RawConfig &config) {
     ime_->updateConfig(entry.uniqueName(), config);
 }
+
+void TableEngine::reloadDict() {
+    instance_->inputContextManager().foreach([&](InputContext *ic) {
+        auto *state = ic->propertyFor(&factory_);
+        state->release();
+        return true;
+    });
+    ime_->reloadAllDict();
+}
+
 } // namespace fcitx
 
 FCITX_ADDON_FACTORY(fcitx::TableEngineFactory)
