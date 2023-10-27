@@ -140,7 +140,7 @@ FCITX_CONFIGURATION(
     Option<bool> showActualPinyinInPreedit{
         this, "PinyinInPreedit", _("Show complete pinyin in preedit"), false};
     Option<bool> predictionEnabled{this, "Prediction", _("Enable Prediction"),
-                                   false};
+                                   isAndroid() ? true: false};
     Option<int, IntConstrain> predictionSize{
         this, "PredictionSize", _("Prediction Size"), 10, IntConstrain(3, 20)};
     OptionWithAnnotation<SwitchInputMethodBehavior,
