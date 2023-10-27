@@ -390,11 +390,15 @@ public:
     }
 
 private:
-    static constexpr std::array<std::string_view, 8> ProgerssString = {
-        "⡿", "⣟", "⣯", "⣷", "⣾", "⣽", "⣻", "⢿"};
+    static constexpr std::array<std::string_view, 4> ProgerssString = {
+        "◐",
+        "◓",
+        "◑",
+        "◒",
+    };
     int tick_ = (now(CLOCK_MONOTONIC) / TickPeriod) % ProgerssString.size();
     std::unique_ptr<EventSourceTime> timeEvent_;
-    static constexpr uint64_t TickPeriod = 120000;
+    static constexpr uint64_t TickPeriod = 180000;
 };
 
 std::unique_ptr<CandidateList>
