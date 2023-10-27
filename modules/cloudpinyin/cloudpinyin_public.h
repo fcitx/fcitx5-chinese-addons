@@ -37,11 +37,12 @@ class CloudPinyinCandidateWord
 public:
     CloudPinyinCandidateWord(fcitx::AddonInstance *cloudpinyin_,
                              const std::string &pinyin,
-                             const std::string &selectedSentence,
+                             const std::string &selectedSentence, bool keep,
                              fcitx::InputContext *inputContext,
                              CloudPinyinSelectedCallback callback)
         : CandidateWord(fcitx::Text{}), selectedSentence_(selectedSentence),
-          inputContext_(inputContext), callback_(std::move(callback)) {
+          inputContext_(inputContext), callback_(std::move(callback)),
+          keep_(keep) {
         // use cloud unicode char
         setText(fcitx::Text("\xe2\x98\x81"));
         auto ref = watch();
@@ -66,6 +67,7 @@ public:
 
     bool filled() const { return filled_; }
     const std::string &word() const { return word_; }
+    fcitx::InputContext *inputContext() { return inputContext_; }
 
 private:
     static constexpr long int LOADING_TIME_QUICK_THRESHOLD = 1000;
@@ -97,8 +99,7 @@ private:
             if (static_cast<CandidateWord *>(this) == &candidate) {
                 idx = i;
             } else {
-                if (!dupIndex &&
-                    text().toString() == candidate.text().toString()) {
+                if (!dupIndex && word_ == candidate.text().toString()) {
                     dupIndex = i;
                 }
             }
@@ -121,12 +122,12 @@ private:
                 }
 
             } else {
-                if (ms > LOADING_TIME_QUICK_THRESHOLD) {
+                if (!keep_ && ms <= LOADING_TIME_QUICK_THRESHOLD) {
+                    modifiable->remove(idx);
+                } else {
                     setText(fcitx::Text("\xe2\x98\x81"));
                     word_ = std::string();
-                    setPlaceHolder(true);
-                } else {
-                    modifiable->remove(idx);
+                    setPlaceHolder(!keep_);
                 }
             }
         }
@@ -143,6 +144,7 @@ private:
     fcitx::InputContext *inputContext_;
     bool constructor_ = true;
     CloudPinyinSelectedCallback callback_;
+    bool keep_;
 };
 
 #endif // _CLOUDPINYIN_CLOUDPINYIN_PUBLIC_H_

@@ -120,6 +120,13 @@ FCITX_CONFIGURATION(
     Option<int, IntConstrain, DefaultMarshaller<int>, OptionalHideInDescription>
         cloudPinyinIndex{this, "CloudPinyinIndex", _("Cloud Pinyin Index"), 2,
                          IntConstrain(1, 10)};
+    OptionWithAnnotation<bool, OptionalHideInDescription> cloudPinyinAnimation{
+        this, "CloudPinyinAnimation",
+        _("Show animation when Cloud Pinyin is loading"), true};
+    OptionWithAnnotation<bool, OptionalHideInDescription>
+        keepCloudPinyinPlaceHolder{this, "KeepCloudPinyinPlaceHolder",
+                                   _("Always show Cloud Pinyin place holder"),
+                                   false};
     Option<bool> showPreeditInApplication{this, "PreeditInApplication",
                                           _("Show preedit within application"),
                                           true};
@@ -280,6 +287,7 @@ public:
                       const fcitx::RawConfig &) override;
 
     libime::PinyinIME *ime() { return ime_.get(); }
+    const auto &config() const { return config_; }
 
     void initPredict(InputContext *inputContext);
     void updatePredict(InputContext *inputContext);
@@ -289,6 +297,8 @@ public:
 
     void resetStroke(InputContext *inputContext) const;
     void resetForgetCandidate(InputContext *inputContext) const;
+
+    FCITX_ADDON_DEPENDENCY_LOADER(cloudpinyin, instance_->addonManager());
 
 private:
     void cloudPinyinSelected(InputContext *inputContext,
@@ -349,7 +359,6 @@ private:
     CustomPhraseDict customPhrase_;
 
     FCITX_ADDON_DEPENDENCY_LOADER(quickphrase, instance_->addonManager());
-    FCITX_ADDON_DEPENDENCY_LOADER(cloudpinyin, instance_->addonManager());
     FCITX_ADDON_DEPENDENCY_LOADER(fullwidth, instance_->addonManager());
     FCITX_ADDON_DEPENDENCY_LOADER(chttrans, instance_->addonManager());
     FCITX_ADDON_DEPENDENCY_LOADER(punctuation, instance_->addonManager());

@@ -12,6 +12,7 @@
 #include "../../modules/cloudpinyin/cloudpinyin_public.h"
 #include "config.h"
 #include "punctuation.h"
+#include <cstdint>
 #include <ctime>
 #include <fcitx-utils/keysym.h>
 #include <fcitx-utils/keysymgen.h>
@@ -340,15 +341,41 @@ class CustomCloudPinyinCandidateWord
     : public CloudPinyinCandidateWord,
       public PinyinAbstractExtraCandidateWordInterface {
 public:
-    CustomCloudPinyinCandidateWord(AddonInstance *cloudpinyin,
+    CustomCloudPinyinCandidateWord(PinyinEngine *engine,
                                    const std::string &pinyin,
                                    const std::string &selectedSentence,
                                    InputContext *inputContext,
                                    CloudPinyinSelectedCallback callback,
                                    int order)
-        : CloudPinyinCandidateWord(cloudpinyin, pinyin, selectedSentence,
+        : CloudPinyinCandidateWord(engine->cloudpinyin(), pinyin,
+                                   selectedSentence,
+                                   *engine->config().keepCloudPinyinPlaceHolder,
                                    inputContext, callback),
-          PinyinAbstractExtraCandidateWordInterface(*this, order) {}
+          PinyinAbstractExtraCandidateWordInterface(*this, order) {
+        if (filled() || !*engine->config().cloudPinyinAnimation) {
+            return;
+        }
+        setText(Text(std::string(ProgerssString[tick_])));
+        // This should be high accuracy since it's per 120ms.
+        timeEvent_ = engine->instance()->eventLoop().addTimeEvent(
+            CLOCK_MONOTONIC, now(CLOCK_MONOTONIC) + TickPeriod, 1000,
+            [this, ref = this->watch()](EventSourceTime *, uint64_t time) {
+                if (!ref.isValid()) {
+                    return true;
+                }
+                if (filled()) {
+                    timeEvent_.reset();
+                    return true;
+                }
+                tick_ = (time / TickPeriod) % ProgerssString.size();
+                setText(Text(std::string(ProgerssString[tick_])));
+                this->inputContext()->updateUserInterface(
+                    fcitx::UserInterfaceComponent::InputPanel);
+                timeEvent_->setTime(timeEvent_->time() + TickPeriod);
+                timeEvent_->setOneShot();
+                return true;
+            });
+    }
 
     void select(InputContext *inputContext) const override {
         if ((!filled() || word().empty()) && order() == 0) {
@@ -361,6 +388,13 @@ public:
         }
         CloudPinyinCandidateWord::select(inputContext);
     }
+
+private:
+    static constexpr std::array<std::string_view, 8> ProgerssString = {
+        "⡿", "⣟", "⣯", "⣷", "⣾", "⣽", "⣻", "⢿"};
+    int tick_ = (now(CLOCK_MONOTONIC) / TickPeriod) % ProgerssString.size();
+    std::unique_ptr<EventSourceTime> timeEvent_;
+    static constexpr uint64_t TickPeriod = 120000;
 };
 
 std::unique_ptr<CandidateList>
@@ -683,7 +717,7 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
                                   ? context.candidateFullPinyin(0)
                                   : context.userInput().substr(selectedLength);
             auto cand = std::make_unique<CustomCloudPinyinCandidateWord>(
-                cloudpinyin(), fullPinyin, selectedSentence, inputContext,
+                this, fullPinyin, selectedSentence, inputContext,
                 std::bind(&PinyinEngine::cloudPinyinSelected, this, _1, _2, _3),
                 *config_.cloudPinyinIndex - 1);
             if (!cand->filled() ||
@@ -974,6 +1008,10 @@ PinyinEngine::PinyinEngine(Instance *instance)
                 configPtr->cloudPinyinEnabled.annotation().setHidden(
                     !hasCloudPinyin);
                 configPtr->cloudPinyinIndex.annotation().setHidden(
+                    !hasCloudPinyin);
+                configPtr->cloudPinyinAnimation.annotation().setHidden(
+                    !hasCloudPinyin);
+                configPtr->keepCloudPinyinPlaceHolder.annotation().setHidden(
                     !hasCloudPinyin);
                 configPtr->cloudpinyin.setHidden(!hasCloudPinyin);
             }
@@ -1845,8 +1883,8 @@ bool PinyinEngine::handlePunc(KeyEvent &event) {
     if (!punc.empty()) {
         event.filterAndAccept();
         auto paired = punc + puncAfter;
-        if (inputContext->capabilityFlags()
-            .test(CapabilityFlag::CommitStringWithCursor)) {
+        if (inputContext->capabilityFlags().test(
+                CapabilityFlag::CommitStringWithCursor)) {
             if (size_t length = utf8::lengthValidated(punc);
                 length != 0 && length != utf8::INVALID_LENGTH) {
                 inputContext->commitStringWithCursor(paired, length);
