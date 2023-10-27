@@ -115,6 +115,9 @@ FCITX_CONFIGURATION(
     Option<bool> extBEnabled{this, "ExtBEnabled",
                              _("Enable Characters in Unicode CJK Extension B"),
                              !isAndroid()};
+    OptionalHiddenSubConfigOption cloudpinyin{
+        this, "CloudPinyin", _("Cloud Pinyin"),
+        "fcitx://config/addon/cloudpinyin"};
     OptionWithAnnotation<bool, OptionalHideInDescription> cloudPinyinEnabled{
         this, "CloudPinyinEnabled", _("Enable Cloud Pinyin"), false};
     Option<int, IntConstrain, DefaultMarshaller<int>, OptionalHideInDescription>
@@ -222,9 +225,6 @@ FCITX_CONFIGURATION(
     SubConfigOption chttrans{
         this, "Chttrans", _("Simplified and Traditional Chinese Translation"),
         "fcitx://config/addon/chttrans"};
-    OptionalHiddenSubConfigOption cloudpinyin{
-        this, "CloudPinyin", _("Cloud Pinyin"),
-        "fcitx://config/addon/cloudpinyin"};
     Option<Key, KeyConstrain> quickphraseKey{
         this,
         "QuickPhraseKey",
