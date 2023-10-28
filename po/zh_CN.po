@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2023-10-27 20:24+0000\n"
+"POT-Creation-Date: 2023-10-28 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: csslayer <wengxt@gmail.com>, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/fcitx/teams/12005/"
@@ -152,7 +152,7 @@ msgstr "替代映射"
 
 #: im/pinyin/pinyin.h:131
 msgid "Always show Cloud Pinyin place holder"
-msgstr ""
+msgstr "总是显示云拼音的占位符"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:365
 msgid "Are you sure to delete %1?"
@@ -922,7 +922,7 @@ msgstr "提示和候选词之间的分隔符文本"
 
 #: im/pinyin/pinyin.h:128
 msgid "Show animation when Cloud Pinyin is loading"
-msgstr ""
+msgstr "加载云拼音的时候显示动画"
 
 #: im/pinyin/pinyin.h:141
 msgid "Show complete pinyin in preedit"
