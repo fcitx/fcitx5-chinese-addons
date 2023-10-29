@@ -50,11 +50,7 @@ TableEngine::TableEngine(Instance *instance)
     events_.emplace_back(instance_->watchEvent(
         EventType::InputMethodGroupChanged, EventWatcherPhase::Default,
         [this](Event &) {
-            instance_->inputContextManager().foreach([this](InputContext *ic) {
-                auto *state = ic->propertyFor(&factory_);
-                state->release();
-                return true;
-            });
+            releaseStates();
             std::unordered_set<std::string> names;
             for (const auto &im : instance_->inputMethodManager()
                                       .currentGroup()
@@ -307,12 +303,16 @@ void TableEngine::setConfigForInputMethod(const InputMethodEntry &entry,
     ime_->updateConfig(entry.uniqueName(), config);
 }
 
-void TableEngine::reloadDict() {
+void TableEngine::releaseStates() {
     instance_->inputContextManager().foreach([&](InputContext *ic) {
         auto *state = ic->propertyFor(&factory_);
         state->release();
         return true;
     });
+}
+
+void TableEngine::reloadDict() {
+    releaseStates();
     ime_->reloadAllDict();
 }
 

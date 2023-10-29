@@ -122,6 +122,7 @@ private:
                             const std::string &word);
     void saveConfig() { safeSaveAsIni(config_, "conf/table.conf"); }
 
+    void releaseStates();
     void reloadDict();
 
     Instance *instance_;
