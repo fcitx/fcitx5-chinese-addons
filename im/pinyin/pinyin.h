@@ -22,7 +22,7 @@
 #include <fcitx/inputcontextproperty.h>
 #include <fcitx/inputmethodengine.h>
 #include <fcitx/instance.h>
-#include <libime/core/prediction.h>
+#include <libime/pinyin/pinyinprediction.h>
 #include <libime/pinyin/pinyincontext.h>
 #include <libime/pinyin/pinyinime.h>
 #include <memory>
@@ -142,7 +142,7 @@ FCITX_CONFIGURATION(
     Option<bool> predictionEnabled{this, "Prediction", _("Enable Prediction"),
                                    isAndroid() ? true: false};
     Option<int, IntConstrain> predictionSize{
-        this, "PredictionSize", _("Prediction Size"), 10, IntConstrain(3, 20)};
+        this, "PredictionSize", _("Prediction Size"), 14, IntConstrain(3, 40)};
     OptionWithAnnotation<SwitchInputMethodBehavior,
                          SwitchInputMethodBehaviorI18NAnnotation>
         switchInputMethodBehavior{this, "SwitchInputMethodBehavior",
@@ -291,14 +291,15 @@ public:
 
     void initPredict(InputContext *inputContext);
     void updatePredict(InputContext *inputContext);
-    std::unique_ptr<CandidateList>
-    predictCandidateList(const std::vector<std::string> &words);
+
     void updateUI(InputContext *inputContext);
 
     void resetStroke(InputContext *inputContext) const;
     void resetForgetCandidate(InputContext *inputContext) const;
 
     FCITX_ADDON_DEPENDENCY_LOADER(cloudpinyin, instance_->addonManager());
+
+    const auto &selectionKeys() const { return selectionKeys_; }
 
 private:
     void cloudPinyinSelected(InputContext *inputContext,
@@ -352,7 +353,7 @@ private:
     KeyList numpadSelectionKeys_;
     FactoryFor<PinyinState> factory_;
     SimpleAction predictionAction_;
-    libime::Prediction prediction_;
+    libime::PinyinPrediction prediction_;
     std::unique_ptr<EventSource> deferEvent_;
     std::unique_ptr<EventSource> checkCloudPinyinAvailable_;
     std::unique_ptr<HandlerTableEntry<EventHandler>> event_;

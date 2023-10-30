@@ -51,12 +51,12 @@
 #include <fmt/chrono.h>
 #include <fmt/format.h>
 #include <libime/core/historybigram.h>
-#include <libime/core/prediction.h>
 #include <libime/core/userlanguagemodel.h>
 #include <libime/pinyin/pinyincontext.h>
 #include <libime/pinyin/pinyindecoder.h>
 #include <libime/pinyin/pinyindictionary.h>
 #include <libime/pinyin/pinyinencoder.h>
+#include <libime/pinyin/pinyinprediction.h>
 #include <libime/pinyin/shuangpinprofile.h>
 #include <quickphrase_public.h>
 
@@ -122,6 +122,28 @@ public:
             predictWords.erase(predictWords.begin(), predictWords.begin() +
                                                          predictWords.size() -
                                                          maxHistorySize);
+        }
+        engine_->updatePredict(inputContext);
+    }
+
+    PinyinEngine *engine_;
+    std::string word_;
+};
+
+class PinyinPredictDictCandidateWord : public CandidateWord {
+public:
+    PinyinPredictDictCandidateWord(PinyinEngine *engine, std::string word)
+        : CandidateWord(Text(word)), engine_(engine), word_(std::move(word)) {}
+
+    void select(InputContext *inputContext) const override {
+        inputContext->commitString(word_);
+        auto *state = inputContext->propertyFor(&engine_->factory());
+        if (!state->predictWords_) {
+            state->predictWords_.emplace();
+        }
+        // Append to last word, instead of push back.
+        if (!state->predictWords_->empty()) {
+            state->predictWords_->back().append(word_);
         }
         engine_->updatePredict(inputContext);
     }
@@ -401,17 +423,33 @@ private:
     static constexpr uint64_t TickPeriod = 180000;
 };
 
+template <typename T>
 std::unique_ptr<CandidateList>
-PinyinEngine::predictCandidateList(const std::vector<std::string> &words) {
+predictCandidateList(PinyinEngine *engine, const std::vector<T> &words) {
     if (words.empty()) {
         return nullptr;
     }
     auto candidateList = std::make_unique<CommonCandidateList>();
     for (const auto &word : words) {
-        candidateList->append<PinyinPredictCandidateWord>(this, word);
+        if constexpr (std::is_same_v<T, std::string>) {
+            candidateList->append<PinyinPredictCandidateWord>(engine, word);
+        } else if constexpr (std::is_same_v<
+                                 T,
+                                 std::pair<std::string,
+                                           libime::PinyinPredictionSource>>) {
+
+            if (word.second == libime::PinyinPredictionSource::Model) {
+                candidateList->append<PinyinPredictCandidateWord>(engine,
+                                                                  word.first);
+            } else if (word.second ==
+                       libime::PinyinPredictionSource::Dictionary) {
+                candidateList->append<PinyinPredictDictCandidateWord>(
+                    engine, word.first);
+            }
+        }
     }
-    candidateList->setSelectionKey(selectionKeys_);
-    candidateList->setPageSize(*config_.pageSize);
+    candidateList->setSelectionKey(engine->selectionKeys());
+    candidateList->setPageSize(*engine->config().pageSize);
     if (candidateList->size()) {
         candidateList->setGlobalCursorIndex(0);
     }
@@ -425,9 +463,11 @@ void PinyinEngine::initPredict(InputContext *inputContext) {
     auto &context = state->context_;
     auto lmState = context.state();
     state->predictWords_ = context.selectedWords();
-    auto words = prediction_.predict(lmState, context.selectedWords(),
-                                     *config_.predictionSize);
-    if (auto candidateList = predictCandidateList(words)) {
+    auto words =
+        prediction_.predict(lmState, context.selectedWords(),
+                            context.selectedWordsWithPinyin().back().second,
+                            *config_.predictionSize);
+    if (auto candidateList = predictCandidateList(this, words)) {
         auto &inputPanel = inputContext->inputPanel();
         inputPanel.setCandidateList(std::move(candidateList));
     } else {
@@ -444,7 +484,7 @@ void PinyinEngine::updatePredict(InputContext *inputContext) {
     assert(state->predictWords_.has_value());
     auto words =
         prediction_.predict(*state->predictWords_, *config_.predictionSize);
-    if (auto candidateList = predictCandidateList(words)) {
+    if (auto candidateList = predictCandidateList(this, words)) {
         auto &inputPanel = inputContext->inputPanel();
         inputPanel.setCandidateList(std::move(candidateList));
     } else {
@@ -905,6 +945,7 @@ PinyinEngine::PinyinEngine(Instance *instance)
                            libime::PinyinDictFormat::Binary);
     }
     prediction_.setUserLanguageModel(ime_->model());
+    prediction_.setPinyinDictionary(ime_->dict());
 
     do {
         auto file = standardPath.openUser(StandardPath::Type::PkgData,
