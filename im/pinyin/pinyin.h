@@ -22,9 +22,9 @@
 #include <fcitx/inputcontextproperty.h>
 #include <fcitx/inputmethodengine.h>
 #include <fcitx/instance.h>
-#include <libime/pinyin/pinyinprediction.h>
 #include <libime/pinyin/pinyincontext.h>
 #include <libime/pinyin/pinyinime.h>
+#include <libime/pinyin/pinyinprediction.h>
 #include <memory>
 #include <string_view>
 #include <unordered_map>
@@ -140,7 +140,7 @@ FCITX_CONFIGURATION(
     Option<bool> showActualPinyinInPreedit{
         this, "PinyinInPreedit", _("Show complete pinyin in preedit"), false};
     Option<bool> predictionEnabled{this, "Prediction", _("Enable Prediction"),
-                                   isAndroid() ? true: false};
+                                   isAndroid() ? true : false};
     Option<int, IntConstrain> predictionSize{
         this, "PredictionSize", _("Prediction Size"), 14, IntConstrain(3, 40)};
     OptionWithAnnotation<SwitchInputMethodBehavior,
