@@ -257,4 +257,16 @@ void TableIME::saveDict(const std::string &name) {
             }
         });
 }
+
+void TableIME::reloadAllDict() {
+    std::unordered_set<std::string> names;
+    for (const auto &pair : tables_) {
+        names.insert(pair.first);
+    }
+    tables_.clear();
+    for (const auto &name : names) {
+        requestDict(name);
+    }
+}
+
 } // namespace fcitx

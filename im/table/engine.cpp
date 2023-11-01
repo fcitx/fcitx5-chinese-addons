@@ -50,11 +50,7 @@ TableEngine::TableEngine(Instance *instance)
     events_.emplace_back(instance_->watchEvent(
         EventType::InputMethodGroupChanged, EventWatcherPhase::Default,
         [this](Event &) {
-            instance_->inputContextManager().foreach([this](InputContext *ic) {
-                auto *state = ic->propertyFor(&factory_);
-                state->release();
-                return true;
-            });
+            releaseStates();
             std::unordered_set<std::string> names;
             for (const auto &im : instance_->inputMethodManager()
                                       .currentGroup()
@@ -161,6 +157,12 @@ void TableEngine::populateConfig() {
             }
             reverseShuangPinTable_->emplace(syl.toString(), input);
         }
+    }
+}
+
+void TableEngine::setSubConfig(const std::string &path, const RawConfig &) {
+    if (path == "reloaddict") {
+        reloadDict();
     }
 }
 
@@ -300,6 +302,20 @@ void TableEngine::setConfigForInputMethod(const InputMethodEntry &entry,
                                           const RawConfig &config) {
     ime_->updateConfig(entry.uniqueName(), config);
 }
+
+void TableEngine::releaseStates() {
+    instance_->inputContextManager().foreach([&](InputContext *ic) {
+        auto *state = ic->propertyFor(&factory_);
+        state->release();
+        return true;
+    });
+}
+
+void TableEngine::reloadDict() {
+    releaseStates();
+    ime_->reloadAllDict();
+}
+
 } // namespace fcitx
 
 FCITX_ADDON_FACTORY(fcitx::TableEngineFactory)

@@ -302,6 +302,7 @@ public:
     void updateConfig(const std::string &name, const RawConfig &config);
 
     void releaseUnusedDict(const std::unordered_set<std::string> &names);
+    void reloadAllDict();
 
 private:
     libime::LanguageModelResolver *lm_;
