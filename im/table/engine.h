@@ -97,6 +97,7 @@ public:
         saveConfig();
     }
     void populateConfig();
+    void setSubConfig(const std::string &path, const RawConfig &) override;
 
     const Configuration *
     getConfigForInputMethod(const InputMethodEntry &) const override;
@@ -120,6 +121,9 @@ private:
                             const std::string &selected,
                             const std::string &word);
     void saveConfig() { safeSaveAsIni(config_, "conf/table.conf"); }
+
+    void releaseStates();
+    void reloadDict();
 
     Instance *instance_;
     std::unique_ptr<TableIME> ime_;
