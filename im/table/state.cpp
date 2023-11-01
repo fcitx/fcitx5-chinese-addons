@@ -357,7 +357,8 @@ bool TableState::autoSelectCandidate() {
     return false;
 }
 
-bool TableState::handleCandidateList(const TableConfig &config, KeyEvent &event) {
+bool TableState::handleCandidateList(const TableConfig &config,
+                                     KeyEvent &event) {
     if (event.isVirtual()) {
         return false;
     }
@@ -894,7 +895,8 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
     }
 
     // Non candidate key for predict candidate should clear it.
-    if (inputContext->inputPanel().candidateList() && dynamic_cast<const TablePredictCandidateWord *>(
+    if (inputContext->inputPanel().candidateList() &&
+        dynamic_cast<const TablePredictCandidateWord *>(
             &inputContext->inputPanel().candidateList()->candidate(0))) {
         inputContext->inputPanel().setCandidateList(nullptr);
         needUpdate = true;
@@ -1152,10 +1154,10 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         if (!punc.empty()) {
             event.filterAndAccept();
             auto paired = punc + puncAfter;
-            if (inputContext->capabilityFlags()
-                    .test(CapabilityFlag::CommitStringWithCursor)) {
+            if (inputContext->capabilityFlags().test(
+                    CapabilityFlag::CommitStringWithCursor)) {
                 if (size_t length = utf8::lengthValidated(punc);
-                        length != 0 && length != utf8::INVALID_LENGTH) {
+                    length != 0 && length != utf8::INVALID_LENGTH) {
                     inputContext->commitStringWithCursor(paired, length);
                 } else {
                     inputContext->commitString(paired);
