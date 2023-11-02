@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2023-11-02 12:11+0000\n"
+"POT-Creation-Date: 2023-11-02 12:17+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: csslayer <wengxt@gmail.com>, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/fcitx/teams/12005/"
@@ -894,7 +894,7 @@ msgstr "选择第 3 个候选词"
 
 #: im/table/ime.h:66
 msgid "Select Current Candidate"
-msgstr ""
+msgstr "选择当前候选词"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:159
 msgid "Select Dictionary File"
