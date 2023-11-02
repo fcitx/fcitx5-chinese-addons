@@ -60,6 +60,12 @@ FCITX_CONFIGURATION(
         _("Next Candidate"),
         {Key("Right")},
         KeyListConstrain(KeyConstrainFlag::AllowModifierLess)};
+    KeyListOption defaultCandidate{
+        this,
+        "DefaultCandidate",
+        _("Select Current Candidate"),
+        {Key(FcitxKey_space)},
+        KeyListConstrain({KeyConstrainFlag::AllowModifierLess})};
     KeyListOption secondCandidate{
         this,
         "SecondCandidate",

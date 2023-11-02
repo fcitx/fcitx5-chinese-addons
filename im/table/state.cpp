@@ -466,7 +466,7 @@ bool TableState::handlePinyinMode(KeyEvent &event) {
                 reset();
                 return true;
             }
-        } else if (event.key().check(FcitxKey_space)) {
+        } else if (event.key().checkKeyList(*config.defaultCandidate)) {
             event.filterAndAccept();
             if (autoSelectCandidate()) {
                 return true;
@@ -1051,7 +1051,7 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
                 needUpdate = true;
             } else if (!context->selected()) {
                 // key to handle when it is not empty.
-                if (event.key().check(FcitxKey_space)) {
+                if (event.key().checkKeyList(*config.defaultCandidate)) {
                     if (!autoSelectCandidate()) {
                         commitBuffer(true);
                         needUpdate = true;
