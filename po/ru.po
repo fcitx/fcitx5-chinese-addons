@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2023-11-02 12:11+0000\n"
+"POT-Creation-Date: 2023-11-02 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Dmitry <dmitrydmitry761@gmail.com>, 2023\n"
 "Language-Team: Russian (https://app.transifex.com/fcitx/teams/12005/ru/)\n"
@@ -908,15 +908,15 @@ msgstr "Файл SCEL (*.scel)"
 
 #: im/pinyin/pinyin.h:183
 msgid "Select 2nd Candidate"
-msgstr "Выберите 2-й кандидат"
+msgstr "Выбрать 2-й кандидат"
 
 #: im/pinyin/pinyin.h:190
 msgid "Select 3rd Candidate"
-msgstr "Выберите 3-й кандидат"
+msgstr "Выбрать 3-й кандидат"
 
 #: im/table/ime.h:66
 msgid "Select Current Candidate"
-msgstr ""
+msgstr "Выбрать текущий кандидат"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:159
 msgid "Select Dictionary File"
@@ -924,15 +924,15 @@ msgstr "Выбрать файл словаря"
 
 #: im/table/ime.h:72
 msgid "Select Second Candidate"
-msgstr "Выберите второй кандидат"
+msgstr "Выбрать второй кандидат"
 
 #: im/table/ime.h:79
 msgid "Select Third Candidate"
-msgstr "Выберите третий кандидат"
+msgstr "Выбрать третий кандидат"
 
 #: im/table/state.cpp:1459
 msgid "Select candidate to be removed from history:"
-msgstr "Выберите кандидат для удаления из истории:"
+msgstr "Выбрать кандидат для удаления из истории:"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:200
 msgid "Select scel file"
@@ -1093,11 +1093,11 @@ msgstr "Использовать Keypad в качестве клавиши вы�
 
 #: im/table/state.cpp:728
 msgid "Use Left and Right to select character: "
-msgstr "Используйте влево и вправо для выбора символа:"
+msgstr "Используйте клавиши Left и Right для выбора символа:"
 
 #: im/table/state.cpp:776
 msgid "Use Left and Right to select text. "
-msgstr "Используйте влево и вправо для выбора текста."
+msgstr "Используйте клавиши Left и Right для выбора текста."
 
 #: im/pinyin/pinyin.h:235
 msgid "Use V to trigger quickphrase"
