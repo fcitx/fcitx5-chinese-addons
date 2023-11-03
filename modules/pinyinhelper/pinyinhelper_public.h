@@ -24,5 +24,6 @@ FCITX_ADDON_DECLARE_FUNCTION(PinyinHelper, reverseLookupStroke,
                              std::string(const std::string &));
 FCITX_ADDON_DECLARE_FUNCTION(PinyinHelper, prettyStrokeString,
                              std::string(const std::string &));
+FCITX_ADDON_DECLARE_FUNCTION(PinyinHelper, loadStroke, void());
 
 #endif // _PINYINHELPER_PINYINHELPER_PUBLIC_H_

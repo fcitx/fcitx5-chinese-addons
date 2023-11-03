@@ -30,10 +30,12 @@ public:
     lookupStroke(const std::string &input, int limit);
     std::string reverseLookupStroke(const std::string &input);
     std::string prettyStrokeString(const std::string &input);
+    void loadStroke();
 
     FCITX_ADDON_EXPORT_FUNCTION(PinyinHelper, lookup);
     FCITX_ADDON_EXPORT_FUNCTION(PinyinHelper, fullLookup);
     FCITX_ADDON_EXPORT_FUNCTION(PinyinHelper, lookupStroke);
+    FCITX_ADDON_EXPORT_FUNCTION(PinyinHelper, loadStroke);
     FCITX_ADDON_EXPORT_FUNCTION(PinyinHelper, reverseLookupStroke);
     FCITX_ADDON_EXPORT_FUNCTION(PinyinHelper, prettyStrokeString);
 

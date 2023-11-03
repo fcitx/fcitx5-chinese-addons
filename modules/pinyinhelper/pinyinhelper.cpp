@@ -107,6 +107,8 @@ PinyinHelper::fullLookup(uint32_t chr) {
     return {};
 }
 
+void PinyinHelper::loadStroke() { stroke_.loadAsync(); }
+
 std::vector<std::pair<std::string, std::string>>
 PinyinHelper::lookupStroke(const std::string &input, int limit) {
     static const std::set<char> num{'1', '2', '3', '4', '5'};
