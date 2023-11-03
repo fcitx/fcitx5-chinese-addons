@@ -1046,23 +1046,22 @@ PinyinEngine::PinyinEngine(Instance *instance)
     pyConfig_.showShuangpinMode.annotation().setHidden(true);
     pyConfig_.fuzzyConfig->partialSp.annotation().setHidden(true);
 
-    checkCloudPinyinAvailable_ =
-        instance_->eventLoop().addDeferEvent([this](EventSource *) {
-            bool hasCloudPinyin = cloudpinyin() != nullptr;
-            for (auto *configPtr : {&config_, &pyConfig_}) {
-                configPtr->cloudPinyinEnabled.annotation().setHidden(
-                    !hasCloudPinyin);
-                configPtr->cloudPinyinIndex.annotation().setHidden(
-                    !hasCloudPinyin);
-                configPtr->cloudPinyinAnimation.annotation().setHidden(
-                    !hasCloudPinyin);
-                configPtr->keepCloudPinyinPlaceHolder.annotation().setHidden(
-                    !hasCloudPinyin);
-                configPtr->cloudpinyin.setHidden(!hasCloudPinyin);
-            }
-            checkCloudPinyinAvailable_.reset();
-            return true;
-        });
+    deferredPreload_ = instance_->eventLoop().addDeferEvent([this](
+                                                                EventSource *) {
+        bool hasCloudPinyin = cloudpinyin() != nullptr;
+        for (auto *configPtr : {&config_, &pyConfig_}) {
+            configPtr->cloudPinyinEnabled.annotation().setHidden(
+                !hasCloudPinyin);
+            configPtr->cloudPinyinIndex.annotation().setHidden(!hasCloudPinyin);
+            configPtr->cloudPinyinAnimation.annotation().setHidden(
+                !hasCloudPinyin);
+            configPtr->keepCloudPinyinPlaceHolder.annotation().setHidden(
+                !hasCloudPinyin);
+            configPtr->cloudpinyin.setHidden(!hasCloudPinyin);
+        }
+        deferredPreload_.reset();
+        return true;
+    });
 }
 
 PinyinEngine::~PinyinEngine() {}
@@ -1330,9 +1329,17 @@ void PinyinEngine::reloadConfig() {
 void PinyinEngine::activate(const fcitx::InputMethodEntry &entry,
                             fcitx::InputContextEvent &event) {
     auto *inputContext = event.inputContext();
-    // Request full width.
+    // Request addons that gonna be used but not listed in optional
+    // dependencies.
     fullwidth();
     chttrans();
+    if (*config_.spellEnabled) {
+        spell();
+    }
+    if (pinyinhelper()) {
+        // Preload stroke data, since we gonna use it anyway.
+        pinyinhelper()->call<IPinyinHelper::loadStroke>();
+    }
     for (const auto *actionName : {"chttrans", "punctuation", "fullwidth"}) {
         if (auto *action =
                 instance_->userInterfaceManager().lookupAction(actionName)) {

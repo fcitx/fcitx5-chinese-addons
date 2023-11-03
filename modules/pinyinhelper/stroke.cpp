@@ -14,55 +14,81 @@
 #include <fcitx-utils/utf8.h>
 #include <fcntl.h>
 #include <queue>
+#include <stdexcept>
 #include <string_view>
 
 namespace fcitx {
 
 Stroke::Stroke() {}
 
+void Stroke::loadAsync() {
+    if (loadFuture_.valid()) {
+        return;
+    }
+
+    loadFuture_ = std::async(std::launch::async, []() {
+        std::tuple<libime::DATrie<int32_t>,
+                   std::unordered_map<std::string, std::string>>
+            result;
+        auto &dict = std::get<0>(result);
+        auto &reverseDict = std::get<1>(result);
+
+        auto file = StandardPath::global().open(
+            StandardPath::Type::PkgData, "pinyinhelper/py_stroke.mb", O_RDONLY);
+        if (file.fd() < 0) {
+            throw std::runtime_error("Failed to open file");
+        }
+
+        boost::iostreams::stream_buffer<
+            boost::iostreams::file_descriptor_source>
+            buffer(file.fd(),
+                   boost::iostreams::file_descriptor_flags::never_close_handle);
+        std::istream in(&buffer);
+        std::string buf;
+        auto isSpaceCheck = boost::is_any_of(" \n\t\r\v\f");
+        while (!in.eof()) {
+            if (!std::getline(in, buf)) {
+                break;
+            }
+            // Validate everything first, so it's easier to process.
+            if (!utf8::validate(buf)) {
+                continue;
+            }
+
+            boost::trim_if(buf, isSpaceCheck);
+            if (buf.empty() || buf[0] == '#') {
+                continue;
+            }
+            std::vector<std::string> tokens;
+            boost::split(tokens, buf, isSpaceCheck);
+            if (tokens.size() != 2 || utf8::length(tokens[1]) != 1 ||
+                tokens[0].find_first_not_of("12345") != std::string::npos) {
+                continue;
+            }
+            std::string token = tokens[0] + '|' + tokens[1];
+            dict.set(token, 1);
+            reverseDict[tokens[1]] = tokens[0];
+        }
+
+        return result;
+    });
+}
+
 bool Stroke::load() {
     if (loaded_) {
         return loadResult_;
     }
+    if (!loadFuture_.valid()) {
+        loadAsync();
+    }
+    try {
+        std::tie(dict_, revserseDict_) = loadFuture_.get();
+        loadResult_ = true;
+    } catch (...) {
+        loadResult_ = false;
+    }
+
     loaded_ = true;
-
-    auto file = StandardPath::global().open(
-        StandardPath::Type::PkgData, "pinyinhelper/py_stroke.mb", O_RDONLY);
-    if (file.fd() < 0) {
-        return false;
-    }
-
-    boost::iostreams::stream_buffer<boost::iostreams::file_descriptor_source>
-        buffer(file.fd(),
-               boost::iostreams::file_descriptor_flags::never_close_handle);
-    std::istream in(&buffer);
-    std::string buf;
-    auto isSpaceCheck = boost::is_any_of(" \n\t\r\v\f");
-    while (!in.eof()) {
-        if (!std::getline(in, buf)) {
-            break;
-        }
-        // Validate everything first, so it's easier to process.
-        if (!utf8::validate(buf)) {
-            continue;
-        }
-
-        boost::trim_if(buf, isSpaceCheck);
-        if (buf.empty() || buf[0] == '#') {
-            continue;
-        }
-        std::vector<std::string> tokens;
-        boost::split(tokens, buf, isSpaceCheck);
-        if (tokens.size() != 2 || utf8::length(tokens[1]) != 1 ||
-            tokens[0].find_first_not_of("12345") != std::string::npos) {
-            continue;
-        }
-        std::string token = tokens[0] + '|' + tokens[1];
-        dict_.set(token, 1);
-        revserseDict_[tokens[1]] = tokens[0];
-    }
-
-    loadResult_ = true;
     return true;
 }
 

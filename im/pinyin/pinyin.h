@@ -355,7 +355,7 @@ private:
     SimpleAction predictionAction_;
     libime::PinyinPrediction prediction_;
     std::unique_ptr<EventSource> deferEvent_;
-    std::unique_ptr<EventSource> checkCloudPinyinAvailable_;
+    std::unique_ptr<EventSource> deferredPreload_;
     std::unique_ptr<HandlerTableEntry<EventHandler>> event_;
     CustomPhraseDict customPhrase_;
 

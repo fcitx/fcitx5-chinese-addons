@@ -8,6 +8,7 @@
 #define _PINYINHELPER_STROKE_H_
 
 #include <cstdint>
+#include <future>
 #include <libime/core/datrie.h>
 #include <string>
 #include <unordered_map>
@@ -19,6 +20,7 @@ class Stroke {
 public:
     Stroke();
 
+    void loadAsync();
     bool load();
     std::vector<std::pair<std::string, std::string>>
     lookup(std::string_view input, int limit);
@@ -30,6 +32,10 @@ private:
     std::unordered_map<std::string, std::string> revserseDict_;
     bool loaded_ = false;
     bool loadResult_ = false;
+
+    std::future<std::tuple<libime::DATrie<int32_t>,
+                           std::unordered_map<std::string, std::string>>>
+        loadFuture_;
 };
 } // namespace fcitx
 
