@@ -1462,7 +1462,7 @@ bool PinyinEngine::handleCloudpinyinTrigger(KeyEvent &event) {
                 _("Cloud Pinyin Status"),
                 *config_.cloudPinyinEnabled ? _("Cloud Pinyin is enabled.")
                                             : _("Cloud Pinyin is disabled."),
-                -1);
+                1000);
         }
         if (*config_.cloudPinyinEnabled) {
             cloudpinyin()->call<ICloudPinyin::resetError>();

@@ -73,7 +73,7 @@ Fullwidth::Fullwidth(Instance *instance) : instance_(instance) {
                         _("Full width Character"),
                         enabled_ ? _("Full width Character is enabled.")
                                  : _("Full width Character is disabled."),
-                        -1);
+                        1000);
                 }
                 keyEvent.filterAndAccept();
                 return;

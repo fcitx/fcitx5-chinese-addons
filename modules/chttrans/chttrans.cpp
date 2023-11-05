@@ -74,7 +74,7 @@ Chttrans::Chttrans(fcitx::Instance *instance) : instance_(instance) {
                                       : _("Switch to Simplified Chinese"),
                         isTraditional ? _("Traditional Chinese is enabled.")
                                       : _("Simplified Chinese is enabled."),
-                        -1);
+                        1000);
                 }
                 keyEvent.filterAndAccept();
                 ic->updateUserInterface(UserInterfaceComponent::InputPanel);
