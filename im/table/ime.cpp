@@ -144,6 +144,25 @@ TableIME::requestDict(const std::string &name) {
                 TABLE_DEBUG() << e.what();
             }
 
+            dict->removeAllExtra();
+            auto extraDicts = StandardPath::global().multiOpen(
+                StandardPath::Type::PkgData,
+                stringutils::concat("table/", name, ".dict.d"), O_RDONLY,
+                filter::Suffix(".dict"));
+            for (const auto &[name, file] : extraDicts) {
+                try {
+                    boost::iostreams::stream_buffer<
+                        boost::iostreams::file_descriptor_source>
+                        buffer(file.fd(),
+                               boost::iostreams::file_descriptor_flags::
+                                   never_close_handle);
+                    std::istream in(&buffer);
+                    dict->loadExtra(in);
+                } catch (const std::exception &e) {
+                    TABLE_DEBUG() << e.what();
+                }
+            }
+
             populateOptions(dict, iter->second.root);
             std::shared_ptr<const libime::StaticLanguageModelFile> lmFile;
             try {
