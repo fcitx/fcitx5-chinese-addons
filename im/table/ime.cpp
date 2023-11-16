@@ -12,6 +12,7 @@
 #include <fcitx-config/iniparser.h>
 #include <fcitx-utils/log.h>
 #include <fcitx-utils/standardpath.h>
+#include <fcitx-utils/stringutils.h>
 #include <fcntl.h>
 #include <libime/core/utils.h>
 #include <libime/table/tablebaseddictionary.h>
@@ -22,6 +23,13 @@ namespace fcitx {
 FCITX_DEFINE_LOG_CATEGORY(table_logcategory, "table")
 
 namespace {
+
+struct BinaryOrTextDict {
+    bool operator()(const std::string &path, const std::string &, bool) const {
+        return stringutils::endsWith(path, ".txt") ||
+               stringutils::endsWith(path, ".dict");
+    }
+};
 
 libime::OrderPolicy converOrderPolicy(fcitx::OrderPolicy policy) {
     switch (policy) {
@@ -148,7 +156,7 @@ TableIME::requestDict(const std::string &name) {
             auto extraDicts = StandardPath::global().multiOpen(
                 StandardPath::Type::PkgData,
                 stringutils::concat("table/", name, ".dict.d"), O_RDONLY,
-                filter::Suffix(".dict"));
+                BinaryOrTextDict());
             for (const auto &[name, file] : extraDicts) {
                 try {
                     boost::iostreams::stream_buffer<
@@ -157,7 +165,10 @@ TableIME::requestDict(const std::string &name) {
                                boost::iostreams::file_descriptor_flags::
                                    never_close_handle);
                     std::istream in(&buffer);
-                    dict->loadExtra(in);
+                    const auto fileFormat = stringutils::endsWith(name, ".txt")
+                                                ? libime::TableFormat::Text
+                                                : libime::TableFormat::Binary;
+                    dict->loadExtra(in, fileFormat);
                 } catch (const std::exception &e) {
                     TABLE_DEBUG() << e.what();
                 }
