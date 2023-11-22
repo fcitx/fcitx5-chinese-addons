@@ -13,7 +13,6 @@
 #include <QIcon>
 #include <QMessageBox>
 #include <QTemporaryFile>
-#include <QTextCodec>
 #include <QUrl>
 #include <QUrlQuery>
 #include <fcitx-utils/i18n.h>
@@ -77,12 +76,8 @@ BrowserDialog::BrowserDialog(QWidget *parent)
 BrowserDialog::~BrowserDialog() {}
 
 QString BrowserDialog::decodeName(const QByteArray &in) {
-    QTextCodec *codec = QTextCodec::codecForName("UTF-8");
-    if (!codec) {
-        return QString();
-    }
     QByteArray out = QByteArray::fromPercentEncoding(in);
-    return codec->toUnicode(out);
+    return QString::fromUtf8(out);
 }
 
 bool BrowserDialog::linkClicked(const QUrl &url) {
