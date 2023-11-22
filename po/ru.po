@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2023-11-03 20:24+0000\n"
+"POT-Creation-Date: 2023-11-22 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Dmitry <dmitrydmitry761@gmail.com>, 2023\n"
 "Language-Team: Russian (https://app.transifex.com/fcitx/teams/12005/ru/)\n"
@@ -22,11 +22,11 @@ msgstr ""
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
 "(n%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: im/table/state.cpp:1146
+#: im/table/state.cpp:1148
 msgid " Return for "
 msgstr " Возврат к "
 
-#: im/table/state.cpp:1143
+#: im/table/state.cpp:1145
 msgid " for "
 msgstr " к "
 
@@ -65,7 +65,7 @@ msgstr "&Очистить Словарь"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:44
 msgid "&Clear User Data"
-msgstr "&Очистить данные пользователя"
+msgstr "&Очистить Данные Пользователя"
 
 #. i18n: file: gui/customphraseeditor/customphraseeditor.ui:73
 #. i18n: ectx: property (text), widget (QPushButton, externalEditor_)
@@ -202,7 +202,7 @@ msgstr "Цанцзе (Упрощенный китайский)"
 
 #: org.fcitx.Fcitx5.Addon.ChineseAddons.metainfo.xml.in:7
 msgid "Chinese Addons"
-msgstr "Китайский - дополнения"
+msgstr "Китайский - Дополнения"
 
 #: im/pinyin/pinyin.h:199
 msgid "Choose Character from Phrase"
@@ -214,7 +214,7 @@ msgstr "Очистить"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:45
 msgid "Clear &All Data"
-msgstr "Очистить &Все данные"
+msgstr "Очистить &Все Данные"
 
 #: im/pinyin/pinyin.h:119 modules/cloudpinyin/cloudpinyin.conf.in.in:3
 msgid "Cloud Pinyin"
@@ -930,7 +930,7 @@ msgstr "Выбрать второй кандидат"
 msgid "Select Third Candidate"
 msgstr "Выбрать третий кандидат"
 
-#: im/table/state.cpp:1459
+#: im/table/state.cpp:1461
 msgid "Select candidate to be removed from history:"
 msgstr "Выбрать кандидат для удаления из истории:"
 
