@@ -203,7 +203,7 @@ void CustomPhraseModel::load() {
     beginResetModel();
     setNeedSave(false);
     futureWatcher_ = new QFutureWatcher<QList<CustomPhraseItem>>(this);
-    futureWatcher_->setFuture(QtConcurrent::run<QList<CustomPhraseItem>>(
+    futureWatcher_->setFuture(QtConcurrent::run(
         &CustomPhraseModel::parse, QLatin1String(customPhraseFileName)));
     connect(futureWatcher_, &QFutureWatcherBase::finished, this,
             &CustomPhraseModel::loadFinished);
@@ -252,7 +252,7 @@ void CustomPhraseModel::loadFinished() {
 QFutureWatcher<bool> *CustomPhraseModel::save() {
     QFutureWatcher<bool> *futureWatcher = new QFutureWatcher<bool>(this);
     futureWatcher->setFuture(
-        QtConcurrent::run<bool>(&CustomPhraseModel::saveData,
+        QtConcurrent::run(&CustomPhraseModel::saveData,
                                 QLatin1String(customPhraseFileName), list_));
     connect(futureWatcher, &QFutureWatcherBase::finished, this,
             &CustomPhraseModel::saveFinished);

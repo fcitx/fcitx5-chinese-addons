@@ -12,15 +12,15 @@ set(DICTMANAGER_SOURCES
 if (ENABLE_BROWSER)
     list(APPEND DICTMANAGER_SOURCES browserdialog.cpp filedownloader.cpp)
 
-    if (TARGET Qt5::WebKit)
-        set(BROWSER_TARGET Qt5::WebKitWidgets)
+    if (TARGET Qt${QT_MAJOR_VERSION}::WebKit)
+        set(BROWSER_TARGET Qt${QT_MAJOR_VERSION}::WebKitWidgets)
     else()
-        set(BROWSER_TARGET Qt5::WebEngineWidgets)
+        set(BROWSER_TARGET Qt${QT_MAJOR_VERSION}::WebEngineWidgets)
     endif()
 endif()
 
 add_library(pinyindictmanager MODULE ${DICTMANAGER_SOURCES})
-target_link_libraries(pinyindictmanager Fcitx5Qt5::WidgetsAddons ${BROWSER_TARGET} Qt5::Concurrent)
+target_link_libraries(pinyindictmanager Fcitx5Qt${QT_MAJOR_VERSION}::WidgetsAddons ${BROWSER_TARGET} Qt${QT_MAJOR_VERSION}::Concurrent)
 set_target_properties(pinyindictmanager PROPERTIES AUTOMOC TRUE AUTOUIC TRUE AUTOUIC_OPTIONS "-tr=fcitx::tr2fcitx;--include=fcitxqti18nhelper.h")
 
-install(TARGETS pinyindictmanager DESTINATION ${CMAKE_INSTALL_LIBDIR}/fcitx5/qt5)
+install(TARGETS pinyindictmanager DESTINATION ${CMAKE_INSTALL_LIBDIR}/fcitx5/qt${QT_MAJOR_VERSION})
