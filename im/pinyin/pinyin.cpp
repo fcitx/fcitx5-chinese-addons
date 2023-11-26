@@ -585,7 +585,7 @@ std::pair<Text, Text> PinyinEngine::preedit(InputContext *inputContext) const {
                                  TextFormatFlag::Underline);
             clientPreedit.setCursor(preeditWithCursor.second);
         }
-    } else {
+    } else if (*config_.showCommitPreviewInApplication) {
         clientPreedit.append(context.sentence(), TextFormatFlag::Underline);
         if (*config_.preeditCursorPositionAtBeginning) {
             clientPreedit.setCursor(0);

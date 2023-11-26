@@ -139,6 +139,11 @@ FCITX_CONFIGURATION(
         !isAndroid()};
     Option<bool> showActualPinyinInPreedit{
         this, "PinyinInPreedit", _("Show complete pinyin in preedit"), false};
+    Option<bool> showCommitPreviewInApplication{
+        this,
+        "CommitPreviewInApplication",
+        _("Show commit preview within application"),
+        !isAndroid()};
     Option<bool> predictionEnabled{this, "Prediction", _("Enable Prediction"),
                                    isAndroid() ? true : false};
     Option<int, IntConstrain> predictionSize{
