@@ -72,6 +72,12 @@ FCITX_CONFIG_ENUM_I18N_ANNOTATION(ShuangpinProfileEnum, N_("Ziranma"), N_("MS"),
                                   N_("Zhongwenzhixing"), N_("PinyinJiajia"),
                                   N_("Xiaohe"), N_("Custom"))
 
+enum class ShowPreeditInApplicationEnum { No, ComposingPinyin, CommitPreview };
+
+FCITX_CONFIG_ENUM_NAME_WITH_I18N(ShowPreeditInApplicationEnum,
+                                 N_("Do not show"), N_("Composing pinyin"),
+                                 N_("Commit preview"))
+
 FCITX_CONFIGURATION(
     FuzzyConfig, Option<bool> ue{this, "VE_UE", _("ue -> ve"), true};
     Option<bool> commonTypo{this, "NG_GN", _("Common Typo"), true};
@@ -130,22 +136,21 @@ FCITX_CONFIGURATION(
         keepCloudPinyinPlaceHolder{this, "KeepCloudPinyinPlaceHolder",
                                    _("Always show Cloud Pinyin place holder"),
                                    false};
-    Option<bool> showPreeditInApplication{this, "PreeditInApplication",
-                                          _("Show preedit within application"),
-                                          true};
+    OptionWithAnnotation<ShowPreeditInApplicationEnum,
+                         OptionalHideInDescriptionBase<
+                             ShowPreeditInApplicationEnumI18NAnnotation>>
+        showPreeditInApplication{
+            this, "PreeditInApplication", _("Show preedit within application"),
+            isAndroid() ? ShowPreeditInApplicationEnum::No
+                        : ShowPreeditInApplicationEnum::ComposingPinyin};
     Option<bool> preeditCursorPositionAtBeginning{
         this, "PreeditCursorPositionAtBeginning",
         _("Fix embedded preedit cursor at the beginning of the preedit"),
         !isAndroid()};
     Option<bool> showActualPinyinInPreedit{
         this, "PinyinInPreedit", _("Show complete pinyin in preedit"), false};
-    Option<bool> showCommitPreviewInApplication{
-        this,
-        "CommitPreviewInApplication",
-        _("Show commit preview within application"),
-        !isAndroid()};
     Option<bool> predictionEnabled{this, "Prediction", _("Enable Prediction"),
-                                   isAndroid() ? true : false};
+                                   isAndroid()};
     Option<int, IntConstrain> predictionSize{
         this, "PredictionSize", _("Prediction Size"), 14, IntConstrain(3, 40)};
     OptionWithAnnotation<SwitchInputMethodBehavior,
