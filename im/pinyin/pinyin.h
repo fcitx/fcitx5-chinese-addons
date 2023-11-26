@@ -137,8 +137,7 @@ FCITX_CONFIGURATION(
                                    _("Always show Cloud Pinyin place holder"),
                                    false};
     OptionWithAnnotation<ShowPreeditInApplicationEnum,
-                         OptionalHideInDescriptionBase<
-                             ShowPreeditInApplicationEnumI18NAnnotation>>
+                         ShowPreeditInApplicationEnumI18NAnnotation>
         showPreeditInApplication{
             this, "PreeditInApplication", _("Show preedit within application"),
             isAndroid() ? ShowPreeditInApplicationEnum::No
