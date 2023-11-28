@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2023-11-22 20:24+0000\n"
+"POT-Creation-Date: 2023-11-28 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Dmitry <dmitrydmitry761@gmail.com>, 2023\n"
 "Language-Team: Russian (https://app.transifex.com/fcitx/teams/12005/ru/)\n"
@@ -188,7 +188,7 @@ msgstr "Бэкэнд"
 msgid "Bingchan"
 msgstr "Бинчань"
 
-#: gui/pinyindictmanager/browserdialog.cpp:66
+#: gui/pinyindictmanager/browserdialog.cpp:65
 msgid "Browse Sogou Cell Dict repository"
 msgstr "Исследовать репозиторий словаря Sogou Cell"
 
@@ -275,12 +275,12 @@ msgstr "Подтвердите удаление"
 
 #: gui/pinyindictmanager/processrunner.cpp:50
 msgid "Convert failed."
-msgstr "Не удалось конвертировать."
+msgstr "Не удалось преобразовать."
 
 #: gui/pinyindictmanager/processrunner.cpp:44
 #: gui/pinyindictmanager/renamefile.cpp:34
 msgid "Converter crashed."
-msgstr "Сбой конвертера."
+msgstr "Сбой преобразователя."
 
 #: im/table/state.cpp:773
 msgid "Could not find pinyin."
@@ -730,7 +730,7 @@ msgstr "Следующая страница"
 msgid "No"
 msgstr "Нет"
 
-#: gui/pinyindictmanager/browserdialog.cpp:116
+#: gui/pinyindictmanager/browserdialog.cpp:111
 msgid "No browsing outside pinyin.sogou.com, now redirect to home page."
 msgstr ""
 "Невозможно перейти вне pinyin.sogou.com, перенаправление на домашнюю "
@@ -1187,7 +1187,7 @@ msgstr "Учить ли новую фразу из других фраз или 
 msgid "Wildcard matching Key"
 msgstr "Клавиша, соответствующая карточке"
 
-#: gui/pinyindictmanager/browserdialog.cpp:115
+#: gui/pinyindictmanager/browserdialog.cpp:110
 msgid "Wrong Link"
 msgstr "Неверная ссылка"
 
