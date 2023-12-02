@@ -570,12 +570,10 @@ std::pair<Text, Text> PinyinEngine::preedit(InputContext *inputContext) const {
     // Use const ref to avoid accidentally change anything.
     const auto &context = state->context_;
     auto preeditWithCursor = context.preeditWithCursor();
-    Text preedit;
+    // client preedit can be empty/pinyin/preview depends on config
     Text clientPreedit;
     switch (*config_.showPreeditInApplication) {
     case ShowPreeditInApplicationEnum::No:
-        preedit.append(preeditWithCursor.first);
-        preedit.setCursor(preeditWithCursor.second);
         break;
     case ShowPreeditInApplicationEnum::ComposingPinyin:
         if (*config_.preeditCursorPositionAtBeginning) {
@@ -593,8 +591,6 @@ std::pair<Text, Text> PinyinEngine::preedit(InputContext *inputContext) const {
         }
         break;
     case ShowPreeditInApplicationEnum::CommitPreview:
-        preedit.append(preeditWithCursor.first);
-        preedit.setCursor(preeditWithCursor.second);
         clientPreedit.append(context.sentence(), TextFormatFlag::Underline);
         if (*config_.preeditCursorPositionAtBeginning) {
             clientPreedit.setCursor(0);
@@ -603,6 +599,10 @@ std::pair<Text, Text> PinyinEngine::preedit(InputContext *inputContext) const {
         }
         break;
     }
+
+    // preedit is always composing pinyin
+    Text preedit(preeditWithCursor.first);
+    preedit.setCursor(preeditWithCursor.second);
     return {std::move(clientPreedit), std::move(preedit)};
 }
 
@@ -623,10 +623,24 @@ PinyinEngine::preeditCommitString(InputContext *inputContext) const {
 void PinyinEngine::updatePreedit(InputContext *inputContext) const {
     auto &inputPanel = inputContext->inputPanel();
     auto [clientPreedit, preedit] = this->preedit(inputContext);
-    if (inputContext->isPreeditEnabled()) {
-        inputPanel.setClientPreedit(clientPreedit);
+    switch (*config_.showPreeditInApplication) {
+    case ShowPreeditInApplicationEnum::No:
+        inputPanel.setPreedit(preedit);
+        break;
+    case ShowPreeditInApplicationEnum::ComposingPinyin:
+        if (inputContext->capabilityFlags().test(CapabilityFlag::Preedit)) {
+            inputPanel.setClientPreedit(clientPreedit);
+        } else {
+            inputPanel.setPreedit(preedit);
+        }
+        break;
+    case ShowPreeditInApplicationEnum::CommitPreview:
+        if (inputContext->capabilityFlags().test(CapabilityFlag::Preedit)) {
+            inputPanel.setClientPreedit(clientPreedit);
+        }
+        inputPanel.setPreedit(preedit);
+        break;
     }
-    inputPanel.setPreedit(preedit);
 }
 
 void PinyinEngine::updatePuncPreedit(InputContext *inputContext) const {
