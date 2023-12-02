@@ -72,11 +72,10 @@ FCITX_CONFIG_ENUM_I18N_ANNOTATION(ShuangpinProfileEnum, N_("Ziranma"), N_("MS"),
                                   N_("Zhongwenzhixing"), N_("PinyinJiajia"),
                                   N_("Xiaohe"), N_("Custom"))
 
-enum class ShowPreeditInApplicationEnum { No, ComposingPinyin, CommitPreview };
+enum class PreeditMode { No, ComposingPinyin, CommitPreview };
 
-FCITX_CONFIG_ENUM_NAME_WITH_I18N(ShowPreeditInApplicationEnum,
-                                 N_("Do not show"), N_("Composing pinyin"),
-                                 N_("Commit preview"))
+FCITX_CONFIG_ENUM_NAME_WITH_I18N(PreeditMode, N_("Do not show"),
+                                 N_("Composing pinyin"), N_("Commit preview"))
 
 FCITX_CONFIGURATION(
     FuzzyConfig, Option<bool> ue{this, "VE_UE", _("ue -> ve"), true};
@@ -136,12 +135,9 @@ FCITX_CONFIGURATION(
         keepCloudPinyinPlaceHolder{this, "KeepCloudPinyinPlaceHolder",
                                    _("Always show Cloud Pinyin place holder"),
                                    false};
-    OptionWithAnnotation<ShowPreeditInApplicationEnum,
-                         ShowPreeditInApplicationEnumI18NAnnotation>
-        showPreeditInApplication{
-            this, "PreeditInApplication", _("Show preedit within application"),
-            isAndroid() ? ShowPreeditInApplicationEnum::No
-                        : ShowPreeditInApplicationEnum::ComposingPinyin};
+    OptionWithAnnotation<PreeditMode, PreeditModeI18NAnnotation> preeditMode{
+        this, "PreeditMode", _("Preedit Mode"),
+        isAndroid() ? PreeditMode::No : PreeditMode::ComposingPinyin};
     Option<bool> preeditCursorPositionAtBeginning{
         this, "PreeditCursorPositionAtBeginning",
         _("Fix embedded preedit cursor at the beginning of the preedit"),
