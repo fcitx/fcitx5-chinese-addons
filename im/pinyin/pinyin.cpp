@@ -14,6 +14,7 @@
 #include "punctuation.h"
 #include <cstdint>
 #include <ctime>
+#include <fcitx-utils/capabilityflags.h>
 #include <fcitx-utils/keysym.h>
 #include <fcitx-utils/keysymgen.h>
 #include <fcitx-utils/stringutils.h>
@@ -567,11 +568,17 @@ PinyinEngine::luaCandidateTrigger(InputContext *ic,
 #endif
 std::pair<Text, Text> PinyinEngine::preedit(InputContext *inputContext) const {
     auto *state = inputContext->propertyFor(&factory_);
+    PreeditMode mode =
+        inputContext->capabilityFlags().test(CapabilityFlag::Preedit)
+            ? *config_.preeditMode
+            : PreeditMode::No;
     // Use const ref to avoid accidentally change anything.
     const auto &context = state->context_;
     auto preeditWithCursor = context.preeditWithCursor();
-    Text clientPreedit;
-    if (*config_.showPreeditInApplication) {
+    // client preedit can be empty/pinyin/preview depends on config
+    Text clientPreedit, preedit;
+    switch (mode) {
+    case PreeditMode::ComposingPinyin:
         if (*config_.preeditCursorPositionAtBeginning) {
             clientPreedit.append(
                 preeditWithCursor.first.substr(0, preeditWithCursor.second),
@@ -585,17 +592,20 @@ std::pair<Text, Text> PinyinEngine::preedit(InputContext *inputContext) const {
                                  TextFormatFlag::Underline);
             clientPreedit.setCursor(preeditWithCursor.second);
         }
-    } else {
+        break;
+    case PreeditMode::CommitPreview:
         clientPreedit.append(context.sentence(), TextFormatFlag::Underline);
         if (*config_.preeditCursorPositionAtBeginning) {
             clientPreedit.setCursor(0);
         } else {
             clientPreedit.setCursor(context.selectedSentence().size());
         }
+        [[fallthrough]];
+    case PreeditMode::No:
+        preedit.append(preeditWithCursor.first);
+        preedit.setCursor(preeditWithCursor.second);
+        break;
     }
-
-    Text preedit(preeditWithCursor.first);
-    preedit.setCursor(preeditWithCursor.second);
     return {std::move(clientPreedit), std::move(preedit)};
 }
 
@@ -616,14 +626,8 @@ PinyinEngine::preeditCommitString(InputContext *inputContext) const {
 void PinyinEngine::updatePreedit(InputContext *inputContext) const {
     auto &inputPanel = inputContext->inputPanel();
     auto [clientPreedit, preedit] = this->preedit(inputContext);
-    if (inputContext->capabilityFlags().test(CapabilityFlag::Preedit)) {
-        inputPanel.setClientPreedit(clientPreedit);
-    }
-
-    if (!config_.showPreeditInApplication.value() ||
-        !inputContext->capabilityFlags().test(CapabilityFlag::Preedit)) {
-        inputPanel.setPreedit(preedit);
-    }
+    inputPanel.setClientPreedit(clientPreedit);
+    inputPanel.setPreedit(preedit);
 }
 
 void PinyinEngine::updatePuncPreedit(InputContext *inputContext) const {
@@ -2375,7 +2379,10 @@ void PinyinEngine::invokeActionImpl(const InputMethodEntry &entry,
     auto preeditWithCursor = context.preeditWithCursor();
     auto selectedSentence = context.selectedSentence();
     // The logic here need to match ::preedit()
-    if (*config_.showPreeditInApplication) {
+    switch (*config_.preeditMode) {
+    case PreeditMode::No:
+        break;
+    case PreeditMode::ComposingPinyin:
         if (utf8::length(selectedSentence) > cursor) {
             // If cursor is with in selected sentence range, cancel until cursor
             // is covered.
@@ -2405,12 +2412,14 @@ void PinyinEngine::invokeActionImpl(const InputMethodEntry &entry,
                 state->context_.setCursor(context.cursor() - 1);
             }
         }
-    } else {
+        break;
+    case PreeditMode::CommitPreview:
         if (utf8::length(selectedSentence) > cursor) {
             do {
                 context.cancel();
             } while (utf8::length(context.selectedSentence()) > cursor);
         }
+        break;
     }
     updateUI(inputContext);
 }
