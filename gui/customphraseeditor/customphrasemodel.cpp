@@ -253,7 +253,7 @@ QFutureWatcher<bool> *CustomPhraseModel::save() {
     QFutureWatcher<bool> *futureWatcher = new QFutureWatcher<bool>(this);
     futureWatcher->setFuture(
         QtConcurrent::run(&CustomPhraseModel::saveData,
-                                QLatin1String(customPhraseFileName), list_));
+                          QLatin1String(customPhraseFileName), list_));
     connect(futureWatcher, &QFutureWatcherBase::finished, this,
             &CustomPhraseModel::saveFinished);
     return futureWatcher;
