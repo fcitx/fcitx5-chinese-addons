@@ -89,19 +89,20 @@ static const char deltbl_str[DELTBL_SIZE] = {'\x4c', '\0', '\x54', '\0',
                                              '\x42', '\0', '\x4c', '\0'};
 
 static void usage() {
-    puts("scel2org - Convert .scel file to libime compatible file (SEE NOTES "
-         "BELOW)\n"
-         "\n"
-         "  usage: scel2org [OPTION] [scel file]\n"
-         "\n"
-         "  -o <file>  specify the output file, if not specified, the output "
-         "will\n"
-         "             be stdout.\n"
-         "  -t         specify the output to be in format of extra table dict.\n"
-         "  -h         display this help.\n"
-         "\n"
-         "NOTES:\n"
-         "   Always check the produced output for errors.\n");
+    puts(
+        "scel2org - Convert .scel file to libime compatible file (SEE NOTES "
+        "BELOW)\n"
+        "\n"
+        "  usage: scel2org [OPTION] [scel file]\n"
+        "\n"
+        "  -o <file>  specify the output file, if not specified, the output "
+        "will\n"
+        "             be stdout.\n"
+        "  -t         specify the output to be in format of extra table dict.\n"
+        "  -h         display this help.\n"
+        "\n"
+        "NOTES:\n"
+        "   Always check the produced output for errors.\n");
     exit(1);
 }
 
