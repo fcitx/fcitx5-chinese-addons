@@ -576,10 +576,8 @@ std::pair<Text, Text> PinyinEngine::preedit(InputContext *inputContext) const {
     const auto &context = state->context_;
     auto preeditWithCursor = context.preeditWithCursor();
     // client preedit can be empty/pinyin/preview depends on config
-    Text clientPreedit;
+    Text clientPreedit, preedit;
     switch (mode) {
-    case PreeditMode::No:
-        break;
     case PreeditMode::ComposingPinyin:
         if (*config_.preeditCursorPositionAtBeginning) {
             clientPreedit.append(
@@ -602,12 +600,12 @@ std::pair<Text, Text> PinyinEngine::preedit(InputContext *inputContext) const {
         } else {
             clientPreedit.setCursor(context.selectedSentence().size());
         }
+        [[fallthrough]];
+    case PreeditMode::No:
+        preedit.append(preeditWithCursor.first);
+        preedit.setCursor(preeditWithCursor.second);
         break;
     }
-
-    // preedit is always composing pinyin
-    Text preedit(preeditWithCursor.first);
-    preedit.setCursor(preeditWithCursor.second);
     return {std::move(clientPreedit), std::move(preedit)};
 }
 
