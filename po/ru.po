@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2023-12-02 20:24+0000\n"
+"POT-Creation-Date: 2023-12-03 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Dmitry <dmitrydmitry761@gmail.com>, 2023\n"
 "Language-Team: Russian (https://app.transifex.com/fcitx/teams/12005/ru/)\n"
@@ -258,7 +258,7 @@ msgstr "Подтвердить выбор по умолчанию"
 
 #: im/pinyin/pinyin.h:78
 msgid "Commit preview"
-msgstr ""
+msgstr "Предварительный просмотр фиксации"
 
 #: im/table/ime.h:110
 msgid ""
@@ -274,7 +274,7 @@ msgstr "Распространённая опечатка"
 
 #: im/pinyin/pinyin.h:78
 msgid "Composing pinyin"
-msgstr ""
+msgstr "Составление Пиньинь"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:332
 #: gui/pinyindictmanager/pinyindictmanager.cpp:364
@@ -355,7 +355,7 @@ msgstr "Не отображать"
 
 #: im/pinyin/pinyin.h:77
 msgid "Do not show"
-msgstr ""
+msgstr "Не показывать"
 
 #: im/pinyin/pinyin.cpp:1183
 #, c++-format
@@ -834,7 +834,7 @@ msgstr "Размер предсказания"
 
 #: im/pinyin/pinyin.h:139
 msgid "Preedit Mode"
-msgstr ""
+msgstr "Режим Предварительного Редактирования"
 
 #: im/table/ime.h:174
 msgid "Prefix key to trigger Pinyin"
