@@ -6,16 +6,16 @@
 # Mingcong Bai <jeffbai@aosc.xyz>, 2018
 # wwj402 <wwj402@gmail.com>, 2018
 # Lau YeeYu, 2023
-# rocka, 2023
 # csslayer <wengxt@gmail.com>, 2023
+# rocka, 2023
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2023-12-02 20:24+0000\n"
+"POT-Creation-Date: 2023-12-04 20:25+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
-"Last-Translator: csslayer <wengxt@gmail.com>, 2023\n"
+"Last-Translator: rocka, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/fcitx/teams/12005/"
 "zh_CN/)\n"
 "Language: zh_CN\n"
@@ -256,7 +256,7 @@ msgstr "提交默认选择"
 
 #: im/pinyin/pinyin.h:78
 msgid "Commit preview"
-msgstr ""
+msgstr "提交预览"
 
 #: im/table/ime.h:110
 msgid ""
@@ -270,7 +270,7 @@ msgstr "常见错误"
 
 #: im/pinyin/pinyin.h:78
 msgid "Composing pinyin"
-msgstr ""
+msgstr "拼音串"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:332
 #: gui/pinyindictmanager/pinyindictmanager.cpp:364
@@ -347,7 +347,7 @@ msgstr "不要显示"
 
 #: im/pinyin/pinyin.h:77
 msgid "Do not show"
-msgstr ""
+msgstr "不显示"
 
 #: im/pinyin/pinyin.cpp:1183
 #, c++-format
@@ -815,7 +815,7 @@ msgstr "预测个数"
 
 #: im/pinyin/pinyin.h:139
 msgid "Preedit Mode"
-msgstr ""
+msgstr "预编辑模式"
 
 #: im/table/ime.h:174
 msgid "Prefix key to trigger Pinyin"
