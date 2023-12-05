@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2023-12-03 20:24+0000\n"
+"POT-Creation-Date: 2023-12-05 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Dmitry <dmitrydmitry761@gmail.com>, 2023\n"
 "Language-Team: Russian (https://app.transifex.com/fcitx/teams/12005/ru/)\n"
@@ -258,7 +258,7 @@ msgstr "Подтвердить выбор по умолчанию"
 
 #: im/pinyin/pinyin.h:78
 msgid "Commit preview"
-msgstr "Предварительный просмотр фиксации"
+msgstr "Фиксация предварительного просмотра"
 
 #: im/table/ime.h:110
 msgid ""
