@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2023-12-02 20:24+0000\n"
+"POT-Creation-Date: 2023-12-09 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Lau YeeYu, 2023\n"
 "Language-Team: Chinese (Taiwan) (https://app.transifex.com/fcitx/teams/12005/"
@@ -258,7 +258,7 @@ msgstr "提交預設選擇"
 
 #: im/pinyin/pinyin.h:78
 msgid "Commit preview"
-msgstr ""
+msgstr "提交預覽"
 
 #: im/table/ime.h:110
 msgid ""
@@ -272,7 +272,7 @@ msgstr "常見錯誤"
 
 #: im/pinyin/pinyin.h:78
 msgid "Composing pinyin"
-msgstr ""
+msgstr "拼音串"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:332
 #: gui/pinyindictmanager/pinyindictmanager.cpp:364
@@ -349,7 +349,7 @@ msgstr "不要顯示"
 
 #: im/pinyin/pinyin.h:77
 msgid "Do not show"
-msgstr ""
+msgstr "不顯示"
 
 #: im/pinyin/pinyin.cpp:1183
 #, c++-format
@@ -817,7 +817,7 @@ msgstr "預測字詞數量"
 
 #: im/pinyin/pinyin.h:139
 msgid "Preedit Mode"
-msgstr ""
+msgstr "預編輯模式"
 
 #: im/table/ime.h:174
 msgid "Prefix key to trigger Pinyin"
