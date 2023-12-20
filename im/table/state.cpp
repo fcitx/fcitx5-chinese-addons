@@ -1125,11 +1125,11 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
                 engine_->punctuation()
                     ->call<IPunctuation::getPunctuationCandidates>(
                         entry.languageCode(), chr);
+            auto pushResult =
+                engine_->punctuation()->call<IPunctuation::pushPunctuationV2>(
+                    entry.languageCode(), inputContext, chr);
             if (candidates.size() == 1) {
-                std::tie(punc, puncAfter) =
-                    engine_->punctuation()
-                        ->call<IPunctuation::pushPunctuationV2>(
-                            entry.languageCode(), inputContext, chr);
+                std::tie(punc, puncAfter) = pushResult;
             } else if (candidates.size() > 1) {
                 updatePuncCandidate(inputContext, utf8::UCS4ToUTF8(chr),
                                     candidates);

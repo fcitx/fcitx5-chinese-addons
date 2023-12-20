@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.6.0)
-project(fcitx5-chinese-addons VERSION 5.1.2)
+project(fcitx5-chinese-addons VERSION 5.1.3)
 
 find_package(ECM REQUIRED 1.0.0)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
@@ -8,7 +8,7 @@ include(GNUInstallDirs)
 include(ECMSetupVersion)
 include(ECMUninstallTarget)
 
-find_package(Fcitx5Core 5.1.2 REQUIRED)
+find_package(Fcitx5Core 5.1.6 REQUIRED)
 find_package(Fcitx5Module REQUIRED COMPONENTS Notifications QuickPhrase Spell Clipboard)
 find_package(Fcitx5ModuleLuaAddonLoader)
 find_package(Pthread REQUIRED)
