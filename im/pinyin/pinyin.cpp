@@ -1903,10 +1903,10 @@ bool PinyinEngine::handlePunc(KeyEvent &event) {
         auto candidates =
             punctuation()->call<IPunctuation::getPunctuationCandidates>("zh_CN",
                                                                         c);
+        auto pushResult = punctuation()->call<IPunctuation::pushPunctuationV2>(
+            "zh_CN", inputContext, c);
         if (candidates.size() == 1) {
-            std::tie(punc, puncAfter) =
-                punctuation()->call<IPunctuation::pushPunctuationV2>(
-                    "zh_CN", inputContext, c);
+            std::tie(punc, puncAfter) = pushResult;
         } else if (candidates.size() > 1) {
             updatePuncCandidate(inputContext, utf8::UCS4ToUTF8(c), candidates);
             event.filterAndAccept();
@@ -2230,7 +2230,6 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
                 auto puncStr = punctuation()->call<IPunctuation::cancelLast>(
                     "zh_CN", inputContext);
                 if (!puncStr.empty()) {
-                    // forward the original key is the best choice.
                     // forward the original key is the best choice.
                     auto ref = inputContext->watch();
                     state->cancelLastEvent_ =

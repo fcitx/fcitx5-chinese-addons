@@ -6,6 +6,7 @@
  */
 #include "testdir.h"
 #include "testfrontend_public.h"
+#include <fcitx-utils/event.h>
 #include <fcitx-utils/eventdispatcher.h>
 #include <fcitx-utils/log.h>
 #include <fcitx-utils/standardpath.h>
@@ -15,11 +16,15 @@
 #include <fcitx/inputpanel.h>
 #include <fcitx/instance.h>
 #include <iostream>
+#include <memory>
 
 using namespace fcitx;
 
-void scheduleEvent(EventDispatcher *dispatcher, Instance *instance) {
-    dispatcher->schedule([dispatcher, instance]() {
+std::unique_ptr<EventSourceTime> endTestEvent;
+void testPunctuationPart2(EventDispatcher *dispatcher, Instance *instance);
+
+void testBasic(EventDispatcher *dispatcher, Instance *instance) {
+    dispatcher->schedule([instance]() {
         auto *pinyin = instance->addonManager().addon("pinyin", true);
         FCITX_ASSERT(pinyin);
         auto defaultGroup = instance->inputMethodManager().currentGroup();
@@ -135,15 +140,70 @@ void scheduleEvent(EventDispatcher *dispatcher, Instance *instance) {
                                                     false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Control+space"),
                                                     false);
-
-        dispatcher->schedule([dispatcher, instance]() {
-            dispatcher->detach();
-            instance->exit();
-        });
     });
 }
 
-void runInstance() {}
+void testPunctuation(EventDispatcher *dispatcher, Instance *instance) {
+    dispatcher->schedule([instance, dispatcher]() {
+        auto *testfrontend = instance->addonManager().addon("testfrontend");
+        auto uuid =
+            testfrontend->call<ITestFrontend::createInputContext>("testapp");
+
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Control+space"),
+                                                    false);
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("。");
+        FCITX_ASSERT(testfrontend->call<ITestFrontend::sendKeyEvent>(
+            uuid, Key("."), false));
+        FCITX_ASSERT(!testfrontend->call<ITestFrontend::sendKeyEvent>(
+            uuid, Key("1"), false));
+        FCITX_ASSERT(!testfrontend->call<ITestFrontend::sendKeyEvent>(
+            uuid, Key("."), false));
+        FCITX_ASSERT(!testfrontend->call<ITestFrontend::sendKeyEvent>(
+            uuid, Key("1"), false));
+        FCITX_ASSERT(!testfrontend->call<ITestFrontend::sendKeyEvent>(
+            uuid, Key("."), false));
+        // This is cancel last eng.
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("。");
+        FCITX_ASSERT(!testfrontend->call<ITestFrontend::sendKeyEvent>(
+            uuid, Key("BackSpace"), false));
+
+        auto event = instance->eventLoop().addTimeEvent(
+            CLOCK_MONOTONIC, now(CLOCK_MONOTONIC) + 2000000, 0,
+            [dispatcher, instance](EventSourceTime *event, uint64_t) {
+                testPunctuationPart2(dispatcher, instance);
+                delete event;
+                return true;
+            });
+        (void)event.release();
+    });
+}
+
+void testPunctuationPart2(EventDispatcher *dispatcher, Instance *instance) {
+    dispatcher->schedule([instance]() {
+        auto *testfrontend = instance->addonManager().addon("testfrontend");
+        auto uuid =
+            testfrontend->call<ITestFrontend::createInputContext>("testapp");
+
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Control+space"),
+                                                    false);
+        FCITX_ASSERT(!testfrontend->call<ITestFrontend::sendKeyEvent>(
+            uuid, Key("1"), false));
+        FCITX_ASSERT(!testfrontend->call<ITestFrontend::sendKeyEvent>(
+            uuid, Key("."), false));
+        FCITX_ASSERT(!testfrontend->call<ITestFrontend::sendKeyEvent>(
+            uuid, Key("space"), false));
+        // This should not cancel last eng.
+        FCITX_ASSERT(!testfrontend->call<ITestFrontend::sendKeyEvent>(
+            uuid, Key("BackSpace"), false));
+
+        endTestEvent = instance->eventLoop().addTimeEvent(
+            CLOCK_MONOTONIC, now(CLOCK_MONOTONIC) + 2000000, 0,
+            [instance](EventSourceTime *, uint64_t) {
+                instance->exit();
+                return true;
+            });
+    });
+}
 
 int main() {
     setupTestingEnvironment(
@@ -164,8 +224,9 @@ int main() {
     instance.addonManager().registerDefaultLoader(nullptr);
     EventDispatcher dispatcher;
     dispatcher.attach(&instance.eventLoop());
-    scheduleEvent(&dispatcher, &instance);
+    testBasic(&dispatcher, &instance);
+    testPunctuation(&dispatcher, &instance);
     instance.exec();
-
+    endTestEvent.reset();
     return 0;
 }
