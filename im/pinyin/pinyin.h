@@ -147,7 +147,7 @@ FCITX_CONFIGURATION(
     Option<bool> predictionEnabled{this, "Prediction", _("Enable Prediction"),
                                    isAndroid()};
     Option<int, IntConstrain> predictionSize{
-        this, "PredictionSize", _("Prediction Size"), 14, IntConstrain(3, 40)};
+        this, "PredictionSize", _("Prediction Size"), 49, IntConstrain(3, 100)};
     OptionWithAnnotation<SwitchInputMethodBehavior,
                          SwitchInputMethodBehaviorI18NAnnotation>
         switchInputMethodBehavior{this, "SwitchInputMethodBehavior",
