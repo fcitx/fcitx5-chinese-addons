@@ -9,6 +9,9 @@
 #include <cstring>
 #if defined(__linux__) || defined(__GLIBC__)
 #include <endian.h>
+#elif defined(__APPLE__)
+#include <libkern/OSByteOrder.h>
+#define le16toh(x) OSSwapLittleToHostInt16(x)
 #else
 #include <sys/endian.h>
 #endif
