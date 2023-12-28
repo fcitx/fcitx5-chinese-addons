@@ -23,16 +23,18 @@ fcitx5_translate_desktop_file("${CMAKE_CURRENT_BINARY_DIR}/pinyin-addon.conf.in"
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/pinyin-addon.conf" RENAME pinyin.conf DESTINATION "${FCITX_INSTALL_PKGDATADIR}/addon"
         COMPONENT config)
 
-add_custom_command(
-  OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/emoji.dict"
-  DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/emoji.txt" LibIME::pinyindict
-  COMMAND LibIME::pinyindict "${CMAKE_CURRENT_SOURCE_DIR}/emoji.txt" "${CMAKE_CURRENT_BINARY_DIR}/emoji.dict")
-add_custom_target(emoji-dict ALL DEPENDS "emoji.dict")
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/emoji.dict" DESTINATION "${FCITX_INSTALL_PKGDATADIR}/pinyin")
+if (ENABLE_DATA)
+  add_custom_command(
+    OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/emoji.dict"
+    DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/emoji.txt" LibIME::pinyindict
+    COMMAND LibIME::pinyindict "${CMAKE_CURRENT_SOURCE_DIR}/emoji.txt" "${CMAKE_CURRENT_BINARY_DIR}/emoji.dict")
+  add_custom_target(emoji-dict ALL DEPENDS "emoji.dict")
+  install(FILES "${CMAKE_CURRENT_BINARY_DIR}/emoji.dict" DESTINATION "${FCITX_INSTALL_PKGDATADIR}/pinyin")
 
-add_custom_command(
-  OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/chaizi.dict"
-  DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/chaizi.txt" LibIME::pinyindict
-  COMMAND LibIME::pinyindict "${CMAKE_CURRENT_SOURCE_DIR}/chaizi.txt" "${CMAKE_CURRENT_BINARY_DIR}/chaizi.dict")
-add_custom_target(chaizi-dict ALL DEPENDS "chaizi.dict")
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/chaizi.dict" DESTINATION "${FCITX_INSTALL_PKGDATADIR}/pinyin")
+  add_custom_command(
+    OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/chaizi.dict"
+    DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/chaizi.txt" LibIME::pinyindict
+    COMMAND LibIME::pinyindict "${CMAKE_CURRENT_SOURCE_DIR}/chaizi.txt" "${CMAKE_CURRENT_BINARY_DIR}/chaizi.dict")
+  add_custom_target(chaizi-dict ALL DEPENDS "chaizi.dict")
+  install(FILES "${CMAKE_CURRENT_BINARY_DIR}/chaizi.dict" DESTINATION "${FCITX_INSTALL_PKGDATADIR}/pinyin")
+endif()
