@@ -1913,7 +1913,8 @@ bool PinyinEngine::handlePunc(KeyEvent &event) {
             return true;
         }
     }
-    if (event.key().check(*config_.quickphraseKey) && quickphrase()) {
+    if (!event.isVirtual() && event.key().check(*config_.quickphraseKey) &&
+        quickphrase()) {
         auto keyString = utf8::UCS4ToUTF8(c);
         // s is punc or key
         auto output = !punc.empty() ? (punc + puncAfter) : keyString;
