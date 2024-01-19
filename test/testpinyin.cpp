@@ -34,7 +34,7 @@ void testBasic(EventDispatcher *dispatcher, Instance *instance) {
         defaultGroup.inputMethodList().push_back(
             InputMethodGroupItem("pinyin"));
         defaultGroup.setDefaultInputMethod("");
-        instance->inputMethodManager().setGroup(defaultGroup);
+        instance->inputMethodManager().setGroup(std::move(defaultGroup));
         auto *testfrontend = instance->addonManager().addon("testfrontend");
         auto uuid =
             testfrontend->call<ITestFrontend::createInputContext>("testapp");

@@ -260,7 +260,7 @@ class CandidateList;
 class PinyinEngine final : public InputMethodEngineV3 {
 public:
     PinyinEngine(Instance *instance);
-    ~PinyinEngine();
+    ~PinyinEngine() override;
     Instance *instance() { return instance_; }
     void activate(const InputMethodEntry &entry,
                   InputContextEvent &event) override;
@@ -289,7 +289,7 @@ public:
     }
 
     void setSubConfig(const std::string &path,
-                      const fcitx::RawConfig &) override;
+                      const fcitx::RawConfig &config) override;
 
     libime::PinyinIME *ime() { return ime_.get(); }
     const auto &config() const { return config_; }

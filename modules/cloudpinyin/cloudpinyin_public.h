@@ -17,13 +17,12 @@
 #include <functional>
 #include <string>
 
-typedef std::function<void(const std::string &pinyin, const std::string &hanzi)>
-    CloudPinyinCallback;
+using CloudPinyinCallback =
+    std::function<void(const std::string &pinyin, const std::string &hanzi)>;
 
-typedef std::function<void(fcitx::InputContext *inputContext,
-                           const std::string &selected,
-                           const std::string &word)>
-    CloudPinyinSelectedCallback;
+using CloudPinyinSelectedCallback =
+    std::function<void(fcitx::InputContext *inputContext,
+                       const std::string &selected, const std::string &word)>;
 
 FCITX_ADDON_DECLARE_FUNCTION(CloudPinyin, request,
                              void(const std::string &pinyin,
@@ -37,17 +36,18 @@ class CloudPinyinCandidateWord
 public:
     CloudPinyinCandidateWord(fcitx::AddonInstance *cloudpinyin_,
                              const std::string &pinyin,
-                             const std::string &selectedSentence, bool keep,
+                             std::string selectedSentence, bool keep,
                              fcitx::InputContext *inputContext,
                              CloudPinyinSelectedCallback callback)
-        : CandidateWord(fcitx::Text{}), selectedSentence_(selectedSentence),
+        : CandidateWord(fcitx::Text{}),
+          selectedSentence_(std::move(selectedSentence)),
           inputContext_(inputContext), callback_(std::move(callback)),
           keep_(keep) {
         // use cloud unicode char
         setText(fcitx::Text("\xe2\x98\x81"));
-        auto ref = watch();
         cloudpinyin_->call<fcitx::ICloudPinyin::request>(
-            pinyin, [ref](const std::string &pinyin, const std::string &hanzi) {
+            pinyin, [ref = watch()](const std::string &pinyin,
+                                    const std::string &hanzi) {
                 FCITX_UNUSED(pinyin);
                 auto *self = ref.get();
                 if (self) {

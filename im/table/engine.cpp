@@ -8,7 +8,6 @@
 #include "config.h"
 #include "context.h"
 #include "ime.h"
-#include "punctuation_public.h"
 #include "state.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/iostreams/device/file_descriptor.hpp>

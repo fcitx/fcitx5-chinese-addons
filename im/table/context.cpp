@@ -37,7 +37,7 @@ Text TableContext::preeditText(bool hint, bool clientPreedit) const {
                              format};
                 }
 
-                text.append(segText, flags);
+                text.append(std::move(segText), flags);
             }
         }
     }
@@ -49,7 +49,7 @@ Text TableContext::preeditText(bool hint, bool clientPreedit) const {
         codeText = hint ? customHint(currentCode()) : currentCode();
     }
 
-    text.append(codeText, {format});
+    text.append(std::move(codeText), {format});
 
     if (clientPreedit && *config_.preeditCursorPositionAtBeginning) {
         text.setCursor(0);

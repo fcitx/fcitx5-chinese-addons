@@ -11,7 +11,6 @@
 // We want to keep cloudpinyin logic but don't call it.
 #include "../../modules/cloudpinyin/cloudpinyin_public.h"
 #include "config.h"
-#include "punctuation.h"
 #include <cstdint>
 #include <ctime>
 #include <fcitx-utils/capabilityflags.h>
@@ -225,7 +224,7 @@ public:
         } else {
             text.append(word_);
         }
-        setText(text);
+        setText(std::move(text));
     }
 
     void select(InputContext *inputContext) const override {
@@ -373,7 +372,7 @@ public:
         : CloudPinyinCandidateWord(engine->cloudpinyin(), pinyin,
                                    selectedSentence,
                                    *engine->config().keepCloudPinyinPlaceHolder,
-                                   inputContext, callback),
+                                   inputContext, std::move(callback)),
           PinyinAbstractExtraCandidateWordInterface(*this, order) {
         if (filled() || !*engine->config().cloudPinyinAnimation) {
             return;
@@ -1171,7 +1170,8 @@ void PinyinEngine::populateConfig() {
                                                                EventSource *) {
             if (cloudpinyin() && !*config_.cloudPinyinEnabled &&
                 notifications()) {
-                auto key = cloudpinyin()->call<ICloudPinyin::toggleKey>();
+                const auto &key =
+                    cloudpinyin()->call<ICloudPinyin::toggleKey>();
 
                 std::string msg;
                 if (key.empty()) {
@@ -1756,11 +1756,12 @@ bool PinyinEngine::handleStrokeFilter(KeyEvent &event) {
     auto candidateList = inputContext->inputPanel().candidateList();
     auto *state = inputContext->propertyFor(&factory_);
     if (state->mode_ == PinyinMode::Normal) {
-        if (candidateList && candidateList->size() && candidateList->toBulk() &&
+        if (candidateList && !candidateList->empty() &&
+            candidateList->toBulk() &&
             event.key().checkKeyList(*config_.selectByStroke) &&
             pinyinhelper()) {
             resetStroke(inputContext);
-            state->strokeCandidateList_ = candidateList;
+            state->strokeCandidateList_ = std::move(candidateList);
             state->mode_ = PinyinMode::StrokeFilter;
             updateStroke(inputContext);
             handleNextPage(event);
@@ -1847,7 +1848,7 @@ bool PinyinEngine::handleForgetCandidate(KeyEvent &event) {
             candidateList->toBulk() &&
             event.key().checkKeyList(*config_.forgetWord)) {
             resetForgetCandidate(inputContext);
-            state->forgetCandidateList_ = candidateList;
+            state->forgetCandidateList_ = std::move(candidateList);
             state->mode_ = PinyinMode::ForgetCandidate;
             updateForgetCandidate(inputContext);
             event.filterAndAccept();
@@ -2225,29 +2226,26 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
                 }
             }
         }
-    } else {
-        if (event.key().check(FcitxKey_BackSpace)) {
-            if (lastIsPunc) {
-                auto puncStr = punctuation()->call<IPunctuation::cancelLast>(
-                    "zh_CN", inputContext);
-                if (!puncStr.empty()) {
-                    // forward the original key is the best choice.
-                    auto ref = inputContext->watch();
-                    state->cancelLastEvent_ =
-                        instance()->eventLoop().addTimeEvent(
-                            CLOCK_MONOTONIC, now(CLOCK_MONOTONIC) + 300, 0,
-                            [this, ref, puncStr](EventSourceTime *, uint64_t) {
-                                if (auto *inputContext = ref.get()) {
-                                    inputContext->commitString(puncStr);
-                                    auto *state =
-                                        inputContext->propertyFor(&factory_);
-                                    state->cancelLastEvent_.reset();
-                                }
-                                return true;
-                            });
-                    event.filter();
-                    return;
-                }
+    } else if (event.key().check(FcitxKey_BackSpace)) {
+        if (lastIsPunc) {
+            const std::string &puncStr =
+                punctuation()->call<IPunctuation::cancelLast>("zh_CN",
+                                                              inputContext);
+            if (!puncStr.empty()) {
+                // forward the original key is the best choice.
+                state->cancelLastEvent_ = instance()->eventLoop().addTimeEvent(
+                    CLOCK_MONOTONIC, now(CLOCK_MONOTONIC) + 300, 0,
+                    [this, ref = inputContext->watch(),
+                     puncStr = puncStr](EventSourceTime *, uint64_t) {
+                        if (auto *inputContext = ref.get()) {
+                            inputContext->commitString(puncStr);
+                            auto *state = inputContext->propertyFor(&factory_);
+                            state->cancelLastEvent_.reset();
+                        }
+                        return true;
+                    });
+                event.filter();
+                return;
             }
         }
     }
@@ -2260,7 +2258,9 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
     }
 }
 
-void PinyinEngine::setSubConfig(const std::string &path, const RawConfig &) {
+void PinyinEngine::setSubConfig(const std::string &path,
+                                const RawConfig &config) {
+    FCITX_UNUSED(config);
     if (path == "dictmanager") {
         loadExtraDict();
     } else if (path == "clearuserdict") {

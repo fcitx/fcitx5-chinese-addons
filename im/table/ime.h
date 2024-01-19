@@ -28,7 +28,7 @@ FCITX_CONFIG_ENUM_NAME_WITH_I18N(CandidateLayoutHint, N_("Not set"),
 struct NoSaveAnnotation {
     bool skipDescription() { return true; }
     bool skipSave() { return true; }
-    void dumpDescription(RawConfig &) const {}
+    void dumpDescription(RawConfig &config) const { FCITX_UNUSED(config); }
 };
 
 template <typename T>

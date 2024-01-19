@@ -5,12 +5,12 @@
  *
  */
 #include "ime.h"
-#include "config.h"
 #include <boost/iostreams/device/file_descriptor.hpp>
 #include <boost/iostreams/stream_buffer.hpp>
 #include <boost/range/adaptor/reversed.hpp>
 #include <fcitx-config/iniparser.h>
 #include <fcitx-utils/log.h>
+#include <fcitx-utils/macros.h>
 #include <fcitx-utils/standardpath.h>
 #include <fcitx-utils/stringutils.h>
 #include <fcntl.h>
@@ -25,7 +25,10 @@ FCITX_DEFINE_LOG_CATEGORY(table_logcategory, "table")
 namespace {
 
 struct BinaryOrTextDict {
-    bool operator()(const std::string &path, const std::string &, bool) const {
+    bool operator()(const std::string &path, const std::string &dir,
+                    bool isUser) const {
+        FCITX_UNUSED(dir);
+        FCITX_UNUSED(isUser);
         return stringutils::endsWith(path, ".txt") ||
                stringutils::endsWith(path, ".dict");
     }
@@ -64,7 +67,7 @@ void populateOptions(libime::TableBasedDictionary *dict,
             endKeys.insert(chr);
         }
     }
-    options.setEndKey(endKeys);
+    options.setEndKey(std::move(endKeys));
     options.setExactMatch(*root.config->exactMatch);
     options.setLearning(*root.config->learning);
     options.setAutoPhraseLength(*root.config->autoPhraseLength);
@@ -74,7 +77,7 @@ void populateOptions(libime::TableBasedDictionary *dict,
     options.setLanguageCode(*root.im->languageCode);
     options.setSortByCodeLength(*root.config->sortByCodeLength);
 
-    dict->setTableOptions(options);
+    dict->setTableOptions(std::move(options));
 }
 } // namespace
 
@@ -92,7 +95,7 @@ TableIME::requestDict(const std::string &name) {
                    .first;
         auto &root = iter->second.root;
 
-        std::string filename = stringutils::joinPath(
+        const std::string filename = stringutils::joinPath(
             "inputmethod", stringutils::concat(name, ".conf"));
         auto files = StandardPath::global().openAll(StandardPath::Type::PkgData,
                                                     filename, O_RDONLY);
@@ -106,7 +109,7 @@ TableIME::requestDict(const std::string &name) {
         // So "Default" can be reset to current value.
         root.syncDefaultValueToCurrent();
 
-        std::string customization =
+        const std::string customization =
             stringutils::joinPath("table", stringutils::concat(name, ".conf"));
         files = StandardPath::global().openAll(StandardPath::Type::PkgConfig,
                                                customization, O_RDONLY);
