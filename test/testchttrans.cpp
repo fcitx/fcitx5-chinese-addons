@@ -60,7 +60,7 @@ void scheduleEvent(EventDispatcher *dispatcher, Instance *instance) {
         inputmethodgroup.inputMethodList().emplace_back("sim");
         inputmethodgroup.inputMethodList().emplace_back("trad");
         inputmethodgroup.setDefaultInputMethod("sim");
-        instance->inputMethodManager().setGroup(inputmethodgroup);
+        instance->inputMethodManager().setGroup(std::move(inputmethodgroup));
 
         FCITX_INFO() << instance->inputMethodManager()
                             .currentGroup()

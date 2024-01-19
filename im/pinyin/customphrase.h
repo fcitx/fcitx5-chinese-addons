@@ -16,7 +16,7 @@ namespace fcitx {
 class CustomPhrase {
 public:
     explicit CustomPhrase(int order, std::string value)
-        : order_(order), value_(value) {}
+        : order_(order), value_(std::move(value)) {}
     FCITX_INLINE_DEFINE_DEFAULT_DTOR_COPY_AND_MOVE_WITH_SPEC(CustomPhrase,
                                                              noexcept)
 

@@ -31,7 +31,7 @@ void scheduleEvent(EventDispatcher *dispatcher, Instance *instance) {
             InputMethodGroupItem("keyboard-us"));
         defaultGroup.inputMethodList().push_back(InputMethodGroupItem("erbi"));
         defaultGroup.setDefaultInputMethod("");
-        instance->inputMethodManager().setGroup(defaultGroup);
+        instance->inputMethodManager().setGroup(std::move(defaultGroup));
         auto *testfrontend = instance->addonManager().addon("testfrontend");
         testfrontend->call<ITestFrontend::pushCommitExpectation>("萌");
         testfrontend->call<ITestFrontend::pushCommitExpectation>("豚");
@@ -46,7 +46,7 @@ void scheduleEvent(EventDispatcher *dispatcher, Instance *instance) {
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("b"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("t"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("d"), false);
-        auto ic = instance->inputContextManager().findByUUID(uuid);
+        auto *ic = instance->inputContextManager().findByUUID(uuid);
         // Check no candidate.
         FCITX_ASSERT(!ic->inputPanel().candidateList());
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key(FcitxKey_Escape),
@@ -90,12 +90,13 @@ void scheduleEvent(EventDispatcher *dispatcher, Instance *instance) {
             InputMethodGroupItem("keyboard-us"));
         defaultGroup.inputMethodList().push_back(InputMethodGroupItem("wbx"));
         defaultGroup.setDefaultInputMethod("");
-        instance->inputMethodManager().setGroup(defaultGroup);
+        instance->inputMethodManager().setGroup(std::move(defaultGroup));
         auto *table = instance->addonManager().addon("table", true);
         RawConfig config;
-        auto wbxConfig = reinterpret_cast<InputMethodEngine *>(table)
-                             ->getConfigForInputMethod(
-                                 *instance->inputMethodManager().entry("wbx"));
+        const auto *wbxConfig =
+            reinterpret_cast<InputMethodEngine *>(table)
+                ->getConfigForInputMethod(
+                    *instance->inputMethodManager().entry("wbx"));
         wbxConfig->save(config);
         config.setValueByPath("AutoPhraseWithPhrase", "True");
         reinterpret_cast<InputMethodEngine *>(table)->setConfigForInputMethod(
@@ -113,7 +114,7 @@ void scheduleEvent(EventDispatcher *dispatcher, Instance *instance) {
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
-        auto ic = instance->inputContextManager().findByUUID(uuid);
+        auto *ic = instance->inputContextManager().findByUUID(uuid);
 
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
@@ -143,8 +144,6 @@ void scheduleEvent(EventDispatcher *dispatcher, Instance *instance) {
         });
     });
 }
-
-void runInstance() {}
 
 int main() {
     setupTestingEnvironment(TESTING_BINARY_DIR,

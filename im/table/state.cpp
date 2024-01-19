@@ -30,9 +30,10 @@ class CommitAfterSelectWrapper {
 public:
     CommitAfterSelectWrapper(TableState *state) : state_(state) {
         if (auto *context = state->updateContext(nullptr)) {
-            commitFrom_ = context->selectedSize();
+            commitFrom_ = static_cast<int>(context->selectedSize());
         }
     }
+
     ~CommitAfterSelectWrapper() {
         if (commitFrom_ >= 0) {
             state_->commitAfterSelect(commitFrom_);
@@ -83,13 +84,12 @@ public:
         Text text;
         text.append(word_);
         if (utf8::lengthValidated(word_) == 1) {
-            auto code = dict.reverseLookup(word_);
-            if (!code.empty()) {
+            if (auto code = dict.reverseLookup(word_); !code.empty()) {
                 text.append(" ~ ");
                 if (customHint) {
                     text.append(dict.hint(code));
                 } else {
-                    text.append(code);
+                    text.append(std::move(code));
                 }
             }
         }
@@ -118,7 +118,7 @@ public:
         } else {
             text.append(word_);
         }
-        setText(text);
+        setText(std::move(text));
     }
 
     void select(InputContext *inputContext) const override {
@@ -323,7 +323,7 @@ void TableState::predict() {
     if (predictWord.empty()) {
         return;
     }
-    std::vector<std::string> predictWords = {predictWord};
+    std::vector<std::string> predictWords{std::move(predictWord)};
     auto words = context_->prediction()->predict(
         predictWords, *engine_->config().predictionSize);
     if (auto candidateList = predictCandidateList(words)) {
@@ -768,7 +768,7 @@ bool TableState::handleLookupPinyinOrModifyDictionaryMode(KeyEvent &event) {
                                 stringutils::join(sp, " ")));
                         }
                     }
-                    inputPanel.setAuxDown(Text(text));
+                    inputPanel.setAuxDown(Text(std::move(text)));
                 } else {
                     inputPanel.setAuxDown(Text(_("Could not find pinyin.")));
                 }
@@ -822,7 +822,8 @@ bool TableState::handleLookupPinyinOrModifyDictionaryMode(KeyEvent &event) {
 
 void TableState::forgetCandidateWord(size_t idx) {
     mode_ = TableMode::Normal;
-    auto oldCode = context_->currentCode();
+    // Make a copy of old code since it will be cleared later.
+    std::string oldCode = context_->currentCode();
     auto code = TableContext::code(context_->candidates()[idx]);
     if (!code.empty()) {
         auto word = context_->candidates()[idx].toString();
@@ -1062,16 +1063,16 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
                 }
             }
         } else if (event.key().check(FcitxKey_BackSpace) && lastIsPunc) {
-            auto puncStr =
+            const std::string &puncStr =
                 engine_->punctuation()->call<IPunctuation::cancelLast>(
                     entry.languageCode(), inputContext);
             if (!puncStr.empty()) {
                 // forward the original key is the best choice.
-                auto ref = inputContext->watch();
                 cancelLastEvent_ =
                     engine_->instance()->eventLoop().addTimeEvent(
                         CLOCK_MONOTONIC, now(CLOCK_MONOTONIC) + 300, 0,
-                        [this, ref, puncStr](EventSourceTime *, uint64_t) {
+                        [this, ref = inputContext->watch(),
+                         puncStr = puncStr](EventSourceTime *, uint64_t) {
                             if (auto *inputContext = ref.get()) {
                                 inputContext->commitString(puncStr);
                             }
@@ -1404,9 +1405,8 @@ void TableState::updateUI(bool keepOldCursor, bool maybePredict) {
             candidateList->setPageSize(*config.pageSize);
 
             for (const auto &candidate : candidates) {
-                auto candidateString = candidate.toString();
                 Text text;
-                text.append(candidateString);
+                text.append(candidate.toString());
                 std::string hint;
                 if (*config.hint) {
                     hint =
@@ -1414,7 +1414,7 @@ void TableState::updateUI(bool keepOldCursor, bool maybePredict) {
                 }
                 if (!hint.empty()) {
                     text.append(*config.hintSeparator);
-                    text.append(hint);
+                    text.append(std::move(hint));
                 }
                 if (!config.markerForAutoPhrase->empty() &&
                     TableContext::isAuto(candidate.sentence())) {
