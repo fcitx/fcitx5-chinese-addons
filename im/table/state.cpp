@@ -62,7 +62,7 @@ public:
             return;
         }
         {
-            CommitAfterSelectWrapper commitAfterSelectRAII(state);
+            const CommitAfterSelectWrapper commitAfterSelectRAII(state);
             context->select(idx_);
         }
         if (context->selected()) {
@@ -111,7 +111,7 @@ class TablePunctuationCandidateWord : public CandidateWord {
 public:
     TablePunctuationCandidateWord(TableState *state, std::string word,
                                   bool isHalf)
-        : CandidateWord(), state_(state), word_(std::move(word)) {
+        : state_(state), word_(std::move(word)) {
         Text text;
         if (isHalf) {
             text.append(fmt::format(_("{0} (Half)"), word_));

@@ -45,8 +45,8 @@ FCITX_CONFIGURATION(
 
 class Backend {
 public:
-    virtual void prepareRequest(CurlQueue *queue,
-                                const std::string &pinyin) = 0;
+    FCITX_NODISCARD virtual bool prepareRequest(CurlQueue *queue,
+                                                const std::string &pinyin) = 0;
     virtual std::string parseResult(CurlQueue *queue) = 0;
     virtual ~Backend() = default;
 };
@@ -54,7 +54,7 @@ public:
 class CloudPinyin : public fcitx::AddonInstance {
 public:
     CloudPinyin(fcitx::AddonManager *manager);
-    ~CloudPinyin();
+    ~CloudPinyin() override;
 
     void reloadConfig() override;
     const fcitx::Configuration *getConfig() const override { return &config_; }

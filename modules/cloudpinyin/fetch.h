@@ -15,6 +15,7 @@
 #include <fcitx-utils/intrusivelist.h>
 #include <iterator>
 #include <mutex>
+#include <stdexcept>
 #include <thread>
 #include <unordered_map>
 #include <vector>
@@ -25,35 +26,41 @@ class CloudPinyin;
 
 class CurlQueue : public fcitx::IntrusiveListNode {
 public:
-    CurlQueue(bool keep = true) : keep_(keep), curl_(curl_easy_init()) {
-        curl_easy_setopt(curl_, CURLOPT_PRIVATE, this);
-        curl_easy_setopt(curl_, CURLOPT_WRITEDATA, this);
-        curl_easy_setopt(curl_, CURLOPT_WRITEFUNCTION,
-                         &CurlQueue::curlWriteFunction);
-        curl_easy_setopt(curl_, CURLOPT_TIMEOUT, 10l);
-        curl_easy_setopt(curl_, CURLOPT_NOSIGNAL, 1);
-    }
+    CurlQueue() : curl_(curl_easy_init()) {
+        if (!curl_) {
+            throw std::runtime_error("Failed to init CURL handle.");
+        }
 
-    ~CurlQueue() { curl_easy_cleanup(curl_); }
-
-    void release() {
-        busy_ = false;
-        if (!keep_) {
-            delete this;
-        } else {
-            data_.clear();
-            pinyin_.clear();
-            // make sure lambda is free'd
-            callback_ = CloudPinyinCallback();
-            httpCode_ = 0;
+        // These options should be pretty safe to set, throw exception
+        // to de-init cloudpinyin.
+        const bool result =
+            (curl_easy_setopt(curl_, CURLOPT_PRIVATE, this) == CURLE_OK) &&
+            (curl_easy_setopt(curl_, CURLOPT_WRITEDATA, this) == CURLE_OK) &&
+            (curl_easy_setopt(curl_, CURLOPT_WRITEFUNCTION,
+                              &CurlQueue::curlWriteFunction) == CURLE_OK) &&
+            (curl_easy_setopt(curl_, CURLOPT_TIMEOUT, 10L) == CURLE_OK) &&
+            (curl_easy_setopt(curl_, CURLOPT_NOSIGNAL, 1L) == CURLE_OK);
+        if (!result) {
+            throw std::runtime_error("Failed setup CURL handle options.");
         }
     }
 
+    ~CurlQueue() override { curl_easy_cleanup(curl_); }
+
+    void release() {
+        busy_ = false;
+        data_.clear();
+        pinyin_.clear();
+        // make sure lambda is free'd
+        callback_ = CloudPinyinCallback();
+        httpCode_ = 0;
+    }
+
     const auto &pinyin() const { return pinyin_; }
-    void setPinyin(const std::string &pinyin) { pinyin_ = pinyin; }
+    void setPinyin(std::string pinyin) { pinyin_ = std::move(pinyin); }
 
     auto curl() { return curl_; }
-    void finish(int result) {
+    void finish(CURLcode result) {
         curlResult_ = result;
         curl_easy_getinfo(curl_, CURLINFO_RESPONSE_CODE, &httpCode_);
     }
@@ -68,7 +75,7 @@ public:
         callback_ = std::move(callback);
     }
 
-    int httpCode() const { return httpCode_; }
+    auto httpCode() const { return httpCode_; }
 
 private:
     static size_t curlWriteFunction(char *ptr, size_t size, size_t nmemb,
@@ -105,17 +112,16 @@ private:
         return realsize;
     }
 
-    bool keep_ = true;
     bool busy_ = false;
     CURL *curl_ = nullptr;
-    int curlResult_ = 0;
+    CURLcode curlResult_ = CURLE_OK;
     long httpCode_ = 0;
     std::vector<char> data_;
     std::string pinyin_;
     CloudPinyinCallback callback_;
 };
 
-typedef std::function<void(CurlQueue *)> SetupRequestCallback;
+using SetupRequestCallback = std::function<bool(CurlQueue *)>;
 
 class FetchThread {
 public:

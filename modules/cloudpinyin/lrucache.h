@@ -12,13 +12,10 @@
 
 template <typename K, typename V>
 class LRUCache {
-    typedef K key_type;
-    typedef V value_type;
-    typedef std::unordered_map<K, std::pair<V, typename std::list<K>::iterator>>
-        dict_type;
-    dict_type dict_;
-    std::list<K> order_;
-    size_t sz_;
+    using key_type = K;
+    using value_type = V;
+    using dict_type =
+        std::unordered_map<K, std::pair<V, typename std::list<K>::iterator>>;
 
 public:
     LRUCache(size_t sz = 80) : sz_(sz) {}
@@ -94,6 +91,9 @@ private:
         }
         return &i->second.first;
     }
+    dict_type dict_;
+    std::list<K> order_;
+    size_t sz_;
 };
 
 #endif // _FCITX_LIBIME_LRU_H_
