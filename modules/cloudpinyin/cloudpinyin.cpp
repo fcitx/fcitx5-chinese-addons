@@ -23,27 +23,33 @@ FCITX_DEFINE_LOG_CATEGORY(cloudpinyin, "cloudpinyin");
 
 #define CLOUDPINYIN_DEBUG() FCITX_LOGC(cloudpinyin, Debug)
 
+namespace {
+
 class GoogleBackend : public Backend {
 public:
-    GoogleBackend(const std::string &url) : url_(url) {}
+    GoogleBackend(std::string url) : url_(std::move(url)) {}
 
-    void prepareRequest(CurlQueue *queue, const std::string &pinyin) override {
-        UniqueCPtr<char, curl_free> escaped(
-            curl_escape(pinyin.c_str(), pinyin.size()));
-        std::string url = url_;
-        url += escaped.get();
+    bool prepareRequest(CurlQueue *queue, const std::string &pinyin) override {
+        const UniqueCPtr<char, curl_free> escaped(
+            curl_escape(pinyin.c_str(), static_cast<int>(pinyin.size())));
+        if (!escaped) {
+            return false;
+        }
+        const std::string url = stringutils::concat(url_, escaped.get());
         CLOUDPINYIN_DEBUG() << "Request URL: " << url;
-        curl_easy_setopt(queue->curl(), CURLOPT_URL, url.c_str());
+        return (curl_easy_setopt(queue->curl(), CURLOPT_URL, url.c_str()) ==
+                CURLE_OK);
     }
     std::string parseResult(CurlQueue *queue) override {
-        std::string result(queue->result().begin(), queue->result().end());
+        const std::string_view result(queue->result().data(),
+                                      queue->result().size());
         CLOUDPINYIN_DEBUG() << "Request result: " << result;
         auto start = result.find("\",[\"");
         std::string hanzi;
-        if (start != std::string::npos) {
+        if (start != std::string_view::npos) {
             start += strlen("\",[\"");
             auto end = result.find('\"', start);
-            if (end != std::string::npos && end > start) {
+            if (end != std::string_view::npos && end > start) {
                 hanzi = result.substr(start, end - start);
             }
         }
@@ -56,17 +62,22 @@ private:
 
 class BaiduBackend : public Backend {
 public:
-    void prepareRequest(CurlQueue *queue, const std::string &pinyin) override {
-        std::string url = "https://olime.baidu.com/py?rn=0&pn=1&ol=1&py=";
-        std::unique_ptr<char, decltype(&curl_free)> escaped(
-            curl_escape(pinyin.c_str(), pinyin.size()), &curl_free);
-        url += escaped.get();
+    bool prepareRequest(CurlQueue *queue, const std::string &pinyin) override {
+        const UniqueCPtr<char, &curl_free> escaped(
+            curl_escape(pinyin.c_str(), static_cast<int>(pinyin.size())));
+        if (!escaped) {
+            return false;
+        }
+        const std::string url = stringutils::concat(
+            "https://olime.baidu.com/py?rn=0&pn=1&ol=1&py=", escaped.get());
         CLOUDPINYIN_DEBUG() << "Request URL: " << url;
-        curl_easy_setopt(queue->curl(), CURLOPT_URL, url.c_str());
+        return (curl_easy_setopt(queue->curl(), CURLOPT_URL, url.c_str()) ==
+                CURLE_OK);
     }
 
     std::string parseResult(CurlQueue *queue) override {
-        std::string result(queue->result().begin(), queue->result().end());
+        const std::string_view result(queue->result().data(),
+                                      queue->result().size());
         CLOUDPINYIN_DEBUG() << "Request result: " << result;
         auto start = result.find("[[\"");
         std::string hanzi;
@@ -82,7 +93,9 @@ public:
 };
 
 constexpr int MAX_ERROR = 10;
-constexpr int minInUs = 60000000;
+constexpr uint64_t minInUs = 60000000;
+
+} // namespace
 
 CloudPinyin::CloudPinyin(fcitx::AddonManager *manager)
     : eventLoop_(manager->eventLoop()) {
@@ -138,16 +151,18 @@ void CloudPinyin::request(const std::string &pinyin,
         auto *b = iter->second.get();
         if (!thread_->addRequest([proxy = *config_.proxy, b, &pinyin,
                                   &callback](CurlQueue *queue) {
-                b->prepareRequest(queue, pinyin);
-                if (proxy.empty()) {
-                    curl_easy_setopt(queue->curl(), CURLOPT_PROXY, nullptr);
-                } else {
-                    curl_easy_setopt(queue->curl(), CURLOPT_PROXY,
-                                     proxy.data());
+                if (!b->prepareRequest(queue, pinyin)) {
+                    return false;
+                }
+                if (curl_easy_setopt(
+                        queue->curl(), CURLOPT_PROXY,
+                        (proxy.empty() ? nullptr : proxy.data())) != CURLE_OK) {
+                    return false;
                 }
                 queue->setPinyin(pinyin);
                 queue->setBusy();
                 queue->setCallback(callback);
+                return true;
             })) {
             callback(pinyin, "");
         };

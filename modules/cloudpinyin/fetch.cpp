@@ -52,9 +52,11 @@ FetchThread::~FetchThread() {
 }
 
 void FetchThread::runThread(FetchThread *self) { self->run(); }
-int FetchThread::curlCallback(CURL *, curl_socket_t s, int action, void *userp,
-                              void *) {
-    FetchThread *self = static_cast<FetchThread *>(userp);
+int FetchThread::curlCallback(CURL *curl, curl_socket_t s, int action,
+                              void *userp, void *socketp) {
+    FCITX_UNUSED(curl);
+    FCITX_UNUSED(socketp);
+    auto *self = static_cast<FetchThread *>(userp);
     self->curl(s, action);
 
     return 0;
@@ -84,14 +86,13 @@ void FetchThread::processMessages() {
     int num_messages = 0;
     CURLMsg *curl_message = curl_multi_info_read(curlm_, &num_messages);
 
-    while (curl_message != NULL) {
+    while (curl_message != nullptr) {
         if (curl_message->msg == CURLMSG_DONE) {
-            int curl_result = curl_message->data.result;
             void *p = nullptr;
             curl_easy_getinfo(curl_message->easy_handle, CURLINFO_PRIVATE, &p);
             auto *queue = static_cast<CurlQueue *>(p);
             curl_multi_remove_handle(curlm_, queue->curl());
-            queue->finish(curl_result);
+            queue->finish(curl_message->data.result);
             queue->remove();
             finished(queue);
         }
@@ -136,7 +137,8 @@ void FetchThread::curl(curl_socket_t s, int action) {
     }
 }
 
-int FetchThread::curlTimerCallback(CURLM *, long timeout_ms, void *user) {
+int FetchThread::curlTimerCallback(CURLM *multi, long timeout_ms, void *user) {
+    FCITX_UNUSED(multi);
     auto *self = static_cast<FetchThread *>(user);
     self->curlTimer(timeout_ms);
     return 0;
@@ -168,7 +170,7 @@ void FetchThread::curlTimer(long timeout_ms) {
 
 void FetchThread::finished(CurlQueue *queue) {
     {
-        std::lock_guard<std::mutex> lock(finishQueueLock);
+        const std::lock_guard<std::mutex> lock(finishQueueLock);
         finishingQueue.push_back(*queue);
     }
     cloudPinyin_->notifyFinished();
@@ -188,13 +190,13 @@ bool FetchThread::addRequest(const SetupRequestCallback &callback) {
     callback(queue);
 
     {
-        std::lock_guard<std::mutex> lock(pendingQueueLock);
+        const std::lock_guard<std::mutex> lock(pendingQueueLock);
         pendingQueue.push_back(*queue);
     }
 
     // Handle pending queue in fetch thread.
     dispatcher_.schedule([this]() {
-        std::lock_guard<std::mutex> lock(pendingQueueLock);
+        const std::lock_guard<std::mutex> lock(pendingQueueLock);
 
         while (!pendingQueue.empty()) {
             auto *queue = &pendingQueue.front();
@@ -214,7 +216,7 @@ void FetchThread::exit() {
 }
 
 CurlQueue *FetchThread::popFinished() {
-    std::lock_guard<std::mutex> lock(finishQueueLock);
+    const std::lock_guard<std::mutex> lock(finishQueueLock);
     CurlQueue *result = nullptr;
     if (!finishingQueue.empty()) {
         result = &finishingQueue.front();
@@ -224,7 +226,7 @@ CurlQueue *FetchThread::popFinished() {
 }
 
 void FetchThread::run() {
-    loop_.reset(new fcitx::EventLoop);
+    loop_ = std::make_unique<fcitx::EventLoop>();
 
     dispatcher_.attach(loop_.get());
     loop_->exec();
