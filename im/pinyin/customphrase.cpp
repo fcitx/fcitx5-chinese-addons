@@ -83,7 +83,7 @@ std::optional<ParseResult> parseCustomPhraseLine(std::string_view line) {
 
     int order = 0;
     if (auto result = parseInt(line.substr(orderStart, i - orderStart))) {
-        order = result.value();
+        order = *result;
     }
     // Zero is invalid value.
     if (order == 0) {
@@ -369,7 +369,7 @@ void CustomPhraseDict::load(std::istream &in, bool loadDisabled) {
             if (value.size() >= 2 && stringutils::startsWith(value, '"') &&
                 stringutils::endsWith(value, '"')) {
                 if (auto unescape = stringutils::unescapeForValue(value)) {
-                    value = unescape.value();
+                    value = *unescape;
                 }
             }
 

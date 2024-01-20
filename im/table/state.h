@@ -77,7 +77,7 @@ private:
     bool handleLookupPinyinOrModifyDictionaryMode(KeyEvent &event);
 
     bool isContextEmpty() const;
-    bool autoSelectCandidate();
+    bool autoSelectCandidate() const;
     std::unique_ptr<CandidateList>
     predictCandidateList(const std::vector<std::string> &words);
     std::string commitSegements(size_t from, size_t to);
