@@ -201,7 +201,7 @@ std::string CustomPhrase::evaluate(
 
     auto state = State::Normal;
 
-    for (size_t i = 0; i < content.size(); i++) {
+    for (size_t i = 0; i < content.size();) {
         const char c = content[i];
 
         switch (state) {
@@ -211,6 +211,7 @@ std::string CustomPhrase::evaluate(
             } else {
                 output += c;
             }
+            i += 1;
             break;
 
         case State::VariableStart:
@@ -226,7 +227,12 @@ std::string CustomPhrase::evaluate(
                 variableNameStart = i;
                 variableNameLength = 1;
                 state = State::Variable;
+            } else {
+                output += '$';
+                output += c;
+                state = State::Normal;
             }
+            i += 1;
             break;
 
         case State::BracedVariable:
@@ -238,6 +244,7 @@ std::string CustomPhrase::evaluate(
                 variableNameLength += 1;
                 state = State::BracedVariable;
             }
+            i += 1;
             break;
 
         case State::Variable:
@@ -245,6 +252,7 @@ std::string CustomPhrase::evaluate(
                 charutils::isdigit(c) || c == '_') {
                 variableNameLength += 1;
                 state = State::Variable;
+                i += 1;
             } else {
                 output += evaluator(
                     content.substr(variableNameStart, variableNameLength));
@@ -253,9 +261,21 @@ std::string CustomPhrase::evaluate(
             break;
         }
     }
-    if (state == State::Variable) {
+
+    switch (state) {
+    case State::Normal:
+        break;
+    case State::VariableStart:
+        output += '$';
+        break;
+    case State::BracedVariable:
+        output += "${";
+        output += content.substr(variableNameStart, variableNameLength);
+        break;
+    case State::Variable:
         output +=
             evaluator(content.substr(variableNameStart, variableNameLength));
+        break;
     }
 
     return output;
