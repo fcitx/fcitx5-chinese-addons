@@ -67,7 +67,8 @@ void test_evaluator() {
     FCITX_ASSERT(phrase.evaluate(evaluator) == "$a $b");
 
     phrase.mutableValue() = "#$a $b";
-    FCITX_ASSERT(phrase.evaluate(evaluator) == "xx yy");
+    FCITX_ASSERT(phrase.evaluate(evaluator) == "xx yy")
+        << phrase.evaluate(evaluator);
 
     phrase.mutableValue() = "#$a$b";
     FCITX_ASSERT(phrase.evaluate(evaluator) == "xxyy");
@@ -89,6 +90,19 @@ void test_evaluator() {
 
     phrase.mutableValue() = "#${a}${b}";
     FCITX_ASSERT(phrase.evaluate(evaluator) == "xxyy");
+
+    phrase.mutableValue() = "#$}${b}";
+    FCITX_ASSERT(phrase.evaluate(evaluator) == "$}yy");
+
+    phrase.mutableValue() = "#$ ${b}";
+    FCITX_ASSERT(phrase.evaluate(evaluator) == "$ yy");
+
+    phrase.mutableValue() = "#$a$";
+    FCITX_ASSERT(phrase.evaluate(evaluator) == "xx$")
+        << phrase.evaluate(evaluator);
+
+    phrase.mutableValue() = "#$a${b";
+    FCITX_ASSERT(phrase.evaluate(evaluator) == "xx${b");
 }
 
 void test_builtin_evaluator() {
