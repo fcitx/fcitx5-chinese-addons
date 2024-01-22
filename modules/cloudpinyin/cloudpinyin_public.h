@@ -114,7 +114,7 @@ private:
             if (idx == 0) {
                 if (dupIndex) {
                     modifiable->remove(0);
-                    modifiable->move(dupIndex.value() - 1, 0);
+                    modifiable->move(*dupIndex - 1, 0);
                 } else {
                     // result is empty.
                     // Remove empty.

@@ -64,7 +64,7 @@ std::optional<ParseResult> parseCustomPhraseLine(std::string_view line) {
         return std::nullopt;
     }
 
-    std::string_view alpha = line.substr(0, i);
+    const std::string_view alpha = line.substr(0, i);
     if (i >= line.size() || line[i] != ',') {
         return std::nullopt;
     }
@@ -111,9 +111,9 @@ inline std::tm currentTm() {
     timePoint.tm_sec = 6;
     return timePoint;
 #else
-    std::chrono::system_clock::time_point now =
+    const std::chrono::system_clock::time_point now =
         std::chrono::system_clock::now();
-    std::time_t currentTime = std::chrono::system_clock::to_time_t(now);
+    const std::time_t currentTime = std::chrono::system_clock::to_time_t(now);
     return fmt::localtime(currentTime);
 #endif
 }
@@ -126,7 +126,7 @@ int currentHour() { return currentTm().tm_hour; }
 int currentMinute() { return currentTm().tm_min; }
 int currentSecond() { return currentTm().tm_sec; }
 int currentHalfHour() {
-    int hour = currentHour() % 12;
+    const int hour = currentHour() % 12;
     return (hour == 0) ? 12 : hour;
 }
 
@@ -136,7 +136,7 @@ std::string toChineseYear(std::string_view num) {
     };
     std::string result;
     result.reserve(num.size() * 3);
-    for (char c : num) {
+    for (const char c : num) {
         assert(charutils::isdigit(c));
         result += chineseDigit[c - '0'];
     }
@@ -159,8 +159,8 @@ std::string toChineseTwoDigitNumber(int num, bool leadingZero) {
     if (num == 0) {
         return std::string(chineseDigit[0]);
     }
-    int tens = num / 10;
-    int ones = num % 10;
+    const int tens = num / 10;
+    const int ones = num % 10;
     std::string prefix;
     if (tens == 0) {
         if (leadingZero) {
@@ -202,20 +202,7 @@ std::string CustomPhrase::evaluate(
     auto state = State::Normal;
 
     for (size_t i = 0; i < content.size(); i++) {
-        char c = content[i];
-
-        if (state == State::Variable) {
-            if (charutils::islower(c) || charutils::isupper(c) ||
-                charutils::isdigit(c) || c == '_') {
-                variableNameLength += 1;
-                state = State::Variable;
-                continue;
-            } else {
-                output += evaluator(
-                    content.substr(variableNameStart, variableNameLength));
-                state = State::Normal;
-            }
-        }
+        const char c = content[i];
 
         switch (state) {
         case State::Normal:
@@ -254,6 +241,15 @@ std::string CustomPhrase::evaluate(
             break;
 
         case State::Variable:
+            if (charutils::islower(c) || charutils::isupper(c) ||
+                charutils::isdigit(c) || c == '_') {
+                variableNameLength += 1;
+                state = State::Variable;
+            } else {
+                output += evaluator(
+                    content.substr(variableNameStart, variableNameLength));
+                state = State::Normal;
+            }
             break;
         }
     }
@@ -332,7 +328,7 @@ std::string CustomPhrase::builtinEvaluator(std::string_view key) {
     return "";
 }
 
-CustomPhraseDict::CustomPhraseDict() {}
+CustomPhraseDict::CustomPhraseDict() = default;
 
 void CustomPhraseDict::load(std::istream &in, bool loadDisabled) {
     clear();
@@ -380,7 +376,7 @@ void CustomPhraseDict::load(std::istream &in, bool loadDisabled) {
                 continue;
             }
             auto index = index_.exactMatchSearch(key);
-            if (index_.isNoValue(index)) {
+            if (TrieType::isNoValue(index)) {
                 if (data_.size() >= std::numeric_limits<int32_t>::max()) {
                     break;
                 }
@@ -408,7 +404,7 @@ void CustomPhraseDict::load(std::istream &in, bool loadDisabled) {
 const std::vector<CustomPhrase> *
 CustomPhraseDict::lookup(std::string_view key) const {
     auto index = index_.exactMatchSearch(key);
-    if (index_.isNoValue(index)) {
+    if (TrieType::isNoValue(index)) {
         return nullptr;
     }
 
@@ -418,7 +414,7 @@ CustomPhraseDict::lookup(std::string_view key) const {
 void CustomPhraseDict::addPhrase(std::string_view key, std::string_view value,
                                  int order) {
     auto index = index_.exactMatchSearch(key);
-    if (index_.isNoValue(index)) {
+    if (TrieType::isNoValue(index)) {
         if (data_.size() >= std::numeric_limits<int32_t>::max()) {
             return;
         }
