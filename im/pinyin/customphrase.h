@@ -37,6 +37,7 @@ private:
 
 class CustomPhraseDict {
 public:
+    using TrieType = libime::DATrie<uint32_t>;
     CustomPhraseDict();
 
     void load(std::istream &in, bool loadDisabled = false);
@@ -50,9 +51,8 @@ public:
     template <typename T>
     void foreach(const T &callback) {
         std::string buf;
-        index_.foreach([this, &buf, &callback](
-                           uint32_t index, size_t len,
-                           libime::DATrie<uint32_t>::position_type pos) {
+        index_.foreach([this, &buf, &callback](uint32_t index, size_t len,
+                                               TrieType::position_type pos) {
             index_.suffix(buf, len, pos);
             callback(buf, data_[index]);
             return true;
@@ -60,7 +60,7 @@ public:
     }
 
 private:
-    libime::DATrie<uint32_t> index_;
+    TrieType index_;
     std::vector<std::vector<CustomPhrase>> data_;
 };
 
