@@ -10,6 +10,7 @@
 #include "ime.h"
 #include <fcitx-config/configuration.h>
 #include <fcitx-config/iniparser.h>
+#include <fcitx-utils/event.h>
 #include <fcitx/action.h>
 #include <fcitx/addonfactory.h>
 #include <fcitx/addonmanager.h>
@@ -124,6 +125,7 @@ private:
 
     void releaseStates();
     void reloadDict();
+    void preload();
 
     Instance *instance_;
     std::unique_ptr<TableIME> ime_;
@@ -137,6 +139,7 @@ private:
     libime::PinyinDictionary pinyinDict_;
     bool pinyinLoaded_ = false;
     std::unique_ptr<libime::LanguageModel> pinyinLM_;
+    std::unique_ptr<EventSource> preloadEvent_;
 };
 
 class TableEngineFactory : public AddonFactory {

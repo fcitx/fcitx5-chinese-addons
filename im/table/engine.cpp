@@ -19,6 +19,7 @@
 #include <fcitx-utils/log.h>
 #include <fcitx-utils/standardpath.h>
 #include <fcitx-utils/utf8.h>
+#include <fcitx/event.h>
 #include <fcitx/inputcontext.h>
 #include <fcitx/inputcontextmanager.h>
 #include <fcitx/inputcontextproperty.h>
@@ -57,13 +58,14 @@ TableEngine::TableEngine(Instance *instance)
                 names.insert(im.name());
             }
             ime_->releaseUnusedDict(names);
+            preload();
         }));
     events_.emplace_back(instance_->watchEvent(
         EventType::InputContextKeyEvent, EventWatcherPhase::PreInputMethod,
         [this](Event &event) {
             auto &keyEvent = static_cast<KeyEvent &>(event);
             auto *inputContext = keyEvent.inputContext();
-            auto *entry = instance_->inputMethodEntry(inputContext);
+            const auto *entry = instance_->inputMethodEntry(inputContext);
             if (!entry || entry->addon() != "table") {
                 return;
             }
@@ -89,9 +91,15 @@ TableEngine::TableEngine(Instance *instance)
         });
     instance_->userInterfaceManager().registerAction("table-prediction",
                                                      &predictionAction_);
+
+    preloadEvent_ = instance_->eventLoop().addDeferEvent([this](EventSource *) {
+        preload();
+        preloadEvent_.reset();
+        return true;
+    });
 }
 
-TableEngine::~TableEngine() {}
+TableEngine::~TableEngine() = default;
 
 void TableEngine::reloadConfig() {
     readAsIni(config_, "conf/table.conf");
@@ -313,6 +321,31 @@ void TableEngine::releaseStates() {
 void TableEngine::reloadDict() {
     releaseStates();
     ime_->reloadAllDict();
+}
+
+void TableEngine::preload() {
+    if (!instance_->globalConfig().preloadInputMethod()) {
+        return;
+    }
+
+    auto &imManager = instance_->inputMethodManager();
+    const auto &group = imManager.currentGroup();
+
+    // Preload first input method.
+    if (!group.inputMethodList().empty()) {
+        if (const auto *entry =
+                imManager.entry(group.inputMethodList()[0].name());
+            entry && entry->addon() == "table") {
+            ime_->requestDict(entry->uniqueName());
+        }
+    }
+    // Preload default input method.
+    if (!group.defaultInputMethod().empty()) {
+        if (const auto *entry = imManager.entry(group.defaultInputMethod());
+            entry && entry->addon() == "table") {
+            ime_->requestDict(entry->uniqueName());
+        }
+    }
 }
 
 } // namespace fcitx
