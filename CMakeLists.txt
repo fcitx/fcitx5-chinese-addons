@@ -35,7 +35,7 @@ option(ENABLE_GUI "Enable Configure Gui" On)
 option(ENABLE_BROWSER "Enable built-in browser." On)
 option(USE_WEBKIT "Use WebKit as browser backend." Off)
 option(ENABLE_CLOUDPINYIN "Build cloud pinyin addon" On)
-option(USE_QT6 "Build with Qt6" Off)
+option(USE_QT6 "Build with Qt6" On)
 option(ENABLE_DATA "Build data" On)
 
 if (ENABLE_OPENCC)
