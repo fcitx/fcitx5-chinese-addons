@@ -6,8 +6,12 @@
   <project_license>GPL-2.0+ and LGPL-2.1+</project_license>
   <name>Chinese Addons</name>
   <summary>Add support for Pinyin, Table and many other Chinese related functionality to Fcitx</summary>
+  <developer id="org.fcitx-im">
+      <name>The Fcitx Team</name>
+  </developer>
   <url type="homepage">https://fcitx-im.org</url>
   <url type="bugtracker">https://github.com/fcitx/fcitx5-chinese-addons/issues</url>
+  <url type="vcs-browser">https://github.com/fcitx/fcitx5-chinese-addons</url>
   <project_group>Fcitx</project_group>
   <releases>
     <release version="5.1.4" date="2024-02-28"/>
