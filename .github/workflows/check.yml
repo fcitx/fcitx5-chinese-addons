@@ -28,7 +28,7 @@ jobs:
     steps:
       - name: Install dependencies
         run: |
-          pacman -Syu --noconfirm base-devel clang cmake ninja extra-cmake-modules fmt libuv boost git qt6-base qt6-wayland libxkbcommon qt6-webengine lua
+          pacman -Syu --noconfirm base-devel clang cmake ninja extra-cmake-modules fmt libuv boost git qt6-base qt6-wayland libxkbcommon qt6-webengine lua opencc
       - uses: actions/checkout@v4
         with:
           repository: fcitx/fcitx5
@@ -82,7 +82,7 @@ jobs:
         uses: fcitx/github-actions@cmake
         with:
           repository: fcitx/fcitx5-qt
-          path: fcitx5-lua
+          path: fcitx5-qt
           cmake-option: >-
             -DENABLE_QT4=Off
             -DENABLE_QT5=Off
