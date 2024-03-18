@@ -15,7 +15,6 @@
 #include <fcitx/inputmethodmanager.h>
 #include <fcitx/inputpanel.h>
 #include <fcitx/instance.h>
-#include <iostream>
 #include <memory>
 
 using namespace fcitx;

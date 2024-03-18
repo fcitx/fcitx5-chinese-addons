@@ -14,7 +14,6 @@
 #include <fcitx-utils/standardpath.h>
 #include <fcitx-utils/stringutils.h>
 #include <fcntl.h>
-#include <libime/core/utils.h>
 #include <libime/table/tablebaseddictionary.h>
 #include <libime/table/tableoptions.h>
 

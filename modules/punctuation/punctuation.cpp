@@ -15,13 +15,10 @@
 #include <fcitx-utils/utf8.h>
 #include <fcitx/inputcontext.h>
 #include <fcitx/inputcontextmanager.h>
-#include <fcitx/inputmethodentry.h>
-#include <fcitx/inputmethodmanager.h>
 #include <fcitx/statusarea.h>
 #include <fcitx/userinterfacemanager.h>
 #include <fcntl.h>
 #include <string_view>
-#include <unordered_set>
 #include <vector>
 
 using namespace fcitx;

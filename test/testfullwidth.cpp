@@ -13,10 +13,8 @@
 #include <fcitx-utils/testing.h>
 #include <fcitx/action.h>
 #include <fcitx/addonmanager.h>
-#include <fcitx/inputmethodmanager.h>
 #include <fcitx/instance.h>
 #include <fcitx/userinterfacemanager.h>
-#include <iostream>
 #include <thread>
 
 using namespace fcitx;

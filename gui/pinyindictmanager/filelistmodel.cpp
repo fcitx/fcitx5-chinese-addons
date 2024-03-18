@@ -6,10 +6,8 @@
  */
 
 #include "filelistmodel.h"
-#include <QDebug>
 #include <QFile>
 #include <fcitx-utils/standardpath.h>
-#include <fcitxqti18nhelper.h>
 #include <fcntl.h>
 
 namespace fcitx {

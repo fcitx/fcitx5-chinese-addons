@@ -13,16 +13,12 @@
 #include <fcitx-utils/event.h>
 #include <fcitx-utils/i18n.h>
 #include <fcitx-utils/misc.h>
-#include <fcitx-utils/standardpath.h>
 #include <fcitx/action.h>
 #include <fcitx/addonfactory.h>
 #include <fcitx/addonmanager.h>
-#include <fcitx/event.h>
-#include <fcitx/inputcontext.h>
 #include <fcitx/inputcontextproperty.h>
 #include <fcitx/inputmethodengine.h>
 #include <fcitx/instance.h>
-#include <libime/pinyin/pinyincontext.h>
 #include <libime/pinyin/pinyinime.h>
 #include <libime/pinyin/pinyinprediction.h>
 #include <memory>
@@ -254,8 +250,6 @@ FCITX_CONFIGURATION(
     HiddenOption<bool> firstRun{this, "FirstRun", "FirstRun", true};)
 
 class PinyinState;
-struct EventSourceTime;
-class CandidateList;
 
 class PinyinEngine final : public InputMethodEngineV3 {
 public:

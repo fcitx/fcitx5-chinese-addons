@@ -10,10 +10,6 @@
 #include "../../im/pinyin/customphrase.h"
 #include <QAbstractTableModel>
 #include <QFutureWatcher>
-#include <QSet>
-#include <QTextStream>
-#include <qfuturewatcher.h>
-#include <vector>
 
 namespace fcitx {
 

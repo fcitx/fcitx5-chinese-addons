@@ -8,9 +8,6 @@
 #include "cloudpinyin.h"
 #include <fcitx-utils/event.h>
 #include <fcitx-utils/eventdispatcher.h>
-#include <fcitx-utils/fs.h>
-#include <fcntl.h>
-#include <unistd.h>
 
 using namespace fcitx;
 

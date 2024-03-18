@@ -9,7 +9,6 @@
 
 #include "punctuation_public.h"
 #include <fcitx-config/configuration.h>
-#include <fcitx-config/enum.h>
 #include <fcitx-config/iniparser.h>
 #include <fcitx-config/rawconfig.h>
 #include <fcitx-utils/i18n.h>
@@ -17,7 +16,6 @@
 #include <fcitx/addonfactory.h>
 #include <fcitx/addoninstance.h>
 #include <fcitx/addonmanager.h>
-#include <fcitx/inputcontext.h>
 #include <fcitx/inputcontextproperty.h>
 #include <fcitx/instance.h>
 

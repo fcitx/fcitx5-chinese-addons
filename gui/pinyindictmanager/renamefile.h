@@ -8,12 +8,6 @@
 #define _PINYINDICTMANAGER_RENAMEFILE_H_
 
 #include "pipelinejob.h"
-#include <QFutureWatcher>
-#include <QMessageBox>
-#include <QObject>
-#include <QProcess>
-#include <QTemporaryFile>
-#include <QtConcurrent>
 
 namespace fcitx {
 

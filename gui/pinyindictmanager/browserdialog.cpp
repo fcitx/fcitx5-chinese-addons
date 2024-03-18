@@ -6,14 +6,8 @@
  */
 
 #include "browserdialog.h"
-#include "config.h"
 #include "filedownloader.h"
 #include "guicommon.h"
-#include <QDebug>
-#include <QIcon>
-#include <QMessageBox>
-#include <QTemporaryFile>
-#include <QUrl>
 #include <QUrlQuery>
 #include <fcitx-utils/i18n.h>
 

@@ -8,12 +8,7 @@
 #define _PINYINDICTMANAGER_FILEDOWNLOADER_H_
 
 #include "pipelinejob.h"
-#include <QByteArray>
-#include <QMessageBox>
-#include <QNetworkAccessManager>
 #include <QNetworkReply>
-#include <QNetworkRequest>
-#include <QObject>
 #include <QTemporaryFile>
 
 namespace fcitx {

@@ -8,7 +8,6 @@
 #define _QUICKPHRASE_EDITOR_EDITORDIALOG_H_
 
 #include "ui_editordialog.h"
-#include <QDialog>
 
 namespace fcitx {
 class EditorDialog : public QDialog, public Ui::EditorDialog {

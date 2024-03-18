@@ -5,16 +5,12 @@
  *
  */
 #include "customphrasemodel.h"
-#include <QApplication>
-#include <QFile>
-#include <QFutureWatcher>
 #include <QtConcurrentRun>
 #include <boost/iostreams/device/file_descriptor.hpp>
 #include <boost/iostreams/stream_buffer.hpp>
 #include <fcitx-utils/i18n.h>
 #include <fcitx-utils/standardpath.h>
 #include <fcitx-utils/stringutils.h>
-#include <fcitx-utils/utf8.h>
 #include <fcntl.h>
 #include <qfuturewatcher.h>
 #include <qnamespace.h>

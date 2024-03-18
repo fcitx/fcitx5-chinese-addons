@@ -8,8 +8,6 @@
 #define _PINYINDICTMANAGER_PIPELINE_H_
 
 #include "pipelinejob.h"
-#include <QObject>
-#include <QVector>
 
 namespace fcitx {
 

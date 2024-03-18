@@ -8,7 +8,6 @@
 #define _PINYINDICTMANAGER_PIPELINEJOB_H_
 
 #include <QMessageBox>
-#include <QObject>
 
 namespace fcitx {
 

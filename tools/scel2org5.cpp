@@ -17,11 +17,9 @@
 #endif
 #include <fcitx-utils/fs.h>
 #include <fcitx-utils/log.h>
-#include <fcitx-utils/stringutils.h>
 #include <fcitx-utils/unixfd.h>
 #include <fcntl.h>
 #include <fstream>
-#include <getopt.h>
 #include <locale>
 #include <unistd.h>
 

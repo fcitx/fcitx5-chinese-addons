@@ -15,10 +15,8 @@
 #include <fcitx-config/iniparser.h>
 #include <fcitx-utils/eventdispatcher.h>
 #include <fcitx-utils/i18n.h>
-#include <fcitx-utils/misc.h>
 #include <fcitx/addonfactory.h>
 #include <fcitx/addoninstance.h>
-#include <fcitx/instance.h>
 
 FCITX_CONFIG_ENUM(CloudPinyinBackend, Google, GoogleCN, Baidu);
 FCITX_CONFIGURATION(

@@ -7,7 +7,6 @@
  */
 #include "pinyinlookup.h"
 
-#include <fcitx-utils/log.h>
 #include <fcitx-utils/macros.h>
 #include <fcitx-utils/standardpath.h>
 #include <fcitx-utils/stringutils.h>

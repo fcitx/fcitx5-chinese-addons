@@ -8,10 +8,7 @@
 #define _PINYINDICTMANAGER_PROCESSRUNNER_H_
 
 #include "pipelinejob.h"
-#include <QMessageBox>
-#include <QObject>
 #include <QProcess>
-#include <QTemporaryFile>
 
 namespace fcitx {
 

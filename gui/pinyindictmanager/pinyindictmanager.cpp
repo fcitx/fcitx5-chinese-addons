@@ -6,15 +6,12 @@
  */
 #include "pinyindictmanager.h"
 #include "config.h"
-#include "log.h"
 #include "processrunner.h"
 #include "renamefile.h"
 #include <QDesktopServices>
 #include <QFileDialog>
 #include <QInputDialog>
 #include <QMenu>
-#include <QMessageBox>
-#include <QTemporaryFile>
 #include <fcitx-utils/i18n.h>
 #include <fcitx-utils/standardpath.h>
 
