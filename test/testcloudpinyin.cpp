@@ -5,8 +5,6 @@
  *
  */
 #include "cloudpinyin_public.h"
-#include "testdir.h"
-#include <cassert>
 #include <fcitx-utils/event.h>
 #include <fcitx/addonmanager.h>
 #include <iostream>

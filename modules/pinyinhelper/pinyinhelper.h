@@ -10,12 +10,10 @@
 #include "pinyinhelper_public.h"
 #include "pinyinlookup.h"
 #include "stroke.h"
-#include <fcitx-config/configuration.h>
 #include <fcitx-utils/event.h>
 #include <fcitx/addoninstance.h>
 #include <fcitx/addonmanager.h>
 #include <fcitx/instance.h>
-#include <libime/core/datrie.h>
 #include <quickphrase_public.h>
 
 namespace fcitx {

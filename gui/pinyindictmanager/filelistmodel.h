@@ -8,7 +8,6 @@
 #define _PINYINDICTMANAGER_FILELISTMODEL_H_
 
 #include <QAbstractListModel>
-#include <QStringList>
 
 namespace fcitx {
 

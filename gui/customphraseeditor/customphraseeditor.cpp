@@ -7,15 +7,10 @@
 #include "customphraseeditor.h"
 #include "customphrasemodel.h"
 #include "editordialog.h"
-#include <QLineEdit>
-#include <QObject>
-#include <QRegularExpressionValidator>
-#include <QSpinBox>
 #include <QStyledItemDelegate>
 #include <QTextEdit>
 #include <fcitx-utils/standardpath.h>
 #include <fcitx-utils/stringutils.h>
-#include <fcntl.h>
 #include <qdesktopservices.h>
 #include <qfilesystemwatcher.h>
 #include <qmessagebox.h>

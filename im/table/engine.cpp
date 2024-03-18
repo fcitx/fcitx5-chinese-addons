@@ -9,16 +9,13 @@
 #include "context.h"
 #include "ime.h"
 #include "state.h"
-#include <boost/algorithm/string.hpp>
 #include <boost/iostreams/device/file_descriptor.hpp>
 #include <boost/iostreams/stream.hpp>
 #include <fcitx-config/iniparser.h>
-#include <fcitx-utils/charutils.h>
 #include <fcitx-utils/event.h>
 #include <fcitx-utils/i18n.h>
 #include <fcitx-utils/log.h>
 #include <fcitx-utils/standardpath.h>
-#include <fcitx-utils/utf8.h>
 #include <fcitx/event.h>
 #include <fcitx/inputcontext.h>
 #include <fcitx/inputcontextmanager.h>
@@ -27,15 +24,10 @@
 #include <fcitx/inputpanel.h>
 #include <fcitx/userinterfacemanager.h>
 #include <fcntl.h>
-#include <libime/core/historybigram.h>
-#include <libime/core/userlanguagemodel.h>
 #include <libime/pinyin/pinyinencoder.h>
 #include <libime/pinyin/shuangpinprofile.h>
-#include <libime/table/tablebaseddictionary.h>
 #include <map>
 #include <memory>
-#include <quickphrase_public.h>
-#include <unordered_map>
 
 namespace fcitx {
 

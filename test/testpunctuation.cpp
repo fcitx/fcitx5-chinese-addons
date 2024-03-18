@@ -8,8 +8,6 @@
 #include "testdir.h"
 #include <fcitx-utils/log.h>
 #include <fcitx/addonmanager.h>
-#include <fcitx/inputcontext.h>
-#include <iostream>
 
 int main() {
     setenv("SKIP_FCITX_PATH", "1", 1);

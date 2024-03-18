@@ -6,7 +6,6 @@
  */
 
 #include "editordialog.h"
-#include <fcitx-utils/i18n.h>
 
 namespace fcitx {
 EditorDialog::EditorDialog(QWidget *parent) : QDialog(parent) { setupUi(this); }

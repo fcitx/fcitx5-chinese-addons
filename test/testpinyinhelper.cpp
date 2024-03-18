@@ -9,7 +9,6 @@
 #include <fcitx-utils/log.h>
 #include <fcitx-utils/utf8.h>
 #include <fcitx/addonmanager.h>
-#include <iostream>
 
 int main() {
     setenv("FCITX_ADDON_DIRS", TESTING_BINARY_DIR "/modules/pinyinhelper", 1);

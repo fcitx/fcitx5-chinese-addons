@@ -8,15 +8,11 @@
 #include "pinyinhelper.h"
 #include <algorithm>
 #include <clipboard_public.h>
-#include <fcitx-config/iniparser.h>
 #include <fcitx-utils/event.h>
 #include <fcitx-utils/i18n.h>
-#include <fcitx-utils/standardpath.h>
 #include <fcitx-utils/utf8.h>
 #include <fcitx/addonfactory.h>
 #include <fcitx/inputcontext.h>
-#include <fcitx/inputmethodentry.h>
-#include <fcntl.h>
 #include <fmt/format.h>
 #include <set>
 

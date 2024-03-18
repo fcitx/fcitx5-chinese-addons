@@ -49,7 +49,6 @@
 #include <fcitx/userinterfacemanager.h>
 #include <fcntl.h>
 #include <fmt/chrono.h>
-#include <fmt/format.h>
 #include <libime/core/historybigram.h>
 #include <libime/core/userlanguagemodel.h>
 #include <libime/pinyin/pinyincontext.h>

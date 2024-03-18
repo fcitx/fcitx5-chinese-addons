@@ -18,7 +18,6 @@
 FCITX_CONFIGURATION(FullWidthConfig, fcitx::Option<fcitx::KeyList> hotkey{
                                          this, "Hotkey", _("Toggle key")};)
 
-class ToggleAction;
 
 class Fullwidth final : public fcitx::AddonInstance {
     class ToggleAction : public fcitx::Action {

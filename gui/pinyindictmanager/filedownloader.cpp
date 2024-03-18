@@ -5,10 +5,8 @@
  *
  */
 
-#include <QTemporaryFile>
 
 #include "filedownloader.h"
-#include "guicommon.h"
 #include <fcitx-utils/i18n.h>
 
 namespace fcitx {

@@ -18,7 +18,6 @@
 #include <fcitx/inputmethodmanager.h>
 #include <fcitx/instance.h>
 #include <fcitx/userinterfacemanager.h>
-#include <iostream>
 #include <thread>
 
 using namespace fcitx;

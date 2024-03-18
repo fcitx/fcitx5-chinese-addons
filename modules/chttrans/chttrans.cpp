@@ -8,12 +8,10 @@
 #include "chttrans.h"
 #include <fcitx-config/iniparser.h>
 #include <fcitx-utils/i18n.h>
-#include <fcitx-utils/standardpath.h>
 #include <fcitx-utils/utf8.h>
 #include <fcitx/addonfactory.h>
 #include <fcitx/addonmanager.h>
 #include <fcitx/inputmethodentry.h>
-#include <fcntl.h>
 #ifdef ENABLE_OPENCC
 #include "chttrans-opencc.h"
 #endif

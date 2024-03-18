@@ -1,6 +1,5 @@
 #include "../im/pinyin/customphrase.h"
 #include <fcitx-utils/log.h>
-#include <fstream>
 #include <sstream>
 #include <string_view>
 

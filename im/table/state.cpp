@@ -17,10 +17,8 @@
 #include <fcitx/inputcontext.h>
 #include <fcitx/inputpanel.h>
 #include <fmt/core.h>
-#include <fmt/format.h>
 #include <libime/core/historybigram.h>
 #include <libime/pinyin/pinyinencoder.h>
-#include <libime/pinyin/shuangpinprofile.h>
 
 namespace fcitx {
 

@@ -8,7 +8,6 @@
 #include <charconv>
 #include <ctime>
 #include <fcitx-utils/charutils.h>
-#include <fcitx-utils/log.h>
 #include <fcitx-utils/stringutils.h>
 #include <fmt/chrono.h>
 #include <istream>
@@ -18,7 +17,6 @@
 #include <string>
 #include <string_view>
 #include <tuple>
-#include <unordered_map>
 
 namespace fcitx {
 

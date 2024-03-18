@@ -5,13 +5,9 @@
  *
  */
 #include "processrunner.h"
-#include "guicommon.h"
 #include "log.h"
-#include <QDebug>
-#include <QProcess>
 #include <QTemporaryFile>
 #include <fcitx-utils/i18n.h>
-#include <fcitx-utils/standardpath.h>
 
 namespace fcitx {
 
