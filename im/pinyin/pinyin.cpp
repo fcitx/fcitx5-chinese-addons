@@ -20,6 +20,7 @@
 #include <fcitx/candidatelist.h>
 #include <fcitx/event.h>
 #include <fcitx/userinterface.h>
+#include <libime/pinyin/pinyincorrectionprofile.h>
 #include <memory>
 #include <string>
 #include <string_view>
@@ -1279,6 +1280,21 @@ void PinyinEngine::populateConfig() {
     SET_FUZZY_FLAG(l, L_N)
     SET_FUZZY_FLAG(s, S_SH)
     SET_FUZZY_FLAG(z, Z_ZH)
+
+    std::shared_ptr<libime::PinyinCorrectionProfile> correctionProfile;
+    switch (*fuzzyConfig.correction) {
+    case CorrectionLayout::None:
+        break;
+    case CorrectionLayout::Qwerty:
+        correctionProfile = std::make_shared<libime::PinyinCorrectionProfile>(
+            libime::BuiltinPinyinCorrectionProfile::Qwerty);
+        break;
+    }
+
+    if (correctionProfile) {
+        flags |= libime::PinyinFuzzyFlag::Correction;
+        ime_->setCorrectionProfile(std::move(correctionProfile));
+    }
 
     ime_->setFuzzyFlags(flags);
 

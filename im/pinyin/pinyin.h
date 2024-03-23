@@ -10,6 +10,7 @@
 #include "customphrase.h"
 #include <fcitx-config/configuration.h>
 #include <fcitx-config/iniparser.h>
+#include <fcitx-config/option.h>
 #include <fcitx-utils/event.h>
 #include <fcitx-utils/i18n.h>
 #include <fcitx-utils/misc.h>
@@ -77,6 +78,13 @@ enum class PreeditMode { No, ComposingPinyin, CommitPreview };
 FCITX_CONFIG_ENUM_NAME_WITH_I18N(PreeditMode, N_("Do not show"),
                                  N_("Composing pinyin"), N_("Commit preview"))
 
+enum class CorrectionLayout {
+    None,
+    Qwerty,
+};
+
+FCITX_CONFIG_ENUM_NAME_WITH_I18N(CorrectionLayout, N_("None"), N_("QWERTY"))
+
 FCITX_CONFIGURATION(
     FuzzyConfig, Option<bool> ue{this, "VE_UE", _("ue -> ve"), true};
     Option<bool> commonTypo{this, "NG_GN", _("Common Typo"), true};
@@ -101,7 +109,10 @@ FCITX_CONFIGURATION(
     Option<bool> f{this, "F_H", _("f <-> h"), false};
     Option<bool> l{this, "L_N", _("l <-> n"), false};
     Option<bool> s{this, "S_SH", _("s <-> sh"), false};
-    Option<bool> z{this, "Z_ZH", _("z <-> zh"), false};)
+    Option<bool> z{this, "Z_ZH", _("z <-> zh"), false};
+    OptionWithAnnotation<CorrectionLayout, CorrectionLayoutI18NAnnotation>
+        correction{this, "Correction", _("Correction Layout"),
+                   CorrectionLayout::None};)
 
 FCITX_CONFIGURATION(
     PinyinEngineConfig,
