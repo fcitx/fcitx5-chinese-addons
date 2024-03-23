@@ -63,7 +63,7 @@ if (ENABLE_GUI)
 endif()
 
 find_package(Boost 1.61 REQUIRED COMPONENTS iostreams)
-find_package(LibIMEPinyin 1.1.3 REQUIRED)
+find_package(LibIMEPinyin 1.1.7 REQUIRED)
 find_package(LibIMETable 1.1.4 REQUIRED)
 
 if (ENABLE_CLOUDPINYIN)
