@@ -5,17 +5,17 @@
 # Translators:
 # Mingcong Bai <jeffbai@aosc.xyz>, 2018
 # wwj402 <wwj402@gmail.com>, 2018
-# Lau YeeYu, 2023
 # csslayer <wengxt@gmail.com>, 2023
 # rocka, 2023
+# Lau YeeYu, 2024
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2024-03-23 20:24+0000\n"
+"POT-Creation-Date: 2024-03-24 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
-"Last-Translator: rocka, 2023\n"
+"Last-Translator: Lau YeeYu, 2024\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/fcitx/teams/12005/"
 "zh_CN/)\n"
 "Language: zh_CN\n"
@@ -288,7 +288,7 @@ msgstr "转换器崩溃。"
 
 #: im/pinyin/pinyin.h:114
 msgid "Correction Layout"
-msgstr ""
+msgstr "纠错布局"
 
 #: im/table/state.cpp:774
 msgid "Could not find pinyin."
@@ -736,7 +736,7 @@ msgstr "不允许访问 pinyin.sogou.com 之外的网页，将重定向到主页
 
 #: im/pinyin/pinyin.h:86
 msgid "None"
-msgstr ""
+msgstr "无"
 
 #: im/table/engine.cpp:216
 msgid "Not available"
@@ -883,7 +883,7 @@ msgstr "标点"
 
 #: im/pinyin/pinyin.h:86
 msgid "QWERTY"
-msgstr ""
+msgstr "QWERTY"
 
 #: im/pinyin/pinyin.h:252
 msgid "Quick Phrase"
