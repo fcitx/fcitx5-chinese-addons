@@ -9,15 +9,15 @@
 # Steve Nian, 2022
 # 菘菘 <rrt467778@gmail.com>, 2022
 # Neko ◣ 0xFF, 2022
-# Lau YeeYu, 2023
+# Lau YeeYu, 2024
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2024-03-23 20:24+0000\n"
+"POT-Creation-Date: 2024-03-24 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
-"Last-Translator: Lau YeeYu, 2023\n"
+"Last-Translator: Lau YeeYu, 2024\n"
 "Language-Team: Chinese (Taiwan) (https://app.transifex.com/fcitx/teams/12005/"
 "zh_TW/)\n"
 "Language: zh_TW\n"
@@ -290,7 +290,7 @@ msgstr "轉換器當掉了。"
 
 #: im/pinyin/pinyin.h:114
 msgid "Correction Layout"
-msgstr ""
+msgstr "糾錯佈局"
 
 #: im/table/state.cpp:774
 msgid "Could not find pinyin."
@@ -738,7 +738,7 @@ msgstr "不允許連線到 pinyin.sogou.com 域外的網頁，正重新導向至
 
 #: im/pinyin/pinyin.h:86
 msgid "None"
-msgstr ""
+msgstr "無"
 
 #: im/table/engine.cpp:216
 msgid "Not available"
@@ -885,7 +885,7 @@ msgstr "標點"
 
 #: im/pinyin/pinyin.h:86
 msgid "QWERTY"
-msgstr ""
+msgstr "QWERTY"
 
 #: im/pinyin/pinyin.h:252
 msgid "Quick Phrase"
