@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2024-03-23 20:24+0000\n"
+"POT-Creation-Date: 2024-03-25 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Dmitry <dmitrydmitry761@gmail.com>, 2024\n"
 "Language-Team: Russian (https://app.transifex.com/fcitx/teams/12005/ru/)\n"
@@ -292,7 +292,7 @@ msgstr "Сбой преобразователя."
 
 #: im/pinyin/pinyin.h:114
 msgid "Correction Layout"
-msgstr ""
+msgstr "Исправление раскладки"
 
 #: im/table/state.cpp:774
 msgid "Could not find pinyin."
@@ -754,7 +754,7 @@ msgstr ""
 
 #: im/pinyin/pinyin.h:86
 msgid "None"
-msgstr ""
+msgstr "Нет"
 
 #: im/table/engine.cpp:216
 msgid "Not available"
@@ -904,7 +904,7 @@ msgstr "Пунктуация"
 
 #: im/pinyin/pinyin.h:86
 msgid "QWERTY"
-msgstr ""
+msgstr "QWERTY"
 
 #: im/pinyin/pinyin.h:252
 msgid "Quick Phrase"
