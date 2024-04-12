@@ -17,11 +17,29 @@
 #include <fcitx/instance.h>
 #include <iostream>
 #include <memory>
+#include <string_view>
 
 using namespace fcitx;
 
 std::unique_ptr<EventSourceTime> endTestEvent;
 void testPunctuationPart2(EventDispatcher *dispatcher, Instance *instance);
+
+int findCandidateOrDie(InputContext *ic, std::string_view word) {
+    auto candList = ic->inputPanel().candidateList();
+    for (int i = 0; i < candList->toBulk()->totalSize(); i++) {
+        const auto &candidate = candList->toBulk()->candidateFromAll(i);
+        if (candidate.text().toString() == word) {
+            return i;
+        }
+    }
+    FCITX_ASSERT(false) << "Failed to find candidate: " << word;
+    return -1;
+}
+
+void findAndSelectCandidate(InputContext *ic, std::string_view word) {
+    auto candList = ic->inputPanel().candidateList();
+    candList->candidate(findCandidateOrDie(ic, word)).select(ic);
+}
 
 void testBasic(EventDispatcher *dispatcher, Instance *instance) {
     dispatcher->schedule([instance]() {
@@ -67,17 +85,10 @@ void testBasic(EventDispatcher *dispatcher, Instance *instance) {
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("h"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("o"), false);
-        auto ic = instance->inputContextManager().findByUUID(uuid);
+        auto *ic = instance->inputContextManager().findByUUID(uuid);
         FCITX_ASSERT(ic);
         // Make a partial selection, we do search because the data might change.
-        auto candList = ic->inputPanel().candidateList();
-        for (int i = 0; i < candList->size(); i++) {
-            auto &candidate = candList->candidate(i);
-            if (candidate.text().toString() == "你") {
-                candidate.select(ic);
-                break;
-            }
-        }
+        findAndSelectCandidate(ic, "你");
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
 
         // Test switch input method.
@@ -99,14 +110,7 @@ void testBasic(EventDispatcher *dispatcher, Instance *instance) {
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("o"), false);
         // Make a partial selection, we do search because the data might change.
-        candList = ic->inputPanel().candidateList();
-        for (int i = 0; i < candList->size(); i++) {
-            auto &candidate = candList->candidate(i);
-            if (candidate.text().toString() == "你") {
-                candidate.select(ic);
-                break;
-            }
-        }
+        findAndSelectCandidate(ic, "你");
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Control+space"),
                                                     false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Control+space"),
@@ -140,6 +144,45 @@ void testBasic(EventDispatcher *dispatcher, Instance *instance) {
                                                     false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Control+space"),
                                                     false);
+    });
+}
+
+void testSelectByChar(EventDispatcher *dispatcher, Instance *instance) {
+    dispatcher->schedule([instance, dispatcher]() {
+        auto *testfrontend = instance->addonManager().addon("testfrontend");
+        auto uuid =
+            testfrontend->call<ITestFrontend::createInputContext>("testapp");
+
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Control+space"),
+                                                    false);
+
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("n"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("i"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("h"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("o"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("g"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("o"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("n"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("g"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("z"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("h"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("u"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("b"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("i"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("n"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("g"), false);
+
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("你好主病");
+        auto *ic = instance->inputContextManager().findByUUID(uuid);
+        FCITX_ASSERT(ic);
+        findAndSelectCandidate(ic, "你好");
+        auto candidateIdx = findCandidateOrDie(ic, "公主");
+        ic->inputPanel().candidateList()->toBulkCursor()->setGlobalCursorIndex(
+            candidateIdx);
+        // With default config, this should select "主".
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("]"), false);
+        findAndSelectCandidate(ic, "病");
     });
 }
 
@@ -226,6 +269,7 @@ int main() {
     EventDispatcher dispatcher;
     dispatcher.attach(&instance.eventLoop());
     testBasic(&dispatcher, &instance);
+    testSelectByChar(&dispatcher, &instance);
     testPunctuation(&dispatcher, &instance);
     instance.exec();
     endTestEvent.reset();
