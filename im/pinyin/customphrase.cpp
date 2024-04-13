@@ -189,8 +189,8 @@ std::string CustomPhrase::evaluate(
     content = content.substr(1);
     std::string output;
     output.reserve(content.size());
-    size_t variableNameStart;
-    size_t variableNameLength;
+    size_t variableNameStart = 0;
+    size_t variableNameLength = 0;
 
     enum class State {
         Normal,
