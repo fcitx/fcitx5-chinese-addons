@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2024-03-23 20:24+0000\n"
+"POT-Creation-Date: 2024-04-14 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Robert Antoni Buj i Gelonch <rbuj@fedoraproject.org>, 2017\n"
 "Language-Team: Catalan (https://app.transifex.com/fcitx/teams/12005/ca/)\n"
@@ -19,11 +19,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: im/table/state.cpp:1151
+#: im/table/state.cpp:1148
 msgid " Return for "
 msgstr ""
 
-#: im/table/state.cpp:1148
+#: im/table/state.cpp:1145
 msgid " for "
 msgstr ""
 
@@ -101,7 +101,11 @@ msgstr ""
 msgid "&Usage"
 msgstr ""
 
-#: im/table/state.cpp:747
+#: im/table/state.cpp:117 im/pinyin/pinyin.cpp:223
+msgid "(Half)"
+msgstr ""
+
+#: im/table/state.cpp:744
 msgctxt "Pinyin lookup delimeter"
 msgid ", "
 msgstr ""
@@ -215,15 +219,15 @@ msgstr "Pinyin al núvol"
 msgid "Cloud Pinyin Index"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1482
+#: im/pinyin/pinyin.cpp:1478
 msgid "Cloud Pinyin Status"
 msgstr "Estat de pinyin al núvol"
 
-#: im/pinyin/pinyin.cpp:1484
+#: im/pinyin/pinyin.cpp:1480
 msgid "Cloud Pinyin is disabled."
 msgstr "El pinyin al núvol està inhabilitat."
 
-#: im/pinyin/pinyin.cpp:1483
+#: im/pinyin/pinyin.cpp:1479
 msgid "Cloud Pinyin is enabled."
 msgstr "El pinyin al núvol està habilitat."
 
@@ -283,7 +287,7 @@ msgstr ""
 msgid "Correction Layout"
 msgstr ""
 
-#: im/table/state.cpp:774
+#: im/table/state.cpp:771
 msgid "Could not find pinyin."
 msgstr "No s'ha pogut trobar el pinyin."
 
@@ -346,14 +350,14 @@ msgstr ""
 msgid "Do not show"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1184
+#: im/pinyin/pinyin.cpp:1180
 #, c++-format
 msgid ""
 "Do you want to enable cloudpinyin now for better prediction? You can always "
 "toggle it later in configuration or by pressing {}."
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1179
+#: im/pinyin/pinyin.cpp:1175
 msgid ""
 "Do you want to enable cloudpinyin now for better prediction? You can always "
 "toggle it later in configuration."
@@ -387,7 +391,7 @@ msgstr ""
 msgid "Enable Cloud Pinyin"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1193
+#: im/pinyin/pinyin.cpp:1189
 msgid "Enable Cloudpinyin"
 msgstr ""
 
@@ -686,7 +690,7 @@ msgstr ""
 msgid "Next page"
 msgstr "Av Pàg"
 
-#: im/table/ime.h:24 im/pinyin/pinyin.cpp:1190
+#: im/table/ime.h:24 im/pinyin/pinyin.cpp:1186
 msgid "No"
 msgstr ""
 
@@ -748,7 +752,7 @@ msgstr ""
 msgid "Phrase"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1193 im/pinyin/pinyin.cpp:1481
+#: im/pinyin/pinyin.cpp:1189 im/pinyin/pinyin.cpp:1477
 #: im/pinyin/pinyin-addon.conf.in.in:3 im/pinyin/pinyin.conf.in:3
 msgid "Pinyin"
 msgstr "Pinyin"
@@ -761,17 +765,17 @@ msgstr ""
 msgid "PinyinJiajia"
 msgstr ""
 
-#: im/table/state.cpp:723
+#: im/table/state.cpp:720
 msgid "Please use this functionality after typing some text."
 msgstr ""
 
-#: im/table/engine.cpp:78 im/table/engine.cpp:86 im/pinyin/pinyin.cpp:1019
-#: im/pinyin/pinyin.cpp:1029
+#: im/table/engine.cpp:78 im/table/engine.cpp:86 im/pinyin/pinyin.cpp:1015
+#: im/pinyin/pinyin.cpp:1025
 msgid "Prediction Disabled"
 msgstr ""
 
-#: im/table/engine.cpp:77 im/table/engine.cpp:85 im/pinyin/pinyin.cpp:1018
-#: im/pinyin/pinyin.cpp:1028
+#: im/table/engine.cpp:77 im/table/engine.cpp:85 im/pinyin/pinyin.cpp:1014
+#: im/pinyin/pinyin.cpp:1024
 msgid "Prediction Enabled"
 msgstr ""
 
@@ -787,24 +791,24 @@ msgstr ""
 msgid "Prefix key to trigger Pinyin"
 msgstr ""
 
-#: im/table/state.cpp:793
+#: im/table/state.cpp:790
 msgid "Press Backspace to forget."
 msgstr ""
 
-#: im/table/state.cpp:796
+#: im/table/state.cpp:793
 msgid "Press Delete to remove."
 msgstr ""
 
-#: im/table/state.cpp:790
+#: im/table/state.cpp:787
 msgid "Press space or enter to insert."
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1949
+#: im/pinyin/pinyin.cpp:1945
 #, c++-format
 msgid "Press {} for {}"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1946
+#: im/pinyin/pinyin.cpp:1942
 #, c++-format
 msgid "Press {} for {} and Return for {}"
 msgstr ""
@@ -894,7 +898,7 @@ msgstr ""
 msgid "Select Third Candidate"
 msgstr ""
 
-#: im/table/state.cpp:1462
+#: im/table/state.cpp:1459
 msgid "Select candidate to be removed from history:"
 msgstr ""
 
@@ -922,7 +926,7 @@ msgstr ""
 msgid "Show current shuangpin mode"
 msgstr ""
 
-#: im/table/engine.cpp:79 im/pinyin/pinyin.cpp:1020
+#: im/table/engine.cpp:79 im/pinyin/pinyin.cpp:1016
 msgid "Show prediction words"
 msgstr "Mostra la predicció de paraules"
 
@@ -1040,11 +1044,11 @@ msgstr ""
 msgid "Use Keypad as Selection key"
 msgstr ""
 
-#: im/table/state.cpp:729
+#: im/table/state.cpp:726
 msgid "Use Left and Right to select character: "
 msgstr "Utilitza dret i esquerre per seleccionar el caràcter:"
 
-#: im/table/state.cpp:777
+#: im/table/state.cpp:774
 msgid "Use Left and Right to select text. "
 msgstr "Utilitza dret i esquerre per seleccionar el text:"
 
@@ -1135,7 +1139,7 @@ msgstr "Wubi Pinyin"
 msgid "Xiaohe"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1189
+#: im/pinyin/pinyin.cpp:1185
 msgid "Yes"
 msgstr ""
 
@@ -1151,11 +1155,11 @@ msgstr ""
 msgid "Ziranma"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1718
+#: im/pinyin/pinyin.cpp:1714
 msgid "[Select the word to remove from history]"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1666
+#: im/pinyin/pinyin.cpp:1662
 msgid "[Stroke Filtering]"
 msgstr ""
 
@@ -1220,33 +1224,28 @@ msgstr ""
 msgid "z <-> zh"
 msgstr ""
 
-#: im/table/state.cpp:117 im/pinyin/pinyin.cpp:224
-#, c++-format
-msgid "{0} (Half)"
-msgstr ""
-
-#: im/pinyin/pinyin.cpp:183 modules/pinyinhelper/pinyinhelper.cpp:80
+#: modules/pinyinhelper/pinyinhelper.cpp:80
 #, c++-format
 msgid "{0} ({1})"
 msgstr "{0} ({1})"
 
-#: im/table/state.cpp:768
+#: im/table/state.cpp:765
 #, c++-format
 msgctxt "Pinyin & Shuangpin"
 msgid "{0} ({1})"
 msgstr ""
 
-#: im/table/state.cpp:811
+#: im/table/state.cpp:808
 #, c++-format
 msgid "{0} is not in table."
 msgstr "{0} no està a la taula."
 
-#: im/table/state.cpp:800
+#: im/table/state.cpp:797
 #, c++-format
 msgid "{0}: No corresponding code."
 msgstr "{0}: sense codi corresponent."
 
-#: im/table/state.cpp:784 im/table/state.cpp:808
+#: im/table/state.cpp:781 im/table/state.cpp:805
 #, c++-format
 msgid "{0}: {1}"
 msgstr "{0}: {1}"
