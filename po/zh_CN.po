@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2024-03-24 20:24+0000\n"
+"POT-Creation-Date: 2024-04-14 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Lau YeeYu, 2024\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/fcitx/teams/12005/"
@@ -24,11 +24,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: im/table/state.cpp:1151
+#: im/table/state.cpp:1148
 msgid " Return for "
 msgstr "回车以"
 
-#: im/table/state.cpp:1148
+#: im/table/state.cpp:1145
 msgid " for "
 msgstr "以"
 
@@ -106,7 +106,11 @@ msgstr "移除(&R)"
 msgid "&Usage"
 msgstr "用法(&U)"
 
-#: im/table/state.cpp:747
+#: im/table/state.cpp:117 im/pinyin/pinyin.cpp:223
+msgid "(Half)"
+msgstr ""
+
+#: im/table/state.cpp:744
 msgctxt "Pinyin lookup delimeter"
 msgid ", "
 msgstr "，"
@@ -222,15 +226,15 @@ msgstr "云拼音"
 msgid "Cloud Pinyin Index"
 msgstr "云拼音位置"
 
-#: im/pinyin/pinyin.cpp:1482
+#: im/pinyin/pinyin.cpp:1478
 msgid "Cloud Pinyin Status"
 msgstr "云拼音状态"
 
-#: im/pinyin/pinyin.cpp:1484
+#: im/pinyin/pinyin.cpp:1480
 msgid "Cloud Pinyin is disabled."
 msgstr "云拼音已禁用。"
 
-#: im/pinyin/pinyin.cpp:1483
+#: im/pinyin/pinyin.cpp:1479
 msgid "Cloud Pinyin is enabled."
 msgstr "已启用云拼音。"
 
@@ -290,7 +294,7 @@ msgstr "转换器崩溃。"
 msgid "Correction Layout"
 msgstr "纠错布局"
 
-#: im/table/state.cpp:774
+#: im/table/state.cpp:771
 msgid "Could not find pinyin."
 msgstr "无法找到拼音。"
 
@@ -353,7 +357,7 @@ msgstr "不要显示"
 msgid "Do not show"
 msgstr "不显示"
 
-#: im/pinyin/pinyin.cpp:1184
+#: im/pinyin/pinyin.cpp:1180
 #, c++-format
 msgid ""
 "Do you want to enable cloudpinyin now for better prediction? You can always "
@@ -362,7 +366,7 @@ msgstr ""
 "您想要启用云拼音以获得更好的预测吗？您也可以稍后在配置中更改设置或者通过按下 "
 "{} 来切换。"
 
-#: im/pinyin/pinyin.cpp:1179
+#: im/pinyin/pinyin.cpp:1175
 msgid ""
 "Do you want to enable cloudpinyin now for better prediction? You can always "
 "toggle it later in configuration."
@@ -396,7 +400,7 @@ msgstr "启用 Unicode CJK 拓展区 B 中的字符"
 msgid "Enable Cloud Pinyin"
 msgstr "启用云拼音"
 
-#: im/pinyin/pinyin.cpp:1193
+#: im/pinyin/pinyin.cpp:1189
 msgid "Enable Cloudpinyin"
 msgstr "启用云拼音"
 
@@ -726,7 +730,7 @@ msgstr "下一页"
 msgid "Next page"
 msgstr "下一页"
 
-#: im/table/ime.h:24 im/pinyin/pinyin.cpp:1190
+#: im/table/ime.h:24 im/pinyin/pinyin.cpp:1186
 msgid "No"
 msgstr "否"
 
@@ -790,7 +794,7 @@ msgstr "页大小"
 msgid "Phrase"
 msgstr "词组"
 
-#: im/pinyin/pinyin.cpp:1193 im/pinyin/pinyin.cpp:1481
+#: im/pinyin/pinyin.cpp:1189 im/pinyin/pinyin.cpp:1477
 #: im/pinyin/pinyin-addon.conf.in.in:3 im/pinyin/pinyin.conf.in:3
 msgid "Pinyin"
 msgstr "拼音"
@@ -803,17 +807,17 @@ msgstr "拼音词库管理器"
 msgid "PinyinJiajia"
 msgstr "拼音加加"
 
-#: im/table/state.cpp:723
+#: im/table/state.cpp:720
 msgid "Please use this functionality after typing some text."
 msgstr "请在输入一些文字之后再使用这个功能。"
 
-#: im/table/engine.cpp:78 im/table/engine.cpp:86 im/pinyin/pinyin.cpp:1019
-#: im/pinyin/pinyin.cpp:1029
+#: im/table/engine.cpp:78 im/table/engine.cpp:86 im/pinyin/pinyin.cpp:1015
+#: im/pinyin/pinyin.cpp:1025
 msgid "Prediction Disabled"
 msgstr "预测禁用"
 
-#: im/table/engine.cpp:77 im/table/engine.cpp:85 im/pinyin/pinyin.cpp:1018
-#: im/pinyin/pinyin.cpp:1028
+#: im/table/engine.cpp:77 im/table/engine.cpp:85 im/pinyin/pinyin.cpp:1014
+#: im/pinyin/pinyin.cpp:1024
 msgid "Prediction Enabled"
 msgstr "预测启用"
 
@@ -829,24 +833,24 @@ msgstr "预编辑模式"
 msgid "Prefix key to trigger Pinyin"
 msgstr "触发拼音的前缀键"
 
-#: im/table/state.cpp:793
+#: im/table/state.cpp:790
 msgid "Press Backspace to forget."
 msgstr "按下退格键以忘记。"
 
-#: im/table/state.cpp:796
+#: im/table/state.cpp:793
 msgid "Press Delete to remove."
 msgstr "按下删除键来移除。"
 
-#: im/table/state.cpp:790
+#: im/table/state.cpp:787
 msgid "Press space or enter to insert."
 msgstr "按下空格或回车键来插入。"
 
-#: im/pinyin/pinyin.cpp:1949
+#: im/pinyin/pinyin.cpp:1945
 #, c++-format
 msgid "Press {} for {}"
 msgstr "按下 {} 输入 {}"
 
-#: im/pinyin/pinyin.cpp:1946
+#: im/pinyin/pinyin.cpp:1942
 #, c++-format
 msgid "Press {} for {} and Return for {}"
 msgstr "按下 {} 输入 {}，按下回车输入 {}"
@@ -936,7 +940,7 @@ msgstr "选择第二个候选词"
 msgid "Select Third Candidate"
 msgstr "选择第三个候选词"
 
-#: im/table/state.cpp:1462
+#: im/table/state.cpp:1459
 msgid "Select candidate to be removed from history:"
 msgstr "选择要从历史中移除的候选词："
 
@@ -964,7 +968,7 @@ msgstr "在预编辑中显示完整拼音"
 msgid "Show current shuangpin mode"
 msgstr "显示当前双拼模式"
 
-#: im/table/engine.cpp:79 im/pinyin/pinyin.cpp:1020
+#: im/table/engine.cpp:79 im/pinyin/pinyin.cpp:1016
 msgid "Show prediction words"
 msgstr "显示联想词组"
 
@@ -1094,11 +1098,11 @@ msgstr "使用退格键取消选词"
 msgid "Use Keypad as Selection key"
 msgstr "使用数字键盘选词"
 
-#: im/table/state.cpp:729
+#: im/table/state.cpp:726
 msgid "Use Left and Right to select character: "
 msgstr "使用左右键来选择字符："
 
-#: im/table/state.cpp:777
+#: im/table/state.cpp:774
 msgid "Use Left and Right to select text. "
 msgstr "使用左右键来选择字符。"
 
@@ -1199,7 +1203,7 @@ msgstr "五笔拼音"
 msgid "Xiaohe"
 msgstr "小鹤"
 
-#: im/pinyin/pinyin.cpp:1189
+#: im/pinyin/pinyin.cpp:1185
 msgid "Yes"
 msgstr "是"
 
@@ -1215,11 +1219,11 @@ msgstr "紫光"
 msgid "Ziranma"
 msgstr "自然码"
 
-#: im/pinyin/pinyin.cpp:1718
+#: im/pinyin/pinyin.cpp:1714
 msgid "[Select the word to remove from history]"
 msgstr "[选择要从历史中移除的词]"
 
-#: im/pinyin/pinyin.cpp:1666
+#: im/pinyin/pinyin.cpp:1662
 msgid "[Stroke Filtering]"
 msgstr "[笔画过滤]"
 
@@ -1284,33 +1288,28 @@ msgstr "ue -> ve"
 msgid "z <-> zh"
 msgstr "z <-> zh"
 
-#: im/table/state.cpp:117 im/pinyin/pinyin.cpp:224
-#, c++-format
-msgid "{0} (Half)"
-msgstr "{0}（半角）"
-
-#: im/pinyin/pinyin.cpp:183 modules/pinyinhelper/pinyinhelper.cpp:80
+#: modules/pinyinhelper/pinyinhelper.cpp:80
 #, c++-format
 msgid "{0} ({1})"
 msgstr "{0} ({1})"
 
-#: im/table/state.cpp:768
+#: im/table/state.cpp:765
 #, c++-format
 msgctxt "Pinyin & Shuangpin"
 msgid "{0} ({1})"
 msgstr "{0} ({1})"
 
-#: im/table/state.cpp:811
+#: im/table/state.cpp:808
 #, c++-format
 msgid "{0} is not in table."
 msgstr "{0} 不在码表中。"
 
-#: im/table/state.cpp:800
+#: im/table/state.cpp:797
 #, c++-format
 msgid "{0}: No corresponding code."
 msgstr "{0}：没有对应的码。"
 
-#: im/table/state.cpp:784 im/table/state.cpp:808
+#: im/table/state.cpp:781 im/table/state.cpp:805
 #, c++-format
 msgid "{0}: {1}"
 msgstr "{0}：{1}"
