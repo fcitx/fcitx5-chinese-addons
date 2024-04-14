@@ -81,19 +81,19 @@ public:
                              const libime::TableBasedDictionary &dict,
                              bool customHint)
         : engine_(engine), word_(std::move(word)) {
-        Text text;
-        text.append(word_);
+        setText(Text(word_));
         if (utf8::lengthValidated(word_) == 1) {
             if (auto code = dict.reverseLookup(word_); !code.empty()) {
-                text.append(" ~ ");
+                Text comment;
+                comment.append("~ ");
                 if (customHint) {
-                    text.append(dict.hint(code));
+                    comment.append(dict.hint(code));
                 } else {
-                    text.append(std::move(code));
+                    comment.append(std::move(code));
                 }
+                setComment(std::move(comment));
             }
         }
-        setText(std::move(text));
     }
 
     void select(InputContext *inputContext) const override {
@@ -112,13 +112,10 @@ public:
     TablePunctuationCandidateWord(TableState *state, std::string word,
                                   bool isHalf)
         : state_(state), word_(std::move(word)) {
-        Text text;
+        setText(Text(word_));
         if (isHalf) {
-            text.append(fmt::format(_("{0} (Half)"), word_));
-        } else {
-            text.append(word_);
+            setComment(Text(_("(Half)")));
         }
-        setText(std::move(text));
     }
 
     void select(InputContext *inputContext) const override {
