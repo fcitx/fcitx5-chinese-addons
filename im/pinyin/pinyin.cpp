@@ -177,10 +177,9 @@ public:
                         const std::string &py, int order)
         : PinyinAbstractExtraCandidateWordInterface(*this, order),
           engine_(engine), hz_(std::move(hz)) {
-        if (py.empty()) {
-            setText(Text(hz_));
-        } else {
-            setText(Text(fmt::format(_("{0} ({1})"), hz_, py)));
+        setText(Text(hz_));
+        if (!py.empty()) {
+            setComment(Text(py));
         }
     }
 
@@ -218,14 +217,11 @@ class PinyinPunctuationCandidateWord : public CandidateWord {
 public:
     PinyinPunctuationCandidateWord(const PinyinEngine *engine, std::string word,
                                    bool isHalf)
-        : CandidateWord(), engine_(engine), word_(std::move(word)) {
-        Text text;
+        : engine_(engine), word_(std::move(word)) {
+        setText(Text(word_));
         if (isHalf) {
-            text.append(fmt::format(_("{0} (Half)"), word_));
-        } else {
-            text.append(word_);
+            setComment(Text(_("(Half)")));
         }
-        setText(std::move(text));
     }
 
     void select(InputContext *inputContext) const override {
