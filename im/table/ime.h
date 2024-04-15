@@ -118,7 +118,7 @@ FCITX_CONFIGURATION(
     Option<bool> preeditCursorPositionAtBeginning{
         this, "PreeditCursorPositionAtBeginning",
         _("Fix embedded preedit cursor at the beginning of the preedit"),
-        !isAndroid()};
+        !isAndroid() && !isApple()};
     Option<Key, KeyConstrain> quickphrase{
         this,
         "QuickPhraseKey",
