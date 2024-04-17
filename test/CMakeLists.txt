@@ -42,3 +42,7 @@ add_executable(testcustomphrase testcustomphrase.cpp ../im/pinyin/customphrase.c
 target_compile_definitions(testcustomphrase PRIVATE "-DFCITX_CUSTOM_PHRASE_TEST")
 target_link_libraries(testcustomphrase Fcitx5::Utils LibIME::Core ${FMT_TARGET})
 add_test(NAME testcustomphrase COMMAND testcustomphrase)
+
+add_executable(testsymboldictionary testsymboldictionary.cpp ../im/pinyin/symboldictionary.cpp)
+target_link_libraries(testsymboldictionary Fcitx5::Utils LibIME::Core)
+add_test(NAME testsymboldictionary COMMAND testsymboldictionary)
