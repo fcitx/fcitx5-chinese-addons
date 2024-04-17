@@ -8,6 +8,7 @@
 #define _PINYIN_PINYIN_H_
 
 #include "customphrase.h"
+#include "symboldictionary.h"
 #include <fcitx-config/configuration.h>
 #include <fcitx-config/iniparser.h>
 #include <fcitx-config/option.h>
@@ -126,7 +127,8 @@ FCITX_CONFIGURATION(
     Option<int, IntConstrain> pageSize{this, "PageSize", _("Page size"), 7,
                                        IntConstrain(3, 10)};
     Option<bool> spellEnabled{this, "SpellEnabled", _("Enable Spell"), true};
-    Option<bool> emojiEnabled{this, "EmojiEnabled", _("Enable Emoji"), true};
+    Option<bool> symbolsEnabled{this, "SymbolsEnabled", _("Enable Symbols"),
+                                true};
     Option<bool> chaiziEnabled{this, "ChaiziEnabled", _("Enable Chaizi"), true};
     Option<bool> extBEnabled{this, "ExtBEnabled",
                              _("Enable Characters in Unicode CJK Extension B"),
@@ -359,6 +361,7 @@ private:
     void loadBuiltInDict();
     void loadExtraDict();
     void loadCustomPhrase();
+    void loadSymbols(const StandardPathFile &file);
     void loadDict(const StandardPathFile &file);
 
     Instance *instance_;
@@ -376,6 +379,7 @@ private:
     std::unique_ptr<EventSource> deferredPreload_;
     std::unique_ptr<HandlerTableEntry<EventHandler>> event_;
     CustomPhraseDict customPhrase_;
+    SymbolDict symbols_;
 
     FCITX_ADDON_DEPENDENCY_LOADER(quickphrase, instance_->addonManager());
     FCITX_ADDON_DEPENDENCY_LOADER(fullwidth, instance_->addonManager());
@@ -386,7 +390,7 @@ private:
     FCITX_ADDON_DEPENDENCY_LOADER(spell, instance_->addonManager());
     FCITX_ADDON_DEPENDENCY_LOADER(imeapi, instance_->addonManager());
 
-    static constexpr size_t NumBuiltInDict = 3;
+    static constexpr size_t NumBuiltInDict = 2;
 };
 
 class PinyinEngineFactory : public AddonFactory {

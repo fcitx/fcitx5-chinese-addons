@@ -1,6 +1,7 @@
 set(PINYIN_SOURCES
     pinyin.cpp
     customphrase.cpp
+    symboldictionary.cpp
 )
 
 add_library(pinyin MODULE ${PINYIN_SOURCES})
@@ -24,12 +25,7 @@ install(FILES "${CMAKE_CURRENT_BINARY_DIR}/pinyin-addon.conf" RENAME pinyin.conf
         COMPONENT config)
 
 if (ENABLE_DATA)
-  add_custom_command(
-    OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/emoji.dict"
-    DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/emoji.txt" LibIME::pinyindict
-    COMMAND LibIME::pinyindict "${CMAKE_CURRENT_SOURCE_DIR}/emoji.txt" "${CMAKE_CURRENT_BINARY_DIR}/emoji.dict")
-  add_custom_target(emoji-dict ALL DEPENDS "emoji.dict")
-  install(FILES "${CMAKE_CURRENT_BINARY_DIR}/emoji.dict" DESTINATION "${FCITX_INSTALL_PKGDATADIR}/pinyin")
+  install(FILES "symbols" DESTINATION "${FCITX_INSTALL_PKGDATADIR}/pinyin")
 
   add_custom_command(
     OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/chaizi.dict"

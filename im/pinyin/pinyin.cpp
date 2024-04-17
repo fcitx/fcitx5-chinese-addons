@@ -316,6 +316,51 @@ private:
     std::string word_;
 };
 
+class SymbolCandidateWord : public CandidateWord {
+public:
+    SymbolCandidateWord(PinyinEngine *engine, std::string symbol,
+                        const libime::SentenceResult &result)
+        : engine_(engine), symbol_(std::move(symbol)),
+          candidateSegmentLength_(result.sentence().back()->to()->index()) {
+        setText(Text(symbol_));
+        bool validPinyin = std::all_of(
+            result.sentence().begin(), result.sentence().end(),
+            [](const libime::LatticeNode *node) {
+                if (node->word().empty()) {
+                    return true;
+                }
+                const auto *pinyinNode =
+                    static_cast<const libime::PinyinLatticeNode *>(node);
+                return !pinyinNode->encodedPinyin().empty() &&
+                       pinyinNode->encodedPinyin().size() % 2 == 0;
+            });
+        if (validPinyin) {
+            for (const auto *node : result.sentence()) {
+                const auto *pinyinNode =
+                    static_cast<const libime::PinyinLatticeNode *>(node);
+                encodedPinyin_.insert(encodedPinyin_.end(),
+                                      pinyinNode->encodedPinyin().begin(),
+                                      pinyinNode->encodedPinyin().end());
+            }
+        }
+    }
+
+    void select(InputContext *inputContext) const override {
+        auto *state = inputContext->propertyFor(&engine_->factory());
+        auto segmentLength =
+            state->context_.size() - state->context_.selectedLength();
+        segmentLength = std::min(segmentLength, candidateSegmentLength_);
+        state->context_.selectCustom(segmentLength, symbol_, encodedPinyin_);
+        engine_->updateUI(inputContext);
+    }
+
+private:
+    PinyinEngine *engine_;
+    std::string symbol_;
+    size_t candidateSegmentLength_ = 0;
+    std::string encodedPinyin_;
+};
+
 class SpellCandidateWord : public CandidateWord,
                            public PinyinAbstractExtraCandidateWordInterface {
 public:
@@ -879,10 +924,24 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
                     luaCandidateTrigger(inputContext, candidateString);
             }
 #endif
+
+            // use candidateString before it is moved.
+            const std::vector<std::string> *symbols = nullptr;
+            if (*config_.symbolsEnabled) {
+                symbols = symbols_.lookup(candidateString);
+            }
             candidateList->append<PinyinCandidateWord>(
                 this, Text(std::move(candidateString)), idx);
             for (auto &extraCandidate : luaExtraCandidates) {
-                candidateList->append<ExtraCandidateWord>(this, extraCandidate);
+                candidateList->append<ExtraCandidateWord>(
+                    this, std::move(extraCandidate));
+            }
+
+            if (symbols) {
+                for (const auto &symbol : *symbols) {
+                    candidateList->append<SymbolCandidateWord>(this, symbol,
+                                                               candidate);
+                }
             }
 
             maybeApplyExtraCandidates(false);
@@ -1066,6 +1125,23 @@ PinyinEngine::PinyinEngine(Instance *instance)
 
 PinyinEngine::~PinyinEngine() {}
 
+void PinyinEngine::loadSymbols(const StandardPathFile &file) {
+    if (file.fd() < 0) {
+        return;
+    }
+    boost::iostreams::stream_buffer<boost::iostreams::file_descriptor_source>
+        buffer(file.fd(),
+               boost::iostreams::file_descriptor_flags::never_close_handle);
+    std::istream in(&buffer);
+    try {
+        PINYIN_DEBUG() << "Loading symbol dict " << file.path();
+        symbols_.load(in);
+    } catch (const std::exception &e) {
+        PINYIN_ERROR() << "Failed to load symbol dict " << file.path() << ": "
+                       << e.what();
+    }
+}
+
 void PinyinEngine::loadDict(const StandardPathFile &file) {
     if (file.fd() < 0) {
         return;
@@ -1090,8 +1166,8 @@ void PinyinEngine::loadBuiltInDict() {
     const auto &standardPath = StandardPath::global();
     {
         auto file = standardPath.open(StandardPath::Type::PkgData,
-                                      "pinyin/emoji.dict", O_RDONLY);
-        loadDict(file);
+                                      "pinyin/symbols", O_RDONLY);
+        loadSymbols(file);
     }
     {
         auto file = standardPath.open(StandardPath::Type::PkgData,
@@ -1322,14 +1398,10 @@ void PinyinEngine::populateConfig() {
     }
     PINYIN_DEBUG() << "Quick Phrase Trigger Dict: " << quickphraseTriggerDict_;
     ime_->dict()->setFlags(libime::TrieDictionary::UserDict + 1,
-                           *config_.emojiEnabled
-                               ? libime::PinyinDictFlag::NoFlag
-                               : libime::PinyinDictFlag::Disabled);
-    ime_->dict()->setFlags(libime::TrieDictionary::UserDict + 2,
                            *config_.chaiziEnabled
                                ? libime::PinyinDictFlag::FullMatch
                                : libime::PinyinDictFlag::Disabled);
-    ime_->dict()->setFlags(libime::TrieDictionary::UserDict + 3,
+    ime_->dict()->setFlags(libime::TrieDictionary::UserDict + 2,
                            *config_.extBEnabled
                                ? libime::PinyinDictFlag::NoFlag
                                : libime::PinyinDictFlag::Disabled);
