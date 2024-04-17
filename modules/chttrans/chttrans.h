@@ -19,6 +19,25 @@
 #include <fcitx/instance.h>
 #include <unordered_set>
 
+#ifdef ENABLE_OPENCC
+struct OpenCCAnnotation : public fcitx::EnumAnnotation {
+    void setProfiles(std::vector<std::string> profiles) {
+        profiles_ = std::move(profiles);
+    }
+    void dumpDescription(fcitx::RawConfig &config) const {
+        fcitx::EnumAnnotation::dumpDescription(config);
+        for (size_t i = 0; i < profiles_.size(); i++) {
+            config.setValueByPath("Enum/" + std::to_string(i), profiles_[i]);
+            config.setValueByPath("EnumI18n/" + std::to_string(i),
+                                  profiles_[i]);
+        }
+    }
+
+private:
+    std::vector<std::string> profiles_;
+};
+#endif
+
 FCITX_CONFIG_ENUM(ChttransEngine, Native, OpenCC);
 
 FCITX_CONFIGURATION(
@@ -32,12 +51,14 @@ FCITX_CONFIGURATION(
     fcitx::HiddenOption<std::vector<std::string>> enabledIM{
         this, "EnabledIM", _("Enabled Input Methods")};
 #ifdef ENABLE_OPENCC
-    fcitx::Option<std::string> openCCS2TProfile{
-        this, "OpenCCS2TProfile",
-        _("OpenCC profile for Simplified to Traditional"), ""};
-    fcitx::Option<std::string> openCCT2SProfile{
-        this, "OpenCCT2SProfile",
-        _("OpenCC profile for Traditional to Simplified"), ""};
+    fcitx::Option<std::string, fcitx::NoConstrain<std::string>,
+                  fcitx::DefaultMarshaller<std::string>, OpenCCAnnotation>
+        openCCS2TProfile{this, "OpenCCS2TProfile",
+                         _("OpenCC profile for Simplified to Traditional"), ""};
+    fcitx::Option<std::string, fcitx::NoConstrain<std::string>,
+                  fcitx::DefaultMarshaller<std::string>, OpenCCAnnotation>
+        openCCT2SProfile{this, "OpenCCT2SProfile",
+                         _("OpenCC profile for Traditional to Simplified"), ""};
 #endif
 );
 
@@ -96,7 +117,7 @@ public:
 
     void reloadConfig() override;
     void save() override;
-    const fcitx::Configuration *getConfig() const override { return &config_; }
+    const fcitx::Configuration *getConfig() const override;
     void setConfig(const fcitx::RawConfig &config) override {
         config_.load(config, true);
         fcitx::safeSaveAsIni(config_, "conf/chttrans.conf");

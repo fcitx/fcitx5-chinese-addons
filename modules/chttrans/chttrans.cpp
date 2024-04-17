@@ -213,6 +213,23 @@ void Chttrans::save() {
     safeSaveAsIni(config_, "conf/chttrans.conf");
 }
 
+const Configuration *Chttrans::getConfig() const {
+#ifdef ENABLE_OPENCC
+    std::vector<std::string> profiles;
+    StandardPath::global().scanFiles(
+        StandardPath::Type::Data, "opencc",
+        [&profiles](const std::string &path, const std::string &, bool) {
+            if (stringutils::endsWith(path, ".json")) {
+                profiles.emplace_back(path);
+            }
+            return true;
+        });
+    config_.openCCS2TProfile.annotation().setProfiles(profiles);
+    config_.openCCT2SProfile.annotation().setProfiles(std::move(profiles));
+#endif
+    return &config_;
+}
+
 std::string Chttrans::convert(ChttransIMType type, const std::string &str) {
     if (!currentBackend_ || !currentBackend_->load(config_)) {
         return str;
