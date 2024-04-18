@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2024-04-17 20:25+0000\n"
+"POT-Creation-Date: 2024-04-18 20:25+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Dmitry <dmitrydmitry761@gmail.com>, 2024\n"
 "Language-Team: Russian (https://app.transifex.com/fcitx/teams/12005/ru/)\n"
@@ -202,7 +202,7 @@ msgstr "Ориентация списка кандидатов"
 
 #: im/table/cangjie.conf.in.in:3
 msgid "Cangjie (Simplified Chinese)"
-msgstr "Цанцзе (Упрощенный китайский)"
+msgstr "Цанцзе (Упрощенный Китайский)"
 
 #: org.fcitx.Fcitx5.Addon.ChineseAddons.metainfo.xml.in:7
 msgid "Chinese Addons"
@@ -416,15 +416,15 @@ msgstr "Включить Cloudpinyin"
 
 #: im/table/engine.h:68 im/pinyin/pinyin.h:160
 msgid "Enable Prediction"
-msgstr "Включить предсказание"
+msgstr "Включить прогнозирование"
 
 #: im/pinyin/pinyin.h:129
 msgid "Enable Spell"
-msgstr "Включить Spell"
+msgstr "Включить проверку орфографии"
 
 #: im/pinyin/pinyin.h:130
 msgid "Enable Symbols"
-msgstr ""
+msgstr "Включить символы"
 
 #: modules/chttrans/chttrans.h:33
 msgid "Enabled Input Methods"
@@ -432,7 +432,7 @@ msgstr "Включенные методы ввода"
 
 #: im/table/ime.h:228
 msgid "End key"
-msgstr "Клавиша End"
+msgstr "Клавиша отмены"
 
 #: im/pinyin/pinyin.h:266
 msgid "Enter a string from the list will make it enter quickphrase mode."
@@ -794,9 +794,9 @@ msgid ""
 "disable this option if you want the candidate order to be stable regardless "
 "of the history."
 msgstr ""
-"Упорядочить кандидата на основе слова, которое вы уже набрали. Вы можете "
-"отключить эту опцию, если хотите, чтобы ордер-кандидат был стабильным "
-"независимо от истории."
+"Слова-кандидаты сортируются в соответствии с тем, что было введено. Если вы "
+"хотите, чтобы порядок слов-кандидатов не зависел от истории ввода, вам "
+"необходимо отключить эту опцию."
 
 #. i18n: file: gui/customphraseeditor/editordialog.ui:55
 #. i18n: ectx: property (text), widget (QLabel, label)
@@ -833,16 +833,16 @@ msgstr "Пожалуйста, используйте эту функцию по�
 #: im/table/engine.cpp:78 im/table/engine.cpp:86 im/pinyin/pinyin.cpp:1074
 #: im/pinyin/pinyin.cpp:1084
 msgid "Prediction Disabled"
-msgstr "Предсказание отключено"
+msgstr "Прогнозирование отключено"
 
 #: im/table/engine.cpp:77 im/table/engine.cpp:85 im/pinyin/pinyin.cpp:1073
 #: im/pinyin/pinyin.cpp:1083
 msgid "Prediction Enabled"
-msgstr "Предсказание включено"
+msgstr "Прогнозирование включено"
 
 #: im/table/engine.h:71 im/pinyin/pinyin.h:163
 msgid "Prediction Size"
-msgstr "Размер предсказания"
+msgstr "Количество прогнозов"
 
 #: im/pinyin/pinyin.h:152
 msgid "Preedit Mode"
@@ -1004,16 +1004,16 @@ msgstr "Профиль Шуанпинь"
 
 #: modules/chttrans/chttrans.h:78
 msgid "Simplified Chinese"
-msgstr "Упрощенный китайский"
+msgstr "Упрощенный Китайский"
 
 #: modules/chttrans/chttrans.cpp:76
 msgid "Simplified Chinese is enabled."
-msgstr "Упрощенный китайский включен."
+msgstr "Упрощенный Китайский включен."
 
 #: im/pinyin/pinyin.h:246 modules/chttrans/chttrans.cpp:70
 #: modules/chttrans/chttrans.conf.in.in:3
 msgid "Simplified and Traditional Chinese Translation"
-msgstr "Перевод упрощенного и традиционного китайского"
+msgstr "Преобразование между Упрощенным и Традиционным Китайским языком"
 
 #: im/table/ime.h:142
 msgid "Sort candidate by code length"
@@ -1093,11 +1093,11 @@ msgstr "Клавиша переключения"
 
 #: modules/chttrans/chttrans.h:77
 msgid "Traditional Chinese"
-msgstr "Традиционный китайский"
+msgstr "Традиционный Китайский"
 
 #: modules/chttrans/chttrans.cpp:75
 msgid "Traditional Chinese is enabled."
-msgstr "Традиционный китайский включен."
+msgstr "Традиционный Китайский включен."
 
 #: modules/chttrans/chttrans.h:27
 msgid "Translate engine"
