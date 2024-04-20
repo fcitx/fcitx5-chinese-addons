@@ -16,6 +16,9 @@
 #include <fcntl.h>
 #ifdef ENABLE_OPENCC
 #include "chttrans-opencc.h"
+#include <boost/iostreams/device/file_descriptor.hpp>
+#include <boost/iostreams/stream.hpp>
+#include <boost/json/src.hpp>
 #endif
 #include "chttrans-native.h"
 #include <fcitx/inputcontext.h>
@@ -215,15 +218,27 @@ void Chttrans::save() {
 
 const Configuration *Chttrans::getConfig() const {
 #ifdef ENABLE_OPENCC
-    std::vector<std::string> profiles;
-    StandardPath::global().scanFiles(
-        StandardPath::Type::Data, "opencc",
-        [&profiles](const std::string &path, const std::string &, bool) {
-            if (stringutils::endsWith(path, ".json")) {
-                profiles.emplace_back(path);
-            }
-            return true;
-        });
+    std::vector<std::pair<std::string, std::string>> profiles{{"", ""}};
+    auto files = StandardPath::global().multiOpen(
+        StandardPath::Type::Data, "opencc", O_RDONLY, filter::Suffix(".json"));
+    for (const auto &file : files) {
+        try {
+            boost::iostreams::stream_buffer<
+                boost::iostreams::file_descriptor_source>
+                buffer(file.second.fd(),
+                       boost::iostreams::file_descriptor_flags::
+                           never_close_handle);
+            std::istream in(&buffer);
+            std::string strBuf(std::istreambuf_iterator<char>(in), {});
+            auto jv = boost::json::parse(strBuf);
+            const auto &obj = jv.as_object();
+            auto name = boost::json::value_to<std::string>(obj.at("name"));
+            profiles.emplace_back(file.first, std::move(name));
+        } catch (const std::exception &e) {
+            FCITX_WARN() << "Failed to parse " << file.first;
+            profiles.emplace_back(file.first, file.first);
+        }
+    }
     config_.openCCS2TProfile.annotation().setProfiles(profiles);
     config_.openCCT2SProfile.annotation().setProfiles(std::move(profiles));
 #endif

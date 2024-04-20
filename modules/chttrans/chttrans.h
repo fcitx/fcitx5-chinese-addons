@@ -21,20 +21,22 @@
 
 #ifdef ENABLE_OPENCC
 struct OpenCCAnnotation : public fcitx::EnumAnnotation {
-    void setProfiles(std::vector<std::string> profiles) {
+    void
+    setProfiles(std::vector<std::pair<std::string, std::string>> profiles) {
         profiles_ = std::move(profiles);
     }
     void dumpDescription(fcitx::RawConfig &config) const {
         fcitx::EnumAnnotation::dumpDescription(config);
         for (size_t i = 0; i < profiles_.size(); i++) {
-            config.setValueByPath("Enum/" + std::to_string(i), profiles_[i]);
+            config.setValueByPath("Enum/" + std::to_string(i),
+                                  profiles_[i].first);
             config.setValueByPath("EnumI18n/" + std::to_string(i),
-                                  profiles_[i]);
+                                  profiles_[i].second);
         }
     }
 
 private:
-    std::vector<std::string> profiles_;
+    std::vector<std::pair<std::string, std::string>> profiles_;
 };
 #endif
 
