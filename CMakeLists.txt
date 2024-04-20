@@ -38,8 +38,10 @@ option(ENABLE_CLOUDPINYIN "Build cloud pinyin addon" On)
 option(USE_QT6 "Build with Qt6" On)
 option(ENABLE_DATA "Build data" On)
 
+set(REQUIRED_BOOST_COMPONENTS iostreams)
 if (ENABLE_OPENCC)
-    find_package(OpenCC REQUIRED)
+    find_package(OpenCC 1.0.1 REQUIRED)
+    list(APPEND REQUIRED_BOOST_COMPONENTS json)
 endif()
 
 if (ENABLE_GUI)
@@ -62,7 +64,7 @@ if (ENABLE_GUI)
     endif()
 endif()
 
-find_package(Boost 1.75 REQUIRED COMPONENTS iostreams)
+find_package(Boost 1.75 REQUIRED COMPONENTS ${REQUIRED_BOOST_COMPONENTS})
 find_package(LibIMEPinyin 1.1.7 REQUIRED)
 find_package(LibIMETable 1.1.4 REQUIRED)
 

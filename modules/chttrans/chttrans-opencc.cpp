@@ -23,7 +23,7 @@ std::string OpenCCBackend::locateProfile(const std::string &profile) {
 
 void OpenCCBackend::updateConfig(const ChttransConfig &config) {
     auto s2tProfile = *config.openCCS2TProfile;
-    if (s2tProfile.empty()) {
+    if (s2tProfile.empty() || s2tProfile == "default") {
         s2tProfile = OPENCC_DEFAULT_CONFIG_SIMP_TO_TRAD;
     }
     auto s2tProfilePath = locateProfile(s2tProfile);
@@ -37,7 +37,7 @@ void OpenCCBackend::updateConfig(const ChttransConfig &config) {
     }
 
     auto t2sProfile = *config.openCCT2SProfile;
-    if (t2sProfile.empty()) {
+    if (t2sProfile.empty() || s2tProfile == "default") {
         t2sProfile = OPENCC_DEFAULT_CONFIG_TRAD_TO_SIMP;
     }
     auto t2sProfilePath = locateProfile(t2sProfile);

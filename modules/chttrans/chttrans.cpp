@@ -14,6 +14,7 @@
 #include <fcitx/addonmanager.h>
 #include <fcitx/inputmethodentry.h>
 #include <fcntl.h>
+#include <fmt/format.h>
 #ifdef ENABLE_OPENCC
 #include "chttrans-opencc.h"
 #include <boost/iostreams/device/file_descriptor.hpp>
@@ -218,9 +219,11 @@ void Chttrans::save() {
 
 const Configuration *Chttrans::getConfig() const {
 #ifdef ENABLE_OPENCC
-    std::vector<std::pair<std::string, std::string>> profiles{{"", ""}};
+    std::vector<std::pair<std::string, std::string>> profiles{{"default", _("Default")}};
+    constexpr std::string_view JsonSuffix = ".json";
     auto files = StandardPath::global().multiOpen(
-        StandardPath::Type::Data, "opencc", O_RDONLY, filter::Suffix(".json"));
+        StandardPath::Type::Data, "opencc", O_RDONLY, filter::Suffix(std::string(JsonSuffix)));
+    profiles.reserve(files.size() + 1);
     for (const auto &file : files) {
         try {
             boost::iostreams::stream_buffer<
@@ -233,7 +236,11 @@ const Configuration *Chttrans::getConfig() const {
             auto jv = boost::json::parse(strBuf);
             const auto &obj = jv.as_object();
             auto name = boost::json::value_to<std::string>(obj.at("name"));
-            profiles.emplace_back(file.first, std::move(name));
+            std::string description = file.first.substr(0, file.first.size() - JsonSuffix.size());
+            if (!name.empty()) {
+                description = fmt::format("{0}: {1}", description, C_("OpenCC Profile", name));
+            }
+            profiles.emplace_back(file.first, std::move(description));
         } catch (const std::exception &e) {
             FCITX_WARN() << "Failed to parse " << file.first;
             profiles.emplace_back(file.first, file.first);
