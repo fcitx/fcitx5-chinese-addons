@@ -224,7 +224,9 @@ const Configuration *Chttrans::getConfig() const {
     auto files = StandardPath::global().multiOpen(
         StandardPath::Type::Data, "opencc", O_RDONLY, filter::Suffix(std::string(JsonSuffix)));
     profiles.reserve(files.size() + 1);
+    // files is std::map, so file name is already sorted.
     for (const auto &file : files) {
+#ifdef HAS_BOOST_JSON
         try {
             boost::iostreams::stream_buffer<
                 boost::iostreams::file_descriptor_source>
@@ -245,6 +247,9 @@ const Configuration *Chttrans::getConfig() const {
             FCITX_WARN() << "Failed to parse " << file.first;
             profiles.emplace_back(file.first, file.first);
         }
+#else
+        profiles.emplace_back(file.first, file.first);
+#endif
     }
     config_.openCCS2TProfile.annotation().setProfiles(profiles);
     config_.openCCT2SProfile.annotation().setProfiles(std::move(profiles));

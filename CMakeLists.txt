@@ -41,7 +41,6 @@ option(ENABLE_DATA "Build data" On)
 set(REQUIRED_BOOST_COMPONENTS iostreams)
 if (ENABLE_OPENCC)
     find_package(OpenCC 1.0.1 REQUIRED)
-    list(APPEND REQUIRED_BOOST_COMPONENTS json)
 endif()
 
 if (ENABLE_GUI)
@@ -64,12 +63,17 @@ if (ENABLE_GUI)
     endif()
 endif()
 
-find_package(Boost 1.75 REQUIRED COMPONENTS ${REQUIRED_BOOST_COMPONENTS})
+# We do not need json if OpenCC is not needed, but just try to find it anyway to save some ifelse logic
+find_package(Boost 1.61 REQUIRED COMPONENTS iostreams OPTIONAL_COMPONENTS json)
 find_package(LibIMEPinyin 1.1.7 REQUIRED)
 find_package(LibIMETable 1.1.4 REQUIRED)
 
 if (ENABLE_CLOUDPINYIN)
     pkg_check_modules(Curl REQUIRED IMPORTED_TARGET "libcurl")
+endif()
+
+if (TARGET Boost::json)
+    set(HAS_BOOST_JSON TRUE)
 endif()
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.h.in ${CMAKE_CURRENT_BINARY_DIR}/config.h)
