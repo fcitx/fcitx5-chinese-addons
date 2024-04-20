@@ -37,7 +37,7 @@ void OpenCCBackend::updateConfig(const ChttransConfig &config) {
     }
 
     auto t2sProfile = *config.openCCT2SProfile;
-    if (t2sProfile.empty() || s2tProfile == "default") {
+    if (t2sProfile.empty() || t2sProfile == "default") {
         t2sProfile = OPENCC_DEFAULT_CONFIG_TRAD_TO_SIMP;
     }
     auto t2sProfilePath = locateProfile(t2sProfile);
