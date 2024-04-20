@@ -38,7 +38,6 @@ option(ENABLE_CLOUDPINYIN "Build cloud pinyin addon" On)
 option(USE_QT6 "Build with Qt6" On)
 option(ENABLE_DATA "Build data" On)
 
-set(REQUIRED_BOOST_COMPONENTS iostreams)
 if (ENABLE_OPENCC)
     find_package(OpenCC 1.0.1 REQUIRED)
 endif()
