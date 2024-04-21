@@ -25,7 +25,13 @@ std::string OpenCCBackend::locateProfile(const std::string &profile) {
 void OpenCCBackend::updateConfig(const ChttransConfig &config) {
     auto s2tProfile = *config.openCCS2TProfile;
     if (s2tProfile.empty() || s2tProfile == "default") {
-        s2tProfile = OPENCC_DEFAULT_CONFIG_SIMP_TO_TRAD;
+        const std::string preferredS2TProfile = "s2tw.json";
+        // Means it's resolved.
+        if (locateProfile(preferredS2TProfile) != preferredS2TProfile) {
+            s2tProfile = preferredS2TProfile;
+        } else {
+            s2tProfile = OPENCC_DEFAULT_CONFIG_SIMP_TO_TRAD;
+        }
     }
     auto s2tProfilePath = locateProfile(s2tProfile);
     FCITX_DEBUG() << "s2tProfilePath: " << s2tProfilePath;
@@ -39,7 +45,13 @@ void OpenCCBackend::updateConfig(const ChttransConfig &config) {
 
     auto t2sProfile = *config.openCCT2SProfile;
     if (t2sProfile.empty() || t2sProfile == "default") {
-        t2sProfile = OPENCC_DEFAULT_CONFIG_TRAD_TO_SIMP;
+        const std::string preferredT2SProfile = "tw2s.json";
+        // Means it's resolved.
+        if (locateProfile(preferredT2SProfile) != preferredT2SProfile) {
+            t2sProfile = preferredT2SProfile;
+        } else {
+            t2sProfile = OPENCC_DEFAULT_CONFIG_TRAD_TO_SIMP;
+        }
     }
     auto t2sProfilePath = locateProfile(t2sProfile);
     FCITX_DEBUG() << "t2sProfilePath: " << t2sProfilePath;
