@@ -107,7 +107,7 @@ void scheduleEvent(EventDispatcher *dispatcher, Instance *instance) {
         testfrontend->call<ITestFrontend::pushCommitExpectation>("皇后");
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("f"), false);
 
-        testfrontend->call<ITestFrontend::pushCommitExpectation>("啓動");
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("啟動");
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("g"), false);
 
         config.setValueByPath("OpenCCS2TProfile", "s2tw.json");
