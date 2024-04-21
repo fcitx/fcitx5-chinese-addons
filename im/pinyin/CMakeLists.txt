@@ -2,6 +2,7 @@ set(PINYIN_SOURCES
     pinyin.cpp
     customphrase.cpp
     symboldictionary.cpp
+    workerthread.cpp
 )
 
 add_library(pinyin MODULE ${PINYIN_SOURCES})
