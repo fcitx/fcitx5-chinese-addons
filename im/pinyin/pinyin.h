@@ -9,6 +9,7 @@
 
 #include "customphrase.h"
 #include "symboldictionary.h"
+#include "workerthread.h"
 #include <fcitx-config/configuration.h>
 #include <fcitx-config/iniparser.h>
 #include <fcitx-config/option.h>
@@ -362,7 +363,8 @@ private:
     void loadExtraDict();
     void loadCustomPhrase();
     void loadSymbols(const StandardPathFile &file);
-    void loadDict(const StandardPathFile &file);
+    void loadDict(StandardPathFile file,
+                  std::list<std::unique_ptr<TaskToken>> &taskTokens);
 
     Instance *instance_;
     PinyinEngineConfig config_;
@@ -380,6 +382,9 @@ private:
     std::unique_ptr<HandlerTableEntry<EventHandler>> event_;
     CustomPhraseDict customPhrase_;
     SymbolDict symbols_;
+    WorkerThread worker_;
+    std::list<std::unique_ptr<TaskToken>> persistentTask_;
+    std::list<std::unique_ptr<TaskToken>> tasks_;
 
     FCITX_ADDON_DEPENDENCY_LOADER(quickphrase, instance_->addonManager());
     FCITX_ADDON_DEPENDENCY_LOADER(fullwidth, instance_->addonManager());

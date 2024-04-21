@@ -11,6 +11,7 @@
 // We want to keep cloudpinyin logic but don't call it.
 #include "../../modules/cloudpinyin/cloudpinyin_public.h"
 #include "config.h"
+#include "workerthread.h"
 #include <cstdint>
 #include <ctime>
 #include <fcitx-utils/capabilityflags.h>
@@ -20,6 +21,7 @@
 #include <fcitx/candidatelist.h>
 #include <fcitx/event.h>
 #include <fcitx/userinterface.h>
+#include <future>
 #include <libime/pinyin/pinyincorrectionprofile.h>
 #include <memory>
 #include <string>
@@ -980,7 +982,8 @@ std::string PinyinEngine::evaluateCustomPhrase(InputContext *inputContext,
 
 PinyinEngine::PinyinEngine(Instance *instance)
     : instance_(instance),
-      factory_([this](InputContext &) { return new PinyinState(this); }) {
+      factory_([this](InputContext &) { return new PinyinState(this); }),
+      worker_(instance->eventDispatcher()) {
     ime_ = std::make_unique<libime::PinyinIME>(
         std::make_unique<libime::PinyinDictionary>(),
         std::make_unique<libime::UserLanguageModel>(
@@ -1142,24 +1145,37 @@ void PinyinEngine::loadSymbols(const StandardPathFile &file) {
     }
 }
 
-void PinyinEngine::loadDict(const StandardPathFile &file) {
+void PinyinEngine::loadDict(StandardPathFile file,
+                            std::list<std::unique_ptr<TaskToken>> &taskTokens) {
     if (file.fd() < 0) {
         return;
     }
-    try {
-        PINYIN_DEBUG() << "Loading pinyin dict " << file.path();
-        boost::iostreams::stream_buffer<
-            boost::iostreams::file_descriptor_source>
-            buffer(file.fd(),
-                   boost::iostreams::file_descriptor_flags::never_close_handle);
-        std::istream in(&buffer);
-        ime_->dict()->addEmptyDict();
-        ime_->dict()->load(ime_->dict()->dictSize() - 1, in,
-                           libime::PinyinDictFormat::Binary);
-    } catch (const std::exception &e) {
-        PINYIN_ERROR() << "Failed to load pinyin dict " << file.path() << ": "
-                       << e.what();
-    }
+    ime_->dict()->addEmptyDict();
+    PINYIN_DEBUG() << "Loading pinyin dict " << file.path();
+    auto path = file.path();
+    std::packaged_task<libime::PinyinDictionary::TrieType()> task(
+        [file = std::move(file)]() {
+            boost::iostreams::stream_buffer<
+                boost::iostreams::file_descriptor_source>
+                buffer(file.fd(), boost::iostreams::file_descriptor_flags::
+                                      never_close_handle);
+            std::istream in(&buffer);
+            auto trie = libime::PinyinDictionary::load(
+                in, libime::PinyinDictFormat::Binary);
+            return trie;
+        });
+    taskTokens.push_back(worker_.addTask(
+        std::move(task),
+        [this, index = ime_->dict()->dictSize() - 1,
+         path](std::shared_future<libime::PinyinDictionary::TrieType> &future) {
+            try {
+                PINYIN_DEBUG() << "Load pinyin dict " << path << " finished.";
+                ime_->dict()->setTrie(index, future.get());
+            } catch (const std::exception &e) {
+                PINYIN_ERROR() << "Failed to load pinyin dict " << path << ": "
+                               << e.what();
+            }
+        }));
 }
 
 void PinyinEngine::loadBuiltInDict() {
@@ -1172,7 +1188,7 @@ void PinyinEngine::loadBuiltInDict() {
     {
         auto file = standardPath.open(StandardPath::Type::PkgData,
                                       "pinyin/chaizi.dict", O_RDONLY);
-        loadDict(file);
+        loadDict(std::move(file), persistentTask_);
     }
     {
         auto file = standardPath.open(StandardPath::Type::Data,
@@ -1183,7 +1199,7 @@ void PinyinEngine::loadBuiltInDict() {
                                      LIBIME_INSTALL_PKGDATADIR "/extb.dict",
                                      O_RDONLY);
         }
-        loadDict(file);
+        loadDict(std::move(file), persistentTask_);
     }
     if (ime_->dict()->dictSize() !=
         libime::TrieDictionary::UserDict + 1 + NumBuiltInDict) {
@@ -1202,15 +1218,16 @@ void PinyinEngine::loadExtraDict() {
     FCITX_ASSERT(ime_->dict()->dictSize() >=
                  libime::TrieDictionary::UserDict + NumBuiltInDict + 1)
         << "Dict size: " << ime_->dict()->dictSize();
+    tasks_.clear();
     ime_->dict()->removeFrom(libime::TrieDictionary::UserDict + NumBuiltInDict +
                              1);
-    for (const auto &file : files) {
+    for (auto &file : files) {
         if (disableFiles.count(stringutils::concat(file.first, ".disable"))) {
             PINYIN_DEBUG() << "Dictionary: " << file.first << " is disabled.";
             continue;
         }
         PINYIN_DEBUG() << "Loading extra dictionary: " << file.first;
-        loadDict(file.second);
+        loadDict(std::move(file.second), tasks_);
     }
 }
 
