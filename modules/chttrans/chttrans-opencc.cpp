@@ -5,6 +5,7 @@
  *
  */
 #include "chttrans-opencc.h"
+#include "chttrans.h"
 #include <fcitx-utils/standardpath.h>
 #include <fcitx-utils/stringutils.h>
 
@@ -16,14 +17,14 @@ bool OpenCCBackend::loadOnce(const ChttransConfig &config) {
 }
 
 std::string OpenCCBackend::locateProfile(const std::string &profile) {
-    auto profilePath = StandardPath::global().locate(
-        StandardPath::Type::Data, stringutils::joinPath("opencc", profile));
+    auto profilePath =
+        openCCStandardPath().locate(StandardPath::Type::PkgData, profile);
     return profilePath.empty() ? profile : profilePath;
 }
 
 void OpenCCBackend::updateConfig(const ChttransConfig &config) {
     auto s2tProfile = *config.openCCS2TProfile;
-    if (s2tProfile.empty()) {
+    if (s2tProfile.empty() || s2tProfile == "default") {
         s2tProfile = OPENCC_DEFAULT_CONFIG_SIMP_TO_TRAD;
     }
     auto s2tProfilePath = locateProfile(s2tProfile);
@@ -37,7 +38,7 @@ void OpenCCBackend::updateConfig(const ChttransConfig &config) {
     }
 
     auto t2sProfile = *config.openCCT2SProfile;
-    if (t2sProfile.empty()) {
+    if (t2sProfile.empty() || t2sProfile == "default") {
         t2sProfile = OPENCC_DEFAULT_CONFIG_TRAD_TO_SIMP;
     }
     auto t2sProfilePath = locateProfile(t2sProfile);
