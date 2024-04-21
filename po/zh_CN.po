@@ -5,17 +5,17 @@
 # Translators:
 # Mingcong Bai <jeffbai@aosc.xyz>, 2018
 # wwj402 <wwj402@gmail.com>, 2018
-# csslayer <wengxt@gmail.com>, 2023
 # rocka, 2023
 # Lau YeeYu, 2024
+# csslayer <wengxt@gmail.com>, 2024
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2024-04-21 20:25+0000\n"
+"POT-Creation-Date: 2024-04-21 21:48+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
-"Last-Translator: Lau YeeYu, 2024\n"
+"Last-Translator: csslayer <wengxt@gmail.com>, 2024\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/fcitx/teams/12005/"
 "zh_CN/)\n"
 "Language: zh_CN\n"
@@ -322,7 +322,7 @@ msgstr "自定义词组编辑器"
 
 #: modules/chttrans/chttrans.cpp:248
 msgid "Default"
-msgstr ""
+msgstr "默认"
 
 #. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:14
 #. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
@@ -726,7 +726,7 @@ msgstr "新词库名称："
 msgctxt "OpenCC Profile"
 msgid ""
 "New Japanese Kanji (Shinjitai) to Traditional Chinese Characters (Kyūjitai)"
-msgstr ""
+msgstr "新日语汉字 (新字体) 到繁体中文字 (旧字体)"
 
 #: im/table/ime.h:60 im/pinyin/pinyin.h:198
 msgid "Next Candidate"
@@ -1001,23 +1001,23 @@ msgstr "已启用简体中文。"
 #: modules/chttrans/opencc-profile-name.cpp:11
 msgctxt "OpenCC Profile"
 msgid "Simplified Chinese to Traditional Chinese"
-msgstr ""
+msgstr "简体中文到繁体中文"
 
 #: modules/chttrans/opencc-profile-name.cpp:18
 msgctxt "OpenCC Profile"
 msgid "Simplified Chinese to Traditional Chinese (Hong Kong variant)"
-msgstr ""
+msgstr "简体中文到繁体中文 (香港变体)"
 
 #: modules/chttrans/opencc-profile-name.cpp:10
 msgctxt "OpenCC Profile"
 msgid "Simplified Chinese to Traditional Chinese (Taiwan standard)"
-msgstr ""
+msgstr "简体中文到繁体中文 (台湾标准)"
 
 #: modules/chttrans/opencc-profile-name.cpp:9
 msgctxt "OpenCC Profile"
 msgid ""
 "Simplified Chinese to Traditional Chinese (Taiwan standard, with phrases)"
-msgstr ""
+msgstr "简体中文到繁体中文 (台湾标准，转换用语)"
 
 #: im/pinyin/pinyin.h:247 modules/chttrans/chttrans.cpp:99
 #: modules/chttrans/chttrans.conf.in.in:3
@@ -1108,34 +1108,34 @@ msgstr "繁体中文"
 #: modules/chttrans/opencc-profile-name.cpp:12
 msgctxt "OpenCC Profile"
 msgid "Traditional Chinese (Hong Kong variant) to Simplified Chinese"
-msgstr ""
+msgstr "繁体中文 (香港变体) 到简体中文"
 
 #: modules/chttrans/opencc-profile-name.cpp:16
 msgctxt "OpenCC Profile"
 msgid "Traditional Chinese (Hong Kong variant) to Traditional Chinese"
-msgstr ""
+msgstr "繁体中文 (香港变体) 到繁体中文"
 
 #: modules/chttrans/opencc-profile-name.cpp:5
 msgctxt "OpenCC Profile"
 msgid "Traditional Chinese (Taiwan standard) to Simplified Chinese"
-msgstr ""
+msgstr "繁体中文 (台湾标准) 到简体中文"
 
 #: modules/chttrans/opencc-profile-name.cpp:7
 msgctxt "OpenCC Profile"
 msgid ""
 "Traditional Chinese (Taiwan standard) to Simplified Chinese (with phrases)"
-msgstr ""
+msgstr "繁体中文 (台湾标准) 到简体中文 (转换用语)"
 
 #: modules/chttrans/opencc-profile-name.cpp:6
 msgctxt "OpenCC Profile"
 msgid "Traditional Chinese (Taiwan standard) to Traditional Chinese"
-msgstr ""
+msgstr "繁体中文 (台湾标准) 到繁体中文"
 
 #: modules/chttrans/opencc-profile-name.cpp:15
 msgctxt "OpenCC Profile"
 msgid ""
 "Traditional Chinese Characters (Kyūjitai) to New Japanese Kanji (Shinjitai)"
-msgstr ""
+msgstr "繁体中文字 (旧字体) 到新日语汉字 (新字体)"
 
 #: modules/chttrans/chttrans.cpp:104
 msgid "Traditional Chinese is enabled."
@@ -1144,17 +1144,17 @@ msgstr "已启用繁体中文。"
 #: modules/chttrans/opencc-profile-name.cpp:14
 msgctxt "OpenCC Profile"
 msgid "Traditional Chinese to Simplified Chinese"
-msgstr ""
+msgstr "繁体中文到简体中文"
 
 #: modules/chttrans/opencc-profile-name.cpp:17
 msgctxt "OpenCC Profile"
 msgid "Traditional Chinese to Traditional Chinese (Hong Kong variant)"
-msgstr ""
+msgstr "繁体中文到繁体中文 (香港变体)"
 
 #: modules/chttrans/opencc-profile-name.cpp:8
 msgctxt "OpenCC Profile"
 msgid "Traditional Chinese to Traditional Chinese (Taiwan standard)"
-msgstr ""
+msgstr "繁体中文到繁体中文 (台湾标准)"
 
 #: modules/chttrans/chttrans.h:49
 msgid "Translate engine"
