@@ -10,6 +10,8 @@
 #cmakedefine ENABLE_OPENCC
 #cmakedefine USE_WEBKIT
 #cmakedefine ENABLE_BROWSER
+#cmakedefine HAS_BOOST_JSON
+#cmakedefine OPENCC_PREFIX "@OPENCC_PREFIX@"
 #define LIBIME_INSTALL_PKGDATADIR "@LIBIME_INSTALL_PKGDATADIR@"
 
 #ifndef _GNU_SOURCE
