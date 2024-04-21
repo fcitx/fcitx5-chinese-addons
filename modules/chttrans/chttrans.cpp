@@ -22,7 +22,9 @@
 #include "chttrans-opencc.h"
 #include <boost/iostreams/device/file_descriptor.hpp>
 #include <boost/iostreams/stream.hpp>
+#ifdef HAS_BOOST_JSON
 #include <boost/json/src.hpp>
+#endif
 #endif
 #include "chttrans-native.h"
 #include <fcitx/inputcontext.h>
