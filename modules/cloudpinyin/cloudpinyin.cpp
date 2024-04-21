@@ -98,9 +98,9 @@ constexpr uint64_t minInUs = 60000000;
 } // namespace
 
 CloudPinyin::CloudPinyin(fcitx::AddonManager *manager)
-    : eventLoop_(manager->eventLoop()) {
+    : eventLoop_(manager->eventLoop()),
+      dispatcher_(manager->instance()->eventDispatcher()) {
     curl_global_init(CURL_GLOBAL_ALL);
-    dispatcher_.attach(eventLoop_);
 
     backends_.emplace(
         CloudPinyinBackend::Google,
@@ -127,7 +127,7 @@ CloudPinyin::CloudPinyin(fcitx::AddonManager *manager)
     reloadConfig();
 }
 
-CloudPinyin::~CloudPinyin() { dispatcher_.detach(); }
+CloudPinyin::~CloudPinyin() {}
 
 void CloudPinyin::reloadConfig() {
     readAsIni(config_, "conf/cloudpinyin.conf");
@@ -170,7 +170,7 @@ void CloudPinyin::request(const std::string &pinyin,
 }
 
 void CloudPinyin::notifyFinished() {
-    dispatcher_.schedule([this]() {
+    dispatcher_.scheduleWithContext(this->watch(), [this]() {
         CurlQueue *item;
         auto backend = config_.backend.value();
         auto iter = backends_.find(backend);
