@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2024-04-21 20:25+0000\n"
+"POT-Creation-Date: 2024-04-21 21:48+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Dmitry <dmitrydmitry761@gmail.com>, 2024\n"
 "Language-Team: Russian (https://app.transifex.com/fcitx/teams/12005/ru/)\n"
@@ -330,7 +330,7 @@ msgstr "Редактор пользовательских фраз"
 
 #: modules/chttrans/chttrans.cpp:248
 msgid "Default"
-msgstr ""
+msgstr "По умолчанию"
 
 #. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:14
 #. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
@@ -743,6 +743,8 @@ msgctxt "OpenCC Profile"
 msgid ""
 "New Japanese Kanji (Shinjitai) to Traditional Chinese Characters (Kyūjitai)"
 msgstr ""
+"Преобразовать Новый Японский Кандзи (Синдзитай) в традиционные китайские "
+"иероглифы (Кюдзитай)"
 
 #: im/table/ime.h:60 im/pinyin/pinyin.h:198
 msgid "Next Candidate"
@@ -1023,23 +1025,27 @@ msgstr "Упрощенный Китайский включен."
 #: modules/chttrans/opencc-profile-name.cpp:11
 msgctxt "OpenCC Profile"
 msgid "Simplified Chinese to Traditional Chinese"
-msgstr ""
+msgstr "Преобразовать Упрощенный Китайский в Традиционный"
 
 #: modules/chttrans/opencc-profile-name.cpp:18
 msgctxt "OpenCC Profile"
 msgid "Simplified Chinese to Traditional Chinese (Hong Kong variant)"
 msgstr ""
+"Преобразовать Упрощенный Китайский в Традиционный (гонконгский вариант)"
 
 #: modules/chttrans/opencc-profile-name.cpp:10
 msgctxt "OpenCC Profile"
 msgid "Simplified Chinese to Traditional Chinese (Taiwan standard)"
 msgstr ""
+"Преобразовать Упрощенный Китайский в Традиционный (тайваньский стандарт)"
 
 #: modules/chttrans/opencc-profile-name.cpp:9
 msgctxt "OpenCC Profile"
 msgid ""
 "Simplified Chinese to Traditional Chinese (Taiwan standard, with phrases)"
 msgstr ""
+"Преобразовать Упрощенный Китайский в Традиционный (тайваньский стандарт, с "
+"фразами)"
 
 #: im/pinyin/pinyin.h:247 modules/chttrans/chttrans.cpp:99
 #: modules/chttrans/chttrans.conf.in.in:3
@@ -1130,33 +1136,45 @@ msgstr "Традиционный Китайский"
 msgctxt "OpenCC Profile"
 msgid "Traditional Chinese (Hong Kong variant) to Simplified Chinese"
 msgstr ""
+"Преобразовать Традиционный Китайский (гонконгский вариант) в Упрощенный "
+"Китайский"
 
 #: modules/chttrans/opencc-profile-name.cpp:16
 msgctxt "OpenCC Profile"
 msgid "Traditional Chinese (Hong Kong variant) to Traditional Chinese"
 msgstr ""
+"Преобразовать Традиционный Китайский (гонконгский вариант) в Традиционный "
+"Китайский"
 
 #: modules/chttrans/opencc-profile-name.cpp:5
 msgctxt "OpenCC Profile"
 msgid "Traditional Chinese (Taiwan standard) to Simplified Chinese"
 msgstr ""
+"Преобразовать Традиционный Китайский (тайваньский стандарт) в Упрощенный "
+"Китайский"
 
 #: modules/chttrans/opencc-profile-name.cpp:7
 msgctxt "OpenCC Profile"
 msgid ""
 "Traditional Chinese (Taiwan standard) to Simplified Chinese (with phrases)"
 msgstr ""
+"Преобразовать Традиционный Китайский (тайваньский стандарт) в Упрощенный "
+"Китайский (с фразами)"
 
 #: modules/chttrans/opencc-profile-name.cpp:6
 msgctxt "OpenCC Profile"
 msgid "Traditional Chinese (Taiwan standard) to Traditional Chinese"
 msgstr ""
+"Преобразовать Традиционный Китайский (тайваньский стандарт) в Традиционный "
+"Китайский"
 
 #: modules/chttrans/opencc-profile-name.cpp:15
 msgctxt "OpenCC Profile"
 msgid ""
 "Traditional Chinese Characters (Kyūjitai) to New Japanese Kanji (Shinjitai)"
 msgstr ""
+"Преобразовать традиционные китайские иероглифы (Кюдзитай) в Новый японский "
+"Кандзи (Синдзитай)"
 
 #: modules/chttrans/chttrans.cpp:104
 msgid "Traditional Chinese is enabled."
@@ -1165,17 +1183,21 @@ msgstr "Традиционный Китайский включен."
 #: modules/chttrans/opencc-profile-name.cpp:14
 msgctxt "OpenCC Profile"
 msgid "Traditional Chinese to Simplified Chinese"
-msgstr ""
+msgstr "Преобразовать Традиционный Китайский в Упрощенный"
 
 #: modules/chttrans/opencc-profile-name.cpp:17
 msgctxt "OpenCC Profile"
 msgid "Traditional Chinese to Traditional Chinese (Hong Kong variant)"
 msgstr ""
+"Преобразовать Традиционный Китайский в Традиционный Китайский (гонконгский "
+"вариант)"
 
 #: modules/chttrans/opencc-profile-name.cpp:8
 msgctxt "OpenCC Profile"
 msgid "Traditional Chinese to Traditional Chinese (Taiwan standard)"
 msgstr ""
+"Преобразовать Традиционный Китайский в Традиционный Китайский (тайваньский "
+"стандарт)"
 
 #: modules/chttrans/chttrans.h:49
 msgid "Translate engine"
