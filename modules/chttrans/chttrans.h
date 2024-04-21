@@ -13,6 +13,7 @@
 #include <fcitx-config/enum.h>
 #include <fcitx-config/iniparser.h>
 #include <fcitx-utils/i18n.h>
+#include <fcitx-utils/standardpath.h>
 #include <fcitx/action.h>
 #include <fcitx/addoninstance.h>
 #include <fcitx/addonmanager.h>
@@ -156,5 +157,7 @@ private:
     fcitx::ScopedConnection commitFilterConn_;
     ToggleAction toggleAction_{this};
 };
+
+const fcitx::StandardPath &openCCStandardPath();
 
 #endif // _CHTTRANS_CHTTRANS_H_

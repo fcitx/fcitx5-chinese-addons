@@ -4,6 +4,7 @@ pkg_check_modules(PKG_OPENCC QUIET opencc)
 
 set(OPENCC_DEFINITIONS ${PKG_OPENCC_CFLAGS_OTHER})
 set(OPENCC_VERSION ${PKG_OPENCC_VERSION})
+set(OPENCC_PREFIX ${PKG_OPENCC_PREFIX})
 
 find_path(OPENCC_INCLUDE_DIR
     NAMES opencc.h
@@ -21,6 +22,7 @@ find_package_handle_standard_args(OpenCC
     REQUIRED_VARS
         OPENCC_LIBRARY
         OPENCC_INCLUDE_DIR
+        OPENCC_PREFIX
     VERSION_VAR
         OPENCC_VERSION
 )
