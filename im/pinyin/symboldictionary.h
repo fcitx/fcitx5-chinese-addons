@@ -5,6 +5,9 @@
  *
  */
 
+#ifndef _PINYIN_SYMBOLDICTIONARY_H_
+#define _PINYIN_SYMBOLDICTIONARY_H_
+
 #include <fcitx-utils/macros.h>
 #include <istream>
 #include <libime/core/datrie.h>
@@ -30,3 +33,5 @@ private:
 };
 
 } // namespace fcitx
+
+#endif // _PINYIN_SYMBOLDICTIONARY_H_
