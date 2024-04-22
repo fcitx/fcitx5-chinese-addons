@@ -28,14 +28,17 @@ public:
     template <typename Ret, typename OnDone>
     FCITX_NODISCARD std::unique_ptr<TaskToken>
     addTask(std::packaged_task<Ret()> task, OnDone onDone) {
-        std::future<Ret> future = task.get_future();
+        // Wrap packaged_task and future in shared, since std::function require
+        // copy-able. The reason that we wrap it with in the std::function is
+        // because we need type erasure to store it.
+        std::shared_future<Ret> future = task.get_future();
         std::function<void()> taskFunction =
             [task = std::make_shared<decltype(task)>(
                  std::move(task))]() mutable { (*task)(); };
-        std::function<void()> callback = [onDone = std::move(onDone),
-                                          future = future.share()]() mutable {
-            onDone(future);
-        };
+        std::function<void()> callback =
+            [onDone = std::move(onDone), future = std::move(future)]() mutable {
+                onDone(future);
+            };
 
         return addTaskImpl(std::move(taskFunction), std::move(callback));
     }
@@ -58,7 +61,8 @@ private:
     bool exit_ = false;
     std::condition_variable condition_;
 
-    // Must be the last member
+    // Must be the last member, since we did not use a smart pointer to wrap it.
+    // The thread will be started right away at the end of constructor.
     std::thread thread_;
 };
 

@@ -15,6 +15,8 @@ WorkerThread::WorkerThread(fcitx::EventDispatcher &dispatcher)
     : dispatcher_(dispatcher), thread_(&WorkerThread::runThread, this) {}
 
 WorkerThread::~WorkerThread() {
+    // Unlike other thread, there is no need to use a event loop  since there is
+    // no IO monitoring, simply use exit_ to notify the exit.
     {
         std::lock_guard<std::mutex> lock(mutex_);
         exit_ = true;
@@ -28,6 +30,8 @@ WorkerThread::~WorkerThread() {
 std::unique_ptr<TaskToken>
 WorkerThread::addTaskImpl(std::function<void()> task,
                           std::function<void()> onDone) {
+    // Return an empty TrackableObject, so the unneeded task can be thrown away
+    // by simply delete TaskToken.
     auto token = std::make_unique<TaskToken>();
     std::lock_guard<std::mutex> lock(mutex_);
     queue_.push({.task = std::move(task),
@@ -50,7 +54,8 @@ void WorkerThread::run() {
             task = std::move(queue_.front());
             queue_.pop();
         }
+        // Run the actual task.
         task.task();
-        dispatcher_.scheduleWithContext(task.context, std::move(task.callback));
+        dispatcher_.scheduleWithContext(std::move(task.context), std::move(task.callback));
     }
 }
