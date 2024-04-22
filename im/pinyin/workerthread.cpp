@@ -56,6 +56,7 @@ void WorkerThread::run() {
         }
         // Run the actual task.
         task.task();
-        dispatcher_.scheduleWithContext(std::move(task.context), std::move(task.callback));
+        dispatcher_.scheduleWithContext(std::move(task.context),
+                                        std::move(task.callback));
     }
 }
