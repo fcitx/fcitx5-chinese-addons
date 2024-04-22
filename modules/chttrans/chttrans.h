@@ -57,11 +57,13 @@ FCITX_CONFIGURATION(
     fcitx::Option<std::string, fcitx::NoConstrain<std::string>,
                   fcitx::DefaultMarshaller<std::string>, OpenCCAnnotation>
         openCCS2TProfile{this, "OpenCCS2TProfile",
-                         _("OpenCC profile for Simplified to Traditional"), "default"};
+                         _("OpenCC profile for Simplified to Traditional"),
+                         "default"};
     fcitx::Option<std::string, fcitx::NoConstrain<std::string>,
                   fcitx::DefaultMarshaller<std::string>, OpenCCAnnotation>
         openCCT2SProfile{this, "OpenCCT2SProfile",
-                         _("OpenCC profile for Traditional to Simplified"), "default"};
+                         _("OpenCC profile for Traditional to Simplified"),
+                         "default"};
 #endif
 );
 

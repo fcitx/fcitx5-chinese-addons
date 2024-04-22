@@ -247,9 +247,9 @@ const Configuration *Chttrans::getConfig() const {
     std::vector<std::pair<std::string, std::string>> profiles{
         {"default", _("Default")}};
     constexpr std::string_view JsonSuffix = ".json";
-    auto files =
-        openCCStandardPath().multiOpen(StandardPath::Type::PkgData, ".", O_RDONLY,
-                                       filter::Suffix(std::string(JsonSuffix)));
+    auto files = openCCStandardPath().multiOpen(
+        StandardPath::Type::PkgData, ".", O_RDONLY,
+        filter::Suffix(std::string(JsonSuffix)));
     profiles.reserve(files.size() + 1);
     // files is std::map, so file name is already sorted.
     for (const auto &file : files) {
