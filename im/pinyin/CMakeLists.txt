@@ -25,8 +25,9 @@ fcitx5_translate_desktop_file("${CMAKE_CURRENT_BINARY_DIR}/pinyin-addon.conf.in"
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/pinyin-addon.conf" RENAME pinyin.conf DESTINATION "${FCITX_INSTALL_PKGDATADIR}/addon"
         COMPONENT config)
 
+install(FILES "symbols" DESTINATION "${FCITX_INSTALL_PKGDATADIR}/pinyin" COMPONENT config)
+
 if (ENABLE_DATA)
-  install(FILES "symbols" DESTINATION "${FCITX_INSTALL_PKGDATADIR}/pinyin")
 
   add_custom_command(
     OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/chaizi.dict"
