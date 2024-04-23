@@ -10,9 +10,12 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/iostreams/device/file_descriptor.hpp>
 #include <boost/iostreams/stream_buffer.hpp>
+#include <fcitx-utils/macros.h>
 #include <fcitx-utils/standardpath.h>
+#include <fcitx-utils/stringutils.h>
 #include <fcitx-utils/utf8.h>
 #include <fcntl.h>
+#include <libime/core/datrie.h>
 #include <queue>
 #include <stdexcept>
 #include <string_view>
@@ -27,9 +30,7 @@ void Stroke::loadAsync() {
     }
 
     loadFuture_ = std::async(std::launch::async, []() {
-        std::tuple<libime::DATrie<int32_t>,
-                   std::unordered_map<std::string, std::string>>
-            result;
+        std::tuple<libime::DATrie<int32_t>, libime::DATrie<int32_t>> result;
         auto &dict = std::get<0>(result);
         auto &reverseDict = std::get<1>(result);
 
@@ -45,7 +46,6 @@ void Stroke::loadAsync() {
                    boost::iostreams::file_descriptor_flags::never_close_handle);
         std::istream in(&buffer);
         std::string buf;
-        auto isSpaceCheck = boost::is_any_of(" \n\t\r\v\f");
         while (!in.eof()) {
             if (!std::getline(in, buf)) {
                 break;
@@ -55,20 +55,29 @@ void Stroke::loadAsync() {
                 continue;
             }
 
-            boost::trim_if(buf, isSpaceCheck);
-            if (buf.empty() || buf[0] == '#') {
+            auto line = stringutils::trimView(buf);
+            if (line.empty() || line[0] == '#') {
                 continue;
             }
-            std::vector<std::string> tokens;
-            boost::split(tokens, buf, isSpaceCheck);
-            if (tokens.size() != 2 || utf8::length(tokens[1]) != 1 ||
-                tokens[0].find_first_not_of("12345") != std::string::npos) {
+            auto pos = line.find_first_of(FCITX_WHITESPACE);
+            if (pos == std::string::npos) {
                 continue;
             }
-            std::string token = tokens[0] + '|' + tokens[1];
+            std::string_view key = line.substr(0, pos);
+            std::string_view value =
+                stringutils::trimView(line.substr(pos + 1));
+            if (utf8::length(value) != 1 ||
+                key.find_first_not_of("12345") != std::string::npos) {
+                continue;
+            }
+            std::string token = stringutils::concat(key, "|", value);
+            std::string reverseToken = stringutils::concat(value, "|", key);
             dict.set(token, 1);
-            reverseDict[tokens[1]] = tokens[0];
+            reverseDict.set(reverseToken, 1);
         }
+
+        dict.shrink_tail();
+        reverseDict.shrink_tail();
 
         return result;
     });
@@ -167,8 +176,8 @@ Stroke::lookup(std::string_view input, int limit) {
                         dict_.suffix(buf, current.length + 1 + len, pos);
                         addResult(buf.substr(current.length + 1),
                                   buf.substr(0, current.length));
-                        return !(limit > 0 &&
-                                 result.size() >= static_cast<size_t>(limit));
+                        return limit <= 0 ||
+                               result.size() < static_cast<size_t>(limit);
                     },
                     current.pos)) {
                 break;
@@ -185,7 +194,7 @@ Stroke::lookup(std::string_view input, int limit) {
         for (char i = '1'; i <= '5'; i++) {
             auto pos = current.pos;
             auto v = dict_.traverse(&i, 1, pos);
-            if (dict_.isNoPath(v)) {
+            if (libime::DATrie<int32_t>::isNoPath(v)) {
                 continue;
             }
             if (!current.remain.empty() && current.remain[0] == i) {
@@ -204,8 +213,8 @@ Stroke::lookup(std::string_view input, int limit) {
 
             if (current.remain.size() >= 2 && current.remain[1] == i) {
                 auto nextPos = pos;
-                auto nextV = dict_.traverse(&current.remain[0], 1, nextPos);
-                if (!dict_.isNoPath(nextV)) {
+                auto nextV = dict_.traverse(current.remain.data(), 1, nextPos);
+                if (!libime::DATrie<int32_t>::isNoPath(nextV)) {
                     pushQueue(LookupItem{nextPos, current.remain.substr(2),
                                          current.weight + TRANSPOSITION_WEIGHT,
                                          current.length + 2});
@@ -218,8 +227,35 @@ Stroke::lookup(std::string_view input, int limit) {
 }
 
 std::string Stroke::reverseLookup(const std::string &hanzi) const {
-    auto iter = revserseDict_.find(hanzi);
-    return iter != revserseDict_.end() ? iter->second : std::string();
+    using position_type = decltype(dict_)::position_type;
+    libime::DATrie<int32_t>::position_type pos = 0;
+    auto result = revserseDict_.traverse(hanzi, pos);
+    if (libime::DATrie<int32_t>::isNoPath(result)) {
+        return {};
+    }
+    result = revserseDict_.traverse("|", pos);
+    if (libime::DATrie<int32_t>::isNoPath(result)) {
+        return {};
+    }
+    std::optional<position_type> onlyMatch;
+    size_t onlyMatchLength = 0;
+    if (revserseDict_.foreach(
+            [&onlyMatch, &onlyMatchLength](int32_t, size_t len, uint64_t pos) {
+                if (onlyMatch) {
+                    return false;
+                }
+                onlyMatch = pos;
+                onlyMatchLength = len;
+                return true;
+            },
+            pos)) {
+        if (onlyMatch) {
+            std::string buf;
+            revserseDict_.suffix(buf, onlyMatchLength, *onlyMatch);
+            return buf;
+        }
+    }
+    return {};
 }
 
 std::string Stroke::prettyString(const std::string &input) const {

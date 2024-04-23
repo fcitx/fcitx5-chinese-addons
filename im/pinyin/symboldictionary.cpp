@@ -108,6 +108,8 @@ void SymbolDict::load(std::istream &in) {
             data_[index].push_back(value);
         }
     }
+    index_.shrink_tail();
+    data_.shrink_to_fit();
 }
 
 const std::vector<std::string> *SymbolDict::lookup(std::string_view key) const {

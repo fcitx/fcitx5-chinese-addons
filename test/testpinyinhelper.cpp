@@ -40,7 +40,7 @@ int main() {
 
     auto result4 =
         pinyinhelper->call<fcitx::IPinyinHelper::reverseLookupStroke>("你");
-    FCITX_ASSERT(result4 == "3235234");
+    FCITX_ASSERT(result4 == "3235234") << result4;
     auto result5 =
         pinyinhelper->call<fcitx::IPinyinHelper::prettyStrokeString>("54321");
     FCITX_ASSERT(result5 == "𠃍㇏丿丨一");
