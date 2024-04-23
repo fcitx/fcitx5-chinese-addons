@@ -29,12 +29,12 @@ public:
 
 private:
     libime::DATrie<int32_t> dict_;
-    std::unordered_map<std::string, std::string> revserseDict_;
+    libime::DATrie<int32_t> revserseDict_;
     bool loaded_ = false;
     bool loadResult_ = false;
 
     std::future<std::tuple<libime::DATrie<int32_t>,
-                           std::unordered_map<std::string, std::string>>>
+                           libime::DATrie<int32_t>>>
         loadFuture_;
 };
 } // namespace fcitx
