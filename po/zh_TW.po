@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2024-04-21 20:25+0000\n"
+"POT-Creation-Date: 2024-04-24 20:25+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Lau YeeYu, 2024\n"
 "Language-Team: Chinese (Taiwan) (https://app.transifex.com/fcitx/teams/12005/"
@@ -184,7 +184,7 @@ msgstr "自動選擇候選字"
 msgid "Auto select when no match is found"
 msgstr "沒有匹配時自動選擇"
 
-#: modules/cloudpinyin/cloudpinyin.h:33
+#: modules/cloudpinyin/cloudpinyin.h:34
 msgid "Backend"
 msgstr "後端"
 
@@ -324,7 +324,7 @@ msgstr "自定字词編輯器"
 
 #: modules/chttrans/chttrans.cpp:248
 msgid "Default"
-msgstr ""
+msgstr "預設"
 
 #. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:14
 #. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
@@ -712,7 +712,7 @@ msgstr "匹配不完整的元音 (e -> en, eng, ei)"
 msgid "Match partial shuangpin if input length is longer than 4"
 msgstr "輸入長度大於 4 時進行部分雙拼匹配"
 
-#: modules/cloudpinyin/cloudpinyin.h:32
+#: modules/cloudpinyin/cloudpinyin.h:33
 msgid "Minimum Pinyin Length"
 msgstr "最小拼音長度"
 
@@ -728,7 +728,7 @@ msgstr "新字典名稱："
 msgctxt "OpenCC Profile"
 msgid ""
 "New Japanese Kanji (Shinjitai) to Traditional Chinese Characters (Kyūjitai)"
-msgstr ""
+msgstr "新日語漢字（新字體）到繁體中文（舊字體）"
 
 #: im/table/ime.h:60 im/pinyin/pinyin.h:198
 msgid "Next Candidate"
@@ -770,7 +770,7 @@ msgstr "句子數量"
 msgid "OpenCC profile for Simplified to Traditional"
 msgstr "簡轉繁的 OpenCC 配置"
 
-#: modules/chttrans/chttrans.h:64
+#: modules/chttrans/chttrans.h:65
 msgid "OpenCC profile for Traditional to Simplified"
 msgstr "繁轉簡的 OpenCC 配置"
 
@@ -887,7 +887,7 @@ msgstr "上一頁"
 msgid "Prompt long word length when input length over (0 for disable)"
 msgstr "當輸入長於...時顯示長詞 (设置为 0 时禁用)"
 
-#: modules/cloudpinyin/cloudpinyin.h:38
+#: modules/cloudpinyin/cloudpinyin.h:39
 msgid "Proxy"
 msgstr "網路代理"
 
@@ -992,7 +992,7 @@ msgstr "雙拼"
 msgid "Shuangpin Profile"
 msgstr "雙拼方案"
 
-#: modules/chttrans/chttrans.h:102
+#: modules/chttrans/chttrans.h:104
 msgid "Simplified Chinese"
 msgstr "簡體中文"
 
@@ -1003,23 +1003,23 @@ msgstr "已啟用簡體中文。"
 #: modules/chttrans/opencc-profile-name.cpp:11
 msgctxt "OpenCC Profile"
 msgid "Simplified Chinese to Traditional Chinese"
-msgstr ""
+msgstr "簡體中文到繁體中文"
 
 #: modules/chttrans/opencc-profile-name.cpp:18
 msgctxt "OpenCC Profile"
 msgid "Simplified Chinese to Traditional Chinese (Hong Kong variant)"
-msgstr ""
+msgstr "簡體中文到繁體中文（香港）"
 
 #: modules/chttrans/opencc-profile-name.cpp:10
 msgctxt "OpenCC Profile"
 msgid "Simplified Chinese to Traditional Chinese (Taiwan standard)"
-msgstr ""
+msgstr "簡體中文到繁體中文（臺灣）"
 
 #: modules/chttrans/opencc-profile-name.cpp:9
 msgctxt "OpenCC Profile"
 msgid ""
 "Simplified Chinese to Traditional Chinese (Taiwan standard, with phrases)"
-msgstr ""
+msgstr "簡體中文到繁體中文（臺灣，轉換用語）"
 
 #: im/pinyin/pinyin.h:247 modules/chttrans/chttrans.cpp:99
 #: modules/chttrans/chttrans.conf.in.in:3
@@ -1086,7 +1086,7 @@ msgstr ""
 "鍵,順序=\"第 1 行\\n第 2 行\\n...\\n第 n 行\"\n"
 "註釋行以「#」或「;」開頭。\n"
 
-#: modules/cloudpinyin/cloudpinyin.h:42
+#: modules/cloudpinyin/cloudpinyin.h:43
 msgid ""
 "The proxy format must be the one that is supported by cURL. Usually it is in "
 "the format of [scheme]://[host]:[port], e.g. http://localhost:1080."
@@ -1094,7 +1094,7 @@ msgstr ""
 "網路代理的格式必須是 cURL 支援的格式。通常的格式是 [協議]://[主機]:[通訊埠]，"
 "例如 http://localhost:1080。"
 
-#: modules/cloudpinyin/cloudpinyin.h:29
+#: modules/cloudpinyin/cloudpinyin.h:30
 msgid "Toggle Key"
 msgstr "切換鍵"
 
@@ -1103,41 +1103,41 @@ msgstr "切換鍵"
 msgid "Toggle key"
 msgstr "切換鍵"
 
-#: modules/chttrans/chttrans.h:101
+#: modules/chttrans/chttrans.h:103
 msgid "Traditional Chinese"
 msgstr "繁體中文"
 
 #: modules/chttrans/opencc-profile-name.cpp:12
 msgctxt "OpenCC Profile"
 msgid "Traditional Chinese (Hong Kong variant) to Simplified Chinese"
-msgstr ""
+msgstr "繁體中文（香港）到簡體中文"
 
 #: modules/chttrans/opencc-profile-name.cpp:16
 msgctxt "OpenCC Profile"
 msgid "Traditional Chinese (Hong Kong variant) to Traditional Chinese"
-msgstr ""
+msgstr "繁體中文（香港）到繁體中文"
 
 #: modules/chttrans/opencc-profile-name.cpp:5
 msgctxt "OpenCC Profile"
 msgid "Traditional Chinese (Taiwan standard) to Simplified Chinese"
-msgstr ""
+msgstr "繁體中文（臺灣）到簡體中文"
 
 #: modules/chttrans/opencc-profile-name.cpp:7
 msgctxt "OpenCC Profile"
 msgid ""
 "Traditional Chinese (Taiwan standard) to Simplified Chinese (with phrases)"
-msgstr ""
+msgstr "繁體中文（臺灣）到簡體中文（轉換用語）"
 
 #: modules/chttrans/opencc-profile-name.cpp:6
 msgctxt "OpenCC Profile"
 msgid "Traditional Chinese (Taiwan standard) to Traditional Chinese"
-msgstr ""
+msgstr "繁體中文（臺灣）到繁體中文"
 
 #: modules/chttrans/opencc-profile-name.cpp:15
 msgctxt "OpenCC Profile"
 msgid ""
 "Traditional Chinese Characters (Kyūjitai) to New Japanese Kanji (Shinjitai)"
-msgstr ""
+msgstr "繁體中文（舊字體）到新日語漢字（新字體）"
 
 #: modules/chttrans/chttrans.cpp:104
 msgid "Traditional Chinese is enabled."
@@ -1146,17 +1146,17 @@ msgstr "已啟用繁體中文。"
 #: modules/chttrans/opencc-profile-name.cpp:14
 msgctxt "OpenCC Profile"
 msgid "Traditional Chinese to Simplified Chinese"
-msgstr ""
+msgstr "繁體中文到簡體中文"
 
 #: modules/chttrans/opencc-profile-name.cpp:17
 msgctxt "OpenCC Profile"
 msgid "Traditional Chinese to Traditional Chinese (Hong Kong variant)"
-msgstr ""
+msgstr "繁體中文到繁體中文（香港）"
 
 #: modules/chttrans/opencc-profile-name.cpp:8
 msgctxt "OpenCC Profile"
 msgid "Traditional Chinese to Traditional Chinese (Taiwan standard)"
-msgstr ""
+msgstr "繁體中文到繁體中文（臺灣）"
 
 #: modules/chttrans/chttrans.h:49
 msgid "Translate engine"
