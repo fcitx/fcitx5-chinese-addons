@@ -710,8 +710,6 @@ void PinyinEngine::updatePuncCandidate(
     }
     puncCandidateList->setCursorIncludeUnselected(false);
     puncCandidateList->setCursorKeepInSamePage(false);
-    puncCandidateList->setCursorPositionAfterPaging(
-        CursorPositionAfterPaging::SameAsLast);
     puncCandidateList->setGlobalCursorIndex(0);
     puncCandidateList->setSelectionKey(selectionKeys_);
     state->mode_ = PinyinMode::Punctuation;
