@@ -114,7 +114,8 @@ FCITX_CONFIGURATION(
     Option<bool> z{this, "Z_ZH", _("z <-> zh"), false};
     OptionWithAnnotation<CorrectionLayout, CorrectionLayoutI18NAnnotation>
         correction{this, "Correction", _("Correction Layout"),
-                   CorrectionLayout::None};)
+                   isAndroid() ? CorrectionLayout::Qwerty
+                               : CorrectionLayout::None};)
 
 FCITX_CONFIGURATION(
     PinyinEngineConfig,
