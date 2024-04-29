@@ -15,6 +15,8 @@
 #include <fcitx-config/option.h>
 #include <fcitx-utils/event.h>
 #include <fcitx-utils/i18n.h>
+#include <fcitx-utils/keysym.h>
+#include <fcitx-utils/keysymgen.h>
 #include <fcitx-utils/misc.h>
 #include <fcitx-utils/standardpath.h>
 #include <fcitx/action.h>
@@ -198,6 +200,20 @@ FCITX_CONFIGURATION(
         "NextCandidate",
         _("Next Candidate"),
         {Key("Tab")},
+        KeyListConstrain({KeyConstrainFlag::AllowModifierLess})};
+    KeyListOption currentCandidate{
+        this,
+        "CurrentCandidate",
+        _("Select Current Candidate"),
+        {Key(FcitxKey_space), Key(FcitxKey_KP_Space)},
+        KeyListConstrain({KeyConstrainFlag::AllowModifierLess})};
+    KeyListOption commitRawInput{
+        this,
+        "CommitRawInput",
+        _("Commit Raw Input"),
+        {Key("Return"), Key("KP_Enter"), Key("Control+Return"),
+         Key("Control+KP_Enter"), Key("Shift+Return"), Key("Shift+KP_Enter"),
+         Key("Control+Shift+Return"), Key("Control+Shift+KP_Enter")},
         KeyListConstrain({KeyConstrainFlag::AllowModifierLess})};
     KeyListOption secondCandidate{
         this,

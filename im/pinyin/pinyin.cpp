@@ -494,7 +494,7 @@ predictCandidateList(PinyinEngine *engine, const std::vector<T> &words) {
     }
     candidateList->setSelectionKey(engine->selectionKeys());
     candidateList->setPageSize(*engine->config().pageSize);
-    if (candidateList->size()) {
+    if (!candidateList->empty()) {
         candidateList->setGlobalCursorIndex(0);
     }
     return candidateList;
@@ -542,7 +542,9 @@ void PinyinEngine::updatePredict(InputContext *inputContext) {
 
 int englishNess(const std::string &input, bool sp) {
     auto pys = stringutils::split(input, " ");
-    constexpr int fullWeight = -2, shortWeight = 3, invalidWeight = 6;
+    constexpr int fullWeight = -2;
+    constexpr int shortWeight = 3;
+    constexpr int invalidWeight = 6;
     int weight = 0;
     for (auto iter = pys.begin(), end = pys.end(); iter != end; ++iter) {
         if (sp) {
@@ -1652,10 +1654,9 @@ bool PinyinEngine::handleCandidateList(KeyEvent &event) {
         return false;
     }
     auto *state = inputContext->propertyFor(&factory_);
-    if ((event.key().check(FcitxKey_space) ||
-         event.key().check(FcitxKey_KP_Space)) &&
+    if (event.key().checkKeyList(*config_.currentCandidate) &&
         !state->predictWords_) {
-        if (candidateList->size()) {
+        if (!candidateList->empty()) {
             event.filterAndAccept();
             int idx = candidateList->cursorIndex();
             if (idx < 0) {
@@ -2296,8 +2297,7 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         } else if (event.key().check(FcitxKey_Escape)) {
             state->context_.clear();
             event.filterAndAccept();
-        } else if (event.key().sym() == FcitxKey_Return ||
-                   event.key().sym() == FcitxKey_KP_Enter) {
+        } else if (event.key().checkKeyList(*config_.commitRawInput)) {
             inputContext->commitString(preeditCommitString(inputContext));
             state->context_.clear();
             event.filterAndAccept();
