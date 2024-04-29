@@ -33,8 +33,7 @@ private:
     bool loaded_ = false;
     bool loadResult_ = false;
 
-    std::future<std::tuple<libime::DATrie<int32_t>,
-                           libime::DATrie<int32_t>>>
+    std::future<std::tuple<libime::DATrie<int32_t>, libime::DATrie<int32_t>>>
         loadFuture_;
 };
 } // namespace fcitx
