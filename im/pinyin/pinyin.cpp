@@ -366,22 +366,24 @@ private:
 class SpellCandidateWord : public CandidateWord,
                            public PinyinAbstractExtraCandidateWordInterface {
 public:
-    SpellCandidateWord(PinyinEngine *engine, std::string word, int order)
+    SpellCandidateWord(PinyinEngine *engine, std::string word,
+                       size_t inputLength, int order)
         : PinyinAbstractExtraCandidateWordInterface(*this, order),
-          engine_(engine), word_(std::move(word)) {
+          engine_(engine), word_(std::move(word)), inputLength_(inputLength) {
         setText(Text(word_));
     }
 
     void select(InputContext *inputContext) const override {
         auto *state = inputContext->propertyFor(&engine_->factory());
         auto &context = state->context_;
-        inputContext->commitString(context.selectedSentence() + word_);
-        engine_->doReset(inputContext);
+        context.selectCustom(inputLength_, word_);
+        engine_->updateUI(inputContext);
     }
 
 private:
     PinyinEngine *engine_;
     std::string word_;
+    size_t inputLength_;
 };
 
 class PinyinCandidateWord : public CandidateWord {
@@ -824,11 +826,22 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
 
         /// Create spell candidate {{{
         int engNess;
-        auto parsedPy =
-            state->context_.preedit(libime::PinyinPreeditMode::RawText);
-        if (*config_.spellEnabled && spell() && fullResult &&
+        auto [parsedPy, parsedPyCursor] = state->context_.preeditWithCursor(
+            libime::PinyinPreeditMode::RawText);
+        if (*config_.spellEnabled && spell() &&
+            parsedPyCursor >= selectedSentence.size() &&
+            selectedLength <= context.cursor() &&
             (engNess = englishNess(parsedPy, context.useShuangpin()))) {
-            auto py = context.userInput().substr(selectedLength);
+            parsedPyCursor -= selectedSentence.length();
+            parsedPy =
+                parsedPy.substr(selectedSentence.size(),
+                                parsedPyCursor > selectedSentence.length()
+                                    ? parsedPyCursor - selectedSentence.length()
+                                    : std::string::npos);
+            const auto pyLength = context.cursor() > selectedLength
+                                      ? context.cursor() - selectedLength
+                                      : std::string::npos;
+            auto py = context.userInput().substr(selectedLength, pyLength);
             auto results = spell()->call<ISpell::hintWithProvider>(
                 "en", SpellProvider::Custom, py, engNess);
             std::string bestSentence;
@@ -842,7 +855,7 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
                     continue;
                 }
                 extraCandidates.push_back(std::make_unique<SpellCandidateWord>(
-                    this, result, position++));
+                    this, result, py.size(), position++));
             }
         }
         /// }}}
