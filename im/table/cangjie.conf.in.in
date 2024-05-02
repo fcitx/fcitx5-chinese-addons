@@ -5,6 +5,7 @@ Label=仓
 LangCode=zh_CN
 Addon=table
 Configurable=True
+Enable=False
 
 [Table]
 File=@LIBIME_INSTALL_PKGDATADIR@/cj.main.dict
