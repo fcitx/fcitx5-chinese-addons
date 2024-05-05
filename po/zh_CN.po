@@ -6,16 +6,16 @@
 # Mingcong Bai <jeffbai@aosc.xyz>, 2018
 # wwj402 <wwj402@gmail.com>, 2018
 # rocka, 2023
-# Lau YeeYu, 2024
 # csslayer <wengxt@gmail.com>, 2024
+# Lau YeeYu, 2024
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2024-04-29 20:25+0000\n"
+"POT-Creation-Date: 2024-05-05 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
-"Last-Translator: csslayer <wengxt@gmail.com>, 2024\n"
+"Last-Translator: Lau YeeYu, 2024\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/fcitx/teams/12005/"
 "zh_CN/)\n"
 "Language: zh_CN\n"
@@ -226,15 +226,15 @@ msgstr "云拼音"
 msgid "Cloud Pinyin Index"
 msgstr "云拼音位置"
 
-#: im/pinyin/pinyin.cpp:1567
+#: im/pinyin/pinyin.cpp:1580
 msgid "Cloud Pinyin Status"
 msgstr "云拼音状态"
 
-#: im/pinyin/pinyin.cpp:1569
+#: im/pinyin/pinyin.cpp:1582
 msgid "Cloud Pinyin is disabled."
 msgstr "云拼音已禁用。"
 
-#: im/pinyin/pinyin.cpp:1568
+#: im/pinyin/pinyin.cpp:1581
 msgid "Cloud Pinyin is enabled."
 msgstr "已启用云拼音。"
 
@@ -244,7 +244,7 @@ msgstr "提交无效分段"
 
 #: im/pinyin/pinyin.h:213
 msgid "Commit Raw Input"
-msgstr ""
+msgstr "提交原始字符串"
 
 #: im/table/ime.h:97
 msgid "Commit after auto select candidates"
@@ -365,7 +365,7 @@ msgstr "不要显示"
 msgid "Do not show"
 msgstr "不显示"
 
-#: im/pinyin/pinyin.cpp:1273
+#: im/pinyin/pinyin.cpp:1286
 #, c++-format
 msgid ""
 "Do you want to enable cloudpinyin now for better prediction? You can always "
@@ -374,7 +374,7 @@ msgstr ""
 "您想要启用云拼音以获得更好的预测吗？您也可以稍后在配置中更改设置或者通过按下 "
 "{} 来切换。"
 
-#: im/pinyin/pinyin.cpp:1268
+#: im/pinyin/pinyin.cpp:1281
 msgid ""
 "Do you want to enable cloudpinyin now for better prediction? You can always "
 "toggle it later in configuration."
@@ -408,7 +408,7 @@ msgstr "启用 Unicode CJK 拓展区 B 中的字符"
 msgid "Enable Cloud Pinyin"
 msgstr "启用云拼音"
 
-#: im/pinyin/pinyin.cpp:1282
+#: im/pinyin/pinyin.cpp:1295
 msgid "Enable Cloudpinyin"
 msgstr "启用云拼音"
 
@@ -744,7 +744,7 @@ msgstr "下一页"
 msgid "Next page"
 msgstr "下一页"
 
-#: im/table/ime.h:24 im/pinyin/pinyin.cpp:1279
+#: im/table/ime.h:24 im/pinyin/pinyin.cpp:1292
 msgid "No"
 msgstr "否"
 
@@ -808,7 +808,7 @@ msgstr "页大小"
 msgid "Phrase"
 msgstr "词组"
 
-#: im/pinyin/pinyin.cpp:1282 im/pinyin/pinyin.cpp:1566
+#: im/pinyin/pinyin.cpp:1295 im/pinyin/pinyin.cpp:1579
 #: im/pinyin/pinyin-addon.conf.in.in:3 im/pinyin/pinyin.conf.in:3
 msgid "Pinyin"
 msgstr "拼音"
@@ -825,13 +825,13 @@ msgstr "拼音加加"
 msgid "Please use this functionality after typing some text."
 msgstr "请在输入一些文字之后再使用这个功能。"
 
-#: im/table/engine.cpp:78 im/table/engine.cpp:86 im/pinyin/pinyin.cpp:1077
-#: im/pinyin/pinyin.cpp:1087
+#: im/table/engine.cpp:78 im/table/engine.cpp:86 im/pinyin/pinyin.cpp:1090
+#: im/pinyin/pinyin.cpp:1100
 msgid "Prediction Disabled"
 msgstr "预测禁用"
 
-#: im/table/engine.cpp:77 im/table/engine.cpp:85 im/pinyin/pinyin.cpp:1076
-#: im/pinyin/pinyin.cpp:1086
+#: im/table/engine.cpp:77 im/table/engine.cpp:85 im/pinyin/pinyin.cpp:1089
+#: im/pinyin/pinyin.cpp:1099
 msgid "Prediction Enabled"
 msgstr "预测启用"
 
@@ -859,12 +859,12 @@ msgstr "按下删除键来移除。"
 msgid "Press space or enter to insert."
 msgstr "按下空格或回车键来插入。"
 
-#: im/pinyin/pinyin.cpp:2033
+#: im/pinyin/pinyin.cpp:2046
 #, c++-format
 msgid "Press {} for {}"
 msgstr "按下 {} 输入 {}"
 
-#: im/pinyin/pinyin.cpp:2030
+#: im/pinyin/pinyin.cpp:2043
 #, c++-format
 msgid "Press {} for {} and Return for {}"
 msgstr "按下 {} 输入 {}，按下回车输入 {}"
@@ -982,7 +982,7 @@ msgstr "在预编辑中显示完整拼音"
 msgid "Show current shuangpin mode"
 msgstr "显示当前双拼模式"
 
-#: im/table/engine.cpp:79 im/pinyin/pinyin.cpp:1078
+#: im/table/engine.cpp:79 im/pinyin/pinyin.cpp:1091
 msgid "Show prediction words"
 msgstr "显示联想词组"
 
@@ -1285,7 +1285,7 @@ msgstr "五笔拼音"
 msgid "Xiaohe"
 msgstr "小鹤"
 
-#: im/pinyin/pinyin.cpp:1278
+#: im/pinyin/pinyin.cpp:1291
 msgid "Yes"
 msgstr "是"
 
@@ -1301,11 +1301,11 @@ msgstr "紫光"
 msgid "Ziranma"
 msgstr "自然码"
 
-#: im/pinyin/pinyin.cpp:1802
+#: im/pinyin/pinyin.cpp:1815
 msgid "[Select the word to remove from history]"
 msgstr "[选择要从历史中移除的词]"
 
-#: im/pinyin/pinyin.cpp:1750
+#: im/pinyin/pinyin.cpp:1763
 msgid "[Stroke Filtering]"
 msgstr "[笔画过滤]"
 
