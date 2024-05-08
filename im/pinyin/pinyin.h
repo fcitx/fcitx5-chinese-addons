@@ -286,9 +286,35 @@ FCITX_CONFIGURATION(
     Option<FuzzyConfig> fuzzyConfig{this, "Fuzzy", _("Fuzzy Pinyin Settings")};
     HiddenOption<bool> firstRun{this, "FirstRun", "FirstRun", true};)
 
-class PinyinState;
 struct EventSourceTime;
 class CandidateList;
+class PinyinEngine;
+
+enum class PinyinMode { Normal, StrokeFilter, ForgetCandidate, Punctuation };
+
+class PinyinState : public InputContextProperty {
+public:
+    PinyinState(PinyinEngine *engine);
+
+    libime::PinyinContext context_;
+    bool lastIsPunc_ = false;
+
+    PinyinMode mode_ = PinyinMode::Normal;
+
+    // Stroke filter
+    std::shared_ptr<CandidateList> strokeCandidateList_;
+    InputBuffer strokeBuffer_;
+
+    // Forget candidate
+    std::shared_ptr<CandidateList> forgetCandidateList_;
+
+    std::unique_ptr<EventSourceTime> cancelLastEvent_;
+
+    std::optional<std::vector<std::string>> predictWords_;
+
+    int keyReleased_ = -1;
+    int keyReleasedIndex_ = -2;
+};
 
 class PinyinEngine final : public InputMethodEngineV3 {
 public:
