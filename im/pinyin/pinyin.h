@@ -10,30 +10,44 @@
 #include "customphrase.h"
 #include "symboldictionary.h"
 #include "workerthread.h"
+#include <cstddef>
+#include <cstdint>
 #include <fcitx-config/configuration.h>
+#include <fcitx-config/enum.h>
 #include <fcitx-config/iniparser.h>
 #include <fcitx-config/option.h>
+#include <fcitx-config/rawconfig.h>
 #include <fcitx-utils/event.h>
+#include <fcitx-utils/handlertable.h>
 #include <fcitx-utils/i18n.h>
+#include <fcitx-utils/inputbuffer.h>
+#include <fcitx-utils/key.h>
 #include <fcitx-utils/keysym.h>
 #include <fcitx-utils/keysymgen.h>
 #include <fcitx-utils/misc.h>
 #include <fcitx-utils/standardpath.h>
 #include <fcitx/action.h>
 #include <fcitx/addonfactory.h>
+#include <fcitx/addoninstance.h>
 #include <fcitx/addonmanager.h>
 #include <fcitx/event.h>
 #include <fcitx/inputcontext.h>
 #include <fcitx/inputcontextproperty.h>
 #include <fcitx/inputmethodengine.h>
 #include <fcitx/instance.h>
+#include <fcitx/text.h>
 #include <libime/pinyin/pinyincontext.h>
 #include <libime/pinyin/pinyinime.h>
 #include <libime/pinyin/pinyinprediction.h>
+#include <list>
 #include <memory>
+#include <optional>
+#include <string>
 #include <string_view>
 #include <unordered_map>
 #include <unordered_set>
+#include <utility>
+#include <vector>
 
 namespace fcitx {
 
@@ -286,9 +300,35 @@ FCITX_CONFIGURATION(
     Option<FuzzyConfig> fuzzyConfig{this, "Fuzzy", _("Fuzzy Pinyin Settings")};
     HiddenOption<bool> firstRun{this, "FirstRun", "FirstRun", true};)
 
-class PinyinState;
 struct EventSourceTime;
 class CandidateList;
+class PinyinEngine;
+
+enum class PinyinMode { Normal, StrokeFilter, ForgetCandidate, Punctuation };
+
+class PinyinState : public InputContextProperty {
+public:
+    PinyinState(PinyinEngine *engine);
+
+    libime::PinyinContext context_;
+    bool lastIsPunc_ = false;
+
+    PinyinMode mode_ = PinyinMode::Normal;
+
+    // Stroke filter
+    std::shared_ptr<CandidateList> strokeCandidateList_;
+    InputBuffer strokeBuffer_;
+
+    // Forget candidate
+    std::shared_ptr<CandidateList> forgetCandidateList_;
+
+    std::unique_ptr<EventSourceTime> cancelLastEvent_;
+
+    std::optional<std::vector<std::string>> predictWords_;
+
+    int keyReleased_ = -1;
+    int keyReleasedIndex_ = -2;
+};
 
 class PinyinEngine final : public InputMethodEngineV3 {
 public:
@@ -347,7 +387,7 @@ private:
     bool handleCloudpinyinTrigger(KeyEvent &event);
     bool handle2nd3rdSelection(KeyEvent &event);
     bool handleCandidateList(KeyEvent &event);
-    bool handleNextPage(KeyEvent &event);
+    bool handleNextPage(KeyEvent &event) const;
     bool handleStrokeFilter(KeyEvent &event);
     bool handleForgetCandidate(KeyEvent &event);
     bool handlePunc(KeyEvent &event);
