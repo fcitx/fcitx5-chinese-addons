@@ -9,12 +9,13 @@
 #include "../modules/cloudpinyin/cloudpinyin_public.h"
 #include "pinyin.h"
 #include <algorithm>
-#include <ctime>
 #include <cstddef>
 #include <cstdint>
+#include <ctime>
 #include <fcitx-utils/event.h>
 #include <fcitx-utils/i18n.h>
 #include <fcitx-utils/log.h>
+#include <fcitx/candidateaction.h>
 #include <fcitx/candidatelist.h>
 #include <fcitx/inputcontext.h>
 #include <fcitx/text.h>
@@ -25,6 +26,7 @@
 #include <libime/pinyin/pinyindictionary.h>
 #include <string>
 #include <utility>
+#include <vector>
 
 namespace fcitx {
 
@@ -67,9 +69,17 @@ void PinyinPredictDictCandidateWord::select(InputContext *inputContext) const {
     engine_->updatePredict(inputContext);
 }
 
+ForgettableCandidateInterface::~ForgettableCandidateInterface() = default;
+
+InsertableAsCustomPhraseInterface::~InsertableAsCustomPhraseInterface() =
+    default;
+
 PinyinAbstractExtraCandidateWordInterface::
     PinyinAbstractExtraCandidateWordInterface(CandidateWord &cand, int order)
     : cand_(cand), order_(order) {}
+
+PinyinAbstractExtraCandidateWordInterface::
+    ~PinyinAbstractExtraCandidateWordInterface() = default;
 
 StrokeCandidateWord::StrokeCandidateWord(PinyinEngine *engine, std::string hz,
                                          const std::string &py, int order)
@@ -86,16 +96,20 @@ void StrokeCandidateWord::select(InputContext *inputContext) const {
     engine_->doReset(inputContext);
 }
 
-CustomPhraseCandidateWord::CustomPhraseCandidateWord(const PinyinEngine *engine,
-                                                     int order,
-                                                     std::string value)
-    : PinyinAbstractExtraCandidateWordInterface(*this, order), engine_(engine) {
+CustomPhraseCandidateWord::CustomPhraseCandidateWord(
+    PinyinEngine *engine, int order, size_t inputLength, std::string value,
+    std::string customPhraseString)
+    : PinyinAbstractExtraCandidateWordInterface(*this, order), engine_(engine),
+      inputLength_(inputLength),
+      customPhraseString_(std::move(customPhraseString)) {
     setText(Text(std::move(value)));
 }
 
 void CustomPhraseCandidateWord::select(InputContext *inputContext) const {
-    inputContext->commitString(text().toString());
-    engine_->doReset(inputContext);
+    auto *state = inputContext->propertyFor(&engine_->factory());
+    auto &context = state->context_;
+    context.selectCustom(inputLength_, text().toString());
+    engine_->updateUI(inputContext);
 }
 
 PinyinPunctuationCandidateWord::PinyinPunctuationCandidateWord(
@@ -113,12 +127,41 @@ void PinyinPunctuationCandidateWord::select(InputContext *inputContext) const {
 }
 
 StrokeFilterCandidateWord::StrokeFilterCandidateWord(PinyinEngine *engine,
+                                                     InputContext *inputContext,
                                                      Text text, int index)
-    : engine_(engine), index_(index) {
+    : engine_(engine), inputContext_(inputContext), index_(index) {
     setText(std::move(text));
 }
 
+std::string StrokeFilterCandidateWord::customPhraseString() const {
+    auto *state = inputContext_->propertyFor(&engine_->factory());
+    if (!state->strokeCandidateList_ ||
+        state->strokeCandidateList_->toBulk()->totalSize() <= index_) {
+        return "";
+    }
+    // Forward the selection to internal candidate list.
+    const auto &candidate =
+        state->strokeCandidateList_->toBulk()->candidateFromAll(index_);
+    return static_cast<const PinyinCandidateWord &>(candidate)
+        .customPhraseString();
+}
+
+size_t StrokeFilterCandidateWord::candidateIndex() const {
+    auto *state = inputContext_->propertyFor(&engine_->factory());
+    if (!state->strokeCandidateList_ ||
+        state->strokeCandidateList_->toBulk()->totalSize() <= index_) {
+        return 0;
+    }
+    // Forward the selection to internal candidate list.
+    const auto &candidate =
+        state->strokeCandidateList_->toBulk()->candidateFromAll(index_);
+    return static_cast<const PinyinCandidateWord &>(candidate).candidateIndex();
+}
+
 void StrokeFilterCandidateWord::select(InputContext *inputContext) const {
+    if (inputContext != inputContext_) {
+        return;
+    }
     auto *state = inputContext->propertyFor(&engine_->factory());
     if (!state->strokeCandidateList_ ||
         state->strokeCandidateList_->toBulk()->totalSize() <= index_) {
@@ -139,44 +182,26 @@ ForgetCandidateWord::ForgetCandidateWord(PinyinEngine *engine, Text text,
 }
 
 void ForgetCandidateWord::select(InputContext *inputContext) const {
-    auto *state = inputContext->propertyFor(&engine_->factory());
-    if (state->mode_ != PinyinMode::ForgetCandidate) {
-        FCITX_ERROR() << "Candidate is not consistent. Probably a "
-                         "bug in implementation";
-        return;
-    }
-
-    if (index_ < state->context_.candidatesToCursor().size()) {
-        const auto &sentence = state->context_.candidatesToCursor()[index_];
-        // If this is a word, remove it from user dict.
-        if (sentence.size() == 1) {
-            auto py = state->context_.candidateFullPinyin(index_);
-            state->context_.ime()->dict()->removeWord(
-                libime::PinyinDictionary::UserDict, py, sentence.toString());
-        }
-        for (const auto &word : sentence.sentence()) {
-            state->context_.ime()->model()->history().forget(word->word());
-        }
-    }
-    engine_->resetForgetCandidate(inputContext);
-    engine_->doReset(inputContext);
+    engine_->forgetCandidate(inputContext, index_);
 }
 
-ExtraCandidateWord::ExtraCandidateWord(PinyinEngine *engine, std::string word)
+LuaCandidateWord::LuaCandidateWord(PinyinEngine *engine, std::string word)
     : engine_(engine), word_(std::move(word)) {
     setText(Text(word_));
 }
 
-void ExtraCandidateWord::select(InputContext *inputContext) const {
+void LuaCandidateWord::select(InputContext *inputContext) const {
     inputContext->commitString(word_);
     engine_->doReset(inputContext);
 }
 
 SymbolCandidateWord::SymbolCandidateWord(PinyinEngine *engine,
                                          std::string symbol,
-                                         const libime::SentenceResult &result)
+                                         const libime::SentenceResult &result,
+                                         bool isFull)
     : engine_(engine), symbol_(std::move(symbol)),
-      candidateSegmentLength_(result.sentence().back()->to()->index()) {
+      candidateSegmentLength_(result.sentence().back()->to()->index()),
+      isFull_(isFull) {
     setText(Text(symbol_));
     bool validPinyin = std::all_of(
         result.sentence().begin(), result.sentence().end(),
@@ -198,6 +223,13 @@ SymbolCandidateWord::SymbolCandidateWord(PinyinEngine *engine,
                                   pinyinNode->encodedPinyin().end());
         }
     }
+}
+
+std::string SymbolCandidateWord::customPhraseString() const {
+    if (isFull_) {
+        return symbol_;
+    }
+    return "";
 }
 
 void SymbolCandidateWord::select(InputContext *inputContext) const {
@@ -223,11 +255,16 @@ void SpellCandidateWord::select(InputContext *inputContext) const {
     engine_->updateUI(inputContext);
 }
 
-PinyinCandidateWord::PinyinCandidateWord(PinyinEngine *engine, Text text,
+PinyinCandidateWord::PinyinCandidateWord(PinyinEngine *engine,
+                                         InputContext *inputContext, Text text,
                                          size_t idx)
-    : CandidateWord(std::move(text)), engine_(engine), idx_(idx) {}
+    : CandidateWord(std::move(text)), engine_(engine),
+      inputContext_(inputContext), idx_(idx) {}
 
 void PinyinCandidateWord::select(InputContext *inputContext) const {
+    if (inputContext != inputContext_) {
+        return;
+    }
     auto *state = inputContext->propertyFor(&engine_->factory());
     auto &context = state->context_;
     if (idx_ >= context.candidatesToCursor().size()) {
@@ -235,6 +272,24 @@ void PinyinCandidateWord::select(InputContext *inputContext) const {
     }
     context.selectCandidatesToCursor(idx_);
     engine_->updateUI(inputContext);
+}
+
+std::string PinyinCandidateWord::customPhraseString() const {
+    auto *state = inputContext_->propertyFor(&engine_->factory());
+    auto &context = state->context_;
+    if (idx_ >= context.candidatesToCursor().size()) {
+        return "";
+    }
+    const auto candidatePyLength =
+        context.candidatesToCursor()[idx_].sentence().back()->to()->index();
+    const auto selectedLength = state->context_.selectedLength();
+    const auto currentSearch = (state->context_.cursor() == selectedLength)
+                                   ? state->context_.size()
+                                   : state->context_.cursor();
+    if (currentSearch == candidatePyLength + selectedLength) {
+        return text().toString();
+    }
+    return "";
 }
 
 CustomCloudPinyinCandidateWord::CustomCloudPinyinCandidateWord(
@@ -282,4 +337,79 @@ void CustomCloudPinyinCandidateWord::select(InputContext *inputContext) const {
     CloudPinyinCandidateWord::select(inputContext);
 }
 
+enum { PINYIN_FORGET, PINYIN_CUSTOMPHRASE, PINYIN_DELETE_CUSTOMPHRASE };
+
+PinyinActionableCandidateList::PinyinActionableCandidateList(
+    PinyinEngine *engine, InputContext *inputContext)
+    : engine_(engine), inputContext_(inputContext) {}
+
+bool PinyinActionableCandidateList::hasAction(
+    const CandidateWord &candidate) const {
+    return isForgettable(candidate) || canBeInsertedAsCustomPhrase(candidate);
+}
+
+std::vector<CandidateAction> PinyinActionableCandidateList::candidateActions(
+    const CandidateWord &candidate) const {
+    std::vector<CandidateAction> result;
+    if (isForgettable(candidate)) {
+        CandidateAction action;
+        action.setId(PINYIN_FORGET);
+        action.setText(_("Forget candidate"));
+        result.push_back(std::move(action));
+    }
+    // If it's not custom phrase, or order is not at the top.
+    const auto *customPhrase =
+        dynamic_cast<const CustomPhraseCandidateWord *>(&candidate);
+    if (canBeInsertedAsCustomPhrase(candidate) &&
+        (!customPhrase || customPhrase->order() != 0)) {
+        CandidateAction action;
+        action.setId(PINYIN_CUSTOMPHRASE);
+        action.setText(_("Pin to top as custom phrase"));
+        result.push_back(std::move(action));
+    }
+    if (isCustomPhrase(candidate)) {
+        CandidateAction action;
+        action.setId(PINYIN_DELETE_CUSTOMPHRASE);
+        action.setText(_("Delete from custom phrase"));
+        result.push_back(std::move(action));
+    }
+
+    return result;
+}
+
+void PinyinActionableCandidateList::triggerAction(
+    const CandidateWord &candidate, int id) {
+    switch (id) {
+    case PINYIN_FORGET: {
+        if (const auto *pinyinCandidate =
+                dynamic_cast<const ForgettableCandidateInterface *>(
+                    &candidate)) {
+            engine_->forgetCandidate(inputContext_,
+                                     pinyinCandidate->candidateIndex());
+        }
+    } break;
+    case PINYIN_CUSTOMPHRASE: {
+        if (const auto *insertable =
+                dynamic_cast<const InsertableAsCustomPhraseInterface *>(
+                    &candidate)) {
+            auto customPhraseString = insertable->customPhraseString();
+            if (!customPhraseString.empty()) {
+                engine_->pinCustomPhrase(inputContext_, customPhraseString);
+            }
+        }
+    } break;
+    case PINYIN_DELETE_CUSTOMPHRASE: {
+        if (const auto *customPhrase =
+                dynamic_cast<const CustomPhraseCandidateWord *>(&candidate)) {
+
+            auto customPhraseString = customPhrase->customPhraseString();
+            if (!customPhraseString.empty()) {
+                engine_->deleteCustomPhrase(inputContext_, customPhraseString);
+            }
+        }
+    } break;
+    default:
+        break;
+    }
+}
 } // namespace fcitx
