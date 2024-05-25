@@ -39,6 +39,7 @@
 #include <fcitx/text.h>
 #include <fcitx/userinterface.h>
 #include <fmt/core.h>
+#include <fstream>
 #include <functional>
 #include <future>
 #include <istream>
@@ -482,33 +483,35 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
         /// }}}
 
         /// Create spell candidate {{{
-        int engNess;
         auto [parsedPy, parsedPyCursor] = state->context_.preeditWithCursor(
             libime::PinyinPreeditMode::RawText);
         if (*config_.spellEnabled && spell() &&
             parsedPyCursor >= selectedSentence.size() &&
-            selectedLength <= context.cursor() &&
-            (engNess = englishNess(parsedPy, context.useShuangpin()))) {
-            parsedPyCursor -= selectedSentence.length();
-            parsedPy =
-                parsedPy.substr(selectedSentence.size(),
-                                parsedPyCursor > selectedSentence.length()
-                                    ? parsedPyCursor - selectedSentence.length()
-                                    : std::string::npos);
-            auto results = spell()->call<ISpell::hintWithProvider>(
-                "en", SpellProvider::Custom, pyBeforeCursor, engNess);
-            std::string bestSentence;
-            if (!candidates.empty()) {
-                bestSentence = candidates[0].toString();
-            }
-            int position = 1;
-            for (auto &result : results) {
-                if (customCandidateSet.count(result) ||
-                    context.candidatesToCursorSet().count(result)) {
-                    continue;
+            selectedLength <= context.cursor()) {
+            int engNess = englishNess(parsedPy, context.useShuangpin());
+            if (engNess) {
+                parsedPyCursor -= selectedSentence.length();
+                parsedPy = parsedPy.substr(
+                    selectedSentence.size(),
+                    parsedPyCursor > selectedSentence.length()
+                        ? parsedPyCursor - selectedSentence.length()
+                        : std::string::npos);
+                auto results = spell()->call<ISpell::hintWithProvider>(
+                    "en", SpellProvider::Custom, pyBeforeCursor, engNess);
+                std::string bestSentence;
+                if (!candidates.empty()) {
+                    bestSentence = candidates[0].toString();
                 }
-                extraCandidates.push_back(std::make_unique<SpellCandidateWord>(
-                    this, result, pyBeforeCursor.size(), position++));
+                int position = 1;
+                for (auto &result : results) {
+                    if (customCandidateSet.count(result) ||
+                        context.candidatesToCursorSet().count(result)) {
+                        continue;
+                    }
+                    extraCandidates.push_back(
+                        std::make_unique<SpellCandidateWord>(
+                            this, result, pyBeforeCursor.size(), position++));
+                }
             }
         }
         /// }}}
@@ -818,35 +821,30 @@ void PinyinEngine::loadSymbols(const StandardPathFile &file) {
     }
 }
 
-void PinyinEngine::loadDict(StandardPathFile file,
+void PinyinEngine::loadDict(const std::string &fullPath,
                             std::list<std::unique_ptr<TaskToken>> &taskTokens) {
-    if (file.fd() < 0) {
+    if (fullPath.empty()) {
         return;
     }
     ime_->dict()->addEmptyDict();
-    PINYIN_DEBUG() << "Loading pinyin dict " << file.path();
-    auto path = file.path();
-    std::packaged_task<libime::PinyinDictionary::TrieType()> task(
-        [file = std::move(file)]() {
-            boost::iostreams::stream_buffer<
-                boost::iostreams::file_descriptor_source>
-                buffer(file.fd(), boost::iostreams::file_descriptor_flags::
-                                      never_close_handle);
-            std::istream in(&buffer);
-            auto trie = libime::PinyinDictionary::load(
-                in, libime::PinyinDictFormat::Binary);
-            return trie;
-        });
+    PINYIN_DEBUG() << "Loading pinyin dict " << fullPath;
+    std::packaged_task<libime::PinyinDictionary::TrieType()> task([fullPath]() {
+        std::ifstream in(fullPath, std::ios::in | std::ios::binary);
+        auto trie = libime::PinyinDictionary::load(
+            in, libime::PinyinDictFormat::Binary);
+        return trie;
+    });
     taskTokens.push_back(worker_.addTask(
         std::move(task),
-        [this, index = ime_->dict()->dictSize() - 1,
-         path](std::shared_future<libime::PinyinDictionary::TrieType> &future) {
+        [this, index = ime_->dict()->dictSize() - 1, fullPath](
+            std::shared_future<libime::PinyinDictionary::TrieType> &future) {
             try {
-                PINYIN_DEBUG() << "Load pinyin dict " << path << " finished.";
+                PINYIN_DEBUG()
+                    << "Load pinyin dict " << fullPath << " finished.";
                 ime_->dict()->setTrie(index, future.get());
             } catch (const std::exception &e) {
-                PINYIN_ERROR() << "Failed to load pinyin dict " << path << ": "
-                               << e.what();
+                PINYIN_ERROR() << "Failed to load pinyin dict " << fullPath
+                               << ": " << e.what();
             }
         }));
 }
@@ -859,20 +857,19 @@ void PinyinEngine::loadBuiltInDict() {
         loadSymbols(file);
     }
     {
-        auto file = standardPath.open(StandardPath::Type::PkgData,
-                                      "pinyin/chaizi.dict", O_RDONLY);
-        loadDict(std::move(file), persistentTask_);
+        auto file = standardPath.locate(StandardPath::Type::PkgData,
+                                        "pinyin/chaizi.dict");
+        loadDict(file, persistentTask_);
     }
     {
-        auto file = standardPath.open(StandardPath::Type::Data,
-                                      "libime/extb.dict", O_RDONLY);
+        auto file =
+            standardPath.locate(StandardPath::Type::Data, "libime/extb.dict");
         // Try again with absolute libime path.
-        if (!file.isValid()) {
-            file = standardPath.open(StandardPath::Type::Data,
-                                     LIBIME_INSTALL_PKGDATADIR "/extb.dict",
-                                     O_RDONLY);
+        if (file.empty()) {
+            file = standardPath.locate(StandardPath::Type::Data,
+                                       LIBIME_INSTALL_PKGDATADIR "/extb.dict");
         }
-        loadDict(std::move(file), persistentTask_);
+        loadDict(file, persistentTask_);
     }
     if (ime_->dict()->dictSize() !=
         libime::TrieDictionary::UserDict + 1 + NumBuiltInDict) {
@@ -882,12 +879,12 @@ void PinyinEngine::loadBuiltInDict() {
 
 void PinyinEngine::loadExtraDict() {
     const auto &standardPath = StandardPath::global();
-    auto files = standardPath.multiOpen(StandardPath::Type::PkgData,
-                                        "pinyin/dictionaries", O_RDONLY,
-                                        filter::Suffix(".dict"));
-    auto disableFiles = standardPath.multiOpen(StandardPath::Type::PkgData,
-                                               "pinyin/dictionaries", O_RDONLY,
-                                               filter::Suffix(".dict.disable"));
+    auto files =
+        standardPath.locate(StandardPath::Type::PkgData, "pinyin/dictionaries",
+                            filter::Suffix(".dict"));
+    auto disableFiles =
+        standardPath.locate(StandardPath::Type::PkgData, "pinyin/dictionaries",
+                            filter::Suffix(".dict.disable"));
     FCITX_ASSERT(ime_->dict()->dictSize() >=
                  libime::TrieDictionary::UserDict + NumBuiltInDict + 1)
         << "Dict size: " << ime_->dict()->dictSize();

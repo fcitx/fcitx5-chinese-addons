@@ -6,29 +6,46 @@
  */
 
 #include "chttrans.h"
+#include "chttrans-native.h"
 #include "config.h"
+#include <cassert>
+#include <cstddef>
+#include <exception>
 #include <fcitx-config/iniparser.h>
 #include <fcitx-utils/i18n.h>
+#include <fcitx-utils/log.h>
 #include <fcitx-utils/standardpath.h>
 #include <fcitx-utils/stringutils.h>
 #include <fcitx-utils/utf8.h>
 #include <fcitx/addonfactory.h>
+#include <fcitx/addoninstance.h>
 #include <fcitx/addonmanager.h>
+#include <fcitx/event.h>
+#include <fcitx/inputcontext.h>
 #include <fcitx/inputmethodentry.h>
+#include <fcitx/instance.h>
+#include <fcitx/text.h>
+#include <fcitx/userinterface.h>
+#include <fcitx/userinterfacemanager.h>
 #include <fcntl.h>
+#include <fmt/core.h>
 #include <fmt/format.h>
+#include <fstream>
+#include <iterator>
+#include <string>
+#include <string_view>
 #include <unordered_map>
+#include <utility>
+#include <vector>
+
 #ifdef ENABLE_OPENCC
 #include "chttrans-opencc.h"
-#include <boost/iostreams/device/file_descriptor.hpp>
-#include <boost/iostreams/stream.hpp>
 #ifdef HAS_BOOST_JSON
+#include <boost/json/parse.hpp>
 #include <boost/json/src.hpp>
+#include <boost/json/value_to.hpp>
 #endif
 #endif
-#include "chttrans-native.h"
-#include <fcitx/inputcontext.h>
-#include <fcitx/userinterfacemanager.h>
 
 using namespace fcitx;
 
@@ -112,7 +129,7 @@ Chttrans::Chttrans(fcitx::Instance *instance) : instance_(instance) {
     outputFilterConn_ = instance_->connect<Instance::OutputFilter>(
         [this](InputContext *inputContext, Text &text) {
             // Short cut for empty string.
-            if (text.size() <= 0) {
+            if (text.empty()) {
                 return;
             }
             if (!toggleAction_.isParent(&inputContext->statusArea())) {
@@ -231,6 +248,7 @@ void Chttrans::populateConfig() {
 
 void Chttrans::syncToConfig() {
     std::vector<std::string> values_;
+    values_.reserve(enabledIM_.size());
     for (const auto &id : enabledIM_) {
         values_.push_back(id);
     }
@@ -247,20 +265,15 @@ const Configuration *Chttrans::getConfig() const {
     std::vector<std::pair<std::string, std::string>> profiles{
         {"default", _("Default")}};
     constexpr std::string_view JsonSuffix = ".json";
-    auto files = openCCStandardPath().multiOpen(
-        StandardPath::Type::PkgData, ".", O_RDONLY,
-        filter::Suffix(std::string(JsonSuffix)));
+    auto files =
+        openCCStandardPath().locate(StandardPath::Type::PkgData, ".",
+                                    filter::Suffix(std::string(JsonSuffix)));
     profiles.reserve(files.size() + 1);
     // files is std::map, so file name is already sorted.
     for (const auto &file : files) {
 #ifdef HAS_BOOST_JSON
         try {
-            boost::iostreams::stream_buffer<
-                boost::iostreams::file_descriptor_source>
-                buffer(file.second.fd(),
-                       boost::iostreams::file_descriptor_flags::
-                           never_close_handle);
-            std::istream in(&buffer);
+            std::ifstream in(file.second, std::ios::in | std::ios::binary);
             std::string strBuf(std::istreambuf_iterator<char>(in), {});
             auto jv = boost::json::parse(strBuf);
             const auto &obj = jv.as_object();

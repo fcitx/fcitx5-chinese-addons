@@ -427,7 +427,7 @@ private:
     void loadExtraDict();
     void loadCustomPhrase();
     void loadSymbols(const StandardPathFile &file);
-    void loadDict(StandardPathFile file,
+    void loadDict(const std::string &fullPath,
                   std::list<std::unique_ptr<TaskToken>> &taskTokens);
     void saveCustomPhrase();
 

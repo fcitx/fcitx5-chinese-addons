@@ -8,11 +8,16 @@
 #define _PUNCTUATION_PUNCTUATION_H_
 
 #include "punctuation_public.h"
+#include <cstdint>
 #include <fcitx-config/configuration.h>
 #include <fcitx-config/enum.h>
 #include <fcitx-config/iniparser.h>
+#include <fcitx-config/option.h>
 #include <fcitx-config/rawconfig.h>
+#include <fcitx-utils/handlertable.h>
 #include <fcitx-utils/i18n.h>
+#include <fcitx-utils/key.h>
+#include <fcitx-utils/signals.h>
 #include <fcitx/action.h>
 #include <fcitx/addonfactory.h>
 #include <fcitx/addoninstance.h>
@@ -20,6 +25,13 @@
 #include <fcitx/inputcontext.h>
 #include <fcitx/inputcontextproperty.h>
 #include <fcitx/instance.h>
+#include <istream>
+#include <memory>
+#include <string>
+#include <string_view>
+#include <unordered_map>
+#include <utility>
+#include <vector>
 
 FCITX_CONFIGURATION(
     PunctuationConfig,
@@ -61,7 +73,7 @@ public:
     void loadSystem(std::istream &in);
     void load(std::istream &in);
     void set(const fcitx::RawConfig &config);
-    void save(std::string_view lang) const;
+    void save(std::string_view name) const;
     void resetDefaultValue();
 
     const std::pair<std::string, std::string> &
