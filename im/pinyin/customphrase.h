@@ -7,10 +7,16 @@
 #ifndef _PINYIN_CUSTOMPHRASE_H_
 #define _PINYIN_CUSTOMPHRASE_H_
 
+#include <cstddef>
+#include <cstdint>
 #include <fcitx-utils/macros.h>
+#include <functional>
+#include <istream>
 #include <libime/core/datrie.h>
+#include <ostream>
 #include <string>
 #include <string_view>
+#include <utility>
 #include <vector>
 
 namespace fcitx {
@@ -26,6 +32,8 @@ public:
     const std::string &value() const { return value_; }
     void setOrder(int order) { order_ = order; }
     std::string &mutableValue() { return value_; }
+
+    bool isDynamic() const;
 
     std::string evaluate(const std::function<std::string(std::string_view key)>
                              &evaluator) const;
@@ -49,6 +57,8 @@ public:
     const std::vector<CustomPhrase> *lookup(std::string_view key) const;
 
     void addPhrase(std::string_view key, std::string_view value, int order);
+    void pinPhrase(std::string_view key, std::string_view value);
+    void removePhrase(std::string_view key, std::string_view value);
 
     template <typename T>
     void foreach(const T &callback) {
@@ -62,6 +72,7 @@ public:
     }
 
 private:
+    std::vector<CustomPhrase> *getOrCreateEntry(std::string_view key);
     TrieType index_;
     std::vector<std::vector<CustomPhrase>> data_;
 };
