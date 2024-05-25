@@ -26,6 +26,7 @@
 #include <fcitx-utils/keysymgen.h>
 #include <fcitx-utils/misc.h>
 #include <fcitx-utils/standardpath.h>
+#include <fcitx-utils/trackableobject.h>
 #include <fcitx/action.h>
 #include <fcitx/addonfactory.h>
 #include <fcitx/addoninstance.h>
@@ -330,7 +331,8 @@ public:
     int keyReleasedIndex_ = -2;
 };
 
-class PinyinEngine final : public InputMethodEngineV3 {
+class PinyinEngine final : public InputMethodEngineV3,
+                           public TrackableObject<PinyinEngine> {
 public:
     PinyinEngine(Instance *instance);
     ~PinyinEngine() override;
@@ -374,6 +376,11 @@ public:
 
     void resetStroke(InputContext *inputContext) const;
     void resetForgetCandidate(InputContext *inputContext) const;
+    void forgetCandidate(InputContext *inputContext, size_t index);
+    void pinCustomPhrase(InputContext *inputContext,
+                         const std::string &customPhrase);
+    void deleteCustomPhrase(InputContext *inputContext,
+                            const std::string &customPhrase);
 
     FCITX_ADDON_DEPENDENCY_LOADER(cloudpinyin, instance_->addonManager());
 
@@ -422,6 +429,7 @@ private:
     void loadSymbols(const StandardPathFile &file);
     void loadDict(StandardPathFile file,
                   std::list<std::unique_ptr<TaskToken>> &taskTokens);
+    void saveCustomPhrase();
 
     Instance *instance_;
     PinyinEngineConfig config_;

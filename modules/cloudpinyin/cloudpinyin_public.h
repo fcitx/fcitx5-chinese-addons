@@ -8,6 +8,8 @@
 #define _CLOUDPINYIN_CLOUDPINYIN_PUBLIC_H_
 
 #include <chrono>
+#include <fcitx-utils/key.h>
+#include <fcitx-utils/macros.h>
 #include <fcitx-utils/trackableobject.h>
 #include <fcitx/addoninstance.h>
 #include <fcitx/candidatelist.h>
@@ -15,7 +17,9 @@
 #include <fcitx/inputpanel.h>
 #include <fcitx/text.h>
 #include <functional>
+#include <optional>
 #include <string>
+#include <utility>
 
 using CloudPinyinCallback =
     std::function<void(const std::string &pinyin, const std::string &hanzi)>;

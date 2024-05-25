@@ -5,20 +5,32 @@
  *
  */
 #include "customphrase.h"
+#include <algorithm>
+#include <cassert>
 #include <charconv>
+#include <chrono>
+#include <cstdint>
 #include <ctime>
 #include <fcitx-utils/charutils.h>
 #include <fcitx-utils/log.h>
 #include <fcitx-utils/stringutils.h>
 #include <fmt/chrono.h>
+#include <fmt/core.h>
+#include <fmt/format.h>
+#include <functional>
 #include <istream>
+#include <iterator>
+#include <libime/core/datrie.h>
 #include <limits>
 #include <map>
 #include <optional>
+#include <ostream>
 #include <string>
 #include <string_view>
+#include <system_error>
 #include <tuple>
-#include <unordered_map>
+#include <utility>
+#include <vector>
 
 namespace fcitx {
 
@@ -178,11 +190,15 @@ std::string toChineseTwoDigitNumber(int num, bool leadingZero) {
     return prefix + suffix;
 }
 
+bool CustomPhrase::isDynamic() const {
+    return stringutils::startsWith(value(), "#");
+}
+
 std::string CustomPhrase::evaluate(
     const std::function<std::string(std::string_view key)> &evaluator) const {
     assert(evaluator);
 
-    if (!stringutils::startsWith(value_, "#")) {
+    if (!isDynamic()) {
         return value_;
     }
     std::string_view content = value_;
@@ -431,18 +447,53 @@ CustomPhraseDict::lookup(std::string_view key) const {
     return &data_[index];
 }
 
-void CustomPhraseDict::addPhrase(std::string_view key, std::string_view value,
-                                 int order) {
+std::vector<CustomPhrase> *
+CustomPhraseDict::getOrCreateEntry(std::string_view key) {
+
     auto index = index_.exactMatchSearch(key);
     if (TrieType::isNoValue(index)) {
         if (data_.size() >= std::numeric_limits<int32_t>::max()) {
-            return;
+            return nullptr;
         }
         index = data_.size();
         index_.set(key, index);
         data_.push_back({});
     }
-    data_[index].push_back(CustomPhrase(order, std::string(value)));
+    return &data_[index];
+}
+
+void CustomPhraseDict::addPhrase(std::string_view key, std::string_view value,
+                                 int order) {
+    if (order == 0) {
+        return;
+    }
+    if (auto *entry = getOrCreateEntry(key)) {
+        entry->push_back(CustomPhrase(order, std::string(value)));
+    }
+}
+
+void CustomPhraseDict::pinPhrase(std::string_view key, std::string_view value) {
+    removePhrase(key, value);
+    if (auto *entry = getOrCreateEntry(key)) {
+        // enabled item is 1 based.
+        entry->insert(entry->begin(), CustomPhrase(1, std::string(value)));
+        normalizeData(*entry);
+    }
+}
+
+void CustomPhraseDict::removePhrase(std::string_view key,
+                                    std::string_view value) {
+
+    auto index = index_.exactMatchSearch(key);
+    if (TrieType::isNoValue(index)) {
+        return;
+    }
+
+    data_[index].erase(std::remove_if(data_[index].begin(), data_[index].end(),
+                                      [&value](const CustomPhrase &item) {
+                                          return value == item.value();
+                                      }),
+                       data_[index].end());
 }
 
 void CustomPhraseDict::save(std::ostream &out) const {
@@ -466,7 +517,7 @@ void CustomPhraseDict::save(std::ostream &out) const {
             } else {
                 out << phrase.value();
             }
-            out << std::endl;
+            out << '\n';
         }
         return true;
     });
@@ -476,5 +527,4 @@ void CustomPhraseDict::clear() {
     index_.clear();
     data_.clear();
 }
-
 } // namespace fcitx
