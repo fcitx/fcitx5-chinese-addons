@@ -76,15 +76,15 @@ Qt::ItemFlags FileListModel::flags(const QModelIndex &index) const {
 void FileListModel::loadFileList() {
     beginResetModel();
     fileList_.clear();
-    auto files = StandardPath::global().multiOpen(
-        StandardPath::Type::PkgData, "pinyin/dictionaries", O_RDONLY,
-        filter::Suffix(".dict"));
+    auto files = StandardPath::global().locate(StandardPath::Type::PkgData,
+                                               "pinyin/dictionaries",
+                                               filter::Suffix(".dict"));
     std::map<std::string, bool> enableMap;
     for (const auto &file : files) {
         enableMap[file.first] = true;
     }
-    auto disableFiles = StandardPath::global().multiOpen(
-        StandardPath::Type::PkgData, "pinyin/dictionaries", O_RDONLY,
+    auto disableFiles = StandardPath::global().locate(
+        StandardPath::Type::PkgData, "pinyin/dictionaries",
         filter::Suffix(".dict.disable"));
     for (const auto &file : disableFiles) {
         // Remove .disable suffix.

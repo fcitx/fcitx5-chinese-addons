@@ -8,15 +8,31 @@
 #include <boost/iostreams/device/file_descriptor.hpp>
 #include <boost/iostreams/stream_buffer.hpp>
 #include <boost/range/adaptor/reversed.hpp>
+#include <cstdint>
+#include <exception>
 #include <fcitx-config/iniparser.h>
+#include <fcitx-config/rawconfig.h>
+#include <fcitx-utils/key.h>
 #include <fcitx-utils/log.h>
 #include <fcitx-utils/macros.h>
 #include <fcitx-utils/standardpath.h>
 #include <fcitx-utils/stringutils.h>
 #include <fcntl.h>
+#include <fstream>
+#include <istream>
+#include <libime/core/languagemodel.h>
+#include <libime/core/userlanguagemodel.h>
 #include <libime/core/utils.h>
 #include <libime/table/tablebaseddictionary.h>
 #include <libime/table/tableoptions.h>
+#include <memory>
+#include <ostream>
+#include <set>
+#include <stdexcept>
+#include <string>
+#include <tuple>
+#include <unordered_set>
+#include <utility>
 
 namespace fcitx {
 
@@ -156,18 +172,13 @@ TableIME::requestDict(const std::string &name) {
             }
 
             dict->removeAllExtra();
-            auto extraDicts = StandardPath::global().multiOpen(
+            auto extraDicts = StandardPath::global().locate(
                 StandardPath::Type::PkgData,
-                stringutils::concat("table/", name, ".dict.d"), O_RDONLY,
+                stringutils::concat("table/", name, ".dict.d"),
                 BinaryOrTextDict());
             for (const auto &[name, file] : extraDicts) {
                 try {
-                    boost::iostreams::stream_buffer<
-                        boost::iostreams::file_descriptor_source>
-                        buffer(file.fd(),
-                               boost::iostreams::file_descriptor_flags::
-                                   never_close_handle);
-                    std::istream in(&buffer);
+                    std::ifstream in(file, std::ios::in | std::ios::binary);
                     const auto fileFormat = stringutils::endsWith(name, ".txt")
                                                 ? libime::TableFormat::Text
                                                 : libime::TableFormat::Binary;

@@ -6,22 +6,43 @@
  */
 #include "punctuation.h"
 #include "notifications_public.h"
+#include <algorithm>
 #include <boost/iostreams/device/file_descriptor.hpp>
 #include <boost/iostreams/stream_buffer.hpp>
+#include <cstdint>
+#include <exception>
 #include <fcitx-config/iniparser.h>
+#include <fcitx-config/rawconfig.h>
+#include <fcitx-utils/capabilityflags.h>
 #include <fcitx-utils/charutils.h>
+#include <fcitx-utils/fs.h>
+#include <fcitx-utils/i18n.h>
+#include <fcitx-utils/key.h>
+#include <fcitx-utils/keysymgen.h>
 #include <fcitx-utils/log.h>
+#include <fcitx-utils/macros.h>
+#include <fcitx-utils/misc.h>
 #include <fcitx-utils/standardpath.h>
+#include <fcitx-utils/stringutils.h>
 #include <fcitx-utils/utf8.h>
+#include <fcitx/addoninstance.h>
+#include <fcitx/event.h>
 #include <fcitx/inputcontext.h>
 #include <fcitx/inputcontextmanager.h>
 #include <fcitx/inputmethodentry.h>
 #include <fcitx/inputmethodmanager.h>
+#include <fcitx/instance.h>
 #include <fcitx/statusarea.h>
 #include <fcitx/userinterfacemanager.h>
 #include <fcntl.h>
+#include <fstream>
+#include <ios>
+#include <istream>
+#include <iterator>
+#include <string>
 #include <string_view>
-#include <unordered_set>
+#include <unordered_map>
+#include <utility>
 #include <vector>
 
 using namespace fcitx;
@@ -70,7 +91,7 @@ void PunctuationProfile::addEntry(uint32_t key, const std::string &value,
     puncMap_[key].push_back(p);
 
     std::string punc = utf8::UCS4ToUTF8(key);
-    auto configValue = punctuationMapConfig_.entries.mutableValue();
+    auto *configValue = punctuationMapConfig_.entries.mutableValue();
     configValue->emplace_back();
     PunctuationMapEntryConfig &entryConfig = configValue->back();
     entryConfig.key.setValue(punc);
@@ -80,18 +101,16 @@ void PunctuationProfile::addEntry(uint32_t key, const std::string &value,
 
 void PunctuationProfile::load(std::istream &in) {
     puncMap_.clear();
-    auto configValue = punctuationMapConfig_.entries.mutableValue();
+    auto *configValue = punctuationMapConfig_.entries.mutableValue();
     configValue->clear();
 
     std::string strBuf;
     while (std::getline(in, strBuf)) {
-        auto pair = stringutils::trimInplace(strBuf);
-        std::string::size_type start = pair.first, end = pair.second;
-        if (start == end) {
+        std::string_view trimmed = stringutils::trimView(strBuf);
+        if (trimmed.empty()) {
             continue;
         }
-        std::string text(strBuf.begin() + start, strBuf.begin() + end);
-        auto tokens = stringutils::split(strBuf, FCITX_WHITESPACE);
+        auto tokens = stringutils::split(trimmed, FCITX_WHITESPACE);
         if (tokens.size() != 2 && tokens.size() != 3) {
             continue;
         }
@@ -115,12 +134,12 @@ void PunctuationProfile::set(const RawConfig &config) {
     newConfig.load(config);
 
     puncMap_.clear();
-    auto configValue = punctuationMapConfig_.entries.mutableValue();
+    auto *configValue = punctuationMapConfig_.entries.mutableValue();
     configValue->clear();
 
     const auto &entries = *newConfig.entries;
     // remove duplicate entry
-    for (auto &entry : entries) {
+    for (const auto &entry : entries) {
         if (entry.key->empty() || entry.mapResult1->empty()) {
             continue;
         }
@@ -138,7 +157,7 @@ void PunctuationProfile::save(std::string_view name) const {
         StandardPath::Type::PkgData,
         stringutils::concat("punctuation/", profilePrefix, name),
         [this](int fd) {
-            for (auto &entry : *punctuationMapConfig_.entries) {
+            for (const auto &entry : *punctuationMapConfig_.entries) {
                 fs::safeWrite(fd, entry.key->data(), entry.key->size());
                 fs::safeWrite(fd, " ", sizeof(char));
                 fs::safeWrite(fd, entry.mapResult1->data(),
@@ -175,7 +194,7 @@ PunctuationProfile::getPunctuations(uint32_t unicode) const {
         return {iter->second[0].first};
     }
     std::vector<std::string> result;
-    for (auto &punc : iter->second) {
+    for (const auto &punc : iter->second) {
         result.push_back(punc.first);
         if (!punc.second.empty()) {
             result.push_back(punc.second);
@@ -335,14 +354,9 @@ Punctuation::Punctuation(Instance *instance)
             // Scan through the surrounding text
             if (!state->lastPuncStackBackup_.empty() &&
                 state->lastPuncStack_.empty()) {
-                auto range =
-                    utf8::MakeUTF8CharRange(MakeIterRange(text.begin(), end));
-                for (auto iter = std::begin(range); iter != std::end(range);
-                     iter++) {
-                    auto charRange = iter.charRange();
-                    std::string_view chr(
-                        &*charRange.first,
-                        std::distance(charRange.first, charRange.second));
+                auto range = utf8::MakeUTF8StringViewRange(
+                    MakeIterRange(text.begin(), end));
+                for (std::string_view chr : range) {
                     auto puncIter = std::find_if(
                         state->lastPuncStackBackup_.begin(),
                         state->lastPuncStackBackup_.end(),
@@ -364,12 +378,12 @@ void Punctuation::reloadConfig() {
 }
 
 void Punctuation::loadProfiles() {
-    auto systemFiles = StandardPath::global().multiOpen(
-        StandardPath::Type::PkgData, "punctuation", O_RDONLY,
+    auto systemFiles = StandardPath::global().locate(
+        StandardPath::Type::PkgData, "punctuation",
         filter::Prefix(std::string(PunctuationProfile::profilePrefix)),
         filter::Not(filter::User()));
-    auto allFiles = StandardPath::global().multiOpen(
-        StandardPath::Type::PkgData, "punctuation", O_RDONLY,
+    auto allFiles = StandardPath::global().locate(
+        StandardPath::Type::PkgData, "punctuation",
         filter::Prefix(std::string(PunctuationProfile::profilePrefix)));
 
     // Remove non-exist profiles.
@@ -392,28 +406,18 @@ void Punctuation::loadProfiles() {
         auto iter = systemFiles.find(file.first);
         const bool hasSystemFile = iter != systemFiles.end();
         bool hasUserFile = true;
-        if (hasSystemFile && iter->second.path() == file.second.path()) {
+        if (hasSystemFile && iter->second == file.second) {
             hasUserFile = false;
         }
         try {
             if (hasSystemFile) {
-                boost::iostreams::stream_buffer<
-                    boost::iostreams::file_descriptor_source>
-                    buffer(iter->second.fd(),
-                           boost::iostreams::file_descriptor_flags::
-                               never_close_handle);
-                std::istream in(&buffer);
+                std::ifstream in(iter->second, std::ios::in | std::ios::binary);
                 profiles_[lang].loadSystem(in);
             } else {
                 profiles_[lang].resetDefaultValue();
             }
             if (hasUserFile) {
-                boost::iostreams::stream_buffer<
-                    boost::iostreams::file_descriptor_source>
-                    buffer(file.second.fd(),
-                           boost::iostreams::file_descriptor_flags::
-                               never_close_handle);
-                std::istream in(&buffer);
+                std::ifstream in(file.second, std::ios::in | std::ios::binary);
                 profiles_[lang].load(in);
             }
         } catch (const std::exception &e) {
