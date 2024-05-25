@@ -9,7 +9,7 @@
 #include "../modules/cloudpinyin/cloudpinyin_public.h"
 #include "pinyin.h"
 #include <algorithm>
-#include <bits/time.h>
+#include <ctime>
 #include <cstddef>
 #include <cstdint>
 #include <fcitx-utils/event.h>
