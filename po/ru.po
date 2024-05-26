@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2024-05-25 20:24+0000\n"
+"POT-Creation-Date: 2024-05-26 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Dmitry <dmitrydmitry761@gmail.com>, 2024\n"
 "Language-Team: Russian (https://app.transifex.com/fcitx/teams/12005/ru/)\n"
@@ -338,7 +338,7 @@ msgstr "По умолчанию"
 
 #: im/pinyin/pinyincandidate.cpp:373
 msgid "Delete from custom phrase"
-msgstr ""
+msgstr "Удалить из пользовательской фразы"
 
 #. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:14
 #. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
@@ -518,7 +518,7 @@ msgstr ""
 
 #: im/pinyin/pinyincandidate.cpp:357
 msgid "Forget candidate"
-msgstr ""
+msgstr "Забыть кандидат"
 
 #: im/table/engine.h:54 im/pinyin/pinyin.h:190
 msgid "Forget word"
@@ -802,7 +802,7 @@ msgstr "Профиль OpenCC для перехода с упрощенного 
 
 #: modules/chttrans/chttrans.h:65
 msgid "OpenCC profile for Traditional to Simplified"
-msgstr "Профиль OpenCC для перехода от традиционного к упрощенному китайскому"
+msgstr "Профиль OpenCC для перехода с традиционного на упрощенный китайский"
 
 #: gui/customphraseeditor/customphrasemodel.cpp:90
 msgid "Order"
@@ -839,7 +839,7 @@ msgstr "Фраза"
 
 #: im/pinyin/pinyincandidate.cpp:367
 msgid "Pin to top as custom phrase"
-msgstr ""
+msgstr "Закрепить вверху как пользовательскую фразу"
 
 #: im/pinyin/pinyin.cpp:952 im/pinyin/pinyin.cpp:1236
 #: im/pinyin/pinyin-addon.conf.in.in:3 im/pinyin/pinyin.conf.in:3
