@@ -866,7 +866,8 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
     }
 
     if ((mode_ == TableMode::Normal || mode_ == TableMode::Pinyin) &&
-        !event.key().hasModifier()) {
+        !event.key().states().testAny(
+            KeyStates{KeyState::Ctrl, KeyState::Super})) {
         auto compose = engine_->instance()->processComposeString(
             inputContext, event.key().sym());
         if (!compose) {
