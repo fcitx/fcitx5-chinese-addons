@@ -1813,7 +1813,9 @@ bool PinyinEngine::handlePunc(KeyEvent &event) {
 bool PinyinEngine::handleCompose(KeyEvent &event) {
     auto *inputContext = event.inputContext();
     auto *state = inputContext->propertyFor(&factory_);
-    if (event.key().hasModifier() || state->mode_ != PinyinMode::Normal) {
+    if (event.key().states().testAny(
+            KeyStates{KeyState::Ctrl, KeyState::Super}) ||
+        state->mode_ != PinyinMode::Normal) {
         return false;
     }
     auto candidateList = inputContext->inputPanel().candidateList();
