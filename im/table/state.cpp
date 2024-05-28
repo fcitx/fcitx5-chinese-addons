@@ -5,22 +5,44 @@
  *
  */
 #include "state.h"
+#include "context.h"
+#include "engine.h"
+#include "ime.h"
 #include "pinyinhelper_public.h"
 #include "punctuation_public.h"
 #include "quickphrase_public.h"
 #include <algorithm>
+#include <cstddef>
+#include <cstdint>
+#include <fcitx-utils/capabilityflags.h>
 #include <fcitx-utils/event.h>
+#include <fcitx-utils/i18n.h>
+#include <fcitx-utils/key.h>
 #include <fcitx-utils/keysym.h>
 #include <fcitx-utils/stringutils.h>
 #include <fcitx-utils/utf8.h>
+#include <fcitx/candidatelist.h>
 #include <fcitx/event.h>
 #include <fcitx/inputcontext.h>
+#include <fcitx/inputmethodentry.h>
 #include <fcitx/inputpanel.h>
+#include <fcitx/text.h>
+#include <fcitx/userinterface.h>
 #include <fmt/core.h>
 #include <fmt/format.h>
+#include <initializer_list>
+#include <iterator>
 #include <libime/core/historybigram.h>
 #include <libime/pinyin/pinyinencoder.h>
 #include <libime/pinyin/shuangpinprofile.h>
+#include <libime/table/tablebaseddictionary.h>
+#include <map>
+#include <memory>
+#include <string>
+#include <string_view>
+#include <tuple>
+#include <utility>
+#include <vector>
 
 namespace fcitx {
 

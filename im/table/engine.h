@@ -9,17 +9,28 @@
 
 #include "ime.h"
 #include <fcitx-config/configuration.h>
+#include <fcitx-config/enum.h>
 #include <fcitx-config/iniparser.h>
+#include <fcitx-config/option.h>
+#include <fcitx-config/rawconfig.h>
 #include <fcitx-utils/event.h>
+#include <fcitx-utils/handlertable.h>
+#include <fcitx-utils/i18n.h>
+#include <fcitx-utils/key.h>
 #include <fcitx/action.h>
 #include <fcitx/addonfactory.h>
+#include <fcitx/addoninstance.h>
 #include <fcitx/addonmanager.h>
+#include <fcitx/event.h>
 #include <fcitx/inputcontextproperty.h>
 #include <fcitx/inputmethodengine.h>
 #include <fcitx/instance.h>
+#include <libime/core/languagemodel.h>
 #include <libime/pinyin/pinyindictionary.h>
 #include <map>
 #include <memory>
+#include <string>
+#include <vector>
 
 namespace fcitx {
 
@@ -98,12 +109,13 @@ public:
         saveConfig();
     }
     void populateConfig();
-    void setSubConfig(const std::string &path, const RawConfig &) override;
+    void setSubConfig(const std::string &path,
+                      const RawConfig & /*unused*/) override;
 
     const Configuration *
-    getConfigForInputMethod(const InputMethodEntry &) const override;
-    void setConfigForInputMethod(const InputMethodEntry &,
-                                 const RawConfig &) override;
+    getConfigForInputMethod(const InputMethodEntry &entry) const override;
+    void setConfigForInputMethod(const InputMethodEntry &entry,
+                                 const RawConfig &config) override;
 
     const libime::PinyinDictionary &pinyinDict();
     const libime::LanguageModel &pinyinModel();
