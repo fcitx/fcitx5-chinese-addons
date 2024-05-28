@@ -9,7 +9,10 @@
 
 #include "ime.h"
 #include <fcitx/text.h>
+#include <libime/core/prediction.h>
 #include <libime/table/tablecontext.h>
+#include <memory>
+#include <string>
 
 namespace fcitx {
 

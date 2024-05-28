@@ -19,6 +19,7 @@
 #include <fcitx-utils/stringutils.h>
 #include <fcntl.h>
 #include <fstream>
+#include <ios>
 #include <istream>
 #include <libime/core/languagemodel.h>
 #include <libime/core/userlanguagemodel.h>
@@ -151,7 +152,9 @@ TableIME::requestDict(const std::string &name) {
             std::istream in(&buffer);
             dict->load(in);
             iter->second.dict = std::move(dict);
-        } catch (const std::exception &) {
+        } catch (const std::exception &e) {
+            TABLE_ERROR() << "Failed to load table: " << *root.config->file
+                          << ", error: " << e.what();
         }
 
         if (auto *dict = iter->second.dict.get()) {

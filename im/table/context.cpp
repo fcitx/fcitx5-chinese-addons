@@ -5,6 +5,18 @@
  *
  */
 #include "context.h"
+#include "ime.h"
+#include <cstddef>
+#include <fcitx-utils/stringutils.h>
+#include <fcitx-utils/textformatflags.h>
+#include <fcitx/text.h>
+#include <libime/core/prediction.h>
+#include <libime/core/userlanguagemodel.h>
+#include <libime/table/tablebaseddictionary.h>
+#include <libime/table/tablecontext.h>
+#include <memory>
+#include <string>
+#include <utility>
 
 namespace fcitx {
 

@@ -9,7 +9,18 @@
 
 #include "context.h"
 #include "engine.h"
+#include "ime.h"
+#include <cstddef>
+#include <fcitx-utils/inputbuffer.h>
+#include <fcitx/candidatelist.h>
+#include <fcitx/event.h>
 #include <fcitx/inputcontextproperty.h>
+#include <fcitx/inputmethodentry.h>
+#include <list>
+#include <memory>
+#include <string>
+#include <utility>
+#include <vector>
 
 namespace fcitx {
 

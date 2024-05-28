@@ -12,30 +12,45 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/iostreams/device/file_descriptor.hpp>
 #include <boost/iostreams/stream.hpp>
+#include <boost/iostreams/stream_buffer.hpp>
+#include <cstddef>
+#include <exception>
 #include <fcitx-config/iniparser.h>
+#include <fcitx-config/rawconfig.h>
 #include <fcitx-utils/charutils.h>
 #include <fcitx-utils/event.h>
 #include <fcitx-utils/i18n.h>
 #include <fcitx-utils/log.h>
+#include <fcitx-utils/macros.h>
 #include <fcitx-utils/standardpath.h>
+#include <fcitx-utils/stringutils.h>
 #include <fcitx-utils/utf8.h>
+#include <fcitx/action.h>
+#include <fcitx/addoninstance.h>
 #include <fcitx/event.h>
 #include <fcitx/inputcontext.h>
 #include <fcitx/inputcontextmanager.h>
 #include <fcitx/inputcontextproperty.h>
 #include <fcitx/inputmethodmanager.h>
 #include <fcitx/inputpanel.h>
+#include <fcitx/instance.h>
+#include <fcitx/statusarea.h>
 #include <fcitx/userinterfacemanager.h>
 #include <fcntl.h>
+#include <istream>
 #include <libime/core/historybigram.h>
+#include <libime/core/languagemodel.h>
 #include <libime/core/userlanguagemodel.h>
+#include <libime/pinyin/pinyindictionary.h>
 #include <libime/pinyin/pinyinencoder.h>
 #include <libime/pinyin/shuangpinprofile.h>
 #include <libime/table/tablebaseddictionary.h>
 #include <map>
 #include <memory>
 #include <quickphrase_public.h>
-#include <unordered_map>
+#include <string>
+#include <string_view>
+#include <unordered_set>
 
 namespace fcitx {
 
@@ -167,7 +182,8 @@ void TableEngine::populateConfig() {
     }
 }
 
-void TableEngine::setSubConfig(const std::string &path, const RawConfig &) {
+void TableEngine::setSubConfig(const std::string &path,
+                               const RawConfig & /*unused*/) {
     if (path == "reloaddict") {
         reloadDict();
     }
@@ -282,7 +298,8 @@ const libime::PinyinDictionary &TableEngine::pinyinDict() {
                                never_close_handle);
                 std::istream in(&buffer);
                 pinyinDict_.load(i, in, libime::PinyinDictFormat::Binary);
-            } catch (const std::exception &) {
+            } catch (const std::exception &e) {
+                TABLE_ERROR() << "Failed to load pinyin dict: " << e.what();
             }
         }
         pinyinLoaded_ = true;
