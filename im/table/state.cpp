@@ -5,6 +5,7 @@
  *
  */
 #include "state.h"
+#include "candidate.h"
 #include "context.h"
 #include "engine.h"
 #include "ime.h"
@@ -45,115 +46,6 @@
 #include <vector>
 
 namespace fcitx {
-
-namespace {
-
-class CommitAfterSelectWrapper {
-public:
-    CommitAfterSelectWrapper(TableState *state) : state_(state) {
-        if (auto *context = state->updateContext(nullptr)) {
-            commitFrom_ = static_cast<int>(context->selectedSize());
-        }
-    }
-
-    ~CommitAfterSelectWrapper() {
-        if (commitFrom_ >= 0) {
-            state_->commitAfterSelect(commitFrom_);
-        }
-    }
-
-private:
-    TableState *state_;
-    int commitFrom_ = -1;
-};
-
-class TableCandidateWord : public CandidateWord {
-public:
-    TableCandidateWord(TableEngine *engine, Text text, size_t idx)
-        : CandidateWord(std::move(text)), engine_(engine), idx_(idx) {}
-
-    void select(InputContext *inputContext) const override {
-        auto *state = inputContext->propertyFor(&engine_->factory());
-        // nullptr means use the last requested entry.
-        auto *context = state->updateContext(nullptr);
-        if (!context || idx_ >= context->candidates().size()) {
-            return;
-        }
-        if (state->mode() == TableMode::ForgetWord) {
-            state->forgetCandidateWord(idx_);
-            return;
-        }
-        {
-            const CommitAfterSelectWrapper commitAfterSelectRAII(state);
-            context->select(idx_);
-        }
-        if (context->selected()) {
-            state->commitBuffer(true);
-        }
-        state->updateUI(/*keepOldCursor=*/false, /*maybePredict=*/true);
-    }
-
-    TableEngine *engine_;
-    size_t idx_;
-};
-
-class TablePinyinCandidateWord : public CandidateWord {
-public:
-    TablePinyinCandidateWord(TableEngine *engine, std::string word,
-                             const libime::TableBasedDictionary &dict,
-                             bool customHint)
-        : engine_(engine), word_(std::move(word)) {
-        setText(Text(word_));
-        if (utf8::lengthValidated(word_) == 1) {
-            if (auto code = dict.reverseLookup(word_); !code.empty()) {
-                Text comment;
-                comment.append("~ ");
-                if (customHint) {
-                    comment.append(dict.hint(code));
-                } else {
-                    comment.append(std::move(code));
-                }
-                setComment(std::move(comment));
-            }
-        }
-    }
-
-    void select(InputContext *inputContext) const override {
-        auto *state = inputContext->propertyFor(&engine_->factory());
-        inputContext->commitString(word_);
-        state->pushLastCommit("", word_);
-        state->resetAndPredict();
-    }
-
-    TableEngine *engine_;
-    std::string word_;
-};
-
-class TablePunctuationCandidateWord : public CandidateWord {
-public:
-    TablePunctuationCandidateWord(TableState *state, std::string word,
-                                  bool isHalf)
-        : state_(state), word_(std::move(word)) {
-        setText(Text(word_));
-        if (isHalf) {
-            setComment(Text(_("(Half)")));
-        }
-    }
-
-    void select(InputContext *inputContext) const override {
-        state_->commitBuffer(true);
-        inputContext->commitString(word_);
-        state_->reset();
-    }
-
-    const std::string &word() const { return word_; }
-
-private:
-    TableState *state_;
-    std::string word_;
-};
-
-} // namespace
 
 TableContext *TableState::updateContext(const InputMethodEntry *entry) {
     if (!entry || lastContext_ == entry->uniqueName()) {
@@ -278,22 +170,6 @@ void TableState::reset(const InputMethodEntry *entry) {
     // Since we also to compose, just reset compose all together
     engine_->instance()->resetCompose(ic_);
 }
-
-class TablePredictCandidateWord : public CandidateWord {
-public:
-    TablePredictCandidateWord(TableState *state, std::string word)
-        : CandidateWord(Text(word)), state_(state), word_(std::move(word)) {}
-
-    void select(InputContext *inputContext) const override {
-        state_->commitBuffer(true);
-        inputContext->commitString(word_);
-        state_->pushLastCommit("", word_);
-        state_->resetAndPredict();
-    }
-
-    TableState *state_;
-    std::string word_;
-};
 
 std::unique_ptr<CandidateList>
 TableState::predictCandidateList(const std::vector<std::string> &words) {
