@@ -77,7 +77,6 @@ jobs:
       - name: Build and Install fcitx5-lua
         uses: fcitx/github-actions@cmake
         with:
-          repository: fcitx/fcitx5-lua
           path: fcitx5-lua
       - uses: actions/checkout@v4
         with:
@@ -86,7 +85,6 @@ jobs:
       - name: Build and Install fcitx5-qt
         uses: fcitx/github-actions@cmake
         with:
-          repository: fcitx/fcitx5-qt
           path: fcitx5-qt
           cmake-option: >-
             -DENABLE_QT4=Off -DENABLE_QT5=Off -DENABLE_QT6=On
