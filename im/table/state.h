@@ -108,6 +108,26 @@ private:
     int keyReleased_ = -1;
     int keyReleasedIndex_ = -2;
 };
+
+class CommitAfterSelectWrapper {
+public:
+    CommitAfterSelectWrapper(TableState *state) : state_(state) {
+        if (auto *context = state->updateContext(nullptr)) {
+            commitFrom_ = static_cast<int>(context->selectedSize());
+        }
+    }
+
+    ~CommitAfterSelectWrapper() {
+        if (commitFrom_ >= 0) {
+            state_->commitAfterSelect(commitFrom_);
+        }
+    }
+
+private:
+    TableState *state_;
+    int commitFrom_ = -1;
+};
+
 } // namespace fcitx
 
 #endif // _TABLE_STATE_H_

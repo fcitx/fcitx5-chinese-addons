@@ -3,6 +3,7 @@ set(TABLE_SOURCES
     state.cpp
     ime.cpp
     context.cpp
+    candidate.cpp
 )
 add_library(table MODULE ${TABLE_SOURCES})
 target_link_libraries(table Fcitx5::Core Fcitx5::Config LibIME::Table LibIME::Pinyin Boost::iostreams Fcitx5::Module::Punctuation Fcitx5::Module::QuickPhrase Fcitx5::Module::PinyinHelper LibIME::Pinyin ${FMT_TARGET})
