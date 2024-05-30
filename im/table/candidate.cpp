@@ -11,12 +11,14 @@
 #include <cstddef>
 #include <fcitx-utils/i18n.h>
 #include <fcitx-utils/utf8.h>
+#include <fcitx/candidateaction.h>
 #include <fcitx/candidatelist.h>
 #include <fcitx/inputcontext.h>
 #include <fcitx/text.h>
 #include <libime/table/tablebaseddictionary.h>
 #include <string>
 #include <utility>
+#include <vector>
 
 namespace fcitx {
 
@@ -92,4 +94,34 @@ void TablePredictCandidateWord::select(InputContext *inputContext) const {
     state_->resetAndPredict();
 }
 
+TableActionableCandidateList::TableActionableCandidateList(TableState *state)
+    : state_(state) {}
+
+bool TableActionableCandidateList::hasAction(
+    const CandidateWord &candidate) const {
+    return dynamic_cast<const TableCandidateWord *>(&candidate);
+}
+std::vector<CandidateAction> TableActionableCandidateList::candidateActions(
+    const CandidateWord &candidate) const {
+    if (!hasAction(candidate)) {
+        return {};
+    }
+    std::vector<CandidateAction> actions;
+    CandidateAction action;
+    action.setId(0);
+    action.setText(_("Forget word"));
+    actions.push_back(std::move(action));
+    return actions;
+}
+
+void TableActionableCandidateList::triggerAction(const CandidateWord &candidate,
+                                                 int id) {
+    if (id != 0) {
+        return;
+    }
+    if (const auto *tableCandidate =
+            dynamic_cast<const TableCandidateWord *>(&candidate)) {
+        state_->forgetCandidateWord(tableCandidate->idx_);
+    }
+}
 } // namespace fcitx

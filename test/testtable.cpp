@@ -6,25 +6,43 @@
  */
 #include "testdir.h"
 #include "testfrontend_public.h"
+#include <fcitx-config/rawconfig.h>
 #include <fcitx-utils/eventdispatcher.h>
+#include <fcitx-utils/key.h>
+#include <fcitx-utils/keysymgen.h>
 #include <fcitx-utils/log.h>
+#include <fcitx-utils/macros.h>
 #include <fcitx-utils/standardpath.h>
 #include <fcitx-utils/testing.h>
 #include <fcitx/addonmanager.h>
 #include <fcitx/inputmethodengine.h>
+#include <fcitx/inputmethodgroup.h>
 #include <fcitx/inputmethodmanager.h>
 #include <fcitx/inputpanel.h>
 #include <fcitx/instance.h>
-#include <iostream>
+#include <fcitx/userinterface.h>
+#include <utility>
 
 using namespace fcitx;
 
-void scheduleEvent(EventDispatcher *dispatcher, Instance *instance) {
-    dispatcher->schedule([instance]() {
+int findCandidateOrDie(InputContext *ic, std::string_view word) {
+    auto candList = ic->inputPanel().candidateList();
+    for (int i = 0; i < candList->toBulk()->totalSize(); i++) {
+        const auto &candidate = candList->toBulk()->candidateFromAll(i);
+        if (candidate.text().toString() == word) {
+            return i;
+        }
+    }
+    FCITX_ASSERT(false) << "Failed to find candidate: " << word;
+    return -1;
+}
+
+void scheduleEvent(Instance *instance) {
+    instance->eventDispatcher().schedule([instance]() {
         auto *table = instance->addonManager().addon("table", true);
         FCITX_ASSERT(table);
     });
-    dispatcher->schedule([instance]() {
+    instance->eventDispatcher().schedule([instance]() {
         auto defaultGroup = instance->inputMethodManager().currentGroup();
         defaultGroup.inputMethodList().clear();
         defaultGroup.inputMethodList().push_back(
@@ -83,7 +101,7 @@ void scheduleEvent(EventDispatcher *dispatcher, Instance *instance) {
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("A"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
     });
-    dispatcher->schedule([dispatcher, instance]() {
+    instance->eventDispatcher().schedule([instance]() {
         auto defaultGroup = instance->inputMethodManager().currentGroup();
         defaultGroup.inputMethodList().clear();
         defaultGroup.inputMethodList().push_back(
@@ -134,15 +152,37 @@ void scheduleEvent(EventDispatcher *dispatcher, Instance *instance) {
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
-        // This comma trigger only match commit.
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("5"), false);
 
-        dispatcher->schedule([dispatcher, instance]() {
-            dispatcher->detach();
-            instance->exit();
-        });
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
+
+        auto *candidateList = ic->inputPanel().candidateList().get();
+        FCITX_ASSERT(candidateList);
+        auto idx = findCandidateOrDie(ic, "工工工工");
+        auto *actionable = ic->inputPanel().candidateList()->toActionable();
+        FCITX_ASSERT(actionable);
+        FCITX_ASSERT(actionable->hasAction(candidateList->candidate(idx)));
+        FCITX_ASSERT(
+            actionable->candidateActions(candidateList->candidate(idx))[0]
+                .id() == 0);
+        actionable->triggerAction(candidateList->candidate(idx), 0);
+
+        // Check if 工工工工 is deleted.
+        candidateList = ic->inputPanel().candidateList().get();
+        FCITX_ASSERT(candidateList);
+        for (int i = 0; i < candidateList->size(); i++) {
+            FCITX_ASSERT(candidateList->candidate(i).text().toString() !=
+                         "工工工工")
+                << "Candidate " << i << " is not deleted.";
+        }
+        ic->updateUserInterface(fcitx::UserInterfaceComponent::InputPanel,
+                                true);
     });
+    instance->eventDispatcher().schedule([instance]() { instance->exit(); });
 }
 
 int main() {
@@ -156,14 +196,13 @@ int main() {
     fcitx::Log::setLogRule("default=5,table=5,libime-table=5");
     char arg0[] = "testtable";
     char arg1[] = "--disable=all";
-    char arg2[] = "--enable=testim,testfrontend,table,quickphrase,punctuation,"
-                  "pinyinhelper";
+    char arg2[] =
+        "--enable=testui,testim,testfrontend,table,quickphrase,punctuation,"
+        "pinyinhelper";
     char *argv[] = {arg0, arg1, arg2};
     Instance instance(FCITX_ARRAY_SIZE(argv), argv);
     instance.addonManager().registerDefaultLoader(nullptr);
-    EventDispatcher dispatcher;
-    dispatcher.attach(&instance.eventLoop());
-    scheduleEvent(&dispatcher, &instance);
+    scheduleEvent(&instance);
     instance.exec();
 
     return 0;
