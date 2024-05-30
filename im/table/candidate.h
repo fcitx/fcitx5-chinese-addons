@@ -9,10 +9,12 @@
 
 #include "engine.h"
 #include <cstddef>
+#include <fcitx/candidateaction.h>
 #include <fcitx/candidatelist.h>
 #include <fcitx/text.h>
 #include <libime/table/tablebaseddictionary.h>
 #include <string>
+#include <vector>
 
 namespace fcitx {
 
@@ -60,6 +62,19 @@ public:
 
     TableState *state_;
     std::string word_;
+};
+
+class TableActionableCandidateList : public ActionableCandidateList {
+public:
+    TableActionableCandidateList(TableState *state);
+
+    bool hasAction(const CandidateWord &candidate) const override;
+    std::vector<CandidateAction>
+    candidateActions(const CandidateWord &candidate) const override;
+    void triggerAction(const CandidateWord &candidate, int id) override;
+
+private:
+    TableState *state_;
 };
 
 } // namespace fcitx

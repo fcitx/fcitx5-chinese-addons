@@ -1332,6 +1332,8 @@ void TableState::updateUI(bool keepOldCursor, bool maybePredict) {
                 }
                 candidateList->setGlobalCursorIndex(cursor);
             }
+            candidateList->setActionableImpl(
+                std::make_unique<TableActionableCandidateList>(this));
             inputPanel.setCandidateList(std::move(candidateList));
         }
         const bool useClientPreedit =
