@@ -7,7 +7,7 @@
 #ifndef _PINYIN_PINYINCANDIDATE_H_
 #define _PINYIN_PINYINCANDIDATE_H_
 
-#include "../modules/cloudpinyin/cloudpinyin_public.h"
+#include "../../modules/cloudpinyin/cloudpinyin_public.h"
 #include <array>
 #include <cstddef>
 #include <cstdint>

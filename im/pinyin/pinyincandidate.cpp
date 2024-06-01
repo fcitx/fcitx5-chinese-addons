@@ -6,7 +6,7 @@
  */
 
 #include "pinyincandidate.h"
-#include "../modules/cloudpinyin/cloudpinyin_public.h"
+#include "../../modules/cloudpinyin/cloudpinyin_public.h"
 #include "pinyin.h"
 #include <algorithm>
 #include <cstddef>
