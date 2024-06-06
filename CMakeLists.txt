@@ -8,7 +8,7 @@ include(GNUInstallDirs)
 include(ECMSetupVersion)
 include(ECMUninstallTarget)
 
-find_package(Fcitx5Core 5.1.9 REQUIRED)
+find_package(Fcitx5Core 5.1.11 REQUIRED)
 find_package(Fcitx5Module REQUIRED COMPONENTS Notifications QuickPhrase Spell Clipboard)
 find_package(Fcitx5ModuleLuaAddonLoader)
 find_package(Pthread REQUIRED)

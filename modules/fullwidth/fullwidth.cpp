@@ -108,7 +108,10 @@ Fullwidth::Fullwidth(Instance *instance) : instance_(instance) {
     reloadConfig();
 }
 
-void Fullwidth::reloadConfig() { readAsIni(config_, "conf/fullwidth.conf"); }
+void Fullwidth::reloadConfig() {
+    readAsIni(config_, "conf/fullwidth.conf");
+    toggleAction_.setHotkey(config_.hotkey.value());
+}
 
 bool Fullwidth::inWhiteList(InputContext *inputContext) const {
     return toggleAction_.isParent(&inputContext->statusArea());

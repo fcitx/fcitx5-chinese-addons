@@ -144,6 +144,7 @@ public:
     void setConfig(const fcitx::RawConfig &config) override {
         config_.load(config, true);
         fcitx::safeSaveAsIni(config_, "conf/punctuation.conf");
+        toggleAction_.setHotkey(config_.hotkey.value());
     }
     const fcitx::Configuration *
     getSubConfig(const std::string &path) const override;
