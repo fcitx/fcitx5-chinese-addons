@@ -375,6 +375,7 @@ Punctuation::~Punctuation() {}
 void Punctuation::reloadConfig() {
     readAsIni(config_, "conf/punctuation.conf");
     loadProfiles();
+    toggleAction_.setHotkey(config_.hotkey.value());
 }
 
 void Punctuation::loadProfiles() {
