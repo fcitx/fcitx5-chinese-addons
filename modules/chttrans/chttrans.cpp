@@ -244,6 +244,7 @@ void Chttrans::populateConfig() {
     } else {
         currentBackend_ = iter->second.get();
     }
+    toggleAction_.setHotkey(config_.hotkey.value());
 }
 
 void Chttrans::syncToConfig() {
