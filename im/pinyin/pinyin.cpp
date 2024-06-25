@@ -2095,7 +2095,7 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
             if (!puncStr.empty()) {
                 // forward the original key is the best choice.
                 state->cancelLastEvent_ = instance()->eventLoop().addTimeEvent(
-                    CLOCK_MONOTONIC, now(CLOCK_MONOTONIC) + 300, 0,
+                    CLOCK_MONOTONIC, now(CLOCK_MONOTONIC) + 300, 1,
                     [this, ref = inputContext->watch(),
                      puncStr = puncStr](EventSourceTime *, uint64_t) {
                         if (auto *inputContext = ref.get()) {
