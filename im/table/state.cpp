@@ -967,7 +967,7 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
                 // forward the original key is the best choice.
                 cancelLastEvent_ =
                     engine_->instance()->eventLoop().addTimeEvent(
-                        CLOCK_MONOTONIC, now(CLOCK_MONOTONIC) + 300, 1,
+                        CLOCK_MONOTONIC, now(CLOCK_MONOTONIC) + 3000, 1,
                         [this, ref = inputContext->watch(),
                          puncStr = puncStr](EventSourceTime *, uint64_t) {
                             if (auto *inputContext = ref.get()) {
