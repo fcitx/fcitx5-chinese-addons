@@ -10,14 +10,15 @@
 # 菘菘 <rrt467778@gmail.com>, 2022
 # Neko ◣ 0xFF, 2022
 # Yiyu Liu, 2024
+# Kisaragi Hiu <flyingfeather1501@gmail.com>, 2024
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2024-05-29 20:24+0000\n"
+"POT-Creation-Date: 2024-07-08 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
-"Last-Translator: Yiyu Liu, 2024\n"
+"Last-Translator: Kisaragi Hiu <flyingfeather1501@gmail.com>, 2024\n"
 "Language-Team: Chinese (Taiwan) (https://app.transifex.com/fcitx/teams/12005/"
 "zh_TW/)\n"
 "Language: zh_TW\n"
@@ -26,11 +27,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: im/table/state.cpp:1171
+#: im/table/state.cpp:1047
 msgid " Return for "
 msgstr "按下 Enter 以"
 
-#: im/table/state.cpp:1168
+#: im/table/state.cpp:1044
 msgid " for "
 msgstr " 以"
 
@@ -90,7 +91,7 @@ msgstr "匯入(&I)"
 #: rc.cpp:48
 #, kde-format
 msgid "&Open User Data Directory"
-msgstr "打開使用者數據資料夾(&O)"
+msgstr "開啟使用者資料目錄(&O)"
 
 #. i18n: file: gui/customphraseeditor/customphraseeditor.ui:52
 #. i18n: ectx: property (text), widget (QPushButton, removeButton_)
@@ -108,11 +109,11 @@ msgstr "移除(&R)"
 msgid "&Usage"
 msgstr "用法(&U)"
 
-#: im/table/state.cpp:139 im/pinyin/pinyincandidate.cpp:120
+#: im/table/candidate.cpp:78 im/pinyin/pinyincandidate.cpp:120
 msgid "(Half)"
 msgstr "（半形）"
 
-#: im/table/state.cpp:766
+#: im/table/state.cpp:642
 msgctxt "Pinyin lookup delimeter"
 msgid ", "
 msgstr "，"
@@ -145,8 +146,8 @@ msgid ""
 "once, it will be added as user phrase. -1 means the maximum code length of "
 "the table. 0 means disable this feature. "
 msgstr ""
-"每個字符提交之後，根據輸入紀錄學習新詞組。 如果特定的詞出現多次或者被使用者選"
-"中一次，它將被添加為使用者詞組。 -1 表示碼表最大長度，0 表示停用這個功能。"
+"提交每個字元之後，根據輸入紀錄學習新詞組。如果某詞已出現多次或已被使用者選擇"
+"過一次，它將會被加入使用者詞組。-1 表示碼表最大長度，0 表示停用這個功能。"
 
 #: im/table/ime.h:289
 msgid "Allow use keypad key as table input"
@@ -246,7 +247,7 @@ msgstr "提交無效段"
 
 #: im/pinyin/pinyin.h:228
 msgid "Commit Raw Input"
-msgstr "提交原始字符串"
+msgstr "提交原始字串"
 
 #: im/table/ime.h:108
 msgid "Commit after auto select candidates"
@@ -258,7 +259,7 @@ msgstr "在取消激活輸入法時提交輸入緩衝區"
 
 #: im/pinyin/pinyin.h:84
 msgid "Commit current preedit"
-msgstr "提交當前預編輯"
+msgstr "提交目前預編輯"
 
 #: im/pinyin/pinyin.h:85
 msgid "Commit default selection"
@@ -300,7 +301,7 @@ msgstr "轉換器當掉了。"
 msgid "Correction Layout"
 msgstr "糾錯佈局"
 
-#: im/table/state.cpp:793
+#: im/table/state.cpp:669
 msgid "Could not find pinyin."
 msgstr "找不到拼音。"
 
@@ -324,15 +325,15 @@ msgstr "自訂"
 
 #: gui/customphraseeditor/customphraseeditor.cpp:163
 msgid "Custom Phrase Editor"
-msgstr "自定字词編輯器"
+msgstr "自訂字詞編輯器"
 
-#: modules/chttrans/chttrans.cpp:266
+#: modules/chttrans/chttrans.cpp:267
 msgid "Default"
 msgstr "預設"
 
 #: im/pinyin/pinyincandidate.cpp:373
 msgid "Delete from custom phrase"
-msgstr "從自定字詞中刪除"
+msgstr "從自訂字詞中刪除"
 
 #. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:14
 #. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
@@ -388,7 +389,7 @@ msgstr "您想要啟用雲拼音以獲得更好的預測嗎？您也可以稍後
 
 #: gui/customphraseeditor/customphraseeditor.cpp:206
 msgid "Do you want to reload custom phrase from disk?"
-msgstr "是否希望從硬碟重新加載自定字詞？"
+msgstr "是否希望從硬碟重新載入自訂字詞？"
 
 #: im/table/ime.h:151
 msgid "Don't sort word shorter than"
@@ -408,7 +409,7 @@ msgstr "啟用拆字"
 
 #: im/pinyin/pinyin.h:153
 msgid "Enable Characters in Unicode CJK Extension B"
-msgstr "啟用 Unicode CJK 擴充區 B 中的字符"
+msgstr "啟用 Unicode CJK 擴充區 B 中的字元"
 
 #: im/pinyin/pinyin.h:159
 msgid "Enable Cloud Pinyin"
@@ -440,7 +441,7 @@ msgstr "中止鍵"
 
 #: im/pinyin/pinyin.h:299
 msgid "Enter a string from the list will make it enter quickphrase mode."
-msgstr "輸入列表中的字符會進入快速輸入模式。"
+msgstr "輸入列表中的字串將使其進入快速輸入模式。"
 
 #: modules/punctuation/punctuation.h:62
 msgid "Entries"
@@ -505,13 +506,13 @@ msgstr "將第一個候選詞作為預編輯文字"
 
 #: im/table/ime.h:131 im/pinyin/pinyin.h:175
 msgid "Fix embedded preedit cursor at the beginning of the preedit"
-msgstr "將嵌入預編輯文本的光標固定於開頭"
+msgstr "將內嵌預編輯游標位置固定在預編輯的開頭"
 
 #: im/pinyin/pinyincandidate.cpp:357
 msgid "Forget candidate"
 msgstr "忘記候選詞"
 
-#: im/table/engine.h:65 im/pinyin/pinyin.h:190
+#: im/table/engine.h:65 im/table/candidate.cpp:112 im/pinyin/pinyin.h:190
 msgid "Forget word"
 msgstr "忽略字詞"
 
@@ -533,7 +534,7 @@ msgstr "全形字元"
 
 #: modules/fullwidth/fullwidth.cpp:75
 msgid "Full width Character is disabled."
-msgstr "已禁用全形字元。"
+msgstr "全形字元已停用。"
 
 #: modules/fullwidth/fullwidth.cpp:74
 msgid "Full width Character is enabled."
@@ -549,7 +550,7 @@ msgstr "全形符號"
 
 #: modules/punctuation/punctuation.cpp:272
 msgid "Full width punctuation is disabled."
-msgstr "全形標點已禁用。"
+msgstr "全形標點已停用。"
 
 #: modules/punctuation/punctuation.cpp:271
 msgid "Full width punctuation is enabled."
@@ -585,7 +586,7 @@ msgid ""
 "enabled, selecting auto phrase candidate explicitly will still add the word "
 "as a new user phrase."
 msgstr ""
-"如果小於 0，則此功能會被禁用。如果自動組詞已啓用，手動選擇自動組詞的候選詞將"
+"如果小於 0，則此功能會被停用。如果自動組詞已啓用，手動選擇自動組詞的候選詞將"
 "仍會將其添加到使用者組詞庫。"
 
 #: gui/customphraseeditor/customphrasemodel.cpp:39
@@ -623,7 +624,7 @@ msgid ""
 msgstr ""
 "如果需要生成動態內容，您可以考慮將字詞以符號「#」開頭。\n"
 "字詞中可以包含如 $name 或者 $(name) 這樣的變數名。\n"
-"例如，您可以使用「sj,2=#$fullhour:$minute」來使 sj 生成當前的 24 小時制時"
+"例如，您可以使用「sj,2=#$fullhour:$minute」來使 sj 生成目前的 24 小時制時"
 "間。\n"
 "內建函數包括：\n"
 "$year：目前年份，如 1990，2003。\n"
@@ -674,7 +675,7 @@ msgstr "鍵"
 #: modules/punctuation/punctuation.h:51
 msgctxt "Key of the punctuation, e.g. comma"
 msgid "Key"
-msgstr "按键"
+msgstr "按鍵"
 
 #: im/table/ime.h:136 im/pinyin/pinyin.h:284
 msgid "Key to trigger quickphrase"
@@ -702,7 +703,7 @@ msgstr "微軟"
 
 #: im/pinyin/pinyin.h:273
 msgid "Manage Custom Phrase"
-msgstr "管理自定字詞"
+msgstr "管理自訂字詞"
 
 #: im/pinyin/pinyin.h:271
 msgid "Manage Dictionaries"
@@ -740,7 +741,7 @@ msgstr "新字典名稱："
 msgctxt "OpenCC Profile"
 msgid ""
 "New Japanese Kanji (Shinjitai) to Traditional Chinese Characters (Kyūjitai)"
-msgstr "新日語漢字（新字體）到繁體中文（舊字體）"
+msgstr "新日語漢字（新字體）到傳統漢字（舊字體）"
 
 #: im/table/ime.h:71 im/pinyin/pinyin.h:216
 msgid "Next Candidate"
@@ -800,7 +801,7 @@ msgid ""
 "disable this option if you want the candidate order to be stable regardless "
 "of the history."
 msgstr ""
-"根據已輸入的內容對候選詞排序。如果想要候選詞順序與輸入歷史無關，請禁用此選"
+"根據已輸入的內容對候選詞排序。如果想要候選詞順序與輸入歷史無關，請停用此選"
 "項。"
 
 #. i18n: file: gui/customphraseeditor/editordialog.ui:55
@@ -820,7 +821,7 @@ msgstr "字詞"
 
 #: im/pinyin/pinyincandidate.cpp:367
 msgid "Pin to top as custom phrase"
-msgstr "以自定字詞的方式置頂"
+msgstr "作為自訂字詞置頂"
 
 #: im/pinyin/pinyin.cpp:952 im/pinyin/pinyin.cpp:1236
 #: im/pinyin/pinyin-addon.conf.in.in:3 im/pinyin/pinyin.conf.in:3
@@ -835,14 +836,14 @@ msgstr "拼音字典管理器"
 msgid "PinyinJiajia"
 msgstr "拼音加加"
 
-#: im/table/state.cpp:742
+#: im/table/state.cpp:618
 msgid "Please use this functionality after typing some text."
 msgstr "請在輸入一些文字後再使用此功能。"
 
 #: im/table/engine.cpp:93 im/table/engine.cpp:101 im/pinyin/pinyin.cpp:753
 #: im/pinyin/pinyin.cpp:763
 msgid "Prediction Disabled"
-msgstr "已禁用預測功能"
+msgstr "已停用預測功能"
 
 #: im/table/engine.cpp:92 im/table/engine.cpp:100 im/pinyin/pinyin.cpp:752
 #: im/pinyin/pinyin.cpp:762
@@ -859,17 +860,17 @@ msgstr "預編輯模式"
 
 #: im/table/ime.h:185
 msgid "Prefix key to trigger Pinyin"
-msgstr "前綴鍵觸發拼音"
+msgstr "觸發拼音的前綴鍵"
 
-#: im/table/state.cpp:812
+#: im/table/state.cpp:688
 msgid "Press Backspace to forget."
 msgstr "按下退格鍵以忘記。"
 
-#: im/table/state.cpp:815
+#: im/table/state.cpp:691
 msgid "Press Delete to remove."
 msgstr "按下刪除鍵以移除。"
 
-#: im/table/state.cpp:809
+#: im/table/state.cpp:685
 msgid "Press space or enter to insert."
 msgstr "按下空白鍵或Enter鍵進行插入。"
 
@@ -901,7 +902,7 @@ msgstr "上一頁"
 
 #: im/pinyin/pinyin.h:269
 msgid "Prompt long word length when input length over (0 for disable)"
-msgstr "當輸入長於...時顯示長詞 (设置为 0 时禁用)"
+msgstr "當輸入長於此長度時顯示長詞 (設為 0 來停用)"
 
 #: modules/cloudpinyin/cloudpinyin.h:39
 msgid "Proxy"
@@ -968,7 +969,7 @@ msgstr "選擇第二個候選詞"
 msgid "Select Third Candidate"
 msgstr "選擇第三個候選詞"
 
-#: im/table/state.cpp:1482
+#: im/table/state.cpp:1360
 msgid "Select candidate to be removed from history:"
 msgstr "選擇要從歷史中移除的候選詞："
 
@@ -986,7 +987,7 @@ msgstr "提示與候選詞之間的分隔符文本"
 
 #: im/pinyin/pinyin.h:165
 msgid "Show animation when Cloud Pinyin is loading"
-msgstr "加載雲拼音時顯示動畫"
+msgstr "雲拼音載入時時顯示動畫"
 
 #: im/pinyin/pinyin.h:178
 msgid "Show complete pinyin in preedit"
@@ -1052,7 +1053,7 @@ msgstr "依據上下文排序候選詞"
 
 #: im/pinyin/pinyin.h:294
 msgid "Strings to trigger quick phrase"
-msgstr "觸發快速輸入的字符串"
+msgstr "觸發快速輸入的字串"
 
 #: modules/chttrans/chttrans.cpp:120
 msgid "Switch to Simplified Chinese"
@@ -1194,13 +1195,13 @@ msgstr "使用退格鍵以取消選詞"
 msgid "Use Keypad as Selection key"
 msgstr "使用數字鍵盤選擇候選字詞"
 
-#: im/table/state.cpp:748
+#: im/table/state.cpp:624
 msgid "Use Left and Right to select character: "
-msgstr "使用左右鍵來選擇字符："
+msgstr "使用左右鍵來選擇字元："
 
-#: im/table/state.cpp:796
+#: im/table/state.cpp:672
 msgid "Use Left and Right to select text. "
-msgstr "使用左右鍵以選擇字符。"
+msgstr "使用左右鍵以選擇文字。"
 
 #: im/pinyin/pinyin.h:288
 msgid "Use V to trigger quickphrase"
@@ -1208,7 +1209,7 @@ msgstr "使用 V 以觸發快速輸入"
 
 #: im/table/ime.h:123
 msgid "Use full width"
-msgstr "使用全形字符"
+msgstr "使用全形字元"
 
 #: im/table/ime.h:159
 msgid "Use system language model"
@@ -1227,14 +1228,14 @@ msgid ""
 "When a new character is typed, if it matches any character in this string, "
 "all the existing text will be put into quickphrase buffer."
 msgstr ""
-"輸入新字符時，若此字符與字符串中任何字符匹配，所有已有文本將會被放到快速輸入"
-"緩衝區中。"
+"輸入新字元時，若它符合此字串中的任何字元，則將會把所有顯存文字放到快速輸入緩"
+"衝區中。"
 
 #: im/table/ime.h:163
 msgid ""
 "When available, system language model will be loaded for given language and "
 "provide ability to give better context based order."
-msgstr "系統語言模型將會在可用時加載，並基於上下文提供更好的排序。"
+msgstr "可用時，系統語言模型將會為指定語言載入，並基於上下文提供更好的排序。"
 
 #: im/table/ime.h:198
 msgid ""
@@ -1243,7 +1244,7 @@ msgid ""
 "the maximum code length of the table. 0 means this behavior is disabled."
 msgstr ""
 "如果目前輸入長度大於等於限制並且只有一個可用候選詞時，自動選擇此候選詞。-1 表"
-"示碼表的最大碼長。 0 表示禁用此行為。"
+"示碼表的最大碼長。 0 表示停用此行為。"
 
 #: im/table/ime.h:209
 msgid ""
@@ -1259,9 +1260,9 @@ msgid ""
 "type in the new character. -1 means the maximum code length of the table. 0 "
 "means this behavior is disabled."
 msgstr ""
-"輸入新字符時，如果當前輸入長度大於等於此限制，且當前分段加上此字符在碼表中無"
-"匹配，將選擇當前候選詞，在輸入新字符。-1 表示碼表的最大碼長。0 表示禁用此行"
-"為。"
+"輸入新字元時，如果目前的輸入長度大於等於此限制，且目前包含該新字元的分段沒有"
+"符合碼表中的任何項目，則選擇目前的候選詞並輸入該新字元。-1 表示碼表的最大碼"
+"長。0 表示停用此行為。"
 
 #: im/table/ime.h:234
 msgid ""
@@ -1270,17 +1271,17 @@ msgid ""
 "matched entries in the table, select the current candidate and then type in "
 "the new character."
 msgstr ""
-"輸入新字符時，如果目前的輸入匹配正則表達式且目前分段加上此新字符在碼表中無匹"
-"配，將選擇目前候選詞，再輸入新字符。"
+"輸入新字元時，如果目前的輸入符合該正則表達式，且目前包含該新字元的分段沒有符"
+"合碼表中的任何項目，則選擇目前的候選詞並輸入該新字元。"
 
 #: im/table/ime.h:260
 msgid ""
 "Whether to learn new phrase from other phrases or just single characters."
-msgstr "是要從其他短語中學習新短語還是只學習單個字符。"
+msgstr "是否要從其他詞組學習自組詞，還是僅從單一字元。"
 
 #: im/table/ime.h:180
 msgid "Wildcard matching Key"
-msgstr "模糊键"
+msgstr "模糊鍵"
 
 #: gui/pinyindictmanager/browserdialog.cpp:110
 msgid "Wrong Link"
@@ -1388,23 +1389,23 @@ msgstr "z <-> zh"
 msgid "{0} ({1})"
 msgstr "{0}({1})"
 
-#: im/table/state.cpp:787
+#: im/table/state.cpp:663
 #, c++-format
 msgctxt "Pinyin & Shuangpin"
 msgid "{0} ({1})"
 msgstr "{0} ({1})"
 
-#: im/table/state.cpp:830
+#: im/table/state.cpp:706
 #, c++-format
 msgid "{0} is not in table."
 msgstr "{0} 不在碼表中。"
 
-#: im/table/state.cpp:819
+#: im/table/state.cpp:695
 #, c++-format
 msgid "{0}: No corresponding code."
 msgstr "{0}：無對應的碼。"
 
-#: im/table/state.cpp:803 im/table/state.cpp:827
+#: im/table/state.cpp:679 im/table/state.cpp:703
 #, c++-format
 msgid "{0}: {1}"
 msgstr "{0}:{1}"
