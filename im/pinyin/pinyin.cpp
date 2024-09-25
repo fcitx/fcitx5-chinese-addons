@@ -187,13 +187,18 @@ void PinyinEngine::updatePredict(InputContext *inputContext) {
     inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
 }
 
-int englishNess(const std::string &input, bool sp) {
+std::tuple<bool, int> englishNess(const std::string &input, bool sp) {
     const auto pys = stringutils::split(input, " ");
     constexpr int fullWeight = -2;
     constexpr int shortWeight = 3;
     constexpr int invalidWeight = 6;
     constexpr int defaultWeight = shortWeight;
     int weight = 0;
+    if (std::any_of(input.begin(), input.end(), charutils::isupper)) {
+        return {true,
+                std::max<size_t>(1, (invalidWeight * pys.size() + 7) / 10)};
+    }
+
     for (const auto &py : pys) {
         if (sp) {
             if (py.size() == 2) {
@@ -207,7 +212,7 @@ int englishNess(const std::string &input, bool sp) {
             } else {
                 auto firstChr = py[0];
                 if (firstChr == '\'') {
-                    return 0;
+                    return {false, 0};
                 }
                 if (firstChr == 'i' || firstChr == 'u' || firstChr == 'v') {
                     weight += invalidWeight;
@@ -223,9 +228,9 @@ int englishNess(const std::string &input, bool sp) {
     }
 
     if (weight < 0) {
-        return 0;
+        return {false, 0};
     }
-    return (weight + 7) / 10;
+    return {false, (weight + 7) / 10};
 }
 
 bool isStroke(const std::string &input) {
@@ -488,7 +493,8 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
         if (*config_.spellEnabled && spell() &&
             parsedPyCursor >= selectedSentence.size() &&
             selectedLength <= context.cursor()) {
-            int engNess = englishNess(parsedPy, context.useShuangpin());
+            auto [hasUpper, engNess] =
+                englishNess(parsedPy, context.useShuangpin());
             if (engNess) {
                 parsedPyCursor -= selectedSentence.length();
                 parsedPy = parsedPy.substr(
@@ -498,14 +504,23 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
                         : std::string::npos);
                 auto results = spell()->call<ISpell::hintWithProvider>(
                     "en", SpellProvider::Custom, pyBeforeCursor, engNess);
-                std::string bestSentence;
-                if (!candidates.empty()) {
-                    bestSentence = candidates[0].toString();
+
+                // Our hint doesn't work well with mixed case, so, always put a
+                // word as is.
+                if (hasUpper && !pyBeforeCursor.empty()) {
+                    if (std::find(results.begin(), results.end(),
+                                  pyBeforeCursor) == results.end()) {
+                        if (!charutils::isupper(pyBeforeCursor[0])) {
+                            results.insert(results.begin(), pyBeforeCursor);
+                        } else {
+                            results.push_back(pyBeforeCursor);
+                        }
+                    }
                 }
-                int position = 1;
-                for (auto &result : results) {
-                    if (customCandidateSet.count(result) ||
-                        context.candidatesToCursorSet().count(result)) {
+
+                int position = hasUpper ? 0 : 1;
+                for (const auto &result : results) {
+                    if (customCandidateSet.count(result)) {
                         continue;
                     }
                     extraCandidates.push_back(
