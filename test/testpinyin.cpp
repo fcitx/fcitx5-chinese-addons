@@ -193,6 +193,36 @@ void testSelectByChar(Instance *instance) {
     });
 }
 
+void testUppercase(Instance *instance) {
+    instance->eventDispatcher().schedule([instance]() {
+        auto *testfrontend = instance->addonManager().addon("testfrontend");
+        auto uuid =
+            testfrontend->call<ITestFrontend::createInputContext>("testapp");
+
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Control+space"),
+                                                    false);
+
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("Apple");
+
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("A"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("p"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("p"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("l"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("e"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("space"), false);
+
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("iPhone");
+
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("i"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("P"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("h"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("o"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("n"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("e"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("space"), false);
+    });
+}
+
 void testForget(Instance *instance) {
     instance->eventDispatcher().schedule([instance]() {
         auto *testfrontend = instance->addonManager().addon("testfrontend");
@@ -372,13 +402,14 @@ int main() {
     char arg0[] = "testpinyin";
     char arg1[] = "--disable=all";
     char arg2[] = "--enable=testim,testfrontend,pinyin,punctuation,"
-                  "pinyinhelper";
+                  "pinyinhelper,spell";
     char *argv[] = {arg0, arg1, arg2};
     fcitx::Log::setLogRule("default=5,pinyin=5");
     Instance instance(FCITX_ARRAY_SIZE(argv), argv);
     instance.addonManager().registerDefaultLoader(nullptr);
     testBasic(&instance);
     testSelectByChar(&instance);
+    testUppercase(&instance);
     testForget(&instance);
     testPin(&instance);
     testPunctuation(&instance);
