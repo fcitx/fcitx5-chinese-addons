@@ -18,7 +18,6 @@
 #include <fcitx-utils/i18n.h>
 #include <fcitx-utils/key.h>
 #include <fcitx/action.h>
-#include <fcitx/addonfactory.h>
 #include <fcitx/addoninstance.h>
 #include <fcitx/addonmanager.h>
 #include <fcitx/event.h>
@@ -154,13 +153,6 @@ private:
     std::unique_ptr<EventSource> preloadEvent_;
 };
 
-class TableEngineFactory : public AddonFactory {
-public:
-    AddonInstance *create(AddonManager *manager) override {
-        registerDomain("fcitx5-chinese-addons", FCITX_INSTALL_LOCALEDIR);
-        return new TableEngine(manager->instance());
-    }
-};
 } // namespace fcitx
 
 #endif // _TABLE_TABLE_H_
