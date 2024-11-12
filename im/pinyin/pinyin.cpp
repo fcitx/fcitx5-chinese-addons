@@ -2412,5 +2412,3 @@ void PinyinEngine::cloudPinyinSelected(InputContext *inputContext,
 }
 
 } // namespace fcitx
-
-FCITX_ADDON_FACTORY(fcitx::PinyinEngineFactory)

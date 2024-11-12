@@ -28,7 +28,6 @@
 #include <fcitx-utils/standardpath.h>
 #include <fcitx-utils/trackableobject.h>
 #include <fcitx/action.h>
-#include <fcitx/addonfactory.h>
 #include <fcitx/addoninstance.h>
 #include <fcitx/addonmanager.h>
 #include <fcitx/event.h>
@@ -463,13 +462,6 @@ private:
     static constexpr size_t NumBuiltInDict = 2;
 };
 
-class PinyinEngineFactory : public AddonFactory {
-public:
-    AddonInstance *create(AddonManager *manager) override {
-        registerDomain("fcitx5-chinese-addons", FCITX_INSTALL_LOCALEDIR);
-        return new PinyinEngine(manager->instance());
-    }
-};
 } // namespace fcitx
 
 #endif // _PINYIN_PINYIN_H_
