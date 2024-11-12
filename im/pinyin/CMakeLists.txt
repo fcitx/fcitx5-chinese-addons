@@ -4,6 +4,7 @@ set(PINYIN_SOURCES
     symboldictionary.cpp
     workerthread.cpp
     pinyincandidate.cpp
+    pinyinenginefactory.cpp
 )
 
 add_library(pinyin MODULE ${PINYIN_SOURCES})
