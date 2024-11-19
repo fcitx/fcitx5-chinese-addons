@@ -5,10 +5,13 @@
  *
  */
 
-#include <QTemporaryFile>
-
 #include "filedownloader.h"
-#include "guicommon.h"
+#include "pipelinejob.h"
+#include <QMessageBox>
+#include <QNetworkReply>
+#include <QNetworkRequest>
+#include <QString>
+#include <QTemporaryFile>
 #include <fcitx-utils/i18n.h>
 
 namespace fcitx {

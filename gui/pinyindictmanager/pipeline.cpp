@@ -5,6 +5,8 @@
  *
  */
 #include "pipeline.h"
+#include "pipelinejob.h"
+#include <QObject>
 
 namespace fcitx {
 

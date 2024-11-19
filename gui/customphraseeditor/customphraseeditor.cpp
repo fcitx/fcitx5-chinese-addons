@@ -7,14 +7,22 @@
 #include "customphraseeditor.h"
 #include "customphrasemodel.h"
 #include "editordialog.h"
+#include <QAbstractItemModel>
+#include <QDialog>
+#include <QFutureWatcher>
+#include <QHeaderView>
 #include <QLineEdit>
 #include <QObject>
+#include <QPushButton>
 #include <QRegularExpressionValidator>
 #include <QSpinBox>
+#include <QStyleOptionViewItem>
 #include <QStyledItemDelegate>
 #include <QTextEdit>
+#include <fcitx-utils/i18n.h>
 #include <fcitx-utils/standardpath.h>
 #include <fcitx-utils/stringutils.h>
+#include <fcitxqtconfiguiwidget.h>
 #include <fcntl.h>
 #include <qdesktopservices.h>
 #include <qfilesystemwatcher.h>
@@ -27,9 +35,10 @@ class OrderDelegate : public QStyledItemDelegate {
     Q_OBJECT
 public:
     OrderDelegate(QObject *parent) : QStyledItemDelegate(parent) {}
-    QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &,
-                          const QModelIndex &) const override {
-        QSpinBox *spinBox = new QSpinBox(parent);
+    QWidget *createEditor(QWidget *parent,
+                          const QStyleOptionViewItem & /*option*/,
+                          const QModelIndex & /*index*/) const override {
+        auto *spinBox = new QSpinBox(parent);
         spinBox->setFrame(false);
         spinBox->setMinimum(1);
         spinBox->setMaximum(100);
@@ -39,12 +48,12 @@ public:
                        const QModelIndex &index) const override {
         int value = index.model()->data(index, Qt::EditRole).toInt();
 
-        QSpinBox *spinBox = static_cast<QSpinBox *>(editor);
+        auto *spinBox = static_cast<QSpinBox *>(editor);
         spinBox->setValue(value);
     }
     void setModelData(QWidget *editor, QAbstractItemModel *model,
                       const QModelIndex &index) const override {
-        QSpinBox *spinBox = static_cast<QSpinBox *>(editor);
+        auto *spinBox = static_cast<QSpinBox *>(editor);
         spinBox->interpretText();
         int value = spinBox->value();
 
@@ -56,8 +65,9 @@ class KeyDelegate : public QStyledItemDelegate {
     Q_OBJECT
 public:
     KeyDelegate(QObject *parent) : QStyledItemDelegate(parent) {}
-    QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &,
-                          const QModelIndex &) const override {
+    QWidget *createEditor(QWidget *parent,
+                          const QStyleOptionViewItem & /*option*/,
+                          const QModelIndex & /*index*/) const override {
         auto *lineEdit = new QLineEdit(parent);
         auto *validator = new QRegularExpressionValidator(lineEdit);
 
@@ -86,8 +96,9 @@ class ValueDelegate : public QStyledItemDelegate {
     Q_OBJECT
 public:
     ValueDelegate(QObject *parent) : QStyledItemDelegate(parent) {}
-    QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &,
-                          const QModelIndex &) const override {
+    QWidget *createEditor(QWidget *parent,
+                          const QStyleOptionViewItem & /*option*/,
+                          const QModelIndex & /*index*/) const override {
         auto *textEdit = new QTextEdit(parent);
         textEdit->setAcceptRichText(false);
         return textEdit;
@@ -183,8 +194,9 @@ void CustomPhraseEditor::addPhraseAccepted() {
 }
 
 void CustomPhraseEditor::removePhrase() {
-    if (!tableView_->currentIndex().isValid())
+    if (!tableView_->currentIndex().isValid()) {
         return;
+    }
     int row = tableView_->currentIndex().row();
     model_->deleteItem(row);
 }
