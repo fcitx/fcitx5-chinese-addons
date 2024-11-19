@@ -6,6 +6,9 @@ Library=libpinyinhelper
 Type=SharedLibrary
 OnDemand=False
 
+[Addon/Dependencies]
+0=core:@REQUIRED_FCITX_VERSION@
+
 [Addon/OptionalDependencies]
 0=quickphrase
 1=clipboard

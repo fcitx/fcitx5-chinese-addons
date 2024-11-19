@@ -360,4 +360,4 @@ class ChttransModuleFactory : public AddonFactory {
     }
 };
 
-FCITX_ADDON_FACTORY(ChttransModuleFactory)
+FCITX_ADDON_FACTORY_V2(chttrans, ChttransModuleFactory)
