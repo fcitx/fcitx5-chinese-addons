@@ -7,3 +7,5 @@ Type=SharedLibrary
 OnDemand=True
 Configurable=True
 
+[Addon/Dependencies]
+0=core:@REQUIRED_FCITX_VERSION@

@@ -17,4 +17,4 @@ fcitx::AddonInstance *fcitx::TableEngineFactory::create(AddonManager *manager) {
 
 } // namespace fcitx
 
-FCITX_ADDON_FACTORY(fcitx::TableEngineFactory)
+FCITX_ADDON_FACTORY_V2(table, fcitx::TableEngineFactory)

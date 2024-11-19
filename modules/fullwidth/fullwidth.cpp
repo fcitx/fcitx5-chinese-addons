@@ -124,4 +124,4 @@ class FullwidthModuleFactory : public AddonFactory {
     }
 };
 
-FCITX_ADDON_FACTORY(FullwidthModuleFactory)
+FCITX_ADDON_FACTORY_V2(fullwidth, FullwidthModuleFactory)

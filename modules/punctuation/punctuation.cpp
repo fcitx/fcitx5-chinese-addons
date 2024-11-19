@@ -576,4 +576,4 @@ void Punctuation::setSubConfig(const std::string &path,
     iter->second.save(lang);
 }
 
-FCITX_ADDON_FACTORY(PunctuationFactory);
+FCITX_ADDON_FACTORY_V2(punctuation, PunctuationFactory);

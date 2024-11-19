@@ -207,4 +207,4 @@ void CloudPinyin::notifyFinished() {
     });
 }
 
-FCITX_ADDON_FACTORY(CloudPinyinFactory);
+FCITX_ADDON_FACTORY_V2(cloudpinyin, CloudPinyinFactory);

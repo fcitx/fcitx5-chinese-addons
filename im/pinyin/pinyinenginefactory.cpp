@@ -19,4 +19,4 @@ fcitx::PinyinEngineFactory::create(AddonManager *manager) {
 
 } // namespace fcitx
 
-FCITX_ADDON_FACTORY(fcitx::PinyinEngineFactory)
+FCITX_ADDON_FACTORY_V2(pinyin, fcitx::PinyinEngineFactory)

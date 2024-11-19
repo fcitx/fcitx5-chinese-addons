@@ -8,8 +8,9 @@ Configurable=True
 Version=@PROJECT_VERSION@
 
 [Addon/Dependencies]
-0=punctuation:@PROJECT_VERSION@
-1=pinyinhelper:@PROJECT_VERSION@
+0=core:@REQUIRED_FCITX_VERSION@
+1=punctuation:@PROJECT_VERSION@
+2=pinyinhelper:@PROJECT_VERSION@
 
 [Addon/OptionalDependencies]
 0=fullwidth:@PROJECT_VERSION@
