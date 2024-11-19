@@ -16,6 +16,7 @@
 #include <fcitx-utils/stringutils.h>
 #include <fcitx-utils/utf8.h>
 #include <fcntl.h>
+#include <fstream>
 #include <qfuturewatcher.h>
 #include <qnamespace.h>
 

@@ -6,17 +6,32 @@
  */
 #include "pinyindictmanager.h"
 #include "config.h"
-#include "log.h"
+#include "filelistmodel.h"
+#include "pipeline.h"
 #include "processrunner.h"
 #include "renamefile.h"
+#include <QAction>
 #include <QDesktopServices>
+#include <QDialog>
+#include <QDir>
 #include <QFileDialog>
+#include <QFileInfo>
 #include <QInputDialog>
+#include <QLineEdit>
 #include <QMenu>
 #include <QMessageBox>
+#include <QMetaObject>
+#include <QPushButton>
+#include <QString>
+#include <QStringList>
 #include <QTemporaryFile>
+#include <fcitx-utils/fs.h>
 #include <fcitx-utils/i18n.h>
 #include <fcitx-utils/standardpath.h>
+#include <fcitx-utils/stringutils.h>
+#include <fcitxqtconfiguiwidget.h>
+#include <qnamespace.h>
+#include <string>
 
 #ifdef ENABLE_BROWSER
 #include "browserdialog.h"
@@ -30,7 +45,7 @@ PinyinDictManager::PinyinDictManager(QWidget *parent)
       pipeline_(new Pipeline(this)) {
     setupUi(this);
 
-    QMenu *menu = new QMenu(this);
+    auto *menu = new QMenu(this);
     importFromFileAction_ = new QAction(_("From &File"), this);
     importFromSogou_ = new QAction(_("From &Sogou Cell Dictionary File"), this);
     importFromSogouOnline_ =

@@ -6,15 +6,16 @@
  */
 
 #include "browserdialog.h"
-#include "config.h"
-#include "filedownloader.h"
 #include "guicommon.h"
 #include <QDebug>
+#include <QDialog>
 #include <QIcon>
 #include <QMessageBox>
+#include <QProgressBar>
 #include <QTemporaryFile>
 #include <QUrl>
 #include <QUrlQuery>
+#include <QWidget>
 #include <fcitx-utils/i18n.h>
 
 namespace fcitx {
@@ -39,17 +40,17 @@ public:
 protected:
 #ifdef USE_WEBKIT
     bool acceptNavigationRequest(QWebFrame *, const QNetworkRequest &request,
-                                 NavigationType) override {
+                                 NavigationType /*type*/) override {
         return dialog_->linkClicked(request.url());
     }
 #else
-    bool acceptNavigationRequest(const QUrl &url, NavigationType,
-                                 bool) override {
+    bool acceptNavigationRequest(const QUrl &url, NavigationType /*type*/,
+                                 bool /*isMainFrame*/) override {
         return dialog_->linkClicked(url);
     }
 #endif
 
-    WebPageBase *createWindow(WebPageBase::WebWindowType) override {
+    WebPageBase *createWindow(WebPageBase::WebWindowType /*type*/) override {
         return this;
     }
 
