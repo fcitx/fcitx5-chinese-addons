@@ -8,6 +8,7 @@
 #include "filelistmodel.h"
 #include <QDebug>
 #include <QFile>
+#include <fcitx-utils/fs.h>
 #include <fcitx-utils/standardpath.h>
 #include <fcitxqti18nhelper.h>
 #include <fcntl.h>
@@ -112,17 +113,20 @@ int FileListModel::findFile(const QString &lastFileName) {
 }
 
 void FileListModel::save() {
+    auto baseDir = stringutils::joinPath(
+        StandardPath::global().userDirectory(StandardPath::Type::PkgData),
+        "pinyin/dictionaries");
     for (const auto &file : fileList_) {
         auto disableFilePath = stringutils::joinPath(
-            StandardPath::global().userDirectory(StandardPath::Type::PkgData),
-            "pinyin/dictionaries",
-            stringutils::concat(file.first.toStdString(), ".disable"));
+            baseDir, stringutils::concat(file.first.toStdString(), ".disable"));
         QFile disableFile(QString::fromStdString(disableFilePath));
         if (file.second) {
             disableFile.remove();
         } else {
-            disableFile.open(QIODevice::WriteOnly);
-            disableFile.close();
+            if (fs::makePath(baseDir)) {
+                disableFile.open(QIODevice::WriteOnly);
+                disableFile.close();
+            }
         }
     }
 }
