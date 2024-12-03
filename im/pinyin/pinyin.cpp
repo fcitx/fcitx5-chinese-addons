@@ -1541,6 +1541,8 @@ void PinyinEngine::resetForgetCandidate(InputContext *inputContext) const {
 void PinyinEngine::forgetCandidate(InputContext *inputContext, size_t index) {
     auto *state = inputContext->propertyFor(&factory_);
 
+    const std::string currentInput = state->context_.userInput();
+
     if (index < state->context_.candidatesToCursor().size()) {
         const auto &sentence = state->context_.candidatesToCursor()[index];
         // If this is a word, remove it from user dict.
@@ -1555,6 +1557,9 @@ void PinyinEngine::forgetCandidate(InputContext *inputContext, size_t index) {
     }
     resetForgetCandidate(inputContext);
     doReset(inputContext);
+
+    state->context_.type(currentInput);
+    updateUI(inputContext);
 }
 
 void PinyinEngine::saveCustomPhrase() {
