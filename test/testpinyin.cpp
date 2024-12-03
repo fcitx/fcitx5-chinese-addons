@@ -248,7 +248,7 @@ void testForget(Instance *instance) {
         FCITX_ASSERT(!actions.empty());
         FCITX_ASSERT(actions[0].id() == 0);
         actionable->triggerAction(cand, 0);
-        FCITX_ASSERT(!ic->inputPanel().candidateList());
+        FCITX_ASSERT(ic->inputPanel().candidateList());
     });
 }
 
