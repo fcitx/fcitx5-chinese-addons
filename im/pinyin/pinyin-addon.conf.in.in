@@ -3,7 +3,7 @@ Name=Pinyin
 Category=InputMethod
 Version=@PROJECT_VERSION@
 Library=libpinyin
-Type=SharedLibrary
+Type=@FCITX_ADDON_TYPE@
 OnDemand=True
 Configurable=True
 

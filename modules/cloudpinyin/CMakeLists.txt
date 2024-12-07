@@ -4,7 +4,7 @@ set(CLOUDPINYIN_SOURCES
 )
 
 if (ENABLE_CLOUDPINYIN)
-add_library(cloudpinyin MODULE ${CLOUDPINYIN_SOURCES})
+add_fcitx5_addon(cloudpinyin ${CLOUDPINYIN_SOURCES})
 target_link_libraries(cloudpinyin Fcitx5::Core Fcitx5::Config PkgConfig::Curl Pthread::Pthread)
 install(TARGETS cloudpinyin DESTINATION "${CMAKE_INSTALL_LIBDIR}/fcitx5")
 configure_file(cloudpinyin.conf.in.in cloudpinyin.conf.in)

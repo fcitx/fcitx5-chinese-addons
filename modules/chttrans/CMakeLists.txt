@@ -4,7 +4,7 @@ set(CHTTRANS_SOURCES
 if (ENABLE_OPENCC)
     set(CHTTRANS_SOURCES ${CHTTRANS_SOURCES} chttrans-opencc.cpp)
 endif()
-add_library(chttrans MODULE ${CHTTRANS_SOURCES})
+add_fcitx5_addon(chttrans ${CHTTRANS_SOURCES})
 target_link_libraries(chttrans Fcitx5::Core Fcitx5::Config Fcitx5::Module::Notifications Boost::iostreams ${FMT_TARGET})
 if (ENABLE_OPENCC)
     target_link_libraries(chttrans OpenCC::OpenCC)

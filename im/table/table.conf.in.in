@@ -2,7 +2,7 @@
 Name=Table
 Category=InputMethod
 Library=libtable
-Type=SharedLibrary
+Type=@FCITX_ADDON_TYPE@
 OnDemand=True
 Configurable=True
 Version=@PROJECT_VERSION@

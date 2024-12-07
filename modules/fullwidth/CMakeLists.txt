@@ -1,7 +1,7 @@
 set(FULLWIDTH_SOURCES
     fullwidth.cpp
 )
-add_library(fullwidth MODULE ${FULLWIDTH_SOURCES})
+add_fcitx5_addon(fullwidth ${FULLWIDTH_SOURCES})
 target_link_libraries(fullwidth Fcitx5::Core Fcitx5::Config Fcitx5::Module::Notifications)
 install(TARGETS fullwidth DESTINATION "${CMAKE_INSTALL_LIBDIR}/fcitx5")
 configure_file(fullwidth.conf.in.in fullwidth.conf.in)

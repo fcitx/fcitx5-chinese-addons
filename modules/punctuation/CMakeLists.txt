@@ -8,7 +8,7 @@ set(PUNCTUATION_DATA_FILES
   punc.mb.zh_TW
 )
 
-add_library(punctuation MODULE ${PUNCTUATION_SOURCES})
+add_fcitx5_addon(punctuation ${PUNCTUATION_SOURCES})
 target_link_libraries(punctuation Fcitx5::Core Fcitx5::Config Boost::iostreams Fcitx5::Module::Notifications)
 install(TARGETS punctuation DESTINATION "${CMAKE_INSTALL_LIBDIR}/fcitx5")
 configure_file(punctuation.conf.in.in punctuation.conf.in)
