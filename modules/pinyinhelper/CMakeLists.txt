@@ -3,7 +3,7 @@ set(PINYINHELPER_SOURCES
     pinyinlookup.cpp
     stroke.cpp
 )
-add_library(pinyinhelper MODULE ${PINYINHELPER_SOURCES})
+add_fcitx5_addon(pinyinhelper ${PINYINHELPER_SOURCES})
 target_link_libraries(pinyinhelper 
 Fcitx5::Core 
 Fcitx5::Config

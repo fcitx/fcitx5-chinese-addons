@@ -3,7 +3,7 @@ Name=Punctuation
 Category=Module
 Version=@PROJECT_VERSION@
 Library=libpunctuation
-Type=SharedLibrary
+Type=@FCITX_ADDON_TYPE@
 OnDemand=True
 Configurable=True
 
