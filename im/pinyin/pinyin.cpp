@@ -994,7 +994,8 @@ void PinyinEngine::populateConfig() {
                                           never_close_handle);
                 std::istream in(&buffer);
                 ime_->setShuangpinProfile(
-                    std::make_shared<libime::ShuangpinProfile>(in));
+                    std::make_shared<libime::ShuangpinProfile>(
+                        in, ime_->correctionProfile().get()));
             } catch (const std::exception &e) {
                 PINYIN_ERROR() << e.what();
             }
@@ -1019,14 +1020,15 @@ void PinyinEngine::populateConfig() {
             profile = libime::ShuangpinBuiltinProfile::Ziranma;
             break;
         }
-        ime_->setShuangpinProfile(
-            std::make_shared<libime::ShuangpinProfile>(profile));
+        ime_->setShuangpinProfile(std::make_shared<libime::ShuangpinProfile>(
+            profile, ime_->correctionProfile().get()));
     }
 
     // Always set a profile to avoid crash.
     if (!ime_->shuangpinProfile()) {
         ime_->setShuangpinProfile(std::make_shared<libime::ShuangpinProfile>(
-            libime::ShuangpinBuiltinProfile::Ziranma));
+            libime::ShuangpinBuiltinProfile::Ziranma,
+            ime_->correctionProfile().get()));
     }
 
     libime::PinyinFuzzyFlags flags;
