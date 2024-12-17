@@ -1070,6 +1070,12 @@ void PinyinEngine::populateConfig() {
     if (correctionProfile) {
         flags |= libime::PinyinFuzzyFlag::Correction;
         ime_->setCorrectionProfile(std::move(correctionProfile));
+        auto sp = ime_->shuangpinProfile();
+        if (sp != nullptr) {
+            ime_->setShuangpinProfile(
+                std::make_shared<libime::ShuangpinProfile>(
+                    *sp, ime_->correctionProfile().get()));
+        }
     }
 
     ime_->setFuzzyFlags(flags);
