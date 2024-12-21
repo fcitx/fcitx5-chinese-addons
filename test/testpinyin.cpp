@@ -31,7 +31,7 @@ using namespace fcitx;
 std::unique_ptr<EventSourceTime> endTestEvent;
 void testPunctuationPart2(Instance *instance);
 
-int findCandidateOrDie(InputContext *ic, std::string_view word) {
+int findCandidate(InputContext *ic, std::string_view word) {
     auto candList = ic->inputPanel().candidateList();
     for (int i = 0; i < candList->toBulk()->totalSize(); i++) {
         const auto &candidate = candList->toBulk()->candidateFromAll(i);
@@ -39,8 +39,13 @@ int findCandidateOrDie(InputContext *ic, std::string_view word) {
             return i;
         }
     }
-    FCITX_ASSERT(false) << "Failed to find candidate: " << word;
     return -1;
+}
+
+int findCandidateOrDie(InputContext *ic, std::string_view word) {
+    auto index = findCandidate(ic, word);
+    FCITX_ASSERT(index >= 0) << "Failed to find candidate " << word;
+    return index;
 }
 
 void findAndSelectCandidate(InputContext *ic, std::string_view word) {
@@ -252,6 +257,41 @@ void testForget(Instance *instance) {
     });
 }
 
+void testActionInStrokeFilter(Instance *instance) {
+    instance->eventDispatcher().schedule([instance]() {
+        auto *testfrontend = instance->addonManager().addon("testfrontend");
+        auto uuid =
+            testfrontend->call<ITestFrontend::createInputContext>("testapp");
+        auto *ic = instance->inputContextManager().findByUUID(uuid);
+        FCITX_ASSERT(ic);
+
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Control+space"),
+                                                    false);
+        // Target ppp for 彡
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("p"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("p"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("p"), false);
+        auto *candidateList = ic->inputPanel().candidateList().get();
+        findCandidateOrDie(ic, "彡");
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("`"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("p"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("p"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("p"), false);
+        candidateList = ic->inputPanel().candidateList().get();
+        FCITX_ASSERT(findCandidate(ic, "彡") < 0);
+        int index = findCandidateOrDie(ic, "䫠");
+        const auto &cand = candidateList->candidate(index);
+        auto *actionable = candidateList->toActionable();
+        FCITX_ASSERT(actionable);
+        FCITX_ASSERT(actionable->hasAction(cand));
+        auto actions = actionable->candidateActions(cand);
+        FCITX_ASSERT(!actions.empty());
+        FCITX_ASSERT(actions[0].id() == 0);
+        actionable->triggerAction(cand, 0);
+        FCITX_ASSERT(ic->inputPanel().candidateList());
+    });
+}
+
 void testPin(Instance *instance) {
     instance->eventDispatcher().schedule([instance]() {
         auto *testfrontend = instance->addonManager().addon("testfrontend");
@@ -272,7 +312,8 @@ void testPin(Instance *instance) {
         FCITX_ASSERT(ic);
         auto index1 = findCandidateOrDie(ic, "同音");
         auto index2 = findCandidateOrDie(ic, "痛饮");
-        const auto oldIndex1 = index1, oldIndex2 = index2;
+        const auto oldIndex1 = index1;
+        const auto oldIndex2 = index2;
         FCITX_INFO() << "同音:" << index1 << " "
                      << "痛饮:" << index2;
         {
@@ -411,6 +452,7 @@ int main() {
     testSelectByChar(&instance);
     testUppercase(&instance);
     testForget(&instance);
+    testActionInStrokeFilter(&instance);
     testPin(&instance);
     testPunctuation(&instance);
     instance.exec();
