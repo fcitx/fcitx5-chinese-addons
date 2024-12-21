@@ -173,7 +173,7 @@ void TableState::reset(const InputMethodEntry *entry) {
 
 std::unique_ptr<CandidateList>
 TableState::predictCandidateList(const std::vector<std::string> &words) {
-    if (words.empty()) {
+    if (words.empty() || isComposeTableMode()) {
         return nullptr;
     }
     auto candidateList = std::make_unique<CommonCandidateList>();
@@ -239,6 +239,15 @@ bool TableState::isContextEmpty() const {
     return context_->empty();
 }
 
+bool TableState::isComposeTableMode() const {
+
+    if (!context_) {
+        return false;
+    }
+
+    return *context_->config().pageSize == 0;
+}
+
 bool TableState::autoSelectCandidate() const {
     auto candidateList = ic_->inputPanel().candidateList();
     if (candidateList && !candidateList->empty()) {
@@ -247,6 +256,13 @@ bool TableState::autoSelectCandidate() const {
             idx = 0;
         }
         candidateList->candidate(idx).select(ic_);
+        return true;
+    }
+    if (isComposeTableMode() && !context_->candidates().empty()) {
+        // Create a dummy candidate word to reuse the logic in
+        // TableCandidateWord::select
+        TableCandidateWord candidate(engine_, Text{}, 0);
+        candidate.select(ic_);
         return true;
     }
     return false;
@@ -390,7 +406,7 @@ bool TableState::handlePinyinMode(KeyEvent &event) {
     auto &inputPanel = ic_->inputPanel();
     ic_->inputPanel().reset();
 
-    if (!pinyinModeBuffer_.empty()) {
+    if (!pinyinModeBuffer_.empty() && !isComposeTableMode()) {
         const auto &dict = engine_->pinyinDict();
         const auto &lm = engine_->pinyinModel();
         auto pinyin = libime::PinyinEncoder::encodeOneUserPinyin(
@@ -878,7 +894,7 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
                 event.filterAndAccept();
                 maybePredict = true;
             }
-        } else if (!isContextEmpty()) {
+        } else if (!isContextEmpty() && !isComposeTableMode()) {
             if (event.key().check(FcitxKey_Return, KeyState::Shift) ||
                 event.key().check(FcitxKey_KP_Enter, KeyState::Shift)) {
                 // This key is used to type long auto select buffer.
@@ -1010,6 +1026,14 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
                 event.filterAndAccept();
                 return;
             }
+
+            if (isComposeTableMode()) {
+                if (!autoSelectCandidate()) {
+                    commitBuffer(true);
+                    needUpdate = true;
+                }
+            }
+
             break;
         }
         // if current key will produce some string, select the candidate.
@@ -1027,7 +1051,7 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
             auto pushResult =
                 engine_->punctuation()->call<IPunctuation::pushPunctuationV2>(
                     entry.languageCode(), inputContext, chr);
-            if (candidates.size() == 1) {
+            if (candidates.size() == 1 || isComposeTableMode()) {
                 std::tie(punc, puncAfter) = pushResult;
             } else if (candidates.size() > 1) {
                 updatePuncCandidate(inputContext, utf8::UCS4ToUTF8(chr),
@@ -1292,7 +1316,7 @@ void TableState::updateUI(bool keepOldCursor, bool maybePredict) {
     auto &inputPanel = ic_->inputPanel();
     if (!context->userInput().empty()) {
         auto candidates = context->candidates();
-        if (!candidates.empty()) {
+        if (!candidates.empty() && !isComposeTableMode()) {
             auto candidateList = std::make_unique<CommonCandidateList>();
             size_t idx = 0;
             candidateList->setLayoutHint(*config.candidateLayoutHint);
