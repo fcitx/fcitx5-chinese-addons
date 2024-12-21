@@ -98,8 +98,23 @@ FCITX_CONFIGURATION(
         {Key(FcitxKey_1), Key(FcitxKey_2), Key(FcitxKey_3), Key(FcitxKey_4),
          Key(FcitxKey_5), Key(FcitxKey_6), Key(FcitxKey_7), Key(FcitxKey_8),
          Key(FcitxKey_9), Key(FcitxKey_0)}};
-    Option<int, IntConstrain> pageSize{this, "PageSize", _("Page size"), 5,
-                                       IntConstrain(3, 10)};
+    Option<int, IntConstrain, DefaultMarshaller<int>, ToolTipAnnotation>
+        pageSize{
+            this,
+            "PageSize",
+            _("Page size"),
+            5,
+            IntConstrain(0, 10),
+            {},
+            {_("0 means no candidate will be displayed and a special compose "
+               "table mode will be enabled. This means you will "
+               "not be able to manually select candidate. This may be suitable "
+               "for table that only relies on auto selection. It will also "
+               "implicitly disable many standard key handling, Enter to "
+               "commit code, Tab to select candidate, cursor moving key (e.g. "
+               "Arrow, Page Up/Down) to trigger auto select and forward cursor "
+               "moving key to client, in order to simulate a more compose "
+               "table like experience.")}};
     SubConfigOption punctuationMap{this, "TableGlobal",
                                    _("Table Global Options"),
                                    "fcitx://config/addon/table"};
