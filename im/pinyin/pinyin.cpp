@@ -983,52 +983,8 @@ void PinyinEngine::populateConfig() {
     ime_->setPreeditMode(*config_.showActualPinyinInPreedit
                              ? libime::PinyinPreeditMode::Pinyin
                              : libime::PinyinPreeditMode::RawText);
-    if (*config_.shuangpinProfile == ShuangpinProfileEnum::Custom) {
-        auto file = StandardPath::global().open(StandardPath::Type::PkgConfig,
-                                                "pinyin/sp.dat", O_RDONLY);
-        if (file.isValid()) {
-            try {
-                boost::iostreams::stream_buffer<
-                    boost::iostreams::file_descriptor_source>
-                    buffer(file.fd(), boost::iostreams::file_descriptor_flags::
-                                          never_close_handle);
-                std::istream in(&buffer);
-                ime_->setShuangpinProfile(
-                    std::make_shared<libime::ShuangpinProfile>(in));
-            } catch (const std::exception &e) {
-                PINYIN_ERROR() << e.what();
-            }
-        } else {
-            PINYIN_ERROR() << "Failed to open shuangpin profile.";
-        }
-    } else {
-        libime::ShuangpinBuiltinProfile profile;
-#define TRANS_SP_PROFILE(PROFILE)                                              \
-    case ShuangpinProfileEnum::PROFILE:                                        \
-        profile = libime::ShuangpinBuiltinProfile::PROFILE;                    \
-        break;
-        switch (*config_.shuangpinProfile) {
-            TRANS_SP_PROFILE(Ziranma)
-            TRANS_SP_PROFILE(MS)
-            TRANS_SP_PROFILE(Ziguang)
-            TRANS_SP_PROFILE(ABC)
-            TRANS_SP_PROFILE(Zhongwenzhixing)
-            TRANS_SP_PROFILE(PinyinJiajia)
-            TRANS_SP_PROFILE(Xiaohe)
-        default:
-            profile = libime::ShuangpinBuiltinProfile::Ziranma;
-            break;
-        }
-        ime_->setShuangpinProfile(
-            std::make_shared<libime::ShuangpinProfile>(profile));
-    }
 
-    // Always set a profile to avoid crash.
-    if (!ime_->shuangpinProfile()) {
-        ime_->setShuangpinProfile(std::make_shared<libime::ShuangpinProfile>(
-            libime::ShuangpinBuiltinProfile::Ziranma));
-    }
-
+    // Setup fuzzy flags.
     libime::PinyinFuzzyFlags flags;
     const auto &fuzzyConfig = *config_.fuzzyConfig;
 #define SET_FUZZY_FLAG(VAR, ENUM)                                              \
@@ -1055,22 +1011,72 @@ void PinyinEngine::populateConfig() {
     SET_FUZZY_FLAG(s, S_SH)
     SET_FUZZY_FLAG(z, Z_ZH)
 
-    std::shared_ptr<libime::PinyinCorrectionProfile> correctionProfile;
-    switch (*fuzzyConfig.correction) {
-    case CorrectionLayout::None:
-        break;
-    case CorrectionLayout::Qwerty:
-        correctionProfile = std::make_shared<libime::PinyinCorrectionProfile>(
-            libime::BuiltinPinyinCorrectionProfile::Qwerty);
-        break;
-    }
-
-    if (correctionProfile) {
-        flags |= libime::PinyinFuzzyFlag::Correction;
+    {
+        std::shared_ptr<libime::PinyinCorrectionProfile> correctionProfile;
+        switch (*fuzzyConfig.correction) {
+        case CorrectionLayout::None:
+            break;
+        case CorrectionLayout::Qwerty:
+            correctionProfile =
+                std::make_shared<libime::PinyinCorrectionProfile>(
+                    libime::BuiltinPinyinCorrectionProfile::Qwerty);
+            break;
+        }
         ime_->setCorrectionProfile(std::move(correctionProfile));
     }
 
+    if (ime_->correctionProfile()) {
+        flags |= libime::PinyinFuzzyFlag::Correction;
+    }
     ime_->setFuzzyFlags(flags);
+
+    if (*config_.shuangpinProfile == ShuangpinProfileEnum::Custom) {
+        auto file = StandardPath::global().open(StandardPath::Type::PkgConfig,
+                                                "pinyin/sp.dat", O_RDONLY);
+        if (file.isValid()) {
+            try {
+                boost::iostreams::stream_buffer<
+                    boost::iostreams::file_descriptor_source>
+                    buffer(file.fd(), boost::iostreams::file_descriptor_flags::
+                                          never_close_handle);
+                std::istream in(&buffer);
+                ime_->setShuangpinProfile(
+                    std::make_shared<libime::ShuangpinProfile>(
+                        in, ime_->correctionProfile().get()));
+            } catch (const std::exception &e) {
+                PINYIN_ERROR() << e.what();
+            }
+        } else {
+            PINYIN_ERROR() << "Failed to open shuangpin profile.";
+        }
+    } else {
+        libime::ShuangpinBuiltinProfile profile;
+#define TRANS_SP_PROFILE(PROFILE)                                              \
+    case ShuangpinProfileEnum::PROFILE:                                        \
+        profile = libime::ShuangpinBuiltinProfile::PROFILE;                    \
+        break;
+        switch (*config_.shuangpinProfile) {
+            TRANS_SP_PROFILE(Ziranma)
+            TRANS_SP_PROFILE(MS)
+            TRANS_SP_PROFILE(Ziguang)
+            TRANS_SP_PROFILE(ABC)
+            TRANS_SP_PROFILE(Zhongwenzhixing)
+            TRANS_SP_PROFILE(PinyinJiajia)
+            TRANS_SP_PROFILE(Xiaohe)
+        default:
+            profile = libime::ShuangpinBuiltinProfile::Ziranma;
+            break;
+        }
+        ime_->setShuangpinProfile(std::make_shared<libime::ShuangpinProfile>(
+            profile, ime_->correctionProfile().get()));
+    }
+
+    // Always set a profile to avoid crash.
+    if (!ime_->shuangpinProfile()) {
+        ime_->setShuangpinProfile(std::make_shared<libime::ShuangpinProfile>(
+            libime::ShuangpinBuiltinProfile::Ziranma,
+            ime_->correctionProfile().get()));
+    }
 
     quickphraseTriggerDict_.clear();
     for (std::string_view prefix : *config_.quickphraseTrigger) {
