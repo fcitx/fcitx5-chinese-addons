@@ -983,6 +983,53 @@ void PinyinEngine::populateConfig() {
     ime_->setPreeditMode(*config_.showActualPinyinInPreedit
                              ? libime::PinyinPreeditMode::Pinyin
                              : libime::PinyinPreeditMode::RawText);
+
+    // Setup fuzzy flags.
+    libime::PinyinFuzzyFlags flags;
+    const auto &fuzzyConfig = *config_.fuzzyConfig;
+#define SET_FUZZY_FLAG(VAR, ENUM)                                              \
+    if (*fuzzyConfig.VAR) {                                                    \
+        flags |= libime::PinyinFuzzyFlag::ENUM;                                \
+    }
+    SET_FUZZY_FLAG(ue, VE_UE)
+    SET_FUZZY_FLAG(commonTypo, CommonTypo)
+    SET_FUZZY_FLAG(commonTypo, AdvancedTypo)
+    SET_FUZZY_FLAG(inner, Inner)
+    SET_FUZZY_FLAG(innerShort, InnerShort)
+    SET_FUZZY_FLAG(partialFinal, PartialFinal)
+    SET_FUZZY_FLAG(partialSp, PartialSp)
+    SET_FUZZY_FLAG(v, V_U)
+    SET_FUZZY_FLAG(an, AN_ANG)
+    SET_FUZZY_FLAG(en, EN_ENG)
+    SET_FUZZY_FLAG(ian, IAN_IANG)
+    SET_FUZZY_FLAG(in, IN_ING)
+    SET_FUZZY_FLAG(ou, U_OU)
+    SET_FUZZY_FLAG(uan, UAN_UANG)
+    SET_FUZZY_FLAG(c, C_CH)
+    SET_FUZZY_FLAG(f, F_H)
+    SET_FUZZY_FLAG(l, L_N)
+    SET_FUZZY_FLAG(s, S_SH)
+    SET_FUZZY_FLAG(z, Z_ZH)
+
+    {
+        std::shared_ptr<libime::PinyinCorrectionProfile> correctionProfile;
+        switch (*fuzzyConfig.correction) {
+        case CorrectionLayout::None:
+            break;
+        case CorrectionLayout::Qwerty:
+            correctionProfile =
+                std::make_shared<libime::PinyinCorrectionProfile>(
+                    libime::BuiltinPinyinCorrectionProfile::Qwerty);
+            break;
+        }
+        ime_->setCorrectionProfile(std::move(correctionProfile));
+    }
+
+    if (ime_->correctionProfile()) {
+        flags |= libime::PinyinFuzzyFlag::Correction;
+    }
+    ime_->setFuzzyFlags(flags);
+
     if (*config_.shuangpinProfile == ShuangpinProfileEnum::Custom) {
         auto file = StandardPath::global().open(StandardPath::Type::PkgConfig,
                                                 "pinyin/sp.dat", O_RDONLY);
@@ -1030,55 +1077,6 @@ void PinyinEngine::populateConfig() {
             libime::ShuangpinBuiltinProfile::Ziranma,
             ime_->correctionProfile().get()));
     }
-
-    libime::PinyinFuzzyFlags flags;
-    const auto &fuzzyConfig = *config_.fuzzyConfig;
-#define SET_FUZZY_FLAG(VAR, ENUM)                                              \
-    if (*fuzzyConfig.VAR) {                                                    \
-        flags |= libime::PinyinFuzzyFlag::ENUM;                                \
-    }
-    SET_FUZZY_FLAG(ue, VE_UE)
-    SET_FUZZY_FLAG(commonTypo, CommonTypo)
-    SET_FUZZY_FLAG(commonTypo, AdvancedTypo)
-    SET_FUZZY_FLAG(inner, Inner)
-    SET_FUZZY_FLAG(innerShort, InnerShort)
-    SET_FUZZY_FLAG(partialFinal, PartialFinal)
-    SET_FUZZY_FLAG(partialSp, PartialSp)
-    SET_FUZZY_FLAG(v, V_U)
-    SET_FUZZY_FLAG(an, AN_ANG)
-    SET_FUZZY_FLAG(en, EN_ENG)
-    SET_FUZZY_FLAG(ian, IAN_IANG)
-    SET_FUZZY_FLAG(in, IN_ING)
-    SET_FUZZY_FLAG(ou, U_OU)
-    SET_FUZZY_FLAG(uan, UAN_UANG)
-    SET_FUZZY_FLAG(c, C_CH)
-    SET_FUZZY_FLAG(f, F_H)
-    SET_FUZZY_FLAG(l, L_N)
-    SET_FUZZY_FLAG(s, S_SH)
-    SET_FUZZY_FLAG(z, Z_ZH)
-
-    std::shared_ptr<libime::PinyinCorrectionProfile> correctionProfile;
-    switch (*fuzzyConfig.correction) {
-    case CorrectionLayout::None:
-        break;
-    case CorrectionLayout::Qwerty:
-        correctionProfile = std::make_shared<libime::PinyinCorrectionProfile>(
-            libime::BuiltinPinyinCorrectionProfile::Qwerty);
-        break;
-    }
-
-    if (correctionProfile) {
-        flags |= libime::PinyinFuzzyFlag::Correction;
-        ime_->setCorrectionProfile(std::move(correctionProfile));
-        auto sp = ime_->shuangpinProfile();
-        if (sp != nullptr) {
-            ime_->setShuangpinProfile(
-                std::make_shared<libime::ShuangpinProfile>(
-                    *sp, ime_->correctionProfile().get()));
-        }
-    }
-
-    ime_->setFuzzyFlags(flags);
 
     quickphraseTriggerDict_.clear();
     for (std::string_view prefix : *config_.quickphraseTrigger) {
