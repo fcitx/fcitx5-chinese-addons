@@ -123,21 +123,38 @@ private:
     std::string word_;
 };
 
-class StrokeFilterCandidateWord : public CandidateWord,
-                                  public InsertableAsCustomPhraseInterface,
-                                  public ForgettableCandidateInterface {
+class FilteredCandidateWord : public CandidateWord {
 public:
-    StrokeFilterCandidateWord(PinyinEngine *engine, InputContext *inputContext,
-                              Text text, int index);
+    FilteredCandidateWord(PinyinEngine *engine, InputContext *inputContext,
+                          Text text, int index);
 
     void select(InputContext *inputContext) const override;
-    std::string customPhraseString() const override;
-    size_t candidateIndex() const override;
+
+    int originalIndex() const { return index_; }
+    PinyinEngine *engine() const { return engine_; }
+    InputContext *inputContext() const { return inputContext_; }
 
 private:
     PinyinEngine *engine_;
     InputContext *inputContext_;
     int index_;
+};
+
+class FilteredInsertableAsCustomPhrase
+    : public InsertableAsCustomPhraseInterface {
+public:
+    std::string customPhraseString() const override;
+};
+
+class FilteredForgettableCandidate : public ForgettableCandidateInterface {
+public:
+    size_t candidateIndex() const override;
+};
+
+template <typename... Args>
+class StrokeFilterCandidateWord : public FilteredCandidateWord, public Args... {
+public:
+    using FilteredCandidateWord::FilteredCandidateWord;
 };
 
 class ForgetCandidateWord : public CandidateWord {

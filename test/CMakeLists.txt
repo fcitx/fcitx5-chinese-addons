@@ -14,7 +14,7 @@ endif()
 
 add_executable(testpinyinhelper testpinyinhelper.cpp)
 target_link_libraries(testpinyinhelper Fcitx5::Core Fcitx5::Module::PinyinHelper)
-add_dependencies(testpinyinhelper pinyinhelper pinyinhelper.conf.in-fmt)
+add_dependencies(testpinyinhelper pinyin pinyin.conf.in-fmt pinyinhelper pinyinhelper.conf.in-fmt)
 add_test(NAME testpinyinhelper COMMAND testpinyinhelper)
 
 add_executable(testfullwidth testfullwidth.cpp)
