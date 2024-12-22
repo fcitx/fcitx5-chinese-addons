@@ -1464,8 +1464,18 @@ void PinyinEngine::updateStroke(InputContext *inputContext) {
                 }
             }
             if (strokeMatched) {
-                candidateList->append<StrokeFilterCandidateWord>(
-                    this, inputContext, candidate.text(), i);
+                // PinyinCandidateWord is the only forgettable.
+                if (dynamic_cast<const PinyinCandidateWord *>(&candidate)) {
+                    candidateList->append<StrokeFilterCandidateWord<
+                        FilteredForgettableCandidate,
+                        FilteredInsertableAsCustomPhrase>>(this, inputContext,
+                                                           candidate.text(), i);
+                } else if (dynamic_cast<const InsertableAsCustomPhraseInterface
+                                            *>(&candidate)) {
+                    candidateList->append<StrokeFilterCandidateWord<
+                        FilteredInsertableAsCustomPhrase>>(this, inputContext,
+                                                           candidate.text(), i);
+                }
             }
         }
     }

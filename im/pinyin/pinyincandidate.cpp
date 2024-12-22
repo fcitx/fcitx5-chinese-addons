@@ -126,39 +126,14 @@ void PinyinPunctuationCandidateWord::select(InputContext *inputContext) const {
     engine_->doReset(inputContext);
 }
 
-StrokeFilterCandidateWord::StrokeFilterCandidateWord(PinyinEngine *engine,
-                                                     InputContext *inputContext,
-                                                     Text text, int index)
+FilteredCandidateWord::FilteredCandidateWord(PinyinEngine *engine,
+                                             InputContext *inputContext,
+                                             Text text, int index)
     : engine_(engine), inputContext_(inputContext), index_(index) {
     setText(std::move(text));
 }
 
-std::string StrokeFilterCandidateWord::customPhraseString() const {
-    auto *state = inputContext_->propertyFor(&engine_->factory());
-    if (!state->strokeCandidateList_ ||
-        state->strokeCandidateList_->toBulk()->totalSize() <= index_) {
-        return "";
-    }
-    // Forward the selection to internal candidate list.
-    const auto &candidate =
-        state->strokeCandidateList_->toBulk()->candidateFromAll(index_);
-    return static_cast<const PinyinCandidateWord &>(candidate)
-        .customPhraseString();
-}
-
-size_t StrokeFilterCandidateWord::candidateIndex() const {
-    auto *state = inputContext_->propertyFor(&engine_->factory());
-    if (!state->strokeCandidateList_ ||
-        state->strokeCandidateList_->toBulk()->totalSize() <= index_) {
-        return 0;
-    }
-    // Forward the selection to internal candidate list.
-    const auto &candidate =
-        state->strokeCandidateList_->toBulk()->candidateFromAll(index_);
-    return static_cast<const PinyinCandidateWord &>(candidate).candidateIndex();
-}
-
-void StrokeFilterCandidateWord::select(InputContext *inputContext) const {
+void FilteredCandidateWord::select(InputContext *inputContext) const {
     if (inputContext != inputContext_) {
         return;
     }
@@ -173,6 +148,60 @@ void StrokeFilterCandidateWord::select(InputContext *inputContext) const {
     state->strokeCandidateList_->toBulk()->candidateFromAll(index_).select(
         inputContext);
     engine_->resetStroke(inputContext);
+}
+
+std::string FilteredInsertableAsCustomPhrase::customPhraseString() const {
+    const auto *that = dynamic_cast<const FilteredCandidateWord *>(this);
+    if (!that) {
+        FCITX_ERROR() << "should be a subclass to FilteredCandidateWrord, bug "
+                         "in pinyin engine.";
+        return "";
+    }
+    auto *inputContext = that->inputContext();
+    auto *engine = that->engine();
+    auto index = that->originalIndex();
+    auto *state = inputContext->propertyFor(&engine->factory());
+    if (!state->strokeCandidateList_ ||
+        state->strokeCandidateList_->toBulk()->totalSize() <= index) {
+        return "";
+    }
+    // Forward the selection to internal candidate list.
+    const auto &candidate =
+        state->strokeCandidateList_->toBulk()->candidateFromAll(index);
+    if (const auto *insertable =
+            dynamic_cast<const InsertableAsCustomPhraseInterface *>(&candidate);
+        insertable != this) {
+        return insertable->customPhraseString();
+    }
+    return "";
+}
+
+size_t FilteredForgettableCandidate::candidateIndex() const {
+    const auto *that = dynamic_cast<const FilteredCandidateWord *>(this);
+    if (!that) {
+        FCITX_ERROR() << "should be a subclass to FilteredCandidateWrord, bug "
+                         "in pinyin engine.";
+        return 0;
+    }
+    auto *inputContext = that->inputContext();
+    auto *engine = that->engine();
+    auto index = that->originalIndex();
+
+    auto *state = inputContext->propertyFor(&engine->factory());
+    if (!state->strokeCandidateList_ ||
+        state->strokeCandidateList_->toBulk()->totalSize() <= index) {
+        return 0;
+    }
+    // Forward the selection to internal candidate list.
+    const auto &candidate =
+        state->strokeCandidateList_->toBulk()->candidateFromAll(index);
+
+    if (const auto *forgettable =
+            dynamic_cast<const ForgettableCandidateInterface *>(&candidate);
+        forgettable != this) {
+        return forgettable->candidateIndex();
+    }
+    return 0;
 }
 
 ForgetCandidateWord::ForgetCandidateWord(PinyinEngine *engine, Text text,
