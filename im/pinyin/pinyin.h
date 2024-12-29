@@ -36,12 +36,14 @@
 #include <fcitx/inputmethodengine.h>
 #include <fcitx/instance.h>
 #include <fcitx/text.h>
+#include <future>
 #include <libime/pinyin/pinyincontext.h>
 #include <libime/pinyin/pinyinime.h>
 #include <libime/pinyin/pinyinprediction.h>
 #include <list>
 #include <memory>
 #include <optional>
+#include <regex>
 #include <string>
 #include <string_view>
 #include <unordered_map>
@@ -295,8 +297,18 @@ FCITX_CONFIGURATION(
                             "https:", "ftp:", "telnet:", "mailto:"},
                            {},
                            {},
-                           {_("Enter a string from the list will make it enter "
-                              "quickphrase mode.")}};
+                           {_("Enter quickphrase mode when current input "
+                              "matches any string from the list.")}};
+    OptionWithAnnotation<std::vector<std::string>, ToolTipAnnotation>
+        quickphraseTriggerRegex{
+            this,
+            "QuickPhraseTriggerRegex",
+            _("Regular expression to trigger quick phrase"),
+            {},
+            {},
+            {},
+            {_("Enter quickphrase mode when current input matches any regular "
+               "expression from the list.")}};
     Option<FuzzyConfig> fuzzyConfig{this, "Fuzzy", _("Fuzzy Pinyin Settings")};
     HiddenOption<bool> firstRun{this, "FirstRun", "FirstRun", true};)
 
@@ -392,11 +404,14 @@ private:
 
     bool handleCloudpinyinTrigger(KeyEvent &event);
     bool handle2nd3rdSelection(KeyEvent &event);
-    bool handleCandidateList(KeyEvent &event);
+    bool handleCandidateList(KeyEvent &event,
+                             const std::shared_future<uint32_t> &keyChr);
     bool handleNextPage(KeyEvent &event) const;
-    bool handleStrokeFilter(KeyEvent &event);
+    bool handleStrokeFilter(KeyEvent &event,
+                            const std::shared_future<uint32_t> &keyChr);
     bool handleForgetCandidate(KeyEvent &event);
-    bool handlePunc(KeyEvent &event);
+    bool handlePunc(KeyEvent &event,
+                    const std::shared_future<uint32_t> &keyChr);
     bool handlePuncCandidate(KeyEvent &event);
     bool handleCompose(KeyEvent &event);
     void resetPredict(InputContext *inputContext);
@@ -436,6 +451,7 @@ private:
     std::unique_ptr<libime::PinyinIME> ime_;
     std::unordered_map<std::string, std::unordered_set<uint32_t>>
         quickphraseTriggerDict_;
+    std::vector<std::regex> quickphraseTriggerRegex_;
     KeyList selectionKeys_;
     KeyList numpadSelectionKeys_;
     FactoryFor<PinyinState> factory_;
