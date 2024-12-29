@@ -52,6 +52,7 @@
 #include <memory>
 #include <optional>
 #include <ostream>
+#include <regex>
 #include <stdexcept>
 #include <string>
 #include <string_view>
@@ -912,7 +913,7 @@ void PinyinEngine::loadExtraDict() {
             continue;
         }
         PINYIN_DEBUG() << "Loading extra dictionary: " << file.first;
-        loadDict(std::move(file.second), tasks_);
+        loadDict(file.second, tasks_);
     }
 }
 
@@ -1105,6 +1106,18 @@ void PinyinEngine::populateConfig() {
         }
     }
     PINYIN_DEBUG() << "Quick Phrase Trigger Dict: " << quickphraseTriggerDict_;
+
+    quickphraseTriggerRegex_.clear();
+    for (const std::string &regStr : *config_.quickphraseTriggerRegex) {
+        try {
+            std::regex reg{regStr};
+            quickphraseTriggerRegex_.push_back(std::move(reg));
+        } catch (...) {
+        }
+    }
+    PINYIN_DEBUG() << "Quick Phrase Trigger Regex size: "
+                   << quickphraseTriggerRegex_.size();
+
     ime_->dict()->setFlags(libime::TrieDictionary::UserDict + 1,
                            *config_.chaiziEnabled
                                ? libime::PinyinDictFlag::FullMatch
@@ -1338,7 +1351,8 @@ bool PinyinEngine::handle2nd3rdSelection(KeyEvent &event) {
     return false;
 }
 
-bool PinyinEngine::handleCandidateList(KeyEvent &event) {
+bool PinyinEngine::handleCandidateList(
+    KeyEvent &event, const std::shared_future<uint32_t> &keyChr) {
     auto *inputContext = event.inputContext();
     auto candidateList = inputContext->inputPanel().candidateList();
     if (!candidateList) {
@@ -1382,7 +1396,7 @@ bool PinyinEngine::handleCandidateList(KeyEvent &event) {
                 return true;
             }
             // Only let key go through if it can reach handlePunc.
-            auto c = Key::keySymToUnicode(event.key().sym());
+            auto c = keyChr.get();
             if (event.key().hasModifier() || !c) {
                 event.filterAndAccept();
                 return true;
@@ -1633,7 +1647,8 @@ void PinyinEngine::deleteCustomPhrase(InputContext *inputContext,
     saveCustomPhrase();
 }
 
-bool PinyinEngine::handleStrokeFilter(KeyEvent &event) {
+bool PinyinEngine::handleStrokeFilter(
+    KeyEvent &event, const std::shared_future<uint32_t> &keyChr) {
     auto *inputContext = event.inputContext();
     auto candidateList = inputContext->inputPanel().candidateList();
     auto *state = inputContext->propertyFor(&factory_);
@@ -1671,7 +1686,7 @@ bool PinyinEngine::handleStrokeFilter(KeyEvent &event) {
         }
     }
 
-    if (handleCandidateList(event)) {
+    if (handleCandidateList(event, keyChr)) {
         return true;
     }
     // Skip all key combination.
@@ -1697,7 +1712,7 @@ bool PinyinEngine::handleStrokeFilter(KeyEvent &event) {
         return true;
     }
     // if it gonna commit something
-    auto c = Key::keySymToUnicode(event.key().sym());
+    auto c = keyChr.get();
     if (!c) {
         return true;
     }
@@ -1757,7 +1772,8 @@ bool PinyinEngine::handleForgetCandidate(KeyEvent &event) {
     return true;
 }
 
-bool PinyinEngine::handlePunc(KeyEvent &event) {
+bool PinyinEngine::handlePunc(KeyEvent &event,
+                              const std::shared_future<uint32_t> &keyChr) {
     auto *inputContext = event.inputContext();
     auto candidateList = inputContext->inputPanel().candidateList();
     auto *state = inputContext->propertyFor(&factory_);
@@ -1765,7 +1781,7 @@ bool PinyinEngine::handlePunc(KeyEvent &event) {
         return false;
     }
     // if it gonna commit something
-    auto c = Key::keySymToUnicode(event.key().sym());
+    auto c = keyChr.get();
     if (event.key().hasModifier() || !c) {
         // Handle quick phrase with modifier
         if (event.key().check(*config_.quickphraseKey) && quickphrase()) {
@@ -1899,6 +1915,15 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
     auto *inputContext = event.inputContext();
     auto *state = inputContext->propertyFor(&factory_);
 
+    std::shared_future<uint32_t> keyChr =
+        std::async(std::launch::deferred, [sym = event.key().sym()] {
+            return Key::keySymToUnicode(sym);
+        }).share();
+    std::shared_future<std::string> keyStr =
+        std::async(std::launch::deferred, [&keyChr] {
+            return utf8::UCS4ToUTF8(keyChr.get());
+        }).share();
+
     // 2nd/3rd selection is allowed to be modifier only, handle them before we
     // skip the release.
     if (handle2nd3rdSelection(event)) {
@@ -1927,7 +1952,7 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
     bool lastIsPunc = state->lastIsPunc_;
     state->lastIsPunc_ = false;
 
-    if (handleStrokeFilter(event)) {
+    if (handleStrokeFilter(event, keyChr)) {
         return;
     }
 
@@ -1936,7 +1961,7 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
     }
 
     // handle number key selection and prev/next page/candidate.
-    if (handleCandidateList(event)) {
+    if (handleCandidateList(event, keyChr)) {
         return;
     }
 
@@ -1957,7 +1982,7 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         }
     }
 
-    auto checkSp = [this](const KeyEvent &event, PinyinState *state) {
+    auto checkSp = [this, &keyChr](const KeyEvent &event, PinyinState *state) {
         auto shuangpinProfile = ime_->shuangpinProfile();
         if (!state->context_.useShuangpin() || !shuangpinProfile ||
             !event.key().isSimple()) {
@@ -1965,7 +1990,7 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         }
         // event.key().isSimple() make sure the return value is within range of
         // char.
-        char chr = Key::keySymToUnicode(event.key().sym());
+        char chr = keyChr.get();
         return (!state->context_.empty() &&
                 shuangpinProfile->validInput().count(chr)) ||
                (state->context_.empty() &&
@@ -1976,15 +2001,31 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         const auto iter =
             quickphraseTriggerDict_.find(state->context_.userInput());
         if (iter != quickphraseTriggerDict_.end() && !iter->second.empty() &&
-            iter->second.count(Key::keySymToUnicode(event.key().sym()))) {
-            std::string text = state->context_.userInput();
-            text.append(Key::keySymToUTF8(event.key().sym()));
+            iter->second.count(keyChr.get())) {
+            std::string text =
+                stringutils::concat(state->context_.userInput(), keyStr.get());
             doReset(inputContext);
             quickphrase()->call<IQuickPhrase::trigger>(inputContext, "", "", "",
                                                        "", Key());
             quickphrase()->call<IQuickPhrase::setBuffer>(inputContext, text);
 
             return event.filterAndAccept();
+        }
+
+        if (!quickphraseTriggerRegex_.empty() && !keyStr.get().empty()) {
+            std::string text =
+                stringutils::concat(state->context_.userInput(), keyStr.get());
+            for (const auto &reg : quickphraseTriggerRegex_) {
+                if (std::regex_search(text, reg,
+                                      std::regex_constants::match_default)) {
+                    doReset(inputContext);
+                    quickphrase()->call<IQuickPhrase::trigger>(
+                        inputContext, "", "", "", "", Key());
+                    quickphrase()->call<IQuickPhrase::setBuffer>(inputContext,
+                                                                 text);
+                    return event.filterAndAccept();
+                }
+            }
         }
     }
 
@@ -2002,7 +2043,7 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
             return;
         }
         event.filterAndAccept();
-        if (!state->context_.type(Key::keySymToUTF8(event.key().sym()))) {
+        if (!state->context_.type(keyStr.get())) {
             return;
         }
     } else if (!state->context_.empty()) {
@@ -2146,7 +2187,7 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
             }
         }
     }
-    if (handlePunc(event)) {
+    if (handlePunc(event, keyChr)) {
         return;
     }
 
