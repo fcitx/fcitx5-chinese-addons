@@ -11,6 +11,7 @@
 #include <fcitx-config/rawconfig.h>
 #include <fcitx-utils/event.h>
 #include <fcitx-utils/eventdispatcher.h>
+#include <fcitx-utils/eventloopinterface.h>
 #include <fcitx-utils/key.h>
 #include <fcitx-utils/keysym.h>
 #include <fcitx-utils/log.h>
@@ -368,6 +369,63 @@ void testPin(Instance *instance) {
     });
 }
 
+void testQuickPhraseTrigger(Instance *instance) {
+    instance->eventDispatcher().schedule([instance]() {
+        auto *testfrontend = instance->addonManager().addon("testfrontend");
+        auto uuid =
+            testfrontend->call<ITestFrontend::createInputContext>("testapp");
+
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Control+space"),
+                                                    false);
+
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("w"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("w"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("w"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("."), false);
+        auto *ic = instance->inputContextManager().findByUUID(uuid);
+        FCITX_ASSERT(ic);
+        FCITX_ASSERT(ic->inputPanel().preedit().toString() == "www.");
+
+        ic->reset();
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("."), false);
+        FCITX_ASSERT(ic->inputPanel().preedit().toString() == "a.");
+
+        ic->reset();
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("u"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("s"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("e"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("r"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("@"), false);
+        FCITX_ASSERT(ic->inputPanel().preedit().toString() == "user@");
+
+        ic->reset();
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("h"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("t"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("t"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("p"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key(":"), false);
+        FCITX_ASSERT(ic->inputPanel().preedit().toString() == "http:");
+
+        ic->reset();
+        // htt: shouldn't trigger.
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("h"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("t"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("t"), false);
+
+        FCITX_ASSERT(ic->inputPanel().candidateList());
+        FCITX_ASSERT(!ic->inputPanel().candidateList()->empty());
+        const auto firstCandidate =
+            ic->inputPanel().candidateList()->candidate(0).text().toString();
+        testfrontend->call<ITestFrontend::pushCommitExpectation>(
+            firstCandidate);
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("：");
+
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key(":"), false);
+        FCITX_ASSERT(ic->inputPanel().preedit().toString() == "");
+    });
+}
+
 void testPunctuation(Instance *instance) {
     instance->eventDispatcher().schedule([instance]() {
         auto *testfrontend = instance->addonManager().addon("testfrontend");
@@ -443,7 +501,7 @@ int main() {
     char arg0[] = "testpinyin";
     char arg1[] = "--disable=all";
     char arg2[] = "--enable=testim,testfrontend,pinyin,punctuation,"
-                  "pinyinhelper,spell";
+                  "pinyinhelper,spell,quickphrase";
     char *argv[] = {arg0, arg1, arg2};
     fcitx::Log::setLogRule("default=5,pinyin=5");
     Instance instance(FCITX_ARRAY_SIZE(argv), argv);
@@ -454,6 +512,7 @@ int main() {
     testForget(&instance);
     testActionInStrokeFilter(&instance);
     testPin(&instance);
+    testQuickPhraseTrigger(&instance);
     testPunctuation(&instance);
     instance.exec();
     endTestEvent.reset();
