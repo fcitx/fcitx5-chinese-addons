@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2024-12-22 20:24+0000\n"
+"POT-Creation-Date: 2025-01-11 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: mar well <m.wellendorf@gmx.de>, 2022\n"
 "Language-Team: German (https://app.transifex.com/fcitx/teams/12005/de/)\n"
@@ -122,11 +122,11 @@ msgid ""
 "simulate a more compose table like experience."
 msgstr ""
 
-#: im/table/engine.h:52 im/pinyin/pinyin.h:90
+#: im/table/engine.h:52 im/pinyin/pinyin.h:91
 msgid "ABC"
 msgstr "ABC"
 
-#: im/pinyin/pinyin.h:185
+#: im/pinyin/pinyin.h:186
 msgid "Action when switching input method"
 msgstr "Aktion, wenn die Eingabemethode gewechselt wird"
 
@@ -159,7 +159,7 @@ msgstr ""
 msgid "Alternative Mapping"
 msgstr ""
 
-#: im/pinyin/pinyin.h:167
+#: im/pinyin/pinyin.h:168
 msgid "Always show Cloud Pinyin place holder"
 msgstr ""
 
@@ -211,11 +211,11 @@ msgstr ""
 msgid "Chinese Addons"
 msgstr ""
 
-#: im/pinyin/pinyin.h:251
+#: im/pinyin/pinyin.h:252
 msgid "Choose Character from Phrase"
 msgstr ""
 
-#: im/pinyin/pinyin.h:82
+#: im/pinyin/pinyin.h:83
 msgid "Clear"
 msgstr "Löschen"
 
@@ -223,23 +223,23 @@ msgstr "Löschen"
 msgid "Clear &All Data"
 msgstr "&Alle Daten löschen"
 
-#: im/pinyin/pinyin.h:155 modules/cloudpinyin/cloudpinyin.conf.in.in:3
+#: im/pinyin/pinyin.h:156 modules/cloudpinyin/cloudpinyin.conf.in.in:3
 msgid "Cloud Pinyin"
 msgstr "Cloud Pinyin"
 
-#: im/pinyin/pinyin.h:160
+#: im/pinyin/pinyin.h:161
 msgid "Cloud Pinyin Index"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1258
+#: im/pinyin/pinyin.cpp:1245
 msgid "Cloud Pinyin Status"
 msgstr "Cloud Pinyin Status"
 
-#: im/pinyin/pinyin.cpp:1260
+#: im/pinyin/pinyin.cpp:1247
 msgid "Cloud Pinyin is disabled."
 msgstr "Cloud Pinyin ist ausgeschaltet."
 
-#: im/pinyin/pinyin.cpp:1259
+#: im/pinyin/pinyin.cpp:1246
 msgid "Cloud Pinyin is enabled."
 msgstr "Cloud Pinyin ist eingeschaltet."
 
@@ -247,7 +247,7 @@ msgstr "Cloud Pinyin ist eingeschaltet."
 msgid "Commit Invalid Segment"
 msgstr ""
 
-#: im/pinyin/pinyin.h:227
+#: im/pinyin/pinyin.h:228
 msgid "Commit Raw Input"
 msgstr ""
 
@@ -259,15 +259,15 @@ msgstr ""
 msgid "Commit buffer when deactivating input method"
 msgstr ""
 
-#: im/pinyin/pinyin.h:83
+#: im/pinyin/pinyin.h:84
 msgid "Commit current preedit"
 msgstr ""
 
-#: im/pinyin/pinyin.h:84
+#: im/pinyin/pinyin.h:85
 msgid "Commit default selection"
 msgstr ""
 
-#: im/pinyin/pinyin.h:97
+#: im/pinyin/pinyin.h:98
 msgid "Commit preview"
 msgstr ""
 
@@ -277,11 +277,11 @@ msgid ""
 "for some latin/compose based table."
 msgstr ""
 
-#: im/pinyin/pinyin.h:108
+#: im/pinyin/pinyin.h:109
 msgid "Common Typo"
 msgstr ""
 
-#: im/pinyin/pinyin.h:97
+#: im/pinyin/pinyin.h:98
 msgid "Composing pinyin"
 msgstr ""
 
@@ -299,7 +299,7 @@ msgstr "Konvertierung fehlgeschlagen."
 msgid "Converter crashed."
 msgstr "Konverter abgestürzt."
 
-#: im/pinyin/pinyin.h:132
+#: im/pinyin/pinyin.h:133
 msgid "Correction Layout"
 msgstr ""
 
@@ -325,7 +325,7 @@ msgstr ""
 "Kopieren der temporären Datei fehlgeschlagen. Bitte überprüfen Sie die "
 "Dateiberechtigungen oder ob die Festplatte voll ist."
 
-#: im/table/engine.h:54 im/pinyin/pinyin.h:92
+#: im/table/engine.h:54 im/pinyin/pinyin.h:93
 msgid "Custom"
 msgstr ""
 
@@ -374,18 +374,18 @@ msgstr "Standardhinweis zeigen"
 msgid "Do not display"
 msgstr ""
 
-#: im/pinyin/pinyin.h:96
+#: im/pinyin/pinyin.h:97
 msgid "Do not show"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:958
+#: im/pinyin/pinyin.cpp:961
 #, c++-format
 msgid ""
 "Do you want to enable cloudpinyin now for better prediction? You can always "
 "toggle it later in configuration or by pressing {}."
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:953
+#: im/pinyin/pinyin.cpp:956
 msgid ""
 "Do you want to enable cloudpinyin now for better prediction? You can always "
 "toggle it later in configuration."
@@ -407,31 +407,31 @@ msgstr "Download beendet"
 msgid "Download started."
 msgstr "Download begonnen."
 
-#: im/pinyin/pinyin.h:150
+#: im/pinyin/pinyin.h:151
 msgid "Enable Chaizi"
 msgstr ""
 
-#: im/pinyin/pinyin.h:152
+#: im/pinyin/pinyin.h:153
 msgid "Enable Characters in Unicode CJK Extension B"
 msgstr ""
 
-#: im/pinyin/pinyin.h:158
+#: im/pinyin/pinyin.h:159
 msgid "Enable Cloud Pinyin"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:967
+#: im/pinyin/pinyin.cpp:970
 msgid "Enable Cloudpinyin"
 msgstr ""
 
-#: im/table/engine.h:78 im/pinyin/pinyin.h:178
+#: im/table/engine.h:78 im/pinyin/pinyin.h:179
 msgid "Enable Prediction"
 msgstr "Vorhersage aktivieren"
 
-#: im/pinyin/pinyin.h:147
+#: im/pinyin/pinyin.h:148
 msgid "Enable Spell"
 msgstr ""
 
-#: im/pinyin/pinyin.h:148
+#: im/pinyin/pinyin.h:149
 msgid "Enable Symbols"
 msgstr ""
 
@@ -443,8 +443,10 @@ msgstr "Aktivierte Eingabemethoden"
 msgid "End key"
 msgstr ""
 
-#: im/pinyin/pinyin.h:298
-msgid "Enter a string from the list will make it enter quickphrase mode."
+#: im/pinyin/pinyin.h:299
+msgid ""
+"Enter quickphrase mode when current input matches any regular expression "
+"from the list."
 msgstr ""
 
 #: modules/punctuation/punctuation.h:62
@@ -500,7 +502,7 @@ msgstr "Dateioperation gescheitert"
 msgid "File updated"
 msgstr ""
 
-#: im/pinyin/pinyin.h:260
+#: im/pinyin/pinyin.h:261
 msgid "Filter by stroke"
 msgstr ""
 
@@ -508,7 +510,7 @@ msgstr ""
 msgid "First candidate as Preedit"
 msgstr ""
 
-#: im/table/ime.h:146 im/pinyin/pinyin.h:174
+#: im/table/ime.h:146 im/pinyin/pinyin.h:175
 msgid "Fix embedded preedit cursor at the beginning of the preedit"
 msgstr ""
 
@@ -516,7 +518,7 @@ msgstr ""
 msgid "Forget candidate"
 msgstr ""
 
-#: im/table/engine.h:64 im/table/candidate.cpp:112 im/pinyin/pinyin.h:189
+#: im/table/engine.h:64 im/table/candidate.cpp:112 im/pinyin/pinyin.h:190
 msgid "Forget word"
 msgstr "Wort vergessen"
 
@@ -560,7 +562,7 @@ msgstr "Vollbreite Interpunktion ist ausgeschaltet."
 msgid "Full width punctuation is enabled."
 msgstr "Vollbreite Satzzeichen ist aktiviert."
 
-#: im/pinyin/pinyin.h:300
+#: im/pinyin/pinyin.h:301
 msgid "Fuzzy Pinyin Settings"
 msgstr ""
 
@@ -629,11 +631,11 @@ msgstr ""
 msgid "Ignore built in punctuation"
 msgstr ""
 
-#: im/pinyin/pinyin.h:109
+#: im/pinyin/pinyin.h:110
 msgid "Inner Segment (xian -> xi'an)"
 msgstr ""
 
-#: im/pinyin/pinyin.h:111
+#: im/pinyin/pinyin.h:112
 msgid "Inner Segment for Short Pinyin (qie -> qi'e)"
 msgstr ""
 
@@ -650,7 +652,7 @@ msgctxt "Key of the punctuation, e.g. comma"
 msgid "Key"
 msgstr "Taste"
 
-#: im/table/ime.h:151 im/pinyin/pinyin.h:283
+#: im/table/ime.h:151 im/pinyin/pinyin.h:284
 msgid "Key to trigger quickphrase"
 msgstr "Trigger Key für QuickPhrase"
 
@@ -670,15 +672,15 @@ msgstr ""
 msgid "Look up pinyin"
 msgstr ""
 
-#: im/table/engine.h:51 im/pinyin/pinyin.h:89
+#: im/table/engine.h:51 im/pinyin/pinyin.h:90
 msgid "MS"
 msgstr "MS"
 
-#: im/pinyin/pinyin.h:272
+#: im/pinyin/pinyin.h:273
 msgid "Manage Custom Phrase"
 msgstr ""
 
-#: im/pinyin/pinyin.h:270
+#: im/pinyin/pinyin.h:271
 msgid "Manage Dictionaries"
 msgstr ""
 
@@ -690,11 +692,11 @@ msgstr "Zuordnung"
 msgid "Marker for auto phrase in the candidates"
 msgstr ""
 
-#: im/pinyin/pinyin.h:114
+#: im/pinyin/pinyin.h:115
 msgid "Match partial finals (e -> en, eng, ei)"
 msgstr ""
 
-#: im/pinyin/pinyin.h:118
+#: im/pinyin/pinyin.h:119
 msgid "Match partial shuangpin if input length is longer than 4"
 msgstr ""
 
@@ -716,11 +718,11 @@ msgid ""
 "New Japanese Kanji (Shinjitai) to Traditional Chinese Characters (Kyūjitai)"
 msgstr ""
 
-#: im/table/ime.h:71 im/pinyin/pinyin.h:215
+#: im/table/ime.h:71 im/pinyin/pinyin.h:216
 msgid "Next Candidate"
 msgstr "Nächster Kandidat"
 
-#: im/pinyin/pinyin.h:202
+#: im/pinyin/pinyin.h:203
 msgid "Next Page"
 msgstr "Nächste Seite"
 
@@ -728,7 +730,7 @@ msgstr "Nächste Seite"
 msgid "Next page"
 msgstr "Nächste Seite"
 
-#: im/table/ime.h:35 im/pinyin/pinyin.cpp:964
+#: im/table/ime.h:35 im/pinyin/pinyin.cpp:967
 msgid "No"
 msgstr "Nein"
 
@@ -738,7 +740,7 @@ msgstr ""
 "Browsen außerhalb von pinyin.sogou.com nicht möglich. Sie werden zur "
 "Homepage umgeleitet."
 
-#: im/pinyin/pinyin.h:104
+#: im/pinyin/pinyin.h:105
 msgid "None"
 msgstr ""
 
@@ -750,7 +752,7 @@ msgstr "Nicht verfügbar"
 msgid "Not set"
 msgstr "Nicht festgelegt"
 
-#: im/pinyin/pinyin.h:264
+#: im/pinyin/pinyin.h:265
 msgid "Number of Sentences"
 msgstr ""
 
@@ -784,7 +786,7 @@ msgstr ""
 msgid "Order:"
 msgstr ""
 
-#: im/table/ime.h:105 im/pinyin/pinyin.h:145
+#: im/table/ime.h:105 im/pinyin/pinyin.h:146
 msgid "Page size"
 msgstr "Seitengröße"
 
@@ -796,7 +798,7 @@ msgstr ""
 msgid "Pin to top as custom phrase"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:967 im/pinyin/pinyin.cpp:1257
+#: im/pinyin/pinyin.cpp:970 im/pinyin/pinyin.cpp:1244
 #: im/pinyin/pinyin-addon.conf.in.in:3 im/pinyin/pinyin.conf.in:3
 msgid "Pinyin"
 msgstr "Pinyin"
@@ -805,7 +807,7 @@ msgstr "Pinyin"
 msgid "Pinyin dictionary manager"
 msgstr "Pinyin-Wörterbuch-Manager"
 
-#: im/table/engine.h:53 im/pinyin/pinyin.h:91
+#: im/table/engine.h:53 im/pinyin/pinyin.h:92
 msgid "PinyinJiajia"
 msgstr ""
 
@@ -814,21 +816,21 @@ msgid "Please use this functionality after typing some text."
 msgstr ""
 "Bitte benutzen Sie diese Funktionalität nach der Eingabe von etwas Text."
 
-#: im/table/engine.cpp:93 im/table/engine.cpp:101 im/pinyin/pinyin.cpp:768
-#: im/pinyin/pinyin.cpp:778
+#: im/table/engine.cpp:93 im/table/engine.cpp:101 im/pinyin/pinyin.cpp:771
+#: im/pinyin/pinyin.cpp:781
 msgid "Prediction Disabled"
 msgstr ""
 
-#: im/table/engine.cpp:92 im/table/engine.cpp:100 im/pinyin/pinyin.cpp:767
-#: im/pinyin/pinyin.cpp:777
+#: im/table/engine.cpp:92 im/table/engine.cpp:100 im/pinyin/pinyin.cpp:770
+#: im/pinyin/pinyin.cpp:780
 msgid "Prediction Enabled"
 msgstr ""
 
-#: im/table/engine.h:81 im/pinyin/pinyin.h:181
+#: im/table/engine.h:81 im/pinyin/pinyin.h:182
 msgid "Prediction Size"
 msgstr "Vorhersagegröße"
 
-#: im/pinyin/pinyin.h:170
+#: im/pinyin/pinyin.h:171
 msgid "Preedit Mode"
 msgstr ""
 
@@ -848,12 +850,12 @@ msgstr "Zum Entfernen Löschen drücken"
 msgid "Press space or enter to insert."
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1816
+#: im/pinyin/pinyin.cpp:1806
 #, c++-format
 msgid "Press {} for {}"
 msgstr "{} für {} drücken"
 
-#: im/pinyin/pinyin.cpp:1813
+#: im/pinyin/pinyin.cpp:1803
 #, c++-format
 msgid "Press {} for {} and Return for {}"
 msgstr ""
@@ -866,15 +868,15 @@ msgstr "Vorh. Kandidat"
 msgid "Prev page"
 msgstr "Vorherige Seite"
 
-#: im/pinyin/pinyin.h:209
+#: im/pinyin/pinyin.h:210
 msgid "Previous Candidate"
 msgstr ""
 
-#: im/pinyin/pinyin.h:195
+#: im/pinyin/pinyin.h:196
 msgid "Previous Page"
 msgstr ""
 
-#: im/pinyin/pinyin.h:268
+#: im/pinyin/pinyin.h:269
 msgid "Prompt long word length when input length over (0 for disable)"
 msgstr ""
 
@@ -882,17 +884,17 @@ msgstr ""
 msgid "Proxy"
 msgstr "Proxy"
 
-#: im/pinyin/pinyin.h:275 modules/punctuation/punctuation.cpp:268
+#: im/pinyin/pinyin.h:276 modules/punctuation/punctuation.cpp:268
 #: modules/punctuation/punctuation.cpp:270
 #: modules/punctuation/punctuation.conf.in.in:3
 msgid "Punctuation"
 msgstr "Interpunktion"
 
-#: im/pinyin/pinyin.h:104
+#: im/pinyin/pinyin.h:105
 msgid "QWERTY"
 msgstr ""
 
-#: im/pinyin/pinyin.h:288
+#: im/pinyin/pinyin.h:289
 msgid "Quick Phrase"
 msgstr ""
 
@@ -902,6 +904,10 @@ msgstr ""
 
 #: im/table/ime.h:220
 msgid "Regular expression for selecting the only candidate"
+msgstr ""
+
+#: im/pinyin/pinyin.h:295
+msgid "Regular expression to trigger quick phrase"
 msgstr ""
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:44
@@ -919,15 +925,15 @@ msgstr ""
 msgid "Scel file (*.scel)"
 msgstr "Scel Datei (*.scel)"
 
-#: im/pinyin/pinyin.h:235
+#: im/pinyin/pinyin.h:236
 msgid "Select 2nd Candidate"
 msgstr "2. Kandidaten auswählen"
 
-#: im/pinyin/pinyin.h:242
+#: im/pinyin/pinyin.h:243
 msgid "Select 3rd Candidate"
 msgstr "3. Kandidaten auswählen"
 
-#: im/table/ime.h:77 im/pinyin/pinyin.h:221
+#: im/table/ime.h:77 im/pinyin/pinyin.h:222
 msgid "Select Current Candidate"
 msgstr ""
 
@@ -959,19 +965,19 @@ msgstr "Auswahl"
 msgid "Separator text between hint and candidate"
 msgstr "Trenntext zwischen Hinweis und Kandidat"
 
-#: im/pinyin/pinyin.h:164
+#: im/pinyin/pinyin.h:165
 msgid "Show animation when Cloud Pinyin is loading"
 msgstr ""
 
-#: im/pinyin/pinyin.h:177
+#: im/pinyin/pinyin.h:178
 msgid "Show complete pinyin in preedit"
 msgstr ""
 
-#: im/pinyin/pinyin.h:144
+#: im/pinyin/pinyin.h:145
 msgid "Show current shuangpin mode"
 msgstr ""
 
-#: im/table/engine.cpp:94 im/pinyin/pinyin.cpp:769
+#: im/table/engine.cpp:94 im/pinyin/pinyin.cpp:772
 msgid "Show prediction words"
 msgstr "Wörter der Autovervollständigung anzeigen"
 
@@ -979,7 +985,7 @@ msgstr "Wörter der Autovervollständigung anzeigen"
 msgid "Shuangpin"
 msgstr "Shuangpin"
 
-#: im/pinyin/pinyin.h:141
+#: im/pinyin/pinyin.h:142
 msgid "Shuangpin Profile"
 msgstr ""
 
@@ -1012,7 +1018,7 @@ msgid ""
 "Simplified Chinese to Traditional Chinese (Taiwan standard, with phrases)"
 msgstr ""
 
-#: im/pinyin/pinyin.h:278 modules/chttrans/chttrans.cpp:116
+#: im/pinyin/pinyin.h:279 modules/chttrans/chttrans.cpp:116
 #: modules/chttrans/chttrans.conf.in.in:3
 msgid "Simplified and Traditional Chinese Translation"
 msgstr "Übersetzung simplizifiertes und traditionelles Chinesisch "
@@ -1023,10 +1029,6 @@ msgstr ""
 
 #: im/table/ime.h:184
 msgid "Sort candidates based on current context"
-msgstr ""
-
-#: im/pinyin/pinyin.h:293
-msgid "Strings to trigger quick phrase"
 msgstr ""
 
 #: modules/chttrans/chttrans.cpp:120
@@ -1149,11 +1151,11 @@ msgstr ""
 msgid "Usage"
 msgstr ""
 
-#: im/pinyin/pinyin.h:255
+#: im/pinyin/pinyin.h:256
 msgid "Use BackSpace to cancel the selection"
 msgstr ""
 
-#: im/pinyin/pinyin.h:247
+#: im/pinyin/pinyin.h:248
 msgid "Use Keypad as Selection key"
 msgstr ""
 
@@ -1165,7 +1167,7 @@ msgstr "Pfeiltasten Links und Rechts benutzen, um Zeichen auszuwählen"
 msgid "Use Left and Right to select text. "
 msgstr "Pfeiltasten Links und Rechts benutzen, um Text auszuwählen"
 
-#: im/pinyin/pinyin.h:287
+#: im/pinyin/pinyin.h:288
 msgid "Use V to trigger quickphrase"
 msgstr ""
 
@@ -1248,31 +1250,31 @@ msgstr "Wubi"
 msgid "Wubi Pinyin"
 msgstr "Wubi Pinyin"
 
-#: im/table/engine.h:54 im/pinyin/pinyin.h:92
+#: im/table/engine.h:54 im/pinyin/pinyin.h:93
 msgid "Xiaohe"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:963
+#: im/pinyin/pinyin.cpp:966
 msgid "Yes"
 msgstr "Ja"
 
-#: im/table/engine.h:53 im/pinyin/pinyin.h:91
+#: im/table/engine.h:53 im/pinyin/pinyin.h:92
 msgid "Zhongwenzhixing"
 msgstr ""
 
-#: im/table/engine.h:52 im/pinyin/pinyin.h:90
+#: im/table/engine.h:52 im/pinyin/pinyin.h:91
 msgid "Ziguang"
 msgstr ""
 
-#: im/table/engine.h:51 im/pinyin/pinyin.h:89 im/table/zrm.conf.in.in:3
+#: im/table/engine.h:51 im/pinyin/pinyin.h:90 im/table/zrm.conf.in.in:3
 msgid "Ziranma"
 msgstr "Ziranma"
 
-#: im/pinyin/pinyin.cpp:1505
+#: im/pinyin/pinyin.cpp:1493
 msgid "[Select the word to remove from history]"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1441
+#: im/pinyin/pinyin.cpp:1429
 msgid "[Stroke Filtering]"
 msgstr ""
 
@@ -1285,55 +1287,55 @@ msgstr ""
 msgid "about:blank"
 msgstr ""
 
-#: im/pinyin/pinyin.h:120
+#: im/pinyin/pinyin.h:121
 msgid "an <-> ang"
 msgstr ""
 
-#: im/pinyin/pinyin.h:126
+#: im/pinyin/pinyin.h:127
 msgid "c <-> ch"
 msgstr ""
 
-#: im/pinyin/pinyin.h:121
+#: im/pinyin/pinyin.h:122
 msgid "en <-> eng"
 msgstr "en <-> eng"
 
-#: im/pinyin/pinyin.h:127
+#: im/pinyin/pinyin.h:128
 msgid "f <-> h"
 msgstr ""
 
-#: im/pinyin/pinyin.h:122
+#: im/pinyin/pinyin.h:123
 msgid "ian <-> iang"
 msgstr ""
 
-#: im/pinyin/pinyin.h:123
+#: im/pinyin/pinyin.h:124
 msgid "in <-> ing"
 msgstr "in <-> ing"
 
-#: im/pinyin/pinyin.h:128
+#: im/pinyin/pinyin.h:129
 msgid "l <-> n"
 msgstr ""
 
-#: im/pinyin/pinyin.h:129
+#: im/pinyin/pinyin.h:130
 msgid "s <-> sh"
 msgstr ""
 
-#: im/pinyin/pinyin.h:124
+#: im/pinyin/pinyin.h:125
 msgid "u <-> ou"
 msgstr "u <-> ou"
 
-#: im/pinyin/pinyin.h:119
+#: im/pinyin/pinyin.h:120
 msgid "u <-> v"
 msgstr ""
 
-#: im/pinyin/pinyin.h:125
+#: im/pinyin/pinyin.h:126
 msgid "uan <-> uang"
 msgstr "uan <-> uang"
 
-#: im/pinyin/pinyin.h:107
+#: im/pinyin/pinyin.h:108
 msgid "ue -> ve"
 msgstr "ue -> ve"
 
-#: im/pinyin/pinyin.h:130
+#: im/pinyin/pinyin.h:131
 msgid "z <-> zh"
 msgstr ""
 
