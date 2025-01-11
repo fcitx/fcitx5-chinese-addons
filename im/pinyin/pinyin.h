@@ -18,6 +18,7 @@
 #include <fcitx-config/option.h>
 #include <fcitx-config/rawconfig.h>
 #include <fcitx-utils/event.h>
+#include <fcitx-utils/eventloopinterface.h>
 #include <fcitx-utils/handlertable.h>
 #include <fcitx-utils/i18n.h>
 #include <fcitx-utils/inputbuffer.h>
@@ -46,8 +47,6 @@
 #include <regex>
 #include <string>
 #include <string_view>
-#include <unordered_map>
-#include <unordered_set>
 #include <utility>
 #include <vector>
 
@@ -290,21 +289,11 @@ FCITX_CONFIGURATION(
     ExternalOption quickphrase{this, "QuickPhrase", _("Quick Phrase"),
                                "fcitx://config/addon/quickphrase/editor"};
     OptionWithAnnotation<std::vector<std::string>, ToolTipAnnotation>
-        quickphraseTrigger{this,
-                           "QuickPhrase trigger",
-                           _("Strings to trigger quick phrase"),
-                           {"www.", "ftp.", "http:", "mail.", "bbs.", "forum.",
-                            "https:", "ftp:", "telnet:", "mailto:"},
-                           {},
-                           {},
-                           {_("Enter quickphrase mode when current input "
-                              "matches any string from the list.")}};
-    OptionWithAnnotation<std::vector<std::string>, ToolTipAnnotation>
         quickphraseTriggerRegex{
             this,
             "QuickPhraseTriggerRegex",
             _("Regular expression to trigger quick phrase"),
-            {},
+            {".(\\.|/|@)$", "^(http|https|ftp|telnet|mailto):"},
             {},
             {},
             {_("Enter quickphrase mode when current input matches any regular "
@@ -449,8 +438,6 @@ private:
     PinyinEngineConfig config_;
     PinyinEngineConfig pyConfig_;
     std::unique_ptr<libime::PinyinIME> ime_;
-    std::unordered_map<std::string, std::unordered_set<uint32_t>>
-        quickphraseTriggerDict_;
     std::vector<std::regex> quickphraseTriggerRegex_;
     KeyList selectionKeys_;
     KeyList numpadSelectionKeys_;
