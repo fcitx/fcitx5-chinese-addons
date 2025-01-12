@@ -4,15 +4,15 @@
 #
 # Translators:
 # TotalCaesar659 <x24cm5b8c54q6szxw@yandex.ru>, 2017
-# Dmitry <dmitrydmitry761@gmail.com>, 2024
+# Dmitry <dmitrydmitry761@gmail.com>, 2025
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2025-01-11 20:24+0000\n"
+"POT-Creation-Date: 2025-01-12 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
-"Last-Translator: Dmitry <dmitrydmitry761@gmail.com>, 2024\n"
+"Last-Translator: Dmitry <dmitrydmitry761@gmail.com>, 2025\n"
 "Language-Team: Russian (https://app.transifex.com/fcitx/teams/12005/ru/)\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -470,6 +470,8 @@ msgid ""
 "Enter quickphrase mode when current input matches any regular expression "
 "from the list."
 msgstr ""
+"Перейти в режим быстрой фразы, если текущий ввод соответствует любому "
+"регулярному выражению из списка."
 
 #: modules/punctuation/punctuation.h:62
 msgid "Entries"
@@ -976,7 +978,7 @@ msgstr "Регулярное выражение для выбора единст
 
 #: im/pinyin/pinyin.h:295
 msgid "Regular expression to trigger quick phrase"
-msgstr ""
+msgstr "Регулярное выражение для запуска быстрой фразы"
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:44
 #. i18n: ectx: property (text), widget (QPushButton, removeAllButton_)
