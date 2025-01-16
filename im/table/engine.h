@@ -14,9 +14,11 @@
 #include <fcitx-config/option.h>
 #include <fcitx-config/rawconfig.h>
 #include <fcitx-utils/event.h>
+#include <fcitx-utils/eventloopinterface.h>
 #include <fcitx-utils/handlertable.h>
 #include <fcitx-utils/i18n.h>
 #include <fcitx-utils/key.h>
+#include <fcitx-utils/misc.h>
 #include <fcitx/action.h>
 #include <fcitx/addoninstance.h>
 #include <fcitx/addonmanager.h>
@@ -76,10 +78,10 @@ FCITX_CONFIGURATION(
                          LookupShuangpinProfileEnum::No};
 
     Option<bool> predictionEnabled{this, "Prediction", _("Enable Prediction"),
-                                   false};
+                                   isAndroid()};
     Option<int, IntConstrain> predictionSize{this, "PredictionSize",
                                              _("Prediction Size"), 10,
-                                             IntConstrain(3, 20)};);
+                                             IntConstrain(3, 100)};);
 
 class TableEngine final : public InputMethodEngine {
 public:
