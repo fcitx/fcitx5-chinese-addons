@@ -7,15 +7,15 @@
 # wwj402 <wwj402@gmail.com>, 2018
 # rocka, 2023
 # csslayer <wengxt@gmail.com>, 2024
-# Yiyu Liu, 2024
+# Yiyu Liu, 2025
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2025-01-11 20:24+0000\n"
+"POT-Creation-Date: 2025-01-17 20:25+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
-"Last-Translator: Yiyu Liu, 2024\n"
+"Last-Translator: Yiyu Liu, 2025\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/fcitx/teams/12005/"
 "zh_CN/)\n"
 "Language: zh_CN\n"
@@ -126,7 +126,7 @@ msgid ""
 "simulate a more compose table like experience."
 msgstr ""
 
-#: im/table/engine.h:52 im/pinyin/pinyin.h:91
+#: im/table/engine.h:54 im/pinyin/pinyin.h:91
 msgid "ABC"
 msgstr "智能ABC"
 
@@ -327,7 +327,7 @@ msgstr "创建临时文件失败。"
 msgid "Creating temp file failed. Please check the permission or disk space."
 msgstr "创建临时文件失败。请检查权限或磁盘空间。"
 
-#: im/table/engine.h:54 im/pinyin/pinyin.h:93
+#: im/table/engine.h:56 im/pinyin/pinyin.h:93
 msgid "Custom"
 msgstr "自定义"
 
@@ -364,7 +364,7 @@ msgstr "词库已经存在"
 msgid "Display Hint for word"
 msgstr "显示词的提示"
 
-#: im/table/engine.h:75
+#: im/table/engine.h:77
 msgid "Display Shuangpin when looking up pinyin"
 msgstr "查找拼音时显示双拼"
 
@@ -372,7 +372,7 @@ msgstr "查找拼音时显示双拼"
 msgid "Display custom hint"
 msgstr "显示自定义提示"
 
-#: im/table/engine.h:51
+#: im/table/engine.h:53
 msgid "Do not display"
 msgstr "不要显示"
 
@@ -427,7 +427,7 @@ msgstr "启用云拼音"
 msgid "Enable Cloudpinyin"
 msgstr "启用云拼音"
 
-#: im/table/engine.h:78 im/pinyin/pinyin.h:179
+#: im/table/engine.h:80 im/pinyin/pinyin.h:179
 msgid "Enable Prediction"
 msgstr "启用预测"
 
@@ -451,7 +451,7 @@ msgstr "中止键"
 msgid ""
 "Enter quickphrase mode when current input matches any regular expression "
 "from the list."
-msgstr ""
+msgstr "在当前输入匹配列表中任一正则表达式进入快速输入"
 
 #: modules/punctuation/punctuation.h:62
 msgid "Entries"
@@ -522,7 +522,7 @@ msgstr "将嵌入预编辑文本的光标固定在开头"
 msgid "Forget candidate"
 msgstr "忘记候选词"
 
-#: im/table/engine.h:64 im/table/candidate.cpp:112 im/pinyin/pinyin.h:190
+#: im/table/engine.h:66 im/table/candidate.cpp:112 im/pinyin/pinyin.h:190
 msgid "Forget word"
 msgstr "忘记词汇"
 
@@ -703,11 +703,11 @@ msgstr "学习"
 msgid "Length limit of selecting the only candidate"
 msgstr "选择唯一候选词的长度限制"
 
-#: im/table/engine.h:69
+#: im/table/engine.h:71
 msgid "Look up pinyin"
 msgstr "查找拼音"
 
-#: im/table/engine.h:51 im/pinyin/pinyin.h:90
+#: im/table/engine.h:53 im/pinyin/pinyin.h:90
 msgid "MS"
 msgstr "微软"
 
@@ -739,7 +739,7 @@ msgstr "输入长度大于 4 时进行部分双拼匹配"
 msgid "Minimum Pinyin Length"
 msgstr "最小拼音长度"
 
-#: im/table/engine.h:59
+#: im/table/engine.h:61
 msgid "Modify dictionary"
 msgstr "修改词典"
 
@@ -842,7 +842,7 @@ msgstr "拼音"
 msgid "Pinyin dictionary manager"
 msgstr "拼音词库管理器"
 
-#: im/table/engine.h:53 im/pinyin/pinyin.h:92
+#: im/table/engine.h:55 im/pinyin/pinyin.h:92
 msgid "PinyinJiajia"
 msgstr "拼音加加"
 
@@ -860,7 +860,7 @@ msgstr "预测禁用"
 msgid "Prediction Enabled"
 msgstr "预测启用"
 
-#: im/table/engine.h:81 im/pinyin/pinyin.h:182
+#: im/table/engine.h:83 im/pinyin/pinyin.h:182
 msgid "Prediction Size"
 msgstr "预测个数"
 
@@ -942,7 +942,7 @@ msgstr "选择唯一候选词的正则表达式"
 
 #: im/pinyin/pinyin.h:295
 msgid "Regular expression to trigger quick phrase"
-msgstr ""
+msgstr "触发快速输入的正则表达式"
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:44
 #. i18n: ectx: property (text), widget (QPushButton, removeAllButton_)
@@ -1306,7 +1306,7 @@ msgstr "五笔字型"
 msgid "Wubi Pinyin"
 msgstr "五笔拼音"
 
-#: im/table/engine.h:54 im/pinyin/pinyin.h:93
+#: im/table/engine.h:56 im/pinyin/pinyin.h:93
 msgid "Xiaohe"
 msgstr "小鹤"
 
@@ -1314,15 +1314,15 @@ msgstr "小鹤"
 msgid "Yes"
 msgstr "是"
 
-#: im/table/engine.h:53 im/pinyin/pinyin.h:92
+#: im/table/engine.h:55 im/pinyin/pinyin.h:92
 msgid "Zhongwenzhixing"
 msgstr "中文之星"
 
-#: im/table/engine.h:52 im/pinyin/pinyin.h:91
+#: im/table/engine.h:54 im/pinyin/pinyin.h:91
 msgid "Ziguang"
 msgstr "紫光"
 
-#: im/table/engine.h:51 im/pinyin/pinyin.h:90 im/table/zrm.conf.in.in:3
+#: im/table/engine.h:53 im/pinyin/pinyin.h:90 im/table/zrm.conf.in.in:3
 msgid "Ziranma"
 msgstr "自然码"
 
