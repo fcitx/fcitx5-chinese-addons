@@ -25,7 +25,6 @@
 #include <fcitx-utils/eventloopinterface.h>
 #include <fcitx-utils/key.h>
 #include <fcitx-utils/keysym.h>
-#include <fcitx-utils/keysymgen.h>
 #include <fcitx-utils/macros.h>
 #include <fcitx-utils/misc.h>
 #include <fcitx-utils/stringutils.h>
