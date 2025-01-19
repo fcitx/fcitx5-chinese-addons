@@ -1767,6 +1767,18 @@ bool PinyinEngine::handlePunc(KeyEvent &event,
         candidateList->candidate(0).select(inputContext);
     }
 
+    // We can't emit punctuation right now, since it's not yet fully selected.
+    // There is an option to split the current input, however, it may not be
+    // sane to do so based on the partial input and cursor location. E.g.
+    // current input is n|i hao, and you press ",". Candidate will be filtered
+    // until "ni", instead of "n". which means you are not inserting "," between
+    // n & i. Thus, let's just make it select the default candidate.
+    // Also, it can not work with punctuation candidate, or type punc in pair.
+    if (!state->context_.empty()) {
+        event.filterAndAccept();
+        return true;
+    }
+
     std::string punc;
     std::string puncAfter;
     // skip key pad
