@@ -387,9 +387,11 @@ void testQuickPhraseTrigger(Instance *instance) {
         FCITX_ASSERT(ic->inputPanel().preedit().toString() == "www.");
 
         ic->reset();
-        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("b"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("b"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("s"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("."), false);
-        FCITX_ASSERT(ic->inputPanel().preedit().toString() == "a.");
+        FCITX_ASSERT(ic->inputPanel().preedit().toString() == "bbs.");
 
         ic->reset();
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("u"), false);
