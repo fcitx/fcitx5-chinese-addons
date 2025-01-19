@@ -292,7 +292,8 @@ FCITX_CONFIGURATION(
             this,
             "QuickPhraseTriggerRegex",
             _("Regular expression to trigger quick phrase"),
-            {".(\\.|/|@)$", "^(http|https|ftp|telnet|mailto):"},
+            {".(/|@)$", "^(www|bbs|forum|mail|bbs)\\.",
+             "^(http|https|ftp|telnet|mailto):"},
             {},
             {},
             {_("Enter quickphrase mode when current input matches any regular "
