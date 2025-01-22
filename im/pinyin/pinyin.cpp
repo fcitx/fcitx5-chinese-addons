@@ -1085,7 +1085,9 @@ void PinyinEngine::populateConfig() {
         try {
             std::regex reg{regStr};
             quickphraseTriggerRegex_.push_back(std::move(reg));
-        } catch (...) {
+        } catch (const std::exception &e) {
+            PINYIN_DEBUG() << "Invalid regular expression: \"" << regStr
+                           << "\", " << e.what();
         }
     }
     PINYIN_DEBUG() << "Quick Phrase Trigger Regex size: "
