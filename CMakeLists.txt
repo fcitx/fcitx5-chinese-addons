@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.6.0)
-project(fcitx5-chinese-addons VERSION 5.1.7)
+project(fcitx5-chinese-addons VERSION 5.1.8)
 
 set(REQUIRED_FCITX_VERSION 5.1.12)
 
