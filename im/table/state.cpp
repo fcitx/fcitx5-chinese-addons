@@ -251,10 +251,7 @@ bool TableState::isComposeTableMode() const {
 bool TableState::autoSelectCandidate() const {
     auto candidateList = ic_->inputPanel().candidateList();
     if (candidateList && !candidateList->empty()) {
-        int idx = candidateList->cursorIndex();
-        if (idx < 0) {
-            idx = 0;
-        }
+        int idx = std::max(candidateList->cursorIndex(), 0);
         candidateList->candidate(idx).select(ic_);
         return true;
     }
@@ -1302,9 +1299,7 @@ void TableState::updateUI(bool keepOldCursor, bool maybePredict) {
             }
         }
     }
-    if (cursor < 0) {
-        cursor = 0;
-    }
+    cursor = std::max(cursor, 0);
 
     ic_->inputPanel().reset();
 
