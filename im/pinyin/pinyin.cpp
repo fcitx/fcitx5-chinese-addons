@@ -1286,10 +1286,13 @@ bool PinyinEngine::handle2nd3rdSelection(KeyEvent &event) {
             if (keyReleased == idx &&
                 keyReleasedIndex == event.key().keyListIndex(keyHandler.list)) {
                 if (isModifier) {
-                    if (keyHandler.selection < candidateList->size()) {
+                    if (instance_->globalConfig().checkModifierOnlyKeyTimeout(
+                            state->lastKeyPressedTime_) &&
+                        keyHandler.selection < candidateList->size()) {
                         candidateList->candidate(keyHandler.selection)
                             .select(inputContext);
                     }
+                    state->lastKeyPressedTime_ = 0;
                     event.filterAndAccept();
                     return true;
                 }
@@ -1308,6 +1311,7 @@ bool PinyinEngine::handle2nd3rdSelection(KeyEvent &event) {
                 state->keyReleased_ = idx;
                 state->keyReleasedIndex_ = keyIdx;
                 if (isModifier) {
+                    state->lastKeyPressedTime_ = now(CLOCK_MONOTONIC);
                     // don't forward to input method, but make it pass
                     // through to client.
                     event.filter();

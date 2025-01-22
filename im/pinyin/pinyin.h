@@ -329,6 +329,7 @@ public:
 
     int keyReleased_ = -1;
     int keyReleasedIndex_ = -2;
+    uint64_t lastKeyPressedTime_ = 0;
 };
 
 class PinyinEngine final : public InputMethodEngineV3,

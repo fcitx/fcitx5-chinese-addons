@@ -15,8 +15,10 @@
 #include <algorithm>
 #include <cstddef>
 #include <cstdint>
+#include <ctime>
 #include <fcitx-utils/capabilityflags.h>
 #include <fcitx-utils/event.h>
+#include <fcitx-utils/eventloopinterface.h>
 #include <fcitx-utils/i18n.h>
 #include <fcitx-utils/key.h>
 #include <fcitx-utils/keysym.h>
@@ -1131,10 +1133,14 @@ bool TableState::handle2nd3rdCandidate(const TableConfig &config,
             if (keyReleased == idx &&
                 keyReleasedIndex == event.key().keyListIndex(keyHandler.list)) {
                 if (isModifier) {
-                    if (keyHandler.selection < candidateList->size()) {
+                    if (engine_->instance()
+                            ->globalConfig()
+                            .checkModifierOnlyKeyTimeout(lastKeyPressedTime_) &&
+                        keyHandler.selection < candidateList->size()) {
                         candidateList->candidate(keyHandler.selection)
                             .select(inputContext);
                     }
+                    lastKeyPressedTime_ = 0;
                     event.filterAndAccept();
                     return true;
                 }
@@ -1153,6 +1159,7 @@ bool TableState::handle2nd3rdCandidate(const TableConfig &config,
                 keyReleased_ = idx;
                 keyReleasedIndex_ = keyIdx;
                 if (isModifier) {
+                    lastKeyPressedTime_ = now(CLOCK_MONOTONIC);
                     // don't forward to input method, but make it pass
                     // through to client.
                     event.filter();
