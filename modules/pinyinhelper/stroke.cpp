@@ -7,18 +7,27 @@
  */
 #include "stroke.h"
 
-#include <boost/algorithm/string.hpp>
-#include <boost/iostreams/device/file_descriptor.hpp>
-#include <boost/iostreams/stream_buffer.hpp>
+#include <cstddef>
+#include <cstdint>
+#include <fcitx-utils/fdstreambuf.h>
 #include <fcitx-utils/macros.h>
 #include <fcitx-utils/standardpath.h>
 #include <fcitx-utils/stringutils.h>
 #include <fcitx-utils/utf8.h>
 #include <fcntl.h>
+#include <functional>
+#include <future>
+#include <istream>
 #include <libime/core/datrie.h>
+#include <optional>
 #include <queue>
 #include <stdexcept>
+#include <string>
 #include <string_view>
+#include <tuple>
+#include <unordered_set>
+#include <utility>
+#include <vector>
 
 namespace fcitx {
 
@@ -40,10 +49,7 @@ void Stroke::loadAsync() {
             throw std::runtime_error("Failed to open file");
         }
 
-        boost::iostreams::stream_buffer<
-            boost::iostreams::file_descriptor_source>
-            buffer(file.fd(),
-                   boost::iostreams::file_descriptor_flags::never_close_handle);
+        IFDStreamBuf buffer(file.fd());
         std::istream in(&buffer);
         std::string buf;
         while (!in.eof()) {
@@ -162,7 +168,7 @@ Stroke::lookup(std::string_view input, int limit) {
         q.push(item);
     };
 
-    pushQueue(LookupItem{0, input, 0, 0});
+    pushQueue(LookupItem{.pos = 0, .remain = input, .weight = 0, .length = 0});
 
     while (!q.empty()) {
         auto current = q.top();
@@ -186,9 +192,10 @@ Stroke::lookup(std::string_view input, int limit) {
 
         // Deletion
         if (!current.remain.empty()) {
-            pushQueue(LookupItem{current.pos, current.remain.substr(1),
-                                 current.weight + DELETION_WEIGHT,
-                                 current.length});
+            pushQueue(LookupItem{.pos = current.pos,
+                                 .remain = current.remain.substr(1),
+                                 .weight = current.weight + DELETION_WEIGHT,
+                                 .length = current.length});
         }
 
         for (char i = '1'; i <= '5'; i++) {
@@ -198,16 +205,22 @@ Stroke::lookup(std::string_view input, int limit) {
                 continue;
             }
             if (!current.remain.empty() && current.remain[0] == i) {
-                pushQueue(LookupItem{pos, current.remain.substr(1),
-                                     current.weight, current.length + 1});
+                pushQueue(LookupItem{.pos = pos,
+                                     .remain = current.remain.substr(1),
+                                     .weight = current.weight,
+                                     .length = current.length + 1});
             } else {
-                pushQueue(LookupItem{pos, current.remain,
-                                     current.weight + INSERTION_WEIGHT,
-                                     current.length + 1});
+                pushQueue(
+                    LookupItem{.pos = pos,
+                               .remain = current.remain,
+                               .weight = current.weight + INSERTION_WEIGHT,
+                               .length = current.length + 1});
                 if (!current.remain.empty()) {
-                    pushQueue(LookupItem{pos, current.remain.substr(1),
-                                         current.weight + SUBSTITUTION_WEIGHT,
-                                         current.length + 1});
+                    pushQueue(LookupItem{.pos = pos,
+                                         .remain = current.remain.substr(1),
+                                         .weight = current.weight +
+                                                   SUBSTITUTION_WEIGHT,
+                                         .length = current.length + 1});
                 }
             }
 

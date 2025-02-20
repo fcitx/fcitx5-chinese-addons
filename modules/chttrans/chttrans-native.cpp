@@ -6,8 +6,7 @@
  */
 #include "chttrans-native.h"
 #include "config.h"
-#include <boost/iostreams/device/file_descriptor.hpp>
-#include <boost/iostreams/stream_buffer.hpp>
+#include <fcitx-utils/fdstreambuf.h>
 #include <fcitx-utils/standardpath.h>
 #include <fcitx-utils/utf8.h>
 #include <fcntl.h>
@@ -22,9 +21,8 @@ bool NativeBackend::loadOnce(const ChttransConfig &) {
     if (file.fd() < 0) {
         return false;
     }
-    boost::iostreams::stream_buffer<boost::iostreams::file_descriptor_source>
-        buffer(file.fd(),
-               boost::iostreams::file_descriptor_flags::never_close_handle);
+
+    IFDStreamBuf buffer(file.fd());
     std::istream in(&buffer);
 
     std::string strBuf;

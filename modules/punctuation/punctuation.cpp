@@ -7,8 +7,6 @@
 #include "punctuation.h"
 #include "notifications_public.h"
 #include <algorithm>
-#include <boost/iostreams/device/file_descriptor.hpp>
-#include <boost/iostreams/stream_buffer.hpp>
 #include <cstdint>
 #include <exception>
 #include <fcitx-config/iniparser.h>

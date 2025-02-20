@@ -17,7 +17,6 @@
 #include <fcitx/inputcontext.h>
 #include <fcitx/inputmethodentry.h>
 #include <fcntl.h>
-#include <fmt/format.h>
 #include <set>
 
 namespace fcitx {
@@ -77,8 +76,7 @@ void PinyinHelper::initQuickPhrase() {
                     auto result = lookup(c);
                     if (!result.empty()) {
                         auto py = stringutils::join(result, ", ");
-                        auto display = fmt::format(_("{0} ({1})"),
-                                                   utf8::UCS4ToUTF8(c), py);
+                        auto display = _("{0} ({1})", utf8::UCS4ToUTF8(c), py);
                         callback(display, display,
                                  QuickPhraseAction::DoNothing);
                     }

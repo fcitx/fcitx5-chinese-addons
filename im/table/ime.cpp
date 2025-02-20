@@ -5,13 +5,11 @@
  *
  */
 #include "ime.h"
-#include <boost/iostreams/device/file_descriptor.hpp>
-#include <boost/iostreams/stream_buffer.hpp>
-#include <boost/range/adaptor/reversed.hpp>
 #include <cstdint>
 #include <exception>
 #include <fcitx-config/iniparser.h>
 #include <fcitx-config/rawconfig.h>
+#include <fcitx-utils/fdstreambuf.h>
 #include <fcitx-utils/key.h>
 #include <fcitx-utils/log.h>
 #include <fcitx-utils/macros.h>
@@ -28,6 +26,7 @@
 #include <libime/table/tableoptions.h>
 #include <memory>
 #include <ostream>
+#include <ranges>
 #include <set>
 #include <stdexcept>
 #include <string>
@@ -117,7 +116,7 @@ TableIME::requestDict(const std::string &name) {
         auto files = StandardPath::global().openAll(StandardPath::Type::PkgData,
                                                     filename, O_RDONLY);
         // reverse the order, so we end up parse user file at last.
-        for (const auto &file : files | boost::adaptors::reversed) {
+        for (const auto &file : files | std::views::reverse) {
             RawConfig rawConfig;
             readFromIni(rawConfig, file.fd());
             root.load(rawConfig, true);
@@ -131,7 +130,7 @@ TableIME::requestDict(const std::string &name) {
         files = StandardPath::global().openAll(StandardPath::Type::PkgConfig,
                                                customization, O_RDONLY);
         // reverse the order, so we end up parse user file at last.
-        for (const auto &file : files | boost::adaptors::reversed) {
+        for (const auto &file : files | std::views::reverse) {
             RawConfig rawConfig;
             readFromIni(rawConfig, file.fd());
             root.load(rawConfig, true);
@@ -145,10 +144,7 @@ TableIME::requestDict(const std::string &name) {
             if (dictFile.fd() < 0) {
                 throw std::runtime_error("Couldn't open file");
             }
-            boost::iostreams::stream_buffer<
-                boost::iostreams::file_descriptor_source>
-                buffer(dictFile.fd(), boost::iostreams::file_descriptor_flags::
-                                          never_close_handle);
+            IFDStreamBuf buffer(dictFile.fd());
             std::istream in(&buffer);
             dict->load(in);
             iter->second.dict = std::move(dict);
@@ -163,11 +159,7 @@ TableIME::requestDict(const std::string &name) {
                     StandardPath::Type::PkgData,
                     stringutils::concat("table/", name, ".user.dict"),
                     O_RDONLY);
-                boost::iostreams::stream_buffer<
-                    boost::iostreams::file_descriptor_source>
-                    buffer(dictFile.fd(),
-                           boost::iostreams::file_descriptor_flags::
-                               never_close_handle);
+                IFDStreamBuf buffer(dictFile.fd());
                 std::istream in(&buffer);
                 dict->loadUser(in);
             } catch (const std::exception &e) {
@@ -212,11 +204,7 @@ TableIME::requestDict(const std::string &name) {
                 auto dictFile = StandardPath::global().openUser(
                     StandardPath::Type::PkgData,
                     stringutils::concat("table/", name, ".history"), O_RDONLY);
-                boost::iostreams::stream_buffer<
-                    boost::iostreams::file_descriptor_source>
-                    buffer(dictFile.fd(),
-                           boost::iostreams::file_descriptor_flags::
-                               never_close_handle);
+                IFDStreamBuf buffer(dictFile.fd());
                 std::istream in(&buffer);
                 iter->second.model->load(in);
             } catch (const std::exception &e) {
@@ -274,35 +262,29 @@ void TableIME::saveDict(const std::string &name) {
     }
     auto fileName = stringutils::joinPath("table", name);
 
-    StandardPath::global().safeSave(
-        StandardPath::Type::PkgData, fileName + ".user.dict", [dict](int fd) {
-            boost::iostreams::stream_buffer<
-                boost::iostreams::file_descriptor_sink>
-                buffer(fd, boost::iostreams::file_descriptor_flags::
-                               never_close_handle);
-            std::ostream out(&buffer);
-            try {
-                dict->saveUser(out);
-                return static_cast<bool>(out);
-            } catch (const std::exception &) {
-                return false;
-            }
-        });
+    StandardPath::global().safeSave(StandardPath::Type::PkgData,
+                                    fileName + ".user.dict", [dict](int fd) {
+                                        OFDStreamBuf buffer(fd);
+                                        std::ostream out(&buffer);
+                                        try {
+                                            dict->saveUser(out);
+                                            return static_cast<bool>(out);
+                                        } catch (const std::exception &) {
+                                            return false;
+                                        }
+                                    });
 
-    StandardPath::global().safeSave(
-        StandardPath::Type::PkgData, fileName + ".history", [lm](int fd) {
-            boost::iostreams::stream_buffer<
-                boost::iostreams::file_descriptor_sink>
-                buffer(fd, boost::iostreams::file_descriptor_flags::
-                               never_close_handle);
-            std::ostream out(&buffer);
-            try {
-                lm->save(out);
-                return static_cast<bool>(out);
-            } catch (const std::exception &) {
-                return false;
-            }
-        });
+    StandardPath::global().safeSave(StandardPath::Type::PkgData,
+                                    fileName + ".history", [lm](int fd) {
+                                        OFDStreamBuf buffer(fd);
+                                        std::ostream out(&buffer);
+                                        try {
+                                            lm->save(out);
+                                            return static_cast<bool>(out);
+                                        } catch (const std::exception &) {
+                                            return false;
+                                        }
+                                    });
 }
 
 void TableIME::reloadAllDict() {
