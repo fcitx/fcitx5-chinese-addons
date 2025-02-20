@@ -8,6 +8,8 @@
 #include "chttrans.h"
 #include "chttrans-native.h"
 #include "config.h"
+#include "notifications_public.h"
+#include <algorithm>
 #include <cassert>
 #include <cstddef>
 #include <exception>
@@ -28,10 +30,11 @@
 #include <fcitx/userinterface.h>
 #include <fcitx/userinterfacemanager.h>
 #include <fcntl.h>
-#include <fmt/core.h>
-#include <fmt/format.h>
+#include <format>
 #include <fstream>
+#include <ios>
 #include <iterator>
+#include <memory>
 #include <string>
 #include <string_view>
 #include <unordered_map>
@@ -159,9 +162,7 @@ Chttrans::Chttrans(fcitx::Instance *instance) : instance_(instance) {
                 size_t remainLength = newLength;
                 for (size_t i = 0; i < text.size(); i++) {
                     auto segmentLength = utf8::length(text.stringAt(i));
-                    if (remainLength < segmentLength) {
-                        segmentLength = remainLength;
-                    }
+                    segmentLength = std::min(remainLength, segmentLength);
                     remainLength -= segmentLength;
                     size_t segmentByteLength = utf8::ncharByteLength(
                         newString.begin() + off, segmentLength);
@@ -172,9 +173,7 @@ Chttrans::Chttrans(fcitx::Instance *instance) : instance_(instance) {
             }
             if (text.cursor() > 0) {
                 auto length = utf8::length(oldString, 0, text.cursor());
-                if (length > newLength) {
-                    length = newLength;
-                }
+                length = std::min(length, newLength);
                 newText.setCursor(
                     utf8::ncharByteLength(newText.toString().begin(), length));
             } else {
@@ -204,7 +203,7 @@ void Chttrans::toggle(InputContext *ic) {
         return;
     }
     const auto *entry = instance_->inputMethodEntry(ic);
-    if (enabledIM_.count(entry->uniqueName())) {
+    if (enabledIM_.contains(entry->uniqueName())) {
         enabledIM_.erase(entry->uniqueName());
     } else {
         enabledIM_.insert(entry->uniqueName());
@@ -282,7 +281,7 @@ const Configuration *Chttrans::getConfig() const {
             std::string description =
                 file.first.substr(0, file.first.size() - JsonSuffix.size());
             if (!name.empty()) {
-                description = fmt::format("{0}: {1}", description,
+                description = std::format("{0}: {1}", description,
                                           C_("OpenCC Profile", name));
             }
             profiles.emplace_back(file.first, std::move(description));
@@ -329,7 +328,7 @@ ChttransIMType Chttrans::convertType(fcitx::InputContext *inputContext) const {
 
     const auto *entry = instance_->inputMethodEntry(inputContext);
     assert(entry);
-    if (!enabledIM_.count(entry->uniqueName())) {
+    if (!enabledIM_.contains(entry->uniqueName())) {
         return ChttransIMType::Other;
     }
 
@@ -345,7 +344,7 @@ ChttransIMType Chttrans::currentType(fcitx::InputContext *inputContext) const {
 
     const auto *entry = instance_->inputMethodEntry(inputContext);
     assert(entry);
-    if (!enabledIM_.count(entry->uniqueName())) {
+    if (!enabledIM_.contains(entry->uniqueName())) {
         return type;
     }
 

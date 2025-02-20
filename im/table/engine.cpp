@@ -9,16 +9,12 @@
 #include "context.h"
 #include "ime.h"
 #include "state.h"
-#include <boost/algorithm/string.hpp>
-#include <boost/iostreams/device/file_descriptor.hpp>
-#include <boost/iostreams/stream.hpp>
-#include <boost/iostreams/stream_buffer.hpp>
-#include <cstddef>
 #include <exception>
 #include <fcitx-config/iniparser.h>
 #include <fcitx-config/rawconfig.h>
 #include <fcitx-utils/charutils.h>
 #include <fcitx-utils/event.h>
+#include <fcitx-utils/fdstreambuf.h>
 #include <fcitx-utils/i18n.h>
 #include <fcitx-utils/log.h>
 #include <fcitx-utils/macros.h>
@@ -131,10 +127,7 @@ void TableEngine::populateConfig() {
                                                 "pinyin/sp.dat", O_RDONLY);
         if (file.isValid()) {
             try {
-                boost::iostreams::stream_buffer<
-                    boost::iostreams::file_descriptor_source>
-                    buffer(file.fd(), boost::iostreams::file_descriptor_flags::
-                                          never_close_handle);
+                IFDStreamBuf buffer(file.fd());
                 std::istream in(&buffer);
                 shuangpinProfile =
                     std::make_unique<libime::ShuangpinProfile>(in);
@@ -291,11 +284,7 @@ const libime::PinyinDictionary &TableEngine::pinyinDict() {
                         O_RDONLY);
                 }
 
-                boost::iostreams::stream_buffer<
-                    boost::iostreams::file_descriptor_source>
-                    buffer(systemDictFile.fd(),
-                           boost::iostreams::file_descriptor_flags::
-                               never_close_handle);
+                IFDStreamBuf buffer(systemDictFile.fd());
                 std::istream in(&buffer);
                 pinyinDict_.load(i, in, libime::PinyinDictFormat::Binary);
             } catch (const std::exception &e) {

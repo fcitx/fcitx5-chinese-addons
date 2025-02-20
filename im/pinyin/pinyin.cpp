@@ -12,47 +12,73 @@
 #include "../../modules/cloudpinyin/cloudpinyin_public.h"
 #include "config.h"
 #include "customphrase.h"
+#include "notifications_public.h"
 #include "pinyincandidate.h"
+#include "pinyinhelper_public.h"
+#include "punctuation_public.h"
+#include "spell_public.h"
 #include "workerthread.h"
 #include <algorithm>
-#include <boost/iostreams/stream_buffer.hpp>
 #include <cassert>
 #include <cstdint>
 #include <ctime>
 #include <exception>
+#include <fcitx-config/iniparser.h>
 #include <fcitx-config/rawconfig.h>
 #include <fcitx-utils/capabilityflags.h>
+#include <fcitx-utils/charutils.h>
+#include <fcitx-utils/event.h>
 #include <fcitx-utils/eventloopinterface.h>
+#include <fcitx-utils/fdstreambuf.h>
+#include <fcitx-utils/i18n.h>
 #include <fcitx-utils/key.h>
 #include <fcitx-utils/keysym.h>
+#include <fcitx-utils/log.h>
 #include <fcitx-utils/macros.h>
 #include <fcitx-utils/misc.h>
+#include <fcitx-utils/standardpath.h>
 #include <fcitx-utils/stringutils.h>
 #include <fcitx-utils/textformatflags.h>
+#include <fcitx-utils/utf8.h>
+#include <fcitx/action.h>
 #include <fcitx/addoninstance.h>
 #include <fcitx/candidatelist.h>
 #include <fcitx/event.h>
+#include <fcitx/inputcontext.h>
+#include <fcitx/inputcontextmanager.h>
+#include <fcitx/inputcontextproperty.h>
 #include <fcitx/inputmethodengine.h>
 #include <fcitx/inputmethodentry.h>
+#include <fcitx/inputpanel.h>
 #include <fcitx/instance.h>
 #include <fcitx/statusarea.h>
 #include <fcitx/text.h>
 #include <fcitx/userinterface.h>
-#include <fmt/core.h>
+#include <fcitx/userinterfacemanager.h>
+#include <fcntl.h>
 #include <fstream>
 #include <functional>
 #include <future>
 #include <ios>
 #include <istream>
 #include <iterator>
+#include <libime/core/historybigram.h>
 #include <libime/core/languagemodel.h>
 #include <libime/core/triedictionary.h>
+#include <libime/core/userlanguagemodel.h>
+#include <libime/pinyin/pinyincontext.h>
 #include <libime/pinyin/pinyincorrectionprofile.h>
+#include <libime/pinyin/pinyindecoder.h>
+#include <libime/pinyin/pinyindictionary.h>
+#include <libime/pinyin/pinyinencoder.h>
 #include <libime/pinyin/pinyinime.h>
+#include <libime/pinyin/pinyinprediction.h>
+#include <libime/pinyin/shuangpinprofile.h>
 #include <list>
 #include <memory>
 #include <optional>
 #include <ostream>
+#include <quickphrase_public.h>
 #include <regex>
 #include <stdexcept>
 #include <string>
@@ -62,40 +88,10 @@
 #include <unordered_set>
 #include <utility>
 #include <vector>
+
 #ifdef FCITX_HAS_LUA
-#include "luaaddon_public.h"
+#include <luaaddon_public.h>
 #endif
-#include "notifications_public.h"
-#include "pinyinhelper_public.h"
-#include "punctuation_public.h"
-#include "spell_public.h"
-#include <boost/iostreams/device/file_descriptor.hpp>
-#include <boost/iostreams/stream.hpp>
-#include <fcitx-config/iniparser.h>
-#include <fcitx-utils/charutils.h>
-#include <fcitx-utils/event.h>
-#include <fcitx-utils/i18n.h>
-#include <fcitx-utils/log.h>
-#include <fcitx-utils/standardpath.h>
-#include <fcitx-utils/utf8.h>
-#include <fcitx/action.h>
-#include <fcitx/inputcontext.h>
-#include <fcitx/inputcontextmanager.h>
-#include <fcitx/inputcontextproperty.h>
-#include <fcitx/inputpanel.h>
-#include <fcitx/userinterfacemanager.h>
-#include <fcntl.h>
-#include <fmt/chrono.h>
-#include <fmt/format.h>
-#include <libime/core/historybigram.h>
-#include <libime/core/userlanguagemodel.h>
-#include <libime/pinyin/pinyincontext.h>
-#include <libime/pinyin/pinyindecoder.h>
-#include <libime/pinyin/pinyindictionary.h>
-#include <libime/pinyin/pinyinencoder.h>
-#include <libime/pinyin/pinyinprediction.h>
-#include <libime/pinyin/shuangpinprofile.h>
-#include <quickphrase_public.h>
 
 namespace fcitx {
 
@@ -451,7 +447,7 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
                     result.evaluate([this, inputContext](std::string_view key) {
                         return evaluateCustomPhrase(inputContext, key);
                     });
-                if (customCandidateSet.count(phrase)) {
+                if (customCandidateSet.contains(phrase)) {
                     continue;
                 }
                 customCandidateSet.insert(phrase);
@@ -484,8 +480,8 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
                 *config_.cloudPinyinIndex - 1);
             if (!cand->filled() ||
                 (!cand->word().empty() &&
-                 !customCandidateSet.count(cand->word()) &&
-                 !context.candidatesToCursorSet().count(cand->word()))) {
+                 !customCandidateSet.contains(cand->word()) &&
+                 !context.candidatesToCursorSet().contains(cand->word()))) {
                 customCandidateSet.insert(cand->word());
                 extraCandidates.push_back(std::move(cand));
                 cloud = std::prev(extraCandidates.end());
@@ -526,7 +522,7 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
 
                 int position = hasUpper ? 0 : 1;
                 for (const auto &result : results) {
-                    if (customCandidateSet.count(result)) {
+                    if (customCandidateSet.contains(result)) {
                         continue;
                     }
                     extraCandidates.push_back(
@@ -594,7 +590,7 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
         for (size_t idx = 0, end = candidates.size(); idx < end; idx++) {
             const auto &candidate = candidates[idx];
             auto candidateString = candidate.toString();
-            if (customCandidateSet.count(candidateString)) {
+            if (customCandidateSet.contains(candidateString)) {
                 continue;
             }
             std::vector<std::string> luaExtraCandidates;
@@ -687,10 +683,7 @@ PinyinEngine::PinyinEngine(Instance *instance)
     auto systemDictFile =
         standardPath.open(StandardPath::Type::Data, "libime/sc.dict", O_RDONLY);
     if (systemDictFile.isValid()) {
-        boost::iostreams::stream_buffer<
-            boost::iostreams::file_descriptor_source>
-            buffer(systemDictFile.fd(),
-                   boost::iostreams::file_descriptor_flags::never_close_handle);
+        IFDStreamBuf buffer(systemDictFile.fd());
         std::istream in(&buffer);
         ime_->dict()->load(libime::PinyinDictionary::SystemDict, in,
                            libime::PinyinDictFormat::Binary);
@@ -711,10 +704,7 @@ PinyinEngine::PinyinEngine(Instance *instance)
         }
 
         try {
-            boost::iostreams::stream_buffer<
-                boost::iostreams::file_descriptor_source>
-                buffer(file.fd(), boost::iostreams::file_descriptor_flags::
-                                      never_close_handle);
+            IFDStreamBuf buffer(file.fd());
             std::istream in(&buffer);
             ime_->dict()->load(libime::PinyinDictionary::UserDict, in,
                                libime::PinyinDictFormat::Binary);
@@ -727,10 +717,7 @@ PinyinEngine::PinyinEngine(Instance *instance)
                                           "pinyin/user.history", O_RDONLY);
 
         try {
-            boost::iostreams::stream_buffer<
-                boost::iostreams::file_descriptor_source>
-                buffer(file.fd(), boost::iostreams::file_descriptor_flags::
-                                      never_close_handle);
+            IFDStreamBuf buffer(file.fd());
             std::istream in(&buffer);
             ime_->model()->load(in);
         } catch (const std::exception &e) {
@@ -825,9 +812,7 @@ void PinyinEngine::loadSymbols(const StandardPathFile &file) {
     if (file.fd() < 0) {
         return;
     }
-    boost::iostreams::stream_buffer<boost::iostreams::file_descriptor_source>
-        buffer(file.fd(),
-               boost::iostreams::file_descriptor_flags::never_close_handle);
+    IFDStreamBuf buffer(file.fd());
     std::istream in(&buffer);
     try {
         PINYIN_DEBUG() << "Loading symbol dict " << file.path();
@@ -909,7 +894,8 @@ void PinyinEngine::loadExtraDict() {
     ime_->dict()->removeFrom(libime::TrieDictionary::UserDict + NumBuiltInDict +
                              1);
     for (auto &file : files) {
-        if (disableFiles.count(stringutils::concat(file.first, ".disable"))) {
+        if (disableFiles.contains(
+                stringutils::concat(file.first, ".disable"))) {
             PINYIN_DEBUG() << "Dictionary: " << file.first << " is disabled.";
             continue;
         }
@@ -928,10 +914,7 @@ void PinyinEngine::loadCustomPhrase() {
     }
 
     try {
-        boost::iostreams::stream_buffer<
-            boost::iostreams::file_descriptor_source>
-            buffer(file.fd(),
-                   boost::iostreams::file_descriptor_flags::never_close_handle);
+        IFDStreamBuf buffer(file.fd());
         std::istream in(&buffer);
         customPhrase_.load(in, true);
     } catch (const std::exception &e) {
@@ -956,10 +939,10 @@ void PinyinEngine::populateConfig() {
                             "prediction? You can always toggle it later in "
                             "configuration.");
                 } else {
-                    msg = fmt::format(
-                        _("Do you want to enable cloudpinyin now for better "
-                          "prediction? You can always toggle it later in "
-                          "configuration or by pressing {}."),
+                    msg = _(
+                        "Do you want to enable cloudpinyin now for better "
+                        "prediction? You can always toggle it later in "
+                        "configuration or by pressing {}.",
                         Key::keyListToString(key, KeyStringFormat::Localized));
                 }
                 std::vector<std::string> actions = {"yes", _("Yes"), "no",
@@ -1037,10 +1020,7 @@ void PinyinEngine::populateConfig() {
                                                 "pinyin/sp.dat", O_RDONLY);
         if (file.isValid()) {
             try {
-                boost::iostreams::stream_buffer<
-                    boost::iostreams::file_descriptor_source>
-                    buffer(file.fd(), boost::iostreams::file_descriptor_flags::
-                                          never_close_handle);
+                IFDStreamBuf buffer(file.fd());
                 std::istream in(&buffer);
                 ime_->setShuangpinProfile(
                     std::make_shared<libime::ShuangpinProfile>(
@@ -1572,10 +1552,7 @@ void PinyinEngine::saveCustomPhrase() {
     instance_->eventDispatcher().scheduleWithContext(watch(), [this]() {
         StandardPath::global().safeSave(
             StandardPath::Type::PkgData, "pinyin/customphrase", [this](int fd) {
-                boost::iostreams::stream_buffer<
-                    boost::iostreams::file_descriptor_sink>
-                    buffer(fd, boost::iostreams::file_descriptor_flags::
-                                   never_close_handle);
+                OFDStreamBuf buffer(fd);
                 std::ostream out(&buffer);
                 try {
                     customPhrase_.save(out);
@@ -1814,10 +1791,10 @@ bool PinyinEngine::handlePunc(KeyEvent &event,
         std::string text;
         if (!output.empty()) {
             if (!altOutput.empty()) {
-                text = fmt::format(_("Press {} for {} and Return for {}"),
-                                   keyString, output, altOutput);
+                text = _("Press {} for {} and Return for {}", keyString, output,
+                         altOutput);
             } else {
-                text = fmt::format(_("Press {} for {}"), keyString, altOutput);
+                text = _("Press {} for {}", keyString, altOutput);
             }
         }
         quickphrase()->call<IQuickPhrase::trigger>(
@@ -1980,9 +1957,9 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         // char.
         char chr = keyChr.get();
         return (!state->context_.empty() &&
-                shuangpinProfile->validInput().count(chr)) ||
+                shuangpinProfile->validInput().contains(chr)) ||
                (state->context_.empty() &&
-                shuangpinProfile->validInitial().count(chr));
+                shuangpinProfile->validInitial().contains(chr));
     };
 
     if (!event.key().hasModifier() && quickphrase() &&
@@ -2225,10 +2202,7 @@ void PinyinEngine::save() {
     const auto &standardPath = StandardPath::global();
     standardPath.safeSave(
         StandardPath::Type::PkgData, "pinyin/user.dict", [this](int fd) {
-            boost::iostreams::stream_buffer<
-                boost::iostreams::file_descriptor_sink>
-                buffer(fd, boost::iostreams::file_descriptor_flags::
-                               never_close_handle);
+            OFDStreamBuf buffer(fd);
             std::ostream out(&buffer);
             try {
                 ime_->dict()->save(libime::PinyinDictionary::UserDict, out,
@@ -2241,10 +2215,7 @@ void PinyinEngine::save() {
         });
     standardPath.safeSave(
         StandardPath::Type::PkgData, "pinyin/user.history", [this](int fd) {
-            boost::iostreams::stream_buffer<
-                boost::iostreams::file_descriptor_sink>
-                buffer(fd, boost::iostreams::file_descriptor_flags::
-                               never_close_handle);
+            OFDStreamBuf buffer(fd);
             std::ostream out(&buffer);
             try {
                 ime_->model()->save(out);

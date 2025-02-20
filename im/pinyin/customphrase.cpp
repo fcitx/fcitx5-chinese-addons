@@ -14,9 +14,7 @@
 #include <fcitx-utils/charutils.h>
 #include <fcitx-utils/log.h>
 #include <fcitx-utils/stringutils.h>
-#include <fmt/chrono.h>
-#include <fmt/core.h>
-#include <fmt/format.h>
+#include <format>
 #include <functional>
 #include <istream>
 #include <iterator>
@@ -33,6 +31,37 @@
 #include <vector>
 
 namespace fcitx {
+
+// localtime_s is relatively evil and we simply want to avoid it.
+namespace localtime_helper {
+
+struct not_available_tag {};
+
+not_available_tag localtime_r(...) { return {}; }
+
+} // namespace localtime_helper
+
+struct localtime_impl {
+    std::tm tm_{};
+    std::time_t time_{};
+
+    bool get() {
+        using namespace localtime_helper;
+        return localtime_fallback(localtime_r(&time_, &tm_));
+    }
+
+    bool localtime_fallback(std::tm *t) { return t != nullptr; }
+
+    bool localtime_fallback(localtime_helper::not_available_tag) {
+        // This is a least worse option since win has thread-local for it.
+        auto *t = std::localtime(&time_);
+        if (t) {
+            tm_ = *t;
+            return true;
+        }
+        return false;
+    }
+};
 
 void normalizeData(std::vector<CustomPhrase> &data) {
     std::stable_sort(data.begin(), data.end(),
@@ -112,7 +141,7 @@ bool isComment(std::string_view line) {
 }
 
 inline std::tm currentTm() {
-#ifdef FCITX_CUSTOM_PHRASE_TEST
+#if defined(FCITX_CUSTOM_PHRASE_TEST)
     std::tm timePoint;
     timePoint.tm_year = 2023 - 1900;
     timePoint.tm_mon = 6;
@@ -125,8 +154,9 @@ inline std::tm currentTm() {
 #else
     const std::chrono::system_clock::time_point now =
         std::chrono::system_clock::now();
-    const std::time_t currentTime = std::chrono::system_clock::to_time_t(now);
-    return fmt::localtime(currentTime);
+    localtime_impl impl{.time_ = std::chrono::system_clock::to_time_t(now)};
+    impl.get();
+    return impl.tm_;
 #endif
 }
 
@@ -303,25 +333,25 @@ std::string CustomPhrase::builtinEvaluator(std::string_view key) {
         table = {
             {"year", []() { return std::to_string(currentYear()); }},
             {"year_yy",
-             []() { return fmt::format("{:02d}", currentYear() % 100); }},
+             []() { return std::format("{:02d}", currentYear() % 100); }},
             {"month", []() { return std::to_string(currentMonth()); }},
             {"month_mm",
-             []() { return fmt::format("{:02d}", currentMonth()); }},
+             []() { return std::format("{:02d}", currentMonth()); }},
             {"day", []() { return std::to_string(currentDay()); }},
-            {"day_dd", []() { return fmt::format("{:02d}", currentDay()); }},
+            {"day_dd", []() { return std::format("{:02d}", currentDay()); }},
             {"weekday", []() { return std::to_string(currentWeekday()); }},
-            {"fullhour", []() { return fmt::format("{:02d}", currentHour()); }},
+            {"fullhour", []() { return std::format("{:02d}", currentHour()); }},
             {"halfhour",
-             []() { return fmt::format("{:02d}", currentHalfHour()); }},
+             []() { return std::format("{:02d}", currentHalfHour()); }},
             {"ampm", []() { return currentHour() < 12 ? "AM" : "PM"; }},
-            {"minute", []() { return fmt::format("{:02d}", currentMinute()); }},
-            {"second", []() { return fmt::format("{:02d}", currentSecond()); }},
+            {"minute", []() { return std::format("{:02d}", currentMinute()); }},
+            {"second", []() { return std::format("{:02d}", currentSecond()); }},
             {"year_cn",
              []() { return toChineseYear(std::to_string(currentYear())); }},
             {"year_yy_cn",
              []() {
                  return toChineseYear(
-                     fmt::format("{:02d}", currentYear() % 100));
+                     std::format("{:02d}", currentYear() % 100));
              }},
             {"month_cn",
              []() {

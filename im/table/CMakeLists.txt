@@ -7,7 +7,7 @@ set(TABLE_SOURCES
     factory.cpp
 )
 add_fcitx5_addon(table ${TABLE_SOURCES})
-target_link_libraries(table Fcitx5::Core Fcitx5::Config LibIME::Table LibIME::Pinyin Boost::iostreams Fcitx5::Module::Punctuation Fcitx5::Module::QuickPhrase Fcitx5::Module::PinyinHelper ${FMT_TARGET})
+target_link_libraries(table Fcitx5::Core Fcitx5::Config LibIME::Table LibIME::Pinyin Fcitx5::Module::Punctuation Fcitx5::Module::QuickPhrase Fcitx5::Module::PinyinHelper)
 target_compile_definitions(table PRIVATE FCITX_STRINGUTILS_ENABLE_BOOST_STRING_VIEW)
 install(TARGETS table DESTINATION "${CMAKE_INSTALL_LIBDIR}/fcitx5")
 configure_file(table.conf.in.in table.conf.in)
