@@ -31,8 +31,6 @@
 #include <fcitx/inputpanel.h>
 #include <fcitx/text.h>
 #include <fcitx/userinterface.h>
-#include <fmt/core.h>
-#include <fmt/format.h>
 #include <initializer_list>
 #include <iterator>
 #include <libime/core/historybigram.h>
@@ -674,9 +672,9 @@ bool TableState::handleLookupPinyinOrModifyDictionaryMode(KeyEvent &event) {
                         if (sp.empty()) {
                             text.append(allTones);
                         } else {
-                            text.append(fmt::format(
-                                C_("Pinyin & Shuangpin", "{0} ({1})"), allTones,
-                                stringutils::join(sp, " ")));
+                            text.append(C_("Pinyin & Shuangpin", "{0} ({1})",
+                                           allTones,
+                                           stringutils::join(sp, " ")));
                         }
                     }
                     inputPanel.setAuxDown(Text(std::move(text)));
@@ -690,9 +688,8 @@ bool TableState::handleLookupPinyinOrModifyDictionaryMode(KeyEvent &event) {
                     std::string result;
                     if (context_->dict().generateWithHint(
                             subString.first, subString.second, result)) {
-                        auxDown.append(
-                            fmt::format(_("{0}: {1}"), subString.first,
-                                        context_->customHint(result)));
+                        auxDown.append(_("{0}: {1}", subString.first,
+                                         context_->customHint(result)));
                         auto flag = context_->dict().wordExists(
                             result, subString.first);
                         if (flag == libime::PhraseFlag::Invalid ||
@@ -706,19 +703,17 @@ bool TableState::handleLookupPinyinOrModifyDictionaryMode(KeyEvent &event) {
                             auxUp.append(_("Press Delete to remove."));
                         }
                     } else {
-                        auxDown.append(fmt::format(
-                            _("{0}: No corresponding code."), subString.first));
+                        auxDown.append(
+                            _("{0}: No corresponding code.", subString.first));
                     }
                     auxDown.append(" ");
                 }
                 auto chrString = utf8::UCS4ToUTF8(chr);
                 auto chrCode = context_->dict().reverseLookup(chrString);
                 if (!chrCode.empty()) {
-                    auxDown.append(
-                        fmt::format(_("{0}: {1}"), chrString, chrCode));
+                    auxDown.append(_("{0}: {1}", chrString, chrCode));
                 } else {
-                    auxDown.append(
-                        fmt::format(_("{0} is not in table."), chrString));
+                    auxDown.append(_("{0} is not in table.", chrString));
                 }
                 inputPanel.setAuxUp(auxUp);
                 inputPanel.setAuxDown(auxDown);

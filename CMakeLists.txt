@@ -16,13 +16,6 @@ find_package(Fcitx5ModuleLuaAddonLoader)
 find_package(Pthread REQUIRED)
 find_package(PkgConfig REQUIRED)
 find_package(Gettext REQUIRED)
-find_package(fmt REQUIRED)
-
-if (TARGET fmt::fmt-header-only)
-  set(FMT_TARGET fmt::fmt-header-only)
-else()
-  set(FMT_TARGET fmt::fmt)
-endif ()
 
 include("${FCITX_INSTALL_CMAKECONFIG_DIR}/Fcitx5Utils/Fcitx5CompilerSettings.cmake")
 
@@ -65,7 +58,7 @@ if (ENABLE_GUI)
 endif()
 
 # We do not need json if OpenCC is not needed, but just try to find it anyway to save some ifelse logic
-find_package(Boost 1.61 REQUIRED COMPONENTS iostreams OPTIONAL_COMPONENTS json)
+find_package(Boost 1.61 OPTIONAL_COMPONENTS json)
 find_package(LibIMEPinyin 1.1.7 REQUIRED)
 find_package(LibIMETable 1.1.4 REQUIRED)
 
