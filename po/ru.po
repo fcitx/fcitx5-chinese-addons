@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2025-02-22 20:24+0000\n"
+"POT-Creation-Date: 2025-02-27 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Dmitry <dmitrydmitry761@gmail.com>, 2025\n"
 "Language-Team: Russian (https://app.transifex.com/fcitx/teams/12005/ru/)\n"
@@ -925,7 +925,7 @@ msgstr "Нажать {} для {}"
 #: im/pinyin/pinyin.cpp:1794
 #, c++-format
 msgid "Press {} for {} and Return for {}"
-msgstr "Нажать {} для {} и для возврата {}"
+msgstr "Нажать {} для {} и вернуться к {}"
 
 #: im/table/ime.h:65
 msgid "Prev Candidate"
