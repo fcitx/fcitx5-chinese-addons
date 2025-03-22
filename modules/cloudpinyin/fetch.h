@@ -143,8 +143,8 @@ private:
                                  long timeout_ms, /* see above */
                                  void *userp);    /* private callback
                                                      pointer */
-    void curl(curl_socket_t s,                    /* socket */
-              int action);
+    int curl(curl_socket_t s,                     /* socket */
+             int action);
     void curlTimer(long timeout_ms);
 
     void handleIO(int fd, fcitx::IOEventFlags flags);

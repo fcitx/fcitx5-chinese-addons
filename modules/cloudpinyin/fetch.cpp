@@ -57,9 +57,7 @@ int FetchThread::curlCallback(CURL *curl, curl_socket_t s, int action,
     FCITX_UNUSED(curl);
     FCITX_UNUSED(socketp);
     auto *self = static_cast<FetchThread *>(userp);
-    self->curl(s, action);
-
-    return 0;
+    return self->curl(s, action);
 }
 
 void FetchThread::handleIO(int fd, IOEventFlags flags) {
@@ -100,10 +98,10 @@ void FetchThread::processMessages() {
     }
 }
 
-void FetchThread::curl(curl_socket_t s, int action) {
+int FetchThread::curl(curl_socket_t s, int action) {
     // if loop is gone, don't bother do anything
     if (!loop_) {
-        return;
+        return -1;
     }
     if (action == CURL_POLL_REMOVE) {
         events_.erase(s);
@@ -111,17 +109,21 @@ void FetchThread::curl(curl_socket_t s, int action) {
         auto iter = events_.find(s);
         if (iter == events_.end()) {
             auto *that_ = this;
-            auto p = events_.emplace(
-                s, loop_->addIOEvent(
-                       s, IOEventFlags(0),
-                       [that_](EventSourceIO *, int fd, IOEventFlags flags) {
-                           auto *that = that_;
-                           // make sure "that" is valid since io handler may
-                           // free itself.
-                           that->handleIO(fd, flags);
-                           return true;
-                       }));
-            iter = p.first;
+            try {
+                auto p = events_.emplace(
+                    s, loop_->addIOEvent(s, IOEventFlags(0),
+                                         [that_](EventSourceIO *, int fd,
+                                                 IOEventFlags flags) {
+                                             auto *that = that_;
+                                             // make sure "that" is valid since
+                                             // io handler may free itself.
+                                             that->handleIO(fd, flags);
+                                             return true;
+                                         }));
+                iter = p.first;
+            } catch (...) {
+                return -1;
+            }
         }
         IOEventFlags flags(0);
         if (action == CURL_POLL_IN) {
@@ -135,6 +137,7 @@ void FetchThread::curl(curl_socket_t s, int action) {
 
         iter->second->setEvents(flags);
     }
+    return 0;
 }
 
 int FetchThread::curlTimerCallback(CURLM *multi, long timeout_ms, void *user) {
