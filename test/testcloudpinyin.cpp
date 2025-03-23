@@ -8,34 +8,41 @@
 #include "testdir.h"
 #include <cassert>
 #include <fcitx-utils/event.h>
+#include <fcitx-utils/log.h>
+#include <fcitx-utils/standardpath.h>
+#include <fcitx-utils/testing.h>
 #include <fcitx/addonmanager.h>
+#include <fcitx/instance.h>
 #include <iostream>
 
-int main(int argc, char *argv[]) {
-    if (argc < 3) {
-        return 1;
-    }
-    setenv("FCITX_ADDON_DIRS", argv[2], 1);
-    setenv("FCITX_DATA_DIRS", (std::string(argv[1]) + "/..").c_str(), 1);
-    fcitx::EventLoop loop;
-    fcitx::AddonManager manager(argv[1]);
-    manager.setEventLoop(&loop);
-    manager.registerDefaultLoader(nullptr);
-    manager.load();
-    auto *cloudpinyin = manager.addon("cloudpinyin", true);
+int main() {
+    fcitx::setupTestingEnvironment(TESTING_BINARY_DIR, {"modules/cloudpinyin"},
+                                   {"test", TESTING_SOURCE_DIR "/modules"});
+    fcitx::Log::setLogRule("*=5");
+
+    char arg0[] = "testcloudpinyin";
+    char arg1[] = "--disable=all";
+    char arg2[] = "--enable=cloudpinyin";
+    char *argv[] = {arg0, arg1, arg2};
+    fcitx::Instance instance(FCITX_ARRAY_SIZE(argv), argv);
+    instance.addonManager().registerDefaultLoader(nullptr);
+
     int returned = 0;
-    auto callback = [&loop, &returned](const std::string &pinyin,
-                                       const std::string &hanzi) {
-        std::cout << "Pinyin: " << pinyin << std::endl;
-        std::cout << "Hanzi: " << hanzi << std::endl;
-        returned++;
-        if (returned == 1) {
-            loop.exit();
-        }
-    };
-    cloudpinyin->call<fcitx::ICloudPinyin::request>("nihao", callback);
-    cloudpinyin->call<fcitx::ICloudPinyin::request>("ceshi", callback);
-    loop.exec();
+    instance.eventDispatcher().schedule([&instance, &returned]() {
+        auto callback = [&instance, &returned](const std::string &pinyin,
+                                               const std::string &hanzi) {
+            std::cout << "Pinyin: " << pinyin << std::endl;
+            std::cout << "Hanzi: " << hanzi << std::endl;
+            returned++;
+            if (returned == 1) {
+                instance.exit();
+            }
+        };
+        auto *cloudpinyin = instance.addonManager().addon("cloudpinyin", true);
+        cloudpinyin->call<fcitx::ICloudPinyin::request>("nihao", callback);
+        cloudpinyin->call<fcitx::ICloudPinyin::request>("ceshi", callback);
+    });
+    instance.exec();
 
     return 0;
 }

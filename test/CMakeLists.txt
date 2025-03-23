@@ -9,7 +9,7 @@ add_test(NAME testpunctuation COMMAND testpunctuation)
 if (ENABLE_CLOUDPINYIN)
 add_executable(testcloudpinyin testcloudpinyin.cpp)
 target_link_libraries(testcloudpinyin Fcitx5::Core Fcitx5::Module::CloudPinyin)
-add_dependencies(testcloudpinyin cloudpinyin)
+add_dependencies(testcloudpinyin cloudpinyin copy-addon-cloudpinyin)
 endif()
 
 add_executable(testpinyinhelper testpinyinhelper.cpp)
