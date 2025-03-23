@@ -18,13 +18,13 @@ add_dependencies(testpinyinhelper pinyin pinyin.conf.in-fmt pinyinhelper pinyinh
 add_test(NAME testpinyinhelper COMMAND testpinyinhelper)
 
 add_executable(testfullwidth testfullwidth.cpp)
-target_link_libraries(testfullwidth Fcitx5::Core Fcitx5::Module::TestFrontend Fcitx5::Module::TestIM Pthread::Pthread)
+target_link_libraries(testfullwidth Fcitx5::Core Fcitx5::Module::TestFrontend Fcitx5::Module::TestIM)
 add_dependencies(testfullwidth fullwidth fullwidth.conf.in-fmt)
 add_test(NAME testfullwidth COMMAND testfullwidth)
 
 add_subdirectory(inputmethod)
 add_executable(testchttrans testchttrans.cpp)
-target_link_libraries(testchttrans Fcitx5::Core Fcitx5::Module::TestFrontend Fcitx5::Module::TestIM Pthread::Pthread)
+target_link_libraries(testchttrans Fcitx5::Core Fcitx5::Module::TestFrontend Fcitx5::Module::TestIM)
 add_dependencies(testchttrans chttrans chttrans.conf.in-fmt copy-addon copy-testim)
 add_test(NAME testchttrans COMMAND testchttrans)
 
