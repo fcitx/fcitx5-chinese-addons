@@ -18,8 +18,6 @@
 #include <fcitx/inputmethodmanager.h>
 #include <fcitx/instance.h>
 #include <fcitx/userinterfacemanager.h>
-#include <iostream>
-#include <thread>
 
 using namespace fcitx;
 
@@ -45,8 +43,8 @@ std::string getTestWord(const std::string &s) {
     return result;
 }
 
-void scheduleEvent(EventDispatcher *dispatcher, Instance *instance) {
-    dispatcher->schedule([dispatcher, instance]() {
+void scheduleEvent(Instance *instance) {
+    instance->eventDispatcher().schedule([instance]() {
         auto *chttrans = instance->addonManager().addon("chttrans", true);
         FCITX_ASSERT(chttrans);
         auto testfrontend = instance->addonManager().addon("testfrontend");
@@ -140,7 +138,6 @@ void scheduleEvent(EventDispatcher *dispatcher, Instance *instance) {
             uuid, Key("Control+Shift+F"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("f"), false);
 
-        dispatcher->detach();
         instance->exit();
     });
 }
@@ -161,11 +158,8 @@ int main() {
     char *argv[] = {arg0, arg1, arg2};
     Instance instance(FCITX_ARRAY_SIZE(argv), argv);
     instance.addonManager().registerDefaultLoader(nullptr);
-    EventDispatcher dispatcher;
-    dispatcher.attach(&instance.eventLoop());
-    std::thread thread(scheduleEvent, &dispatcher, &instance);
+    scheduleEvent(&instance);
     instance.exec();
-    thread.join();
 
     return 0;
 }
