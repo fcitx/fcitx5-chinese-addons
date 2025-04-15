@@ -534,8 +534,8 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
         /// }}}
 
         /// Create stroke candidate {{{
-        if (pinyinhelper() && context.selectedLength() == 0 &&
-            isStroke(context.userInput())) {
+        if (*config_.strokeCandidateEnabled && pinyinhelper() &&
+            context.selectedLength() == 0 && isStroke(context.userInput())) {
             int limit = (context.userInput().size() + 4) / 5;
             limit = std::min(limit, 3);
             auto results = pinyinhelper()->call<IPinyinHelper::lookupStroke>(
