@@ -148,9 +148,15 @@ FCITX_CONFIGURATION(
     Option<bool> symbolsEnabled{this, "SymbolsEnabled", _("Enable Symbols"),
                                 true};
     Option<bool> chaiziEnabled{this, "ChaiziEnabled", _("Enable Chaizi"), true};
-    Option<bool> extBEnabled{this, "ExtBEnabled",
-                             _("Enable Characters in Unicode CJK Extension B"),
-                             !isAndroid()};
+    Option<bool> extBEnabled{
+        this, "ExtBEnabled",
+        _("Enable more Characters after Unicode CJK Extension B"),
+        !isAndroid()};
+    Option<bool> strokeCandidateEnabled{
+        this, "StrokeCandidateEnabled",
+        _("Show stroke candidates when typing with h(一), s(丨), p(丿), n(㇏), "
+          "z(𠃍)"),
+        true};
     OptionalHiddenSubConfigOption cloudpinyin{
         this, "CloudPinyin", _("Cloud Pinyin"),
         "fcitx://config/addon/cloudpinyin"};
