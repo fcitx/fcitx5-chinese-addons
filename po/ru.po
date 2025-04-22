@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2025-04-21 20:24+0000\n"
+"POT-Creation-Date: 2025-04-22 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Dmitry <dmitrydmitry761@gmail.com>, 2025\n"
 "Language-Team: Russian (https://app.transifex.com/fcitx/teams/12005/ru/)\n"
@@ -455,7 +455,7 @@ msgstr "Включить символы"
 
 #: im/pinyin/pinyin.h:153
 msgid "Enable more Characters after Unicode CJK Extension B"
-msgstr ""
+msgstr "Включить больше символов после Unicode CJK Extension B"
 
 #: modules/chttrans/chttrans.h:55
 msgid "Enabled Input Methods"
@@ -1055,6 +1055,7 @@ msgstr "Показать слова-предсказания"
 msgid ""
 "Show stroke candidates when typing with h(一), s(丨), p(丿), n(㇏), z(𠃍)"
 msgstr ""
+"Показывать варианты штрихов при наборе с h(一), s(丨), p(丿), n(㇏), z(𠃍)"
 
 #: im/pinyin/shuangpin.conf.in:2
 msgid "Shuangpin"
