@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2025-04-22 20:24+0000\n"
+"POT-Creation-Date: 2025-04-23 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: hoanghuy309 <hoanghuy309@gmail.com>, 2025\n"
 "Language-Team: Vietnamese (https://app.transifex.com/fcitx/teams/12005/vi/)\n"
@@ -184,7 +184,7 @@ msgstr ""
 
 #: im/table/ime.h:230
 msgid "Auto select when no match is found"
-msgstr ""
+msgstr "Tự động chọn khi không tìm thấy phù hợp"
 
 #: modules/cloudpinyin/cloudpinyin.h:34
 msgid "Backend"
@@ -892,7 +892,7 @@ msgstr ""
 
 #: im/table/ime.h:244
 msgid "Regular expression for auto select when no match is found"
-msgstr ""
+msgstr "Biểu thức chính quy cho tự động chọn khi không tìm thấy phù hợp"
 
 #: im/table/ime.h:220
 msgid "Regular expression for selecting the only candidate"
