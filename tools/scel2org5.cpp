@@ -84,9 +84,11 @@ std::string unicodeToUTF8(const char *value, size_t size) {
     return unicodeToUTF8(str.data(), str.size());
 }
 
-static const char header_str[HEADER_SIZE] = {'\x40', '\x15', '\0',   '\0',
-                                             '\x44', '\x43', '\x53', '\x01',
-                                             '\x01', '\0',   '\0',   '\0'};
+static const char header_str[4] = {'\x40', '\x15', '\0', '\0'};
+static const char magic_str1[4] = {'\x44', '\x43', '\x53', '\x01'};
+static const char magic_str2[4] = {'\x45', '\x43', '\x53', '\x01'};
+static const char magic_str3[4] = {'\xd2', '\x6d', '\x53', '\x01'};
+static const char version_str[4] = {'\x01', '\0', '\0', '\0'};
 static const char pinyin_str[PINYIN_SIZE] = {'\x9d', '\x01', '\0', '\0'};
 static const char deltbl_str[DELTBL_SIZE] = {'\x4c', '\0', '\x54', '\0',
                                              '\x42', '\0', '\x4c', '\0'};
@@ -155,7 +157,11 @@ int main(int argc, char **argv) {
 
     char headerBuf[HEADER_SIZE];
     readOrAbort(fd, headerBuf, HEADER_SIZE, "Failed to read header");
-    FCITX_ASSERT(memcmp(headerBuf, header_str, HEADER_SIZE) == 0)
+    FCITX_ASSERT((memcmp(headerBuf, header_str, 4) == 0) &&
+                 ((memcmp(headerBuf + 4, magic_str1, 4) == 0) ||
+                  (memcmp(headerBuf + 4, magic_str2, 4) == 0) ||
+                  (memcmp(headerBuf + 4, magic_str3, 4) == 0)) &&
+                 (memcmp(headerBuf + 8, version_str, 4) == 0))
         << " format error.";
 
     FCITX_ASSERT(lseek(fd.fd(), DESC_START, SEEK_SET) !=
