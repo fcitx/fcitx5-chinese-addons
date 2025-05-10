@@ -7,6 +7,7 @@
 
 #include <codecvt>
 #include <cstring>
+#include <iostream>
 #if defined(__linux__) || defined(__GLIBC__)
 #include <endian.h>
 #elif defined(__APPLE__)
@@ -31,6 +32,7 @@ using namespace fcitx;
 #define DELTBL_SIZE 8
 #define BUFLEN 0x1000
 
+#define ENTRY_OFFSET 0x120
 #define DESC_START 0x130
 #define DESC_LENGTH (0x338 - 0x130)
 
@@ -84,10 +86,11 @@ std::string unicodeToUTF8(const char *value, size_t size) {
     return unicodeToUTF8(str.data(), str.size());
 }
 
-static const char header_str[HEADER_SIZE] = {'\x40', '\x15', '\0',   '\0',
-                                             '\x44', '\x43', '\x53', '\x01',
-                                             '\x01', '\0',   '\0',   '\0'};
-static const char pinyin_str[PINYIN_SIZE] = {'\x9d', '\x01', '\0', '\0'};
+static const char header_str[4] = {'\x40', '\x15', '\0', '\0'};
+static const char magic_str1[4] = {'\x44', '\x43', '\x53', '\x01'};
+static const char magic_str2[4] = {'\x45', '\x43', '\x53', '\x01'};
+static const char magic_str3[4] = {'\xd2', '\x6d', '\x53', '\x01'};
+static const char version_str[4] = {'\x01', '\0', '\0', '\0'};
 static const char deltbl_str[DELTBL_SIZE] = {'\x4c', '\0', '\x54', '\0',
                                              '\x42', '\0', '\x4c', '\0'};
 
@@ -155,8 +158,18 @@ int main(int argc, char **argv) {
 
     char headerBuf[HEADER_SIZE];
     readOrAbort(fd, headerBuf, HEADER_SIZE, "Failed to read header");
-    FCITX_ASSERT(memcmp(headerBuf, header_str, HEADER_SIZE) == 0)
+    FCITX_ASSERT((memcmp(headerBuf, header_str, 4) == 0) &&
+                 ((memcmp(headerBuf + 4, magic_str1, 4) == 0) ||
+                  (memcmp(headerBuf + 4, magic_str2, 4) == 0) ||
+                  (memcmp(headerBuf + 4, magic_str3, 4) == 0)) &&
+                 (memcmp(headerBuf + 8, version_str, 4) == 0))
         << " format error.";
+
+    FCITX_ASSERT(lseek(fd.fd(), ENTRY_OFFSET, SEEK_SET) !=
+                 static_cast<off_t>(-1));
+    char entryBuf[4];
+    readOrAbort(fd, entryBuf, 4, "Failed to read entry count");
+    uint32_t entryCount = le32toh(*(uint32_t *)entryBuf);
 
     FCITX_ASSERT(lseek(fd.fd(), DESC_START, SEEK_SET) !=
                  static_cast<off_t>(-1));
@@ -175,11 +188,12 @@ int main(int argc, char **argv) {
 
     char pyBuf[PINYIN_SIZE];
     readOrAbort(fd, pyBuf, PINYIN_SIZE, "Failed to read py");
-    FCITX_ASSERT(memcmp(pyBuf, pinyin_str, PINYIN_SIZE) == 0);
+
+    uint32_t table_size;
+    table_size = *(uint32_t *)pyBuf;
 
     std::vector<std::string> pys;
-
-    while (true) {
+    for (uint32_t i = 0; i < table_size; i++) {
         uint16_t index;
         uint16_t count;
         readUInt16(fd, &index, "failed to read index");
@@ -197,35 +211,19 @@ int main(int argc, char **argv) {
             py[py.size() - 2] = 'v';
         }
         pys.push_back(py);
-
-        if (py == "zuo") {
-            break;
-        }
     }
 
     if (table) {
         *out << "[Phrase]" << std::endl;
     }
 
-    bool mightBeDelTbl = false;
-    while (true) {
+    for (uint32_t ec = 0; ec < entryCount; ec++) {
         uint16_t symcount;
         uint16_t count;
         uint16_t wordcount;
+
         readUInt16(fd, &symcount);
-
-        // Just in case we read a invalid value.
-        if (symcount > 128) {
-            FCITX_ERROR() << "Error at offset: " << lseek(fd.fd(), 0, SEEK_CUR);
-            break;
-        }
-
         readUInt16(fd, &count, "Failed to read count");
-
-        if (symcount == 0x44 && count == 0x45) {
-            mightBeDelTbl = true;
-            break;
-        }
 
         wordcount = count / 2;
         std::vector<uint16_t> pyindex;
@@ -234,7 +232,8 @@ int main(int argc, char **argv) {
         for (uint16_t i = 0; i < wordcount; i++) {
             readUInt16(fd, &pyindex[i], "Failed to read pyindex");
             if (pyindex[i] >= pys.size()) {
-                FCITX_FATAL() << "Invalid pinyin index";
+                FCITX_WARN() << "Invalid pinyin index: " << pyindex[i]
+                             << " at offset: " << lseek(fd.fd(), 0, SEEK_CUR);
             }
         }
 
@@ -252,9 +251,12 @@ int main(int argc, char **argv) {
                     *out << bufout << "\t";
                     *out << pys[pyindex[0]];
                     for (auto i = 1; i < wordcount; i++) {
-                        *out << '\'' << pys[pyindex[i]];
+                        *out << '\'';
+                        if (pyindex[i] >= pys.size())
+                            *out << char(pyindex[i] - pys.size() + 97);
+                        else
+                            *out << pys[pyindex[i]];
                     }
-
                     *out << "\t0" << std::endl;
                 }
             }
@@ -263,10 +265,6 @@ int main(int argc, char **argv) {
             buf.resize(count);
             readOrAbort(fd, buf.data(), buf.size(), "failed to read buf");
         }
-    }
-
-    if (!mightBeDelTbl) {
-        return 0;
     }
 
     char delTblBuf[DELTBL_SIZE];
