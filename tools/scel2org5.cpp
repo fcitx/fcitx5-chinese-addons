@@ -189,11 +189,11 @@ int main(int argc, char **argv) {
     char pyBuf[PINYIN_SIZE];
     readOrAbort(fd, pyBuf, PINYIN_SIZE, "Failed to read py");
 
-    uint32_t table_size;
-    table_size = *(uint32_t *)pyBuf;
+    uint32_t pyCount;
+    pyCount = le32toh(*(uint32_t *)pyBuf);
 
     std::vector<std::string> pys;
-    for (uint32_t i = 0; i < table_size; i++) {
+    for (uint32_t i = 0; i < pyCount; i++) {
         uint16_t index;
         uint16_t count;
         readUInt16(fd, &index, "failed to read index");
@@ -218,18 +218,18 @@ int main(int argc, char **argv) {
     }
 
     for (uint32_t ec = 0; ec < entryCount; ec++) {
-        uint16_t symcount;
+        uint16_t symCount;
         uint16_t count;
-        uint16_t wordcount;
+        uint16_t wordCount;
 
-        readUInt16(fd, &symcount);
+        readUInt16(fd, &symCount);
         readUInt16(fd, &count, "Failed to read count");
 
-        wordcount = count / 2;
+        wordCount = count / 2;
         std::vector<uint16_t> pyindex;
-        pyindex.resize(wordcount);
+        pyindex.resize(wordCount);
 
-        for (uint16_t i = 0; i < wordcount; i++) {
+        for (uint16_t i = 0; i < wordCount; i++) {
             readUInt16(fd, &pyindex[i], "Failed to read pyindex");
             if (pyindex[i] >= pys.size()) {
                 FCITX_WARN() << "Invalid pinyin index: " << pyindex[i]
@@ -237,20 +237,20 @@ int main(int argc, char **argv) {
             }
         }
 
-        for (uint16_t s = 0; s < symcount; s++) {
+        for (uint16_t s = 0; s < symCount; s++) {
             std::vector<char> buf;
             readUInt16(fd, &count, "Failed to read count");
             buf.resize(count);
             readOrAbort(fd, buf.data(), count, "Failed to read text");
             std::string bufout = unicodeToUTF8(buf.data(), buf.size());
 
-            if (wordcount > 0) {
+            if (wordCount > 0) {
                 if (table) {
                     *out << bufout << std::endl;
                 } else {
                     *out << bufout << "\t";
                     *out << pys[pyindex[0]];
-                    for (auto i = 1; i < wordcount; i++) {
+                    for (auto i = 1; i < wordCount; i++) {
                         *out << '\'';
                         if (pyindex[i] >= pys.size())
                             *out << char(pyindex[i] - pys.size() + 97);
