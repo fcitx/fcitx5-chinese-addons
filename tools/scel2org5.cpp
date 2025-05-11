@@ -6,8 +6,10 @@
  */
 
 #include <codecvt>
+#include <cstdint>
 #include <cstring>
 #include <iostream>
+#include <string>
 #if defined(__linux__) || defined(__GLIBC__)
 #include <endian.h>
 #elif defined(__APPLE__)
@@ -32,14 +34,13 @@ using namespace fcitx;
 #define DELTBL_SIZE 8
 #define BUFLEN 0x1000
 
+#define PHRASE_OFFSET 0x5C
 #define ENTRY_OFFSET 0x120
 #define DESC_START 0x130
 #define DESC_LENGTH (0x338 - 0x130)
 
 #define LDESC_LENGTH (0x540 - 0x338)
 #define NEXT_LENGTH (0x1540 - 0x540)
-
-#define PINYIN_SIZE 4
 
 template <typename T>
 void readOrAbort(const UnixFD &fd, T *value, int n,
@@ -63,6 +64,12 @@ void readUInt16(const UnixFD &fd, uint16_t *value,
                 const char *error = nullptr) {
     readOrAbort(fd, value, error);
     *value = le16toh(*value);
+}
+
+void readUInt32(const UnixFD &fd, uint32_t *value,
+                const char *error = nullptr) {
+    readOrAbort(fd, value, error);
+    *value = le32toh(*value);
 }
 
 std::string unicodeToUTF8(const char16_t *value, size_t size) {
@@ -165,11 +172,26 @@ int main(int argc, char **argv) {
                  (memcmp(headerBuf + 8, version_str, 4) == 0))
         << " format error.";
 
+    FCITX_ASSERT(lseek(fd.fd(), PHRASE_OFFSET, SEEK_SET) !=
+                 static_cast<off_t>(-1));
+    uint32_t phraseCount;
+    readUInt32(fd, &phraseCount, "Failed to read phrase count");
+    uint32_t phraseOffset;
+    readUInt32(fd, &phraseOffset, "Failed to read phrase offset");
+
+    // skip 8 bytes
+    FCITX_ASSERT(lseek(fd.fd(), 8, SEEK_CUR) != static_cast<off_t>(-1));
+    uint32_t delTblOffset;
+    readUInt32(fd, &delTblOffset, "Failed to read delete table offset");
+    // skip 4 bytes
+    FCITX_ASSERT(lseek(fd.fd(), 4, SEEK_CUR) != static_cast<off_t>(-1));
+    uint32_t delTblCount;
+    readUInt32(fd, &delTblCount, "Failed to read delete table count");
+
     FCITX_ASSERT(lseek(fd.fd(), ENTRY_OFFSET, SEEK_SET) !=
                  static_cast<off_t>(-1));
-    char entryBuf[4];
-    readOrAbort(fd, entryBuf, 4, "Failed to read entry count");
-    uint32_t entryCount = le32toh(*(uint32_t *)entryBuf);
+    uint32_t entryCount;
+    readUInt32(fd, &entryCount, "Failed to read entry count");
 
     FCITX_ASSERT(lseek(fd.fd(), DESC_START, SEEK_SET) !=
                  static_cast<off_t>(-1));
@@ -186,11 +208,8 @@ int main(int argc, char **argv) {
     readOrAbort(fd, nextBuf, NEXT_LENGTH, "Failed to read next description");
     std::cerr << "NEXT:" << unicodeToUTF8(nextBuf, NEXT_LENGTH) << std::endl;
 
-    char pyBuf[PINYIN_SIZE];
-    readOrAbort(fd, pyBuf, PINYIN_SIZE, "Failed to read py");
-
     uint32_t pyCount;
-    pyCount = le32toh(*(uint32_t *)pyBuf);
+    readUInt32(fd, &pyCount, "Failed to read py count");
 
     std::vector<std::string> pys;
     for (uint32_t i = 0; i < pyCount; i++) {
@@ -267,19 +286,71 @@ int main(int argc, char **argv) {
         }
     }
 
-    char delTblBuf[DELTBL_SIZE];
-    if (fs::safeRead(fd.fd(), delTblBuf, DELTBL_SIZE) != DELTBL_SIZE ||
-        memcmp(delTblBuf, deltbl_str, DELTBL_SIZE) != 0) {
-        return 0;
+    if (phraseCount > 0) {
+        FCITX_ASSERT(lseek(fd.fd(), phraseOffset, SEEK_SET) !=
+                     static_cast<off_t>(-1));
+    }
+    for (uint32_t i = 0; i < phraseCount; i++) {
+        char info[17];
+        readOrAbort(fd, info, 17, "Failed to read buf");
+
+        uint16_t count;
+        readUInt16(fd, &count, "Failed to read count");
+
+        std::string code;
+        if (info[2] == 0x1) {
+            std::vector<uint16_t> pyindex;
+            pyindex.resize(count / 2);
+            for (auto &index : pyindex) {
+                readUInt16(fd, &index, "Failed to read pyindex");
+            }
+            if (count / 2 > 0) {
+                code = pys[pyindex[0]];
+                for (auto i = 1; i < count / 2; i++) {
+                    code += '\'';
+                    if (pyindex[i] >= pys.size())
+                        code += char(pyindex[i] - pys.size() + 97);
+                    else
+                        code += pys[pyindex[i]];
+                }
+            }
+        } else {
+            std::vector<char> buf;
+            buf.resize(count);
+            readOrAbort(fd, buf.data(), count, "Failed to read buf");
+            code = unicodeToUTF8(buf.data(), buf.size());
+        }
+
+        std::vector<char> buf;
+        readUInt16(fd, &count, "Failed to read count");
+        buf.resize(count);
+        readOrAbort(fd, buf.data(), count, "Failed to read buf");
+        std::string bufout = unicodeToUTF8(buf.data(), buf.size());
+
+        if (table) {
+            *out << bufout << std::endl;
+        } else {
+            *out << bufout << "\t" << code << "\t0" << std::endl;
+        }
     }
 
     if (!printDel) {
         return 0;
     }
-
-    uint16_t delTblCount;
-    readUInt16(fd, &delTblCount);
-    for (int i = 0; i < delTblCount; i++) {
+    if (delTblCount > 0) {
+        FCITX_ASSERT(lseek(fd.fd(), delTblOffset, SEEK_SET) !=
+                     static_cast<off_t>(-1));
+    } else {
+        char delTblBuf[DELTBL_SIZE];
+        if (fs::safeRead(fd.fd(), delTblBuf, DELTBL_SIZE) != DELTBL_SIZE ||
+            memcmp(delTblBuf, deltbl_str, DELTBL_SIZE) != 0) {
+            return 0;
+        }
+        uint16_t _delTblCount;
+        readUInt16(fd, &_delTblCount);
+        delTblCount = _delTblCount;
+    }
+    for (uint32_t i = 0; i < delTblCount; i++) {
         uint16_t count;
         readUInt16(fd, &count);
         count *= 2;
