@@ -10,11 +10,13 @@
 #include <cstring>
 #include <iostream>
 #include <string>
+#include <vector>
 #if defined(__linux__) || defined(__GLIBC__)
 #include <endian.h>
 #elif defined(__APPLE__)
 #include <libkern/OSByteOrder.h>
 #define le16toh(x) OSSwapLittleToHostInt16(x)
+#define le32toh(x) OSSwapLittleToHostInt32(x)
 #else
 #include <sys/endian.h>
 #endif
@@ -89,8 +91,20 @@ std::string unicodeToUTF8(const char *value, size_t size) {
         }
         str.push_back(le16toh(ustr[i]));
     }
-
     return unicodeToUTF8(str.data(), str.size());
+}
+
+std::string indexPinyin(uint32_t index, std::vector<std::string> vec) {
+    if (index < vec.size())
+        return vec[index];
+
+    if (index - vec.size() == 43)
+        return "#";
+
+    if (index - vec.size() >= 10)
+        FCITX_WARN() << "Invalid index: " << index;
+
+    return std::to_string(index - vec.size());
 }
 
 static const char header_str[4] = {'\x40', '\x15', '\0', '\0'};
@@ -100,6 +114,63 @@ static const char magic_str3[4] = {'\xd2', '\x6d', '\x53', '\x01'};
 static const char version_str[4] = {'\x01', '\0', '\0', '\0'};
 static const char deltbl_str[DELTBL_SIZE] = {'\x4c', '\0', '\x54', '\0',
                                              '\x42', '\0', '\x4c', '\0'};
+static const std::vector<std::string> default_pys = {
+    "a",     "ai",     "an",     "ang",   "ao",     "ba",    "bai",   "ban",
+    "bang",  "bao",    "bei",    "ben",   "beng",   "bi",    "bian",  "biao",
+    "bie",   "bin",    "bing",   "bo",    "bu",     "ca",    "cai",   "can",
+    "cang",  "cao",    "ce",     "cen",   "ceng",   "cha",   "chai",  "chan",
+    "chang", "chao",   "che",    "chen",  "cheng",  "chi",   "chong", "chou",
+    "chu",   "chua",   "chuai",  "chuan", "chuang", "chui",  "chun",  "chuo",
+    "ci",    "cong",   "cou",    "cu",    "cuan",   "cui",   "cun",   "cuo",
+    "da",    "dai",    "dan",    "dang",  "dao",    "de",    "dei",   "den",
+    "deng",  "di",     "dia",    "dian",  "diao",   "die",   "ding",  "diu",
+    "dong",  "dou",    "du",     "duan",  "dui",    "dun",   "duo",   "e",
+    "ei",    "en",     "eng",    "er",    "fa",     "fan",   "fang",  "fei",
+    "fen",   "feng",   "fiao",   "fo",    "fou",    "fu",    "ga",    "gai",
+    "gan",   "gang",   "gao",    "ge",    "gei",    "gen",   "geng",  "gong",
+    "gou",   "gu",     "gua",    "guai",  "guan",   "guang", "gui",   "gun",
+    "guo",   "ha",     "hai",    "han",   "hang",   "hao",   "he",    "hei",
+    "hen",   "heng",   "hong",   "hou",   "hu",     "hua",   "huai",  "huan",
+    "huang", "hui",    "hun",    "huo",   "ji",     "jia",   "jian",  "jiang",
+    "jiao",  "jie",    "jin",    "jing",  "jiong",  "jiu",   "ju",    "juan",
+    "jue",   "jun",    "ka",     "kai",   "kan",    "kang",  "kao",   "ke",
+    "kei",   "ken",    "keng",   "kong",  "kou",    "ku",    "kua",   "kuai",
+    "kuan",  "kuang",  "kui",    "kun",   "kuo",    "la",    "lai",   "lan",
+    "lang",  "lao",    "le",     "lei",   "leng",   "li",    "lia",   "lian",
+    "liang", "liao",   "lie",    "lin",   "ling",   "liu",   "lo",    "long",
+    "lou",   "lu",     "luan",   "lve",   "lun",    "luo",   "lv",    "ma",
+    "mai",   "man",    "mang",   "mao",   "me",     "mei",   "men",   "meng",
+    "mi",    "mian",   "miao",   "mie",   "min",    "ming",  "miu",   "mo",
+    "mou",   "mu",     "na",     "nai",   "nan",    "nang",  "nao",   "ne",
+    "nei",   "nen",    "neng",   "ni",    "nian",   "niang", "niao",  "nie",
+    "nin",   "ning",   "niu",    "nong",  "nou",    "nu",    "nuan",  "nve",
+    "nun",   "nuo",    "nv",     "o",     "ou",     "pa",    "pai",   "pan",
+    "pang",  "pao",    "pei",    "pen",   "peng",   "pi",    "pian",  "piao",
+    "pie",   "pin",    "ping",   "po",    "pou",    "pu",    "qi",    "qia",
+    "qian",  "qiang",  "qiao",   "qie",   "qin",    "qing",  "qiong", "qiu",
+    "qu",    "quan",   "que",    "qun",   "ran",    "rang",  "rao",   "re",
+    "ren",   "reng",   "ri",     "rong",  "rou",    "ru",    "rua",   "ruan",
+    "rui",   "run",    "ruo",    "sa",    "sai",    "san",   "sang",  "sao",
+    "se",    "sen",    "seng",   "sha",   "shai",   "shan",  "shang", "shao",
+    "she",   "shei",   "shen",   "sheng", "shi",    "shou",  "shu",   "shua",
+    "shuai", "shuan",  "shuang", "shui",  "shun",   "shuo",  "si",    "song",
+    "sou",   "su",     "suan",   "sui",   "sun",    "suo",   "ta",    "tai",
+    "tan",   "tang",   "tao",    "te",    "tei",    "teng",  "ti",    "tian",
+    "tiao",  "tie",    "ting",   "tong",  "tou",    "tu",    "tuan",  "tui",
+    "tun",   "tuo",    "wa",     "wai",   "wan",    "wang",  "wei",   "wen",
+    "weng",  "wo",     "wu",     "xi",    "xia",    "xian",  "xiang", "xiao",
+    "xie",   "xin",    "xing",   "xiong", "xiu",    "xu",    "xuan",  "xue",
+    "xun",   "ya",     "yan",    "yang",  "yao",    "ye",    "yi",    "yin",
+    "ying",  "yo",     "yong",   "you",   "yu",     "yuan",  "yue",   "yun",
+    "za",    "zai",    "zan",    "zang",  "zao",    "ze",    "zei",   "zen",
+    "zeng",  "zha",    "zhai",   "zhan",  "zhang",  "zhao",  "zhe",   "zhei",
+    "zhen",  "zheng",  "zhi",    "zhong", "zhou",   "zhu",   "zhua",  "zhuai",
+    "zhuan", "zhuang", "zhui",   "zhun",  "zhuo",   "zi",    "zong",  "zou",
+    "zu",    "zuan",   "zui",    "zun",   "zuo",    "A",     "B",     "C",
+    "D",     "E",      "F",      "G",     "H",      "I",     "J",     "K",
+    "L",     "M",      "N",      "O",     "P",      "Q",     "R",     "S",
+    "T",     "U",      "V",      "W",     "X",      "Y",     "Z",
+};
 
 static void usage() {
     puts(
@@ -234,6 +305,14 @@ int main(int argc, char **argv) {
 
     if (table) {
         *out << "[Phrase]" << std::endl;
+    } else if (pys.size() == 0) {
+        pys = default_pys;
+    }
+
+    if (pys.size() < default_pys.size()) {
+        for (uint32_t i = 0; i < 26; i++) {
+            pys.push_back(std::string(1, char(i + 65)));
+        }
     }
 
     for (uint32_t ec = 0; ec < entryCount; ec++) {
@@ -268,13 +347,10 @@ int main(int argc, char **argv) {
                     *out << bufout << std::endl;
                 } else {
                     *out << bufout << "\t";
-                    *out << pys[pyindex[0]];
+                    *out << indexPinyin(pyindex[0], pys);
                     for (auto i = 1; i < wordCount; i++) {
                         *out << '\'';
-                        if (pyindex[i] >= pys.size())
-                            *out << char(pyindex[i] - pys.size() + 97);
-                        else
-                            *out << pys[pyindex[i]];
+                        *out << indexPinyin(pyindex[i], pys);
                     }
                     *out << "\t0" << std::endl;
                 }
@@ -300,18 +376,16 @@ int main(int argc, char **argv) {
         std::string code;
         if (info[2] == 0x1) {
             std::vector<uint16_t> pyindex;
-            pyindex.resize(count / 2);
+            count /= 2;
+            pyindex.resize(count);
             for (auto &index : pyindex) {
                 readUInt16(fd, &index, "Failed to read pyindex");
             }
-            if (count / 2 > 0) {
-                code = pys[pyindex[0]];
-                for (auto i = 1; i < count / 2; i++) {
+            if (count > 0) {
+                code = indexPinyin(pyindex[0], pys);
+                for (auto i = 1; i < count; i++) {
                     code += '\'';
-                    if (pyindex[i] >= pys.size())
-                        code += char(pyindex[i] - pys.size() + 97);
-                    else
-                        code += pys[pyindex[i]];
+                    code += indexPinyin(pyindex[i], pys);
                 }
             }
         } else {
