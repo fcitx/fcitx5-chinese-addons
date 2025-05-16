@@ -63,7 +63,7 @@ endif()
 
 # We do not need json if OpenCC is not needed, but just try to find it anyway to save some ifelse logic
 find_package(Boost 1.61 OPTIONAL_COMPONENTS json)
-find_package(LibIMEPinyin 1.1.7 REQUIRED)
+find_package(LibIMEPinyin 1.1.11 REQUIRED)
 find_package(LibIMETable 1.1.4 REQUIRED)
 
 if (ENABLE_CLOUDPINYIN)
