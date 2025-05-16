@@ -6,12 +6,21 @@
  */
 
 #include "filelistmodel.h"
+#include <QAbstractListModel>
 #include <QDebug>
 #include <QFile>
+#include <QObject>
+#include <QVariant>
+#include <Qt>
+#include <algorithm>
 #include <fcitx-utils/fs.h>
-#include <fcitx-utils/standardpath.h>
+#include <fcitx-utils/standardpaths.h>
 #include <fcitxqti18nhelper.h>
 #include <fcntl.h>
+#include <filesystem>
+#include <iterator>
+#include <map>
+#include <string>
 
 namespace fcitx {
 
@@ -21,13 +30,13 @@ FileListModel::FileListModel(QObject *parent) : QAbstractListModel(parent) {
 
 FileListModel::~FileListModel() {}
 
-int FileListModel::rowCount(const QModelIndex &) const {
+int FileListModel::rowCount(const QModelIndex & /*parent*/) const {
     return fileList_.size();
 }
 
 QVariant FileListModel::data(const QModelIndex &index, int role) const {
     if (!index.isValid() || index.row() >= fileList_.size()) {
-        return QVariant();
+        return {};
     }
 
     switch (role) {
@@ -77,20 +86,22 @@ Qt::ItemFlags FileListModel::flags(const QModelIndex &index) const {
 void FileListModel::loadFileList() {
     beginResetModel();
     fileList_.clear();
-    auto files = StandardPath::global().locate(StandardPath::Type::PkgData,
-                                               "pinyin/dictionaries",
-                                               filter::Suffix(".dict"));
+    auto files = StandardPaths::global().locate(StandardPathsType::PkgData,
+                                                "pinyin/dictionaries",
+                                                pathfilter::extension(".dict"));
     std::map<std::string, bool> enableMap;
     for (const auto &file : files) {
         enableMap[file.first] = true;
     }
-    auto disableFiles = StandardPath::global().locate(
-        StandardPath::Type::PkgData, "pinyin/dictionaries",
-        filter::Suffix(".dict.disable"));
+    auto disableFiles = StandardPaths::global().locate(
+        StandardPathsType::PkgData, "pinyin/dictionaries",
+        pathfilter::extension(".disable"));
     for (const auto &file : disableFiles) {
         // Remove .disable suffix.
-        auto dictName = file.first.substr(0, file.first.size() - 8);
-        if (auto iter = enableMap.find(dictName); iter != enableMap.end()) {
+        QString s = QString::fromStdU16String(file.first.u16string());
+        auto dictName = s.chopped(8).toStdU16String();
+        if (auto iter = enableMap.find(std::filesystem::path(dictName));
+            iter != enableMap.end()) {
             iter->second = false;
         }
     }
@@ -102,10 +113,10 @@ void FileListModel::loadFileList() {
 }
 
 int FileListModel::findFile(const QString &lastFileName) {
-    auto iter = std::find_if(fileList_.begin(), fileList_.end(),
-                             [&lastFileName](const auto &item) {
-                                 return item.first == lastFileName;
-                             });
+    auto iter =
+        std::ranges::find_if(fileList_, [&lastFileName](const auto &item) {
+            return item.first == lastFileName;
+        });
     if (iter == fileList_.end()) {
         return 0;
     }
@@ -113,12 +124,12 @@ int FileListModel::findFile(const QString &lastFileName) {
 }
 
 void FileListModel::save() {
-    auto baseDir = stringutils::joinPath(
-        StandardPath::global().userDirectory(StandardPath::Type::PkgData),
-        "pinyin/dictionaries");
+    const auto baseDir =
+        StandardPaths::global().userDirectory(StandardPathsType::PkgData) /
+        "pinyin/dictionaries";
     for (const auto &file : fileList_) {
-        auto disableFilePath = stringutils::joinPath(
-            baseDir, stringutils::concat(file.first.toStdString(), ".disable"));
+        auto disableFilePath =
+            baseDir / (file.first.toStdString() + ".disable");
         QFile disableFile(QString::fromStdString(disableFilePath));
         if (file.second) {
             disableFile.remove();

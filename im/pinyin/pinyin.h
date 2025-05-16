@@ -25,8 +25,9 @@
 #include <fcitx-utils/key.h>
 #include <fcitx-utils/keysym.h>
 #include <fcitx-utils/misc.h>
-#include <fcitx-utils/standardpath.h>
+#include <fcitx-utils/standardpaths.h>
 #include <fcitx-utils/trackableobject.h>
+#include <fcitx-utils/unixfd.h>
 #include <fcitx/action.h>
 #include <fcitx/addoninstance.h>
 #include <fcitx/addonmanager.h>
@@ -36,6 +37,7 @@
 #include <fcitx/inputmethodengine.h>
 #include <fcitx/instance.h>
 #include <fcitx/text.h>
+#include <filesystem>
 #include <future>
 #include <libime/pinyin/pinyincontext.h>
 #include <libime/pinyin/pinyinime.h>
@@ -436,7 +438,7 @@ private:
     void loadBuiltInDict();
     void loadExtraDict();
     void loadCustomPhrase();
-    void loadSymbols(const StandardPathFile &file);
+    void loadSymbols(const UnixFD &file);
     void loadDict(const std::string &fullPath,
                   std::list<std::unique_ptr<TaskToken>> &taskTokens);
     void saveCustomPhrase();

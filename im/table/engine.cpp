@@ -9,16 +9,18 @@
 #include "context.h"
 #include "ime.h"
 #include "state.h"
+#include <cstddef>
 #include <exception>
 #include <fcitx-config/iniparser.h>
 #include <fcitx-config/rawconfig.h>
 #include <fcitx-utils/charutils.h>
 #include <fcitx-utils/event.h>
+#include <fcitx-utils/eventloopinterface.h>
 #include <fcitx-utils/fdstreambuf.h>
 #include <fcitx-utils/i18n.h>
 #include <fcitx-utils/log.h>
 #include <fcitx-utils/macros.h>
-#include <fcitx-utils/standardpath.h>
+#include <fcitx-utils/standardpaths.h>
 #include <fcitx-utils/stringutils.h>
 #include <fcitx-utils/utf8.h>
 #include <fcitx/action.h>
@@ -33,6 +35,7 @@
 #include <fcitx/statusarea.h>
 #include <fcitx/userinterfacemanager.h>
 #include <fcntl.h>
+#include <filesystem>
 #include <istream>
 #include <libime/core/historybigram.h>
 #include <libime/core/languagemodel.h>
@@ -123,8 +126,8 @@ void TableEngine::populateConfig() {
     std::unique_ptr<libime::ShuangpinProfile> shuangpinProfile;
 
     if (*config_.shuangpinProfile == LookupShuangpinProfileEnum::Custom) {
-        auto file = StandardPath::global().open(StandardPath::Type::PkgConfig,
-                                                "pinyin/sp.dat", O_RDONLY);
+        auto file = StandardPaths::global().open(StandardPathsType::PkgConfig,
+                                                 "pinyin/sp.dat");
         if (file.isValid()) {
             try {
                 IFDStreamBuf buffer(file.fd());
@@ -272,16 +275,15 @@ const libime::PinyinDictionary &TableEngine::pinyinDict() {
                       libime::PinyinDictionary::UserDict + 1);
         for (size_t i = 0; i < FCITX_ARRAY_SIZE(dicts); i++) {
             try {
-                const auto &standardPath = StandardPath::global();
+                const auto &standardPath = StandardPaths::global();
                 auto systemDictFile = standardPath.open(
-                    StandardPath::Type::Data,
-                    stringutils::joinPath("libime", dicts[i]), O_RDONLY);
+                    StandardPathsType::Data,
+                    std::filesystem::path("libime") / dicts[i]);
                 if (!systemDictFile.isValid()) {
                     systemDictFile = standardPath.open(
-                        StandardPath::Type::Data,
-                        stringutils::joinPath(LIBIME_INSTALL_PKGDATADIR,
-                                              dicts[i]),
-                        O_RDONLY);
+                        StandardPathsType::Data,
+                        std::filesystem::path(LIBIME_INSTALL_PKGDATADIR) /
+                            dicts[i]);
                 }
 
                 IFDStreamBuf buffer(systemDictFile.fd());

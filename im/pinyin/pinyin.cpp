@@ -36,9 +36,10 @@
 #include <fcitx-utils/log.h>
 #include <fcitx-utils/macros.h>
 #include <fcitx-utils/misc.h>
-#include <fcitx-utils/standardpath.h>
+#include <fcitx-utils/standardpaths.h>
 #include <fcitx-utils/stringutils.h>
 #include <fcitx-utils/textformatflags.h>
+#include <fcitx-utils/unixfd.h>
 #include <fcitx-utils/utf8.h>
 #include <fcitx/action.h>
 #include <fcitx/addoninstance.h>
@@ -56,6 +57,7 @@
 #include <fcitx/userinterface.h>
 #include <fcitx/userinterfacemanager.h>
 #include <fcntl.h>
+#include <filesystem>
 #include <fstream>
 #include <functional>
 #include <future>
@@ -79,6 +81,7 @@
 #include <optional>
 #include <ostream>
 #include <quickphrase_public.h>
+#include <ranges>
 #include <regex>
 #include <stdexcept>
 #include <string>
@@ -679,9 +682,9 @@ PinyinEngine::PinyinEngine(Instance *instance)
             libime::DefaultLanguageModelResolver::instance()
                 .languageModelFileForLanguage("zh_CN")));
 
-    const auto &standardPath = StandardPath::global();
+    const auto &standardPath = StandardPaths::global();
     auto systemDictFile =
-        standardPath.open(StandardPath::Type::Data, "libime/sc.dict", O_RDONLY);
+        standardPath.open(StandardPathsType::Data, "libime/sc.dict");
     if (systemDictFile.isValid()) {
         IFDStreamBuf buffer(systemDictFile.fd());
         std::istream in(&buffer);
@@ -696,10 +699,10 @@ PinyinEngine::PinyinEngine(Instance *instance)
     prediction_.setPinyinDictionary(ime_->dict());
 
     do {
-        auto file = standardPath.openUser(StandardPath::Type::PkgData,
-                                          "pinyin/user.dict", O_RDONLY);
+        auto file =
+            standardPath.open(StandardPathsType::PkgData, "pinyin/user.dict");
 
-        if (file.fd() < 0) {
+        if (!file.isValid()) {
             break;
         }
 
@@ -713,8 +716,9 @@ PinyinEngine::PinyinEngine(Instance *instance)
         }
     } while (0);
     do {
-        auto file = standardPath.openUser(StandardPath::Type::PkgData,
-                                          "pinyin/user.history", O_RDONLY);
+        auto file =
+            standardPath.open(StandardPathsType::PkgData, "pinyin/user.history",
+                              StandardPathsMode::User);
 
         try {
             IFDStreamBuf buffer(file.fd());
@@ -808,18 +812,17 @@ PinyinEngine::PinyinEngine(Instance *instance)
 
 PinyinEngine::~PinyinEngine() {}
 
-void PinyinEngine::loadSymbols(const StandardPathFile &file) {
-    if (file.fd() < 0) {
+void PinyinEngine::loadSymbols(const UnixFD &file) {
+    if (!file.isValid()) {
         return;
     }
     IFDStreamBuf buffer(file.fd());
     std::istream in(&buffer);
     try {
-        PINYIN_DEBUG() << "Loading symbol dict " << file.path();
+        PINYIN_DEBUG() << "Loading symbol dict.";
         symbols_.load(in);
     } catch (const std::exception &e) {
-        PINYIN_ERROR() << "Failed to load symbol dict " << file.path() << ": "
-                       << e.what();
+        PINYIN_ERROR() << "Failed to load symbol dict: " << e.what();
     }
 }
 
@@ -852,23 +855,23 @@ void PinyinEngine::loadDict(const std::string &fullPath,
 }
 
 void PinyinEngine::loadBuiltInDict() {
-    const auto &standardPath = StandardPath::global();
+    const auto &standardPath = StandardPaths::global();
     {
-        auto file = standardPath.open(StandardPath::Type::PkgData,
-                                      "pinyin/symbols", O_RDONLY);
+        auto file =
+            standardPath.open(StandardPathsType::PkgData, "pinyin/symbols");
         loadSymbols(file);
     }
     {
-        auto file = standardPath.locate(StandardPath::Type::PkgData,
+        auto file = standardPath.locate(StandardPathsType::PkgData,
                                         "pinyin/chaizi.dict");
         loadDict(file, persistentTask_);
     }
     {
         auto file =
-            standardPath.locate(StandardPath::Type::Data, "libime/extb.dict");
+            standardPath.locate(StandardPathsType::Data, "libime/extb.dict");
         // Try again with absolute libime path.
         if (file.empty()) {
-            file = standardPath.locate(StandardPath::Type::Data,
+            file = standardPath.locate(StandardPathsType::Data,
                                        LIBIME_INSTALL_PKGDATADIR "/extb.dict");
         }
         loadDict(file, persistentTask_);
@@ -880,13 +883,18 @@ void PinyinEngine::loadBuiltInDict() {
 }
 
 void PinyinEngine::loadExtraDict() {
-    const auto &standardPath = StandardPath::global();
+    const auto &standardPath = StandardPaths::global();
     auto files =
-        standardPath.locate(StandardPath::Type::PkgData, "pinyin/dictionaries",
-                            filter::Suffix(".dict"));
-    auto disableFiles =
-        standardPath.locate(StandardPath::Type::PkgData, "pinyin/dictionaries",
-                            filter::Suffix(".dict.disable"));
+        standardPath.locate(StandardPathsType::PkgData, "pinyin/dictionaries",
+                            pathfilter::extension(".dict"));
+    std::unordered_set<std::filesystem::path> disableFilesSet;
+    for (const auto &item :
+         standardPath.locate(StandardPathsType::PkgData, "pinyin/dictionaries",
+                             pathfilter::extension(".disable")) |
+             std::views::transform(
+                 [](const auto &item) { return item.first.stem(); })) {
+        disableFilesSet.insert(item);
+    }
     FCITX_ASSERT(ime_->dict()->dictSize() >=
                  libime::TrieDictionary::UserDict + NumBuiltInDict + 1)
         << "Dict size: " << ime_->dict()->dictSize();
@@ -894,8 +902,7 @@ void PinyinEngine::loadExtraDict() {
     ime_->dict()->removeFrom(libime::TrieDictionary::UserDict + NumBuiltInDict +
                              1);
     for (auto &file : files) {
-        if (disableFiles.contains(
-                stringutils::concat(file.first, ".disable"))) {
+        if (disableFilesSet.contains(file.first)) {
             PINYIN_DEBUG() << "Dictionary: " << file.first << " is disabled.";
             continue;
         }
@@ -905,9 +912,9 @@ void PinyinEngine::loadExtraDict() {
 }
 
 void PinyinEngine::loadCustomPhrase() {
-    const auto &standardPath = StandardPath::global();
-    auto file = standardPath.open(StandardPath::Type::PkgData,
-                                  "pinyin/customphrase", O_RDONLY);
+    const auto &standardPath = StandardPaths::global();
+    auto file =
+        standardPath.open(StandardPathsType::PkgData, "pinyin/customphrase");
     if (!file.isValid()) {
         customPhrase_.clear();
         return;
@@ -1016,8 +1023,8 @@ void PinyinEngine::populateConfig() {
     ime_->setFuzzyFlags(flags);
 
     if (*config_.shuangpinProfile == ShuangpinProfileEnum::Custom) {
-        auto file = StandardPath::global().open(StandardPath::Type::PkgConfig,
-                                                "pinyin/sp.dat", O_RDONLY);
+        auto file = StandardPaths::global().open(StandardPathsType::PkgConfig,
+                                                 "pinyin/sp.dat");
         if (file.isValid()) {
             try {
                 IFDStreamBuf buffer(file.fd());
@@ -1550,8 +1557,8 @@ void PinyinEngine::forgetCandidate(InputContext *inputContext, size_t index) {
 
 void PinyinEngine::saveCustomPhrase() {
     instance_->eventDispatcher().scheduleWithContext(watch(), [this]() {
-        StandardPath::global().safeSave(
-            StandardPath::Type::PkgData, "pinyin/customphrase", [this](int fd) {
+        StandardPaths::global().safeSave(
+            StandardPathsType::PkgData, "pinyin/customphrase", [this](int fd) {
                 OFDStreamBuf buffer(fd);
                 std::ostream out(&buffer);
                 try {
@@ -2199,9 +2206,9 @@ void PinyinEngine::doReset(InputContext *inputContext) const {
 
 void PinyinEngine::save() {
     safeSaveAsIni(config_, "conf/pinyin.conf");
-    const auto &standardPath = StandardPath::global();
+    const auto &standardPath = StandardPaths::global();
     standardPath.safeSave(
-        StandardPath::Type::PkgData, "pinyin/user.dict", [this](int fd) {
+        StandardPathsType::PkgData, "pinyin/user.dict", [this](int fd) {
             OFDStreamBuf buffer(fd);
             std::ostream out(&buffer);
             try {
@@ -2214,7 +2221,7 @@ void PinyinEngine::save() {
             }
         });
     standardPath.safeSave(
-        StandardPath::Type::PkgData, "pinyin/user.history", [this](int fd) {
+        StandardPathsType::PkgData, "pinyin/user.history", [this](int fd) {
             OFDStreamBuf buffer(fd);
             std::ostream out(&buffer);
             try {

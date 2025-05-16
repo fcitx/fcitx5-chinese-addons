@@ -7,14 +7,20 @@
  */
 #include "pinyinlookup.h"
 
+#include <cstdint>
+#include <fcitx-utils/cutf8.h>
+#include <fcitx-utils/fs.h>
 #include <fcitx-utils/log.h>
 #include <fcitx-utils/macros.h>
-#include <fcitx-utils/standardpath.h>
+#include <fcitx-utils/standardpaths.h>
 #include <fcitx-utils/stringutils.h>
 #include <fcitx-utils/utf8.h>
 #include <fcntl.h>
+#include <string>
 #include <string_view>
+#include <tuple>
 #include <unistd.h>
+#include <vector>
 
 namespace fcitx {
 
@@ -85,8 +91,6 @@ std::string_view py_enhance_get_konsonant(int index) {
 }
 } // namespace
 
-PinyinLookup::PinyinLookup() {}
-
 std::vector<std::string> PinyinLookup::lookup(uint32_t hz) {
     auto iter = data_.find(hz);
     if (iter == data_.end()) {
@@ -130,9 +134,9 @@ bool PinyinLookup::load() {
     }
     loaded_ = true;
 
-    auto file = StandardPath::global().open(
-        StandardPath::Type::PkgData, "pinyinhelper/py_table.mb", O_RDONLY);
-    if (file.fd() < 0) {
+    auto file = StandardPaths::global().open(StandardPathsType::PkgData,
+                                             "pinyinhelper/py_table.mb");
+    if (!file.isValid()) {
         return false;
     }
     /**
@@ -145,7 +149,7 @@ bool PinyinLookup::load() {
     while (true) {
         char word[FCITX_UTF8_MAX_LENGTH + 1];
         uint8_t wordLen;
-        auto res = read(file.fd(), &wordLen, 1);
+        auto res = fs::safeRead(file.fd(), &wordLen, 1);
         if (res == 0) {
             break;
         }

@@ -7,16 +7,14 @@
 #include "punctuation_public.h"
 #include "testdir.h"
 #include <fcitx-utils/log.h>
+#include <fcitx-utils/testing.h>
 #include <fcitx/addonmanager.h>
 #include <fcitx/inputcontext.h>
-#include <iostream>
 
 int main() {
-    setenv("SKIP_FCITX_PATH", "1", 1);
-    setenv("SKIP_FCITX_USER_PATH", "1", 1);
-    setenv("FCITX_ADDON_DIRS", TESTING_BINARY_DIR "/modules/punctuation", 1);
-    setenv("FCITX_DATA_DIRS",
-           TESTING_BINARY_DIR "/modules:" TESTING_SOURCE_DIR "/modules", 1);
+    fcitx::setupTestingEnvironmentPath(
+        TESTING_BINARY_DIR, {"bin"},
+        {TESTING_BINARY_DIR "/modules", TESTING_SOURCE_DIR "/modules"});
     fcitx::AddonManager manager(TESTING_BINARY_DIR "/modules/punctuation");
     manager.registerDefaultLoader(nullptr);
     manager.load();

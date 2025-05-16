@@ -9,6 +9,7 @@
 
 #include <cstdint>
 #include <string>
+#include <tuple>
 #include <unordered_map>
 #include <vector>
 
@@ -22,8 +23,6 @@ struct PinyinLookupData {
 
 class PinyinLookup {
 public:
-    PinyinLookup();
-
     bool load();
     std::vector<std::string> lookup(uint32_t hz);
     std::vector<std::tuple<std::string, std::string, int>>

@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.6.0)
 project(fcitx5-chinese-addons VERSION 5.1.8)
 
-set(REQUIRED_FCITX_VERSION 5.1.12)
+set(REQUIRED_FCITX_VERSION 5.1.13)
 
 find_package(ECM REQUIRED 1.0.0)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
@@ -18,6 +18,10 @@ find_package(PkgConfig REQUIRED)
 find_package(Gettext REQUIRED)
 
 include("${FCITX_INSTALL_CMAKECONFIG_DIR}/Fcitx5Utils/Fcitx5CompilerSettings.cmake")
+
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 
 #######################################################################
 # Options

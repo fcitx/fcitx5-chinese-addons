@@ -11,7 +11,7 @@
 #include <cstdint>
 #include <fcitx-utils/fdstreambuf.h>
 #include <fcitx-utils/macros.h>
-#include <fcitx-utils/standardpath.h>
+#include <fcitx-utils/standardpaths.h>
 #include <fcitx-utils/stringutils.h>
 #include <fcitx-utils/utf8.h>
 #include <fcntl.h>
@@ -43,9 +43,9 @@ void Stroke::loadAsync() {
         auto &dict = std::get<0>(result);
         auto &reverseDict = std::get<1>(result);
 
-        auto file = StandardPath::global().open(
-            StandardPath::Type::PkgData, "pinyinhelper/py_stroke.mb", O_RDONLY);
-        if (file.fd() < 0) {
+        auto file = StandardPaths::global().open(StandardPathsType::PkgData,
+                                                 "pinyinhelper/py_stroke.mb");
+        if (!file.isValid()) {
             throw std::runtime_error("Failed to open file");
         }
 

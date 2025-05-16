@@ -5,20 +5,24 @@
  *
  */
 #include "chttrans-native.h"
-#include "config.h"
+#include "chttrans.h"
+#include <cstdint>
 #include <fcitx-utils/fdstreambuf.h>
-#include <fcitx-utils/standardpath.h>
+#include <fcitx-utils/standardpaths.h>
 #include <fcitx-utils/utf8.h>
 #include <fcntl.h>
+#include <istream>
+#include <string>
+#include <string_view>
 
 #define TABLE_GBKS2T "chttrans/gbks2t.tab"
 
 using namespace fcitx;
 
-bool NativeBackend::loadOnce(const ChttransConfig &) {
-    auto file = StandardPath::global().open(StandardPath::Type::PkgData,
-                                            TABLE_GBKS2T, O_RDONLY);
-    if (file.fd() < 0) {
+bool NativeBackend::loadOnce(const ChttransConfig & /*unused*/) {
+    auto file =
+        StandardPaths::global().open(StandardPathsType::PkgData, TABLE_GBKS2T);
+    if (!file.isValid()) {
         return false;
     }
 
@@ -29,45 +33,37 @@ bool NativeBackend::loadOnce(const ChttransConfig &) {
     while (std::getline(in, strBuf)) {
         // Get two char.
         auto simpStart = strBuf.begin();
-        uint32_t simp, trad;
+        uint32_t simp;
+        uint32_t trad;
 
         auto tradStart = utf8::getNextChar(simpStart, strBuf.end(), &simp);
         auto end = utf8::getNextChar(tradStart, strBuf.end(), &trad);
         if (!utf8::isValidChar(simp) || !utf8::isValidChar(trad)) {
             continue;
         }
-        if (!s2tMap_.count(simp)) {
-            s2tMap_.emplace(std::piecewise_construct,
-                            std::forward_as_tuple(simp),
-                            std::forward_as_tuple(tradStart, end));
-        }
-        if (!t2sMap_.count(trad)) {
-            t2sMap_.emplace(std::piecewise_construct,
-                            std::forward_as_tuple(trad),
-                            std::forward_as_tuple(simpStart, tradStart));
-        }
+        std::string_view simpView(simpStart, tradStart);
+        std::string_view tradView(tradStart, end);
+        s2tMap_.try_emplace(std::string(simpView), tradView);
+        t2sMap_.try_emplace(std::string(tradView), simpView);
     }
     return true;
 }
 
-std::string convert(const std::unordered_map<uint32_t, std::string> &transMap,
+std::string convert(const NativeBackend::MapType &transMap,
                     const std::string &strHZ) {
-    auto len = utf8::length(strHZ);
+    auto len = utf8::lengthValidated(strHZ);
+    if (len == utf8::INVALID_LENGTH) {
+        return strHZ;
+    }
+    auto range = fcitx::utf8::MakeUTF8StringViewRange(strHZ);
     std::string result;
-    const auto *ps = strHZ.c_str();
-    for (size_t i = 0; i < len; ++i) {
-        uint32_t wc;
-        char *nps;
-        nps = fcitx_utf8_get_char(ps, &wc);
-        int chr_len = nps - ps;
-        auto iter = transMap.find(wc);
+    for (const auto &value : range) {
+        auto iter = transMap.find(value);
         if (iter != transMap.end()) {
             result.append(iter->second);
         } else {
-            result.append(ps, chr_len);
+            result.append(value);
         }
-
-        ps = nps;
     }
 
     return result;

@@ -11,7 +11,7 @@
 #include <QProcess>
 #include <QTemporaryFile>
 #include <fcitx-utils/i18n.h>
-#include <fcitx-utils/standardpath.h>
+#include <fcitx-utils/standardpaths.h>
 
 namespace fcitx {
 

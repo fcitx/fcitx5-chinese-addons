@@ -9,14 +9,14 @@
 #include <cassert>
 #include <fcitx-utils/event.h>
 #include <fcitx-utils/log.h>
-#include <fcitx-utils/standardpath.h>
+#include <fcitx-utils/standardpaths.h>
 #include <fcitx-utils/testing.h>
 #include <fcitx/addonmanager.h>
 #include <fcitx/instance.h>
 #include <iostream>
 
 int main() {
-    fcitx::setupTestingEnvironment(TESTING_BINARY_DIR, {"modules/cloudpinyin"},
+    fcitx::setupTestingEnvironment(TESTING_BINARY_DIR, {"bin"},
                                    {"test", TESTING_SOURCE_DIR "/modules"});
     fcitx::Log::setLogRule("*=5");
 

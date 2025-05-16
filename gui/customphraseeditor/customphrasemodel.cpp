@@ -5,25 +5,26 @@
  *
  */
 #include "customphrasemodel.h"
+#include "../../im/pinyin/customphrase.h"
 #include <QAbstractTableModel>
 #include <QApplication>
 #include <QByteArray>
 #include <QFile>
+#include <QFuture>
 #include <QFutureWatcher>
 #include <QLatin1String>
 #include <QList>
 #include <QObject>
+#include <Qt>
 #include <QtConcurrentRun>
 #include <fcitx-utils/fdstreambuf.h>
 #include <fcitx-utils/i18n.h>
-#include <fcitx-utils/standardpath.h>
+#include <fcitx-utils/standardpaths.h>
 #include <fcitx-utils/stringutils.h>
 #include <fcitx-utils/utf8.h>
 #include <fcntl.h>
 #include <istream>
 #include <ostream>
-#include <qfuturewatcher.h>
-#include <qnamespace.h>
 #include <string>
 #include <string_view>
 #include <vector>
@@ -232,10 +233,9 @@ QList<CustomPhraseItem> CustomPhraseModel::parse(const QString &file) {
     QList<CustomPhraseItem> list;
 
     do {
-        auto fp = fcitx::StandardPath::global().open(
-            fcitx::StandardPath::Type::PkgData, fileNameArray.constData(),
-            O_RDONLY);
-        if (fp.fd() < 0) {
+        auto fp = StandardPaths::global().open(StandardPathsType::PkgData,
+                                               fileNameArray.constData());
+        if (!fp.isValid()) {
             break;
         }
 
@@ -279,9 +279,8 @@ QFutureWatcher<bool> *CustomPhraseModel::save() {
 bool CustomPhraseModel::saveData(const QString &file,
                                  const QList<CustomPhraseItem> &list) {
     QByteArray filenameArray = file.toLocal8Bit();
-    return StandardPath::global().safeSave(
-        StandardPath::Type::PkgData, filenameArray.constData(),
-        [&list](int fd) {
+    return StandardPaths::global().safeSave(
+        StandardPathsType::PkgData, filenameArray.constData(), [&list](int fd) {
             OFDStreamBuf buffer(fd);
             std::ostream out(&buffer);
             auto printMultilineComment = [](std::ostream &out,
@@ -308,8 +307,7 @@ bool CustomPhraseModel::saveData(const QString &file,
 }
 
 void CustomPhraseModel::saveFinished() {
-    QFutureWatcher<bool> *watcher =
-        static_cast<QFutureWatcher<bool> *>(sender());
+    auto *watcher = static_cast<QFutureWatcher<bool> *>(sender());
     QFuture<bool> future = watcher->future();
     if (future.result()) {
         setNeedSave(false);

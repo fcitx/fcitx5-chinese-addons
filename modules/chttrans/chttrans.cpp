@@ -16,7 +16,7 @@
 #include <fcitx-config/iniparser.h>
 #include <fcitx-utils/i18n.h>
 #include <fcitx-utils/log.h>
-#include <fcitx-utils/standardpath.h>
+#include <fcitx-utils/standardpaths.h>
 #include <fcitx-utils/stringutils.h>
 #include <fcitx-utils/utf8.h>
 #include <fcitx/addonfactory.h>
@@ -30,6 +30,7 @@
 #include <fcitx/userinterface.h>
 #include <fcitx/userinterfacemanager.h>
 #include <fcntl.h>
+#include <filesystem>
 #include <format>
 #include <fstream>
 #include <ios>
@@ -52,23 +53,24 @@
 
 using namespace fcitx;
 
-std::unordered_map<std::string, std::string> openCCBuiltInPath() {
-    std::unordered_map<std::string, std::string> result;
-    std::string prefix;
+std::unordered_map<std::string, std::filesystem::path> openCCBuiltInPath() {
+    std::unordered_map<std::string, std::filesystem::path> result;
+    std::filesystem::path prefix;
 #ifdef OPENCC_PREFIX
     prefix = OPENCC_PREFIX;
 #endif
     if (!prefix.empty()) {
-        result["datadir"] = stringutils::joinPath(prefix, "share");
-        result["pkgdatadir"] = stringutils::joinPath(prefix, "share/opencc");
+        result["datadir"] = prefix / "share";
+        result["pkgdatadir"] = prefix / "share/opencc";
     }
     return result;
 }
 
-const StandardPath &openCCStandardPath() {
-    static const StandardPath standardPath(
-        "opencc", openCCBuiltInPath(), StandardPath::global().skipBuiltInPath(),
-        StandardPath::global().skipUserPath());
+const StandardPaths &openCCStandardPath() {
+    static const StandardPaths standardPath(
+        "opencc", openCCBuiltInPath(),
+        StandardPaths::global().skipBuiltInPath(),
+        StandardPaths::global().skipUserPath());
     return standardPath;
 }
 
@@ -265,9 +267,9 @@ const Configuration *Chttrans::getConfig() const {
     std::vector<std::pair<std::string, std::string>> profiles{
         {"default", _("Default")}};
     constexpr std::string_view JsonSuffix = ".json";
-    auto files =
-        openCCStandardPath().locate(StandardPath::Type::PkgData, ".",
-                                    filter::Suffix(std::string(JsonSuffix)));
+    auto files = openCCStandardPath().locate(
+        StandardPathsType::PkgData, ".",
+        pathfilter::extension(std::string(JsonSuffix)));
     profiles.reserve(files.size() + 1);
     // files is std::map, so file name is already sorted.
     for (const auto &file : files) {
@@ -278,8 +280,7 @@ const Configuration *Chttrans::getConfig() const {
             auto jv = boost::json::parse(strBuf);
             const auto &obj = jv.as_object();
             auto name = boost::json::value_to<std::string>(obj.at("name"));
-            std::string description =
-                file.first.substr(0, file.first.size() - JsonSuffix.size());
+            std::string description = file.first.stem();
             if (!name.empty()) {
                 description = std::format("{0}: {1}", description,
                                           C_("OpenCC Profile", name));
