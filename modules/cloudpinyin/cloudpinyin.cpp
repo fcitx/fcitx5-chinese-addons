@@ -9,7 +9,7 @@
 #include <fcitx-config/iniparser.h>
 #include <fcitx-utils/fs.h>
 #include <fcitx-utils/log.h>
-#include <fcitx-utils/standardpath.h>
+#include <fcitx-utils/standardpaths.h>
 #include <fcitx-utils/unixfd.h>
 #include <fcitx-utils/utf8.h>
 #include <fcitx/addonmanager.h>

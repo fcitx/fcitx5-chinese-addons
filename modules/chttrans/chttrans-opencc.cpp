@@ -6,8 +6,11 @@
  */
 #include "chttrans-opencc.h"
 #include "chttrans.h"
-#include <fcitx-utils/standardpath.h>
+#include <exception>
+#include <fcitx-utils/standardpaths.h>
 #include <fcitx-utils/stringutils.h>
+#include <opencc.h>
+#include <string>
 
 using namespace fcitx;
 
@@ -18,8 +21,8 @@ bool OpenCCBackend::loadOnce(const ChttransConfig &config) {
 
 std::string OpenCCBackend::locateProfile(const std::string &profile) {
     auto profilePath =
-        openCCStandardPath().locate(StandardPath::Type::PkgData, profile);
-    return profilePath.empty() ? profile : profilePath;
+        openCCStandardPath().locate(StandardPathsType::PkgData, profile);
+    return profilePath.empty() ? profile : profilePath.string();
 }
 
 void OpenCCBackend::updateConfig(const ChttransConfig &config) {

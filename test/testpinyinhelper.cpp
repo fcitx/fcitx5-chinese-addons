@@ -7,13 +7,13 @@
 #include "pinyinhelper_public.h"
 #include "testdir.h"
 #include <fcitx-utils/log.h>
+#include <fcitx-utils/testing.h>
 #include <fcitx-utils/utf8.h>
 #include <fcitx/addonmanager.h>
-#include <iostream>
 
 int main() {
-    setenv("FCITX_ADDON_DIRS", TESTING_BINARY_DIR "/modules/pinyinhelper", 1);
-    setenv("FCITX_DATA_DIRS", TESTING_BINARY_DIR "/modules", 1);
+    fcitx::setupTestingEnvironmentPath(TESTING_BINARY_DIR, {"bin"},
+                                       {TESTING_BINARY_DIR "/modules"});
     fcitx::AddonManager manager(TESTING_BINARY_DIR "/modules/pinyinhelper");
     manager.registerDefaultLoader(nullptr);
     manager.load();

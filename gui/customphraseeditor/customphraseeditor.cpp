@@ -20,7 +20,7 @@
 #include <QStyledItemDelegate>
 #include <QTextEdit>
 #include <fcitx-utils/i18n.h>
-#include <fcitx-utils/standardpath.h>
+#include <fcitx-utils/standardpaths.h>
 #include <fcitx-utils/stringutils.h>
 #include <fcitxqtconfiguiwidget.h>
 #include <fcntl.h>
@@ -119,9 +119,10 @@ public:
 
 CustomPhraseEditor::CustomPhraseEditor(QWidget *parent)
     : FcitxQtConfigUIWidget(parent), model_(new CustomPhraseModel(this)),
-      userFile_(QString::fromStdString(stringutils::joinPath(
-          StandardPath::global().userDirectory(StandardPath::Type::PkgData),
-          customPhraseFileName))) {
+      userFile_(QString::fromStdU16String(
+          (StandardPaths::global().userDirectory(StandardPathsType::PkgData) /
+           customPhraseFileName)
+              .u16string())) {
     setupUi(this);
 
     connect(addButton_, &QPushButton::clicked, this,

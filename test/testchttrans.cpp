@@ -10,7 +10,7 @@
 #include "testim_public.h"
 #include <fcitx-utils/eventdispatcher.h>
 #include <fcitx-utils/log.h>
-#include <fcitx-utils/standardpath.h>
+#include <fcitx-utils/standardpaths.h>
 #include <fcitx-utils/testing.h>
 #include <fcitx/action.h>
 #include <fcitx/addonmanager.h>
@@ -145,10 +145,9 @@ void scheduleEvent(Instance *instance) {
 void runInstance() {}
 
 int main() {
-    setupTestingEnvironment(
-        TESTING_BINARY_DIR,
-        {"modules/chttrans", StandardPath::fcitxPath("addondir")},
-        {"test", TESTING_SOURCE_DIR "/modules"});
+    setupTestingEnvironment(TESTING_BINARY_DIR,
+                            {"bin", StandardPaths::fcitxPath("addondir")},
+                            {"test", TESTING_SOURCE_DIR "/modules"});
 
     fcitx::Log::setLogRule("*=5");
 

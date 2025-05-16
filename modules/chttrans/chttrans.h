@@ -13,7 +13,7 @@
 #include <fcitx-config/enum.h>
 #include <fcitx-config/iniparser.h>
 #include <fcitx-utils/i18n.h>
-#include <fcitx-utils/standardpath.h>
+#include <fcitx-utils/standardpaths.h>
 #include <fcitx/action.h>
 #include <fcitx/addoninstance.h>
 #include <fcitx/addonmanager.h>
@@ -160,6 +160,6 @@ private:
     ToggleAction toggleAction_{this};
 };
 
-const fcitx::StandardPath &openCCStandardPath();
+const fcitx::StandardPaths &openCCStandardPath();
 
 #endif // _CHTTRANS_CHTTRANS_H_

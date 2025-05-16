@@ -9,7 +9,7 @@
 #include "testim_public.h"
 #include <fcitx-utils/eventdispatcher.h>
 #include <fcitx-utils/log.h>
-#include <fcitx-utils/standardpath.h>
+#include <fcitx-utils/standardpaths.h>
 #include <fcitx-utils/testing.h>
 #include <fcitx/action.h>
 #include <fcitx/addonmanager.h>
@@ -91,9 +91,9 @@ void scheduleEvent(Instance *instance) {
 void runInstance() {}
 
 int main() {
-    setupTestingEnvironment(
-        TESTING_BINARY_DIR,
-        {"modules/fullwidth", StandardPath::fcitxPath("addondir")}, {"test"});
+    setupTestingEnvironment(TESTING_BINARY_DIR,
+                            {"bin", StandardPaths::fcitxPath("addondir")},
+                            {"test"});
     fcitx::Log::setLogRule("*=5");
 
     char arg0[] = "testfullwidth";

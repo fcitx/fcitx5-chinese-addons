@@ -11,7 +11,7 @@
 #include <fcitx-config/iniparser.h>
 #include <fcitx-utils/event.h>
 #include <fcitx-utils/i18n.h>
-#include <fcitx-utils/standardpath.h>
+#include <fcitx-utils/standardpaths.h>
 #include <fcitx-utils/utf8.h>
 #include <fcitx/addonfactory.h>
 #include <fcitx/inputcontext.h>

@@ -27,7 +27,7 @@
 #include <QTemporaryFile>
 #include <fcitx-utils/fs.h>
 #include <fcitx-utils/i18n.h>
-#include <fcitx-utils/standardpath.h>
+#include <fcitx-utils/standardpaths.h>
 #include <fcitx-utils/stringutils.h>
 #include <fcitxqtconfiguiwidget.h>
 #include <qnamespace.h>
@@ -120,16 +120,16 @@ QString PinyinDictManager::confirmImportFileName(const QString &defaultName) {
 }
 
 QString PinyinDictManager::prepareDirectory() {
-    auto directory = stringutils::joinPath(
-        StandardPath::global().userDirectory(StandardPath::Type::PkgData),
-        "pinyin/dictionaries");
+    auto directory =
+        StandardPaths::global().userDirectory(StandardPathsType::PkgData) /
+        "pinyin/dictionaries";
     if (!fs::makePath(directory)) {
         QMessageBox::warning(this, _("Failed to create directory"),
                              _("Create directory failed. Please check the "
                                "permission or disk space."));
         return "";
     }
-    return QString::fromLocal8Bit(directory.data());
+    return QString::fromStdU16String(directory.u16string());
 }
 
 QString PinyinDictManager::prepareTempFile(const QString &tempFileTemplate) {
@@ -233,7 +233,7 @@ void PinyinDictManager::importFromSogou() {
         return;
     }
     auto runtimeDirectory =
-        StandardPath::global().userDirectory(StandardPath::Type::Runtime);
+        StandardPaths::global().userDirectory(StandardPathsType::Runtime);
     if (runtimeDirectory.empty()) {
         QMessageBox::warning(this, _("Failed to get runtime directory"),
                              _("Create directory failed. Please check the "
@@ -248,8 +248,7 @@ void PinyinDictManager::importFromSogou() {
 
     auto tempFile = prepareTempFile(fullname + "_XXXXXX");
 
-    QDir runtimeDir(QString::fromLocal8Bit(runtimeDirectory.data(),
-                                           runtimeDirectory.size()));
+    QDir runtimeDir(runtimeDirectory);
     auto txtFile = prepareTempFile(runtimeDir.filePath("scel_txt_XXXXXX"));
     if (tempFile.isEmpty() || txtFile.isEmpty()) {
         if (!tempFile.isEmpty()) {
@@ -292,7 +291,7 @@ void PinyinDictManager::importFromSogouOnline() {
         return;
     }
     auto runtimeDirectory =
-        StandardPath::global().userDirectory(StandardPath::Type::Runtime);
+        StandardPaths::global().userDirectory(StandardPathsType::Runtime);
     if (runtimeDirectory.empty()) {
         QMessageBox::warning(this, _("Failed to get runtime directory"),
                              _("Create directory failed. Please check the "
@@ -305,8 +304,7 @@ void PinyinDictManager::importFromSogouOnline() {
         return;
     }
 
-    QDir runtimeDir(QString::fromLocal8Bit(runtimeDirectory.data(),
-                                           runtimeDirectory.size()));
+    QDir runtimeDir(runtimeDirectory);
     auto tempFile = prepareTempFile(fullname + "_XXXXXX");
     auto txtFile = prepareTempFile(runtimeDir.filePath("scel_txt_XXXXXX"));
     auto scelFile = prepareTempFile(runtimeDir.filePath("scel_XXXXXX"));
@@ -356,9 +354,9 @@ void PinyinDictManager::removeAllDict() {
 
         std::string fileName =
             index.data(Qt::UserRole).toString().toLocal8Bit().constData();
-        auto fullPath = StandardPath::global().locate(
-            StandardPath::Type::PkgData, "pinyin/dictionaries/" + fileName);
-        QFile::remove(QString::fromLocal8Bit(fullPath.data(), fullPath.size()));
+        auto fullPath = StandardPaths::global().locate(
+            StandardPathsType::PkgData, "pinyin/dictionaries/" + fileName);
+        QFile::remove(fullPath);
     }
     reload();
 }
@@ -372,8 +370,8 @@ void PinyinDictManager::removeDict() {
     QString curName = index.data(Qt::DisplayRole).toString();
     std::string fileName =
         index.data(Qt::UserRole).toString().toLocal8Bit().constData();
-    auto fullPath = StandardPath::global().locate(
-        StandardPath::Type::PkgData, "pinyin/dictionaries/" + fileName);
+    auto fullPath = StandardPaths::global().locate(
+        StandardPathsType::PkgData, "pinyin/dictionaries/" + fileName);
 
     int ret = QMessageBox::question(
         this, _("Confirm deletion"),
@@ -381,8 +379,7 @@ void PinyinDictManager::removeDict() {
         QMessageBox::Ok | QMessageBox::Cancel);
 
     if (ret == QMessageBox::Ok) {
-        bool ok = QFile::remove(
-            QString::fromLocal8Bit(fullPath.data(), fullPath.size()));
+        bool ok = QFile::remove(fullPath);
         if (!ok) {
             QMessageBox::warning(
                 this, _("File Operation Failed"),
