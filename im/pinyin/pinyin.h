@@ -128,6 +128,7 @@ FCITX_CONFIGURATION(
     Option<bool> c{this, "C_CH", _("c <-> ch"), false};
     Option<bool> f{this, "F_H", _("f <-> h"), false};
     Option<bool> l{this, "L_N", _("l <-> n"), false};
+    Option<bool> r{this, "L_R", _("l <-> r"), false};
     Option<bool> s{this, "S_SH", _("s <-> sh"), false};
     Option<bool> z{this, "Z_ZH", _("z <-> zh"), false};
     OptionWithAnnotation<CorrectionLayout, CorrectionLayoutI18NAnnotation>
