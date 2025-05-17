@@ -11,12 +11,7 @@ set(DICTMANAGER_SOURCES
 
 if (ENABLE_BROWSER)
     list(APPEND DICTMANAGER_SOURCES browserdialog.cpp filedownloader.cpp)
-
-    if (TARGET Qt${QT_MAJOR_VERSION}::WebKit)
-        set(BROWSER_TARGET Qt${QT_MAJOR_VERSION}::WebKitWidgets)
-    else()
-        set(BROWSER_TARGET Qt${QT_MAJOR_VERSION}::WebEngineWidgets)
-    endif()
+    set(BROWSER_TARGET Qt${QT_MAJOR_VERSION}::WebEngineWidgets)
 endif()
 
 add_library(pinyindictmanager MODULE ${DICTMANAGER_SOURCES})
