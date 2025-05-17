@@ -304,7 +304,7 @@ void PinyinDictManager::importFromSogouOnline() {
         return;
     }
 
-    QDir runtimeDir(QString::fromStdWString(runtimeDirectory.wstring()));
+    QDir runtimeDir(runtimeDirectory);
     auto tempFile = prepareTempFile(fullname + "_XXXXXX");
     auto txtFile = prepareTempFile(runtimeDir.filePath("scel_txt_XXXXXX"));
     auto scelFile = prepareTempFile(runtimeDir.filePath("scel_XXXXXX"));

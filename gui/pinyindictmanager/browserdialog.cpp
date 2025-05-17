@@ -20,13 +20,8 @@
 
 namespace fcitx {
 
-#ifdef USE_WEBKIT
-using WebPageBase = QWebPage;
-using WebViewType = QWebView;
-#else
 using WebPageBase = QWebEnginePage;
 using WebViewType = QWebEngineView;
-#endif
 
 /*
  * a typical link looks like this.
@@ -38,17 +33,10 @@ public:
     WebPage(BrowserDialog *dialog) : WebPageBase(dialog), dialog_(dialog) {}
 
 protected:
-#ifdef USE_WEBKIT
-    bool acceptNavigationRequest(QWebFrame *, const QNetworkRequest &request,
-                                 NavigationType /*type*/) override {
-        return dialog_->linkClicked(request.url());
-    }
-#else
     bool acceptNavigationRequest(const QUrl &url, NavigationType /*type*/,
                                  bool /*isMainFrame*/) override {
         return dialog_->linkClicked(url);
     }
-#endif
 
     WebPageBase *createWindow(WebPageBase::WebWindowType /*type*/) override {
         return this;
