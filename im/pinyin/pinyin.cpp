@@ -1000,6 +1000,7 @@ void PinyinEngine::populateConfig() {
     SET_FUZZY_FLAG(c, C_CH)
     SET_FUZZY_FLAG(f, F_H)
     SET_FUZZY_FLAG(l, L_N)
+    SET_FUZZY_FLAG(r, L_R)
     SET_FUZZY_FLAG(s, S_SH)
     SET_FUZZY_FLAG(z, Z_ZH)
 
