@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2025-05-17 20:24+0000\n"
+"POT-Creation-Date: 2025-05-18 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Dmitry <dmitrydmitry761@gmail.com>, 2025\n"
 "Language-Team: Russian (https://app.transifex.com/fcitx/teams/12005/ru/)\n"
@@ -58,7 +58,7 @@ msgstr "&Очистить"
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:55
 #. i18n: ectx: property (text), widget (QPushButton, clearDictButton_)
-#: rc.cpp:45
+#: rc.cpp:39
 #, kde-format
 msgid "&Clear Dictionary"
 msgstr "&Очистить Словарь"
@@ -76,14 +76,14 @@ msgstr "&Внешний редактор"
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:22
 #. i18n: ectx: property (text), widget (QPushButton, importButton_)
-#: rc.cpp:36
+#: rc.cpp:30
 #, kde-format
 msgid "&Import"
 msgstr "&Импорт"
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:66
 #. i18n: ectx: property (text), widget (QPushButton, openDirectoryButton_)
-#: rc.cpp:48
+#: rc.cpp:42
 #, kde-format
 msgid "&Open User Data Directory"
 msgstr "&Открыть каталог пользовательских данных"
@@ -92,7 +92,7 @@ msgstr "&Открыть каталог пользовательских данн
 #. i18n: ectx: property (text), widget (QPushButton, removeButton_)
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:33
 #. i18n: ectx: property (text), widget (QPushButton, removeButton_)
-#: rc.cpp:12 rc.cpp:39
+#: rc.cpp:12 rc.cpp:33
 #, kde-format
 msgid "&Remove"
 msgstr "&Удалить"
@@ -211,7 +211,7 @@ msgstr "Бэкэнд"
 msgid "Bingchan"
 msgstr "Бинчань"
 
-#: gui/pinyindictmanager/browserdialog.cpp:66
+#: gui/pinyindictmanager/browserdialog.cpp:54
 msgid "Browse Sogou Cell Dict repository"
 msgstr "Исследовать репозиторий словаря Sogou Cell"
 
@@ -359,11 +359,9 @@ msgstr "По умолчанию"
 msgid "Delete from custom phrase"
 msgstr "Удалить из пользовательской фразы"
 
-#. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:14
-#. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
 #. i18n: file: gui/pinyindictmanager/browserdialog.ui:14
 #. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
-#: rc.cpp:24 rc.cpp:30
+#: rc.cpp:24
 #, kde-format
 msgid "Dialog"
 msgstr "Диалог"
@@ -799,7 +797,7 @@ msgstr "Следующая страница"
 msgid "No"
 msgstr "Нет"
 
-#: gui/pinyindictmanager/browserdialog.cpp:112
+#: gui/pinyindictmanager/browserdialog.cpp:100
 msgid "No browsing outside pinyin.sogou.com, now redirect to home page."
 msgstr ""
 "Невозможно перейти вне pinyin.sogou.com, перенаправление на домашнюю "
@@ -982,7 +980,7 @@ msgstr "Регулярное выражение для запуска быстр
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:44
 #. i18n: ectx: property (text), widget (QPushButton, removeAllButton_)
-#: rc.cpp:42
+#: rc.cpp:36
 #, kde-format
 msgid "Remove &All"
 msgstr "Удалить все"
@@ -1363,7 +1361,7 @@ msgstr "Учить ли новую фразу из других фраз или 
 msgid "Wildcard matching Key"
 msgstr "Клавиша, соответствующая карточке"
 
-#: gui/pinyindictmanager/browserdialog.cpp:111
+#: gui/pinyindictmanager/browserdialog.cpp:99
 msgid "Wrong Link"
 msgstr "Неверная ссылка"
 
@@ -1403,11 +1401,9 @@ msgstr "[Выберите слово для удаления из истории
 msgid "[Stroke Filtering]"
 msgstr "[Фильтрация штрихов]"
 
-#. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:21
-#. i18n: ectx: property (url), widget (QWebView, webView_)
 #. i18n: file: gui/pinyindictmanager/browserdialog.ui:21
 #. i18n: ectx: property (url), widget (QWebEngineView, webView_)
-#: rc.cpp:27 rc.cpp:33
+#: rc.cpp:27
 #, kde-format
 msgid "about:blank"
 msgstr "о:пусто"
@@ -1442,7 +1438,7 @@ msgstr "l <-> n"
 
 #: im/pinyin/pinyin.h:131
 msgid "l <-> r"
-msgstr ""
+msgstr "l <-> r"
 
 #: im/pinyin/pinyin.h:132
 msgid "s <-> sh"
