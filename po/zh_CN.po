@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2025-05-17 20:24+0000\n"
+"POT-Creation-Date: 2025-05-24 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: csslayer <wengxt@gmail.com>, 2025\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/fcitx/teams/12005/"
@@ -60,7 +60,7 @@ msgstr "清空(&C)"
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:55
 #. i18n: ectx: property (text), widget (QPushButton, clearDictButton_)
-#: rc.cpp:45
+#: rc.cpp:39
 #, kde-format
 msgid "&Clear Dictionary"
 msgstr "清空词库(&C)"
@@ -78,14 +78,14 @@ msgstr "外部编辑器(&E)"
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:22
 #. i18n: ectx: property (text), widget (QPushButton, importButton_)
-#: rc.cpp:36
+#: rc.cpp:30
 #, kde-format
 msgid "&Import"
 msgstr "导入(&I)"
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:66
 #. i18n: ectx: property (text), widget (QPushButton, openDirectoryButton_)
-#: rc.cpp:48
+#: rc.cpp:42
 #, kde-format
 msgid "&Open User Data Directory"
 msgstr "打开用户数据目录(&O)"
@@ -94,7 +94,7 @@ msgstr "打开用户数据目录(&O)"
 #. i18n: ectx: property (text), widget (QPushButton, removeButton_)
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:33
 #. i18n: ectx: property (text), widget (QPushButton, removeButton_)
-#: rc.cpp:12 rc.cpp:39
+#: rc.cpp:12 rc.cpp:33
 #, kde-format
 msgid "&Remove"
 msgstr "移除(&R)"
@@ -206,7 +206,7 @@ msgstr "后端"
 msgid "Bingchan"
 msgstr "冰蟾全息"
 
-#: gui/pinyindictmanager/browserdialog.cpp:66
+#: gui/pinyindictmanager/browserdialog.cpp:54
 msgid "Browse Sogou Cell Dict repository"
 msgstr "浏览搜狗细胞词库"
 
@@ -348,11 +348,9 @@ msgstr "默认"
 msgid "Delete from custom phrase"
 msgstr "从自定义词组中删除"
 
-#. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:14
-#. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
 #. i18n: file: gui/pinyindictmanager/browserdialog.ui:14
 #. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
-#: rc.cpp:24 rc.cpp:30
+#: rc.cpp:24
 #, kde-format
 msgid "Dialog"
 msgstr "对话框"
@@ -442,7 +440,7 @@ msgstr "启用符号"
 
 #: im/pinyin/pinyin.h:156
 msgid "Enable more Characters after Unicode CJK Extension B"
-msgstr ""
+msgstr "启用 Unicode CJK 拓展区 B 之后的更多字符"
 
 #: modules/chttrans/chttrans.h:55
 msgid "Enabled Input Methods"
@@ -774,7 +772,7 @@ msgstr "下一页"
 msgid "No"
 msgstr "否"
 
-#: gui/pinyindictmanager/browserdialog.cpp:112
+#: gui/pinyindictmanager/browserdialog.cpp:100
 msgid "No browsing outside pinyin.sogou.com, now redirect to home page."
 msgstr "不允许访问 pinyin.sogou.com 之外的网页，将重定向到主页。"
 
@@ -951,7 +949,7 @@ msgstr "触发快速输入的正则表达式"
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:44
 #. i18n: ectx: property (text), widget (QPushButton, removeAllButton_)
-#: rc.cpp:42
+#: rc.cpp:36
 #, kde-format
 msgid "Remove &All"
 msgstr "移除全部(&A)"
@@ -1023,7 +1021,7 @@ msgstr "显示联想词组"
 #: im/pinyin/pinyin.h:160
 msgid ""
 "Show stroke candidates when typing with h(一), s(丨), p(丿), n(㇏), z(𠃍)"
-msgstr ""
+msgstr "输入 h(横)，s(竖)，p(撇)，n(捺)，z(折) 时显示笔画候选词"
 
 #: im/pinyin/shuangpin.conf.in:2
 msgid "Shuangpin"
@@ -1304,7 +1302,7 @@ msgstr "是否从其它词组，或仅从单字学习自组词"
 msgid "Wildcard matching Key"
 msgstr "模糊键"
 
-#: gui/pinyindictmanager/browserdialog.cpp:111
+#: gui/pinyindictmanager/browserdialog.cpp:99
 msgid "Wrong Link"
 msgstr "链接错误"
 
@@ -1344,11 +1342,9 @@ msgstr "[选择要从历史中移除的词]"
 msgid "[Stroke Filtering]"
 msgstr "[笔画过滤]"
 
-#. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:21
-#. i18n: ectx: property (url), widget (QWebView, webView_)
 #. i18n: file: gui/pinyindictmanager/browserdialog.ui:21
 #. i18n: ectx: property (url), widget (QWebEngineView, webView_)
-#: rc.cpp:27 rc.cpp:33
+#: rc.cpp:27
 #, kde-format
 msgid "about:blank"
 msgstr "about:blank"
@@ -1383,7 +1379,7 @@ msgstr "l <-> n"
 
 #: im/pinyin/pinyin.h:131
 msgid "l <-> r"
-msgstr ""
+msgstr "l <-> r"
 
 #: im/pinyin/pinyin.h:132
 msgid "s <-> sh"
