@@ -53,24 +53,23 @@
 
 using namespace fcitx;
 
-std::unordered_map<std::string, std::filesystem::path> openCCBuiltInPath() {
-    std::unordered_map<std::string, std::filesystem::path> result;
+std::unordered_map<std::string, std::vector<std::filesystem::path>>
+openCCBuiltInPath() {
+    std::unordered_map<std::string, std::vector<std::filesystem::path>> result;
     std::filesystem::path prefix;
 #ifdef OPENCC_PREFIX
     prefix = OPENCC_PREFIX;
 #endif
     if (!prefix.empty()) {
-        result["datadir"] = prefix / "share";
-        result["pkgdatadir"] = prefix / "share/opencc";
+        result["datadir"] = {prefix / "share"};
+        result["pkgdatadir"] = {prefix / "share/opencc"};
     }
     return result;
 }
 
 const StandardPaths &openCCStandardPath() {
-    static const StandardPaths standardPath(
-        "opencc", openCCBuiltInPath(),
-        StandardPaths::global().skipBuiltInPath(),
-        StandardPaths::global().skipUserPath());
+    static const StandardPaths standardPath("opencc", openCCBuiltInPath(),
+                                            StandardPaths::global().options());
     return standardPath;
 }
 
