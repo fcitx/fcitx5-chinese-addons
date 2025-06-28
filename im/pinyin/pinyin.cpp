@@ -2004,14 +2004,20 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         (event.key().check(FcitxKey_apostrophe) && !state->context_.empty()) ||
         checkSp(event, state)) {
         // first v, use it to trigger quickphrase
-        if (!state->context_.useShuangpin() && quickphrase() &&
-            *config_.useVAsQuickphrase && event.key().check(FcitxKey_v) &&
+        if (*config_.useVAsQuickphrase && quickphrase() &&
             state->context_.empty()) {
+            const bool isSp = state->context_.useShuangpin();
+            if ((event.key().check(FcitxKey_v) && !isSp) ||
+                (event.key().check(FcitxKey_V) && isSp)) {
+                const std::string leadingString =
+                    Key::keySymToUTF8(event.key().sym());
 
-            quickphrase()->call<IQuickPhrase::trigger>(
-                inputContext, "", "v", "", "", Key(FcitxKey_None));
-            event.filterAndAccept();
-            return;
+                quickphrase()->call<IQuickPhrase::trigger>(
+                    inputContext, "", leadingString, "", "",
+                    Key(FcitxKey_None));
+                event.filterAndAccept();
+                return;
+            }
         }
         event.filterAndAccept();
         if (!state->context_.type(keyStr.get())) {

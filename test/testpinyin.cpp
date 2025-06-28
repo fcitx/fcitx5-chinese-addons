@@ -18,7 +18,9 @@
 #include <fcitx-utils/macros.h>
 #include <fcitx-utils/standardpaths.h>
 #include <fcitx-utils/testing.h>
+#include <fcitx/addoninstance.h>
 #include <fcitx/addonmanager.h>
+#include <fcitx/inputcontext.h>
 #include <fcitx/inputmethodgroup.h>
 #include <fcitx/inputmethodmanager.h>
 #include <fcitx/inputpanel.h>
@@ -54,7 +56,21 @@ void findAndSelectCandidate(InputContext *ic, std::string_view word) {
     candList->candidate(findCandidateOrDie(ic, word)).select(ic);
 }
 
-void testBasic(Instance *instance) {
+void sendControlSpace(AddonInstance *testfrontend, InputContext *ic) {
+    for (int i = 0; i < 2; i++) {
+        testfrontend->call<ITestFrontend::keyEvent>(ic->uuid(),
+                                                    Key("Control_L"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(
+            ic->uuid(), Key("Control+space"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(ic->uuid(),
+                                                    Key("Control+space"), true);
+        testfrontend->call<ITestFrontend::keyEvent>(
+            ic->uuid(), Key("Control+Control_L"), true);
+        ic->reset();
+    }
+}
+
+void setup(Instance *instance) {
     instance->eventDispatcher().schedule([instance]() {
         auto *pinyin = instance->addonManager().addon("pinyin", true);
         FCITX_ASSERT(pinyin);
@@ -64,8 +80,16 @@ void testBasic(Instance *instance) {
             InputMethodGroupItem("keyboard-us"));
         defaultGroup.inputMethodList().push_back(
             InputMethodGroupItem("pinyin"));
+        defaultGroup.inputMethodList().push_back(
+            InputMethodGroupItem("shuangpin"));
         defaultGroup.setDefaultInputMethod("");
         instance->inputMethodManager().setGroup(std::move(defaultGroup));
+    });
+}
+
+void testBasic(Instance *instance) {
+    instance->eventDispatcher().schedule([instance]() {
+        auto *pinyin = instance->addonManager().addon("pinyin");
         auto *testfrontend = instance->addonManager().addon("testfrontend");
         auto uuid =
             testfrontend->call<ITestFrontend::createInputContext>("testapp");
@@ -73,8 +97,10 @@ void testBasic(Instance *instance) {
         testfrontend->call<ITestFrontend::pushCommitExpectation>("ni");
         testfrontend->call<ITestFrontend::pushCommitExpectation>("ni");
         testfrontend->call<ITestFrontend::pushCommitExpectation>("你hao");
-        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Control+space"),
-                                                    false);
+        auto *ic = instance->inputContextManager().findByUUID(uuid);
+        FCITX_ASSERT(ic);
+        instance->setCurrentInputMethod(ic, "pinyin", true);
+
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("`"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("n"), false);
@@ -98,8 +124,6 @@ void testBasic(Instance *instance) {
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("h"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("o"), false);
-        auto *ic = instance->inputContextManager().findByUUID(uuid);
-        FCITX_ASSERT(ic);
         // Make a partial selection, we do search because the data might change.
         findAndSelectCandidate(ic, "你");
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
@@ -111,10 +135,7 @@ void testBasic(Instance *instance) {
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("h"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("o"), false);
-        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Control+space"),
-                                                    false);
-        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Control+space"),
-                                                    false);
+        sendControlSpace(testfrontend, ic);
 
         testfrontend->call<ITestFrontend::pushCommitExpectation>("你hao");
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("n"), false);
@@ -124,10 +145,7 @@ void testBasic(Instance *instance) {
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("o"), false);
         // Make a partial selection, we do search because the data might change.
         findAndSelectCandidate(ic, "你");
-        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Control+space"),
-                                                    false);
-        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Control+space"),
-                                                    false);
+        sendControlSpace(testfrontend, ic);
 
         RawConfig config;
         config.setValueByPath("SwitchInputMethodBehavior",
@@ -141,10 +159,7 @@ void testBasic(Instance *instance) {
         auto sentence =
             ic->inputPanel().candidateList()->candidate(0).text().toString();
         testfrontend->call<ITestFrontend::pushCommitExpectation>(sentence);
-        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Control+space"),
-                                                    false);
-        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Control+space"),
-                                                    false);
+        sendControlSpace(testfrontend, ic);
 
         config.setValueByPath("SwitchInputMethodBehavior", "Clear");
         pinyin->setConfig(config);
@@ -153,10 +168,7 @@ void testBasic(Instance *instance) {
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("h"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("o"), false);
-        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Control+space"),
-                                                    false);
-        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Control+space"),
-                                                    false);
+        sendControlSpace(testfrontend, ic);
     });
 }
 
@@ -165,9 +177,9 @@ void testSelectByChar(Instance *instance) {
         auto *testfrontend = instance->addonManager().addon("testfrontend");
         auto uuid =
             testfrontend->call<ITestFrontend::createInputContext>("testapp");
-
-        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Control+space"),
-                                                    false);
+        auto *ic = instance->inputContextManager().findByUUID(uuid);
+        FCITX_ASSERT(ic);
+        instance->setCurrentInputMethod(ic, "pinyin", true);
 
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("n"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("i"), false);
@@ -187,8 +199,6 @@ void testSelectByChar(Instance *instance) {
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("g"), false);
 
         testfrontend->call<ITestFrontend::pushCommitExpectation>("你好主病");
-        auto *ic = instance->inputContextManager().findByUUID(uuid);
-        FCITX_ASSERT(ic);
         findAndSelectCandidate(ic, "你好");
         auto candidateIdx = findCandidateOrDie(ic, "公主");
         ic->inputPanel().candidateList()->toBulkCursor()->setGlobalCursorIndex(
@@ -204,9 +214,9 @@ void testUppercase(Instance *instance) {
         auto *testfrontend = instance->addonManager().addon("testfrontend");
         auto uuid =
             testfrontend->call<ITestFrontend::createInputContext>("testapp");
-
-        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Control+space"),
-                                                    false);
+        auto *ic = instance->inputContextManager().findByUUID(uuid);
+        FCITX_ASSERT(ic);
+        instance->setCurrentInputMethod(ic, "pinyin", true);
 
         testfrontend->call<ITestFrontend::pushCommitExpectation>("Apple");
 
@@ -234,17 +244,15 @@ void testForget(Instance *instance) {
         auto *testfrontend = instance->addonManager().addon("testfrontend");
         auto uuid =
             testfrontend->call<ITestFrontend::createInputContext>("testapp");
-
-        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Control+space"),
-                                                    false);
+        auto *ic = instance->inputContextManager().findByUUID(uuid);
+        FCITX_ASSERT(ic);
+        instance->setCurrentInputMethod(ic, "pinyin", true);
 
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("n"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("i"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("h"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("o"), false);
-        auto *ic = instance->inputContextManager().findByUUID(uuid);
-        FCITX_ASSERT(ic);
         auto *candidateList = ic->inputPanel().candidateList().get();
         const auto &cand = candidateList->candidate(0);
         auto *actionable = candidateList->toActionable();
@@ -265,9 +273,8 @@ void testActionInStrokeFilter(Instance *instance) {
             testfrontend->call<ITestFrontend::createInputContext>("testapp");
         auto *ic = instance->inputContextManager().findByUUID(uuid);
         FCITX_ASSERT(ic);
+        instance->setCurrentInputMethod(ic, "pinyin", true);
 
-        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Control+space"),
-                                                    false);
         // Target ppp for 彡
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("p"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("p"), false);
@@ -298,9 +305,9 @@ void testPin(Instance *instance) {
         auto *testfrontend = instance->addonManager().addon("testfrontend");
         auto uuid =
             testfrontend->call<ITestFrontend::createInputContext>("testapp");
-
-        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Control+space"),
-                                                    false);
+        auto *ic = instance->inputContextManager().findByUUID(uuid);
+        FCITX_ASSERT(ic);
+        instance->setCurrentInputMethod(ic, "pinyin", true);
 
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("t"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("o"), false);
@@ -309,8 +316,6 @@ void testPin(Instance *instance) {
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("y"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("i"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("n"), false);
-        auto *ic = instance->inputContextManager().findByUUID(uuid);
-        FCITX_ASSERT(ic);
         auto index1 = findCandidateOrDie(ic, "同音");
         auto index2 = findCandidateOrDie(ic, "痛饮");
         const auto oldIndex1 = index1;
@@ -374,16 +379,14 @@ void testQuickPhraseTrigger(Instance *instance) {
         auto *testfrontend = instance->addonManager().addon("testfrontend");
         auto uuid =
             testfrontend->call<ITestFrontend::createInputContext>("testapp");
-
-        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Control+space"),
-                                                    false);
+        auto *ic = instance->inputContextManager().findByUUID(uuid);
+        FCITX_ASSERT(ic);
+        instance->setCurrentInputMethod(ic, "pinyin", true);
 
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("w"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("w"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("w"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("."), false);
-        auto *ic = instance->inputContextManager().findByUUID(uuid);
-        FCITX_ASSERT(ic);
         FCITX_ASSERT(ic->inputPanel().preedit().toString() == "www.");
 
         ic->reset();
@@ -428,14 +431,37 @@ void testQuickPhraseTrigger(Instance *instance) {
     });
 }
 
-void testPunctuation(Instance *instance) {
+void testVQuickPhraseTrigger(Instance *instance) {
     instance->eventDispatcher().schedule([instance]() {
         auto *testfrontend = instance->addonManager().addon("testfrontend");
         auto uuid =
             testfrontend->call<ITestFrontend::createInputContext>("testapp");
 
-        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Control+space"),
-                                                    false);
+        auto *ic = instance->inputContextManager().findByUUID(uuid);
+        FCITX_ASSERT(ic);
+        instance->setCurrentInputMethod(ic, "pinyin", true);
+
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("v"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("."), false);
+        FCITX_ASSERT(ic->inputPanel().preedit().toString() == "v.");
+
+        instance->setCurrentInputMethod(ic, "shuangpin", true);
+        ic->reset();
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("V"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("."), false);
+        FCITX_ASSERT(ic->inputPanel().preedit().toString() == "V.");
+    });
+}
+
+void testPunctuation(Instance *instance) {
+    instance->eventDispatcher().schedule([instance]() {
+        auto *testfrontend = instance->addonManager().addon("testfrontend");
+        auto uuid =
+            testfrontend->call<ITestFrontend::createInputContext>("testapp");
+        auto *ic = instance->inputContextManager().findByUUID(uuid);
+        FCITX_ASSERT(ic);
+        instance->setCurrentInputMethod(ic, "pinyin", true);
+
         testfrontend->call<ITestFrontend::pushCommitExpectation>("。");
         FCITX_ASSERT(testfrontend->call<ITestFrontend::sendKeyEvent>(
             uuid, Key("."), false));
@@ -468,9 +494,10 @@ void testPunctuationPart2(Instance *instance) {
         auto *testfrontend = instance->addonManager().addon("testfrontend");
         auto uuid =
             testfrontend->call<ITestFrontend::createInputContext>("testapp");
+        auto *ic = instance->inputContextManager().findByUUID(uuid);
+        FCITX_ASSERT(ic);
+        instance->setCurrentInputMethod(ic, "pinyin", true);
 
-        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Control+space"),
-                                                    false);
         FCITX_ASSERT(!testfrontend->call<ITestFrontend::sendKeyEvent>(
             uuid, Key("1"), false));
         FCITX_ASSERT(!testfrontend->call<ITestFrontend::sendKeyEvent>(
@@ -505,6 +532,7 @@ int main() {
     fcitx::Log::setLogRule("default=5,pinyin=5");
     Instance instance(FCITX_ARRAY_SIZE(argv), argv);
     instance.addonManager().registerDefaultLoader(nullptr);
+    setup(&instance);
     testBasic(&instance);
     testSelectByChar(&instance);
     testUppercase(&instance);
@@ -512,6 +540,7 @@ int main() {
     testActionInStrokeFilter(&instance);
     testPin(&instance);
     testQuickPhraseTrigger(&instance);
+    testVQuickPhraseTrigger(&instance);
     testPunctuation(&instance);
     instance.exec();
     endTestEvent.reset();
