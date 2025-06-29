@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.6.0)
 project(fcitx5-chinese-addons VERSION 5.1.9)
 
 set(REQUIRED_FCITX_VERSION 5.1.13)
+set(REQUIRED_LIBIME_VERSION 1.1.12)
 
 find_package(ECM REQUIRED 1.0.0)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
@@ -50,8 +51,8 @@ endif()
 
 # We do not need json if OpenCC is not needed, but just try to find it anyway to save some ifelse logic
 find_package(Boost 1.61 OPTIONAL_COMPONENTS json)
-find_package(LibIMEPinyin 1.1.11 REQUIRED)
-find_package(LibIMETable 1.1.4 REQUIRED)
+find_package(LibIMEPinyin ${REQUIRED_LIBIME_VERSION} REQUIRED)
+find_package(LibIMETable ${REQUIRED_LIBIME_VERSION} REQUIRED)
 
 if (ENABLE_CLOUDPINYIN)
     pkg_check_modules(Curl REQUIRED IMPORTED_TARGET "libcurl")

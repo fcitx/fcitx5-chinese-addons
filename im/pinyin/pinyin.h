@@ -272,6 +272,14 @@ FCITX_CONFIGURATION(
     Option<int, IntConstrain> nbest{this, "Number of sentence",
                                     _("Number of Sentences"), 2,
                                     IntConstrain(1, 3)};
+    Option<int, IntConstrain, DefaultMarshaller<int>, ToolTipAnnotation>
+        wordCandidateLimit{this,
+                           "WordCandidateLimit",
+                           _("Number of Phrase Candidates"),
+                           15,
+                           IntConstrain(0),
+                           {},
+                           {_("Set to 0 will show all candidates.")}};
     Option<int, IntConstrain> longWordLimit{
         this, "LongWordLengthLimit",
         _("Prompt long word length when input length over (0 for disable)"), 4,
