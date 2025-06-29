@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2025-05-17 20:24+0000\n"
+"POT-Creation-Date: 2025-06-29 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: 63f334ffc0709ba0fc2361b80bf3c0f0_00ffd1e "
 "<ab96c93ca0ac55ba7fa06385427e60dd_878890>, 2021\n"
@@ -57,7 +57,7 @@ msgstr ""
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:55
 #. i18n: ectx: property (text), widget (QPushButton, clearDictButton_)
-#: rc.cpp:45
+#: rc.cpp:39
 #, kde-format
 msgid "&Clear Dictionary"
 msgstr ""
@@ -75,14 +75,14 @@ msgstr ""
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:22
 #. i18n: ectx: property (text), widget (QPushButton, importButton_)
-#: rc.cpp:36
+#: rc.cpp:30
 #, kde-format
 msgid "&Import"
 msgstr ""
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:66
 #. i18n: ectx: property (text), widget (QPushButton, openDirectoryButton_)
-#: rc.cpp:48
+#: rc.cpp:42
 #, kde-format
 msgid "&Open User Data Directory"
 msgstr ""
@@ -91,7 +91,7 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QPushButton, removeButton_)
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:33
 #. i18n: ectx: property (text), widget (QPushButton, removeButton_)
-#: rc.cpp:12 rc.cpp:39
+#: rc.cpp:12 rc.cpp:33
 #, kde-format
 msgid "&Remove"
 msgstr ""
@@ -196,7 +196,7 @@ msgstr "ממשק נסתר"
 msgid "Bingchan"
 msgstr ""
 
-#: gui/pinyindictmanager/browserdialog.cpp:66
+#: gui/pinyindictmanager/browserdialog.cpp:54
 msgid "Browse Sogou Cell Dict repository"
 msgstr ""
 
@@ -232,15 +232,15 @@ msgstr ""
 msgid "Cloud Pinyin Index"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1234
+#: im/pinyin/pinyin.cpp:1235
 msgid "Cloud Pinyin Status"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1236
+#: im/pinyin/pinyin.cpp:1237
 msgid "Cloud Pinyin is disabled."
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1235
+#: im/pinyin/pinyin.cpp:1236
 msgid "Cloud Pinyin is enabled."
 msgstr ""
 
@@ -330,7 +330,7 @@ msgstr ""
 msgid "Custom Phrase Editor"
 msgstr ""
 
-#: modules/chttrans/chttrans.cpp:268
+#: modules/chttrans/chttrans.cpp:267
 msgid "Default"
 msgstr ""
 
@@ -338,11 +338,9 @@ msgstr ""
 msgid "Delete from custom phrase"
 msgstr ""
 
-#. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:14
-#. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
 #. i18n: file: gui/pinyindictmanager/browserdialog.ui:14
 #. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
-#: rc.cpp:24 rc.cpp:30
+#: rc.cpp:24
 #, kde-format
 msgid "Dialog"
 msgstr ""
@@ -440,7 +438,7 @@ msgstr ""
 msgid "End key"
 msgstr ""
 
-#: im/pinyin/pinyin.h:308
+#: im/pinyin/pinyin.h:316
 msgid ""
 "Enter quickphrase mode when current input matches any regular expression "
 "from the list."
@@ -559,7 +557,7 @@ msgstr ""
 msgid "Full width punctuation is enabled."
 msgstr ""
 
-#: im/pinyin/pinyin.h:310
+#: im/pinyin/pinyin.h:318
 msgid "Fuzzy Pinyin Settings"
 msgstr ""
 
@@ -649,7 +647,7 @@ msgctxt "Key of the punctuation, e.g. comma"
 msgid "Key"
 msgstr ""
 
-#: im/table/ime.h:151 im/pinyin/pinyin.h:292
+#: im/table/ime.h:151 im/pinyin/pinyin.h:300
 msgid "Key to trigger quickphrase"
 msgstr ""
 
@@ -673,11 +671,11 @@ msgstr ""
 msgid "MS"
 msgstr ""
 
-#: im/pinyin/pinyin.h:281
+#: im/pinyin/pinyin.h:289
 msgid "Manage Custom Phrase"
 msgstr ""
 
-#: im/pinyin/pinyin.h:279
+#: im/pinyin/pinyin.h:287
 msgid "Manage Dictionaries"
 msgstr ""
 
@@ -731,7 +729,7 @@ msgstr ""
 msgid "No"
 msgstr "לא"
 
-#: gui/pinyindictmanager/browserdialog.cpp:112
+#: gui/pinyindictmanager/browserdialog.cpp:100
 msgid "No browsing outside pinyin.sogou.com, now redirect to home page."
 msgstr ""
 
@@ -745,6 +743,10 @@ msgstr ""
 
 #: im/table/ime.h:36
 msgid "Not set"
+msgstr ""
+
+#: im/pinyin/pinyin.h:278
+msgid "Number of Phrase Candidates"
 msgstr ""
 
 #: im/pinyin/pinyin.h:273
@@ -793,7 +795,7 @@ msgstr ""
 msgid "Pin to top as custom phrase"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:959 im/pinyin/pinyin.cpp:1233
+#: im/pinyin/pinyin.cpp:959 im/pinyin/pinyin.cpp:1234
 #: im/pinyin/pinyin-addon.conf.in.in:2 im/pinyin/pinyin.conf.in:2
 msgid "Pinyin"
 msgstr "פיניין:"
@@ -844,12 +846,12 @@ msgstr ""
 msgid "Press space or enter to insert."
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1805
+#: im/pinyin/pinyin.cpp:1806
 #, c++-format
 msgid "Press {} for {}"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1802
+#: im/pinyin/pinyin.cpp:1803
 #, c++-format
 msgid "Press {} for {} and Return for {}"
 msgstr ""
@@ -870,7 +872,7 @@ msgstr ""
 msgid "Previous Page"
 msgstr ""
 
-#: im/pinyin/pinyin.h:277
+#: im/pinyin/pinyin.h:285
 msgid "Prompt long word length when input length over (0 for disable)"
 msgstr ""
 
@@ -878,7 +880,7 @@ msgstr ""
 msgid "Proxy"
 msgstr ""
 
-#: im/pinyin/pinyin.h:284 modules/punctuation/punctuation.cpp:267
+#: im/pinyin/pinyin.h:292 modules/punctuation/punctuation.cpp:267
 #: modules/punctuation/punctuation.cpp:269
 #: modules/punctuation/punctuation.conf.in.in:2
 msgid "Punctuation"
@@ -888,7 +890,7 @@ msgstr ""
 msgid "QWERTY"
 msgstr ""
 
-#: im/pinyin/pinyin.h:297
+#: im/pinyin/pinyin.h:305
 msgid "Quick Phrase"
 msgstr ""
 
@@ -900,13 +902,13 @@ msgstr ""
 msgid "Regular expression for selecting the only candidate"
 msgstr ""
 
-#: im/pinyin/pinyin.h:303
+#: im/pinyin/pinyin.h:311
 msgid "Regular expression to trigger quick phrase"
 msgstr ""
 
 #. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:44
 #. i18n: ectx: property (text), widget (QPushButton, removeAllButton_)
-#: rc.cpp:42
+#: rc.cpp:36
 #, kde-format
 msgid "Remove &All"
 msgstr ""
@@ -959,6 +961,10 @@ msgstr ""
 msgid "Separator text between hint and candidate"
 msgstr ""
 
+#: im/pinyin/pinyin.h:282
+msgid "Set to 0 will show all candidates."
+msgstr ""
+
 #: im/pinyin/pinyin.h:173
 msgid "Show animation when Cloud Pinyin is loading"
 msgstr ""
@@ -992,7 +998,7 @@ msgstr ""
 msgid "Simplified Chinese"
 msgstr "סינית מפושטת"
 
-#: modules/chttrans/chttrans.cpp:127
+#: modules/chttrans/chttrans.cpp:126
 msgid "Simplified Chinese is enabled."
 msgstr ""
 
@@ -1017,7 +1023,7 @@ msgid ""
 "Simplified Chinese to Traditional Chinese (Taiwan standard, with phrases)"
 msgstr ""
 
-#: im/pinyin/pinyin.h:287 modules/chttrans/chttrans.cpp:121
+#: im/pinyin/pinyin.h:295 modules/chttrans/chttrans.cpp:120
 #: modules/chttrans/chttrans.conf.in.in:2
 msgid "Simplified and Traditional Chinese Translation"
 msgstr ""
@@ -1030,11 +1036,11 @@ msgstr ""
 msgid "Sort candidates based on current context"
 msgstr ""
 
-#: modules/chttrans/chttrans.cpp:125
+#: modules/chttrans/chttrans.cpp:124
 msgid "Switch to Simplified Chinese"
 msgstr ""
 
-#: modules/chttrans/chttrans.cpp:124
+#: modules/chttrans/chttrans.cpp:123
 msgid "Switch to Traditional Chinese"
 msgstr ""
 
@@ -1119,7 +1125,7 @@ msgid ""
 "Traditional Chinese Characters (Kyūjitai) to New Japanese Kanji (Shinjitai)"
 msgstr ""
 
-#: modules/chttrans/chttrans.cpp:126
+#: modules/chttrans/chttrans.cpp:125
 msgid "Traditional Chinese is enabled."
 msgstr ""
 
@@ -1166,7 +1172,7 @@ msgstr ""
 msgid "Use Left and Right to select text. "
 msgstr ""
 
-#: im/pinyin/pinyin.h:296
+#: im/pinyin/pinyin.h:304
 msgid "Use V to trigger quickphrase"
 msgstr ""
 
@@ -1237,7 +1243,7 @@ msgstr ""
 msgid "Wildcard matching Key"
 msgstr ""
 
-#: gui/pinyindictmanager/browserdialog.cpp:111
+#: gui/pinyindictmanager/browserdialog.cpp:99
 msgid "Wrong Link"
 msgstr ""
 
@@ -1269,19 +1275,17 @@ msgstr ""
 msgid "Ziranma"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1483
+#: im/pinyin/pinyin.cpp:1484
 msgid "[Select the word to remove from history]"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1419
+#: im/pinyin/pinyin.cpp:1420
 msgid "[Stroke Filtering]"
 msgstr ""
 
-#. i18n: file: gui/pinyindictmanager/browserdialog_webkit.ui:21
-#. i18n: ectx: property (url), widget (QWebView, webView_)
 #. i18n: file: gui/pinyindictmanager/browserdialog.ui:21
 #. i18n: ectx: property (url), widget (QWebEngineView, webView_)
-#: rc.cpp:27 rc.cpp:33
+#: rc.cpp:27
 #, kde-format
 msgid "about:blank"
 msgstr "about:blank"
