@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2025-05-18 20:24+0000\n"
+"POT-Creation-Date: 2025-06-29 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Dmitry <dmitrydmitry761@gmail.com>, 2025\n"
 "Language-Team: Russian (https://app.transifex.com/fcitx/teams/12005/ru/)\n"
@@ -247,15 +247,15 @@ msgstr "Cloud Pinyin"
 msgid "Cloud Pinyin Index"
 msgstr "Индекс Cloud Pinyin"
 
-#: im/pinyin/pinyin.cpp:1234
+#: im/pinyin/pinyin.cpp:1235
 msgid "Cloud Pinyin Status"
 msgstr "Статус Cloud Pinyin"
 
-#: im/pinyin/pinyin.cpp:1236
+#: im/pinyin/pinyin.cpp:1237
 msgid "Cloud Pinyin is disabled."
 msgstr "Cloud Pinyin отключен."
 
-#: im/pinyin/pinyin.cpp:1235
+#: im/pinyin/pinyin.cpp:1236
 msgid "Cloud Pinyin is enabled."
 msgstr "Cloud Pinyin включен."
 
@@ -351,7 +351,7 @@ msgstr "Пользовательский"
 msgid "Custom Phrase Editor"
 msgstr "Редактор пользовательских фраз"
 
-#: modules/chttrans/chttrans.cpp:268
+#: modules/chttrans/chttrans.cpp:267
 msgid "Default"
 msgstr "По умолчанию"
 
@@ -463,7 +463,7 @@ msgstr "Включенные методы ввода"
 msgid "End key"
 msgstr "Клавиша отмены"
 
-#: im/pinyin/pinyin.h:308
+#: im/pinyin/pinyin.h:316
 msgid ""
 "Enter quickphrase mode when current input matches any regular expression "
 "from the list."
@@ -587,7 +587,7 @@ msgstr "Полноширинная пунктуация отключена."
 msgid "Full width punctuation is enabled."
 msgstr "Полноширинная пунктуация включена."
 
-#: im/pinyin/pinyin.h:310
+#: im/pinyin/pinyin.h:318
 msgid "Fuzzy Pinyin Settings"
 msgstr "Нечёткие настройки Пиньинь"
 
@@ -713,7 +713,7 @@ msgctxt "Key of the punctuation, e.g. comma"
 msgid "Key"
 msgstr "Клавиша"
 
-#: im/table/ime.h:151 im/pinyin/pinyin.h:292
+#: im/table/ime.h:151 im/pinyin/pinyin.h:300
 msgid "Key to trigger quickphrase"
 msgstr "Клавиша для активации быстрой фразы"
 
@@ -737,11 +737,11 @@ msgstr "Искать Пиньинь"
 msgid "MS"
 msgstr "MS"
 
-#: im/pinyin/pinyin.h:281
+#: im/pinyin/pinyin.h:289
 msgid "Manage Custom Phrase"
 msgstr "Управление пользовательской фразой"
 
-#: im/pinyin/pinyin.h:279
+#: im/pinyin/pinyin.h:287
 msgid "Manage Dictionaries"
 msgstr "Управление словарями"
 
@@ -815,6 +815,10 @@ msgstr "Недоступно"
 msgid "Not set"
 msgstr "Не задано"
 
+#: im/pinyin/pinyin.h:278
+msgid "Number of Phrase Candidates"
+msgstr ""
+
 #: im/pinyin/pinyin.h:273
 msgid "Number of Sentences"
 msgstr "Количество предложений"
@@ -864,7 +868,7 @@ msgstr "Фраза"
 msgid "Pin to top as custom phrase"
 msgstr "Закрепить вверху как пользовательскую фразу"
 
-#: im/pinyin/pinyin.cpp:959 im/pinyin/pinyin.cpp:1233
+#: im/pinyin/pinyin.cpp:959 im/pinyin/pinyin.cpp:1234
 #: im/pinyin/pinyin-addon.conf.in.in:2 im/pinyin/pinyin.conf.in:2
 msgid "Pinyin"
 msgstr "Пиньинь"
@@ -915,12 +919,12 @@ msgstr "Нажмите Delete, чтобы удалить."
 msgid "Press space or enter to insert."
 msgstr "Нажмите пробел или enter, чтобы вставить."
 
-#: im/pinyin/pinyin.cpp:1805
+#: im/pinyin/pinyin.cpp:1806
 #, c++-format
 msgid "Press {} for {}"
 msgstr "Нажать {} для {}"
 
-#: im/pinyin/pinyin.cpp:1802
+#: im/pinyin/pinyin.cpp:1803
 #, c++-format
 msgid "Press {} for {} and Return for {}"
 msgstr "Нажать {} для {} и вернуться к {}"
@@ -941,7 +945,7 @@ msgstr "Предыдущее слово-кандидат"
 msgid "Previous Page"
 msgstr "Предыдущая страница"
 
-#: im/pinyin/pinyin.h:277
+#: im/pinyin/pinyin.h:285
 msgid "Prompt long word length when input length over (0 for disable)"
 msgstr ""
 "Запрашивать большую длину слова, когда длина ввода превышает (0 для "
@@ -951,7 +955,7 @@ msgstr ""
 msgid "Proxy"
 msgstr "Прокси"
 
-#: im/pinyin/pinyin.h:284 modules/punctuation/punctuation.cpp:267
+#: im/pinyin/pinyin.h:292 modules/punctuation/punctuation.cpp:267
 #: modules/punctuation/punctuation.cpp:269
 #: modules/punctuation/punctuation.conf.in.in:2
 msgid "Punctuation"
@@ -961,7 +965,7 @@ msgstr "Пунктуация"
 msgid "QWERTY"
 msgstr "QWERTY"
 
-#: im/pinyin/pinyin.h:297
+#: im/pinyin/pinyin.h:305
 msgid "Quick Phrase"
 msgstr "Быстрая фраза"
 
@@ -974,7 +978,7 @@ msgstr ""
 msgid "Regular expression for selecting the only candidate"
 msgstr "Регулярное выражение для выбора единственного слова-кандидата"
 
-#: im/pinyin/pinyin.h:303
+#: im/pinyin/pinyin.h:311
 msgid "Regular expression to trigger quick phrase"
 msgstr "Регулярное выражение для запуска быстрой фразы"
 
@@ -1033,6 +1037,10 @@ msgstr "Выбор"
 msgid "Separator text between hint and candidate"
 msgstr "Текст-разделитель между подсказкой и словом-кандидатом"
 
+#: im/pinyin/pinyin.h:282
+msgid "Set to 0 will show all candidates."
+msgstr ""
+
 #: im/pinyin/pinyin.h:173
 msgid "Show animation when Cloud Pinyin is loading"
 msgstr "Показывать анимацию при загрузке Cloud Pinyin"
@@ -1067,7 +1075,7 @@ msgstr "Профиль Шуанпинь"
 msgid "Simplified Chinese"
 msgstr "Упрощенный Китайский"
 
-#: modules/chttrans/chttrans.cpp:127
+#: modules/chttrans/chttrans.cpp:126
 msgid "Simplified Chinese is enabled."
 msgstr "Упрощенный Китайский включен."
 
@@ -1096,7 +1104,7 @@ msgstr ""
 "Преобразовать Упрощенный Китайский в Традиционный (тайваньский стандарт, с "
 "фразами)"
 
-#: im/pinyin/pinyin.h:287 modules/chttrans/chttrans.cpp:121
+#: im/pinyin/pinyin.h:295 modules/chttrans/chttrans.cpp:120
 #: modules/chttrans/chttrans.conf.in.in:2
 msgid "Simplified and Traditional Chinese Translation"
 msgstr "Преобразование между Упрощенным и Традиционным Китайским языком"
@@ -1109,11 +1117,11 @@ msgstr "Сортировка слов-кандидатов по длине ко�
 msgid "Sort candidates based on current context"
 msgstr "Сортировка слов-кандидатов на основе текущего контекста"
 
-#: modules/chttrans/chttrans.cpp:125
+#: modules/chttrans/chttrans.cpp:124
 msgid "Switch to Simplified Chinese"
 msgstr "Переключиться на Китайский Упрощенный"
 
-#: modules/chttrans/chttrans.cpp:124
+#: modules/chttrans/chttrans.cpp:123
 msgid "Switch to Traditional Chinese"
 msgstr "Переключиться на Китайский Традиционный"
 
@@ -1221,7 +1229,7 @@ msgstr ""
 "Преобразовать традиционные китайские иероглифы (Кюдзитай) в Новый японский "
 "Кандзи (Синдзитай)"
 
-#: modules/chttrans/chttrans.cpp:126
+#: modules/chttrans/chttrans.cpp:125
 msgid "Traditional Chinese is enabled."
 msgstr "Традиционный Китайский включен."
 
@@ -1272,7 +1280,7 @@ msgstr "Используйте Left и Right для выбора символа:
 msgid "Use Left and Right to select text. "
 msgstr "Используйте Left и Right для выбора текста."
 
-#: im/pinyin/pinyin.h:296
+#: im/pinyin/pinyin.h:304
 msgid "Use V to trigger quickphrase"
 msgstr "Использовать V для переключения быстрой фразы"
 
@@ -1393,11 +1401,11 @@ msgstr "Цзыгуан"
 msgid "Ziranma"
 msgstr "Цзыжаньма"
 
-#: im/pinyin/pinyin.cpp:1483
+#: im/pinyin/pinyin.cpp:1484
 msgid "[Select the word to remove from history]"
 msgstr "[Выберите слово для удаления из истории]"
 
-#: im/pinyin/pinyin.cpp:1419
+#: im/pinyin/pinyin.cpp:1420
 msgid "[Stroke Filtering]"
 msgstr "[Фильтрация штрихов]"
 
