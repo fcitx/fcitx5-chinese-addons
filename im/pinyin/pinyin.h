@@ -98,6 +98,11 @@ enum class PreeditMode { No, ComposingPinyin, CommitPreview };
 FCITX_CONFIG_ENUM_NAME_WITH_I18N(PreeditMode, N_("Do not show"),
                                  N_("Composing pinyin"), N_("Commit preview"))
 
+enum class TreatBackspaceAsEscapeOnPrediction { No, WithVirtualKeyboard, Yes };
+
+FCITX_CONFIG_ENUM_NAME_WITH_I18N(TreatBackspaceAsEscapeOnPrediction, N_("No"),
+                                 N_("With virtual keyboard"), N_("Yes"))
+
 enum class CorrectionLayout {
     None,
     Qwerty,
@@ -188,6 +193,12 @@ FCITX_CONFIGURATION(
                                    isAndroid()};
     Option<int, IntConstrain> predictionSize{
         this, "PredictionSize", _("Prediction Size"), 49, IntConstrain(3, 100)};
+    OptionWithAnnotation<TreatBackspaceAsEscapeOnPrediction,
+                         TreatBackspaceAsEscapeOnPredictionI18NAnnotation>
+        treatBackspaceAsEscapeOnPrediction{
+            this, "TreatBackspaceAsEscapeOnPrediction",
+            _("Treat BackSpace as Escape on prediction"),
+            TreatBackspaceAsEscapeOnPrediction::WithVirtualKeyboard};
     OptionWithAnnotation<SwitchInputMethodBehavior,
                          SwitchInputMethodBehaviorI18NAnnotation>
         switchInputMethodBehavior{this, "SwitchInputMethodBehavior",

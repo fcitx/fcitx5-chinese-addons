@@ -1949,7 +1949,12 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
     if (state->predictWords_) {
         resetPredict(inputContext);
         if (event.key().check(FcitxKey_Escape) ||
-            (isAndroid() && event.key().check(FcitxKey_BackSpace)) ||
+            (event.key().check(FcitxKey_BackSpace) &&
+             (*config_.treatBackspaceAsEscapeOnPrediction ==
+                  TreatBackspaceAsEscapeOnPrediction::Yes ||
+              (*config_.treatBackspaceAsEscapeOnPrediction ==
+                   TreatBackspaceAsEscapeOnPrediction::WithVirtualKeyboard &&
+               event.isVirtual()))) ||
             event.key().check(FcitxKey_Delete)) {
             event.filterAndAccept();
             return;
