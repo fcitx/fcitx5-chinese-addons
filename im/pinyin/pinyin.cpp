@@ -1950,10 +1950,11 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         resetPredict(inputContext);
         if (event.key().check(FcitxKey_Escape) ||
             (event.key().check(FcitxKey_BackSpace) &&
-             (*config_.treatBackspaceAsEscapeOnPrediction ==
-                  TreatBackspaceAsEscapeOnPrediction::Yes ||
-              (*config_.treatBackspaceAsEscapeOnPrediction ==
-                   TreatBackspaceAsEscapeOnPrediction::WithVirtualKeyboard &&
+             (*config_.backspaceBehaviorOnPrediction ==
+                  BackspaceBehaviorOnPrediction::OnlyClearCandidates ||
+              (*config_.backspaceBehaviorOnPrediction ==
+                   BackspaceBehaviorOnPrediction::
+                       BackspaceWhenNotUsingOnScreenKeyboard &&
                event.isVirtual()))) ||
             event.key().check(FcitxKey_Delete)) {
             event.filterAndAccept();
