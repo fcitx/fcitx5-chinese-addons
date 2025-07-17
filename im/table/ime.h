@@ -50,7 +50,7 @@ FCITX_CONFIGURATION(
     KeyListOption prevPage{
         this,
         "PrevPage",
-        _("Prev page"),
+        _("Previous page"),
         {Key(FcitxKey_Up)},
         KeyListConstrain(KeyConstrainFlag::AllowModifierLess)};
     KeyListOption nextPage{
@@ -62,7 +62,7 @@ FCITX_CONFIGURATION(
     KeyListOption prevCandidate{
         this,
         "PrevCandidate",
-        _("Prev Candidate"),
+        _("Previous Candidate"),
         {Key("Left")},
         KeyListConstrain(KeyConstrainFlag::AllowModifierLess)};
     KeyListOption nextCandidate{
@@ -102,7 +102,7 @@ FCITX_CONFIGURATION(
         pageSize{
             this,
             "PageSize",
-            _("Page size"),
+            _("Candidates Per Page"),
             5,
             IntConstrain(0, 10),
             {},
