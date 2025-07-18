@@ -156,12 +156,14 @@ FCITX_CONFIGURATION(
                          ShuangpinProfileEnum::Ziranma};
     OptionWithAnnotation<bool, OptionalHideInDescription> showShuangpinMode{
         this, "ShowShuangpinMode", _("Show current shuangpin mode"), true};
-    Option<int, IntConstrain> pageSize{this, "PageSize", _("Page size"), 7,
-                                       IntConstrain(3, 10)};
-    Option<bool> spellEnabled{this, "SpellEnabled", _("Enable Spell"), true};
-    Option<bool> symbolsEnabled{this, "SymbolsEnabled", _("Enable Symbols"),
-                                true};
-    Option<bool> chaiziEnabled{this, "ChaiziEnabled", _("Enable Chaizi"), true};
+    Option<int, IntConstrain> pageSize{
+        this, "PageSize", _("Candidates Per Page"), 7, IntConstrain(3, 10)};
+    Option<bool> spellEnabled{this, "SpellEnabled",
+                              _("Show English Candidates"), true};
+    Option<bool> symbolsEnabled{this, "SymbolsEnabled",
+                                _("Show symbol candidates"), true};
+    Option<bool> chaiziEnabled{this, "ChaiziEnabled",
+                               _("Show Chaizi candidates"), true};
     Option<bool> extBEnabled{
         this, "ExtBEnabled",
         _("Enable more Characters after Unicode CJK Extension B"),
@@ -171,13 +173,14 @@ FCITX_CONFIGURATION(
         _("Show stroke candidates when typing with h(一), s(丨), p(丿), n(㇏), "
           "z(𠃍)"),
         true};
-    OptionalHiddenSubConfigOption cloudpinyin{
-        this, "CloudPinyin", _("Cloud Pinyin"),
-        "fcitx://config/addon/cloudpinyin"};
     OptionWithAnnotation<bool, OptionalHideInDescription> cloudPinyinEnabled{
         this, "CloudPinyinEnabled", _("Enable Cloud Pinyin"), false};
+    OptionalHiddenSubConfigOption cloudpinyin{
+        this, "CloudPinyin", _("Configure Cloud Pinyin"),
+        "fcitx://config/addon/cloudpinyin"};
     Option<int, IntConstrain, DefaultMarshaller<int>, OptionalHideInDescription>
-        cloudPinyinIndex{this, "CloudPinyinIndex", _("Cloud Pinyin Index"), 2,
+        cloudPinyinIndex{this, "CloudPinyinIndex",
+                         _("Cloud Pinyin Candidate Order"), 2,
                          IntConstrain(1, 10)};
     OptionWithAnnotation<bool, OptionalHideInDescription> cloudPinyinAnimation{
         this, "CloudPinyinAnimation",
@@ -197,8 +200,9 @@ FCITX_CONFIGURATION(
         this, "PinyinInPreedit", _("Show complete pinyin in preedit"), false};
     Option<bool> predictionEnabled{this, "Prediction", _("Enable Prediction"),
                                    isAndroid()};
-    Option<int, IntConstrain> predictionSize{
-        this, "PredictionSize", _("Prediction Size"), 49, IntConstrain(3, 100)};
+    Option<int, IntConstrain> predictionSize{this, "PredictionSize",
+                                             _("Number of Predictions"), 49,
+                                             IntConstrain(3, 100)};
     OptionWithAnnotation<BackspaceBehaviorOnPrediction,
                          BackspaceBehaviorOnPredictionI18NAnnotation>
         backspaceBehaviorOnPrediction{
@@ -259,14 +263,14 @@ FCITX_CONFIGURATION(
     KeyListOption secondCandidate{
         this,
         "SecondCandidate",
-        _("Select 2nd Candidate"),
+        _("Select Second Candidate"),
         {},
         KeyListConstrain({KeyConstrainFlag::AllowModifierLess,
                           KeyConstrainFlag::AllowModifierOnly})};
     KeyListOption thirdCandidate{
         this,
         "ThirdCandidate",
-        _("Select 3rd Candidate"),
+        _("Select Third Candidate"),
         {},
         KeyListConstrain({KeyConstrainFlag::AllowModifierLess,
                           KeyConstrainFlag::AllowModifierOnly})};
@@ -310,7 +314,8 @@ FCITX_CONFIGURATION(
         this, "Punctuation", _("Punctuation"),
         "fcitx://config/addon/punctuation/punctuationmap/zh_CN"};
     SubConfigOption chttrans{
-        this, "Chttrans", _("Simplified and Traditional Chinese Translation"),
+        this, "Chttrans",
+        _("Configure Simplified/Traditional Chinese Conversion"),
         "fcitx://config/addon/chttrans"};
     Option<Key, KeyConstrain> quickphraseKey{
         this,
@@ -333,7 +338,7 @@ FCITX_CONFIGURATION(
             {},
             {_("Enter quickphrase mode when current input matches any regular "
                "expression from the list.")}};
-    Option<FuzzyConfig> fuzzyConfig{this, "Fuzzy", _("Fuzzy Pinyin Settings")};
+    Option<FuzzyConfig> fuzzyConfig{this, "Fuzzy", _("Fuzzy Pinyin")};
     HiddenOption<bool> firstRun{this, "FirstRun", "FirstRun", true};)
 
 struct EventSourceTime;
