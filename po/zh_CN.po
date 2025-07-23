@@ -6,16 +6,16 @@
 # Mingcong Bai <jeffbai@aosc.xyz>, 2018
 # wwj402 <wwj402@gmail.com>, 2018
 # rocka, 2023
-# Yiyu Liu, 2025
 # Xuetian Weng <wengxt@gmail.com>, 2025
+# Yiyu Liu, 2025
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2025-07-18 20:24+0000\n"
+"POT-Creation-Date: 2025-07-23 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
-"Last-Translator: Xuetian Weng <wengxt@gmail.com>, 2025\n"
+"Last-Translator: Yiyu Liu, 2025\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/fcitx/teams/12005/"
 "zh_CN/)\n"
 "Language: zh_CN\n"
@@ -208,7 +208,7 @@ msgstr "预测时退格键的行为"
 
 #: im/pinyin/pinyin.h:110
 msgid "Backspace when not using on-screen keyboard"
-msgstr "使用屏幕键盘时进行退格"
+msgstr "不使用屏幕键盘时进行退格"
 
 #: im/table/qxm.conf.in.in:2
 msgid "Bingchan"
@@ -224,7 +224,7 @@ msgstr "候选词列表方向"
 
 #: im/table/ime.h:105 im/pinyin/pinyin.h:160
 msgid "Candidates Per Page"
-msgstr ""
+msgstr "每页候选词"
 
 #: im/table/cangjie.conf.in.in:2
 msgid "Cangjie (Simplified Chinese)"
@@ -256,7 +256,7 @@ msgstr "云拼音"
 
 #: im/pinyin/pinyin.h:183
 msgid "Cloud Pinyin Candidate Order"
-msgstr ""
+msgstr "云拼音候选词顺序"
 
 #: im/pinyin/pinyin.cpp:1235
 msgid "Cloud Pinyin Status"
@@ -314,11 +314,11 @@ msgstr "拼音串"
 
 #: im/pinyin/pinyin.h:179
 msgid "Configure Cloud Pinyin"
-msgstr ""
+msgstr "配置云拼音"
 
 #: im/pinyin/pinyin.h:318
 msgid "Configure Simplified/Traditional Chinese Conversion"
-msgstr ""
+msgstr "配置繁简转换"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:345
 #: gui/pinyindictmanager/pinyindictmanager.cpp:377
@@ -583,7 +583,7 @@ msgstr "已启用全角标点。"
 
 #: im/pinyin/pinyin.h:341
 msgid "Fuzzy Pinyin"
-msgstr ""
+msgstr "模糊拼音"
 
 #: modules/fullwidth/fullwidth.h:30
 msgid "Half width Character"
@@ -806,7 +806,7 @@ msgstr "词组候选词数"
 
 #: im/pinyin/pinyin.h:204
 msgid "Number of Predictions"
-msgstr ""
+msgstr "预测数量"
 
 #: im/pinyin/pinyin.h:295
 msgid "Number of Sentences"
@@ -927,7 +927,7 @@ msgstr "上一页"
 
 #: im/table/ime.h:53
 msgid "Previous page"
-msgstr ""
+msgstr "上一页"
 
 #: im/pinyin/pinyin.h:307
 msgid "Prompt long word length when input length over (0 for disable)"
@@ -1016,11 +1016,11 @@ msgstr "设置为 0 时将显示全部候选词"
 
 #: im/pinyin/pinyin.h:166
 msgid "Show Chaizi candidates"
-msgstr ""
+msgstr "显示拆字候选词"
 
 #: im/pinyin/pinyin.h:162
 msgid "Show English Candidates"
-msgstr ""
+msgstr "显示英文候选词"
 
 #: im/pinyin/pinyin.h:187
 msgid "Show animation when Cloud Pinyin is loading"
@@ -1045,7 +1045,7 @@ msgstr "输入 h(横)，s(竖)，p(撇)，n(捺)，z(折) 时显示笔画候选�
 
 #: im/pinyin/pinyin.h:164
 msgid "Show symbol candidates"
-msgstr ""
+msgstr "显示符号候选词"
 
 #: im/pinyin/shuangpin.conf.in:2
 msgid "Shuangpin"
