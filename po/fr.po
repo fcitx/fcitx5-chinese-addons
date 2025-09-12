@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2025-09-11 20:24+0000\n"
+"POT-Creation-Date: 2025-09-12 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Popolon_Github, 2025\n"
 "Language-Team: French (https://app.transifex.com/fcitx/teams/12005/fr/)\n"
@@ -22,7 +22,7 @@ msgstr ""
 
 #: im/table/state.cpp:1065
 msgid " Return for "
-msgstr ""
+msgstr "Entrée pour"
 
 #: im/table/state.cpp:1062
 msgid " for "
@@ -152,6 +152,11 @@ msgid ""
 "once, it will be added as user phrase. -1 means the maximum code length of "
 "the table. 0 means disable this feature. "
 msgstr ""
+"Après avoir validé chaque caractère, apprend la nouvelle phrase en fonction "
+"de l'historique de saisie. Si un certain mot est vu plusieurs fois ou "
+"sélectionné par l'utilisateur une fois, il sera ajouté comme phrase "
+"utilisateur. -1 signifie la longueur maximum du code de la tabe. 0 signifie "
+"désactiver la fonctionnalité."
 
 #: im/table/ime.h:304
 msgid "Allow use keypad key as table input"
@@ -820,6 +825,9 @@ msgid ""
 "disable this option if you want the candidate order to be stable regardless "
 "of the history."
 msgstr ""
+"Tri les candidats d'après le mot que vous avec déjà tapé. Vous pourriez "
+"vouloir désactiver cette option si vous désirez que l'ordre soit stable "
+"indépendamment de l'historique."
 
 #. i18n: file: gui/customphraseeditor/editordialog.ui:55
 #. i18n: ectx: property (text), widget (QLabel, label)
@@ -834,7 +842,7 @@ msgstr "Phrase :"
 
 #: im/pinyin/pinyincandidate.cpp:396
 msgid "Pin to top as custom phrase"
-msgstr ""
+msgstr "Épingler en haut comme phrase personnalisée"
 
 #: im/pinyin/pinyin.cpp:959 im/pinyin/pinyin.cpp:1234
 #: im/pinyin/pinyin-addon.conf.in.in:2 im/pinyin/pinyin.conf.in:2
@@ -852,6 +860,7 @@ msgstr "PinyinJiajia"
 #: im/table/state.cpp:631
 msgid "Please use this functionality after typing some text."
 msgstr ""
+"Utilisez cette fonctionnalité après avoir tapé du texte s'il vous plaît."
 
 #: im/table/engine.cpp:92 im/table/engine.cpp:100 im/pinyin/pinyin.cpp:761
 #: im/pinyin/pinyin.cpp:771
@@ -912,6 +921,8 @@ msgstr "Page suivante"
 #: im/pinyin/pinyin.h:307
 msgid "Prompt long word length when input length over (0 for disable)"
 msgstr ""
+"Préciser la longueur du mot long lorsque la longueur de la saisie dépasse (0 "
+"pour désactiver)"
 
 #: modules/cloudpinyin/cloudpinyin.h:39
 msgid "Proxy"
@@ -1119,12 +1130,23 @@ msgid ""
 "Or, write it as key,order=\"line1\\nline2...\\nlineN\"\n"
 "The comment line is started with # or ;.\n"
 msgstr ""
+"La ligne devrait être dans le format touche,ordre=valeur\n"
+"Si la valeur est multi-ligne, vous devriez soit l'écrire comme\n"
+" touche,ordre=\n"
+"ligne1\n"
+"ligne2\n"
+"...\n"
+"ligneN\n"
+"Ou, l'écrire comme touche,ordre=\"ligne1\\nligne2...\\nligneN\"\n"
+"La ligne de commentaire commence par un # ou un ;.\n"
 
 #: modules/cloudpinyin/cloudpinyin.h:43
 msgid ""
 "The proxy format must be the one that is supported by cURL. Usually it is in "
 "the format of [scheme]://[host]:[port], e.g. http://localhost:1080."
 msgstr ""
+"Le format de proxy doit être un de ceux suportés par cURL. Généralement dans "
+"le format  [schéma]://[hôte]:[port], par.ex. http://localhost:1080."
 
 #: modules/cloudpinyin/cloudpinyin.h:30
 msgid "Toggle Key"
@@ -1232,7 +1254,7 @@ msgstr "Utiliser la pleine largeur"
 
 #: im/table/ime.h:174
 msgid "Use system language model"
-msgstr ""
+msgstr "Utiliser le modèle de langue du système"
 
 #: im/table/ime.h:37
 msgid "Vertical"
@@ -1247,12 +1269,18 @@ msgid ""
 "When a new character is typed, if it matches any character in this string, "
 "all the existing text will be put into quickphrase buffer."
 msgstr ""
+"Lorsqu'un nouveau caractère est tapé, si il correspond à n'importe quel "
+"caractère de cette chaîne de caractères, tout le texte existant sera mis "
+"dans le tampon quickphrase."
 
 #: im/table/ime.h:178
 msgid ""
 "When available, system language model will be loaded for given language and "
 "provide ability to give better context based order."
 msgstr ""
+"Lorsque disponible, le modèle de langue du système sera chargé pour la "
+"langue donnée et fournira la possibilité de donner un meilleur ordre basé "
+"sur le contexte."
 
 #: im/table/ime.h:213
 msgid ""
@@ -1260,12 +1288,19 @@ msgid ""
 "only one candidate available, automatically select this candidate. -1 Means "
 "the maximum code length of the table. 0 means this behavior is disabled."
 msgstr ""
+"Lorsque la longueur de la saisie actuelle est plus grand ou égal à la "
+"limite, et qu'une seule proposition est disponible, sélectionne "
+"automatiquement cette proposition. -1 signifie la longueur de code maximum "
+"de la table. 0 signifie que ce comportement est désactivé."
 
 #: im/table/ime.h:224
 msgid ""
 "When current input matches the regular expression and there is only one "
 "candidate available, automatically select this candidate."
 msgstr ""
+"Lorsque la saisie actuelle correspond avec l'expression régulière, et qu'une "
+"seule proposition est disponible, sélectionne automatiquement cette "
+"proposition."
 
 #: im/table/ime.h:235
 msgid ""
@@ -1275,6 +1310,12 @@ msgid ""
 "type in the new character. -1 means the maximum code length of the table. 0 "
 "means this behavior is disabled."
 msgstr ""
+"Lors de la frappe d'un nouveau caractère, si la longueur de la saisie "
+"actuelle est plus grand ou égal à la limite, et que le segment existant avec "
+"le nouveau caractère n'a aucune entrée correspondante dans la table, "
+"sélectionne la proposition actuelle et le frappe dans le nouveau caractère. "
+"-1 signifie le la longueur de code maximum de la table. 0 signifie que le "
+"comportement est désactivé."
 
 #: im/table/ime.h:249
 msgid ""
@@ -1288,10 +1329,12 @@ msgstr ""
 msgid ""
 "Whether to learn new phrase from other phrases or just single characters."
 msgstr ""
+"Apprendre les nouvelles phrases depuis les autres phrases ou bien juste "
+"depuis les caractères uniques."
 
 #: im/table/ime.h:195
 msgid "Wildcard matching Key"
-msgstr ""
+msgstr "Touche de correspondance *"
 
 #: gui/pinyindictmanager/browserdialog.cpp:99
 msgid "Wrong Link"
@@ -1327,11 +1370,11 @@ msgstr "Ziranma"
 
 #: im/pinyin/pinyin.cpp:1484
 msgid "[Select the word to remove from history]"
-msgstr ""
+msgstr "[Sélectionner le mot à supprimer de l'historique]"
 
 #: im/pinyin/pinyin.cpp:1420
 msgid "[Stroke Filtering]"
-msgstr ""
+msgstr "[Filtre de traits]"
 
 #. i18n: file: gui/pinyindictmanager/browserdialog.ui:21
 #. i18n: ectx: property (url), widget (QWebEngineView, webView_)
@@ -1399,25 +1442,25 @@ msgstr "z <-> zh"
 #: modules/pinyinhelper/pinyinhelper.cpp:79
 #, c++-format
 msgid "{0} ({1})"
-msgstr ""
+msgstr "{0}({1})"
 
 #: im/table/state.cpp:675
 #, c++-format
 msgctxt "Pinyin & Shuangpin"
 msgid "{0} ({1})"
-msgstr ""
+msgstr "{0}({1})"
 
 #: im/table/state.cpp:716
 #, c++-format
 msgid "{0} is not in table."
-msgstr ""
+msgstr "{0}n'est pas dans la table."
 
 #: im/table/state.cpp:707
 #, c++-format
 msgid "{0}: No corresponding code."
-msgstr ""
+msgstr "{0} : Pas de code correspondant"
 
 #: im/table/state.cpp:691 im/table/state.cpp:714
 #, c++-format
 msgid "{0}: {1}"
-msgstr ""
+msgstr "{0} :{1}"
