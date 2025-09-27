@@ -210,16 +210,23 @@ void PinyinEngine::initPredict(InputContext *inputContext) {
     auto *state = inputContext->propertyFor(&factory_);
     auto &context = state->context_;
     auto lmState = context.state();
-    state->predictWords_ = context.selectedWords();
-    auto words =
-        prediction_.predict(lmState, context.selectedWords(),
-                            context.selectedWordsWithPinyin().back().second,
-                            *config_.predictionSize);
+    auto selected = context.selectedWords();
+    if (selected.empty()) {
+        return;
+    }
+
+    const auto selectPinyin = context.selectedWordsWithPinyin();
+    const std::string lastEncodedPinyin =
+        !selectPinyin.empty() ? selectPinyin.back().second : std::string();
+
+    auto words = prediction_.predict(lmState, selected, lastEncodedPinyin,
+                                     *config_.predictionSize);
     if (auto candidateList = predictCandidateList(this, words)) {
         auto &inputPanel = inputContext->inputPanel();
+        state->predictWords_ = std::move(selected);
         inputPanel.setCandidateList(std::move(candidateList));
     } else {
-        state->predictWords_.reset();
+        return;
     }
     inputContext->updatePreedit();
     inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
