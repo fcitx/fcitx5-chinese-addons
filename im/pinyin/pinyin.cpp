@@ -1810,7 +1810,7 @@ bool PinyinEngine::handlePunc(KeyEvent &event,
                 text = _("Press {} for {} and Return for {}", keyString, output,
                          altOutput);
             } else {
-                text = _("Press {} for {}", keyString, altOutput);
+                text = _("Press {} for {}", keyString, output);
             }
         }
         quickphrase()->call<IQuickPhrase::trigger>(
