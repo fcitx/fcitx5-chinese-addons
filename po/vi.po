@@ -3,15 +3,15 @@
 # This file is distributed under the same license as the fcitx5-chinese-addons package.
 #
 # Translators:
-# hoanghuy309 <hoanghuy309@gmail.com>, 2025
+# Huy Võ <hoanghuy309@gmail.com>, 2025
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2025-07-18 20:24+0000\n"
+"POT-Creation-Date: 2025-11-18 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
-"Last-Translator: hoanghuy309 <hoanghuy309@gmail.com>, 2025\n"
+"Last-Translator: Huy Võ <hoanghuy309@gmail.com>, 2025\n"
 "Language-Team: Vietnamese (https://app.transifex.com/fcitx/teams/12005/vi/)\n"
 "Language: vi\n"
 "MIME-Version: 1.0\n"
@@ -164,7 +164,7 @@ msgstr ""
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:378
 msgid "Are you sure to delete %1?"
-msgstr ""
+msgstr "Bạn có chắc chắn xóa %1?"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:346
 msgid "Are you sure to delete all dictionaries?"
@@ -246,15 +246,15 @@ msgstr ""
 msgid "Cloud Pinyin Candidate Order"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1235
+#: im/pinyin/pinyin.cpp:1242
 msgid "Cloud Pinyin Status"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1237
+#: im/pinyin/pinyin.cpp:1244
 msgid "Cloud Pinyin is disabled."
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1236
+#: im/pinyin/pinyin.cpp:1243
 msgid "Cloud Pinyin is enabled."
 msgstr ""
 
@@ -302,11 +302,11 @@ msgstr ""
 
 #: im/pinyin/pinyin.h:179
 msgid "Configure Cloud Pinyin"
-msgstr ""
+msgstr "Cấu Hình Bính Âm Đám Mây"
 
 #: im/pinyin/pinyin.h:318
 msgid "Configure Simplified/Traditional Chinese Conversion"
-msgstr ""
+msgstr "Cấu Hình Chuyển Đổi Tiếng Trung Giản Thể/Phồn Thể"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:345
 #: gui/pinyindictmanager/pinyindictmanager.cpp:377
@@ -334,7 +334,7 @@ msgstr ""
 #: gui/pinyindictmanager/pinyindictmanager.cpp:239
 #: gui/pinyindictmanager/pinyindictmanager.cpp:297
 msgid "Create directory failed. Please check the permission or disk space."
-msgstr ""
+msgstr "Tạo thư mục thất bại. Vui lòng kiểm tra quyền hoặc dung lượng ổ đĩa."
 
 #: gui/pinyindictmanager/filedownloader.cpp:26
 msgid "Create temporary file failed."
@@ -342,7 +342,7 @@ msgstr ""
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:139
 msgid "Creating temp file failed. Please check the permission or disk space."
-msgstr ""
+msgstr "Tạo tệp tạm thất bại. Vui lòng kiểm tra quyền hoặc dung lượng ổ đĩa."
 
 #: im/table/engine.h:56 im/pinyin/pinyin.h:94
 msgid "Custom"
@@ -358,7 +358,7 @@ msgstr "Mặc định"
 
 #: im/pinyin/pinyincandidate.cpp:402
 msgid "Delete from custom phrase"
-msgstr ""
+msgstr "Xóa khỏi cụm từ tùy chỉnh"
 
 #. i18n: file: gui/pinyindictmanager/browserdialog.ui:14
 #. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
@@ -395,18 +395,22 @@ msgstr ""
 msgid "Do not show"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:950
+#: im/pinyin/pinyin.cpp:957
 #, c++-format
 msgid ""
 "Do you want to enable cloudpinyin now for better prediction? You can always "
 "toggle it later in configuration or by pressing {}."
 msgstr ""
+"Bạn có muốn bật cloudpinyin ngay bây giờ để dự đoán tốt hơn không? Bạn luôn "
+"có thể chuyển đổi nó sau trong cấu hình hoặc bằng cách nhấn {}."
 
-#: im/pinyin/pinyin.cpp:945
+#: im/pinyin/pinyin.cpp:952
 msgid ""
 "Do you want to enable cloudpinyin now for better prediction? You can always "
 "toggle it later in configuration."
 msgstr ""
+"Bạn có muốn bật cloudpinyin ngay bây giờ để dự đoán tốt hơn không? Bạn luôn "
+"có thể chuyển đổi nó sau trong cấu hình."
 
 #: gui/customphraseeditor/customphraseeditor.cpp:219
 msgid "Do you want to reload custom phrase from disk?"
@@ -428,7 +432,7 @@ msgstr ""
 msgid "Enable Cloud Pinyin"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:959
+#: im/pinyin/pinyin.cpp:966
 msgid "Enable Cloudpinyin"
 msgstr ""
 
@@ -453,6 +457,8 @@ msgid ""
 "Enter quickphrase mode when current input matches any regular expression "
 "from the list."
 msgstr ""
+"Vào chế độ cụm từ nhanh khi đầu vào hiện tại khớp với bất kỳ biểu thức chính "
+"quy nào trong danh sách."
 
 #: modules/punctuation/punctuation.h:62
 msgid "Entries"
@@ -631,6 +637,36 @@ msgid ""
 "If lua is installed, the function defined in imeapi can be invoked \n"
 "with ${lua:function_name}.\n"
 msgstr ""
+"Nếu bạn muốn tạo nội dung động, bạn có thể đặt cụm từ thành\n"
+"bắt đầu bằng ký hiệu \"#\". Cụm từ có thể chứa tên biến như \n"
+"$name hoặc ${name}. Ví dụ, bạn có thể viết: sj,2=#$fullhour:$minute\n"
+"để trình bày thời gian hiện tại 24-giờ với sj.\n"
+"Các chức năng tích hợp bao gồm:\n"
+"$year Năm hiện tại, vd: 1990, 2003.\n"
+"$year_yy Năm hiện tại với 2 ký tự, vd: 90, 03.\n"
+"$month Tháng hiện tại, vd: 1, 2, 3..., 12.\n"
+"$month_mm Tháng hiện tại với 2 ký tự, vd: 01, 02, ... 12.\n"
+"$day Ngày hiện tại trong tháng, vd: 1, 2, 3..., 31.\n"
+"$day_dd Ngày hiện tại trong tháng với 2 ký tự, vd: 01, 02, ... 31.\n"
+"$weekday Ngày trong tuần hiện tại, vd: 1, 2, 3, ... 7.\n"
+"$fullhour Giờ hiện tại 24-giờ, vd: 00, 01, 02, ..., 23.\n"
+"$halfhour Giờ hiện tại 12-giờ, vd: 01, 02, 03, ..., 12.\n"
+"$ampm Hiện tại SA hay CH.\n"
+"$minute Phút hiện tại, vd: 00, 01, ..., 59\n"
+"$second Giây hiện tại, vd: 00, 01, ..., 59\n"
+"$year_cn Năm hiện tại tiếng Trung Quốc, vd: 一九九零, 二零零三.\n"
+"$year_yy_cn Năm hiện tại tiếng Trung Quốc với 2 ký tự, vd: 九零, 零三.\n"
+"$month_cn Tháng hiện tại tiếng Trung Quốc, vd: 一月, 二月, ... 十二月.\n"
+"$day_cn Ngày hiện tại tiếng Trung Quốc, vd: 一, 二, ... 三十一.\n"
+"$fullhour_cn Giờ hiện tại 24-giờ tiếng Trung Quốc, vd: 零, 一, 二, ... 二十"
+"三.\n"
+"$halfhour_cn Giờ hiện tại 12-giờ tiếng Trung Quốc, vd: 一, 二, ... 十二.\n"
+"$ampm_cn Hiện tại AM, PM tiếng Trung Quốc, vd: 上午 or 下午.\n"
+"$minute_cn Phút hiện tại tiếng Trung Quốc, vd: 零, 一, 二, ... 五十九.\n"
+"$second_cn Giây hiện tại tiếng Trung Quốc, vd: 零, 一, 二, ... 五十九.\n"
+"\n"
+"Nếu lua được cài đặt, hàm được xác định trong imeapi có thể được gọi\n"
+"với ${lua:function_name}.\n"
 
 #: im/table/ime.h:140
 msgid "Ignore built in punctuation"
@@ -735,13 +771,14 @@ msgstr ""
 msgid "Next page"
 msgstr ""
 
-#: im/table/ime.h:35 im/pinyin/pinyin.cpp:956
+#: im/table/ime.h:35 im/pinyin/pinyin.cpp:963
 msgid "No"
 msgstr ""
 
 #: gui/pinyindictmanager/browserdialog.cpp:100
 msgid "No browsing outside pinyin.sogou.com, now redirect to home page."
 msgstr ""
+"Không duyệt bên ngoài pinyin.sogou.com, bây giờ chuyển hướng đến trang chủ."
 
 #: im/pinyin/pinyin.h:117
 msgid "None"
@@ -809,7 +846,7 @@ msgstr ""
 msgid "Pin to top as custom phrase"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:959 im/pinyin/pinyin.cpp:1234
+#: im/pinyin/pinyin.cpp:966 im/pinyin/pinyin.cpp:1241
 #: im/pinyin/pinyin-addon.conf.in.in:2 im/pinyin/pinyin.conf.in:2
 msgid "Pinyin"
 msgstr ""
@@ -826,13 +863,13 @@ msgstr ""
 msgid "Please use this functionality after typing some text."
 msgstr ""
 
-#: im/table/engine.cpp:92 im/table/engine.cpp:100 im/pinyin/pinyin.cpp:761
-#: im/pinyin/pinyin.cpp:771
+#: im/table/engine.cpp:92 im/table/engine.cpp:100 im/pinyin/pinyin.cpp:768
+#: im/pinyin/pinyin.cpp:778
 msgid "Prediction Disabled"
 msgstr ""
 
-#: im/table/engine.cpp:91 im/table/engine.cpp:99 im/pinyin/pinyin.cpp:760
-#: im/pinyin/pinyin.cpp:770
+#: im/table/engine.cpp:91 im/table/engine.cpp:99 im/pinyin/pinyin.cpp:767
+#: im/pinyin/pinyin.cpp:777
 msgid "Prediction Enabled"
 msgstr ""
 
@@ -850,22 +887,22 @@ msgstr ""
 
 #: im/table/state.cpp:700
 msgid "Press Backspace to forget."
-msgstr ""
+msgstr "Nhấn Backspace để quên."
 
 #: im/table/state.cpp:703
 msgid "Press Delete to remove."
-msgstr ""
+msgstr "Nhấn Delete để xóa."
 
 #: im/table/state.cpp:697
 msgid "Press space or enter to insert."
-msgstr ""
+msgstr "Nhấn phím cách hoặc enter để chèn."
 
-#: im/pinyin/pinyin.cpp:1806
+#: im/pinyin/pinyin.cpp:1813
 #, c++-format
 msgid "Press {} for {}"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1803
+#: im/pinyin/pinyin.cpp:1810
 #, c++-format
 msgid "Press {} for {} and Return for {}"
 msgstr ""
@@ -987,7 +1024,7 @@ msgstr ""
 msgid "Show current shuangpin mode"
 msgstr ""
 
-#: im/table/engine.cpp:93 im/pinyin/pinyin.cpp:762
+#: im/table/engine.cpp:93 im/pinyin/pinyin.cpp:769
 msgid "Show prediction words"
 msgstr ""
 
@@ -1195,7 +1232,7 @@ msgstr ""
 
 #: im/table/ime.h:174
 msgid "Use system language model"
-msgstr ""
+msgstr "Sử dụng mô hình ngôn ngữ hệ thống"
 
 #: im/table/ime.h:37
 msgid "Vertical"
@@ -1216,6 +1253,8 @@ msgid ""
 "When available, system language model will be loaded for given language and "
 "provide ability to give better context based order."
 msgstr ""
+"Khi có sẵn, mô hình ngôn ngữ hệ thống sẽ được tải cho ngôn ngữ nhất định và "
+"cung cấp khả năng đưa ra thứ tự dựa trên ngữ cảnh tốt hơn."
 
 #: im/table/ime.h:213
 msgid ""
@@ -1279,7 +1318,7 @@ msgstr ""
 msgid "Xiaohe"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:955
+#: im/pinyin/pinyin.cpp:962
 msgid "Yes"
 msgstr ""
 
@@ -1295,11 +1334,11 @@ msgstr ""
 msgid "Ziranma"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1484
+#: im/pinyin/pinyin.cpp:1491
 msgid "[Select the word to remove from history]"
 msgstr ""
 
-#: im/pinyin/pinyin.cpp:1420
+#: im/pinyin/pinyin.cpp:1427
 msgid "[Stroke Filtering]"
 msgstr ""
 
