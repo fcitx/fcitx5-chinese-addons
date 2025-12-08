@@ -5,7 +5,6 @@ add_custom_target(copy-addon DEPENDS
     punctuation.conf.in-fmt
     fullwidth.conf.in-fmt
     chttrans.conf.in-fmt
-    cloudpinyin.conf.in-fmt
     )
 add_custom_command(TARGET copy-addon COMMAND ${CMAKE_COMMAND} -E copy ${PROJECT_BINARY_DIR}/im/pinyin/pinyin-addon.conf ${CMAKE_CURRENT_BINARY_DIR}/pinyin.conf)
 add_custom_command(TARGET copy-addon COMMAND ${CMAKE_COMMAND} -E copy ${PROJECT_BINARY_DIR}/im/table/table.conf ${CMAKE_CURRENT_BINARY_DIR}/table.conf)
