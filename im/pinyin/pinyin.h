@@ -200,6 +200,14 @@ FCITX_CONFIGURATION(
         this, "PinyinInPreedit", _("Show complete pinyin in preedit"), false};
     Option<bool> predictionEnabled{this, "Prediction", _("Enable Prediction"),
                                    isAndroid()};
+    OptionWithAnnotation<bool, ToolTipAnnotation> keepCurrentContext{
+        this,
+        "KeepCurrentContext",
+        _("Keep the current typed text for next input prediction"),
+        true,
+        {},
+        {},
+        {_("Keep the current typed text for future prediction.")}};
     Option<int, IntConstrain> predictionSize{this, "PredictionSize",
                                              _("Number of Predictions"), 49,
                                              IntConstrain(3, 100)};
