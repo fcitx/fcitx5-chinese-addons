@@ -205,13 +205,19 @@ PinyinState::PinyinState(PinyinEngine *engine) : context_(engine->ime()) {
 }
 
 void PinyinEngine::initPredict(InputContext *inputContext) {
-    inputContext->inputPanel().reset();
-
     auto *state = inputContext->propertyFor(&factory_);
+    // clear state no matter what.
+    state->predictWords_.reset();
     auto &context = state->context_;
     auto lmState = context.state();
     auto selected = context.selectedWords();
+    if (*config_.keepCurrentContext) {
+        context.appendContextWords(selected);
+    }
     if (selected.empty()) {
+        return;
+    }
+    if (!*config_.predictionEnabled) {
         return;
     }
 
@@ -237,6 +243,9 @@ void PinyinEngine::updatePredict(InputContext *inputContext) {
 
     auto *state = inputContext->propertyFor(&factory_);
     assert(state->predictWords_.has_value());
+    if (*config_.keepCurrentContext) {
+        state->context_.setContextWords(*state->predictWords_);
+    }
     auto words =
         prediction_.predict(*state->predictWords_, *config_.predictionSize);
     if (auto candidateList = predictCandidateList(this, words)) {
@@ -401,9 +410,7 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
         inputContext->commitString(sentence);
         inputContext->updatePreedit();
         inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
-        if (*config_.predictionEnabled) {
-            initPredict(inputContext);
-        }
+        initPredict(inputContext);
         state->context_.clear();
         return;
     }
@@ -1131,6 +1138,8 @@ void PinyinEngine::activate(const fcitx::InputMethodEntry &entry,
                                          &predictionAction_);
     auto *state = inputContext->propertyFor(&factory_);
     state->context_.setUseShuangpin(entry.uniqueName() == "shuangpin");
+    // TODO: use surrouding to re-build context.
+    state->context_.clearContextWords();
 }
 
 void PinyinEngine::deactivate(const fcitx::InputMethodEntry &entry,
@@ -1265,8 +1274,8 @@ bool PinyinEngine::handle2nd3rdSelection(KeyEvent &event) {
         int selection;
     } keyHandlers[] = {
         // Index starts with 0
-        {*config_.secondCandidate, 1},
-        {*config_.thirdCandidate, 2},
+        {.list = *config_.secondCandidate, .selection = 1},
+        {.list = *config_.thirdCandidate, .selection = 2},
     };
 
     auto *state = inputContext->propertyFor(&factory_);
@@ -1762,7 +1771,8 @@ bool PinyinEngine::handlePunc(KeyEvent &event,
         return false;
     }
     if (candidateList && !candidateList->empty()) {
-        candidateList->candidate(0).select(inputContext);
+        int idx = std::max(candidateList->cursorIndex(), 0);
+        candidateList->candidate(idx).select(inputContext);
     }
 
     // We can't emit punctuation right now, since it's not yet fully selected.
@@ -1776,6 +1786,9 @@ bool PinyinEngine::handlePunc(KeyEvent &event,
         event.filterAndAccept();
         return true;
     }
+    // It's a key not handled by engine, just clear the word context.
+    // Need to do after candidate selection, so the context is properly reset.
+    state->context_.clearContextWords();
 
     std::string punc;
     std::string puncAfter;
@@ -2117,6 +2130,7 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         } else if (event.key().checkKeyList(*config_.commitRawInput)) {
             inputContext->commitString(preeditCommitString(inputContext));
             state->context_.clear();
+            state->context_.clearContextWords();
             event.filterAndAccept();
         } else if (int idx =
                        event.key().keyListIndex(*config_.selectCharFromPhrase);
@@ -2214,6 +2228,7 @@ void PinyinEngine::doReset(InputContext *inputContext) const {
     resetForgetCandidate(inputContext);
     state->mode_ = PinyinMode::Normal;
     state->context_.clear();
+    state->context_.clearContextWords();
     state->predictWords_.reset();
     inputContext->inputPanel().reset();
     inputContext->updatePreedit();
@@ -2452,6 +2467,9 @@ void PinyinEngine::cloudPinyinSelected(InputContext *inputContext,
     state->context_.clear();
     inputContext->commitString(selected + word);
     inputContext->inputPanel().reset();
+    if (*config_.keepCurrentContext) {
+        state->context_.appendContextWords(words);
+    }
     if (*config_.predictionEnabled) {
         state->predictWords_ = std::move(words);
         updatePredict(inputContext);

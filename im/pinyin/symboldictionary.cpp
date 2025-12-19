@@ -48,7 +48,6 @@ std::optional<ParseResult> parseSymbolLine(std::string_view line) {
     line = stringutils::trimView(line);
     if (line.empty()) {
         return std::nullopt;
-        ;
     }
     std::string_view key;
     size_t valueStart = std::string_view::npos;
