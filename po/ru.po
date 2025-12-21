@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2025-12-19 22:48+0000\n"
+"POT-Creation-Date: 2025-12-21 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Dmitry <dmitrydmitry761@gmail.com>, 2025\n"
 "Language-Team: Russian (https://app.transifex.com/fcitx/teams/12005/ru/)\n"
@@ -718,11 +718,11 @@ msgstr "Ввести имя словаря"
 
 #: im/pinyin/pinyin.h:210
 msgid "Keep the current typed text for future prediction."
-msgstr ""
+msgstr "Сохранить текущий набранный текст для прогнозирования в будущем."
 
 #: im/pinyin/pinyin.h:206
 msgid "Keep the current typed text for next input prediction"
-msgstr ""
+msgstr "Сохранить текущий набранный текст для прогнозирования следующего ввода"
 
 #: gui/customphraseeditor/customphrasemodel.cpp:96
 msgid "Key"
