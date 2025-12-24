@@ -21,7 +21,6 @@
 #include <fcitx-utils/log.h>
 #include <fcitx-utils/macros.h>
 #include <fcitx-utils/standardpaths.h>
-#include <fcitx-utils/stringutils.h>
 #include <fcitx-utils/utf8.h>
 #include <fcitx/action.h>
 #include <fcitx/addoninstance.h>
@@ -190,7 +189,7 @@ void TableEngine::activate(const fcitx::InputMethodEntry &entry,
     auto *inputContext = event.inputContext();
     auto *state = inputContext->propertyFor(&factory_);
     auto *context = state->updateContext(&entry);
-    if (stringutils::startsWith(entry.languageCode(), "zh_")) {
+    if (entry.languageCode().starts_with("zh_")) {
         chttrans();
         for (const auto *actionName : {"chttrans", "punctuation"}) {
             if (auto *action = instance_->userInterfaceManager().lookupAction(
