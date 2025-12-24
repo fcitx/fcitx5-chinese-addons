@@ -54,7 +54,7 @@ bool dontConvertWhenEn(uint32_t c) { return c == '.' || c == ','; }
 
 std::string langByPath(const std::string &path) {
     constexpr std::string_view prefix = "punctuationmap/";
-    if (stringutils::startsWith(path, prefix)) {
+    if (path.starts_with(prefix)) {
         return path.substr(prefix.size());
     }
     return "";

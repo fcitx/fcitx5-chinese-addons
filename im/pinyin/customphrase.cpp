@@ -136,8 +136,7 @@ std::optional<ParseResult> parseCustomPhraseLine(std::string_view line) {
 }
 
 bool isComment(std::string_view line) {
-    return stringutils::startsWith(line, ";") ||
-           stringutils::startsWith(line, "#");
+    return line.starts_with(";") || line.starts_with("#");
 }
 
 inline std::tm currentTm() {
@@ -220,9 +219,7 @@ std::string toChineseTwoDigitNumber(int num, bool leadingZero) {
     return prefix + suffix;
 }
 
-bool CustomPhrase::isDynamic() const {
-    return stringutils::startsWith(value(), "#");
-}
+bool CustomPhrase::isDynamic() const { return value().starts_with("#"); }
 
 std::string CustomPhrase::evaluate(
     const std::function<std::string(std::string_view key)> &evaluator) const {
@@ -428,8 +425,8 @@ void CustomPhraseDict::load(std::istream &in, bool loadDisabled) {
             cleanUpMultiline();
             auto [key, order, data] = *parseResult;
             std::string value{data};
-            if (value.size() >= 2 && stringutils::startsWith(value, '"') &&
-                stringutils::endsWith(value, '"')) {
+            if (value.size() >= 2 && value.starts_with('"') &&
+                value.ends_with('"')) {
                 if (auto unescape = stringutils::unescapeForValue(value)) {
                     value = *unescape;
                 }
