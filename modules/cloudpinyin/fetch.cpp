@@ -187,10 +187,9 @@ bool FetchThread::addRequest(const SetupRequestCallback &callback) {
             break;
         }
     }
-    if (!queue) {
+    if (!queue || !callback(queue)) {
         return false;
     }
-    callback(queue);
 
     {
         const std::lock_guard<std::mutex> lock(pendingQueueLock);
