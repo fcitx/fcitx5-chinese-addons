@@ -10,15 +10,15 @@
 # 菘菘 <rrt467778@gmail.com>, 2022
 # neko_0xff <zangmenhsu@yahoo.co.jp>, 2022
 # Kisaragi Hiu <flyingfeather1501@gmail.com>, 2024
-# Yiyu Liu, 2025
+# Yiyu Liu, 2026
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2025-12-19 22:48+0000\n"
+"POT-Creation-Date: 2026-01-11 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
-"Last-Translator: Yiyu Liu, 2025\n"
+"Last-Translator: Yiyu Liu, 2026\n"
 "Language-Team: Chinese (Taiwan) (https://app.transifex.com/fcitx/teams/12005/"
 "zh_TW/)\n"
 "Language: zh_TW\n"
@@ -698,11 +698,11 @@ msgstr "輸入字典名稱"
 
 #: im/pinyin/pinyin.h:210
 msgid "Keep the current typed text for future prediction."
-msgstr ""
+msgstr "為以後的預測保留目前輸入的內容"
 
 #: im/pinyin/pinyin.h:206
 msgid "Keep the current typed text for next input prediction"
-msgstr ""
+msgstr "為下次輸入預測保留目前輸入的內容"
 
 #: gui/customphraseeditor/customphrasemodel.cpp:96
 msgid "Key"
