@@ -82,9 +82,10 @@ void FetchThread::handleIO(int fd, IOEventFlags flags) {
 
 void FetchThread::processMessages() {
     int num_messages = 0;
-    CURLMsg *curl_message = curl_multi_info_read(curlm_, &num_messages);
+    CURLMsg *curl_message = nullptr;
 
-    while (curl_message != nullptr) {
+    while ((curl_message = curl_multi_info_read(curlm_, &num_messages)) !=
+           nullptr) {
         if (curl_message->msg == CURLMSG_DONE) {
             void *p = nullptr;
             curl_easy_getinfo(curl_message->easy_handle, CURLINFO_PRIVATE, &p);
@@ -94,7 +95,6 @@ void FetchThread::processMessages() {
             queue->remove();
             finished(queue);
         }
-        curl_message = curl_multi_info_read(curlm_, &num_messages);
     }
 }
 
