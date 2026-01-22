@@ -6,24 +6,35 @@
  */
 
 #include "cloudpinyin.h"
+#include "cloudpinyin_public.h"
+#include "fetch.h"
+#include <cstdint>
+#include <cstring>
+#include <curl/curl.h>
 #include <fcitx-config/iniparser.h>
+#include <fcitx-utils/eventloopinterface.h>
 #include <fcitx-utils/fs.h>
 #include <fcitx-utils/log.h>
+#include <fcitx-utils/misc.h>
 #include <fcitx-utils/standardpaths.h>
+#include <fcitx-utils/stringutils.h>
 #include <fcitx-utils/unixfd.h>
 #include <fcitx-utils/utf8.h>
+#include <fcitx/addoninstance.h>
 #include <fcitx/addonmanager.h>
 #include <fcntl.h>
-#include <thread>
+#include <memory>
+#include <string>
+#include <string_view>
 #include <unistd.h>
+#include <utility>
 
 using namespace fcitx;
 
-FCITX_DEFINE_LOG_CATEGORY(cloudpinyin, "cloudpinyin");
+namespace {
 
 #define CLOUDPINYIN_DEBUG() FCITX_LOGC(cloudpinyin, Debug)
-
-namespace {
+FCITX_DEFINE_LOG_CATEGORY(cloudpinyin, "cloudpinyin");
 
 class GoogleBackend : public Backend {
 public:
@@ -68,8 +79,10 @@ public:
         if (!escaped) {
             return false;
         }
-        const std::string url = stringutils::concat(
-            "https://olime.baidu.com/py?rn=0&pn=1&ol=1&py=", escaped.get());
+        const std::string url =
+            std::format("https://olimenew.baidu.com/"
+                        "py?input={}&inputtype=py&resultcoding=utf-8",
+                        escaped.get());
         CLOUDPINYIN_DEBUG() << "Request URL: " << url;
         return (curl_easy_setopt(queue->curl(), CURLOPT_URL, url.c_str()) ==
                 CURLE_OK);
@@ -165,7 +178,7 @@ void CloudPinyin::request(const std::string &pinyin,
                 return true;
             })) {
             callback(pinyin, "");
-        };
+        }
     }
 }
 
