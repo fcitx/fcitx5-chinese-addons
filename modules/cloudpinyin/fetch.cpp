@@ -6,10 +6,18 @@
  */
 #include "fetch.h"
 #include "cloudpinyin.h"
+#include <cstdint>
+#include <curl/curl.h>
+#include <curl/multi.h>
 #include <fcitx-utils/event.h>
 #include <fcitx-utils/eventdispatcher.h>
+#include <fcitx-utils/eventloopinterface.h>
 #include <fcitx-utils/fs.h>
+#include <fcitx-utils/macros.h>
 #include <fcntl.h>
+#include <memory>
+#include <mutex>
+#include <thread>
 #include <unistd.h>
 
 using namespace fcitx;
@@ -52,9 +60,10 @@ FetchThread::~FetchThread() {
 }
 
 void FetchThread::runThread(FetchThread *self) { self->run(); }
-int FetchThread::curlCallback(CURL *curl, curl_socket_t s, int action,
+
+int FetchThread::curlCallback(CURL *easy, curl_socket_t s, int action,
                               void *userp, void *socketp) {
-    FCITX_UNUSED(curl);
+    FCITX_UNUSED(easy);
     FCITX_UNUSED(socketp);
     auto *self = static_cast<FetchThread *>(userp);
     return self->curl(s, action);
@@ -153,7 +162,7 @@ void FetchThread::curlTimer(long timeout_ms) {
     }
     if (!timer_) {
         timer_ = loop_->addTimeEvent(
-            CLOCK_MONOTONIC, now(CLOCK_MONOTONIC) + timeout_ms * 1000, 0,
+            CLOCK_MONOTONIC, now(CLOCK_MONOTONIC) + (timeout_ms * 1000), 1,
             [this](EventSourceTime *, uint64_t) {
                 CURLMcode mcode;
                 int still_running;
@@ -198,16 +207,7 @@ bool FetchThread::addRequest(const SetupRequestCallback &callback) {
     }
 
     // Handle pending queue in fetch thread.
-    dispatcher_.schedule([this]() {
-        const std::lock_guard<std::mutex> lock(pendingQueueLock);
-
-        while (!pendingQueue.empty()) {
-            auto *queue = &pendingQueue.front();
-            pendingQueue.pop_front();
-            curl_multi_add_handle(curlm_, queue->curl());
-            workingQueue.push_back(*queue);
-        }
-    });
+    dispatcher_.schedule([this]() { handlePendingRequests(); });
     return true;
 }
 
@@ -228,10 +228,21 @@ CurlQueue *FetchThread::popFinished() {
     return result;
 }
 
+void FetchThread::handlePendingRequests() {
+    const std::lock_guard<std::mutex> lock(pendingQueueLock);
+
+    while (!pendingQueue.empty()) {
+        auto *queue = &pendingQueue.front();
+        pendingQueue.pop_front();
+        curl_multi_add_handle(curlm_, queue->curl());
+        workingQueue.push_back(*queue);
+    }
+}
+
 void FetchThread::run() {
     loop_ = std::make_unique<fcitx::EventLoop>();
-
     dispatcher_.attach(loop_.get());
+    handlePendingRequests();
     loop_->exec();
     // free events ahead of time
     timer_.reset();

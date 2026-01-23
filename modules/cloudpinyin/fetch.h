@@ -8,16 +8,25 @@
 #define _CLOUDPINYIN_FETCH_H_
 
 #include "cloudpinyin_public.h"
+#include <algorithm>
+#include <cstddef>
 #include <cstdint>
 #include <curl/curl.h>
+#include <curl/easy.h>
+#include <curl/multi.h>
 #include <fcitx-utils/event.h>
 #include <fcitx-utils/eventdispatcher.h>
+#include <fcitx-utils/eventloopinterface.h>
 #include <fcitx-utils/intrusivelist.h>
+#include <functional>
 #include <iterator>
+#include <memory>
 #include <mutex>
 #include <stdexcept>
+#include <string>
 #include <thread>
 #include <unordered_map>
+#include <utility>
 #include <vector>
 #define MAX_HANDLE 100l
 #define MAX_BUFFER_SIZE 2048
@@ -98,9 +107,7 @@ private:
             return 0;
         }
 
-        if (SIZE_MAX - data_.size() < realsize) {
-            realsize = SIZE_MAX - data_.size();
-        }
+        realsize = std::min(SIZE_MAX - data_.size(), realsize);
 
         // make sure we won't be hacked
         if (data_.size() + realsize > MAX_BUFFER_SIZE) {
@@ -149,6 +156,8 @@ private:
 
     void handleIO(int fd, fcitx::IOEventFlags flags);
     void processMessages();
+
+    void handlePendingRequests();
 
     void run();
     void finished(CurlQueue *queue);
