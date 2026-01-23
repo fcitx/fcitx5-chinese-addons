@@ -7,13 +7,15 @@
 #include "cloudpinyin_public.h"
 #include "testdir.h"
 #include <cassert>
+#include <fcitx-config/rawconfig.h>
 #include <fcitx-utils/event.h>
 #include <fcitx-utils/log.h>
+#include <fcitx-utils/macros.h>
 #include <fcitx-utils/standardpaths.h>
 #include <fcitx-utils/testing.h>
 #include <fcitx/addonmanager.h>
 #include <fcitx/instance.h>
-#include <iostream>
+#include <string>
 
 int main() {
     fcitx::setupTestingEnvironment(TESTING_BINARY_DIR, {"bin"},
@@ -26,13 +28,14 @@ int main() {
     char *argv[] = {arg0, arg1, arg2};
     fcitx::Instance instance(FCITX_ARRAY_SIZE(argv), argv);
     instance.addonManager().registerDefaultLoader(nullptr);
+    fcitx::Log::setLogRule("cloudpinyin=5");
 
     int returned = 0;
     instance.eventDispatcher().schedule([&instance, &returned]() {
         auto callback = [&instance, &returned](const std::string &pinyin,
                                                const std::string &hanzi) {
-            std::cout << "Pinyin: " << pinyin << std::endl;
-            std::cout << "Hanzi: " << hanzi << std::endl;
+            FCITX_INFO() << "Pinyin: " << pinyin;
+            FCITX_INFO() << "Hanzi: " << hanzi;
             returned++;
             if (returned == 1) {
                 instance.exit();

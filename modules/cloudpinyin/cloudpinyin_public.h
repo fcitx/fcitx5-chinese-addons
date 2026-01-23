@@ -16,6 +16,7 @@
 #include <fcitx/inputcontext.h>
 #include <fcitx/inputpanel.h>
 #include <fcitx/text.h>
+#include <fcitx/userinterface.h>
 #include <functional>
 #include <optional>
 #include <string>
