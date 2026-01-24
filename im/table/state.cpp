@@ -258,7 +258,7 @@ bool TableState::autoSelectCandidate() const {
     if (isComposeTableMode() && !context_->candidates().empty()) {
         // Create a dummy candidate word to reuse the logic in
         // TableCandidateWord::select
-        TableCandidateWord candidate(engine_, Text{}, 0);
+        TableCandidateWord candidate(engine_, Text{}, Text{}, 0);
         candidate.select(ic_);
         return true;
     }
@@ -1323,7 +1323,7 @@ void TableState::updateUI(bool keepOldCursor, bool maybePredict) {
             candidateList->setPageSize(*config.pageSize);
 
             for (const auto &candidate : candidates) {
-                Text text;
+                Text text, comment;
                 text.append(candidate.toString());
                 std::string hint;
                 if (*config.hint) {
@@ -1331,15 +1331,15 @@ void TableState::updateUI(bool keepOldCursor, bool maybePredict) {
                         context->candidateHint(idx, *config.displayCustomHint);
                 }
                 if (!hint.empty()) {
-                    text.append(*config.hintSeparator);
-                    text.append(std::move(hint));
+                    comment.append(*config.hintSeparator);
+                    comment.append(std::move(hint));
                 }
                 if (!config.markerForAutoPhrase->empty() &&
                     TableContext::isAuto(candidate.sentence())) {
                     text.append(*config.markerForAutoPhrase);
                 }
-                candidateList->append<TableCandidateWord>(engine_,
-                                                          std::move(text), idx);
+                candidateList->append<TableCandidateWord>(
+                    engine_, std::move(text), std::move(comment), idx);
                 idx++;
             }
             if (!candidateList->empty()) {
