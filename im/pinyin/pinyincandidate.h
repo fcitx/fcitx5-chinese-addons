@@ -13,6 +13,7 @@
 #include <cstdint>
 #include <ctime>
 #include <fcitx-utils/event.h>
+#include <fcitx-utils/eventloopinterface.h>
 #include <fcitx/candidateaction.h>
 #include <fcitx/candidatelist.h>
 #include <fcitx/inputcontext.h>
@@ -59,27 +60,25 @@ public:
     virtual size_t candidateIndex() const = 0;
 };
 
-class PinyinAbstractExtraCandidateWordInterface {
+class PinyinAbstractCandidateWord : virtual public CandidateWord {
 public:
-    explicit PinyinAbstractExtraCandidateWordInterface(CandidateWord &cand,
-                                                       int order);
+    explicit PinyinAbstractCandidateWord(size_t selectLength, int order);
 
-    virtual ~PinyinAbstractExtraCandidateWordInterface();
+    virtual ~PinyinAbstractCandidateWord();
 
     int order() const { return order_; };
-    const CandidateWord &toCandidateWord() const { return cand_; }
-    CandidateWord &toCandidateWord() { return cand_; }
+    size_t selectLength() const { return selectLength_; }
+    virtual bool isPinyinCandidate() const { return false; }
 
-private:
-    CandidateWord &cand_;
-    int order_;
+protected:
+    const size_t selectLength_;
+    const int order_;
 };
 
-class StrokeCandidateWord : public CandidateWord,
-                            public PinyinAbstractExtraCandidateWordInterface {
+class StrokeCandidateWord : public PinyinAbstractCandidateWord {
 public:
     StrokeCandidateWord(PinyinEngine *engine, std::string hz,
-                        const std::string &py, int order);
+                        const std::string &py, size_t selectLength, int order);
 
     void select(InputContext *inputContext) const override;
 
@@ -88,13 +87,11 @@ private:
     std::string hz_;
 };
 
-class CustomPhraseCandidateWord
-    : public CandidateWord,
-      public PinyinAbstractExtraCandidateWordInterface,
-      public InsertableAsCustomPhraseInterface {
+class CustomPhraseCandidateWord : public PinyinAbstractCandidateWord,
+                                  public InsertableAsCustomPhraseInterface {
 public:
-    CustomPhraseCandidateWord(PinyinEngine *engine, int order,
-                              size_t inputLength, std::string value,
+    CustomPhraseCandidateWord(PinyinEngine *engine, size_t selectLength,
+                              int order, std::string value,
                               std::string customPhraseString);
 
     void select(InputContext *inputContext) const override;
@@ -105,7 +102,6 @@ public:
 
 private:
     PinyinEngine *engine_;
-    size_t inputLength_;
     std::string customPhraseString_;
 };
 
@@ -170,12 +166,14 @@ private:
 
 class LuaCandidateWord : public CandidateWord {
 public:
-    LuaCandidateWord(PinyinEngine *engine, std::string word);
+    LuaCandidateWord(PinyinEngine *engine, size_t selectLength,
+                     std::string word);
 
     void select(InputContext *inputContext) const override;
 
 private:
     PinyinEngine *engine_;
+    size_t selectLength_ = 0;
     std::string word_;
 };
 
@@ -183,7 +181,8 @@ class SymbolCandidateWord : public CandidateWord,
                             public InsertableAsCustomPhraseInterface {
 public:
     SymbolCandidateWord(PinyinEngine *engine, std::string symbol,
-                        const libime::SentenceResult &result, bool isFull);
+                        std::string encodedPinyin, size_t selectLength,
+                        bool isFull);
 
     void select(InputContext *inputContext) const override;
 
@@ -197,8 +196,7 @@ private:
     std::string encodedPinyin_;
 };
 
-class SpellCandidateWord : public CandidateWord,
-                           public PinyinAbstractExtraCandidateWordInterface,
+class SpellCandidateWord : public PinyinAbstractCandidateWord,
                            public InsertableAsCustomPhraseInterface {
 public:
     SpellCandidateWord(PinyinEngine *engine, std::string word,
@@ -214,17 +212,18 @@ private:
     size_t inputLength_;
 };
 
-class PinyinCandidateWord : public CandidateWord,
+class PinyinCandidateWord : public PinyinAbstractCandidateWord,
                             public InsertableAsCustomPhraseInterface,
                             public ForgettableCandidateInterface {
 public:
     PinyinCandidateWord(PinyinEngine *engine, InputContext *inputContext,
-                        Text text, size_t idx);
+                        Text text, size_t selectLength, size_t idx);
 
     void select(InputContext *inputContext) const override;
 
     std::string customPhraseString() const override;
     size_t candidateIndex() const override { return idx_; }
+    bool isPinyinCandidate() const override { return true; }
 
     PinyinEngine *engine_;
     InputContext *inputContext_;
@@ -233,7 +232,7 @@ public:
 
 class CustomCloudPinyinCandidateWord
     : public CloudPinyinCandidateWord,
-      public PinyinAbstractExtraCandidateWordInterface,
+      public PinyinAbstractCandidateWord,
       public InsertableAsCustomPhraseInterface {
 public:
     CustomCloudPinyinCandidateWord(PinyinEngine *engine,

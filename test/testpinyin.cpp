@@ -332,12 +332,10 @@ void testPin(Instance *instance) {
             FCITX_ASSERT(actionable->hasAction(cand));
             auto actions = actionable->candidateActions(cand);
             FCITX_ASSERT(!actions.empty());
-            FCITX_ASSERT(
-                std::any_of(actions.begin(), actions.end(),
-                            [](const auto &a) { return a.id() == 1; }));
-            FCITX_ASSERT(
-                !std::any_of(actions.begin(), actions.end(),
-                             [](const auto &a) { return a.id() == 2; }));
+            FCITX_ASSERT(std::ranges::any_of(
+                actions, [](const auto &a) { return a.id() == 1; }));
+            FCITX_ASSERT(!std::ranges::any_of(
+                actions, [](const auto &a) { return a.id() == 2; }));
             // This is pin action, 痛饮 should be pined to head.
             actionable->triggerAction(cand, 1);
         }
@@ -358,9 +356,8 @@ void testPin(Instance *instance) {
             auto actions = actionable->candidateActions(candNew);
             FCITX_ASSERT(!actions.empty());
             // Check if deletable action is there.
-            FCITX_ASSERT(
-                std::any_of(actions.begin(), actions.end(),
-                            [](const auto &a) { return a.id() == 2; }));
+            FCITX_ASSERT(std::ranges::any_of(
+                actions, [](const auto &a) { return a.id() == 2; }));
             // This is delete custom phrase action, 痛饮 should be pined to
             // head.
             actionable->triggerAction(candNew, 2);

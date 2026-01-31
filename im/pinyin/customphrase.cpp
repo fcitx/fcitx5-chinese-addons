@@ -32,6 +32,8 @@
 
 namespace fcitx {
 
+namespace {
+
 // localtime_s is relatively evil and we simply want to avoid it.
 namespace localtime_helper {
 
@@ -64,20 +66,10 @@ struct localtime_impl {
 };
 
 void normalizeData(std::vector<CustomPhrase> &data) {
-    std::stable_sort(data.begin(), data.end(),
-                     [](const CustomPhrase &lhs, const CustomPhrase &rhs) {
-                         return lhs.order() < rhs.order();
-                     });
-
-    int currentOrder = data.front().order();
-    for (auto iter = std::next(data.begin()); iter != data.end(); ++iter) {
-        if (currentOrder > 0) {
-            if (iter->order() <= currentOrder) {
-                iter->setOrder(currentOrder + 1);
-            }
-        }
-        currentOrder = iter->order();
-    }
+    std::ranges::stable_sort(
+        data, [](const CustomPhrase &lhs, const CustomPhrase &rhs) {
+            return lhs.order() < rhs.order();
+        });
 }
 
 std::optional<int> parseInt(std::string_view input) {
@@ -220,9 +212,9 @@ std::string toChineseTwoDigitNumber(int num, bool leadingZero) {
     return prefix + suffix;
 }
 
-bool CustomPhrase::isDynamic() const {
-    return stringutils::startsWith(value(), "#");
-}
+} // namespace
+
+bool CustomPhrase::isDynamic() const { return value().starts_with("#"); }
 
 std::string CustomPhrase::evaluate(
     const std::function<std::string(std::string_view key)> &evaluator) const {
