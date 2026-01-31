@@ -36,7 +36,7 @@ FCITX_ADDON_DECLARE_FUNCTION(CloudPinyin, toggleKey, const fcitx::KeyList &());
 FCITX_ADDON_DECLARE_FUNCTION(CloudPinyin, resetError, void());
 
 class CloudPinyinCandidateWord
-    : public fcitx::CandidateWord,
+    : virtual public fcitx::CandidateWord,
       public fcitx::TrackableObject<CloudPinyinCandidateWord> {
 public:
     CloudPinyinCandidateWord(fcitx::AddonInstance *cloudpinyin_,
@@ -44,8 +44,7 @@ public:
                              std::string selectedSentence, bool keep,
                              fcitx::InputContext *inputContext,
                              CloudPinyinSelectedCallback callback)
-        : CandidateWord(fcitx::Text{}),
-          selectedSentence_(std::move(selectedSentence)),
+        : selectedSentence_(std::move(selectedSentence)),
           inputContext_(inputContext), callback_(std::move(callback)),
           keep_(keep) {
         // use cloud unicode char
