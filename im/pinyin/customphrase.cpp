@@ -128,8 +128,7 @@ std::optional<ParseResult> parseCustomPhraseLine(std::string_view line) {
 }
 
 bool isComment(std::string_view line) {
-    return stringutils::startsWith(line, ";") ||
-           stringutils::startsWith(line, "#");
+    return line.starts_with(';') || line.starts_with('#');
 }
 
 inline std::tm currentTm() {
@@ -420,8 +419,8 @@ void CustomPhraseDict::load(std::istream &in, bool loadDisabled) {
             cleanUpMultiline();
             auto [key, order, data] = *parseResult;
             std::string value{data};
-            if (value.size() >= 2 && stringutils::startsWith(value, '"') &&
-                stringutils::endsWith(value, '"')) {
+            if (value.size() >= 2 && value.starts_with('"') &&
+                value.ends_with('"')) {
                 if (auto unescape = stringutils::unescapeForValue(value)) {
                     value = *unescape;
                 }

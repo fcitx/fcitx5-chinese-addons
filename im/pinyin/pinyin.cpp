@@ -106,14 +106,6 @@ FCITX_DEFINE_LOG_CATEGORY(pinyin, "pinyin");
 #define PINYIN_DEBUG() FCITX_LOGC(pinyin, Debug)
 #define PINYIN_ERROR() FCITX_LOGC(pinyin, Error)
 
-bool consumePrefix(std::string_view &view, std::string_view prefix) {
-    if (stringutils::startsWith(view, prefix)) {
-        view.remove_prefix(prefix.size());
-        return true;
-    }
-    return false;
-}
-
 template <typename T>
 std::unique_ptr<CandidateList>
 predictCandidateList(PinyinEngine *engine, const std::vector<T> &words) {
@@ -694,7 +686,7 @@ std::string PinyinEngine::evaluateCustomPhrase(InputContext *inputContext,
     }
 
 #ifdef FCITX_HAS_LUA
-    if (stringutils::startsWith(key, "lua:")) {
+    if (key.starts_with("lua:")) {
         RawConfig config;
         auto ret = imeapi()->call<ILuaAddon::invokeLuaFunction>(
             inputContext, std::string(key.substr(4)), config);
@@ -1478,8 +1470,7 @@ void PinyinEngine::updateStroke(InputContext *inputContext) {
                 auto stroke =
                     pinyinhelper()->call<IPinyinHelper::reverseLookupStroke>(
                         chr);
-                if (stringutils::startsWith(stroke,
-                                            state->strokeBuffer_.userInput())) {
+                if (stroke.starts_with(state->strokeBuffer_.userInput())) {
                     strokeMatched = true;
                     break;
                 }
@@ -2395,7 +2386,7 @@ void PinyinEngine::cloudPinyinSelected(InputContext *inputContext,
     // preedit is "selected sentence" + Pinyin.
     do {
         // Validate selected is still the same.
-        if (!stringutils::startsWith(preedit, selected)) {
+        if (!preedit.starts_with(selected)) {
             words.clear();
             break;
         }
@@ -2416,7 +2407,7 @@ void PinyinEngine::cloudPinyinSelected(InputContext *inputContext,
             auto end = bestSentence.end();
             while (iter != end) {
                 auto consumed = wordView;
-                if (!consumePrefix(consumed, (*iter)->word())) {
+                if (!stringutils::consumePrefix(consumed, (*iter)->word())) {
                     break;
                 }
                 if (!(*iter)->word().empty()) {
