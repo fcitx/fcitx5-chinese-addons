@@ -39,7 +39,7 @@ namespace localtime_helper {
 
 struct not_available_tag {};
 
-not_available_tag localtime_r(...) { return {}; }
+[[maybe_unused]] not_available_tag localtime_r(...) { return {}; }
 
 } // namespace localtime_helper
 
