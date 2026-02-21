@@ -23,8 +23,10 @@
 namespace fcitx {
 
 TableCandidateWord::TableCandidateWord(TableEngine *engine, Text text,
-                                       size_t idx)
-    : CandidateWord(std::move(text)), engine_(engine), idx_(idx) {}
+                                       Text comment, size_t idx)
+    : CandidateWord(std::move(text)), engine_(engine), idx_(idx) {
+    setComment(std::move(comment));
+}
 void TableCandidateWord::select(InputContext *inputContext) const {
     auto *state = inputContext->propertyFor(&engine_->factory());
     // nullptr means use the last requested entry.
