@@ -20,7 +20,8 @@ namespace fcitx {
 
 class TableCandidateWord : public CandidateWord {
 public:
-    TableCandidateWord(TableEngine *engine, Text text, size_t idx);
+    TableCandidateWord(TableEngine *engine, Text text, Text comment,
+                       size_t idx);
 
     void select(InputContext *inputContext) const override;
 
