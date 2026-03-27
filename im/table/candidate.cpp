@@ -49,13 +49,13 @@ void TableCandidateWord::select(InputContext *inputContext) const {
 }
 TablePinyinCandidateWord::TablePinyinCandidateWord(
     TableEngine *engine, std::string word,
-    const libime::TableBasedDictionary &dict, bool customHint)
+    const libime::TableBasedDictionary &dict, bool customHint, std::string hintSeparator)
     : engine_(engine), word_(std::move(word)) {
     setText(Text(word_));
     if (utf8::lengthValidated(word_) == 1) {
         if (auto code = dict.reverseLookup(word_); !code.empty()) {
             Text comment;
-            comment.append("~ ");
+            comment.append(hintSeparator);
             if (customHint) {
                 comment.append(dict.hint(code));
             } else {

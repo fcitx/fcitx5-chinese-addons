@@ -434,7 +434,7 @@ bool TableState::handlePinyinMode(KeyEvent &event) {
         for (auto &p : pinyinWords) {
             candidateList->append<TablePinyinCandidateWord>(
                 engine_, std::move(p.first), context_->dict(),
-                *config.displayCustomHint);
+                *config.displayCustomHint, *config.hintSeparator);
         }
 
         if (!candidateList->empty()) {
