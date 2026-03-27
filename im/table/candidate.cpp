@@ -49,8 +49,8 @@ void TableCandidateWord::select(InputContext *inputContext) const {
 }
 TablePinyinCandidateWord::TablePinyinCandidateWord(
     TableEngine *engine, std::string word,
-    const libime::TableBasedDictionary &dict,
-    bool customHint, std::string hintSeparator, bool hintInComment)
+    const libime::TableBasedDictionary &dict, bool customHint,
+    std::string hintSeparator, bool hintInComment)
     : engine_(engine), word_(std::move(word)) {
     setText(Text(word_));
     if (utf8::lengthValidated(word_) == 1) {
