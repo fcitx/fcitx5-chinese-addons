@@ -296,6 +296,8 @@ FCITX_CONFIGURATION(
     Option<std::string> hintSeparator{
         this, "HintSeparator", _("Separator text between hint and candidate"),
         " ~ "};
+    Option<bool> hintInCandidateComment{this, "HintInCandidateComment",
+                                        _("Display hint in candidate comment"), true};
     OptionWithAnnotation<CandidateLayoutHint, CandidateLayoutHintI18NAnnotation>
         candidateLayoutHint{this, "CandidateLayoutHint",
                             _("Candidate List orientation"),

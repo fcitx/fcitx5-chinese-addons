@@ -434,7 +434,8 @@ bool TableState::handlePinyinMode(KeyEvent &event) {
         for (auto &p : pinyinWords) {
             candidateList->append<TablePinyinCandidateWord>(
                 engine_, std::move(p.first), context_->dict(),
-                *config.displayCustomHint);
+                *config.displayCustomHint, *config.hintSeparator,
+                *config.hintInCandidateComment);
         }
 
         if (!candidateList->empty()) {
@@ -1331,8 +1332,13 @@ void TableState::updateUI(bool keepOldCursor, bool maybePredict) {
                         context->candidateHint(idx, *config.displayCustomHint);
                 }
                 if (!hint.empty()) {
-                    comment.append(*config.hintSeparator);
-                    comment.append(std::move(hint));
+                    if (*config.hintInCandidateComment) {
+                        comment.append(*config.hintSeparator);
+                        comment.append(std::move(hint));
+                    } else {
+                        text.append(*config.hintSeparator);
+                        text.append(std::move(hint));
+                    }
                 }
                 if (!config.markerForAutoPhrase->empty() &&
                     TableContext::isAuto(candidate.sentence())) {
