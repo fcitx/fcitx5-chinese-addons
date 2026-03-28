@@ -33,8 +33,7 @@ class TablePinyinCandidateWord : public CandidateWord {
 public:
     TablePinyinCandidateWord(TableEngine *engine, std::string word,
                              const libime::TableBasedDictionary &dict,
-                             bool customHint,
-                             std::string hintSeparator);
+                             bool customHint, std::string hintSeparator);
 
     void select(InputContext *inputContext) const override;
 
