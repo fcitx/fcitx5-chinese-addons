@@ -258,7 +258,7 @@ bool TableState::autoSelectCandidate() const {
     if (isComposeTableMode() && !context_->candidates().empty()) {
         // Create a dummy candidate word to reuse the logic in
         // TableCandidateWord::select
-        TableCandidateWord candidate(engine_, Text{}, Text{}, 0);
+        TableCandidateWord candidate(engine_, Text{}, Text{}, true, 0);
         candidate.select(ic_);
         return true;
     }
@@ -434,7 +434,8 @@ bool TableState::handlePinyinMode(KeyEvent &event) {
         for (auto &p : pinyinWords) {
             candidateList->append<TablePinyinCandidateWord>(
                 engine_, std::move(p.first), context_->dict(),
-                *config.displayCustomHint, *config.hintSeparator);
+                *config.displayCustomHint, *config.hintSeparator,
+                *config.spaceBeforeHint);
         }
 
         if (!candidateList->empty()) {
@@ -1323,7 +1324,8 @@ void TableState::updateUI(bool keepOldCursor, bool maybePredict) {
             candidateList->setPageSize(*config.pageSize);
 
             for (const auto &candidate : candidates) {
-                Text text, comment;
+                Text text;
+                Text comment;
                 text.append(candidate.toString());
                 std::string hint;
                 if (*config.hint) {
@@ -1339,7 +1341,8 @@ void TableState::updateUI(bool keepOldCursor, bool maybePredict) {
                     text.append(*config.markerForAutoPhrase);
                 }
                 candidateList->append<TableCandidateWord>(
-                    engine_, std::move(text), std::move(comment), idx);
+                    engine_, std::move(text), std::move(comment),
+                    *config.spaceBeforeHint, idx);
                 idx++;
             }
             if (!candidateList->empty()) {

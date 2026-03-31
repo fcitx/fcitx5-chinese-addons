@@ -295,7 +295,10 @@ FCITX_CONFIGURATION(
                                    _("Display custom hint")};
     Option<std::string> hintSeparator{
         this, "HintSeparator", _("Separator text between hint and candidate"),
-        " ~ "};
+        "~ "};
+    Option<bool> spaceBeforeHint{
+        this, "SpaceBeforeHint",
+        _("Show space between candidate and hint text"), true};
     OptionWithAnnotation<CandidateLayoutHint, CandidateLayoutHintI18NAnnotation>
         candidateLayoutHint{this, "CandidateLayoutHint",
                             _("Candidate List orientation"),
