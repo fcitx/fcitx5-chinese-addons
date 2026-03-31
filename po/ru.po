@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2025-12-21 20:24+0000\n"
+"POT-Creation-Date: 2026-03-31 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Dmitry <dmitrydmitry761@gmail.com>, 2025\n"
 "Language-Team: Russian (https://app.transifex.com/fcitx/teams/12005/ru/)\n"
@@ -22,96 +22,135 @@ msgstr ""
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
 "(n%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: im/table/state.cpp:1065
-msgid " Return for "
-msgstr " Возврат к "
+#: im/table/state.cpp:632
+msgid "Please use this functionality after typing some text."
+msgstr "Пожалуйста, используйте эту функцию после набора текста."
 
-#: im/table/state.cpp:1062
-msgid " for "
-msgstr " к "
+#: im/table/state.cpp:638
+msgid "Use Left and Right to select character: "
+msgstr "Используйте Left и Right для выбора символа:"
 
-#: gui/pinyindictmanager/pinyindictmanager.cpp:155
-msgid "%1 already exists, do you want to overwrite this dictionary?"
-msgstr "%1 уже существует, вы хотите перезаписать этот словарь?"
-
-#: gui/pinyindictmanager/filedownloader.cpp:74
-msgid "%1% Downloaded."
-msgstr "%1% загружен."
-
-#. i18n: file: gui/customphraseeditor/customphraseeditor.ui:41
-#. i18n: ectx: property (text), widget (QPushButton, addButton_)
-#: rc.cpp:9
-#, kde-format
-msgid "&Add"
-msgstr "&Добавить"
-
-#: gui/pinyindictmanager/pinyindictmanager.cpp:52
-msgid "&Browse Sogou Cell Dictionary Online"
-msgstr "&Просмотреть словарь Sogou Cell в интернете"
-
-#. i18n: file: gui/customphraseeditor/customphraseeditor.ui:84
-#. i18n: ectx: property (text), widget (QPushButton, clearButton_)
-#: rc.cpp:21
-#, kde-format
-msgid "&Clear"
-msgstr "&Очистить"
-
-#. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:55
-#. i18n: ectx: property (text), widget (QPushButton, clearDictButton_)
-#: rc.cpp:39
-#, kde-format
-msgid "&Clear Dictionary"
-msgstr "&Очистить Словарь"
-
-#: gui/pinyindictmanager/pinyindictmanager.cpp:59
-msgid "&Clear User Data"
-msgstr "&Очистить Данные Пользователя"
-
-#. i18n: file: gui/customphraseeditor/customphraseeditor.ui:73
-#. i18n: ectx: property (text), widget (QPushButton, externalEditor_)
-#: rc.cpp:18
-#, kde-format
-msgid "&External Editor"
-msgstr "&Внешний редактор"
-
-#. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:22
-#. i18n: ectx: property (text), widget (QPushButton, importButton_)
-#: rc.cpp:30
-#, kde-format
-msgid "&Import"
-msgstr "&Импорт"
-
-#. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:66
-#. i18n: ectx: property (text), widget (QPushButton, openDirectoryButton_)
-#: rc.cpp:42
-#, kde-format
-msgid "&Open User Data Directory"
-msgstr "&Открыть каталог пользовательских данных"
-
-#. i18n: file: gui/customphraseeditor/customphraseeditor.ui:52
-#. i18n: ectx: property (text), widget (QPushButton, removeButton_)
-#. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:33
-#. i18n: ectx: property (text), widget (QPushButton, removeButton_)
-#: rc.cpp:12 rc.cpp:33
-#, kde-format
-msgid "&Remove"
-msgstr "&Удалить"
-
-#. i18n: file: gui/customphraseeditor/customphraseeditor.ui:63
-#. i18n: ectx: property (text), widget (QPushButton, helpButton_)
-#: rc.cpp:15
-#, kde-format
-msgid "&Usage"
-msgstr "&Использование"
-
-#: im/table/candidate.cpp:78 im/pinyin/pinyincandidate.cpp:120
-msgid "(Half)"
-msgstr "(Полуширинный)"
-
-#: im/table/state.cpp:655
+#: im/table/state.cpp:656
 msgctxt "Pinyin lookup delimeter"
 msgid ", "
 msgstr ", "
+
+#: im/table/state.cpp:676
+#, c++-format
+msgctxt "Pinyin & Shuangpin"
+msgid "{0} ({1})"
+msgstr "{0} ({1})"
+
+#: im/table/state.cpp:683
+msgid "Could not find pinyin."
+msgstr "Не удается найти Пиньинь."
+
+#: im/table/state.cpp:686
+msgid "Use Left and Right to select text. "
+msgstr "Используйте Left и Right для выбора текста."
+
+#: im/table/state.cpp:692 im/table/state.cpp:715
+#, c++-format
+msgid "{0}: {1}"
+msgstr "{0}: {1}"
+
+#: im/table/state.cpp:698
+msgid "Press space or enter to insert."
+msgstr "Нажмите пробел или enter, чтобы вставить."
+
+#: im/table/state.cpp:701
+msgid "Press Backspace to forget."
+msgstr "Нажмите Backspace, чтобы забыть."
+
+#: im/table/state.cpp:704
+msgid "Press Delete to remove."
+msgstr "Нажмите Delete, чтобы удалить."
+
+#: im/table/state.cpp:708
+#, c++-format
+msgid "{0}: No corresponding code."
+msgstr "{0}: Нет соответствующего кода."
+
+#: im/table/state.cpp:717
+#, c++-format
+msgid "{0} is not in table."
+msgstr "{0} нет в таблице."
+
+#: im/table/state.cpp:1063
+msgid " for "
+msgstr " к "
+
+#: im/table/state.cpp:1066
+msgid " Return for "
+msgstr " Возврат к "
+
+#: im/table/state.cpp:1384
+msgid "Select candidate to be removed from history:"
+msgstr "Выбрать слово-кандидат для удаления из истории:"
+
+#: im/table/ime.h:35 im/pinyin/pinyin.cpp:982
+msgid "No"
+msgstr "Нет"
+
+#: im/table/ime.h:35
+msgid "Freq"
+msgstr "Частота"
+
+#: im/table/ime.h:35
+msgid "Fast"
+msgstr "Быстро"
+
+#: im/table/ime.h:36
+msgid "Not set"
+msgstr "Не задано"
+
+#: im/table/ime.h:37
+msgid "Vertical"
+msgstr "Вертикально"
+
+#: im/table/ime.h:37
+msgid "Horizontal"
+msgstr "Горизонтально"
+
+#: im/table/ime.h:49
+msgid "File"
+msgstr "Файл"
+
+#: im/table/ime.h:53
+msgid "Previous page"
+msgstr "Предыдущая страница"
+
+#: im/table/ime.h:59
+msgid "Next page"
+msgstr "Следующая страница"
+
+#: im/table/ime.h:65 im/pinyin/pinyin.h:248
+msgid "Previous Candidate"
+msgstr "Предыдущее слово-кандидат"
+
+#: im/table/ime.h:71 im/pinyin/pinyin.h:254
+msgid "Next Candidate"
+msgstr "Следующее слово-кандидат"
+
+#: im/table/ime.h:77 im/pinyin/pinyin.h:260
+msgid "Select Current Candidate"
+msgstr "Выбрать текущее слово-кандидат"
+
+#: im/table/ime.h:83 im/pinyin/pinyin.h:274
+msgid "Select Second Candidate"
+msgstr "Выбрать второе слово-кандидат"
+
+#: im/table/ime.h:90 im/pinyin/pinyin.h:281
+msgid "Select Third Candidate"
+msgstr "Выбрать третье слово-кандидат"
+
+#: im/table/ime.h:97
+msgid "Selection"
+msgstr "Выбор"
+
+#: im/table/ime.h:105 im/pinyin/pinyin.h:160
+msgid "Candidates Per Page"
+msgstr "Количество слов-кандидатов на страницу"
 
 #: im/table/ime.h:109
 msgid ""
@@ -132,28 +171,187 @@ msgstr ""
 "автоматического выбора и клавишу перемещения курсора вперед к клиенту, чтобы "
 "имитировать работу, более похожую на составление таблицы."
 
-#: im/table/engine.h:54 im/pinyin/pinyin.h:92
-msgid "ABC"
-msgstr "ABC"
+#: im/table/ime.h:119
+msgid "Table Global Options"
+msgstr "Глобальные параметры таблицы"
 
-#: im/pinyin/pinyin.h:224
-msgid "Action when switching input method"
-msgstr "Действие при переключении метода ввода"
+#: im/table/ime.h:123
+msgid "Commit after auto select candidates"
+msgstr "Фиксировать после автоматического выбора слов-кандидатов"
 
-#. i18n: file: gui/customphraseeditor/editordialog.ui:14
-#. i18n: ectx: property (windowTitle), widget (QDialog, EditorDialog)
-#: rc.cpp:3
-#, kde-format
-msgid "Add Phrase"
-msgstr "Добавить фразу"
+#: im/table/ime.h:127
+msgid "Commit buffer when deactivating input method"
+msgstr "Фиксировать буфер при деактивации метода ввода"
 
-#: org.fcitx.Fcitx5.Addon.ChineseAddons.metainfo.xml.in:8
+#: im/table/ime.h:131
+msgid "Commit Invalid Segment"
+msgstr "Зафиксировать недопустимый сегмент"
+
+#: im/table/ime.h:136
 msgid ""
-"Add support for Pinyin, Table and many other Chinese related functionality "
-"to Fcitx"
+"Commit the segment that does not exist in the table. This option is useful "
+"for some latin/compose based table."
 msgstr ""
-"Добавить в Fcitx поддержку Пиньинь, таблиц и многих других функций, "
-"связанных с китайским языком."
+"Зафиксируйте сегмент, которого нет в таблице. Эта опция полезна для "
+"некоторых таблиц на основе латиницы/композиции."
+
+#: im/table/ime.h:138
+msgid "Use full width"
+msgstr "Использовать полную ширину"
+
+#: im/table/ime.h:140
+msgid "Ignore built in punctuation"
+msgstr "Игнорировать встроенные знаки препинания"
+
+#: im/table/ime.h:142
+msgid "First candidate as Preedit"
+msgstr ""
+"Использовать первое слово-кандидат в качестве предварительно "
+"отредактированного текста"
+
+#: im/table/ime.h:146 im/pinyin/pinyin.h:197
+msgid "Fix embedded preedit cursor at the beginning of the preedit"
+msgstr ""
+"Зафиксировать встроенный курсор предварительного редактирования в начале."
+
+#: im/table/ime.h:151 im/pinyin/pinyin.h:331
+msgid "Key to trigger quickphrase"
+msgstr "Клавиша для активации быстрой фразы"
+
+#: im/table/ime.h:157
+msgid "Text to trigger quickphrase"
+msgstr "Текст для запуска быстрой фразы"
+
+#: im/table/ime.h:161
+msgid ""
+"When a new character is typed, if it matches any character in this string, "
+"all the existing text will be put into quickphrase buffer."
+msgstr ""
+"При вводе нового символа, если он соответствует любому символу в этой "
+"строке, весь существующий текст будет помещен в буфер быстрой фразы."
+
+#: im/table/ime.h:164
+msgid "Icon"
+msgstr "Иконка"
+
+#: im/table/ime.h:166
+msgid "Don't sort word shorter than"
+msgstr "Не сортировать слово короче, чем"
+
+#: im/table/ime.h:168
+msgid "Sort candidate by code length"
+msgstr "Сортировка слов-кандидатов по длине кода"
+
+#: im/table/ime.h:170
+msgid "Order policy"
+msgstr "Политика порядка"
+
+#: im/table/ime.h:174
+msgid "Use system language model"
+msgstr "Использовать языковую модель системы"
+
+#: im/table/ime.h:178
+msgid ""
+"When available, system language model will be loaded for given language and "
+"provide ability to give better context based order."
+msgstr ""
+"Если доступно, системная языковая модель будет загружена для данного языка и "
+"предоставит возможность задать лучший порядок на основе контекста."
+
+#: im/table/ime.h:184
+msgid "Sort candidates based on current context"
+msgstr "Сортировка слов-кандидатов на основе текущего контекста"
+
+#: im/table/ime.h:189
+msgid ""
+"Order the candidate based on the word you already typed. You may want to "
+"disable this option if you want the candidate order to be stable regardless "
+"of the history."
+msgstr ""
+"Слова-кандидаты сортируются в соответствии с тем, что было введено. Если вы "
+"хотите, чтобы порядок слов-кандидатов не зависел от истории ввода, вам "
+"необходимо отключить эту опцию."
+
+#: im/table/ime.h:195
+msgid "Wildcard matching Key"
+msgstr "Клавиша, соответствующая карточке"
+
+#: im/table/ime.h:200
+msgid "Prefix key to trigger Pinyin"
+msgstr "Клавиша-префикс для активации Пиньинь"
+
+#: im/table/ime.h:204
+msgid "Auto select candidate"
+msgstr "Автоматически выбирать слово-кандидат"
+
+#: im/table/ime.h:208
+msgid "Length limit of selecting the only candidate"
+msgstr "Ограничение по длине выбора единственного слова-кандидата"
+
+#: im/table/ime.h:213
+msgid ""
+"When current input length is greater than or equal to the limit and there is "
+"only one candidate available, automatically select this candidate. -1 Means "
+"the maximum code length of the table. 0 means this behavior is disabled."
+msgstr ""
+"Когда текущая входная длина больше или равна пределу и доступно только одно "
+"слово-кандидат, это слово-кандидат выбирается автоматически. -1 Означает "
+"максимальную длину кода таблицы. 0 означает, что это поведение отключено."
+
+#: im/table/ime.h:220
+msgid "Regular expression for selecting the only candidate"
+msgstr "Регулярное выражение для выбора единственного слова-кандидата"
+
+#: im/table/ime.h:224
+msgid ""
+"When current input matches the regular expression and there is only one "
+"candidate available, automatically select this candidate."
+msgstr ""
+"Когда текущий ввод соответствует регулярному выражению и доступно только "
+"одно слово-кандидат, это слово-кандидат выбирается автоматически."
+
+#: im/table/ime.h:230
+msgid "Auto select when no match is found"
+msgstr "Автоматический выбор, когда совпадений не найдено"
+
+#: im/table/ime.h:235
+msgid ""
+"When typing a new character, if the current input length is greater than or "
+"equal to the limit, and the existing segment with the new character does not "
+"have any matched entries in the table, select the current candidate and then "
+"type in the new character. -1 means the maximum code length of the table. 0 "
+"means this behavior is disabled."
+msgstr ""
+"При вводе нового символа, если текущая длина ввода больше или равна пределу, "
+"а существующий сегмент с новым символом не имеет совпадающих записей в "
+"таблице, выберите текущее слово-кандидат, а затем введите новый символ. -1 "
+"означает максимальную длину кода таблицы. 0 означает, что это поведение "
+"отключено."
+
+#: im/table/ime.h:244
+msgid "Regular expression for auto select when no match is found"
+msgstr ""
+"Регулярное выражение для автоматического выбора, когда совпадение не найдено"
+
+#: im/table/ime.h:249
+msgid ""
+"When typing a new character, if the current input matches the regular "
+"expression and the existing segment with the new character does not have any "
+"matched entries in the table, select the current candidate and then type in "
+"the new character."
+msgstr ""
+"При вводе нового символа, если текущий ввод соответствует регулярному "
+"выражению, а существующий сегмент с новым символом не имеет совпадающих "
+"записей в таблице, выберите текущее слово-кандидат, а затем введите новый "
+"символ."
+
+#: im/table/ime.h:254
+msgid "End key"
+msgstr "Клавиша отмены"
+
+#: im/table/ime.h:258
+msgid "Auto phrase length"
+msgstr "Автоматически устанавливать длину фразы"
 
 #: im/table/ime.h:263
 msgid ""
@@ -167,461 +365,22 @@ msgstr ""
 "пользователем один раз, оно будет добавлено как пользовательская фраза. -1 "
 "означает максимальную длину кода таблицы. 0 означает отключить эту функцию."
 
-#: im/table/ime.h:304
-msgid "Allow use keypad key as table input"
-msgstr "Разрешить использовать клавиатуру в качестве ввода таблицы"
+#: im/table/ime.h:271
+msgid "Learn auto phrase with phrase"
+msgstr "Выучить автофразу с помощью фразы"
 
-#: modules/punctuation/punctuation.h:54
-msgid "Alternative Mapping"
-msgstr "Альтернативное отображение"
-
-#: im/pinyin/pinyin.h:190
-msgid "Always show Cloud Pinyin place holder"
-msgstr "Всегда отображать текст-заполнитель Cloud Pinyin"
-
-#: gui/pinyindictmanager/pinyindictmanager.cpp:378
-msgid "Are you sure to delete %1?"
-msgstr "Действительно удалить %1?"
-
-#: gui/pinyindictmanager/pinyindictmanager.cpp:346
-msgid "Are you sure to delete all dictionaries?"
-msgstr "Вы уверены, что хотите удалить все словари?"
-
-#: im/table/ime.h:258
-msgid "Auto phrase length"
-msgstr "Автоматически устанавливать длину фразы"
-
-#: im/table/ime.h:306
-msgid "Auto rule set"
-msgstr "Автоматически устанавливать правила"
-
-#: im/table/ime.h:204
-msgid "Auto select candidate"
-msgstr "Автоматически выбирать слово-кандидат"
-
-#: im/table/ime.h:230
-msgid "Auto select when no match is found"
-msgstr "Автоматический выбор, когда совпадений не найдено"
-
-#: modules/cloudpinyin/cloudpinyin.h:34
-msgid "Backend"
-msgstr "Бэкэнд"
-
-#: im/pinyin/pinyin.h:218
-msgid "Backspace behavior on prediction"
-msgstr "Поведение клавиши Backspace при прогнозировании"
-
-#: im/pinyin/pinyin.h:110
-msgid "Backspace when not using on-screen keyboard"
-msgstr "Backspace, если экранная клавиатура не используется"
-
-#: im/table/qxm.conf.in.in:2
-msgid "Bingchan"
-msgstr "Бинчань"
-
-#: gui/pinyindictmanager/browserdialog.cpp:54
-msgid "Browse Sogou Cell Dict repository"
-msgstr "Исследовать репозиторий словаря Sogou Cell"
-
-#: im/table/ime.h:301
-msgid "Candidate List orientation"
-msgstr "Ориентация списка слов-кандидатов"
-
-#: im/table/ime.h:105 im/pinyin/pinyin.h:160
-msgid "Candidates Per Page"
-msgstr "Количество слов-кандидатов на страницу"
-
-#: im/table/cangjie.conf.in.in:2
-msgid "Cangjie (Simplified Chinese)"
-msgstr "Цанцзе (Упрощенный Китайский)"
-
-#: org.fcitx.Fcitx5.Addon.ChineseAddons.metainfo.xml.in:7
-msgid "Chinese Addons"
-msgstr "Китайский - Дополнения"
-
-#: im/pinyin/pinyin.h:290
-msgid "Choose Character from Phrase"
-msgstr "Выберите символ из фразы"
-
-#: im/pinyin/pinyin.h:84
-msgid "Clear"
-msgstr "Очистить"
-
-#: gui/pinyindictmanager/pinyindictmanager.cpp:60
-msgid "Clear &All Data"
-msgstr "Очистить &Все Данные"
-
-#: im/pinyin/pinyin.h:109
-msgid "Clear candidates & backspace"
-msgstr "Очистить слова-кандидаты и нажать клавишу Backspace"
-
-#: modules/cloudpinyin/cloudpinyin.conf.in.in:2
-msgid "Cloud Pinyin"
-msgstr "Cloud Pinyin"
-
-#: im/pinyin/pinyin.h:183
-msgid "Cloud Pinyin Candidate Order"
-msgstr "Порядок слов-кандидатов в Cloud Pinyin"
-
-#: im/pinyin/pinyin.cpp:1251
-msgid "Cloud Pinyin Status"
-msgstr "Статус Cloud Pinyin"
-
-#: im/pinyin/pinyin.cpp:1253
-msgid "Cloud Pinyin is disabled."
-msgstr "Cloud Pinyin отключен."
-
-#: im/pinyin/pinyin.cpp:1252
-msgid "Cloud Pinyin is enabled."
-msgstr "Cloud Pinyin включен."
-
-#: im/table/ime.h:131
-msgid "Commit Invalid Segment"
-msgstr "Зафиксировать недопустимый сегмент"
-
-#: im/pinyin/pinyin.h:266
-msgid "Commit Raw Input"
-msgstr "Совершать необработанный ввод"
-
-#: im/table/ime.h:123
-msgid "Commit after auto select candidates"
-msgstr "Фиксировать после автоматического выбора слов-кандидатов"
-
-#: im/table/ime.h:127
-msgid "Commit buffer when deactivating input method"
-msgstr "Фиксировать буфер при деактивации метода ввода"
-
-#: im/pinyin/pinyin.h:85
-msgid "Commit current preedit"
-msgstr "Подтвердить текущее предварительное редактирование"
-
-#: im/pinyin/pinyin.h:86
-msgid "Commit default selection"
-msgstr "Подтвердить выбор по умолчанию"
-
-#: im/pinyin/pinyin.h:99
-msgid "Commit preview"
-msgstr "Отправить превью"
-
-#: im/table/ime.h:136
+#: im/table/ime.h:275
 msgid ""
-"Commit the segment that does not exist in the table. This option is useful "
-"for some latin/compose based table."
-msgstr ""
-"Зафиксируйте сегмент, которого нет в таблице. Эта опция полезна для "
-"некоторых таблиц на основе латиницы/композиции."
-
-#: im/pinyin/pinyin.h:121
-msgid "Common Typo"
-msgstr "Распространённая опечатка"
-
-#: im/pinyin/pinyin.h:99
-msgid "Composing pinyin"
-msgstr "Составление Пиньинь"
-
-#: im/pinyin/pinyin.h:179
-msgid "Configure Cloud Pinyin"
-msgstr "Настроить Cloud Pinyin"
-
-#: im/pinyin/pinyin.h:326
-msgid "Configure Simplified/Traditional Chinese Conversion"
-msgstr "Настройка преобразования упрощенного/традиционного китайского языка"
-
-#: gui/pinyindictmanager/pinyindictmanager.cpp:345
-#: gui/pinyindictmanager/pinyindictmanager.cpp:377
-msgid "Confirm deletion"
-msgstr "Подтвердите удаление"
-
-#: gui/pinyindictmanager/processrunner.cpp:50
-msgid "Convert failed."
-msgstr "Не удалось преобразовать."
-
-#: gui/pinyindictmanager/processrunner.cpp:44
-#: gui/pinyindictmanager/renamefile.cpp:34
-msgid "Converter crashed."
-msgstr "Сбой преобразователя."
-
-#: im/pinyin/pinyin.h:146
-msgid "Correction Layout"
-msgstr "Исправление раскладки"
-
-#: im/table/state.cpp:682
-msgid "Could not find pinyin."
-msgstr "Не удается найти Пиньинь."
-
-#: gui/pinyindictmanager/pinyindictmanager.cpp:128
-#: gui/pinyindictmanager/pinyindictmanager.cpp:239
-#: gui/pinyindictmanager/pinyindictmanager.cpp:297
-msgid "Create directory failed. Please check the permission or disk space."
-msgstr ""
-"Не удалось создать каталог. Пожалуйста, проверьте разрешение или место на "
-"диске."
-
-#: gui/pinyindictmanager/filedownloader.cpp:26
-msgid "Create temporary file failed."
-msgstr "Не удалось создать временный файл."
-
-#: gui/pinyindictmanager/pinyindictmanager.cpp:139
-msgid "Creating temp file failed. Please check the permission or disk space."
-msgstr ""
-"Не удалось создать временный файл. Пожалуйста, проверьте разрешение или "
-"место на диске."
-
-#: im/table/engine.h:56 im/pinyin/pinyin.h:94
-msgid "Custom"
-msgstr "Пользовательский"
-
-#: gui/customphraseeditor/customphraseeditor.cpp:175
-msgid "Custom Phrase Editor"
-msgstr "Редактор пользовательских фраз"
-
-#: modules/chttrans/chttrans.cpp:267
-msgid "Default"
-msgstr "По умолчанию"
-
-#: im/pinyin/pinyincandidate.cpp:402
-msgid "Delete from custom phrase"
-msgstr "Удалить из пользовательской фразы"
-
-#. i18n: file: gui/pinyindictmanager/browserdialog.ui:14
-#. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
-#: rc.cpp:24
-#, kde-format
-msgid "Dialog"
-msgstr "Диалог"
-
-#: im/table/db.conf.in.in:2
-msgid "Dianbaoma"
-msgstr "Дяньбаома"
-
-#: gui/pinyindictmanager/pinyindictmanager.cpp:154
-msgid "Dictionary already exists"
-msgstr "Словарь уже существует"
-
-#: im/table/ime.h:293
-msgid "Display Hint for word"
-msgstr "Показывать подсказку для слова"
-
-#: im/table/engine.h:77
-msgid "Display Shuangpin when looking up pinyin"
-msgstr "Отображать Шуанпинь при поиске Пиньинь"
-
-#: im/table/ime.h:295
-msgid "Display custom hint"
-msgstr "Показывать собственную подсказку"
-
-#: im/table/engine.h:53
-msgid "Do not display"
-msgstr "Не отображать"
-
-#: im/pinyin/pinyin.h:98
-msgid "Do not show"
-msgstr "Не показывать"
-
-#: im/pinyin/pinyin.cpp:964
-#, c++-format
-msgid ""
-"Do you want to enable cloudpinyin now for better prediction? You can always "
-"toggle it later in configuration or by pressing {}."
-msgstr ""
-"Вы хотите включить cloudpinyin сейчас для более точного прогнозирования? Вы "
-"всегда можете переключить его позже в настройках или нажав {}."
-
-#: im/pinyin/pinyin.cpp:959
-msgid ""
-"Do you want to enable cloudpinyin now for better prediction? You can always "
-"toggle it later in configuration."
-msgstr ""
-"Вы хотите включить cloudpinyin сейчас для более точного прогнозирования? Вы "
-"всегда можете переключить его позже в настройках."
-
-#: gui/customphraseeditor/customphraseeditor.cpp:219
-msgid "Do you want to reload custom phrase from disk?"
-msgstr "Вы хотите загрузить пользовательскую фразу с диска повторно?"
-
-#: im/table/ime.h:166
-msgid "Don't sort word shorter than"
-msgstr "Не сортировать слово короче, чем"
-
-#: gui/pinyindictmanager/filedownloader.cpp:81
-msgid "Download Finished"
-msgstr "Загрузка завершена"
-
-#: gui/pinyindictmanager/filedownloader.cpp:43
-msgid "Download started."
-msgstr "Загрузка началась."
-
-#: im/pinyin/pinyin.h:177
-msgid "Enable Cloud Pinyin"
-msgstr "Включить Cloud Pinyin"
-
-#: im/pinyin/pinyin.cpp:973
-msgid "Enable Cloudpinyin"
-msgstr "Включить Cloudpinyin"
-
-#: im/table/engine.h:80 im/pinyin/pinyin.h:201
-msgid "Enable Prediction"
-msgstr "Включить прогнозирование"
-
-#: im/pinyin/pinyin.h:169
-msgid "Enable more Characters after Unicode CJK Extension B"
-msgstr "Включить больше символов после Unicode CJK Extension B"
-
-#: modules/chttrans/chttrans.h:55
-msgid "Enabled Input Methods"
-msgstr "Включенные методы ввода"
-
-#: im/table/ime.h:254
-msgid "End key"
-msgstr "Клавиша отмены"
-
-#: im/pinyin/pinyin.h:347
-msgid ""
-"Enter quickphrase mode when current input matches any regular expression "
-"from the list."
-msgstr ""
-"Перейти в режим быстрой фразы, если текущий ввод соответствует любому "
-"регулярному выражению из списка."
-
-#: modules/punctuation/punctuation.h:62
-msgid "Entries"
-msgstr "Записи"
-
-#: im/table/erbi.conf.in.in:2
-msgid "Erbi"
-msgstr "Эрби"
-
-#: gui/pinyindictmanager/pinyindictmanager.cpp:386
-msgid "Error while deleting %1."
-msgstr "Ошибка при удалении %1."
-
-#: im/table/ime.h:291
-msgid "Exact Match"
-msgstr "Точное совпадение"
-
-#: modules/pinyinhelper/pinyinhelper.conf.in.in:2
-msgid "Extra Pinyin functionality"
-msgstr "Дополнительная функциональность Пиньинь"
-
-#: gui/pinyindictmanager/pinyindictmanager.cpp:127
-msgid "Failed to create directory"
-msgstr "Не удалось создать каталог"
-
-#: gui/pinyindictmanager/filedownloader.cpp:39
-msgid "Failed to create request."
-msgstr "Не удалось создать запрос."
-
-#: gui/pinyindictmanager/pinyindictmanager.cpp:138
-msgid "Failed to create temp file"
-msgstr "Не удалось создать временный файл"
-
-#: gui/pinyindictmanager/pinyindictmanager.cpp:238
-#: gui/pinyindictmanager/pinyindictmanager.cpp:296
-msgid "Failed to get runtime directory"
-msgstr "Не удалось получить каталог среды выполнения"
-
-#: im/table/ime.h:35
-msgid "Fast"
-msgstr "Быстро"
-
-#: im/table/ime.h:49
-msgid "File"
-msgstr "Файл"
-
-#: gui/pinyindictmanager/pinyindictmanager.cpp:385
-msgid "File Operation Failed"
-msgstr "Сбой операции с файлом"
-
-#: gui/customphraseeditor/customphraseeditor.cpp:218
-msgid "File updated"
-msgstr "Файл обновлен"
-
-#: im/pinyin/pinyin.h:299
-msgid "Filter by stroke"
-msgstr "Фильтр по штриху"
-
-#: im/table/ime.h:142
-msgid "First candidate as Preedit"
-msgstr ""
-"Использовать первое слово-кандидат в качестве предварительно "
-"отредактированного текста"
-
-#: im/table/ime.h:146 im/pinyin/pinyin.h:197
-msgid "Fix embedded preedit cursor at the beginning of the preedit"
-msgstr ""
-"Зафиксировать встроенный курсор предварительного редактирования в начале."
-
-#: im/pinyin/pinyincandidate.cpp:386
-msgid "Forget candidate"
-msgstr "Забыть слово-кандидат"
-
-#: im/table/engine.h:66 im/table/candidate.cpp:112 im/pinyin/pinyin.h:228
-msgid "Forget word"
-msgstr "Забыть слово"
-
-#: im/table/ime.h:35
-msgid "Freq"
-msgstr "Частота"
-
-#: gui/pinyindictmanager/pinyindictmanager.cpp:49
-msgid "From &File"
-msgstr "&Из файла"
-
-#: gui/pinyindictmanager/pinyindictmanager.cpp:50
-msgid "From &Sogou Cell Dictionary File"
-msgstr "Из &файла словаря Sogou Cell"
-
-#: modules/fullwidth/fullwidth.cpp:73 modules/fullwidth/fullwidth.h:29
-msgid "Full width Character"
-msgstr "Полноширинный символ"
-
-#: modules/fullwidth/fullwidth.cpp:75
-msgid "Full width Character is disabled."
-msgstr "Полноширинный символ отключен."
-
-#: modules/fullwidth/fullwidth.cpp:74
-msgid "Full width Character is enabled."
-msgstr "Полноширинный символ включен."
-
-#: modules/fullwidth/fullwidth.cpp:70 modules/fullwidth/fullwidth.conf.in.in:2
-msgid "Full width character"
-msgstr "Полноширинный символ"
-
-#: modules/punctuation/punctuation.h:104
-msgid "Full width punctuation"
-msgstr "Полноширинная пунктуация"
-
-#: modules/punctuation/punctuation.cpp:271
-msgid "Full width punctuation is disabled."
-msgstr "Полноширинная пунктуация отключена."
-
-#: modules/punctuation/punctuation.cpp:270
-msgid "Full width punctuation is enabled."
-msgstr "Полноширинная пунктуация включена."
-
-#: im/pinyin/pinyin.h:349
-msgid "Fuzzy Pinyin"
-msgstr "Нечёткий Пиньинь"
-
-#: modules/fullwidth/fullwidth.h:30
-msgid "Half width Character"
-msgstr "Полуширинный символ"
-
-#: modules/punctuation/punctuation.h:105
-msgid "Half width punctuation"
-msgstr "Полуширинная пунктуация"
-
-#: modules/punctuation/punctuation.h:42
-msgid "Half width punctuation after latin letter or number"
-msgstr "Полуширинная пунктуация после латинской буквы или цифры"
-
-#: im/table/ime.h:37
-msgid "Horizontal"
-msgstr "Горизонтально"
-
-#: im/table/ime.h:164
-msgid "Icon"
-msgstr "Иконка"
+"Whether to learn new phrase from other phrases or just single characters."
+msgstr "Учить ли новую фразу из других фраз или только отдельных символов."
+
+#: im/table/ime.h:279
+msgid "Marker for auto phrase in the candidates"
+msgstr "Маркер для автофраз в словах-кандидатах"
+
+#: im/table/ime.h:283
+msgid "Save auto phrase after being typed for ... times"
+msgstr "Сохранять автофразу после набора ... раз"
 
 #: im/table/ime.h:288
 msgid ""
@@ -632,6 +391,509 @@ msgstr ""
 "Если значение меньше 0, значит эта функция отключена. Если автофраза "
 "включена, явный выбор кандидата автофразы все равно добавит слово в качестве "
 "новой пользовательской фразы."
+
+#: im/table/ime.h:291
+msgid "Exact Match"
+msgstr "Точное совпадение"
+
+#: im/table/ime.h:292
+msgid "Learning"
+msgstr "Обучение"
+
+#: im/table/ime.h:293
+msgid "Display Hint for word"
+msgstr "Показывать подсказку для слова"
+
+#: im/table/ime.h:295
+msgid "Display custom hint"
+msgstr "Показывать собственную подсказку"
+
+#: im/table/ime.h:297
+msgid "Separator text between hint and candidate"
+msgstr "Текст-разделитель между подсказкой и словом-кандидатом"
+
+#: im/table/ime.h:301
+msgid "Show space between candidate and hint text"
+msgstr ""
+
+#: im/table/ime.h:304
+msgid "Candidate List orientation"
+msgstr "Ориентация списка слов-кандидатов"
+
+#: im/table/ime.h:307
+msgid "Allow use keypad key as table input"
+msgstr "Разрешить использовать клавиатуру в качестве ввода таблицы"
+
+#: im/table/ime.h:309
+msgid "Auto rule set"
+msgstr "Автоматически устанавливать правила"
+
+#: im/table/engine.h:53
+msgid "Do not display"
+msgstr "Не отображать"
+
+#: im/table/engine.h:53 im/pinyin/pinyin.h:91 im/table/zrm.conf.in.in:2
+msgid "Ziranma"
+msgstr "Цзыжаньма"
+
+#: im/table/engine.h:53 im/pinyin/pinyin.h:91
+msgid "MS"
+msgstr "MS"
+
+#: im/table/engine.h:54 im/pinyin/pinyin.h:92
+msgid "Ziguang"
+msgstr "Цзыгуан"
+
+#: im/table/engine.h:54 im/pinyin/pinyin.h:92
+msgid "ABC"
+msgstr "ABC"
+
+#: im/table/engine.h:55 im/pinyin/pinyin.h:93
+msgid "Zhongwenzhixing"
+msgstr "Чжунвэньчжисин"
+
+#: im/table/engine.h:55 im/pinyin/pinyin.h:93
+msgid "PinyinJiajia"
+msgstr "ПиньиньЦзяцзя"
+
+#: im/table/engine.h:56 im/pinyin/pinyin.h:94
+msgid "Xiaohe"
+msgstr "Сяохэ"
+
+#: im/table/engine.h:56 im/pinyin/pinyin.h:94
+msgid "Custom"
+msgstr "Пользовательский"
+
+#: im/table/engine.h:61
+msgid "Modify dictionary"
+msgstr "Изменить словарь"
+
+#: im/table/engine.h:66 im/table/candidate.cpp:118 im/pinyin/pinyin.h:228
+msgid "Forget word"
+msgstr "Забыть слово"
+
+#: im/table/engine.h:71
+msgid "Look up pinyin"
+msgstr "Искать Пиньинь"
+
+#: im/table/engine.h:77
+msgid "Display Shuangpin when looking up pinyin"
+msgstr "Отображать Шуанпинь при поиске Пиньинь"
+
+#: im/table/engine.h:80 im/pinyin/pinyin.h:201
+msgid "Enable Prediction"
+msgstr "Включить прогнозирование"
+
+#: im/table/engine.h:83
+msgid "Prediction Size"
+msgstr "Количество прогнозов"
+
+#: im/table/candidate.cpp:84 im/pinyin/pinyincandidate.cpp:119
+msgid "(Half)"
+msgstr "(Полуширинный)"
+
+#: im/table/engine.cpp:91 im/table/engine.cpp:99 im/pinyin/pinyin.cpp:786
+#: im/pinyin/pinyin.cpp:796
+msgid "Prediction Enabled"
+msgstr "Прогнозирование включено"
+
+#: im/table/engine.cpp:92 im/table/engine.cpp:100 im/pinyin/pinyin.cpp:787
+#: im/pinyin/pinyin.cpp:797
+msgid "Prediction Disabled"
+msgstr "Прогнозирование отключено"
+
+#: im/table/engine.cpp:93 im/pinyin/pinyin.cpp:788
+msgid "Show prediction words"
+msgstr "Показать слова-предсказания"
+
+#: im/table/engine.cpp:228
+msgid "Not available"
+msgstr "Недоступно"
+
+#: im/pinyin/pinyin.h:84
+msgid "Clear"
+msgstr "Очистить"
+
+#: im/pinyin/pinyin.h:85
+msgid "Commit current preedit"
+msgstr "Подтвердить текущее предварительное редактирование"
+
+#: im/pinyin/pinyin.h:86
+msgid "Commit default selection"
+msgstr "Подтвердить выбор по умолчанию"
+
+#: im/pinyin/pinyin.h:98
+msgid "Do not show"
+msgstr "Не показывать"
+
+#: im/pinyin/pinyin.h:99
+msgid "Composing pinyin"
+msgstr "Составление Пиньинь"
+
+#: im/pinyin/pinyin.h:99
+msgid "Commit preview"
+msgstr "Отправить превью"
+
+#: im/pinyin/pinyin.h:108
+msgid "Only Clear candidates"
+msgstr "Очистить только слова-кандидаты"
+
+#: im/pinyin/pinyin.h:109
+msgid "Clear candidates & backspace"
+msgstr "Очистить слова-кандидаты и нажать клавишу Backspace"
+
+#: im/pinyin/pinyin.h:110
+msgid "Backspace when not using on-screen keyboard"
+msgstr "Backspace, если экранная клавиатура не используется"
+
+#: im/pinyin/pinyin.h:117
+msgid "None"
+msgstr "Нет"
+
+#: im/pinyin/pinyin.h:117
+msgid "QWERTY"
+msgstr "QWERTY"
+
+#: im/pinyin/pinyin.h:120
+msgid "ue -> ve"
+msgstr "ue -> ve"
+
+#: im/pinyin/pinyin.h:121
+msgid "Common Typo"
+msgstr "Распространённая опечатка"
+
+#: im/pinyin/pinyin.h:122
+msgid "Inner Segment (xian -> xi'an)"
+msgstr "Внутренний сегмент (xian -> xi'an)"
+
+#: im/pinyin/pinyin.h:124
+msgid "Inner Segment for Short Pinyin (qie -> qi'e)"
+msgstr "Внутренний сегмент для короткого Пиньинь (qie -> qi'e)"
+
+#: im/pinyin/pinyin.h:127
+msgid "Match partial finals (e -> en, eng, ei)"
+msgstr "Частичное  совпадение окончаний (e -> en, eng, ei)"
+
+#: im/pinyin/pinyin.h:131
+msgid "Match partial shuangpin if input length is longer than 4"
+msgstr "Совпадение с частичным двойным пиньинем, если длина ввода больше 4"
+
+#: im/pinyin/pinyin.h:132
+msgid "u <-> v"
+msgstr "u <-> v"
+
+#: im/pinyin/pinyin.h:133
+msgid "an <-> ang"
+msgstr "an <-> ang"
+
+#: im/pinyin/pinyin.h:134
+msgid "en <-> eng"
+msgstr "en <-> eng"
+
+#: im/pinyin/pinyin.h:135
+msgid "ian <-> iang"
+msgstr "ian <-> iang"
+
+#: im/pinyin/pinyin.h:136
+msgid "in <-> ing"
+msgstr "in <-> ing"
+
+#: im/pinyin/pinyin.h:137
+msgid "u <-> ou"
+msgstr "u <-> ou"
+
+#: im/pinyin/pinyin.h:138
+msgid "uan <-> uang"
+msgstr "uan <-> uang"
+
+#: im/pinyin/pinyin.h:139
+msgid "c <-> ch"
+msgstr "c <-> ch"
+
+#: im/pinyin/pinyin.h:140
+msgid "f <-> h"
+msgstr "f <-> h"
+
+#: im/pinyin/pinyin.h:141
+msgid "l <-> n"
+msgstr "l <-> n"
+
+#: im/pinyin/pinyin.h:142
+msgid "l <-> r"
+msgstr "l <-> r"
+
+#: im/pinyin/pinyin.h:143
+msgid "s <-> sh"
+msgstr "s <-> sh"
+
+#: im/pinyin/pinyin.h:144
+msgid "z <-> zh"
+msgstr "z <-> zh"
+
+#: im/pinyin/pinyin.h:146
+msgid "Correction Layout"
+msgstr "Исправление раскладки"
+
+#: im/pinyin/pinyin.h:155
+msgid "Shuangpin Profile"
+msgstr "Профиль Шуанпинь"
+
+#: im/pinyin/pinyin.h:158
+msgid "Show current shuangpin mode"
+msgstr "Показать текущий режим шуанпинь"
+
+#: im/pinyin/pinyin.h:162
+msgid "Show English Candidates"
+msgstr "Показать кандидаты на английском языке"
+
+#: im/pinyin/pinyin.h:164
+msgid "Show symbol candidates"
+msgstr "Показать кандидаты-символы"
+
+#: im/pinyin/pinyin.h:166
+msgid "Show Chaizi candidates"
+msgstr "Показать кандидаты Чайцзы"
+
+#: im/pinyin/pinyin.h:169
+msgid "Enable more Characters after Unicode CJK Extension B"
+msgstr "Включить больше символов после Unicode CJK Extension B"
+
+#: im/pinyin/pinyin.h:173
+msgid ""
+"Show stroke candidates when typing with h(一), s(丨), p(丿), n(㇏), z(𠃍)"
+msgstr ""
+"Показывать варианты штрихов при наборе с h(一), s(丨), p(丿), n(㇏), z(𠃍)"
+
+#: im/pinyin/pinyin.h:177
+msgid "Enable Cloud Pinyin"
+msgstr "Включить Cloud Pinyin"
+
+#: im/pinyin/pinyin.h:179
+msgid "Configure Cloud Pinyin"
+msgstr "Настроить Cloud Pinyin"
+
+#: im/pinyin/pinyin.h:183
+msgid "Cloud Pinyin Candidate Order"
+msgstr "Порядок слов-кандидатов в Cloud Pinyin"
+
+#: im/pinyin/pinyin.h:187
+msgid "Show animation when Cloud Pinyin is loading"
+msgstr "Показывать анимацию при загрузке Cloud Pinyin"
+
+#: im/pinyin/pinyin.h:190
+msgid "Always show Cloud Pinyin place holder"
+msgstr "Всегда отображать текст-заполнитель Cloud Pinyin"
+
+#: im/pinyin/pinyin.h:193
+msgid "Preedit Mode"
+msgstr "Режим Предварительного Редактирования"
+
+#: im/pinyin/pinyin.h:200
+msgid "Show complete pinyin in preedit"
+msgstr "Показать полный Пиньинь в предварительном редактировании"
+
+#: im/pinyin/pinyin.h:206
+msgid "Keep the current typed text for next input prediction"
+msgstr "Сохранить текущий набранный текст для прогнозирования следующего ввода"
+
+#: im/pinyin/pinyin.h:210
+msgid "Keep the current typed text for future prediction."
+msgstr "Сохранить текущий набранный текст для прогнозирования в будущем."
+
+#: im/pinyin/pinyin.h:212
+msgid "Number of Predictions"
+msgstr "Количество прогнозов"
+
+#: im/pinyin/pinyin.h:218
+msgid "Backspace behavior on prediction"
+msgstr "Поведение клавиши Backspace при прогнозировании"
+
+#: im/pinyin/pinyin.h:224
+msgid "Action when switching input method"
+msgstr "Действие при переключении метода ввода"
+
+#: im/pinyin/pinyin.h:234
+msgid "Previous Page"
+msgstr "Предыдущая страница"
+
+#: im/pinyin/pinyin.h:241
+msgid "Next Page"
+msgstr "Следующая Страница"
+
+#: im/pinyin/pinyin.h:266
+msgid "Commit Raw Input"
+msgstr "Совершать необработанный ввод"
+
+#: im/pinyin/pinyin.h:286
+msgid "Use Keypad as Selection key"
+msgstr "Использовать Keypad в качестве клавиши выбора"
+
+#: im/pinyin/pinyin.h:290
+msgid "Choose Character from Phrase"
+msgstr "Выберите символ из фразы"
+
+#: im/pinyin/pinyin.h:294
+msgid "Use BackSpace to cancel the selection"
+msgstr "Использовать BackSpace, чтобы отменить выбор"
+
+#: im/pinyin/pinyin.h:299
+msgid "Filter by stroke"
+msgstr "Фильтр по штриху"
+
+#: im/pinyin/pinyin.h:303
+msgid "Number of Sentences"
+msgstr "Количество предложений"
+
+#: im/pinyin/pinyin.h:308
+msgid "Number of Phrase Candidates"
+msgstr "Количество фраз-кандидатов"
+
+#: im/pinyin/pinyin.h:312
+msgid "Set to 0 will show all candidates."
+msgstr "Если установлено значение 0, будут показаны все кандидаты."
+
+#: im/pinyin/pinyin.h:315
+msgid "Prompt long word length when input length over (0 for disable)"
+msgstr ""
+"Запрашивать большую длину слова, когда длина ввода превышает (0 для "
+"отключения)"
+
+#: im/pinyin/pinyin.h:317
+msgid "Manage Dictionaries"
+msgstr "Управление словарями"
+
+#: im/pinyin/pinyin.h:319
+msgid "Manage Custom Phrase"
+msgstr "Управление пользовательской фразой"
+
+#: im/pinyin/pinyin.h:322 modules/punctuation/punctuation.cpp:267
+#: modules/punctuation/punctuation.cpp:269
+#: modules/punctuation/punctuation.conf.in.in:2
+msgid "Punctuation"
+msgstr "Пунктуация"
+
+#: im/pinyin/pinyin.h:326
+msgid "Configure Simplified/Traditional Chinese Conversion"
+msgstr "Настройка преобразования упрощенного/традиционного китайского языка"
+
+#: im/pinyin/pinyin.h:335
+msgid "Use V to trigger quickphrase"
+msgstr "Использовать V для переключения быстрой фразы"
+
+#: im/pinyin/pinyin.h:336
+msgid "Quick Phrase"
+msgstr "Быстрая фраза"
+
+#: im/pinyin/pinyin.h:342
+msgid "Regular expression to trigger quick phrase"
+msgstr "Регулярное выражение для запуска быстрой фразы"
+
+#: im/pinyin/pinyin.h:347
+msgid ""
+"Enter quickphrase mode when current input matches any regular expression "
+"from the list."
+msgstr ""
+"Перейти в режим быстрой фразы, если текущий ввод соответствует любому "
+"регулярному выражению из списка."
+
+#: im/pinyin/pinyin.h:349
+msgid "Fuzzy Pinyin"
+msgstr "Нечёткий Пиньинь"
+
+#: im/pinyin/pinyincandidate.cpp:372
+msgid "Forget candidate"
+msgstr "Забыть слово-кандидат"
+
+#: im/pinyin/pinyincandidate.cpp:382
+msgid "Pin to top as custom phrase"
+msgstr "Закрепить вверху как пользовательскую фразу"
+
+#: im/pinyin/pinyincandidate.cpp:388
+msgid "Delete from custom phrase"
+msgstr "Удалить из пользовательской фразы"
+
+#: im/pinyin/pinyin.cpp:971
+msgid ""
+"Do you want to enable cloudpinyin now for better prediction? You can always "
+"toggle it later in configuration."
+msgstr ""
+"Вы хотите включить cloudpinyin сейчас для более точного прогнозирования? Вы "
+"всегда можете переключить его позже в настройках."
+
+#: im/pinyin/pinyin.cpp:976
+#, c++-format
+msgid ""
+"Do you want to enable cloudpinyin now for better prediction? You can always "
+"toggle it later in configuration or by pressing {}."
+msgstr ""
+"Вы хотите включить cloudpinyin сейчас для более точного прогнозирования? Вы "
+"всегда можете переключить его позже в настройках или нажав {}."
+
+#: im/pinyin/pinyin.cpp:981
+msgid "Yes"
+msgstr "Да"
+
+#: im/pinyin/pinyin.cpp:985 im/pinyin/pinyin.cpp:1262
+#: im/pinyin/pinyin-addon.conf.in.in:2 im/pinyin/pinyin.conf.in:2
+msgid "Pinyin"
+msgstr "Пиньинь"
+
+#: im/pinyin/pinyin.cpp:985
+msgid "Enable Cloudpinyin"
+msgstr "Включить Cloudpinyin"
+
+#: im/pinyin/pinyin.cpp:1263
+msgid "Cloud Pinyin Status"
+msgstr "Статус Cloud Pinyin"
+
+#: im/pinyin/pinyin.cpp:1264
+msgid "Cloud Pinyin is enabled."
+msgstr "Cloud Pinyin включен."
+
+#: im/pinyin/pinyin.cpp:1265
+msgid "Cloud Pinyin is disabled."
+msgstr "Cloud Pinyin отключен."
+
+#: im/pinyin/pinyin.cpp:1448
+msgid "[Stroke Filtering]"
+msgstr "[Фильтрация штрихов]"
+
+#: im/pinyin/pinyin.cpp:1511
+msgid "[Select the word to remove from history]"
+msgstr "[Выберите слово для удаления из истории]"
+
+#: im/pinyin/pinyin.cpp:1834
+#, c++-format
+msgid "Press {} for {} and Return for {}"
+msgstr "Нажать {} для {} и вернуться к {}"
+
+#: im/pinyin/pinyin.cpp:1837
+#, c++-format
+msgid "Press {} for {}"
+msgstr "Нажать {} для {}"
+
+#: gui/customphraseeditor/customphrasemodel.cpp:36
+msgctxt "Please ensure the line width is around 80 character width"
+msgid ""
+"The line should be in format key,order=value\n"
+"If value is multiline, you may either write is as\n"
+"key,order=\n"
+"line1\n"
+"line2\n"
+"...\n"
+"lineN\n"
+"Or, write it as key,order=\"line1\\nline2...\\nlineN\"\n"
+"The comment line is started with # or ;.\n"
+msgstr ""
+"Строка должна быть в формате key,order=value\n"
+"Если значение многострочное, вы можете либо записать его как\n"
+"key,order=\n"
+"line1\n"
+"line2\n"
+"...\n"
+"lineN\n"
+"Или запишите это как key,order=\"line1\\nline2...\\nlineN\"\n"
+"Строка комментария начинается с # или ;\n"
 
 #: gui/customphraseeditor/customphrasemodel.cpp:49
 msgctxt "Please ensure the line width is around 80 character width"
@@ -700,122 +962,174 @@ msgstr ""
 "Если установлен lua, функция, определенная в ime api, может быть вызвана\n"
 "с помощью ${lua:function_name}.\n"
 
-#: im/table/ime.h:140
-msgid "Ignore built in punctuation"
-msgstr "Игнорировать встроенные знаки препинания"
+#: gui/customphraseeditor/customphrasemodel.cpp:96
+msgid "Key"
+msgstr "Клавиша"
 
-#: im/pinyin/pinyin.h:122
-msgid "Inner Segment (xian -> xi'an)"
-msgstr "Внутренний сегмент (xian -> xi'an)"
+#: gui/customphraseeditor/customphrasemodel.cpp:99
+msgid "Phrase"
+msgstr "Фраза"
 
-#: im/pinyin/pinyin.h:124
-msgid "Inner Segment for Short Pinyin (qie -> qi'e)"
-msgstr "Внутренний сегмент для короткого Пиньинь (qie -> qi'e)"
+#: gui/customphraseeditor/customphrasemodel.cpp:102
+msgid "Order"
+msgstr "Порядок"
+
+#: gui/customphraseeditor/customphraseeditor.cpp:138
+msgid "Usage"
+msgstr "Использование"
+
+#: gui/customphraseeditor/customphraseeditor.cpp:175
+msgid "Custom Phrase Editor"
+msgstr "Редактор пользовательских фраз"
+
+#: gui/customphraseeditor/customphraseeditor.cpp:218
+msgid "File updated"
+msgstr "Файл обновлен"
+
+#: gui/customphraseeditor/customphraseeditor.cpp:219
+msgid "Do you want to reload custom phrase from disk?"
+msgstr "Вы хотите загрузить пользовательскую фразу с диска повторно?"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:49
+msgid "From &File"
+msgstr "&Из файла"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:50
+msgid "From &Sogou Cell Dictionary File"
+msgstr "Из &файла словаря Sogou Cell"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:52
+msgid "&Browse Sogou Cell Dictionary Online"
+msgstr "&Просмотреть словарь Sogou Cell в интернете"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:59
+msgid "&Clear User Data"
+msgstr "&Очистить Данные Пользователя"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:60
+msgid "Clear &All Data"
+msgstr "Очистить &Все Данные"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:107
+msgid "Pinyin dictionary manager"
+msgstr "Менеджер словаря Пиньинь"
 
 #: gui/pinyindictmanager/pinyindictmanager.cpp:114
 msgid "Input Dictionary Name"
 msgstr "Ввести имя словаря"
 
-#: im/pinyin/pinyin.h:210
-msgid "Keep the current typed text for future prediction."
-msgstr "Сохранить текущий набранный текст для прогнозирования в будущем."
-
-#: im/pinyin/pinyin.h:206
-msgid "Keep the current typed text for next input prediction"
-msgstr "Сохранить текущий набранный текст для прогнозирования следующего ввода"
-
-#: gui/customphraseeditor/customphrasemodel.cpp:96
-msgid "Key"
-msgstr "Клавиша"
-
-#: modules/punctuation/punctuation.h:51
-msgctxt "Key of the punctuation, e.g. comma"
-msgid "Key"
-msgstr "Клавиша"
-
-#: im/table/ime.h:151 im/pinyin/pinyin.h:331
-msgid "Key to trigger quickphrase"
-msgstr "Клавиша для активации быстрой фразы"
-
-#: im/table/ime.h:271
-msgid "Learn auto phrase with phrase"
-msgstr "Выучить автофразу с помощью фразы"
-
-#: im/table/ime.h:292
-msgid "Learning"
-msgstr "Обучение"
-
-#: im/table/ime.h:208
-msgid "Length limit of selecting the only candidate"
-msgstr "Ограничение по длине выбора единственного слова-кандидата"
-
-#: im/table/engine.h:71
-msgid "Look up pinyin"
-msgstr "Искать Пиньинь"
-
-#: im/table/engine.h:53 im/pinyin/pinyin.h:91
-msgid "MS"
-msgstr "MS"
-
-#: im/pinyin/pinyin.h:319
-msgid "Manage Custom Phrase"
-msgstr "Управление пользовательской фразой"
-
-#: im/pinyin/pinyin.h:317
-msgid "Manage Dictionaries"
-msgstr "Управление словарями"
-
-#: modules/punctuation/punctuation.h:52
-msgid "Mapping"
-msgstr "Отображение"
-
-#: im/table/ime.h:279
-msgid "Marker for auto phrase in the candidates"
-msgstr "Маркер для автофраз в словах-кандидатах"
-
-#: im/pinyin/pinyin.h:127
-msgid "Match partial finals (e -> en, eng, ei)"
-msgstr "Частичное  совпадение окончаний (e -> en, eng, ei)"
-
-#: im/pinyin/pinyin.h:131
-msgid "Match partial shuangpin if input length is longer than 4"
-msgstr "Совпадение с частичным двойным пиньинем, если длина ввода больше 4"
-
-#: modules/cloudpinyin/cloudpinyin.h:33
-msgid "Minimum Pinyin Length"
-msgstr "Минимальная длина Пиньинь"
-
-#: im/table/engine.h:61
-msgid "Modify dictionary"
-msgstr "Изменить словарь"
-
 #: gui/pinyindictmanager/pinyindictmanager.cpp:114
 msgid "New Dictionary Name:"
 msgstr "Новое имя словаря:"
 
-#: modules/chttrans/opencc-profile-name.cpp:13
-msgctxt "OpenCC Profile"
-msgid ""
-"New Japanese Kanji (Shinjitai) to Traditional Chinese Characters (Kyūjitai)"
+#: gui/pinyindictmanager/pinyindictmanager.cpp:127
+msgid "Failed to create directory"
+msgstr "Не удалось создать каталог"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:128
+#: gui/pinyindictmanager/pinyindictmanager.cpp:239
+#: gui/pinyindictmanager/pinyindictmanager.cpp:297
+msgid "Create directory failed. Please check the permission or disk space."
 msgstr ""
-"Преобразовать Новый Японский Кандзи (Синдзитай) в традиционные китайские "
-"иероглифы (Кюдзитай)"
+"Не удалось создать каталог. Пожалуйста, проверьте разрешение или место на "
+"диске."
 
-#: im/table/ime.h:71 im/pinyin/pinyin.h:254
-msgid "Next Candidate"
-msgstr "Следующее слово-кандидат"
+#: gui/pinyindictmanager/pinyindictmanager.cpp:138
+msgid "Failed to create temp file"
+msgstr "Не удалось создать временный файл"
 
-#: im/pinyin/pinyin.h:241
-msgid "Next Page"
-msgstr "Следующая Страница"
+#: gui/pinyindictmanager/pinyindictmanager.cpp:139
+msgid "Creating temp file failed. Please check the permission or disk space."
+msgstr ""
+"Не удалось создать временный файл. Пожалуйста, проверьте разрешение или "
+"место на диске."
 
-#: im/table/ime.h:59
-msgid "Next page"
-msgstr "Следующая страница"
+#: gui/pinyindictmanager/pinyindictmanager.cpp:154
+msgid "Dictionary already exists"
+msgstr "Словарь уже существует"
 
-#: im/table/ime.h:35 im/pinyin/pinyin.cpp:970
-msgid "No"
-msgstr "Нет"
+#: gui/pinyindictmanager/pinyindictmanager.cpp:155
+msgid "%1 already exists, do you want to overwrite this dictionary?"
+msgstr "%1 уже существует, вы хотите перезаписать этот словарь?"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:174
+msgid "Select Dictionary File"
+msgstr "Выбрать файл словаря"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:215
+msgid "Select scel file"
+msgstr "Выбрать файл scel"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:215
+msgid "Scel file (*.scel)"
+msgstr "Файл SCEL (*.scel)"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:238
+#: gui/pinyindictmanager/pinyindictmanager.cpp:296
+msgid "Failed to get runtime directory"
+msgstr "Не удалось получить каталог среды выполнения"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:345
+#: gui/pinyindictmanager/pinyindictmanager.cpp:377
+msgid "Confirm deletion"
+msgstr "Подтвердите удаление"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:346
+msgid "Are you sure to delete all dictionaries?"
+msgstr "Вы уверены, что хотите удалить все словари?"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:378
+msgid "Are you sure to delete %1?"
+msgstr "Действительно удалить %1?"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:385
+msgid "File Operation Failed"
+msgstr "Сбой операции с файлом"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:386
+msgid "Error while deleting %1."
+msgstr "Ошибка при удалении %1."
+
+#: gui/pinyindictmanager/filedownloader.cpp:26
+msgid "Create temporary file failed."
+msgstr "Не удалось создать временный файл."
+
+#: gui/pinyindictmanager/filedownloader.cpp:30
+msgid "Temporary file created."
+msgstr "Создан временный файл"
+
+#: gui/pinyindictmanager/filedownloader.cpp:39
+msgid "Failed to create request."
+msgstr "Не удалось создать запрос."
+
+#: gui/pinyindictmanager/filedownloader.cpp:43
+msgid "Download started."
+msgstr "Загрузка началась."
+
+#: gui/pinyindictmanager/filedownloader.cpp:74
+msgid "%1% Downloaded."
+msgstr "%1% загружен."
+
+#: gui/pinyindictmanager/filedownloader.cpp:81
+msgid "Download Finished"
+msgstr "Загрузка завершена"
+
+#: gui/pinyindictmanager/processrunner.cpp:44
+#: gui/pinyindictmanager/renamefile.cpp:34
+msgid "Converter crashed."
+msgstr "Сбой преобразователя."
+
+#: gui/pinyindictmanager/processrunner.cpp:50
+msgid "Convert failed."
+msgstr "Не удалось преобразовать."
+
+#: gui/pinyindictmanager/browserdialog.cpp:54
+msgid "Browse Sogou Cell Dict repository"
+msgstr "Исследовать репозиторий словаря Sogou Cell"
+
+#: gui/pinyindictmanager/browserdialog.cpp:99
+msgid "Wrong Link"
+msgstr "Неверная ссылка"
 
 #: gui/pinyindictmanager/browserdialog.cpp:100
 msgid "No browsing outside pinyin.sogou.com, now redirect to home page."
@@ -823,410 +1137,48 @@ msgstr ""
 "Невозможно перейти вне pinyin.sogou.com, перенаправление на домашнюю "
 "страницу."
 
-#: im/pinyin/pinyin.h:117
-msgid "None"
-msgstr "Нет"
-
-#: im/table/engine.cpp:228
-msgid "Not available"
-msgstr "Недоступно"
-
-#: im/table/ime.h:36
-msgid "Not set"
-msgstr "Не задано"
-
-#: im/pinyin/pinyin.h:308
-msgid "Number of Phrase Candidates"
-msgstr "Количество фраз-кандидатов"
-
-#: im/pinyin/pinyin.h:212
-msgid "Number of Predictions"
-msgstr "Количество прогнозов"
-
-#: im/pinyin/pinyin.h:303
-msgid "Number of Sentences"
-msgstr "Количество предложений"
-
-#: im/pinyin/pinyin.h:108
-msgid "Only Clear candidates"
-msgstr "Очистить только слова-кандидаты"
-
-#: modules/chttrans/chttrans.h:60
-msgid "OpenCC profile for Simplified to Traditional"
-msgstr "Профиль OpenCC для перехода с упрощенного на традиционный китайский"
-
-#: modules/chttrans/chttrans.h:65
-msgid "OpenCC profile for Traditional to Simplified"
-msgstr "Профиль OpenCC для перехода с традиционного на упрощенный китайский"
-
-#: gui/customphraseeditor/customphrasemodel.cpp:102
-msgid "Order"
-msgstr "Порядок"
-
-#: im/table/ime.h:170
-msgid "Order policy"
-msgstr "Политика порядка"
-
-#: im/table/ime.h:189
-msgid ""
-"Order the candidate based on the word you already typed. You may want to "
-"disable this option if you want the candidate order to be stable regardless "
-"of the history."
-msgstr ""
-"Слова-кандидаты сортируются в соответствии с тем, что было введено. Если вы "
-"хотите, чтобы порядок слов-кандидатов не зависел от истории ввода, вам "
-"необходимо отключить эту опцию."
-
-#. i18n: file: gui/customphraseeditor/editordialog.ui:55
-#. i18n: ectx: property (text), widget (QLabel, label)
-#: rc.cpp:6
-#, kde-format
-msgid "Order:"
-msgstr "Порядок:"
-
-#: gui/customphraseeditor/customphrasemodel.cpp:99
-msgid "Phrase"
-msgstr "Фраза"
-
-#: im/pinyin/pinyincandidate.cpp:396
-msgid "Pin to top as custom phrase"
-msgstr "Закрепить вверху как пользовательскую фразу"
-
-#: im/pinyin/pinyin.cpp:973 im/pinyin/pinyin.cpp:1250
-#: im/pinyin/pinyin-addon.conf.in.in:2 im/pinyin/pinyin.conf.in:2
-msgid "Pinyin"
-msgstr "Пиньинь"
-
-#: gui/pinyindictmanager/pinyindictmanager.cpp:107
-msgid "Pinyin dictionary manager"
-msgstr "Менеджер словаря Пиньинь"
-
-#: im/table/engine.h:55 im/pinyin/pinyin.h:93
-msgid "PinyinJiajia"
-msgstr "ПиньиньЦзяцзя"
-
-#: im/table/state.cpp:631
-msgid "Please use this functionality after typing some text."
-msgstr "Пожалуйста, используйте эту функцию после набора текста."
-
-#: im/table/engine.cpp:92 im/table/engine.cpp:100 im/pinyin/pinyin.cpp:775
-#: im/pinyin/pinyin.cpp:785
-msgid "Prediction Disabled"
-msgstr "Прогнозирование отключено"
-
-#: im/table/engine.cpp:91 im/table/engine.cpp:99 im/pinyin/pinyin.cpp:774
-#: im/pinyin/pinyin.cpp:784
-msgid "Prediction Enabled"
-msgstr "Прогнозирование включено"
-
-#: im/table/engine.h:83
-msgid "Prediction Size"
-msgstr "Количество прогнозов"
-
-#: im/pinyin/pinyin.h:193
-msgid "Preedit Mode"
-msgstr "Режим Предварительного Редактирования"
-
-#: im/table/ime.h:200
-msgid "Prefix key to trigger Pinyin"
-msgstr "Клавиша-префикс для активации Пиньинь"
-
-#: im/table/state.cpp:700
-msgid "Press Backspace to forget."
-msgstr "Нажмите Backspace, чтобы забыть."
-
-#: im/table/state.cpp:703
-msgid "Press Delete to remove."
-msgstr "Нажмите Delete, чтобы удалить."
-
-#: im/table/state.cpp:697
-msgid "Press space or enter to insert."
-msgstr "Нажмите пробел или enter, чтобы вставить."
-
-#: im/pinyin/pinyin.cpp:1826
-#, c++-format
-msgid "Press {} for {}"
-msgstr "Нажать {} для {}"
-
-#: im/pinyin/pinyin.cpp:1823
-#, c++-format
-msgid "Press {} for {} and Return for {}"
-msgstr "Нажать {} для {} и вернуться к {}"
-
-#: im/table/ime.h:65 im/pinyin/pinyin.h:248
-msgid "Previous Candidate"
-msgstr "Предыдущее слово-кандидат"
-
-#: im/pinyin/pinyin.h:234
-msgid "Previous Page"
-msgstr "Предыдущая страница"
-
-#: im/table/ime.h:53
-msgid "Previous page"
-msgstr "Предыдущая страница"
-
-#: im/pinyin/pinyin.h:315
-msgid "Prompt long word length when input length over (0 for disable)"
-msgstr ""
-"Запрашивать большую длину слова, когда длина ввода превышает (0 для "
-"отключения)"
-
-#: modules/cloudpinyin/cloudpinyin.h:39
-msgid "Proxy"
-msgstr "Прокси"
-
-#: im/pinyin/pinyin.h:322 modules/punctuation/punctuation.cpp:267
-#: modules/punctuation/punctuation.cpp:269
-#: modules/punctuation/punctuation.conf.in.in:2
-msgid "Punctuation"
-msgstr "Пунктуация"
-
-#: im/pinyin/pinyin.h:117
-msgid "QWERTY"
-msgstr "QWERTY"
-
-#: im/pinyin/pinyin.h:336
-msgid "Quick Phrase"
-msgstr "Быстрая фраза"
-
-#: im/table/ime.h:244
-msgid "Regular expression for auto select when no match is found"
-msgstr ""
-"Регулярное выражение для автоматического выбора, когда совпадение не найдено"
-
-#: im/table/ime.h:220
-msgid "Regular expression for selecting the only candidate"
-msgstr "Регулярное выражение для выбора единственного слова-кандидата"
-
-#: im/pinyin/pinyin.h:342
-msgid "Regular expression to trigger quick phrase"
-msgstr "Регулярное выражение для запуска быстрой фразы"
-
-#. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:44
-#. i18n: ectx: property (text), widget (QPushButton, removeAllButton_)
-#: rc.cpp:36
-#, kde-format
-msgid "Remove &All"
-msgstr "Удалить все"
-
-#: im/table/ime.h:283
-msgid "Save auto phrase after being typed for ... times"
-msgstr "Сохранять автофразу после набора ... раз"
-
-#: gui/pinyindictmanager/pinyindictmanager.cpp:215
-msgid "Scel file (*.scel)"
-msgstr "Файл SCEL (*.scel)"
-
-#: im/table/ime.h:77 im/pinyin/pinyin.h:260
-msgid "Select Current Candidate"
-msgstr "Выбрать текущее слово-кандидат"
-
-#: gui/pinyindictmanager/pinyindictmanager.cpp:174
-msgid "Select Dictionary File"
-msgstr "Выбрать файл словаря"
-
-#: im/table/ime.h:83 im/pinyin/pinyin.h:274
-msgid "Select Second Candidate"
-msgstr "Выбрать второе слово-кандидат"
-
-#: im/table/ime.h:90 im/pinyin/pinyin.h:281
-msgid "Select Third Candidate"
-msgstr "Выбрать третье слово-кандидат"
-
-#: im/table/state.cpp:1381
-msgid "Select candidate to be removed from history:"
-msgstr "Выбрать слово-кандидат для удаления из истории:"
-
-#: gui/pinyindictmanager/pinyindictmanager.cpp:215
-msgid "Select scel file"
-msgstr "Выбрать файл scel"
-
-#: im/table/ime.h:97
-msgid "Selection"
-msgstr "Выбор"
-
-#: im/table/ime.h:297
-msgid "Separator text between hint and candidate"
-msgstr "Текст-разделитель между подсказкой и словом-кандидатом"
-
-#: im/pinyin/pinyin.h:312
-msgid "Set to 0 will show all candidates."
-msgstr "Если установлено значение 0, будут показаны все кандидаты."
-
-#: im/pinyin/pinyin.h:166
-msgid "Show Chaizi candidates"
-msgstr "Показать кандидаты Чайцзы"
-
-#: im/pinyin/pinyin.h:162
-msgid "Show English Candidates"
-msgstr "Показать кандидаты на английском языке"
-
-#: im/pinyin/pinyin.h:187
-msgid "Show animation when Cloud Pinyin is loading"
-msgstr "Показывать анимацию при загрузке Cloud Pinyin"
-
-#: im/pinyin/pinyin.h:200
-msgid "Show complete pinyin in preedit"
-msgstr "Показать полный Пиньинь в предварительном редактировании"
-
-#: im/pinyin/pinyin.h:158
-msgid "Show current shuangpin mode"
-msgstr "Показать текущий режим шуанпинь"
-
-#: im/table/engine.cpp:93 im/pinyin/pinyin.cpp:776
-msgid "Show prediction words"
-msgstr "Показать слова-предсказания"
-
-#: im/pinyin/pinyin.h:173
-msgid ""
-"Show stroke candidates when typing with h(一), s(丨), p(丿), n(㇏), z(𠃍)"
-msgstr ""
-"Показывать варианты штрихов при наборе с h(一), s(丨), p(丿), n(㇏), z(𠃍)"
-
-#: im/pinyin/pinyin.h:164
-msgid "Show symbol candidates"
-msgstr "Показать кандидаты-символы"
-
-#: im/pinyin/shuangpin.conf.in:2
-msgid "Shuangpin"
-msgstr "Шуанпинь"
-
-#: im/pinyin/pinyin.h:155
-msgid "Shuangpin Profile"
-msgstr "Профиль Шуанпинь"
-
-#: modules/chttrans/chttrans.h:104
-msgid "Simplified Chinese"
-msgstr "Упрощенный Китайский"
-
-#: modules/chttrans/chttrans.cpp:126
-msgid "Simplified Chinese is enabled."
-msgstr "Упрощенный Китайский включен."
-
-#: modules/chttrans/opencc-profile-name.cpp:11
-msgctxt "OpenCC Profile"
-msgid "Simplified Chinese to Traditional Chinese"
-msgstr "Преобразовать Упрощенный Китайский в Традиционный"
-
-#: modules/chttrans/opencc-profile-name.cpp:18
-msgctxt "OpenCC Profile"
-msgid "Simplified Chinese to Traditional Chinese (Hong Kong variant)"
-msgstr ""
-"Преобразовать Упрощенный Китайский в Традиционный (гонконгский вариант)"
-
-#: modules/chttrans/opencc-profile-name.cpp:10
-msgctxt "OpenCC Profile"
-msgid "Simplified Chinese to Traditional Chinese (Taiwan standard)"
-msgstr ""
-"Преобразовать Упрощенный Китайский в Традиционный (тайваньский стандарт)"
-
-#: modules/chttrans/opencc-profile-name.cpp:9
-msgctxt "OpenCC Profile"
-msgid ""
-"Simplified Chinese to Traditional Chinese (Taiwan standard, with phrases)"
-msgstr ""
-"Преобразовать Упрощенный Китайский в Традиционный (тайваньский стандарт, с "
-"фразами)"
-
-#: modules/chttrans/chttrans.cpp:120 modules/chttrans/chttrans.conf.in.in:2
-msgid "Simplified and Traditional Chinese Translation"
-msgstr "Преобразование между Упрощенным и Традиционным Китайским языком"
-
-#: im/table/ime.h:168
-msgid "Sort candidate by code length"
-msgstr "Сортировка слов-кандидатов по длине кода"
-
-#: im/table/ime.h:184
-msgid "Sort candidates based on current context"
-msgstr "Сортировка слов-кандидатов на основе текущего контекста"
-
-#: modules/chttrans/chttrans.cpp:124
-msgid "Switch to Simplified Chinese"
-msgstr "Переключиться на Китайский Упрощенный"
-
-#: modules/chttrans/chttrans.cpp:123
-msgid "Switch to Traditional Chinese"
-msgstr "Переключиться на Китайский Традиционный"
-
-#: im/table/table.conf.in.in:2
-msgid "Table"
-msgstr "Таблица"
-
-#: im/table/ime.h:119
-msgid "Table Global Options"
-msgstr "Глобальные параметры таблицы"
-
-#: gui/pinyindictmanager/filedownloader.cpp:30
-msgid "Temporary file created."
-msgstr "Создан временный файл"
-
-#: im/table/ime.h:157
-msgid "Text to trigger quickphrase"
-msgstr "Текст для запуска быстрой фразы"
-
-#: gui/customphraseeditor/customphrasemodel.cpp:36
-msgctxt "Please ensure the line width is around 80 character width"
-msgid ""
-"The line should be in format key,order=value\n"
-"If value is multiline, you may either write is as\n"
-"key,order=\n"
-"line1\n"
-"line2\n"
-"...\n"
-"lineN\n"
-"Or, write it as key,order=\"line1\\nline2...\\nlineN\"\n"
-"The comment line is started with # or ;.\n"
-msgstr ""
-"Строка должна быть в формате key,order=value\n"
-"Если значение многострочное, вы можете либо записать его как\n"
-"key,order=\n"
-"line1\n"
-"line2\n"
-"...\n"
-"lineN\n"
-"Или запишите это как key,order=\"line1\\nline2...\\nlineN\"\n"
-"Строка комментария начинается с # или ;\n"
-
-#: modules/cloudpinyin/cloudpinyin.h:43
-msgid ""
-"The proxy format must be the one that is supported by cURL. Usually it is in "
-"the format of [scheme]://[host]:[port], e.g. http://localhost:1080."
-msgstr ""
-"Формат прокси должен быть тем, который поддерживается cURL. Обычно это "
-"формат [scheme]://[host]:[port], e.g. http://localhost:1080."
-
-#: modules/cloudpinyin/cloudpinyin.h:30
-msgid "Toggle Key"
-msgstr "Клавиша Переключения"
+#: modules/fullwidth/fullwidth.cpp:70 modules/fullwidth/fullwidth.conf.in.in:2
+msgid "Full width character"
+msgstr "Полноширинный символ"
+
+#: modules/fullwidth/fullwidth.cpp:73 modules/fullwidth/fullwidth.h:29
+msgid "Full width Character"
+msgstr "Полноширинный символ"
+
+#: modules/fullwidth/fullwidth.cpp:74
+msgid "Full width Character is enabled."
+msgstr "Полноширинный символ включен."
+
+#: modules/fullwidth/fullwidth.cpp:75
+msgid "Full width Character is disabled."
+msgstr "Полноширинный символ отключен."
 
 #: modules/fullwidth/fullwidth.h:19 modules/chttrans/chttrans.h:53
 #: modules/punctuation/punctuation.h:39
 msgid "Toggle key"
 msgstr "Клавиша переключения"
 
-#: modules/chttrans/chttrans.h:103
-msgid "Traditional Chinese"
-msgstr "Традиционный Китайский"
+#: modules/fullwidth/fullwidth.h:30
+msgid "Half width Character"
+msgstr "Полуширинный символ"
 
-#: modules/chttrans/opencc-profile-name.cpp:12
-msgctxt "OpenCC Profile"
-msgid "Traditional Chinese (Hong Kong variant) to Simplified Chinese"
-msgstr ""
-"Преобразовать Традиционный Китайский (гонконгский вариант) в Упрощенный "
-"Китайский"
-
-#: modules/chttrans/opencc-profile-name.cpp:16
-msgctxt "OpenCC Profile"
-msgid "Traditional Chinese (Hong Kong variant) to Traditional Chinese"
-msgstr ""
-"Преобразовать Традиционный Китайский (гонконгский вариант) в Традиционный "
-"Китайский"
+#: modules/pinyinhelper/pinyinhelper.cpp:79
+#, c++-format
+msgid "{0} ({1})"
+msgstr "{0} ({1})"
 
 #: modules/chttrans/opencc-profile-name.cpp:5
 msgctxt "OpenCC Profile"
 msgid "Traditional Chinese (Taiwan standard) to Simplified Chinese"
 msgstr ""
 "Преобразовать Традиционный Китайский (тайваньский стандарт) в Упрощенный "
+"Китайский"
+
+#: modules/chttrans/opencc-profile-name.cpp:6
+msgctxt "OpenCC Profile"
+msgid "Traditional Chinese (Taiwan standard) to Traditional Chinese"
+msgstr ""
+"Преобразовать Традиционный Китайский (тайваньский стандарт) в Традиционный "
 "Китайский"
 
 #: modules/chttrans/opencc-profile-name.cpp:7
@@ -1237,12 +1189,51 @@ msgstr ""
 "Преобразовать Традиционный Китайский (тайваньский стандарт) в Упрощенный "
 "Китайский (с фразами)"
 
-#: modules/chttrans/opencc-profile-name.cpp:6
+#: modules/chttrans/opencc-profile-name.cpp:8
 msgctxt "OpenCC Profile"
-msgid "Traditional Chinese (Taiwan standard) to Traditional Chinese"
+msgid "Traditional Chinese to Traditional Chinese (Taiwan standard)"
 msgstr ""
-"Преобразовать Традиционный Китайский (тайваньский стандарт) в Традиционный "
+"Преобразовать Традиционный Китайский в Традиционный Китайский (тайваньский "
+"стандарт)"
+
+#: modules/chttrans/opencc-profile-name.cpp:9
+msgctxt "OpenCC Profile"
+msgid ""
+"Simplified Chinese to Traditional Chinese (Taiwan standard, with phrases)"
+msgstr ""
+"Преобразовать Упрощенный Китайский в Традиционный (тайваньский стандарт, с "
+"фразами)"
+
+#: modules/chttrans/opencc-profile-name.cpp:10
+msgctxt "OpenCC Profile"
+msgid "Simplified Chinese to Traditional Chinese (Taiwan standard)"
+msgstr ""
+"Преобразовать Упрощенный Китайский в Традиционный (тайваньский стандарт)"
+
+#: modules/chttrans/opencc-profile-name.cpp:11
+msgctxt "OpenCC Profile"
+msgid "Simplified Chinese to Traditional Chinese"
+msgstr "Преобразовать Упрощенный Китайский в Традиционный"
+
+#: modules/chttrans/opencc-profile-name.cpp:12
+msgctxt "OpenCC Profile"
+msgid "Traditional Chinese (Hong Kong variant) to Simplified Chinese"
+msgstr ""
+"Преобразовать Традиционный Китайский (гонконгский вариант) в Упрощенный "
 "Китайский"
+
+#: modules/chttrans/opencc-profile-name.cpp:13
+msgctxt "OpenCC Profile"
+msgid ""
+"New Japanese Kanji (Shinjitai) to Traditional Chinese Characters (Kyūjitai)"
+msgstr ""
+"Преобразовать Новый Японский Кандзи (Синдзитай) в традиционные китайские "
+"иероглифы (Кюдзитай)"
+
+#: modules/chttrans/opencc-profile-name.cpp:14
+msgctxt "OpenCC Profile"
+msgid "Traditional Chinese to Simplified Chinese"
+msgstr "Преобразовать Традиционный Китайский в Упрощенный"
 
 #: modules/chttrans/opencc-profile-name.cpp:15
 msgctxt "OpenCC Profile"
@@ -1252,14 +1243,12 @@ msgstr ""
 "Преобразовать традиционные китайские иероглифы (Кюдзитай) в Новый японский "
 "Кандзи (Синдзитай)"
 
-#: modules/chttrans/chttrans.cpp:125
-msgid "Traditional Chinese is enabled."
-msgstr "Традиционный Китайский включен."
-
-#: modules/chttrans/opencc-profile-name.cpp:14
+#: modules/chttrans/opencc-profile-name.cpp:16
 msgctxt "OpenCC Profile"
-msgid "Traditional Chinese to Simplified Chinese"
-msgstr "Преобразовать Традиционный Китайский в Упрощенный"
+msgid "Traditional Chinese (Hong Kong variant) to Traditional Chinese"
+msgstr ""
+"Преобразовать Традиционный Китайский (гонконгский вариант) в Традиционный "
+"Китайский"
 
 #: modules/chttrans/opencc-profile-name.cpp:17
 msgctxt "OpenCC Profile"
@@ -1268,169 +1257,182 @@ msgstr ""
 "Преобразовать Традиционный Китайский в Традиционный Китайский (гонконгский "
 "вариант)"
 
-#: modules/chttrans/opencc-profile-name.cpp:8
+#: modules/chttrans/opencc-profile-name.cpp:18
 msgctxt "OpenCC Profile"
-msgid "Traditional Chinese to Traditional Chinese (Taiwan standard)"
+msgid "Simplified Chinese to Traditional Chinese (Hong Kong variant)"
 msgstr ""
-"Преобразовать Традиционный Китайский в Традиционный Китайский (тайваньский "
-"стандарт)"
+"Преобразовать Упрощенный Китайский в Традиционный (гонконгский вариант)"
 
 #: modules/chttrans/chttrans.h:49
 msgid "Translate engine"
 msgstr "Механизм перевода"
 
+#: modules/chttrans/chttrans.h:55
+msgid "Enabled Input Methods"
+msgstr "Включенные методы ввода"
+
+#: modules/chttrans/chttrans.h:60
+msgid "OpenCC profile for Simplified to Traditional"
+msgstr "Профиль OpenCC для перехода с упрощенного на традиционный китайский"
+
+#: modules/chttrans/chttrans.h:65
+msgid "OpenCC profile for Traditional to Simplified"
+msgstr "Профиль OpenCC для перехода с традиционного на упрощенный китайский"
+
+#: modules/chttrans/chttrans.h:103
+msgid "Traditional Chinese"
+msgstr "Традиционный Китайский"
+
+#: modules/chttrans/chttrans.h:104
+msgid "Simplified Chinese"
+msgstr "Упрощенный Китайский"
+
+#: modules/chttrans/chttrans.cpp:120 modules/chttrans/chttrans.conf.in.in:2
+msgid "Simplified and Traditional Chinese Translation"
+msgstr "Преобразование между Упрощенным и Традиционным Китайским языком"
+
+#: modules/chttrans/chttrans.cpp:123
+msgid "Switch to Traditional Chinese"
+msgstr "Переключиться на Китайский Традиционный"
+
+#: modules/chttrans/chttrans.cpp:124
+msgid "Switch to Simplified Chinese"
+msgstr "Переключиться на Китайский Упрощенный"
+
+#: modules/chttrans/chttrans.cpp:125
+msgid "Traditional Chinese is enabled."
+msgstr "Традиционный Китайский включен."
+
+#: modules/chttrans/chttrans.cpp:126
+msgid "Simplified Chinese is enabled."
+msgstr "Упрощенный Китайский включен."
+
+#: modules/chttrans/chttrans.cpp:267
+msgid "Default"
+msgstr "По умолчанию"
+
+#: modules/cloudpinyin/cloudpinyin.h:30
+msgid "Toggle Key"
+msgstr "Клавиша Переключения"
+
+#: modules/cloudpinyin/cloudpinyin.h:33
+msgid "Minimum Pinyin Length"
+msgstr "Минимальная длина Пиньинь"
+
+#: modules/cloudpinyin/cloudpinyin.h:34
+msgid "Backend"
+msgstr "Бэкэнд"
+
+#: modules/cloudpinyin/cloudpinyin.h:39
+msgid "Proxy"
+msgstr "Прокси"
+
+#: modules/cloudpinyin/cloudpinyin.h:43
+msgid ""
+"The proxy format must be the one that is supported by cURL. Usually it is in "
+"the format of [scheme]://[host]:[port], e.g. http://localhost:1080."
+msgstr ""
+"Формат прокси должен быть тем, который поддерживается cURL. Обычно это "
+"формат [scheme]://[host]:[port], e.g. http://localhost:1080."
+
+#: modules/punctuation/punctuation.h:42
+msgid "Half width punctuation after latin letter or number"
+msgstr "Полуширинная пунктуация после латинской буквы или цифры"
+
 #: modules/punctuation/punctuation.h:45
 msgid "Type paired punctuations together (e.g. Quote)"
 msgstr "Вводите парные знаки препинания вместе (e.g. Quote)"
 
-#: gui/customphraseeditor/customphraseeditor.cpp:138
-msgid "Usage"
-msgstr "Использование"
+#: modules/punctuation/punctuation.h:51
+msgctxt "Key of the punctuation, e.g. comma"
+msgid "Key"
+msgstr "Клавиша"
 
-#: im/pinyin/pinyin.h:294
-msgid "Use BackSpace to cancel the selection"
-msgstr "Использовать BackSpace, чтобы отменить выбор"
+#: modules/punctuation/punctuation.h:52
+msgid "Mapping"
+msgstr "Отображение"
 
-#: im/pinyin/pinyin.h:286
-msgid "Use Keypad as Selection key"
-msgstr "Использовать Keypad в качестве клавиши выбора"
+#: modules/punctuation/punctuation.h:54
+msgid "Alternative Mapping"
+msgstr "Альтернативное отображение"
 
-#: im/table/state.cpp:637
-msgid "Use Left and Right to select character: "
-msgstr "Используйте Left и Right для выбора символа:"
+#: modules/punctuation/punctuation.h:62
+msgid "Entries"
+msgstr "Записи"
 
-#: im/table/state.cpp:685
-msgid "Use Left and Right to select text. "
-msgstr "Используйте Left и Right для выбора текста."
+#: modules/punctuation/punctuation.h:104
+msgid "Full width punctuation"
+msgstr "Полноширинная пунктуация"
 
-#: im/pinyin/pinyin.h:335
-msgid "Use V to trigger quickphrase"
-msgstr "Использовать V для переключения быстрой фразы"
+#: modules/punctuation/punctuation.h:105
+msgid "Half width punctuation"
+msgstr "Полуширинная пунктуация"
 
-#: im/table/ime.h:138
-msgid "Use full width"
-msgstr "Использовать полную ширину"
+#: modules/punctuation/punctuation.cpp:270
+msgid "Full width punctuation is enabled."
+msgstr "Полноширинная пунктуация включена."
 
-#: im/table/ime.h:174
-msgid "Use system language model"
-msgstr "Использовать языковую модель системы"
+#: modules/punctuation/punctuation.cpp:271
+msgid "Full width punctuation is disabled."
+msgstr "Полноширинная пунктуация отключена."
 
-#: im/table/ime.h:37
-msgid "Vertical"
-msgstr "Вертикально"
+#. i18n: file: gui/customphraseeditor/editordialog.ui:14
+#. i18n: ectx: property (windowTitle), widget (QDialog, EditorDialog)
+#: rc.cpp:3
+#, kde-format
+msgid "Add Phrase"
+msgstr "Добавить фразу"
 
-#: im/table/wanfeng.conf.in.in:2
-msgid "Wanfeng"
-msgstr "Ваньфэн"
+#. i18n: file: gui/customphraseeditor/editordialog.ui:55
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:6
+#, kde-format
+msgid "Order:"
+msgstr "Порядок:"
 
-#: im/table/ime.h:161
-msgid ""
-"When a new character is typed, if it matches any character in this string, "
-"all the existing text will be put into quickphrase buffer."
-msgstr ""
-"При вводе нового символа, если он соответствует любому символу в этой "
-"строке, весь существующий текст будет помещен в буфер быстрой фразы."
+#. i18n: file: gui/customphraseeditor/customphraseeditor.ui:41
+#. i18n: ectx: property (text), widget (QPushButton, addButton_)
+#: rc.cpp:9
+#, kde-format
+msgid "&Add"
+msgstr "&Добавить"
 
-#: im/table/ime.h:178
-msgid ""
-"When available, system language model will be loaded for given language and "
-"provide ability to give better context based order."
-msgstr ""
-"Если доступно, системная языковая модель будет загружена для данного языка и "
-"предоставит возможность задать лучший порядок на основе контекста."
+#. i18n: file: gui/customphraseeditor/customphraseeditor.ui:52
+#. i18n: ectx: property (text), widget (QPushButton, removeButton_)
+#. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:33
+#. i18n: ectx: property (text), widget (QPushButton, removeButton_)
+#: rc.cpp:12 rc.cpp:33
+#, kde-format
+msgid "&Remove"
+msgstr "&Удалить"
 
-#: im/table/ime.h:213
-msgid ""
-"When current input length is greater than or equal to the limit and there is "
-"only one candidate available, automatically select this candidate. -1 Means "
-"the maximum code length of the table. 0 means this behavior is disabled."
-msgstr ""
-"Когда текущая входная длина больше или равна пределу и доступно только одно "
-"слово-кандидат, это слово-кандидат выбирается автоматически. -1 Означает "
-"максимальную длину кода таблицы. 0 означает, что это поведение отключено."
+#. i18n: file: gui/customphraseeditor/customphraseeditor.ui:63
+#. i18n: ectx: property (text), widget (QPushButton, helpButton_)
+#: rc.cpp:15
+#, kde-format
+msgid "&Usage"
+msgstr "&Использование"
 
-#: im/table/ime.h:224
-msgid ""
-"When current input matches the regular expression and there is only one "
-"candidate available, automatically select this candidate."
-msgstr ""
-"Когда текущий ввод соответствует регулярному выражению и доступно только "
-"одно слово-кандидат, это слово-кандидат выбирается автоматически."
+#. i18n: file: gui/customphraseeditor/customphraseeditor.ui:73
+#. i18n: ectx: property (text), widget (QPushButton, externalEditor_)
+#: rc.cpp:18
+#, kde-format
+msgid "&External Editor"
+msgstr "&Внешний редактор"
 
-#: im/table/ime.h:235
-msgid ""
-"When typing a new character, if the current input length is greater than or "
-"equal to the limit, and the existing segment with the new character does not "
-"have any matched entries in the table, select the current candidate and then "
-"type in the new character. -1 means the maximum code length of the table. 0 "
-"means this behavior is disabled."
-msgstr ""
-"При вводе нового символа, если текущая длина ввода больше или равна пределу, "
-"а существующий сегмент с новым символом не имеет совпадающих записей в "
-"таблице, выберите текущее слово-кандидат, а затем введите новый символ. -1 "
-"означает максимальную длину кода таблицы. 0 означает, что это поведение "
-"отключено."
+#. i18n: file: gui/customphraseeditor/customphraseeditor.ui:84
+#. i18n: ectx: property (text), widget (QPushButton, clearButton_)
+#: rc.cpp:21
+#, kde-format
+msgid "&Clear"
+msgstr "&Очистить"
 
-#: im/table/ime.h:249
-msgid ""
-"When typing a new character, if the current input matches the regular "
-"expression and the existing segment with the new character does not have any "
-"matched entries in the table, select the current candidate and then type in "
-"the new character."
-msgstr ""
-"При вводе нового символа, если текущий ввод соответствует регулярному "
-"выражению, а существующий сегмент с новым символом не имеет совпадающих "
-"записей в таблице, выберите текущее слово-кандидат, а затем введите новый "
-"символ."
-
-#: im/table/ime.h:275
-msgid ""
-"Whether to learn new phrase from other phrases or just single characters."
-msgstr "Учить ли новую фразу из других фраз или только отдельных символов."
-
-#: im/table/ime.h:195
-msgid "Wildcard matching Key"
-msgstr "Клавиша, соответствующая карточке"
-
-#: gui/pinyindictmanager/browserdialog.cpp:99
-msgid "Wrong Link"
-msgstr "Неверная ссылка"
-
-#: im/table/wbx.conf.in.in:2
-msgid "Wubi"
-msgstr "Уби"
-
-#: im/table/wbpy.conf.in.in:2
-msgid "Wubi Pinyin"
-msgstr "Уби Пиньинь"
-
-#: im/table/engine.h:56 im/pinyin/pinyin.h:94
-msgid "Xiaohe"
-msgstr "Сяохэ"
-
-#: im/pinyin/pinyin.cpp:969
-msgid "Yes"
-msgstr "Да"
-
-#: im/table/engine.h:55 im/pinyin/pinyin.h:93
-msgid "Zhongwenzhixing"
-msgstr "Чжунвэньчжисин"
-
-#: im/table/engine.h:54 im/pinyin/pinyin.h:92
-msgid "Ziguang"
-msgstr "Цзыгуан"
-
-#: im/table/engine.h:53 im/pinyin/pinyin.h:91 im/table/zrm.conf.in.in:2
-msgid "Ziranma"
-msgstr "Цзыжаньма"
-
-#: im/pinyin/pinyin.cpp:1500
-msgid "[Select the word to remove from history]"
-msgstr "[Выберите слово для удаления из истории]"
-
-#: im/pinyin/pinyin.cpp:1436
-msgid "[Stroke Filtering]"
-msgstr "[Фильтрация штрихов]"
+#. i18n: file: gui/pinyindictmanager/browserdialog.ui:14
+#. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
+#: rc.cpp:24
+#, kde-format
+msgid "Dialog"
+msgstr "Диалог"
 
 #. i18n: file: gui/pinyindictmanager/browserdialog.ui:21
 #. i18n: ectx: property (url), widget (QWebEngineView, webView_)
@@ -1439,84 +1441,86 @@ msgstr "[Фильтрация штрихов]"
 msgid "about:blank"
 msgstr "о:пусто"
 
-#: im/pinyin/pinyin.h:133
-msgid "an <-> ang"
-msgstr "an <-> ang"
+#. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:22
+#. i18n: ectx: property (text), widget (QPushButton, importButton_)
+#: rc.cpp:30
+#, kde-format
+msgid "&Import"
+msgstr "&Импорт"
 
-#: im/pinyin/pinyin.h:139
-msgid "c <-> ch"
-msgstr "c <-> ch"
+#. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:44
+#. i18n: ectx: property (text), widget (QPushButton, removeAllButton_)
+#: rc.cpp:36
+#, kde-format
+msgid "Remove &All"
+msgstr "Удалить все"
 
-#: im/pinyin/pinyin.h:134
-msgid "en <-> eng"
-msgstr "en <-> eng"
+#. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:55
+#. i18n: ectx: property (text), widget (QPushButton, clearDictButton_)
+#: rc.cpp:39
+#, kde-format
+msgid "&Clear Dictionary"
+msgstr "&Очистить Словарь"
 
-#: im/pinyin/pinyin.h:140
-msgid "f <-> h"
-msgstr "f <-> h"
+#. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:66
+#. i18n: ectx: property (text), widget (QPushButton, openDirectoryButton_)
+#: rc.cpp:42
+#, kde-format
+msgid "&Open User Data Directory"
+msgstr "&Открыть каталог пользовательских данных"
 
-#: im/pinyin/pinyin.h:135
-msgid "ian <-> iang"
-msgstr "ian <-> iang"
+#: im/table/cangjie.conf.in.in:2
+msgid "Cangjie (Simplified Chinese)"
+msgstr "Цанцзе (Упрощенный Китайский)"
 
-#: im/pinyin/pinyin.h:136
-msgid "in <-> ing"
-msgstr "in <-> ing"
+#: im/table/erbi.conf.in.in:2
+msgid "Erbi"
+msgstr "Эрби"
 
-#: im/pinyin/pinyin.h:141
-msgid "l <-> n"
-msgstr "l <-> n"
+#: im/table/db.conf.in.in:2
+msgid "Dianbaoma"
+msgstr "Дяньбаома"
 
-#: im/pinyin/pinyin.h:142
-msgid "l <-> r"
-msgstr "l <-> r"
+#: im/table/wbpy.conf.in.in:2
+msgid "Wubi Pinyin"
+msgstr "Уби Пиньинь"
 
-#: im/pinyin/pinyin.h:143
-msgid "s <-> sh"
-msgstr "s <-> sh"
+#: im/table/table.conf.in.in:2
+msgid "Table"
+msgstr "Таблица"
 
-#: im/pinyin/pinyin.h:137
-msgid "u <-> ou"
-msgstr "u <-> ou"
+#: im/table/qxm.conf.in.in:2
+msgid "Bingchan"
+msgstr "Бинчань"
 
-#: im/pinyin/pinyin.h:132
-msgid "u <-> v"
-msgstr "u <-> v"
+#: im/table/wanfeng.conf.in.in:2
+msgid "Wanfeng"
+msgstr "Ваньфэн"
 
-#: im/pinyin/pinyin.h:138
-msgid "uan <-> uang"
-msgstr "uan <-> uang"
+#: im/table/wbx.conf.in.in:2
+msgid "Wubi"
+msgstr "Уби"
 
-#: im/pinyin/pinyin.h:120
-msgid "ue -> ve"
-msgstr "ue -> ve"
+#: im/pinyin/shuangpin.conf.in:2
+msgid "Shuangpin"
+msgstr "Шуанпинь"
 
-#: im/pinyin/pinyin.h:144
-msgid "z <-> zh"
-msgstr "z <-> zh"
+#: modules/pinyinhelper/pinyinhelper.conf.in.in:2
+msgid "Extra Pinyin functionality"
+msgstr "Дополнительная функциональность Пиньинь"
 
-#: modules/pinyinhelper/pinyinhelper.cpp:79
-#, c++-format
-msgid "{0} ({1})"
-msgstr "{0} ({1})"
+#: modules/cloudpinyin/cloudpinyin.conf.in.in:2
+msgid "Cloud Pinyin"
+msgstr "Cloud Pinyin"
 
-#: im/table/state.cpp:675
-#, c++-format
-msgctxt "Pinyin & Shuangpin"
-msgid "{0} ({1})"
-msgstr "{0} ({1})"
+#: org.fcitx.Fcitx5.Addon.ChineseAddons.metainfo.xml.in:7
+msgid "Chinese Addons"
+msgstr "Китайский - Дополнения"
 
-#: im/table/state.cpp:716
-#, c++-format
-msgid "{0} is not in table."
-msgstr "{0} нет в таблице."
-
-#: im/table/state.cpp:707
-#, c++-format
-msgid "{0}: No corresponding code."
-msgstr "{0}: Нет соответствующего кода."
-
-#: im/table/state.cpp:691 im/table/state.cpp:714
-#, c++-format
-msgid "{0}: {1}"
-msgstr "{0}: {1}"
+#: org.fcitx.Fcitx5.Addon.ChineseAddons.metainfo.xml.in:8
+msgid ""
+"Add support for Pinyin, Table and many other Chinese related functionality "
+"to Fcitx"
+msgstr ""
+"Добавить в Fcitx поддержку Пиньинь, таблиц и многих других функций, "
+"связанных с китайским языком."
