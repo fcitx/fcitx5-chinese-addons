@@ -23,9 +23,11 @@
 namespace fcitx {
 
 TableCandidateWord::TableCandidateWord(TableEngine *engine, Text text,
-                                       Text comment, size_t idx)
+                                       Text comment, bool spaceBeforeHint,
+                                       size_t idx)
     : CandidateWord(std::move(text)), engine_(engine), idx_(idx) {
     setComment(std::move(comment));
+    setSpaceBetweenComment(spaceBeforeHint);
 }
 void TableCandidateWord::select(InputContext *inputContext) const {
     auto *state = inputContext->propertyFor(&engine_->factory());
@@ -50,7 +52,7 @@ void TableCandidateWord::select(InputContext *inputContext) const {
 TablePinyinCandidateWord::TablePinyinCandidateWord(
     TableEngine *engine, std::string word,
     const libime::TableBasedDictionary &dict, bool customHint,
-    std::string hintSeparator)
+    std::string hintSeparator, bool spaceBeforeHint)
     : engine_(engine), word_(std::move(word)) {
     setText(Text(word_));
     if (utf8::lengthValidated(word_) == 1) {
@@ -65,6 +67,7 @@ TablePinyinCandidateWord::TablePinyinCandidateWord(
             setComment(std::move(comment));
         }
     }
+    setSpaceBetweenComment(spaceBeforeHint);
 }
 void TablePinyinCandidateWord::select(InputContext *inputContext) const {
     auto *state = inputContext->propertyFor(&engine_->factory());

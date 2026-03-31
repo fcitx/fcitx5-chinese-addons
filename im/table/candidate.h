@@ -21,7 +21,7 @@ namespace fcitx {
 class TableCandidateWord : public CandidateWord {
 public:
     TableCandidateWord(TableEngine *engine, Text text, Text comment,
-                       size_t idx);
+                       bool spaceBeforeHint, size_t idx);
 
     void select(InputContext *inputContext) const override;
 
@@ -33,7 +33,8 @@ class TablePinyinCandidateWord : public CandidateWord {
 public:
     TablePinyinCandidateWord(TableEngine *engine, std::string word,
                              const libime::TableBasedDictionary &dict,
-                             bool customHint, std::string hintSeparator);
+                             bool customHint, std::string hintSeparator,
+                             bool spaceBeforeHint);
 
     void select(InputContext *inputContext) const override;
 
