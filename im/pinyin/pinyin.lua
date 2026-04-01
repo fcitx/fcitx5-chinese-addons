@@ -48,10 +48,11 @@ end
 local function get_chinese_non_math_num(num)
     local ret = ""
     for ch in tostring(num):gmatch(".") do
-        if ch >= "0" and ch <= "9" then
-            ch = _CHINESE_DIGITS[tonumber(ch)]
+        local c = ch
+        if c >= "0" and c <= "9" then
+            c = _CHINESE_DIGITS[tonumber(c)]
         end
-        ret = ret .. ch
+        ret = ret .. c
     end
     return ret
 end
