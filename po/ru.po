@@ -4,15 +4,15 @@
 #
 # Translators:
 # TotalCaesar659 <x24cm5b8c54q6szxw@yandex.ru>, 2017
-# Dmitry <dmitrydmitry761@gmail.com>, 2025
+# Dmitry <dmitrydmitry761@gmail.com>, 2026
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2026-03-31 20:24+0000\n"
+"POT-Creation-Date: 2026-04-02 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
-"Last-Translator: Dmitry <dmitrydmitry761@gmail.com>, 2025\n"
+"Last-Translator: Dmitry <dmitrydmitry761@gmail.com>, 2026\n"
 "Language-Team: Russian (https://app.transifex.com/fcitx/teams/12005/ru/)\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -414,7 +414,7 @@ msgstr "Текст-разделитель между подсказкой и с�
 
 #: im/table/ime.h:301
 msgid "Show space between candidate and hint text"
-msgstr ""
+msgstr "Отображать пробел между текстом-кандидатом и текстом-подсказкой"
 
 #: im/table/ime.h:304
 msgid "Candidate List orientation"
