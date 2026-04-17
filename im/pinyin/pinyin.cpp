@@ -1080,6 +1080,7 @@ void PinyinEngine::populateConfig() {
             TRANS_SP_PROFILE(Zhongwenzhixing)
             TRANS_SP_PROFILE(PinyinJiajia)
             TRANS_SP_PROFILE(Xiaohe)
+            TRANS_SP_PROFILE(GB)
         default:
             profile = libime::ShuangpinBuiltinProfile::Ziranma;
             break;
