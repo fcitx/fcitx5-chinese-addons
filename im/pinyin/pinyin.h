@@ -85,13 +85,22 @@ FCITX_CONFIG_ENUM_NAME_WITH_I18N(SwitchInputMethodBehavior, N_("Clear"),
                                  N_("Commit current preedit"),
                                  N_("Commit default selection"))
 
-FCITX_CONFIG_ENUM(ShuangpinProfileEnum, Ziranma, MS, Ziguang, ABC,
-                  Zhongwenzhixing, PinyinJiajia, Xiaohe, Custom)
+enum class ShuangpinProfileEnum {
+    Ziranma,
+    MS,
+    Ziguang,
+    ABC,
+    Zhongwenzhixing,
+    PinyinJiajia,
+    Xiaohe,
+    GB,
+    Custom
+};
 
-FCITX_CONFIG_ENUM_I18N_ANNOTATION(ShuangpinProfileEnum, N_("Ziranma"), N_("MS"),
-                                  N_("Ziguang"), N_("ABC"),
-                                  N_("Zhongwenzhixing"), N_("PinyinJiajia"),
-                                  N_("Xiaohe"), N_("Custom"))
+FCITX_CONFIG_ENUM_NAME_WITH_I18N(ShuangpinProfileEnum, N_("Ziranma"), N_("MS"),
+                                 N_("Ziguang"), N_("ABC"),
+                                 N_("Zhongwenzhixing"), N_("PinyinJiajia"),
+                                 N_("Xiaohe"), N_("GB Standard"), N_("Custom"))
 
 enum class PreeditMode { No, ComposingPinyin, CommitPreview };
 
