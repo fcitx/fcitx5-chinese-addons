@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2026-04-23 20:24+0000\n"
+"POT-Creation-Date: 2026-04-24 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
 "Last-Translator: Popolon_Github, 2025\n"
 "Language-Team: French (https://app.transifex.com/fcitx/teams/12005/fr/)\n"
@@ -87,7 +87,7 @@ msgstr "Entrée pour"
 msgid "Select candidate to be removed from history:"
 msgstr "Sélectionner la proposition à supprimer de l'historique :"
 
-#: im/table/ime.h:35 im/pinyin/pinyin.cpp:982
+#: im/table/ime.h:35 im/pinyin/pinyin.cpp:993
 msgid "No"
 msgstr "Non"
 
@@ -211,7 +211,7 @@ msgstr "Première proposition en pré-édition"
 msgid "Fix embedded preedit cursor at the beginning of the preedit"
 msgstr "Fixe le curseur de la pré-édition embarquée au début de la pré-édition"
 
-#: im/table/ime.h:151 im/pinyin/pinyin.h:340
+#: im/table/ime.h:151 im/pinyin/pinyin.h:347
 msgid "Key to trigger quickphrase"
 msgstr "Touche pour déclencher quickphrase"
 
@@ -500,17 +500,17 @@ msgstr "Taille de la prédiction"
 msgid "(Half)"
 msgstr "(demi)"
 
-#: im/table/engine.cpp:91 im/table/engine.cpp:99 im/pinyin/pinyin.cpp:786
-#: im/pinyin/pinyin.cpp:796
+#: im/table/engine.cpp:91 im/table/engine.cpp:99 im/pinyin/pinyin.cpp:797
+#: im/pinyin/pinyin.cpp:807
 msgid "Prediction Enabled"
 msgstr "Prédiction activée"
 
-#: im/table/engine.cpp:92 im/table/engine.cpp:100 im/pinyin/pinyin.cpp:787
-#: im/pinyin/pinyin.cpp:797
+#: im/table/engine.cpp:92 im/table/engine.cpp:100 im/pinyin/pinyin.cpp:798
+#: im/pinyin/pinyin.cpp:808
 msgid "Prediction Disabled"
 msgstr "Prédiction désactivée"
 
-#: im/table/engine.cpp:93 im/pinyin/pinyin.cpp:788
+#: im/table/engine.cpp:93 im/pinyin/pinyin.cpp:799
 msgid "Show prediction words"
 msgstr "Afficher les mots de prédiction"
 
@@ -748,62 +748,72 @@ msgid "Choose Character from Phrase"
 msgstr "Caractère chinois d'une phrase"
 
 #: im/pinyin/pinyin.h:303
+msgid ""
+"N-th key in the option will select the N-th character in the current "
+"candidate."
+msgstr ""
+
+#: im/pinyin/pinyin.h:307
+msgid "Choose Last Character from Phrase"
+msgstr ""
+
+#: im/pinyin/pinyin.h:310
 msgid "Use BackSpace to cancel the selection"
 msgstr "Utiliser le retour arrière pour annuler la sélection"
 
-#: im/pinyin/pinyin.h:308
+#: im/pinyin/pinyin.h:315
 msgid "Filter by stroke"
 msgstr "Filtrer par traits"
 
-#: im/pinyin/pinyin.h:312
+#: im/pinyin/pinyin.h:319
 msgid "Number of Sentences"
 msgstr "Nombre de phrases"
 
-#: im/pinyin/pinyin.h:317
+#: im/pinyin/pinyin.h:324
 msgid "Number of Phrase Candidates"
 msgstr "Nombre de propositions de phrases"
 
-#: im/pinyin/pinyin.h:321
+#: im/pinyin/pinyin.h:328
 msgid "Set to 0 will show all candidates."
 msgstr "Régler à 0 pour montrer toutes les propositions"
 
-#: im/pinyin/pinyin.h:324
+#: im/pinyin/pinyin.h:331
 msgid "Prompt long word length when input length over (0 for disable)"
 msgstr ""
 "Préciser la longueur du mot long lorsque la longueur de la saisie dépasse (0 "
 "pour désactiver)"
 
-#: im/pinyin/pinyin.h:326
+#: im/pinyin/pinyin.h:333
 msgid "Manage Dictionaries"
 msgstr "Gérer les dictionnaires"
 
-#: im/pinyin/pinyin.h:328
+#: im/pinyin/pinyin.h:335
 msgid "Manage Custom Phrase"
 msgstr "Gérer les phrases personnalisées"
 
-#: im/pinyin/pinyin.h:331 modules/punctuation/punctuation.cpp:267
+#: im/pinyin/pinyin.h:338 modules/punctuation/punctuation.cpp:267
 #: modules/punctuation/punctuation.cpp:269
 #: modules/punctuation/punctuation.conf.in.in:2
 msgid "Punctuation"
 msgstr "Ponctuation"
 
-#: im/pinyin/pinyin.h:335
+#: im/pinyin/pinyin.h:342
 msgid "Configure Simplified/Traditional Chinese Conversion"
 msgstr "Configurer la conversion du chinois simplifié/traditionnel"
 
-#: im/pinyin/pinyin.h:344
+#: im/pinyin/pinyin.h:351
 msgid "Use V to trigger quickphrase"
 msgstr "Utiliser V pour déclencher quickphrase"
 
-#: im/pinyin/pinyin.h:345
+#: im/pinyin/pinyin.h:352
 msgid "Quick Phrase"
 msgstr "Quick Phrase"
 
-#: im/pinyin/pinyin.h:351
+#: im/pinyin/pinyin.h:358
 msgid "Regular expression to trigger quick phrase"
 msgstr "Expression régulière pour déclencher quick phrase"
 
-#: im/pinyin/pinyin.h:356
+#: im/pinyin/pinyin.h:363
 msgid ""
 "Enter quickphrase mode when current input matches any regular expression "
 "from the list."
@@ -811,7 +821,7 @@ msgstr ""
 "Entrer dans le mode quickphrase lorsque la saisie actuelle correspond à "
 "n'importe quelle expression régulière de la liste."
 
-#: im/pinyin/pinyin.h:358
+#: im/pinyin/pinyin.h:365
 msgid "Fuzzy Pinyin"
 msgstr "Pinyin vague"
 
@@ -827,7 +837,7 @@ msgstr "Épingler en haut comme phrase personnalisée"
 msgid "Delete from custom phrase"
 msgstr "Supprimer depuis les phrases personnalisées"
 
-#: im/pinyin/pinyin.cpp:971
+#: im/pinyin/pinyin.cpp:982
 msgid ""
 "Do you want to enable cloudpinyin now for better prediction? You can always "
 "toggle it later in configuration."
@@ -835,7 +845,7 @@ msgstr ""
 "Désirez-vous activer cloudpinying maintenant pour une meilleur prédiction ? "
 "Vous pourrez toujours le commuter plus tard dans la configuration."
 
-#: im/pinyin/pinyin.cpp:976
+#: im/pinyin/pinyin.cpp:987
 #, c++-format
 msgid ""
 "Do you want to enable cloudpinyin now for better prediction? You can always "
@@ -845,45 +855,45 @@ msgstr ""
 "Vous pourrez toujours le commuter plus tard dans la configuration ou en "
 "pressant {}."
 
-#: im/pinyin/pinyin.cpp:981
+#: im/pinyin/pinyin.cpp:992
 msgid "Yes"
 msgstr "Oui"
 
-#: im/pinyin/pinyin.cpp:985 im/pinyin/pinyin.cpp:1263
+#: im/pinyin/pinyin.cpp:996 im/pinyin/pinyin.cpp:1276
 #: im/pinyin/pinyin-addon.conf.in.in:2 im/pinyin/pinyin.conf.in:2
 msgid "Pinyin"
 msgstr "Pinyin"
 
-#: im/pinyin/pinyin.cpp:985
+#: im/pinyin/pinyin.cpp:996
 msgid "Enable Cloudpinyin"
 msgstr "Activer Cloud Pinyin"
 
-#: im/pinyin/pinyin.cpp:1264
+#: im/pinyin/pinyin.cpp:1277
 msgid "Cloud Pinyin Status"
 msgstr "Status de Cloud Pinyin"
 
-#: im/pinyin/pinyin.cpp:1265
+#: im/pinyin/pinyin.cpp:1278
 msgid "Cloud Pinyin is enabled."
 msgstr "Cloud Pinyin est activé"
 
-#: im/pinyin/pinyin.cpp:1266
+#: im/pinyin/pinyin.cpp:1279
 msgid "Cloud Pinyin is disabled."
 msgstr "Cloud Pinyin est désactivé"
 
-#: im/pinyin/pinyin.cpp:1449
+#: im/pinyin/pinyin.cpp:1462
 msgid "[Stroke Filtering]"
 msgstr "[Filtre de traits]"
 
-#: im/pinyin/pinyin.cpp:1512
+#: im/pinyin/pinyin.cpp:1525
 msgid "[Select the word to remove from history]"
 msgstr "[Sélectionner le mot à supprimer de l'historique]"
 
-#: im/pinyin/pinyin.cpp:1835
+#: im/pinyin/pinyin.cpp:1848
 #, c++-format
 msgid "Press {} for {} and Return for {}"
 msgstr "Presser {} pour {} et entrée pour {}"
 
-#: im/pinyin/pinyin.cpp:1838
+#: im/pinyin/pinyin.cpp:1851
 #, c++-format
 msgid "Press {} for {}"
 msgstr "Presser {} pour {}"
