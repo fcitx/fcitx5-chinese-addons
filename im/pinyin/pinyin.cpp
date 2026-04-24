@@ -216,6 +216,17 @@ std::string getEncodedPinyin(const libime::SentenceResult &result) {
     return encodedPinyin;
 }
 
+std::optional<int> selectCharFromCandidateIndex(const Key &key,
+                                                PinyinEngineConfig &config) {
+    if (key.check(*config.selectLastCharFromPhrase)) {
+        return -1;
+    }
+    if (int idx = key.keyListIndex(*config.selectCharFromPhrase); idx >= 0) {
+        return idx;
+    }
+    return std::nullopt;
+}
+
 } // namespace
 
 PinyinState::PinyinState(PinyinEngine *engine) : context_(engine->ime()) {
@@ -2146,42 +2157,50 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
             state->context_.clear();
             state->context_.clearContextWords();
             event.filterAndAccept();
-        } else if (int idx =
-                       event.key().keyListIndex(*config_.selectCharFromPhrase);
-                   idx >= 0) {
-            if (candidateList && !candidateList->empty() &&
-                candidateList->cursorIndex() >= 0) {
+        } else if (auto maybeIdx =
+                       selectCharFromCandidateIndex(event.key(), config_)) {
+            do {
+                if (!candidateList || candidateList->empty() ||
+                    candidateList->cursorIndex() < 0) {
+                    break;
+                }
+                auto idx = maybeIdx.value();
                 const auto &candidate =
                     candidateList->candidate(candidateList->cursorIndex());
                 auto str = candidate.text().toStringForCommit();
                 // Validate string and length.
-                if (auto len = utf8::lengthValidated(str);
-                    len != utf8::INVALID_LENGTH &&
-                    len > static_cast<size_t>(idx)) {
-                    // Get idx-th char.
-                    const std::string_view chr =
-                        std::next(utf8::MakeUTF8CharRange(str).begin(), idx)
-                            .view();
-                    auto segmentLength = state->context_.size() -
-                                         state->context_.selectedLength();
-                    const auto *pyCandidate =
-                        dynamic_cast<const PinyinCandidateWord *>(&candidate);
-                    if (pyCandidate) {
-                        const auto &contextCandidates =
-                            state->context_.candidatesToCursor();
-                        if (pyCandidate->idx_ < contextCandidates.size()) {
-                            const auto &sentence =
-                                contextCandidates[pyCandidate->idx_].sentence();
-                            const auto candidateSegmentLength =
-                                sentence.back()->to()->index();
-                            segmentLength =
-                                std::min(segmentLength, candidateSegmentLength);
-                        }
-                    }
-                    state->context_.selectCustom(segmentLength, chr);
-                    event.filterAndAccept();
+                auto len = utf8::lengthValidated(str);
+                if (len == utf8::INVALID_LENGTH || len == 0) {
+                    break;
                 }
-            }
+                if (idx < 0) {
+                    idx = len - 1;
+                }
+                if (static_cast<size_t>(idx) >= len) {
+                    break;
+                }
+                // Get idx-th char.
+                const std::string_view chr =
+                    std::next(utf8::MakeUTF8CharRange(str).begin(), idx).view();
+                auto segmentLength =
+                    state->context_.size() - state->context_.selectedLength();
+                const auto *pyCandidate =
+                    dynamic_cast<const PinyinCandidateWord *>(&candidate);
+                if (pyCandidate) {
+                    const auto &contextCandidates =
+                        state->context_.candidatesToCursor();
+                    if (pyCandidate->idx_ < contextCandidates.size()) {
+                        const auto &sentence =
+                            contextCandidates[pyCandidate->idx_].sentence();
+                        const auto candidateSegmentLength =
+                            sentence.back()->to()->index();
+                        segmentLength =
+                            std::min(segmentLength, candidateSegmentLength);
+                    }
+                }
+                state->context_.selectCustom(segmentLength, chr);
+                event.filterAndAccept();
+            } while (false);
         }
     } else if (event.key().check(FcitxKey_BackSpace)) {
         if (lastIsPunc) {
