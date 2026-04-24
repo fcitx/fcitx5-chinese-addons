@@ -986,7 +986,9 @@ void PinyinEngine::populateConfig() {
                     msg, actions, -1,
                     [this](const std::string &action) {
                         if (action == "yes") {
-                            config_.cloudPinyinEnabled.setValue(true);
+                            for (auto *configPtr : {&config_, &pyConfig_}) {
+                                configPtr->cloudPinyinEnabled.setValue(true);
+                            }
                             save();
                         }
                     },
