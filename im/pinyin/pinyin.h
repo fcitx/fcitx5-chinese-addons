@@ -293,12 +293,19 @@ FCITX_CONFIGURATION(
                           KeyConstrainFlag::AllowModifierOnly})};
     Option<bool> useKeypadAsSelectionKey{
         this, "UseKeypadAsSelection", _("Use Keypad as Selection key"), false};
-    KeyListOption selectCharFromPhrase{
+    KeyListOptionWithAnnotation<ToolTipAnnotation> selectCharFromPhrase{
         this,
         "ChooseCharFromPhrase",
         _("Choose Character from Phrase"),
-        {Key("["), Key("]")},
-        KeyListConstrain({KeyConstrainFlag::AllowModifierLess})};
+        {Key("[")},
+        KeyListConstrain({KeyConstrainFlag::AllowModifierLess}),
+        {},
+        {_("N-th key in the option will select the N-th character in the "
+           "current candidate.")}};
+    Option<Key, KeyConstrain> selectLastCharFromPhrase{
+        this, "ChooseLastCharFromPhrase",
+        _("Choose Last Character from Phrase"), Key("]"),
+        KeyConstrain{KeyConstrainFlag::AllowModifierLess}};
     Option<bool> useBackSpaceToUnselect{
         this, "BackSpaceToUnselect", _("Use BackSpace to cancel the selection"),
         true};
