@@ -39,6 +39,7 @@
 #include <fcitx/text.h>
 #include <filesystem>
 #include <future>
+#include <libime/core/historybigram.h>
 #include <libime/pinyin/pinyincontext.h>
 #include <libime/pinyin/pinyinime.h>
 #include <libime/pinyin/pinyinprediction.h>
@@ -389,7 +390,8 @@ public:
 
     std::unique_ptr<EventSourceTime> cancelLastEvent_;
 
-    std::optional<std::vector<std::string>> predictWords_;
+    std::optional<std::vector<libime::HistoryBigram::WordWithCode>>
+        predictWords_;
 
     int keyReleased_ = -1;
     int keyReleasedIndex_ = -2;

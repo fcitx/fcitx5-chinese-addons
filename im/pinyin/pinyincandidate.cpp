@@ -41,7 +41,7 @@ void PinyinPredictCandidateWord::select(InputContext *inputContext) const {
         state->predictWords_.emplace();
     }
     auto &predictWords = *state->predictWords_;
-    predictWords.push_back(word_);
+    predictWords.push_back({word_, ""});
     // Max history size.
     constexpr size_t maxHistorySize = 5;
     if (predictWords.size() > maxHistorySize) {
@@ -64,7 +64,8 @@ void PinyinPredictDictCandidateWord::select(InputContext *inputContext) const {
     }
     // Append to last word, instead of push back.
     if (!state->predictWords_->empty()) {
-        state->predictWords_->back().append(word_);
+        state->predictWords_->back().first.append(word_);
+        state->predictWords_->back().second.clear();
     }
     engine_->updatePredict(inputContext);
 }

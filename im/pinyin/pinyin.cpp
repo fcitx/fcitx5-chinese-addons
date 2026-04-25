@@ -239,9 +239,9 @@ void PinyinEngine::initPredict(InputContext *inputContext) {
     state->predictWords_.reset();
     auto &context = state->context_;
     auto lmState = context.state();
-    auto selected = context.selectedWords();
+    auto selected = context.selectedWordsWithPinyin();
     if (*config_.keepCurrentContext) {
-        context.appendContextWords(selected);
+        context.appendContextWordsWithPinyin(context.selectedWordsWithPinyin());
     }
     if (selected.empty()) {
         return;
@@ -251,11 +251,9 @@ void PinyinEngine::initPredict(InputContext *inputContext) {
     }
 
     const auto selectPinyin = context.selectedWordsWithPinyin();
-    const std::string lastEncodedPinyin =
-        !selectPinyin.empty() ? selectPinyin.back().second : std::string();
 
-    auto words = prediction_.predict(lmState, selected, lastEncodedPinyin,
-                                     *config_.predictionSize);
+    auto words =
+        prediction_.predict(lmState, selected, *config_.predictionSize);
     if (auto candidateList = predictCandidateList(this, words)) {
         auto &inputPanel = inputContext->inputPanel();
         state->predictWords_ = std::move(selected);
@@ -273,10 +271,11 @@ void PinyinEngine::updatePredict(InputContext *inputContext) {
     auto *state = inputContext->propertyFor(&factory_);
     assert(state->predictWords_.has_value());
     if (*config_.keepCurrentContext) {
-        state->context_.setContextWords(*state->predictWords_);
+        state->context_.setContextWordsWithPinyin(*state->predictWords_);
     }
     auto words =
-        prediction_.predict(*state->predictWords_, *config_.predictionSize);
+        prediction_.predict(ime_->model()->nullState(), *state->predictWords_,
+                            *config_.predictionSize);
     if (auto candidateList = predictCandidateList(this, words)) {
         auto &inputPanel = inputContext->inputPanel();
         inputPanel.setCandidateList(std::move(candidateList));
@@ -2402,7 +2401,7 @@ void PinyinEngine::cloudPinyinSelected(InputContext *inputContext,
                                        const std::string &selected,
                                        const std::string &word) {
     auto *state = inputContext->propertyFor(&factory_);
-    auto words = state->context_.selectedWords();
+    auto words = state->context_.selectedWordsWithPinyin();
     // This ensure us to convert pinyin to the right one.
     auto preedit = state->context_.preedit(libime::PinyinPreeditMode::RawText);
     // preedit is "selected sentence" + Pinyin.
@@ -2433,11 +2432,12 @@ void PinyinEngine::cloudPinyinSelected(InputContext *inputContext,
                     break;
                 }
                 if (!(*iter)->word().empty()) {
-                    words.push_back((*iter)->word());
                     PINYIN_DEBUG()
                         << "Cloud Pinyin can reuse segment " << (*iter)->word();
                     const auto *pinyinNode =
                         static_cast<const libime::PinyinLatticeNode *>(*iter);
+                    words.push_back(libime::HistoryBigram::WordWithCode{
+                        (*iter)->word(), pinyinNode->encodedPinyin()});
                     auto pinyinSize = pinyinNode->encodedPinyin().size() / 2;
                     if (pinyinSize &&
                         static_cast<size_t>(std::distance(
@@ -2454,14 +2454,19 @@ void PinyinEngine::cloudPinyinSelected(InputContext *inputContext,
         // if pinyin is not valid, it may throw
         try {
             if (utf8::length(wordView) == 1 &&
-                std::all_of(words.begin(), words.end(),
-                            [](const std::string &w) {
-                                return utf8::length(w) == 1;
-                            })) {
-                words = state->context_.selectedWords();
+                std::ranges::all_of(
+                    words, [](const libime::HistoryBigram::WordWithCode &w) {
+                        return utf8::length(w.first) == 1;
+                    })) {
+                words = state->context_.selectedWordsWithPinyin();
                 auto joined =
                     stringutils::join(pinyins.begin(), pinyins.end(), "'");
-                words.push_back(word);
+                auto encodedPinyin =
+                    libime::PinyinEncoder::encodeFullPinyinWithFlags(
+                        joined, libime::PinyinFuzzyFlag::VE_UE);
+                words.push_back(libime::HistoryBigram::WordWithCode{
+                    std::string(word),
+                    std::string(encodedPinyin.data(), encodedPinyin.size())});
                 ime_->dict()->addWord(libime::PinyinDictionary::UserDict,
                                       joined, word);
             } else {
@@ -2488,11 +2493,16 @@ void PinyinEngine::cloudPinyinSelected(InputContext *inputContext,
                 auto joined = stringutils::join(pinyinsIter, pinyinsEnd, "'");
                 PINYIN_DEBUG()
                     << "Cloud pinyin saves word: " << wordView << " " << joined;
+                auto encodedPinyin =
+                    libime::PinyinEncoder::encodeFullPinyinWithFlags(
+                        joined, libime::PinyinFuzzyFlag::VE_UE);
                 ime_->dict()->addWord(libime::PinyinDictionary::UserDict,
                                       joined, wordView);
-                words.push_back(std::string{wordView});
+                words.push_back(libime::HistoryBigram::WordWithCode{
+                    std::string(wordView),
+                    std::string(encodedPinyin.data(), encodedPinyin.size())});
             }
-            ime_->model()->history().add(words);
+            ime_->model()->history().addWithCode(words);
         } catch (const std::exception &e) {
             PINYIN_DEBUG() << "Failed to save cloudpinyin: " << e.what();
         }
@@ -2501,7 +2511,7 @@ void PinyinEngine::cloudPinyinSelected(InputContext *inputContext,
     inputContext->commitString(selected + word);
     inputContext->inputPanel().reset();
     if (*config_.keepCurrentContext) {
-        state->context_.appendContextWords(words);
+        state->context_.appendContextWordsWithPinyin(words);
     }
     if (*config_.predictionEnabled) {
         state->predictWords_ = std::move(words);
