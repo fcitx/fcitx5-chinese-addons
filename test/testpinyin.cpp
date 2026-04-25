@@ -31,6 +31,8 @@
 
 using namespace fcitx;
 
+namespace {
+
 std::unique_ptr<EventSourceTime> endTestEvent;
 void testPunctuationPart2(Instance *instance);
 
@@ -513,6 +515,8 @@ void testPunctuationPart2(Instance *instance) {
             });
     });
 }
+
+} // namespace
 
 int main() {
     setupTestingEnvironment(
