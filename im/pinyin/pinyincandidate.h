@@ -209,7 +209,6 @@ public:
 private:
     PinyinEngine *engine_;
     std::string word_;
-    size_t inputLength_;
 };
 
 class PinyinCandidateWord : public PinyinAbstractCandidateWord,
