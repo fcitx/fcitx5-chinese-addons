@@ -78,7 +78,7 @@ FCITX_CONFIGURATION(
                          LookupShuangpinProfileEnum::No};
 
     Option<bool> predictionEnabled{this, "Prediction", _("Enable Prediction"),
-                                   isAndroid()};
+                                   isAndroid() || isIOS()};
     Option<int, IntConstrain> predictionSize{this, "PredictionSize",
                                              _("Prediction Size"), 10,
                                              IntConstrain(3, 100)};);
