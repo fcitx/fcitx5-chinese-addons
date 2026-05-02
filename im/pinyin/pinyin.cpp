@@ -20,6 +20,7 @@
 #include "workerthread.h"
 #include <algorithm>
 #include <cassert>
+#include <cstddef>
 #include <cstdint>
 #include <ctime>
 #include <exception>
@@ -476,10 +477,9 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
         const auto pyBeforeCursor =
             context.userInput().substr(selectedLength, pyLength);
 
-        std::vector<std::unique_ptr<PinyinAbstractCandidateWord>> candidates;
-        // Since symbol is by default, add some extra size for reservation.
-        candidates.reserve(pinyinCandidates.size() + (*config_.pageSize * 2));
-        std::unordered_set<std::string> customCandidateSet;
+        std::unordered_map<std::string,
+                           std::unique_ptr<PinyinAbstractCandidateWord>>
+            customCandidateMap;
         /// Create custom phrase candidate {{{
         do {
             const auto *results = customPhrase_.lookup(pyBeforeCursor);
@@ -494,22 +494,22 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
                     result.evaluate([this, inputContext](std::string_view key) {
                         return evaluateCustomPhrase(inputContext, key);
                     });
-                if (customCandidateSet.contains(phrase)) {
+                if (customCandidateMap.contains(phrase)) {
                     continue;
                 }
-                customCandidateSet.insert(phrase);
                 std::string customPhrase =
                     result.isDynamic() ? result.value() : phrase;
-                candidates.push_back(
-                    std::make_unique<CustomPhraseCandidateWord>(
-                        this, pyBeforeCursor.size(), result.order() - 1,
-                        std::move(phrase), std::move(customPhrase)));
+                customCandidateMap.emplace(
+                    phrase, std::make_unique<CustomPhraseCandidateWord>(
+                                this, pyBeforeCursor.size(),
+                                CandidateOrder{result.order() - 1,
+                                               customCandidateMap.size()},
+                                phrase, std::move(customPhrase)));
             }
-        } while (0);
+        } while (false);
         /// }}}
 
         /// Create cloud candidate. {{{
-        std::optional<decltype(candidates)::iterator> cloud;
         if (*config_.cloudPinyinEnabled && cloudpinyin() &&
             !inputContext->capabilityFlags().testAny(
                 CapabilityFlag::PasswordOrSensitive) &&
@@ -524,14 +524,13 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
                        const std::string &word) {
                     cloudPinyinSelected(ic, selected, word);
                 },
-                *config_.cloudPinyinIndex - 1);
+                CandidateOrder{*config_.cloudPinyinIndex - 1,
+                               customCandidateMap.size()});
             if (!cand->filled() ||
                 (!cand->word().empty() &&
-                 !customCandidateSet.contains(cand->word()) &&
+                 !customCandidateMap.contains(cand->word()) &&
                  !context.candidatesToCursorSet().contains(cand->word()))) {
-                customCandidateSet.insert(cand->word());
-                candidates.push_back(std::move(cand));
-                cloud = std::prev(candidates.end());
+                customCandidateMap.emplace(cand->word(), std::move(cand));
             }
         }
         /// }}}
@@ -569,11 +568,14 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
 
                 int position = hasUpper ? 0 : 1;
                 for (const auto &result : results) {
-                    if (customCandidateSet.contains(result)) {
+                    if (customCandidateMap.contains(result)) {
                         continue;
                     }
-                    candidates.push_back(std::make_unique<SpellCandidateWord>(
-                        this, result, pyBeforeCursor.size(), position++));
+                    customCandidateMap.emplace(
+                        result, std::make_unique<SpellCandidateWord>(
+                                    this, result, pyBeforeCursor.size(),
+                                    CandidateOrder{position++,
+                                                   customCandidateMap.size()}));
                 }
             }
         }
@@ -598,36 +600,59 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
                 auto py = pinyinhelper()->call<IPinyinHelper::lookup>(
                     utf8::getChar(result.first));
                 auto pystr = stringutils::join(py, " ");
-                candidates.push_back(std::make_unique<StrokeCandidateWord>(
-                    this, result.first, pystr, context.userInput().size(),
-                    strokeCandsPos++));
+                customCandidateMap.try_emplace(
+                    result.first,
+                    std::make_unique<StrokeCandidateWord>(
+                        this, result.first, pystr, context.userInput().size(),
+                        CandidateOrder{strokeCandsPos++,
+                                       customCandidateMap.size()}));
             }
         }
         /// }}}
 
         const auto candidateCompare = [](const auto &lhs, const auto &rhs) {
-            return lhs->order() < rhs->order();
+            return lhs->sortOrder() < rhs->sortOrder();
         };
 
-        // We expect stable sort here.
-        // Real pinyin candidate is always in order, so we have small N here.
-        std::ranges::stable_sort(candidates, candidateCompare);
         // Save the middle point for inplace_merge.
-        const size_t middle = candidates.size();
+        std::vector<std::unique_ptr<PinyinAbstractCandidateWord>> candidates;
 
         for (size_t idx = 0; idx < pinyinCandidates.size(); ++idx) {
             const auto &candidate = pinyinCandidates[idx];
             auto candidateString = candidate.toString();
-            if (customCandidateSet.contains(candidateString)) {
-                continue;
+            auto iter = customCandidateMap.find(candidateString);
+            CandidateOrder order{idx, customCandidateMap.size()};
+            if (iter != customCandidateMap.end()) {
+                if (iter->second->selectLength() !=
+                    candidate.sentence().back()->to()->index()) {
+                    continue;
+                }
+                order = iter->second->sortOrder();
             }
-            candidates.push_back(std::make_unique<PinyinCandidateWord>(
+            auto pinyinCandidate = std::make_unique<PinyinCandidateWord>(
                 this, inputContext, Text(std::move(candidateString)),
-                candidate.sentence().back()->to()->index(), idx));
+                candidate.sentence().back()->to()->index(), idx, order);
+            if (iter != customCandidateMap.end()) {
+                if (dynamic_cast<CustomPhraseCandidateWord *>(
+                        iter->second.get())) {
+                    pinyinCandidate->setCustomPhrase();
+                }
+                iter->second = std::move(pinyinCandidate);
+            } else {
+                candidates.push_back(std::move(pinyinCandidate));
+            }
         }
-        std::ranges::inplace_merge(candidates,
-                                   std::next(candidates.begin(), middle),
-                                   candidateCompare);
+        size_t middle = candidates.size();
+        for (auto &[_, candidate] : customCandidateMap) {
+            candidates.push_back(std::move(candidate));
+        }
+        // We expect stable sort here.
+        // Real pinyin candidate is always in order, so we have small N here.
+        std::stable_sort(std::ranges::next(candidates.begin(), middle),
+                         candidates.end(), candidateCompare);
+        std::ranges::inplace_merge(
+            candidates, std::ranges::next(candidates.begin(), middle),
+            candidateCompare);
 
         // Apply the candidate to candidate generation.
         for (auto &candidatePtr : candidates) {
@@ -639,7 +664,7 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
 #ifdef FCITX_HAS_LUA
             // Only trigger lua for top N candidates to avoid too much overhead.
             if (candidate->order() <
-                    std::max(*config_.nbest, *config_.pageSize) &&
+                    std::max<size_t>(*config_.nbest, *config_.pageSize) &&
                 imeapi()) {
                 luaExtraCandidates =
                     luaCandidateTrigger(inputContext, candidateString);
@@ -661,8 +686,10 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
             if (symbols) {
                 std::string encodedPinyin;
                 if (candidate->isPinyinCandidate()) {
-                    encodedPinyin =
-                        getEncodedPinyin(pinyinCandidates[candidate->order()]);
+                    encodedPinyin = getEncodedPinyin(
+                        pinyinCandidates[static_cast<PinyinCandidateWord *>(
+                                             candidate)
+                                             ->candidateIndex()]);
                 }
                 for (const auto &symbol : *symbols) {
                     const bool isFull =
@@ -1025,6 +1052,7 @@ void PinyinEngine::populateConfig() {
     SET_FUZZY_FLAG(ue, VE_UE)
     SET_FUZZY_FLAG(commonTypo, CommonTypo)
     SET_FUZZY_FLAG(commonTypo, AdvancedTypo)
+    SET_FUZZY_FLAG(lowerCaseMatchLetter, Letter)
     SET_FUZZY_FLAG(inner, Inner)
     SET_FUZZY_FLAG(innerShort, InnerShort)
     SET_FUZZY_FLAG(partialFinal, PartialFinal)

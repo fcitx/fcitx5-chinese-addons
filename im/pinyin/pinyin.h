@@ -129,6 +129,8 @@ FCITX_CONFIG_ENUM_NAME_WITH_I18N(CorrectionLayout, N_("None"), N_("QWERTY"))
 FCITX_CONFIGURATION(
     FuzzyConfig, Option<bool> ue{this, "VE_UE", _("ue -> ve"), true};
     Option<bool> commonTypo{this, "NG_GN", _("Common Typo"), true};
+    Option<bool> lowerCaseMatchLetter{this, "LowerCaseMatchLetter",
+                                      _("Match Letter in lower case"), true};
     Option<bool> inner{this, "Inner", _("Inner Segment (xian -> xi'an)"), true};
     Option<bool> innerShort{this, "InnerShort",
                             _("Inner Segment for Short Pinyin (qie -> qi'e)"),
