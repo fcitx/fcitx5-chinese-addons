@@ -22,6 +22,7 @@
 #include <memory>
 #include <string>
 #include <string_view>
+#include <utility>
 #include <vector>
 
 namespace fcitx {
@@ -60,25 +61,31 @@ public:
     virtual size_t candidateIndex() const = 0;
 };
 
+using CandidateOrder = std::pair<size_t, size_t>;
+
 class PinyinAbstractCandidateWord : virtual public CandidateWord {
 public:
-    explicit PinyinAbstractCandidateWord(size_t selectLength, int order);
+    explicit PinyinAbstractCandidateWord(size_t selectLength,
+                                         CandidateOrder order);
 
     virtual ~PinyinAbstractCandidateWord();
 
-    int order() const { return order_; };
+    size_t order() const { return order_.first; };
+    CandidateOrder sortOrder() const { return order_; };
     size_t selectLength() const { return selectLength_; }
     virtual bool isPinyinCandidate() const { return false; }
+    virtual bool isCustomPhrase() const { return false; }
 
 protected:
     const size_t selectLength_;
-    const int order_;
+    const CandidateOrder order_;
 };
 
 class StrokeCandidateWord : public PinyinAbstractCandidateWord {
 public:
     StrokeCandidateWord(PinyinEngine *engine, std::string hz,
-                        const std::string &py, size_t selectLength, int order);
+                        const std::string &py, size_t selectLength,
+                        CandidateOrder order);
 
     void select(InputContext *inputContext) const override;
 
@@ -91,7 +98,7 @@ class CustomPhraseCandidateWord : public PinyinAbstractCandidateWord,
                                   public InsertableAsCustomPhraseInterface {
 public:
     CustomPhraseCandidateWord(PinyinEngine *engine, size_t selectLength,
-                              int order, std::string value,
+                              CandidateOrder order, std::string value,
                               std::string customPhraseString);
 
     void select(InputContext *inputContext) const override;
@@ -99,6 +106,8 @@ public:
     std::string customPhraseString() const override {
         return customPhraseString_;
     }
+
+    bool isCustomPhrase() const override { return true; }
 
 private:
     PinyinEngine *engine_;
@@ -200,7 +209,7 @@ class SpellCandidateWord : public PinyinAbstractCandidateWord,
                            public InsertableAsCustomPhraseInterface {
 public:
     SpellCandidateWord(PinyinEngine *engine, std::string word,
-                       size_t inputLength, int order);
+                       size_t inputLength, CandidateOrder order);
 
     void select(InputContext *inputContext) const override;
 
@@ -216,7 +225,8 @@ class PinyinCandidateWord : public PinyinAbstractCandidateWord,
                             public ForgettableCandidateInterface {
 public:
     PinyinCandidateWord(PinyinEngine *engine, InputContext *inputContext,
-                        Text text, size_t selectLength, size_t idx);
+                        Text text, size_t selectLength, size_t idx,
+                        CandidateOrder order);
 
     void select(InputContext *inputContext) const override;
 
@@ -224,9 +234,13 @@ public:
     size_t candidateIndex() const override { return idx_; }
     bool isPinyinCandidate() const override { return true; }
 
+    bool isCustomPhrase() const override { return isCustomPhrase_; }
+    void setCustomPhrase() { isCustomPhrase_ = true; }
+
     PinyinEngine *engine_;
     InputContext *inputContext_;
     size_t idx_;
+    bool isCustomPhrase_ = false;
 };
 
 class CustomCloudPinyinCandidateWord
@@ -239,7 +253,7 @@ public:
                                    const std::string &selectedSentence,
                                    InputContext *inputContext,
                                    CloudPinyinSelectedCallback callback,
-                                   int order);
+                                   CandidateOrder order);
 
     void select(InputContext *inputContext) const override;
 
@@ -286,7 +300,12 @@ private:
     }
 
     static bool isCustomPhrase(const CandidateWord &candidate) {
-        return dynamic_cast<const CustomPhraseCandidateWord *>(&candidate);
+        if (const auto *pinyinCandidate =
+                dynamic_cast<const PinyinAbstractCandidateWord *>(&candidate);
+            pinyinCandidate && pinyinCandidate->isCustomPhrase()) {
+            return true;
+        }
+        return false;
     }
 
     PinyinEngine *engine_;

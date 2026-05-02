@@ -13,6 +13,7 @@
 #include <cstdint>
 #include <ctime>
 #include <fcitx-utils/event.h>
+#include <fcitx-utils/eventloopinterface.h>
 #include <fcitx-utils/i18n.h>
 #include <fcitx-utils/log.h>
 #include <fcitx/candidateaction.h>
@@ -24,6 +25,7 @@
 #include <libime/core/lattice.h>
 #include <libime/pinyin/pinyindecoder.h>
 #include <libime/pinyin/pinyindictionary.h>
+#include <optional>
 #include <string>
 #include <utility>
 #include <vector>
@@ -76,14 +78,15 @@ InsertableAsCustomPhraseInterface::~InsertableAsCustomPhraseInterface() =
     default;
 
 PinyinAbstractCandidateWord::PinyinAbstractCandidateWord(size_t selectLength,
-                                                         int order)
-    : selectLength_(selectLength), order_(order) {}
+                                                         CandidateOrder order)
+    : selectLength_(selectLength), order_(std::move(order)) {}
 
 PinyinAbstractCandidateWord::~PinyinAbstractCandidateWord() = default;
 
 StrokeCandidateWord::StrokeCandidateWord(PinyinEngine *engine, std::string hz,
                                          const std::string &py,
-                                         size_t selectLength, int order)
+                                         size_t selectLength,
+                                         CandidateOrder order)
     : PinyinAbstractCandidateWord(selectLength, order), engine_(engine),
       hz_(std::move(hz)) {
     setText(Text(hz_));
@@ -98,8 +101,8 @@ void StrokeCandidateWord::select(InputContext *inputContext) const {
 }
 
 CustomPhraseCandidateWord::CustomPhraseCandidateWord(
-    PinyinEngine *engine, size_t selectLength, int order, std::string value,
-    std::string customPhraseString)
+    PinyinEngine *engine, size_t selectLength, CandidateOrder order,
+    std::string value, std::string customPhraseString)
     : PinyinAbstractCandidateWord(selectLength, order), engine_(engine),
       customPhraseString_(std::move(customPhraseString)) {
     setText(Text(std::move(value)));
@@ -256,7 +259,7 @@ void SymbolCandidateWord::select(InputContext *inputContext) const {
 }
 
 SpellCandidateWord::SpellCandidateWord(PinyinEngine *engine, std::string word,
-                                       size_t inputLength, int order)
+                                       size_t inputLength, CandidateOrder order)
     : PinyinAbstractCandidateWord(inputLength, order), engine_(engine),
       word_(std::move(word)) {
     setText(Text(word_));
@@ -271,8 +274,9 @@ void SpellCandidateWord::select(InputContext *inputContext) const {
 
 PinyinCandidateWord::PinyinCandidateWord(PinyinEngine *engine,
                                          InputContext *inputContext, Text text,
-                                         size_t selectLength, size_t idx)
-    : PinyinAbstractCandidateWord(selectLength, idx), engine_(engine),
+                                         size_t selectLength, size_t idx,
+                                         CandidateOrder order)
+    : PinyinAbstractCandidateWord(selectLength, order), engine_(engine),
       inputContext_(inputContext), idx_(idx) {
     setText(std::move(text));
 }
@@ -311,7 +315,7 @@ std::string PinyinCandidateWord::customPhraseString() const {
 CustomCloudPinyinCandidateWord::CustomCloudPinyinCandidateWord(
     PinyinEngine *engine, const std::string &pinyin,
     const std::string &selectedSentence, InputContext *inputContext,
-    CloudPinyinSelectedCallback callback, int order)
+    CloudPinyinSelectedCallback callback, CandidateOrder order)
     : CloudPinyinCandidateWord(engine->cloudpinyin(), pinyin, selectedSentence,
                                *engine->config().keepCloudPinyinPlaceHolder,
                                inputContext, std::move(callback)),
@@ -346,7 +350,8 @@ void CustomCloudPinyinCandidateWord::select(InputContext *inputContext) const {
         auto candidateList = inputContext->inputPanel().candidateList();
         for (int i = 0; i < candidateList->size(); i++) {
             if (&candidateList->candidate(i) != this) {
-                return candidateList->candidate(i).select(inputContext);
+                candidateList->candidate(i).select(inputContext);
+                return;
             }
         }
     }
@@ -375,9 +380,10 @@ std::vector<CandidateAction> PinyinActionableCandidateList::candidateActions(
     }
     // If it's not custom phrase, or order is not at the top.
     const auto *customPhrase =
-        dynamic_cast<const CustomPhraseCandidateWord *>(&candidate);
+        dynamic_cast<const PinyinAbstractCandidateWord *>(&candidate);
     if (canBeInsertedAsCustomPhrase(candidate) &&
-        (!customPhrase || customPhrase->order() != 0)) {
+        (!customPhrase || !customPhrase->isCustomPhrase() ||
+         customPhrase->order() != 0)) {
         CandidateAction action;
         action.setId(PINYIN_CUSTOMPHRASE);
         action.setText(_("Pin to top as custom phrase"));
@@ -416,11 +422,16 @@ void PinyinActionableCandidateList::triggerAction(
     } break;
     case PINYIN_DELETE_CUSTOMPHRASE: {
         if (const auto *customPhrase =
-                dynamic_cast<const CustomPhraseCandidateWord *>(&candidate)) {
-
-            auto customPhraseString = customPhrase->customPhraseString();
-            if (!customPhraseString.empty()) {
-                engine_->deleteCustomPhrase(inputContext_, customPhraseString);
+                dynamic_cast<const PinyinAbstractCandidateWord *>(&candidate);
+            customPhrase && customPhrase->isCustomPhrase()) {
+            if (const auto *insertable =
+                    dynamic_cast<const InsertableAsCustomPhraseInterface *>(
+                        &candidate)) {
+                auto customPhraseString = insertable->customPhraseString();
+                if (!customPhraseString.empty()) {
+                    engine_->deleteCustomPhrase(inputContext_,
+                                                customPhraseString);
+                }
             }
         }
     } break;
