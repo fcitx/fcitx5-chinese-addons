@@ -140,6 +140,8 @@ void TableEngine::populateConfig() {
         } else {
             TABLE_ERROR() << "Failed to open shuangpin profile.";
         }
+    } else if (*config_.shuangpinProfile == LookupShuangpinProfileEnum::No) {
+        reverseShuangPinTable_.reset();
     } else {
         libime::ShuangpinBuiltinProfile profile =
             libime::ShuangpinBuiltinProfile::Ziranma;
@@ -155,7 +157,6 @@ void TableEngine::populateConfig() {
             TRANS_SP_PROFILE(Zhongwenzhixing)
             TRANS_SP_PROFILE(PinyinJiajia)
             TRANS_SP_PROFILE(Xiaohe)
-        case LookupShuangpinProfileEnum::No:
         default:
             break;
         }
