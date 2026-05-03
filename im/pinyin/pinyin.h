@@ -156,8 +156,8 @@ FCITX_CONFIGURATION(
     Option<bool> z{this, "Z_ZH", _("z <-> zh"), false};
     OptionWithAnnotation<CorrectionLayout, CorrectionLayoutI18NAnnotation>
         correction{this, "Correction", _("Correction Layout"),
-                   isAndroid() ? CorrectionLayout::Qwerty
-                               : CorrectionLayout::None};)
+                   (isAndroid() || isIOS()) ? CorrectionLayout::Qwerty
+                                            : CorrectionLayout::None};)
 
 FCITX_CONFIGURATION(
     PinyinEngineConfig,
@@ -168,7 +168,7 @@ FCITX_CONFIGURATION(
                          ShuangpinProfileEnum::Ziranma};
     OptionWithAnnotation<bool, OptionalHideInDescription> showShuangpinMode{
         this, "ShowShuangpinMode", _("Show current shuangpin mode"), true};
-    Option<int, IntConstrain> pageSize{
+    ConditionalHidden<isIOS(), Option<int, IntConstrain>> pageSize{
         this, "PageSize", _("Candidates Per Page"), 7, IntConstrain(3, 10)};
     Option<bool> spellEnabled{this, "SpellEnabled",
                               _("Show English Candidates"), true};
@@ -179,7 +179,7 @@ FCITX_CONFIGURATION(
     Option<bool> extBEnabled{
         this, "ExtBEnabled",
         _("Enable more Characters after Unicode CJK Extension B"),
-        !isAndroid()};
+        !(isAndroid() || isIOS())};
     Option<bool> strokeCandidateEnabled{
         this, "StrokeCandidateEnabled",
         _("Show stroke candidates when typing with h(一), s(丨), p(丿), n(㇏), "
@@ -211,7 +211,7 @@ FCITX_CONFIGURATION(
     Option<bool> showActualPinyinInPreedit{
         this, "PinyinInPreedit", _("Show complete pinyin in preedit"), false};
     Option<bool> predictionEnabled{this, "Prediction", _("Enable Prediction"),
-                                   isAndroid()};
+                                   isAndroid() || isIOS()};
     OptionWithAnnotation<bool, ToolTipAnnotation> keepCurrentContext{
         this,
         "KeepCurrentContext",
