@@ -91,10 +91,9 @@ void FetchThread::handleIO(int fd, IOEventFlags flags) {
 
 void FetchThread::processMessages() {
     int num_messages = 0;
-    CURLMsg *curl_message = nullptr;
 
-    while ((curl_message = curl_multi_info_read(curlm_, &num_messages)) !=
-           nullptr) {
+    while (CURLMsg *curl_message =
+               curl_multi_info_read(curlm_, &num_messages)) {
         if (curl_message->msg == CURLMSG_DONE) {
             void *p = nullptr;
             curl_easy_getinfo(curl_message->easy_handle, CURLINFO_PRIVATE, &p);
