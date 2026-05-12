@@ -7,15 +7,15 @@
 # wwj402 <wwj402@gmail.com>, 2018
 # rocka, 2023
 # Yiyu Liu, 2025
-# Xuetian Weng <wengxt@gmail.com>, 2025
+# Xuetian Weng <wengxt@gmail.com>, 2026
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-chinese-addons\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2026-05-03 20:24+0000\n"
+"POT-Creation-Date: 2026-05-12 20:24+0000\n"
 "PO-Revision-Date: 2017-11-23 04:30+0000\n"
-"Last-Translator: Xuetian Weng <wengxt@gmail.com>, 2025\n"
+"Last-Translator: Xuetian Weng <wengxt@gmail.com>, 2026\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/fcitx/teams/12005/"
 "zh_CN/)\n"
 "Language: zh_CN\n"
@@ -395,7 +395,7 @@ msgstr "提示和候选词之间的分隔符文本"
 
 #: im/table/ime.h:301
 msgid "Show space between candidate and hint text"
-msgstr ""
+msgstr "提示和候选词间显示空格"
 
 #: im/table/ime.h:304
 msgid "Candidate List orientation"
@@ -505,7 +505,7 @@ msgstr "提交默认选择"
 
 #: im/pinyin/pinyin.h:104
 msgid "GB Standard"
-msgstr ""
+msgstr "国标"
 
 #: im/pinyin/pinyin.h:108
 msgid "Do not show"
@@ -549,7 +549,7 @@ msgstr "常见错误"
 
 #: im/pinyin/pinyin.h:133
 msgid "Match Letter in lower case"
-msgstr ""
+msgstr "小写时匹配字母"
 
 #: im/pinyin/pinyin.h:134
 msgid "Inner Segment (xian -> xi'an)"
@@ -724,11 +724,11 @@ msgstr "以词定字"
 msgid ""
 "N-th key in the option will select the N-th character in the current "
 "candidate."
-msgstr ""
+msgstr "第 N 个按键将选择当前候选词第 N 个字"
 
 #: im/pinyin/pinyin.h:310
 msgid "Choose Last Character from Phrase"
-msgstr ""
+msgstr "选词末字"
 
 #: im/pinyin/pinyin.h:313
 msgid "Use BackSpace to cancel the selection"
