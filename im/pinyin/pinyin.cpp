@@ -426,9 +426,11 @@ void PinyinEngine::updatePuncCandidate(
 }
 
 void PinyinEngine::updateUI(InputContext *inputContext) {
-    inputContext->inputPanel().reset();
-
     auto *state = inputContext->propertyFor(&factory_);
+    if (state->mode_ == PinyinMode::StrokeFilter) {
+        resetStroke(inputContext);
+    }
+    inputContext->inputPanel().reset();
     // Use const ref to avoid accidentally change anything.
     const auto &context = state->context_;
     if (context.selected()) {
@@ -1482,7 +1484,6 @@ bool PinyinEngine::handleNextPage(KeyEvent &event) const {
 void PinyinEngine::updateStroke(InputContext *inputContext) {
     auto *state = inputContext->propertyFor(&factory_);
     auto &inputPanel = inputContext->inputPanel();
-    inputPanel.reset();
 
     updatePreedit(inputContext);
     Text aux;
@@ -1490,55 +1491,46 @@ void PinyinEngine::updateStroke(InputContext *inputContext) {
     aux.append(pinyinhelper()->call<IPinyinHelper::prettyStrokeString>(
         state->strokeBuffer_.userInput()));
     inputPanel.setAuxUp(aux);
+    inputPanel.setAuxDown(Text());
 
-    auto candidateList = std::make_unique<CommonCandidateList>();
-    candidateList->setPageSize(*config_.pageSize);
-    candidateList->setCursorPositionAfterPaging(
-        CursorPositionAfterPaging::ResetToFirst);
+    auto *candidateList =
+        dynamic_cast<CommonCandidateList *>(inputPanel.candidateList().get());
+    if (candidateList) {
+        if (state->strokeBuffer_.empty()) {
+            candidateList->clearFilter();
+        } else {
+            candidateList->setFilter([this,
+                                      state](const CandidateWord &candidate) {
+                // For stroke candidate, skip if we are doing stroke filter.
+                if (dynamic_cast<const StrokeCandidateWord *>(&candidate)) {
+                    return false;
+                }
+                auto str = candidate.text().toStringForCommit();
+                if (auto length = utf8::lengthValidated(str);
+                    length != utf8::INVALID_LENGTH && length >= 1) {
+                    auto charRange = utf8::MakeUTF8CharRange(str);
+                    for (auto iter = std::begin(charRange),
+                              end = std::end(charRange);
+                         iter != end; ++iter) {
+                        std::string chr(iter.charRange().first,
+                                        iter.charRange().second);
+                        auto stroke =
+                            pinyinhelper()
+                                ->call<IPinyinHelper::reverseLookupStroke>(chr);
+                        if (stroke.starts_with(
+                                state->strokeBuffer_.userInput())) {
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            });
+        }
 
-    auto *origCandidateList = state->strokeCandidateList_->toBulk();
-    for (int i = 0; i < origCandidateList->totalSize(); i++) {
-        const auto &candidate = origCandidateList->candidateFromAll(i);
-        auto str = candidate.text().toStringForCommit();
-        if (auto length = utf8::lengthValidated(str);
-            length != utf8::INVALID_LENGTH && length >= 1) {
-            auto charRange = utf8::MakeUTF8CharRange(str);
-            bool strokeMatched = false;
-            for (auto iter = std::begin(charRange), end = std::end(charRange);
-                 iter != end; ++iter) {
-                std::string chr(iter.charRange().first,
-                                iter.charRange().second);
-                auto stroke =
-                    pinyinhelper()->call<IPinyinHelper::reverseLookupStroke>(
-                        chr);
-                if (stroke.starts_with(state->strokeBuffer_.userInput())) {
-                    strokeMatched = true;
-                    break;
-                }
-            }
-            if (strokeMatched) {
-                // PinyinCandidateWord is the only forgettable.
-                if (dynamic_cast<const PinyinCandidateWord *>(&candidate)) {
-                    candidateList->append<StrokeFilterCandidateWord<
-                        FilteredForgettableCandidate,
-                        FilteredInsertableAsCustomPhrase>>(this, inputContext,
-                                                           candidate.text(), i);
-                } else if (dynamic_cast<const InsertableAsCustomPhraseInterface
-                                            *>(&candidate)) {
-                    candidateList->append<StrokeFilterCandidateWord<
-                        FilteredInsertableAsCustomPhrase>>(this, inputContext,
-                                                           candidate.text(), i);
-                }
-            }
+        if (!candidateList->empty()) {
+            candidateList->setGlobalCursorIndex(0);
         }
     }
-    candidateList->setSelectionKey(selectionKeys_);
-    if (!candidateList->empty()) {
-        candidateList->setGlobalCursorIndex(0);
-    }
-    candidateList->setActionableImpl(
-        std::make_unique<PinyinActionableCandidateList>(this, inputContext));
-    inputContext->inputPanel().setCandidateList(std::move(candidateList));
     inputContext->updatePreedit();
     inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
 }
@@ -1586,7 +1578,6 @@ void PinyinEngine::updateForgetCandidate(InputContext *inputContext) {
 
 void PinyinEngine::resetStroke(InputContext *inputContext) const {
     auto *state = inputContext->propertyFor(&factory_);
-    state->strokeCandidateList_.reset();
     state->strokeBuffer_.clear();
     if (state->mode_ == PinyinMode::StrokeFilter) {
         state->mode_ = PinyinMode::Normal;
@@ -1688,7 +1679,6 @@ bool PinyinEngine::handleStrokeFilter(
             event.key().checkKeyList(*config_.selectByStroke) &&
             pinyinhelper()) {
             resetStroke(inputContext);
-            state->strokeCandidateList_ = std::move(candidateList);
             state->mode_ = PinyinMode::StrokeFilter;
             updateStroke(inputContext);
             handleNextPage(event);
