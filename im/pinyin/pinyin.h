@@ -384,7 +384,6 @@ public:
     PinyinMode mode_ = PinyinMode::Normal;
 
     // Stroke filter
-    std::shared_ptr<CandidateList> strokeCandidateList_;
     InputBuffer strokeBuffer_;
 
     // Forget candidate
