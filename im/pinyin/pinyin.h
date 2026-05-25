@@ -49,6 +49,7 @@
 #include <regex>
 #include <string>
 #include <string_view>
+#include <unordered_set>
 #include <utility>
 #include <vector>
 
@@ -441,6 +442,7 @@ public:
     void updatePredict(InputContext *inputContext);
 
     void updateUI(InputContext *inputContext);
+    void updateFilter(InputContext *inputContext);
 
     void resetStroke(InputContext *inputContext) const;
     void resetForgetCandidate(InputContext *inputContext) const;
@@ -478,7 +480,6 @@ private:
 
     void populateConfig();
 
-    void updateStroke(InputContext *inputContext);
     void updateForgetCandidate(InputContext *inputContext);
 
     void updatePreedit(InputContext *inputContext) const;

@@ -20,8 +20,11 @@
 #include <fcitx/text.h>
 #include <libime/core/lattice.h>
 #include <memory>
+#include <optional>
 #include <string>
 #include <string_view>
+#include <unordered_map>
+#include <unordered_set>
 #include <utility>
 #include <vector>
 
@@ -55,10 +58,10 @@ public:
     virtual std::string customPhraseString() const = 0;
 };
 
-class ForgettableCandidateInterface {
+class PinyinCandidateIndexInterface {
 public:
-    virtual ~ForgettableCandidateInterface();
-    virtual size_t candidateIndex() const = 0;
+    virtual ~PinyinCandidateIndexInterface();
+    virtual int candidateIndex() const = 0;
 };
 
 using CandidateOrder = std::pair<size_t, size_t>;
@@ -153,15 +156,17 @@ private:
 };
 
 class SymbolCandidateWord : public CandidateWord,
-                            public InsertableAsCustomPhraseInterface {
+                            public InsertableAsCustomPhraseInterface,
+                            public PinyinCandidateIndexInterface {
 public:
     SymbolCandidateWord(PinyinEngine *engine, std::string symbol,
                         std::string encodedPinyin, size_t selectLength,
-                        bool isFull);
+                        bool isFull, int pinyinCandidateIndex);
 
     void select(InputContext *inputContext) const override;
 
     std::string customPhraseString() const override;
+    int candidateIndex() const override { return pinyinCandidateIndex_; }
 
 private:
     PinyinEngine *engine_;
@@ -169,6 +174,7 @@ private:
     size_t candidateSegmentLength_ = 0;
     const bool isFull_ = false;
     std::string encodedPinyin_;
+    int pinyinCandidateIndex_;
 };
 
 class SpellCandidateWord : public PinyinAbstractCandidateWord,
@@ -188,7 +194,7 @@ private:
 
 class PinyinCandidateWord : public PinyinAbstractCandidateWord,
                             public InsertableAsCustomPhraseInterface,
-                            public ForgettableCandidateInterface {
+                            public PinyinCandidateIndexInterface {
 public:
     PinyinCandidateWord(PinyinEngine *engine, InputContext *inputContext,
                         Text text, size_t selectLength, size_t idx,
@@ -197,12 +203,13 @@ public:
     void select(InputContext *inputContext) const override;
 
     std::string customPhraseString() const override;
-    size_t candidateIndex() const override { return idx_; }
+    int candidateIndex() const override { return idx_; }
     bool isPinyinCandidate() const override { return true; }
 
     bool isCustomPhrase() const override { return isCustomPhrase_; }
     void setCustomPhrase() { isCustomPhrase_ = true; }
 
+private:
     PinyinEngine *engine_;
     InputContext *inputContext_;
     size_t idx_;
@@ -252,8 +259,8 @@ public:
     void triggerAction(const CandidateWord &candidate, int id) override;
 
 private:
-    static bool isForgettable(const CandidateWord &candidate) {
-        return dynamic_cast<const ForgettableCandidateInterface *>(&candidate);
+    static bool isPinyinCandidate(const CandidateWord &candidate) {
+        return dynamic_cast<const PinyinCandidateWord *>(&candidate);
     }
 
     static bool canBeInsertedAsCustomPhrase(const CandidateWord &candidate) {
@@ -276,6 +283,33 @@ private:
 
     PinyinEngine *engine_;
     InputContext *inputContext_;
+};
+
+class PinyinTabbedCandidateList : public TabbedCandidateList {
+public:
+    PinyinTabbedCandidateList(
+        PinyinEngine *engine, InputContext *inputContext,
+        CommonCandidateList *candidateList,
+        std::optional<int> checkedActionId = std::nullopt);
+
+    std::vector<CandidateAction> tabActions() const override;
+
+    void triggerTabAction(int id) override;
+    bool checked() const { return checkedActionId_.has_value(); }
+
+    bool filter(const CandidateWord &candidate) const;
+
+private:
+    void buildTabActions();
+
+    static constexpr int SINGLE_ACITON = -1;
+
+    PinyinEngine *engine_;
+    InputContext *inputContext_;
+    CommonCandidateList *candidateList_;
+    std::vector<CandidateAction> actions_;
+    std::optional<int> checkedActionId_ = std::nullopt;
+    std::vector<std::unordered_set<int>> actionIdToCandidate_;
 };
 
 } // namespace fcitx
