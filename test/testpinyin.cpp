@@ -26,8 +26,12 @@
 #include <fcitx/inputpanel.h>
 #include <fcitx/instance.h>
 #include <memory>
+#include <string>
 #include <string_view>
+#include <tuple>
+#include <unordered_set>
 #include <utility>
+#include <vector>
 
 using namespace fcitx;
 
@@ -302,6 +306,41 @@ void testActionInStrokeFilter(Instance *instance) {
     });
 }
 
+void testPinyinTabFilter(Instance *instance) {
+    instance->eventDispatcher().schedule([instance]() {
+        auto *pinyin = instance->addonManager().addon("pinyin");
+        FCITX_ASSERT(pinyin);
+        auto *testfrontend = instance->addonManager().addon("testfrontend");
+        auto uuid =
+            testfrontend->call<ITestFrontend::createInputContext>("testapp");
+        auto *ic = instance->inputContextManager().findByUUID(uuid);
+        FCITX_ASSERT(ic);
+        instance->setCurrentInputMethod(ic, "pinyin", true);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("x"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("i"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("n"), false);
+        findCandidateOrDie(ic, "西安");
+        auto *tabbed = ic->inputPanel().candidateList()->toTabbed();
+        FCITX_ASSERT(tabbed);
+        auto actions = tabbed->tabActions();
+        std::vector<std::string> names;
+        names.reserve(actions.size());
+        for (const auto &action : actions) {
+            names.push_back(action.text());
+        }
+        FCITX_ASSERT(names == std::vector<std::string>{"xian", "xi", "单"});
+        tabbed->triggerTabAction(actions[0].id());
+        FCITX_ASSERT(findCandidate(ic, "西安") < 0);
+        tabbed->triggerTabAction(actions[1].id());
+        FCITX_ASSERT(findCandidate(ic, "西安") >= 0);
+        tabbed->triggerTabAction(actions[2].id());
+        FCITX_ASSERT(findCandidate(ic, "西安") < 0);
+        tabbed->triggerTabAction(actions[2].id());
+        FCITX_ASSERT(findCandidate(ic, "西安") >= 0);
+    });
+}
+
 void testPin(Instance *instance) {
     instance->eventDispatcher().schedule([instance]() {
         auto *testfrontend = instance->addonManager().addon("testfrontend");
@@ -539,6 +578,7 @@ int main() {
     testUppercase(&instance);
     testForget(&instance);
     testActionInStrokeFilter(&instance);
+    testPinyinTabFilter(&instance);
     testPin(&instance);
     testQuickPhraseTrigger(&instance);
     testVQuickPhraseTrigger(&instance);
