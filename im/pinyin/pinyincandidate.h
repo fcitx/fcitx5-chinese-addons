@@ -21,6 +21,7 @@
 #include <libime/core/lattice.h>
 #include <memory>
 #include <optional>
+#include <span>
 #include <string>
 #include <string_view>
 #include <unordered_map>
@@ -292,7 +293,7 @@ public:
         CommonCandidateList *candidateList,
         std::optional<int> checkedActionId = std::nullopt);
 
-    std::vector<CandidateAction> tabActions() const override;
+    std::span<const CandidateAction> tabActions() override;
 
     void triggerTabAction(int id) override;
     bool checked() const { return checkedActionId_.has_value(); }
@@ -302,12 +303,21 @@ public:
 private:
     void buildTabActions();
 
-    static constexpr int SINGLE_ACITON = -1;
+    enum ActionId {
+        SINGLE_ACITON = -1,
+        STROKE_ACITON = -2,
+        STROKE_SUB_ACTION_H = -3,
+        STROKE_SUB_ACTION_S = -4,
+        STROKE_SUB_ACTION_P = -5,
+        STROKE_SUB_ACTION_N = -6,
+        STROKE_SUB_ACTION_Z = -7,
+    };
 
     PinyinEngine *engine_;
     InputContext *inputContext_;
     CommonCandidateList *candidateList_;
-    std::vector<CandidateAction> actions_;
+    std::optional<std::vector<CandidateAction>> actions_;
+    std::vector<CandidateAction> strokeActions_;
     std::optional<int> checkedActionId_ = std::nullopt;
     std::vector<std::unordered_set<int>> actionIdToCandidate_;
 };

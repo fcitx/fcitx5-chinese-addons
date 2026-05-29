@@ -1989,6 +1989,27 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
         return;
     }
 
+    // Small hack to debug tabbed candidate on desktop.
+#if 0
+    KeyList list;
+    list.push_back(Key(FcitxKey_1, KeyState::Alt));
+    list.push_back(Key(FcitxKey_2, KeyState::Alt));
+    list.push_back(Key(FcitxKey_3, KeyState::Alt));
+    list.push_back(Key(FcitxKey_4, KeyState::Alt));
+    list.push_back(Key(FcitxKey_5, KeyState::Alt));
+    list.push_back(Key(FcitxKey_6, KeyState::Alt));
+    if (auto candidateList = inputContext->inputPanel().candidateList()) {
+        if (auto *tabbed = candidateList->toTabbed()) {
+            auto actions = tabbed->tabActions();
+            if (auto idx = event.key().keyListIndex(list); idx >= 0 && idx < actions.size()) {
+                tabbed->triggerTabAction(actions[idx].id());
+                event.filterAndAccept();
+                return;
+            }
+        }
+    }
+#endif
+
     if (handlePuncCandidate(event)) {
         return;
     }

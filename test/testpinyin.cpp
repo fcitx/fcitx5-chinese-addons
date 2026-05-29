@@ -329,7 +329,8 @@ void testPinyinTabFilter(Instance *instance) {
         for (const auto &action : actions) {
             names.push_back(action.text());
         }
-        FCITX_ASSERT(names == std::vector<std::string>{"xian", "xi", "单"});
+        FCITX_ASSERT(names ==
+                     std::vector<std::string>{"xian", "xi", "单字", "笔画"});
         tabbed->triggerTabAction(actions[0].id());
         FCITX_ASSERT(findCandidate(ic, "西安") < 0);
         tabbed->triggerTabAction(actions[1].id());
