@@ -32,6 +32,7 @@
 namespace fcitx {
 
 class PinyinEngine;
+class PinyinState;
 
 class PinyinPredictCandidateWord : public CandidateWord {
 public:
@@ -301,25 +302,33 @@ public:
     bool filter(const CandidateWord &candidate) const;
 
 private:
+    void triggerStrokeAction(PinyinState *state, int id);
+    void triggerMainAction(PinyinState *state, int id);
+
+    std::optional<int> idToActionIndex(int id) const;
+
     void buildTabActions();
 
     enum ActionId {
-        SINGLE_ACITON = -1,
-        STROKE_ACITON = -2,
+        SINGLE_ACTION = -1,
+        STROKE_ACTION = -2,
         STROKE_SUB_ACTION_H = -3,
         STROKE_SUB_ACTION_S = -4,
         STROKE_SUB_ACTION_P = -5,
         STROKE_SUB_ACTION_N = -6,
         STROKE_SUB_ACTION_Z = -7,
+        STROKE_SUB_ACTION_RETURN = -8,
     };
 
     PinyinEngine *engine_;
     InputContext *inputContext_;
     CommonCandidateList *candidateList_;
+
+    // Lazily initialized actions, since it requires scan all actions.
     std::optional<std::vector<CandidateAction>> actions_;
     std::vector<CandidateAction> strokeActions_;
     std::optional<int> checkedActionId_ = std::nullopt;
-    std::vector<std::unordered_set<int>> actionIdToCandidate_;
+    std::vector<std::unordered_set<int>> actionIdToCandidates_;
 };
 
 } // namespace fcitx
