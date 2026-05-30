@@ -9,6 +9,7 @@
 #include "../../modules/cloudpinyin/cloudpinyin_public.h"
 #include "pinyin.h"
 #include <algorithm>
+#include <cassert>
 #include <cstddef>
 #include <cstdint>
 #include <ctime>
@@ -457,7 +458,7 @@ void PinyinTabbedCandidateList::buildTabActions() {
         return;
     }
     std::vector<CandidateAction> actions;
-    actionIdToCandidate_.clear();
+    actionIdToCandidates_.clear();
 
     auto *state = inputContext_->propertyFor(&engine_->factory());
     auto &context = state->context_;
@@ -509,9 +510,9 @@ void PinyinTabbedCandidateList::buildTabActions() {
             action.setText(actualPinyin);
             action.setCheckable(true);
             actions.push_back(std::move(action));
-            actionIdToCandidate_.emplace_back();
+            actionIdToCandidates_.emplace_back();
         }
-        actionIdToCandidate_[it->second].insert(
+        actionIdToCandidates_[it->second].insert(
             pinyinCandidate->candidateIndex());
     }
 
@@ -520,13 +521,13 @@ void PinyinTabbedCandidateList::buildTabActions() {
     }
 
     CandidateAction action;
-    action.setId(SINGLE_ACITON);
+    action.setId(SINGLE_ACTION);
     action.setText("单字");
     action.setCheckable(true);
     actions.push_back(std::move(action));
 
     CandidateAction stroke;
-    stroke.setId(STROKE_ACITON);
+    stroke.setId(STROKE_ACTION);
     stroke.setText("笔画");
     actions.push_back(std::move(stroke));
 
@@ -548,6 +549,9 @@ void PinyinTabbedCandidateList::buildTabActions() {
     strokeActions_.emplace_back();
     strokeActions_.back().setId(STROKE_SUB_ACTION_Z);
     strokeActions_.back().setText("𠃍");
+    strokeActions_.emplace_back();
+    strokeActions_.back().setId(STROKE_SUB_ACTION_RETURN);
+    strokeActions_.back().setText("返回");
 }
 
 void PinyinTabbedCandidateList::triggerTabAction(int id) {
@@ -556,49 +560,76 @@ void PinyinTabbedCandidateList::triggerTabAction(int id) {
     if (!currentCandidateList || currentCandidateList.get() != candidateList_) {
         return;
     }
+
+    auto *state = inputContext_->propertyFor(&engine_->factory());
+    if (state->mode_ == PinyinMode::StrokeFilter) {
+        triggerStrokeAction(state, id);
+    } else {
+        triggerMainAction(state, id);
+    }
+}
+
+void PinyinTabbedCandidateList::triggerStrokeAction(PinyinState *state,
+                                                    int id) {
+    assert(state->mode_ == PinyinMode::StrokeFilter);
+
+    switch (id) {
+    case STROKE_SUB_ACTION_H:
+    case STROKE_SUB_ACTION_S:
+    case STROKE_SUB_ACTION_P:
+    case STROKE_SUB_ACTION_N:
+    case STROKE_SUB_ACTION_Z:
+        state->strokeBuffer_.type(STROKE_SUB_ACTION_H - id + '1');
+        break;
+    case STROKE_SUB_ACTION_RETURN:
+        engine_->resetStroke(inputContext_);
+        break;
+    default:
+        return;
+    }
+    engine_->updateFilter(inputContext_);
+}
+
+std::optional<int> PinyinTabbedCandidateList::idToActionIndex(int id) const {
+    assert(actions_.has_value() && actions_->size() >= 2);
+    if (id < 0) {
+        if (id == SINGLE_ACTION) {
+            return actions_->size() - 2;
+        }
+    } else if (id >= 0 && id < static_cast<int>(actions_->size())) {
+        return id;
+    }
+    return std::nullopt;
+}
+
+void PinyinTabbedCandidateList::triggerMainAction(PinyinState *state, int id) {
     if (!actions_) {
         return;
     }
-    auto *state = inputContext_->propertyFor(&engine_->factory());
-    std::optional<int> actionIndex;
+    std::optional<int> checkableActionIndex;
     // negative id is special action.
-    if (id < 0) {
-        switch (id) {
-        case SINGLE_ACITON:
-            actionIndex = actionIdToCandidate_.size() - 1;
-            break;
-        case STROKE_ACITON:
-            state->mode_ = PinyinMode::StrokeFilter;
-            break;
-        case STROKE_SUB_ACTION_H:
-        case STROKE_SUB_ACTION_S:
-        case STROKE_SUB_ACTION_P:
-        case STROKE_SUB_ACTION_N:
-        case STROKE_SUB_ACTION_Z:
-            if (state->mode_ == PinyinMode::StrokeFilter) {
-                state->strokeBuffer_.type(STROKE_SUB_ACTION_H - id + '1');
-            } else {
-                return;
-            }
-            break;
-        default:
-            return;
-        }
-    } else if (static_cast<size_t>(id) >= actionIdToCandidate_.size()) {
+    if (id == STROKE_ACTION) {
+        state->mode_ = PinyinMode::StrokeFilter;
+    } else if (checkableActionIndex = idToActionIndex(id);
+               !checkableActionIndex) {
         return;
-    } else {
-        actionIndex = id;
     }
 
-    if (actionIndex) {
+    // If triggered action is checkable, update the action checked state
+    // correspondingly.
+    if (checkableActionIndex) {
+        if (checkedActionId_) {
+            if (auto oldIndex = idToActionIndex(*checkedActionId_)) {
+                (*actions_)[*oldIndex].setChecked(false);
+            }
+        }
+
         if (checkedActionId_ == id) {
+            // If the same action is triggered, uncheck it.
             checkedActionId_.reset();
         } else {
-            if (checkedActionId_.has_value()) {
-                (*actions_)[*actionIndex].setChecked(false);
-            }
             checkedActionId_ = id;
-            (*actions_)[*actionIndex].setChecked(true);
+            (*actions_)[*checkableActionIndex].setChecked(true);
         }
     }
     engine_->updateFilter(inputContext_);
@@ -615,13 +646,13 @@ bool PinyinTabbedCandidateList::filter(const CandidateWord &candidate) const {
         return false;
     }
 
-    if (checkedActionId_ == SINGLE_ACITON) {
+    if (checkedActionId_ == SINGLE_ACTION) {
         auto *state = inputContext_->propertyFor(&engine_->factory());
         auto &context = state->context_;
         return isSinglePinyin(context, pinyinCandidate->candidateIndex());
     }
 
-    const auto &candidateSet = actionIdToCandidate_[checkedActionId_.value()];
+    const auto &candidateSet = actionIdToCandidates_[checkedActionId_.value()];
     return candidateSet.contains(pinyinCandidate->candidateIndex());
 }
 
