@@ -26,6 +26,7 @@
 #include <fcitx/inputmethodmanager.h>
 #include <fcitx/inputpanel.h>
 #include <fcitx/instance.h>
+#include <initializer_list>
 #include <memory>
 #include <string>
 #include <string_view>
@@ -332,57 +333,79 @@ void testPinyinTabFilter(Instance *instance) {
         for (const auto &action : actions) {
             names.push_back(action.text());
         }
-        FCITX_ASSERT(names ==
-                     std::vector<std::string>{"xian", "xi", "单字", "笔画"});
+        FCITX_ASSERT(names == std::vector<std::string>{"xian", "xi", "", "单字",
+                                                       "", "笔画"});
+        FCITX_ASSERT(actions[2].isSeparator());
+        FCITX_ASSERT(actions[4].isSeparator());
+        FCITX_ASSERT(!actions[3].isSeparator());
 
-        auto totalCheckedAction = [tabbed]() {
-            return std::ranges::count_if(
-                tabbed->tabActions(),
-                [](const auto &a) { return a.isChecked(); });
-        };
-        auto checkedActionIs = [tabbed](int id) {
-            return std::ranges::any_of(
-                tabbed->tabActions(),
-                [id](const auto &a) { return a.id() == id && a.isChecked(); });
+        const auto xiAction = actions[1];
+        const auto singleAction = actions[3];
+        const auto strokeAction = actions[5];
+
+        auto checkedActionsAre = [tabbed](std::initializer_list<int> ids) {
+            std::unordered_set<int> checkedIds;
+            for (const auto &action : tabbed->tabActions()) {
+                if (action.isChecked()) {
+                    checkedIds.insert(action.id());
+                }
+            }
+            return checkedIds == std::unordered_set<int>{ids};
         };
 
         FCITX_ASSERT(actions[0].text() == "xian");
         tabbed->triggerTabAction(actions[0].id());
         FCITX_ASSERT(findCandidate(ic, "西安") < 0);
-        FCITX_ASSERT(totalCheckedAction() == 1);
-        FCITX_ASSERT(checkedActionIs(actions[0].id()));
+        FCITX_ASSERT(checkedActionsAre({actions[0].id()}));
 
         // Trigger same action again should uncheck it.
         tabbed->triggerTabAction(actions[0].id());
         FCITX_ASSERT(findCandidate(ic, "西安") >= 0);
-        FCITX_ASSERT(totalCheckedAction() == 0);
+        FCITX_ASSERT(checkedActionsAre({}));
 
-        FCITX_ASSERT(actions[1].text() == "xi");
-        tabbed->triggerTabAction(actions[1].id());
+        FCITX_ASSERT(xiAction.text() == "xi");
+        tabbed->triggerTabAction(xiAction.id());
         FCITX_ASSERT(findCandidate(ic, "西安") >= 0);
-        FCITX_ASSERT(totalCheckedAction() == 1);
-        FCITX_ASSERT(checkedActionIs(actions[1].id()));
+        FCITX_ASSERT(checkedActionsAre({xiAction.id()}));
 
-        FCITX_ASSERT(actions[2].text() == "单字");
-        tabbed->triggerTabAction(actions[2].id());
+        // Pinyin and single char can be checked at the same time.
+        FCITX_ASSERT(singleAction.text() == "单字");
+        tabbed->triggerTabAction(singleAction.id());
         FCITX_ASSERT(findCandidate(ic, "西安") < 0);
-        FCITX_ASSERT(totalCheckedAction() == 1);
-        FCITX_ASSERT(checkedActionIs(actions[2].id()));
+        FCITX_ASSERT(checkedActionsAre({xiAction.id(), singleAction.id()}));
+
+        // Trigger single char action again should only uncheck itself.
+        tabbed->triggerTabAction(singleAction.id());
+        FCITX_ASSERT(findCandidate(ic, "西安") >= 0);
+        FCITX_ASSERT(checkedActionsAre({xiAction.id()}));
+
+        tabbed->triggerTabAction(singleAction.id());
+        FCITX_ASSERT(findCandidate(ic, "西安") < 0);
+        FCITX_ASSERT(checkedActionsAre({xiAction.id(), singleAction.id()}));
+
+        // Trigger pinyin action again should only uncheck itself.
+        tabbed->triggerTabAction(xiAction.id());
+        FCITX_ASSERT(findCandidate(ic, "西安") < 0);
+        FCITX_ASSERT(checkedActionsAre({singleAction.id()}));
 
         // Stroke action should not uncheck single char action.
+        tabbed->triggerTabAction(strokeAction.id());
+        FCITX_ASSERT(findCandidate(ic, "西安") < 0);
+        FCITX_ASSERT(checkedActionsAre({}));
+
+        actionSpan = tabbed->tabActions();
+        actions = {actionSpan.begin(), actionSpan.end()};
+        FCITX_ASSERT(actions.size() >= 2);
+        FCITX_ASSERT(actions[actions.size() - 2].isSeparator());
+        FCITX_ASSERT(actions.back().text() == "返回");
         tabbed->triggerTabAction(actions.back().id());
         FCITX_ASSERT(findCandidate(ic, "西安") < 0);
-        FCITX_ASSERT(totalCheckedAction() == 0);
-
-        tabbed->triggerTabAction(tabbed->tabActions().back().id());
-        FCITX_ASSERT(findCandidate(ic, "西安") < 0);
-        FCITX_ASSERT(totalCheckedAction() == 1);
-        FCITX_ASSERT(checkedActionIs(actions[2].id()));
+        FCITX_ASSERT(checkedActionsAre({singleAction.id()}));
 
         // Trigger single char action again should uncheck it.
-        tabbed->triggerTabAction(actions[2].id());
+        tabbed->triggerTabAction(singleAction.id());
         FCITX_ASSERT(findCandidate(ic, "西安") >= 0);
-        FCITX_ASSERT(totalCheckedAction() == 0);
+        FCITX_ASSERT(checkedActionsAre({}));
     });
 }
 
