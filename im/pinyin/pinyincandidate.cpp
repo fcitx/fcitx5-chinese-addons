@@ -438,9 +438,9 @@ void PinyinActionableCandidateList::triggerAction(
 
 PinyinTabbedCandidateList::PinyinTabbedCandidateList(
     PinyinEngine *engine, InputContext *inputContext,
-    CommonCandidateList *candidateList, std::optional<int> checkedActionId)
+    CommonCandidateList *candidateList)
     : engine_(engine), inputContext_(inputContext),
-      candidateList_(candidateList), checkedActionId_(checkedActionId) {}
+      candidateList_(candidateList) {}
 
 std::span<const CandidateAction> PinyinTabbedCandidateList::tabActions() {
     auto *state = inputContext_->propertyFor(&engine_->factory());
@@ -509,6 +509,7 @@ void PinyinTabbedCandidateList::buildTabActions() {
             action.setId(actions.size());
             action.setText(actualPinyin);
             action.setCheckable(true);
+            action.setChecked(checkedPinyinActionId_ == action.id());
             actions.push_back(std::move(action));
             actionIdToCandidates_.emplace_back();
         }
@@ -518,13 +519,22 @@ void PinyinTabbedCandidateList::buildTabActions() {
 
     if (actions.size() <= 1) {
         actions.clear();
+        actionIdToCandidates_.clear();
     }
+
+    CandidateAction separator;
+    separator.setId(SEPARATOR_ACTION);
+    separator.setSeparator(true);
+    actions.push_back(separator);
 
     CandidateAction action;
     action.setId(SINGLE_ACTION);
     action.setText("单字");
     action.setCheckable(true);
+    action.setChecked(checkedSingleAction_);
     actions.push_back(std::move(action));
+
+    actions.push_back(std::move(separator));
 
     CandidateAction stroke;
     stroke.setId(STROKE_ACTION);
@@ -549,6 +559,9 @@ void PinyinTabbedCandidateList::buildTabActions() {
     strokeActions_.emplace_back();
     strokeActions_.back().setId(STROKE_SUB_ACTION_Z);
     strokeActions_.back().setText("𠃍");
+    strokeActions_.emplace_back();
+    strokeActions_.back().setId(SEPARATOR_ACTION);
+    strokeActions_.back().setSeparator(true);
     strokeActions_.emplace_back();
     strokeActions_.back().setId(STROKE_SUB_ACTION_RETURN);
     strokeActions_.back().setText("返回");
@@ -594,9 +607,9 @@ std::optional<int> PinyinTabbedCandidateList::idToActionIndex(int id) const {
     assert(actions_.has_value() && actions_->size() >= 2);
     if (id < 0) {
         if (id == SINGLE_ACTION) {
-            return actions_->size() - 2;
+            return actionIdToCandidates_.size() + 1;
         }
-    } else if (id >= 0 && id < static_cast<int>(actions_->size())) {
+    } else if (id >= 0 && id < static_cast<int>(actionIdToCandidates_.size())) {
         return id;
     }
     return std::nullopt;
@@ -618,25 +631,30 @@ void PinyinTabbedCandidateList::triggerMainAction(PinyinState *state, int id) {
     // If triggered action is checkable, update the action checked state
     // correspondingly.
     if (checkableActionIndex) {
-        if (checkedActionId_) {
-            if (auto oldIndex = idToActionIndex(*checkedActionId_)) {
-                (*actions_)[*oldIndex].setChecked(false);
-            }
-        }
-
-        if (checkedActionId_ == id) {
-            // If the same action is triggered, uncheck it.
-            checkedActionId_.reset();
+        if (id == SINGLE_ACTION) {
+            checkedSingleAction_ = !checkedSingleAction_;
+            (*actions_)[*checkableActionIndex].setChecked(checkedSingleAction_);
         } else {
-            checkedActionId_ = id;
-            (*actions_)[*checkableActionIndex].setChecked(true);
+            if (checkedPinyinActionId_) {
+                if (auto oldIndex = idToActionIndex(*checkedPinyinActionId_)) {
+                    (*actions_)[*oldIndex].setChecked(false);
+                }
+            }
+
+            if (checkedPinyinActionId_ == id) {
+                // If the same action is triggered, uncheck it.
+                checkedPinyinActionId_.reset();
+            } else {
+                checkedPinyinActionId_ = id;
+                (*actions_)[*checkableActionIndex].setChecked(true);
+            }
         }
     }
     engine_->updateFilter(inputContext_);
 }
 
 bool PinyinTabbedCandidateList::filter(const CandidateWord &candidate) const {
-    if (!checkedActionId_.has_value()) {
+    if (!checked()) {
         return true;
     }
 
@@ -646,14 +664,26 @@ bool PinyinTabbedCandidateList::filter(const CandidateWord &candidate) const {
         return false;
     }
 
-    if (checkedActionId_ == SINGLE_ACTION) {
+    if (checkedSingleAction_) {
         auto *state = inputContext_->propertyFor(&engine_->factory());
         auto &context = state->context_;
-        return isSinglePinyin(context, pinyinCandidate->candidateIndex());
+        if (!isSinglePinyin(context, pinyinCandidate->candidateIndex())) {
+            return false;
+        }
     }
 
-    const auto &candidateSet = actionIdToCandidates_[checkedActionId_.value()];
-    return candidateSet.contains(pinyinCandidate->candidateIndex());
+    if (checkedPinyinActionId_) {
+        const auto id = checkedPinyinActionId_.value();
+        if (id < 0 || id >= static_cast<int>(actionIdToCandidates_.size())) {
+            return false;
+        }
+        const auto &candidateSet = actionIdToCandidates_[id];
+        if (!candidateSet.contains(pinyinCandidate->candidateIndex())) {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 } // namespace fcitx
