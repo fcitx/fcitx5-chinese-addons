@@ -289,15 +289,15 @@ private:
 
 class PinyinTabbedCandidateList : public TabbedCandidateList {
 public:
-    PinyinTabbedCandidateList(
-        PinyinEngine *engine, InputContext *inputContext,
-        CommonCandidateList *candidateList,
-        std::optional<int> checkedActionId = std::nullopt);
+    PinyinTabbedCandidateList(PinyinEngine *engine, InputContext *inputContext,
+                              CommonCandidateList *candidateList);
 
     std::span<const CandidateAction> tabActions() override;
 
     void triggerTabAction(int id) override;
-    bool checked() const { return checkedActionId_.has_value(); }
+    bool checked() const {
+        return checkedPinyinActionId_.has_value() || checkedSingleAction_;
+    }
 
     bool filter(const CandidateWord &candidate) const;
 
@@ -318,6 +318,7 @@ private:
         STROKE_SUB_ACTION_N = -6,
         STROKE_SUB_ACTION_Z = -7,
         STROKE_SUB_ACTION_RETURN = -8,
+        SEPARATOR_ACTION = -9,
     };
 
     PinyinEngine *engine_;
@@ -327,7 +328,8 @@ private:
     // Lazily initialized actions, since it requires scan all actions.
     std::optional<std::vector<CandidateAction>> actions_;
     std::vector<CandidateAction> strokeActions_;
-    std::optional<int> checkedActionId_ = std::nullopt;
+    std::optional<int> checkedPinyinActionId_ = std::nullopt;
+    bool checkedSingleAction_ = false;
     std::vector<std::unordered_set<int>> actionIdToCandidates_;
 };
 
