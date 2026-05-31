@@ -98,7 +98,8 @@ FCITX_CONFIGURATION(
         {Key(FcitxKey_1), Key(FcitxKey_2), Key(FcitxKey_3), Key(FcitxKey_4),
          Key(FcitxKey_5), Key(FcitxKey_6), Key(FcitxKey_7), Key(FcitxKey_8),
          Key(FcitxKey_9), Key(FcitxKey_0)}};
-    Option<int, IntConstrain, DefaultMarshaller<int>, ToolTipAnnotation>
+    ConditionalHidden<isIOS(), Option<int, IntConstrain, DefaultMarshaller<int>,
+                                      ToolTipAnnotation>>
         pageSize{
             this,
             "PageSize",
@@ -299,7 +300,9 @@ FCITX_CONFIGURATION(
     Option<bool> spaceBeforeHint{
         this, "SpaceBeforeHint",
         _("Show space between candidate and hint text"), true};
-    OptionWithAnnotation<CandidateLayoutHint, CandidateLayoutHintI18NAnnotation>
+    ConditionalHidden<isIOS(),
+                      OptionWithAnnotation<CandidateLayoutHint,
+                                           CandidateLayoutHintI18NAnnotation>>
         candidateLayoutHint{this, "CandidateLayoutHint",
                             _("Candidate List orientation"),
                             CandidateLayoutHint::NotSet};
