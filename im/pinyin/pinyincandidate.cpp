@@ -22,6 +22,7 @@
 #include <fcitx/inputcontext.h>
 #include <fcitx/text.h>
 #include <fcitx/userinterface.h>
+#include <format>
 #include <libime/core/historybigram.h>
 #include <libime/core/lattice.h>
 #include <libime/pinyin/pinyincontext.h>
@@ -163,7 +164,7 @@ StrokeCandidateWord::StrokeCandidateWord(PinyinEngine *engine, std::string hz,
       hz_(std::move(hz)) {
     setText(Text(hz_));
     if (!py.empty()) {
-        setComment(Text(py));
+        setComment(Text(std::format("({})", py)));
     }
 }
 
@@ -306,6 +307,19 @@ std::string PinyinCandidateWord::customPhraseString() const {
         return text().toString();
     }
     return "";
+}
+
+void PinyinCandidateWord::setPinyinInComment() {
+    auto *state = inputContext_->propertyFor(&engine_->factory());
+    auto &context = state->context_;
+    if (idx_ >= context.candidatesToCursor().size()) {
+        return;
+    }
+    const auto &result = context.candidatesToCursor()[idx_];
+    auto fullPinyin = context.candidateFullPinyin(result);
+    if (!fullPinyin.empty()) {
+        setComment(Text(std::format("({})", fullPinyin)));
+    }
 }
 
 CustomCloudPinyinCandidateWord::CustomCloudPinyinCandidateWord(
