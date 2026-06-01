@@ -211,6 +211,8 @@ public:
     bool isCustomPhrase() const override { return isCustomPhrase_; }
     void setCustomPhrase() { isCustomPhrase_ = true; }
 
+    void setPinyinInComment();
+
 private:
     PinyinEngine *engine_;
     InputContext *inputContext_;
