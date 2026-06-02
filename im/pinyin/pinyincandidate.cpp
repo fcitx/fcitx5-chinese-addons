@@ -531,11 +531,6 @@ void PinyinTabbedCandidateList::buildTabActions() {
             pinyinCandidate->candidateIndex());
     }
 
-    if (actions.size() <= 1) {
-        actions.clear();
-        actionIdToCandidates_.clear();
-    }
-
     CandidateAction separator;
     separator.setId(SEPARATOR_ACTION);
     separator.setSeparator(true);
