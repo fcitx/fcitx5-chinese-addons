@@ -64,8 +64,9 @@ std::string langByPath(const std::string &path) {
 class PunctuationState : public InputContextProperty {
 public:
     std::unordered_map<uint32_t, std::string> lastPuncStack_;
-    char lastIsEngOrDigit_ = 0;
     uint32_t notConverted_ = 0;
+    bool lastIsEng_ = false;
+    bool lastIsDigit_ = false;
     bool mayRebuildStateFromSurroundingText_ = false;
 
     std::unordered_map<uint32_t, std::string> lastPuncStackBackup_;
@@ -218,12 +219,14 @@ Punctuation::Punctuation(Instance *instance)
         [this](InputContext *ic, const std::string &sentence) {
             auto *state = ic->propertyFor(&factory_);
             // Though sentence is utf8, we only check ascii.
-            if (!sentence.empty() && (charutils::isupper(sentence.back()) ||
-                                      charutils::islower(sentence.back()) ||
-                                      charutils::isdigit(sentence.back()))) {
-                state->lastIsEngOrDigit_ = sentence.back();
+            if (sentence.empty()) {
+                state->lastIsEng_ = false;
+                state->lastIsDigit_ = false;
             } else {
-                state->lastIsEngOrDigit_ = '\0';
+                auto c = sentence.back();
+                state->lastIsEng_ =
+                    charutils::isupper(c) || charutils::islower(c);
+                state->lastIsDigit_ = charutils::isdigit(c);
             }
         });
     auto processKeyEvent = [this](const KeyEventBase &keyEvent) {
@@ -232,16 +235,9 @@ Punctuation::Punctuation(Instance *instance)
             return;
         }
         if (!keyEvent.accepted()) {
-            if (keyEvent.key().isUAZ() || keyEvent.key().isLAZ() ||
-                keyEvent.key().isDigit() ||
-                (keyEvent.key().sym() >= FcitxKey_KP_0 &&
-                 keyEvent.key().sym() <= FcitxKey_KP_9 &&
-                 !keyEvent.key().hasModifier())) {
-                state->lastIsEngOrDigit_ =
-                    Key::keySymToUnicode(keyEvent.key().sym());
-            } else {
-                state->lastIsEngOrDigit_ = '\0';
-            }
+            state->lastIsEng_ =
+                keyEvent.key().isUAZ() || keyEvent.key().isLAZ();
+            state->lastIsDigit_ = keyEvent.key().isDigit();
         }
     };
     keyEventConn_ =
@@ -290,7 +286,8 @@ Punctuation::Punctuation(Instance *instance)
             auto &icEvent = static_cast<InputContextEvent &>(event);
             auto *ic = icEvent.inputContext();
             auto *state = ic->propertyFor(&factory_);
-            state->lastIsEngOrDigit_ = 0;
+            state->lastIsEng_ = false;
+            state->lastIsDigit_ = false;
             // Backup the state.
             state->notConvertedBackup_ = state->notConverted_;
             state->notConverted_ = 0;
@@ -338,11 +335,10 @@ Punctuation::Punctuation(Instance *instance)
                 return;
             }
             // Need to make sure we have ascii.
-            if (std::distance(start, end) == 1 &&
-                (charutils::isupper(lastCharBeforeCursor) ||
-                 charutils::islower(lastCharBeforeCursor) ||
-                 charutils::isdigit(lastCharBeforeCursor))) {
-                state->lastIsEngOrDigit_ = lastCharBeforeCursor;
+            if (std::distance(start, end) == 1) {
+                state->lastIsEng_ = charutils::isupper(lastCharBeforeCursor) ||
+                                    charutils::islower(lastCharBeforeCursor);
+                state->lastIsDigit_ = charutils::isdigit(lastCharBeforeCursor);
             }
             // Restore the not converted state if we still after the same chr.
             if (lastCharBeforeCursor == state->notConvertedBackup_ &&
@@ -442,10 +438,17 @@ const std::string &Punctuation::pushPunctuation(const std::string &language,
         return emptyString;
     }
     auto *state = ic->propertyFor(&factory_);
-    if (state->lastIsEngOrDigit_ && *config_.halfWidthPuncAfterLatinOrNumber &&
-        dontConvertWhenEn(unicode)) {
-        state->notConverted_ = unicode;
-        return emptyString;
+    if (dontConvertWhenEn(unicode)) {
+        auto type = *config_.halfWidthPuncAfterType;
+        if ((state->lastIsDigit_ &&
+             (type == HalfWidthPuncAfterType::Number ||
+              type == HalfWidthPuncAfterType::LatinOrNumber)) ||
+            (state->lastIsEng_ &&
+             (type == HalfWidthPuncAfterType::Latin ||
+              type == HalfWidthPuncAfterType::LatinOrNumber))) {
+            state->notConverted_ = unicode;
+            return emptyString;
+        }
     }
     auto iter = profiles_.find(language);
     if (iter == profiles_.end()) {
@@ -473,10 +476,17 @@ Punctuation::pushPunctuationV2(const std::string &language, InputContext *ic,
         return {emptyString, emptyString};
     }
     auto *state = ic->propertyFor(&factory_);
-    if (state->lastIsEngOrDigit_ && *config_.halfWidthPuncAfterLatinOrNumber &&
-        dontConvertWhenEn(unicode)) {
-        state->notConverted_ = unicode;
-        return {emptyString, emptyString};
+    if (dontConvertWhenEn(unicode)) {
+        auto type = *config_.halfWidthPuncAfterType;
+        if ((state->lastIsDigit_ &&
+             (type == HalfWidthPuncAfterType::Number ||
+              type == HalfWidthPuncAfterType::LatinOrNumber)) ||
+            (state->lastIsEng_ &&
+             (type == HalfWidthPuncAfterType::Latin ||
+              type == HalfWidthPuncAfterType::LatinOrNumber))) {
+            state->notConverted_ = unicode;
+            return {emptyString, emptyString};
+        }
     }
     auto iter = profiles_.find(language);
     if (iter == profiles_.end()) {
