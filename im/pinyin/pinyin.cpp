@@ -1557,8 +1557,8 @@ void PinyinEngine::updateFilter(InputContext *inputContext) {
             });
         }
 
-        if (!candidateList->empty()) {
-            candidateList->setGlobalCursorIndex(0);
+        if (candidateList->totalPages() > 0) {
+            candidateList->setPage(0);
         }
     }
     inputContext->updatePreedit();
