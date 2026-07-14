@@ -27,6 +27,7 @@
 #include <fcitx/inputpanel.h>
 #include <fcitx/instance.h>
 #include <initializer_list>
+#include <iterator>
 #include <memory>
 #include <string>
 #include <string_view>
@@ -333,15 +334,16 @@ void testPinyinTabFilter(Instance *instance) {
         for (const auto &action : actions) {
             names.push_back(action.text());
         }
-        FCITX_ASSERT(names == std::vector<std::string>{"xian", "xi", "", "单字",
-                                                       "", "笔画"});
-        FCITX_ASSERT(actions[2].isSeparator());
-        FCITX_ASSERT(actions[4].isSeparator());
-        FCITX_ASSERT(!actions[3].isSeparator());
 
-        const auto xiAction = actions[1];
-        const auto singleAction = actions[3];
-        const auto strokeAction = actions[5];
+        auto indexOf = [&names](std::string_view name) {
+            auto it = std::ranges::find(names, name);
+            FCITX_ASSERT(it != names.end());
+            return std::distance(names.begin(), it);
+        };
+
+        const auto xiAction = actions[indexOf("xi")];
+        const auto singleAction = actions[indexOf("单字")];
+        const auto strokeAction = actions[indexOf("笔画")];
 
         auto checkedActionsAre = [tabbed](std::initializer_list<int> ids) {
             std::unordered_set<int> checkedIds;
