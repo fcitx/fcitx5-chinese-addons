@@ -38,7 +38,7 @@
 #include <utility>
 #include <vector>
 
-#if defined(__linux__) || defined(__GLIBC__)
+#if defined(__linux__) || defined(__GLIBC__) || defined(__EMSCRIPTEN__)
 #include <endian.h>
 #elif defined(__APPLE__)
 #include <libkern/OSByteOrder.h>
