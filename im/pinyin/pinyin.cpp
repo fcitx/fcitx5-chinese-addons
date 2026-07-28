@@ -619,7 +619,7 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
         // Save the middle point for inplace_merge.
         std::vector<std::unique_ptr<PinyinAbstractCandidateWord>> candidates;
         std::unordered_map<std::string,
-                           std::unordered_set<PinyinCandidateWord *>>
+                           std::vector<PinyinCandidateWord *>>
             candidateSet;
 
         for (size_t idx = 0; idx < pinyinCandidates.size(); ++idx) {
@@ -637,7 +637,7 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
             auto pinyinCandidate = std::make_unique<PinyinCandidateWord>(
                 this, inputContext, Text(std::move(candidateString)),
                 candidate.sentence().back()->to()->index(), idx, order);
-            candidateSet[pinyinCandidate->text().toString()].insert(
+            candidateSet[pinyinCandidate->text().toString()].push_back(
                 pinyinCandidate.get());
             if (iter != customCandidateMap.end()) {
                 if (dynamic_cast<CustomPhraseCandidateWord *>(
@@ -650,10 +650,8 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
             }
         }
         for (const auto &[_, candidates] : candidateSet) {
-            if (candidates.size() > 1) {
-                for (auto *candidate : candidates) {
-                    candidate->setPinyinInComment();
-                }
+            for (auto *candidate : candidates | std::views::drop(1)) {
+                candidate->setPinyinInComment();
             }
         }
         size_t middle = candidates.size();
