@@ -618,8 +618,7 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
 
         // Save the middle point for inplace_merge.
         std::vector<std::unique_ptr<PinyinAbstractCandidateWord>> candidates;
-        std::unordered_map<std::string,
-                           std::vector<PinyinCandidateWord *>>
+        std::unordered_map<std::string, std::vector<PinyinCandidateWord *>>
             candidateSet;
 
         for (size_t idx = 0; idx < pinyinCandidates.size(); ++idx) {
