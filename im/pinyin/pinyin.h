@@ -355,17 +355,17 @@ FCITX_CONFIGURATION(
                                    _("Use V to trigger quickphrase"), true};
     ExternalOption quickphrase{this, "QuickPhrase", _("Quick Phrase"),
                                "fcitx://config/addon/quickphrase/editor"};
-    OptionWithAnnotation<std::vector<std::string>, ToolTipAnnotation>
+    Option<std::vector<std::string>, ListConstrain<RegexConstrain>,
+           DefaultMarshaller<std::vector<std::string>>, ToolTipAnnotation>
         quickphraseTriggerRegex{
-            this,
-            "QuickPhraseTriggerRegex",
-            _("Regular expression to trigger quick phrase"),
-            {".(/|@)$", "^(www|bbs|forum|mail|bbs)\\.",
-             "^(http|https|ftp|telnet|mailto):"},
-            {},
-            {},
-            {_("Enter quickphrase mode when current input matches any regular "
-               "expression from the list.")}};
+            {.parent = this,
+             .path = "QuickPhraseTriggerRegex",
+             .description = _("Regular expression to trigger quick phrase"),
+             .defaultValue = {".(/|@)$", "^(www|bbs|forum|mail|bbs)\\.",
+                              "^(http|https|ftp|telnet|mailto):"},
+             .annotation = {_("Enter quickphrase mode when current input "
+                              "matches any regular "
+                              "expression from the list.")}}};
     Option<FuzzyConfig> fuzzyConfig{this, "Fuzzy", _("Fuzzy Pinyin")};
     HiddenOption<bool> firstRun{this, "FirstRun", "FirstRun", true};)
 
