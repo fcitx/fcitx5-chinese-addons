@@ -214,16 +214,18 @@ FCITX_CONFIGURATION(
               "and there is only one candidate available, automatically select "
               "this candidate. -1 Means the maximum code length of the table. "
               "0 means this behavior is disabled."))};
-    OptionWithAnnotation<std::string, ToolTipAnnotation> autoSelectRegex{
-        this,
-        "AutoSelectRegex",
-        _("Regular expression for selecting the only candidate"),
-        "",
-        {},
-        {},
-        ToolTipAnnotation(_("When current input matches the regular expression "
-                            "and there is only one candidate available, "
-                            "automatically select this candidate."))};
+    Option<std::string, RegexConstrain, DefaultMarshaller<std::string>,
+           ToolTipAnnotation>
+        autoSelectRegex{
+            {.parent = this,
+             .path = "AutoSelectRegex",
+             .description = _("Regular expression for selecting the only "
+                              "candidate"),
+             .defaultValue = "",
+             .annotation = {_("When current input matches the regular "
+                              "expression and there is only one candidate "
+                              "available, automatically select this "
+                              "candidate.")}}};
     OptionWithAnnotation<int, ToolTipAnnotation> noMatchAutoSelectLength{
         this,
         "NoMatchAutoSelectLength",
@@ -238,19 +240,20 @@ FCITX_CONFIGURATION(
               "table, select the current candidate and then type in the new "
               "character. -1 means the maximum code length of the table. 0 "
               "means this behavior is disabled."))};
-    OptionWithAnnotation<std::string, ToolTipAnnotation> noMatchAutoSelectRegex{
-        this,
-        "NoMatchAutoSelectRegex",
-        _("Regular expression for auto select when no match is found"),
-        "",
-        {},
-        {},
-        ToolTipAnnotation(
-            _("When typing a new character, if the current input matches the "
-              "regular expression and the existing segment "
-              "with the new character does not have any matched entries in the "
-              "table, select the current candidate and then type in the new "
-              "character."))};
+    Option<std::string, RegexConstrain, DefaultMarshaller<std::string>,
+           ToolTipAnnotation>
+        noMatchAutoSelectRegex{
+            {.parent = this,
+             .path = "NoMatchAutoSelectRegex",
+             .description = _("Regular expression for auto select when no "
+                              "match is found"),
+             .defaultValue = "",
+             .annotation = {_("When typing a new character, if the current "
+                              "input matches the regular expression and the "
+                              "existing segment with the new character does "
+                              "not have any matched entries in the table, "
+                              "select the current candidate and then type in "
+                              "the new character.")}}};
     NoSaveOption<KeyList> endKey{this, "EndKey", _("End key")};
     OptionWithAnnotation<int, ToolTipAnnotation> autoPhraseLength{
         this,
