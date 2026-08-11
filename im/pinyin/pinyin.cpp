@@ -1154,6 +1154,9 @@ void PinyinEngine::populateConfig() {
 
     quickphraseTriggerRegex_.clear();
     for (const std::string &regStr : *config_.quickphraseTriggerRegex) {
+        if (regStr.empty()) {
+            continue;
+        }
         try {
             std::regex reg{regStr};
             quickphraseTriggerRegex_.push_back(std::move(reg));
