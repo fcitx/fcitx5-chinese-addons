@@ -23,6 +23,7 @@
 #include <fcitx/text.h>
 #include <fcitx/userinterface.h>
 #include <format>
+#include <functional>
 #include <libime/core/historybigram.h>
 #include <libime/core/lattice.h>
 #include <libime/pinyin/pinyincontext.h>
@@ -34,6 +35,7 @@
 #include <optional>
 #include <span>
 #include <string>
+#include <string_view>
 #include <tuple>
 #include <utility>
 #include <vector>
@@ -44,9 +46,9 @@ namespace {
 
 // Helper function to produce the full pinyin string that matches the best to
 // the encoded candidate pinyin.
-std::string bestMatchPinyin(const std::string &pinyin,
-                            const std::string &candidatePinyin,
-                            libime::PinyinContext &context) {
+std::optional<libime::PinyinSyllable>
+bestMatchPinyin(std::string_view pinyin, const std::string &candidatePinyin,
+                libime::PinyinContext &context) {
 
     libime::MatchedPinyinSyllablesWithFuzzyFlags syls;
     syls = context.useShuangpin()
@@ -56,7 +58,6 @@ std::string bestMatchPinyin(const std::string &pinyin,
                : libime::PinyinEncoder::stringToSyllablesWithFuzzyFlags(
                      pinyin, context.ime()->correctionProfile().get(),
                      context.ime()->fuzzyFlags());
-    std::string actualPinyin;
     std::optional<libime::PinyinSyllable> syl;
 
     if (!syls.empty() && !syls.front().second.empty() &&
@@ -78,13 +79,7 @@ std::string bestMatchPinyin(const std::string &pinyin,
         }
     }
 
-    if (syl) {
-        actualPinyin = libime::PinyinEncoder::initialFinalToPinyinString(
-            syl->initial(), syl->final());
-    } else {
-        actualPinyin = pinyin;
-    }
-    return actualPinyin;
+    return syl;
 }
 
 bool isSinglePinyin(const libime::PinyinContext &context, size_t idx) {
@@ -477,9 +472,11 @@ void PinyinTabbedCandidateList::buildTabActions() {
     auto *state = inputContext_->propertyFor(&engine_->factory());
     auto &context = state->context_;
     auto selectedLen = context.selectedLength();
-    const auto &fullInput = context.userInput();
+    std::string_view fullInput = context.userInput();
 
-    std::map<std::tuple<std::string, std::string>, int> syllableToId;
+    std::map<std::tuple<std::string, std::optional<libime::PinyinSyllable>>,
+             int, std::less<>>
+        syllableToId;
 
     if (!candidateList_) {
         actions_ = std::move(actions);
@@ -507,21 +504,37 @@ void PinyinTabbedCandidateList::buildTabActions() {
         if (path.size() < 2) {
             continue;
         }
-        auto start = selectedLen + path[0]->index();
-        auto end = selectedLen + path[1]->index();
-
-        auto syllable = fullInput.substr(start, end - start);
+        std::string_view syllable;
+        for (size_t i = 1; i < path.size(); i++) {
+            auto start = selectedLen + path[i - 1]->index();
+            auto n = path[i]->index() - path[i - 1]->index();
+            auto segment = fullInput.substr(start, n);
+            if (!segment.starts_with('\'')) {
+                syllable = segment;
+                break;
+            }
+        }
+        if (syllable.empty()) {
+            continue;
+        }
         auto actualPinyin = bestMatchPinyin(
             syllable,
             sentence[0]->as<libime::PinyinLatticeNode>().encodedPinyin(),
             context);
 
-        auto [it, inserted] = syllableToId.emplace(
-            std::tuple{syllable, actualPinyin}, actions.size());
-        if (inserted) {
+        auto it = syllableToId.find(std::tuple{syllable, actualPinyin});
+        if (it == syllableToId.end()) {
+            it = syllableToId
+                     .emplace(std::make_tuple(syllable, actualPinyin),
+                              actions.size())
+                     .first;
             CandidateAction action;
             action.setId(actions.size());
-            action.setText(actualPinyin);
+            action.setText(
+                actualPinyin
+                    ? libime::PinyinEncoder::initialFinalToPinyinString(
+                          actualPinyin->initial(), actualPinyin->final())
+                    : std::string(syllable));
             action.setCheckable(true);
             action.setChecked(checkedPinyinActionId_ == action.id());
             actions.push_back(std::move(action));
