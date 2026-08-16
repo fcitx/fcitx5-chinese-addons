@@ -411,6 +411,32 @@ void testPinyinTabFilter(Instance *instance) {
     });
 }
 
+void testPinyinTabFilterWithSeparator(Instance *instance) {
+    instance->eventDispatcher().schedule([instance]() {
+        auto *pinyin = instance->addonManager().addon("pinyin");
+        FCITX_ASSERT(pinyin);
+        auto *testfrontend = instance->addonManager().addon("testfrontend");
+        auto uuid =
+            testfrontend->call<ITestFrontend::createInputContext>("testapp");
+        auto *ic = instance->inputContextManager().findByUUID(uuid);
+        FCITX_ASSERT(ic);
+        instance->setCurrentInputMethod(ic, "pinyin", true);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("x"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("i"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("'"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("'"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("n"), false);
+        findAndSelectCandidate(ic, "西");
+        auto *tabbed = ic->inputPanel().candidateList()->toTabbed();
+        FCITX_ASSERT(tabbed);
+        auto actionSpan = tabbed->tabActions();
+        FCITX_ASSERT(std::ranges::none_of(actionSpan, [](const auto &a) {
+            return a.text().starts_with('\'');
+        }));
+    });
+}
+
 void testPin(Instance *instance) {
     instance->eventDispatcher().schedule([instance]() {
         auto *testfrontend = instance->addonManager().addon("testfrontend");
@@ -649,6 +675,7 @@ int main() {
     testForget(&instance);
     testActionInStrokeFilter(&instance);
     testPinyinTabFilter(&instance);
+    testPinyinTabFilterWithSeparator(&instance);
     testPin(&instance);
     testQuickPhraseTrigger(&instance);
     testVQuickPhraseTrigger(&instance);
