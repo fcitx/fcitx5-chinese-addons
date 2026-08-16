@@ -9,6 +9,7 @@
 #include "../../modules/cloudpinyin/cloudpinyin_public.h"
 #include "pinyin.h"
 #include <algorithm>
+#include <boost/container_hash/hash.hpp>
 #include <cassert>
 #include <cstddef>
 #include <cstdint>
@@ -37,6 +38,7 @@
 #include <string>
 #include <string_view>
 #include <tuple>
+#include <unordered_map>
 #include <utility>
 #include <vector>
 
@@ -44,11 +46,40 @@ namespace fcitx {
 
 namespace {
 
-// Helper function to produce the full pinyin string that matches the best to
+using PinyinCacheKey = std::tuple<std::string, std::string>;
+using PinyinCacheLookupKey = std::tuple<std::string_view, std::string_view>;
+
+struct PinyinCacheKeyHash {
+    using is_transparent = void;
+
+    size_t operator()(PinyinCacheLookupKey key) const noexcept {
+        const auto &[pinyin, candidatePinyin] = key;
+        size_t seed = 0;
+        boost::hash_combine(seed, pinyin);
+        boost::hash_combine(seed, candidatePinyin);
+        return seed;
+    }
+};
+
+using PinyinCache =
+    std::unordered_map<PinyinCacheKey, std::optional<libime::PinyinSyllable>,
+                       PinyinCacheKeyHash, std::equal_to<>>;
+
+// Helper function to produce the pinyin that matches the best to
 // the encoded candidate pinyin.
 std::optional<libime::PinyinSyllable>
-bestMatchPinyin(std::string_view pinyin, const std::string &candidatePinyin,
-                libime::PinyinContext &context) {
+bestMatchPinyin(std::string_view pinyin, std::string_view candidatePinyin,
+                const libime::PinyinContext &context, PinyinCache &cache) {
+    if (candidatePinyin.size() < 2) {
+        return std::nullopt;
+    }
+
+    // Cache hit rate should be very high since there could be only few pinyin
+    // matches, so we can use the cache to avoid repeated computation.
+    if (auto it = cache.find(PinyinCacheLookupKey{pinyin, candidatePinyin});
+        it != cache.end()) {
+        return it->second;
+    }
 
     libime::MatchedPinyinSyllablesWithFuzzyFlags syls;
     syls = context.useShuangpin()
@@ -60,8 +91,7 @@ bestMatchPinyin(std::string_view pinyin, const std::string &candidatePinyin,
                      context.ime()->fuzzyFlags());
     std::optional<libime::PinyinSyllable> syl;
 
-    if (!syls.empty() && !syls.front().second.empty() &&
-        candidatePinyin.size() >= 2) {
+    if (!syls.empty() && !syls.front().second.empty()) {
         auto candidateInitial =
             static_cast<libime::PinyinInitial>(candidatePinyin[0]);
         auto candidateFinal =
@@ -78,6 +108,9 @@ bestMatchPinyin(std::string_view pinyin, const std::string &candidatePinyin,
             }
         }
     }
+
+    cache.try_emplace(
+        PinyinCacheKey{std::string(pinyin), std::string(candidatePinyin)}, syl);
 
     return syl;
 }
@@ -483,6 +516,8 @@ void PinyinTabbedCandidateList::buildTabActions() {
         return;
     }
 
+    PinyinCache cache;
+
     for (size_t i = 0; i < candidateList_->originSize(); i++) {
         const auto *candidate = &candidateList_->originCandidate(i);
         const auto *pinyinCandidate =
@@ -519,8 +554,10 @@ void PinyinTabbedCandidateList::buildTabActions() {
         }
         auto actualPinyin = bestMatchPinyin(
             syllable,
-            sentence[0]->as<libime::PinyinLatticeNode>().encodedPinyin(),
-            context);
+            std::string_view(
+                sentence[0]->as<libime::PinyinLatticeNode>().encodedPinyin())
+                .substr(0, 2),
+            context, cache);
 
         auto it = syllableToId.find(std::tuple{syllable, actualPinyin});
         if (it == syllableToId.end()) {
