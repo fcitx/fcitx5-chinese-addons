@@ -28,34 +28,34 @@ static void testEmptyTable() {
     assert(aux.matchPhrase("时间", "om"));
 }
 
-static void testLoadAndSingleCharMatch() {
-    const std::string path = "/tmp/test_aux_code.txt";
-    writeTestTable(path, R"(# comment line
-时=oc
-间=mo
-实=bd
-践=jc
+static void testSingleCharMatch() {
+    const std::string path = "/tmp/test_aux_code_single.txt";
+    writeTestTable(path, R"(时=oc
 魔=gg
-法=ds
-少=xp
-女=va
-人=pn
-体=rb
+厑=ib
+厑=ii
 )");
 
     AuxCode aux;
     aux.loadFromFile(path);
     assert(aux.isLoaded());
 
-    // single char: any code starts with input
+    // single code: prefix match
     assert(aux.matchPhrase("时", "o"));
     assert(aux.matchPhrase("时", "oc"));
     assert(!aux.matchPhrase("时", "m"));
     assert(!aux.matchPhrase("时", "ocd"));
 
+    // single code: exact match
     assert(aux.matchPhrase("魔", "g"));
     assert(aux.matchPhrase("魔", "gg"));
     assert(!aux.matchPhrase("魔", "ggo"));
+
+    // multiple codes: any code starts with input
+    assert(aux.matchPhrase("厑", "i"));
+    assert(aux.matchPhrase("厑", "ib"));
+    assert(aux.matchPhrase("厑", "ii"));
+    assert(!aux.matchPhrase("厑", "x"));
 
     std::remove(path.c_str());
 }
@@ -71,25 +71,6 @@ static void testGetFirstCode() {
     assert(aux.getFirstCode("时") == "oc");
     assert(aux.getFirstCode("间") == "mo");
     assert(aux.getFirstCode("不").empty());
-
-    std::remove(path.c_str());
-}
-
-static void testMultiCode() {
-    const std::string path = "/tmp/test_aux_code_multi.txt";
-    writeTestTable(path, R"(厑=ib
-厑=ii
-魔=gg
-)");
-
-    AuxCode aux;
-    aux.loadFromFile(path);
-
-    // single char: any code starts with input
-    assert(aux.matchPhrase("厑", "i"));
-    assert(aux.matchPhrase("厑", "ib"));
-    assert(aux.matchPhrase("厑", "ii"));
-    assert(!aux.matchPhrase("厑", "x"));
 
     std::remove(path.c_str());
 }
@@ -215,9 +196,8 @@ A=a
 
 int main() {
     testEmptyTable();
-    testLoadAndSingleCharMatch();
+    testSingleCharMatch();
     testGetFirstCode();
-    testMultiCode();
     testMatchPhrase();
     testStrokeKeyChars();
     testBehaviorExamples();
