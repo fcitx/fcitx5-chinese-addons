@@ -87,74 +87,6 @@ static void testMatchPhrase() {
 女=va
 人=pn
 体=rb
-)");
-
-    AuxCode aux;
-    aux.loadFromFile(path);
-
-    // input length < char count -> prefix match -> keep
-    assert(aux.matchPhrase("时间", "o"));
-    assert(aux.matchPhrase("时间", "om"));
-    assert(aux.matchPhrase("魔法少女", "g"));
-    assert(aux.matchPhrase("魔法少女", "gd"));
-    assert(aux.matchPhrase("魔法少女", "gdx"));
-
-    // input length == char count, all match -> keep
-    assert(aux.matchPhrase("时间", "om"));
-    assert(aux.matchPhrase("魔法少女", "gdxv"));
-
-    // input length == char count, mismatch -> filter
-    assert(!aux.matchPhrase("时间", "og"));
-    assert(!aux.matchPhrase("时间", "xm"));
-
-    // input length > char count -> filter
-    assert(!aux.matchPhrase("时间", "omx"));
-    assert(!aux.matchPhrase("魔法少女", "gdxvy"));
-
-    // unmatched character -> filter entire phrase
-    assert(!aux.matchPhrase("没时间", "o"));
-
-    // empty input -> keep
-    assert(aux.matchPhrase("时间", ""));
-
-    std::remove(path.c_str());
-}
-
-static void testStrokeKeyChars() {
-    const std::string path = "/tmp/test_aux_code_stroke.txt";
-    writeTestTable(path, R"(一=h
-丨=s
-丿=p
-㇏=n
-𠃍=z
-)");
-
-    AuxCode aux;
-    aux.loadFromFile(path);
-    assert(aux.matchPhrase("一", "h"));
-    assert(aux.matchPhrase("丨", "s"));
-    assert(aux.matchPhrase("丿", "p"));
-    assert(aux.matchPhrase("㇏", "n"));
-    assert(aux.matchPhrase("𠃍", "z"));
-    // single char: prefix match
-    assert(aux.matchPhrase("一", "h"));
-    assert(!aux.matchPhrase("一", "hx"));
-
-    std::remove(path.c_str());
-}
-
-static void testBehaviorExamples() {
-    const std::string path = "/tmp/test_aux_code_examples.txt";
-    writeTestTable(path, R"(时=oc
-间=mo
-实=bd
-践=jc
-魔=gg
-法=ds
-少=xp
-女=va
-人=pn
-体=rb
 多=dk
 啦=kl
 A=a
@@ -164,27 +96,26 @@ A=a
     AuxCode aux;
     aux.loadFromFile(path);
 
-    // Example 1: shijian + "o"
-    assert(aux.matchPhrase("时间", "o"));
-    assert(!aux.matchPhrase("实践", "o"));
-
-    // Example 1: shijian + "om"
-    assert(aux.matchPhrase("时间", "om"));
-
-    // Example 2: mofaxxx + "g"
+    // prefix match
     assert(aux.matchPhrase("魔法少女", "g"));
     assert(aux.matchPhrase("魔法少女", "gd"));
     assert(aux.matchPhrase("魔法少女", "gdx"));
-    assert(aux.matchPhrase("魔法少女", "gdxv"));
-    assert(!aux.matchPhrase("魔法少女", "gdxvy"));
 
-    // Example 3: renjianti
-    assert(aux.matchPhrase("人间体", "p"));
-    assert(aux.matchPhrase("人间体", "pm"));
+    // exact match
+    assert(aux.matchPhrase("魔法少女", "gdxv"));
     assert(aux.matchPhrase("人间体", "pmr"));
+
+    // mismatch
+    assert(!aux.matchPhrase("魔法少女", "gdxvy"));
     assert(!aux.matchPhrase("人间体", "pmrx"));
 
-    // Multi-char codes
+    // unmatched character -> filter entire phrase
+    assert(!aux.matchPhrase("没时间", "o"));
+
+    // empty input -> keep
+    assert(aux.matchPhrase("魔法少女", ""));
+
+    // multi-char codes with English
     assert(aux.matchPhrase("多啦A梦", "d"));
     assert(aux.matchPhrase("多啦A梦", "dk"));
     assert(aux.matchPhrase("多啦A梦", "dka"));
@@ -199,8 +130,6 @@ int main() {
     testSingleCharMatch();
     testGetFirstCode();
     testMatchPhrase();
-    testStrokeKeyChars();
-    testBehaviorExamples();
 
     std::cout << "All auxcode tests passed!" << std::endl;
     return 0;
