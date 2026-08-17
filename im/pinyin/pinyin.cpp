@@ -1825,6 +1825,7 @@ bool PinyinEngine::handleAuxCodeFilter(
             resetAuxCode(inputContext);
             state->mode_ = PinyinMode::AuxCodeFilter;
             updateFilter(inputContext);
+            handleNextPage(event);
 
             event.filterAndAccept();
             return true;

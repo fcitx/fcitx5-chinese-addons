@@ -43,20 +43,6 @@ void AuxCode::loadFromFile(const std::string &path) {
     loaded_ = true;
 }
 
-bool AuxCode::anyCodeStartsWith(const std::string &character,
-                                const std::string &prefix) const {
-    auto it = table_.find(character);
-    if (it == table_.end()) {
-        return false;
-    }
-    for (const auto &code : it->second) {
-        if (code.starts_with(prefix)) {
-            return true;
-        }
-    }
-    return false;
-}
-
 std::string AuxCode::getFirstCode(const std::string &character) const {
     auto it = table_.find(character);
     if (it == table_.end() || it->second.empty()) {

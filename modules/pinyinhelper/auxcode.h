@@ -20,8 +20,6 @@ public:
     void loadFromFile(const std::string &path);
     bool isLoaded() const { return loaded_; }
 
-    bool anyCodeStartsWith(const std::string &character,
-                           const std::string &prefix) const;
     std::string getFirstCode(const std::string &character) const;
     bool matchPhrase(const std::string &phrase,
                      const std::string &auxInput) const;

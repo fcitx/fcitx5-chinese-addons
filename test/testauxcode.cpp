@@ -24,7 +24,6 @@ static void testEmptyTable() {
     assert(!aux.isLoaded());
     aux.loadFromFile("/nonexistent/path.txt");
     assert(!aux.isLoaded());
-    assert(!aux.anyCodeStartsWith("时", "o"));
     assert(aux.getFirstCode("时").empty());
     assert(aux.matchPhrase("时间", "om"));
 }
@@ -48,14 +47,13 @@ static void testLoadAndSingleCharMatch() {
     aux.loadFromFile(path);
     assert(aux.isLoaded());
 
-    assert(aux.anyCodeStartsWith("时", "o"));
-    assert(aux.anyCodeStartsWith("时", "oc"));
-    assert(!aux.anyCodeStartsWith("时", "m"));
-    assert(!aux.anyCodeStartsWith("时", "ocd"));
+    // single char: inputLen must be <= 1
+    assert(aux.matchPhrase("时", "o"));
+    assert(!aux.matchPhrase("时", "oc"));
+    assert(!aux.matchPhrase("时", "m"));
 
-    assert(aux.anyCodeStartsWith("魔", "g"));
-    assert(aux.anyCodeStartsWith("魔", "gg"));
-    assert(!aux.anyCodeStartsWith("魔", "ggo"));
+    assert(aux.matchPhrase("魔", "g"));
+    assert(!aux.matchPhrase("魔", "gg"));
 
     std::remove(path.c_str());
 }
@@ -85,10 +83,11 @@ static void testMultiCode() {
     AuxCode aux;
     aux.loadFromFile(path);
 
-    assert(aux.anyCodeStartsWith("厑", "i"));
-    assert(aux.anyCodeStartsWith("厑", "ib"));
-    assert(aux.anyCodeStartsWith("厑", "ii"));
-    assert(!aux.anyCodeStartsWith("厑", "x"));
+    // single char: only one letter matches
+    assert(aux.matchPhrase("厑", "i"));
+    assert(!aux.matchPhrase("厑", "ib"));
+    assert(!aux.matchPhrase("厑", "ii"));
+    assert(!aux.matchPhrase("厑", "x"));
 
     std::remove(path.c_str());
 }
@@ -149,11 +148,13 @@ static void testStrokeKeyChars() {
 
     AuxCode aux;
     aux.loadFromFile(path);
-    assert(aux.anyCodeStartsWith("一", "h"));
-    assert(aux.anyCodeStartsWith("丨", "s"));
-    assert(aux.anyCodeStartsWith("丿", "p"));
-    assert(aux.anyCodeStartsWith("㇏", "n"));
-    assert(aux.anyCodeStartsWith("𠃍", "z"));
+    assert(aux.matchPhrase("一", "h"));
+    assert(aux.matchPhrase("丨", "s"));
+    assert(aux.matchPhrase("丿", "p"));
+    assert(aux.matchPhrase("㇏", "n"));
+    assert(aux.matchPhrase("𠃍", "z"));
+    // single char: longer input rejected
+    assert(!aux.matchPhrase("一", "hx"));
 
     std::remove(path.c_str());
 }
