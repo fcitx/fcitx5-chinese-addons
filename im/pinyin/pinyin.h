@@ -319,8 +319,8 @@ FCITX_CONFIGURATION(
         _("Filter by stroke"),
         {Key("grave")},
         KeyListConstrain({KeyConstrainFlag::AllowModifierLess})};
-    Option<std::string> auxCodeTable{
-        this, "AuxCodeTable", _("Aux Code Table Path"), ""};
+    Option<std::string> auxCodeProfile{
+        this, "AuxCodeProfile", _("Aux Code Profile"), ""};
     Option<Key, KeyConstrain> auxCodeTriggerKey{
         this,
         "AuxCodeTriggerKey",

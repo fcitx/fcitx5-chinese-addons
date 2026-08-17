@@ -1812,10 +1812,16 @@ bool PinyinEngine::handleAuxCodeFilter(
     auto *state = inputContext->propertyFor(&factory_);
     if (state->mode_ == PinyinMode::Normal) {
         if (candidateList && !candidateList->empty() &&
-            candidateList->toBulk() && !config_.auxCodeTable->empty() &&
+            candidateList->toBulk() && !config_.auxCodeProfile->empty() &&
             event.key().check(*config_.auxCodeTriggerKey) && pinyinhelper()) {
-            pinyinhelper()->call<IPinyinHelper::loadAuxCode>(
-                *config_.auxCodeTable);
+            auto auxPath = stringutils::concat("pinyin/auxcode/",
+                                               *config_.auxCodeProfile);
+            auto located = StandardPaths::global().locate(
+                StandardPathsType::PkgData, auxPath);
+            if (!located.empty()) {
+                pinyinhelper()->call<IPinyinHelper::loadAuxCode>(
+                    located.string());
+            }
             resetAuxCode(inputContext);
             state->mode_ = PinyinMode::AuxCodeFilter;
             updateFilter(inputContext);
