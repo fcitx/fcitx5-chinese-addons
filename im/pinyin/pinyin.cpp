@@ -1837,6 +1837,17 @@ bool PinyinEngine::handleAuxCodeFilter(
     }
 
     event.filterAndAccept();
+    // Allow prev page to quit aux code filtering.
+    if ((state->auxCodeBuffer_.empty() &&
+         event.key().checkKeyList(*config_.prevPage))) {
+        auto candidateList = inputContext->inputPanel().candidateList();
+        if (candidateList && candidateList->toPageable() &&
+            candidateList->toPageable()->currentPage() <= 1) {
+            resetAuxCode(inputContext);
+            updateUI(inputContext);
+            return true;
+        }
+    }
 
     if (handleCandidateList(event, keyChr)) {
         return true;

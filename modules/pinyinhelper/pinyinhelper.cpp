@@ -162,26 +162,6 @@ bool PinyinHelper::matchAuxCode(const std::string &text,
     if (!auxCode_.isLoaded()) {
         return true;
     }
-    auto charRange = utf8::MakeUTF8CharRange(text);
-    auto charCount = utf8::lengthValidated(text);
-
-    if (charCount == utf8::INVALID_LENGTH || charCount == 0) {
-        return true;
-    }
-
-    if (auxInput.empty()) {
-        return true;
-    }
-
-    if (charCount == 1) {
-        std::string chr;
-        for (auto iter = std::begin(charRange); iter != std::end(charRange);
-             ++iter) {
-            chr.assign(iter.charRange().first, iter.charRange().second);
-        }
-        return auxCode_.anyCodeStartsWith(chr, auxInput);
-    }
-
     return auxCode_.matchPhrase(text, auxInput);
 }
 
