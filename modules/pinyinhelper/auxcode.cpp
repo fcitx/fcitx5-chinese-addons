@@ -6,6 +6,7 @@
  */
 #include "auxcode.h"
 
+#include <fcitx-utils/stringutils.h>
 #include <fcitx-utils/utf8.h>
 #include <fstream>
 
@@ -20,8 +21,12 @@ void AuxCode::loadFromFile(const std::string &path) {
         return;
     }
 
-    std::string line;
-    while (std::getline(file, line)) {
+    std::string buf;
+    while (std::getline(file, buf)) {
+        if (!utf8::validate(buf)) {
+            continue;
+        }
+        auto line = stringutils::trimView(buf);
         if (line.empty() || line[0] == '#') {
             continue;
         }
@@ -29,15 +34,15 @@ void AuxCode::loadFromFile(const std::string &path) {
         if (pos == std::string::npos || pos == 0) {
             continue;
         }
-        std::string character = line.substr(0, pos);
-        std::string code = line.substr(pos + 1);
+        auto character = line.substr(0, pos);
+        auto code = line.substr(pos + 1);
         if (character.empty() || code.empty()) {
             continue;
         }
-        if (utf8::length(character) != 1) {
+        if (utf8::lengthValidated(character) != 1) {
             continue;
         }
-        table_[character].push_back(code);
+        table_[std::string(character)].push_back(std::string(code));
     }
 
     loaded_ = true;
@@ -96,7 +101,8 @@ bool AuxCode::matchPhrase(const std::string &phrase,
         if (code.empty()) {
             return false;
         }
-        firstCodes += code[0];
+        // Aux codes are ASCII single-byte characters, take the first byte
+        firstCodes += code.front();
     }
 
     for (size_t i = 0; i < inputLen; ++i) {
