@@ -68,11 +68,8 @@ bool AuxCode::matchPhrase(const std::string &phrase,
 
     // Single character: check if any code starts with input
     if (charCount == 1) {
-        std::string chr;
-        for (auto iter = std::begin(charRange); iter != std::end(charRange);
-             ++iter) {
-            chr.assign(iter.charRange().first, iter.charRange().second);
-        }
+        auto iter = std::begin(charRange);
+        std::string chr(iter.charRange().first, iter.charRange().second);
         auto it = table_.find(chr);
         if (it == table_.end()) {
             return false;
@@ -91,7 +88,7 @@ bool AuxCode::matchPhrase(const std::string &phrase,
     }
 
     std::string firstCodes;
-    firstCodes.reserve(charCount);
+    firstCodes.reserve(static_cast<size_t>(charCount));
     for (auto iter = std::begin(charRange); iter != std::end(charRange);
          ++iter) {
         std::string chr(iter.charRange().first, iter.charRange().second);

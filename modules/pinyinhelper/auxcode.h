@@ -20,6 +20,7 @@ public:
     void loadFromFile(const std::string &path);
     bool isLoaded() const { return loaded_; }
 
+    // Public for unit tests; internal use by matchPhrase only.
     std::string getFirstCode(const std::string &character) const;
     bool matchPhrase(const std::string &phrase,
                      const std::string &auxInput) const;
