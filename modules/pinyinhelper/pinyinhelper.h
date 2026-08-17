@@ -53,7 +53,6 @@ private:
     PinyinLookup lookup_;
     Stroke stroke_;
     AuxCode auxCode_;
-    std::string loadedProfile_;
     std::unique_ptr<EventSource> deferEvent_;
     std::unique_ptr<HandlerTableEntry<QuickPhraseProviderCallback>> handler_;
 };

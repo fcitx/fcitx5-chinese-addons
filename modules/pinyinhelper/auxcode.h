@@ -17,8 +17,8 @@ class AuxCode {
 public:
     AuxCode() = default;
 
+    void loadProfile(const std::string &profile);
     void loadFromFile(const std::string &path);
-    void loadFromFD(int fd);
     bool isLoaded() const { return loaded_; }
 
     // Public for unit tests; internal use by matchPhrase only.
@@ -30,6 +30,7 @@ private:
     void parseStream(std::istream &in);
 
     std::unordered_map<std::string, std::vector<std::string>> table_;
+    std::string loadedProfile_;
     bool loaded_ = false;
 };
 

@@ -7,11 +7,30 @@
 #include "auxcode.h"
 
 #include <fcitx-utils/fdstreambuf.h>
+#include <fcitx-utils/standardpaths.h>
 #include <fcitx-utils/stringutils.h>
 #include <fcitx-utils/utf8.h>
 #include <fstream>
 
 namespace fcitx {
+
+void AuxCode::loadProfile(const std::string &profile) {
+    if (profile == loadedProfile_ && loaded_) {
+        return;
+    }
+    auto path = stringutils::concat("pinyin/auxcode/", profile);
+    auto file = StandardPaths::global().open(StandardPathsType::PkgData, path);
+    if (!file.isValid()) {
+        return;
+    }
+    table_.clear();
+    loaded_ = false;
+    IFDStreamBuf buffer(file.fd());
+    std::istream in(&buffer);
+    parseStream(in);
+    loaded_ = true;
+    loadedProfile_ = profile;
+}
 
 void AuxCode::loadFromFile(const std::string &path) {
     table_.clear();
@@ -22,16 +41,6 @@ void AuxCode::loadFromFile(const std::string &path) {
         return;
     }
     parseStream(file);
-    loaded_ = true;
-}
-
-void AuxCode::loadFromFD(int fd) {
-    table_.clear();
-    loaded_ = false;
-
-    IFDStreamBuf buffer(fd);
-    std::istream in(&buffer);
-    parseStream(in);
     loaded_ = true;
 }
 

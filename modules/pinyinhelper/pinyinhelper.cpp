@@ -10,9 +10,7 @@
 #include <clipboard_public.h>
 #include <fcitx-config/iniparser.h>
 #include <fcitx-utils/event.h>
-#include <fcitx-utils/fdstreambuf.h>
 #include <fcitx-utils/i18n.h>
-#include <fcitx-utils/standardpaths.h>
 #include <fcitx-utils/stringutils.h>
 #include <fcitx-utils/utf8.h>
 #include <fcitx/addonfactory.h>
@@ -156,17 +154,7 @@ std::string PinyinHelper::prettyStrokeString(const std::string &input) {
 }
 
 void PinyinHelper::loadAuxCode(const std::string &profile) {
-    if (profile == loadedProfile_ && auxCode_.isLoaded()) {
-        return;
-    }
-    auto auxPath = stringutils::concat("pinyin/auxcode/", profile);
-    auto file = StandardPaths::global().open(StandardPathsType::PkgData,
-                                             auxPath);
-    if (!file.isValid()) {
-        return;
-    }
-    auxCode_.loadFromFD(file.fd());
-    loadedProfile_ = profile;
+    auxCode_.loadProfile(profile);
 }
 
 bool PinyinHelper::matchAuxCode(const std::string &text,
