@@ -399,8 +399,8 @@ public:
     // Stroke filter
     InputBuffer strokeBuffer_;
 
-    // Aux code filter
-    InputBuffer auxCodeBuffer_;
+    // Aux code filter (ASCII only)
+    InputBuffer auxCodeBuffer_{InputBufferOption::AsciiOnly};
 
     // Forget candidate
     std::shared_ptr<CandidateList> forgetCandidateList_;

@@ -6,6 +6,7 @@
  */
 #include "auxcode.h"
 
+#include <fcitx-utils/fdstreambuf.h>
 #include <fcitx-utils/stringutils.h>
 #include <fcitx-utils/utf8.h>
 #include <fstream>
@@ -20,9 +21,23 @@ void AuxCode::loadFromFile(const std::string &path) {
     if (!file.is_open()) {
         return;
     }
+    parseStream(file);
+    loaded_ = true;
+}
 
+void AuxCode::loadFromFD(int fd) {
+    table_.clear();
+    loaded_ = false;
+
+    IFDStreamBuf buffer(fd);
+    std::istream in(&buffer);
+    parseStream(in);
+    loaded_ = true;
+}
+
+void AuxCode::parseStream(std::istream &in) {
     std::string buf;
-    while (std::getline(file, buf)) {
+    while (std::getline(in, buf)) {
         if (!utf8::validate(buf)) {
             continue;
         }
@@ -44,8 +59,6 @@ void AuxCode::loadFromFile(const std::string &path) {
         }
         table_[std::string(character)].push_back(std::string(code));
     }
-
-    loaded_ = true;
 }
 
 std::string AuxCode::getFirstCode(const std::string &character) const {

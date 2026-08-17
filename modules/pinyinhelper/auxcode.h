@@ -18,6 +18,7 @@ public:
     AuxCode() = default;
 
     void loadFromFile(const std::string &path);
+    void loadFromFD(int fd);
     bool isLoaded() const { return loaded_; }
 
     // Public for unit tests; internal use by matchPhrase only.
@@ -26,6 +27,8 @@ public:
                      const std::string &auxInput) const;
 
 private:
+    void parseStream(std::istream &in);
+
     std::unordered_map<std::string, std::vector<std::string>> table_;
     bool loaded_ = false;
 };

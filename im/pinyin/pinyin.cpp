@@ -1827,14 +1827,8 @@ bool PinyinEngine::handleAuxCodeFilter(
             !config_.filterByAuxCode->profile->empty() &&
             event.key().check(*config_.filterByAuxCode->triggerKey) &&
             pinyinhelper()) {
-            auto auxPath = stringutils::concat(
-                "pinyin/auxcode/", *config_.filterByAuxCode->profile);
-            auto located = StandardPaths::global().locate(
-                StandardPathsType::PkgData, auxPath);
-            if (!located.empty()) {
-                pinyinhelper()->call<IPinyinHelper::loadAuxCode>(
-                    located.string());
-            }
+            pinyinhelper()->call<IPinyinHelper::loadAuxCode>(
+                *config_.filterByAuxCode->profile);
             resetAuxCode(inputContext);
             state->mode_ = PinyinMode::AuxCodeFilter;
             updateFilter(inputContext);
@@ -1893,7 +1887,7 @@ bool PinyinEngine::handleAuxCodeFilter(
     }
 
     if (event.key().isLAZ() || event.key().isUAZ()) {
-        state->auxCodeBuffer_.type(Key::keySymToUTF8(event.key().sym()));
+        state->auxCodeBuffer_.type(utf8::UCS4ToUTF8(c));
         updateFilter(inputContext);
     }
 
@@ -2446,6 +2440,7 @@ void PinyinEngine::reset(const InputMethodEntry & /*entry*/,
 void PinyinEngine::doReset(InputContext *inputContext) const {
     auto *state = inputContext->propertyFor(&factory_);
     resetStroke(inputContext);
+    resetAuxCode(inputContext);
     resetForgetCandidate(inputContext);
     state->mode_ = PinyinMode::Normal;
     state->context_.clear();
