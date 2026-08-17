@@ -153,6 +153,38 @@ std::string PinyinHelper::prettyStrokeString(const std::string &input) {
     return stroke_.prettyString(input);
 }
 
+void PinyinHelper::loadAuxCode(const std::string &path) {
+    auxCode_.loadFromFile(path);
+}
+
+bool PinyinHelper::matchAuxCode(const std::string &text,
+                                const std::string &auxInput) const {
+    if (!auxCode_.isLoaded()) {
+        return true;
+    }
+    auto charRange = utf8::MakeUTF8CharRange(text);
+    auto charCount = utf8::lengthValidated(text);
+
+    if (charCount == utf8::INVALID_LENGTH || charCount == 0) {
+        return true;
+    }
+
+    if (auxInput.empty()) {
+        return true;
+    }
+
+    if (charCount == 1) {
+        std::string chr;
+        for (auto iter = std::begin(charRange); iter != std::end(charRange);
+             ++iter) {
+            chr.assign(iter.charRange().first, iter.charRange().second);
+        }
+        return auxCode_.anyCodeStartsWith(chr, auxInput);
+    }
+
+    return auxCode_.matchPhrase(text, auxInput);
+}
+
 class PinyinHelperModuleFactory : public AddonFactory {
     AddonInstance *create(AddonManager *manager) override {
         registerDomain("fcitx5-chinese-addons", FCITX_INSTALL_LOCALEDIR);

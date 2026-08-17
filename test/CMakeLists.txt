@@ -17,6 +17,11 @@ target_link_libraries(testpinyinhelper Fcitx5::Core Fcitx5::Module::PinyinHelper
 add_dependencies(testpinyinhelper pinyin pinyin.conf.in-fmt pinyinhelper pinyinhelper.conf.in-fmt)
 add_test(NAME testpinyinhelper COMMAND testpinyinhelper)
 
+add_executable(testauxcode testauxcode.cpp ../modules/pinyinhelper/auxcode.cpp)
+target_include_directories(testauxcode PRIVATE ${CMAKE_SOURCE_DIR}/modules/pinyinhelper)
+target_link_libraries(testauxcode Fcitx5::Utils)
+add_test(NAME testauxcode COMMAND testauxcode)
+
 add_executable(testfullwidth testfullwidth.cpp)
 target_link_libraries(testfullwidth Fcitx5::Core Fcitx5::Module::TestFrontend Fcitx5::Module::TestIM)
 add_dependencies(testfullwidth fullwidth fullwidth.conf.in-fmt)

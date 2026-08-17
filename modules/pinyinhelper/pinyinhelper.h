@@ -7,6 +7,7 @@
 #ifndef _PINYINHELPER_PINYINHELPER_H_
 #define _PINYINHELPER_PINYINHELPER_H_
 
+#include "auxcode.h"
 #include "pinyinhelper_public.h"
 #include "pinyinlookup.h"
 #include "stroke.h"
@@ -31,6 +32,8 @@ public:
     std::string reverseLookupStroke(const std::string &input);
     std::string prettyStrokeString(const std::string &input);
     void loadStroke();
+    void loadAuxCode(const std::string &path);
+    bool matchAuxCode(const std::string &text, const std::string &auxInput) const;
 
     FCITX_ADDON_EXPORT_FUNCTION(PinyinHelper, lookup);
     FCITX_ADDON_EXPORT_FUNCTION(PinyinHelper, fullLookup);
@@ -38,6 +41,8 @@ public:
     FCITX_ADDON_EXPORT_FUNCTION(PinyinHelper, loadStroke);
     FCITX_ADDON_EXPORT_FUNCTION(PinyinHelper, reverseLookupStroke);
     FCITX_ADDON_EXPORT_FUNCTION(PinyinHelper, prettyStrokeString);
+    FCITX_ADDON_EXPORT_FUNCTION(PinyinHelper, loadAuxCode);
+    FCITX_ADDON_EXPORT_FUNCTION(PinyinHelper, matchAuxCode);
 
     FCITX_ADDON_DEPENDENCY_LOADER(quickphrase, instance_->addonManager());
     FCITX_ADDON_DEPENDENCY_LOADER(clipboard, instance_->addonManager());
@@ -47,6 +52,7 @@ private:
     Instance *instance_;
     PinyinLookup lookup_;
     Stroke stroke_;
+    AuxCode auxCode_;
     std::unique_ptr<EventSource> deferEvent_;
     std::unique_ptr<HandlerTableEntry<QuickPhraseProviderCallback>> handler_;
 };
