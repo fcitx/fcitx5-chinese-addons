@@ -430,6 +430,9 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
     if (state->mode_ == PinyinMode::StrokeFilter) {
         resetStroke(inputContext);
     }
+    if (state->mode_ == PinyinMode::AuxCodeFilter) {
+        resetAuxCode(inputContext);
+    }
     inputContext->inputPanel().reset();
     // Use const ref to avoid accidentally change anything.
     const auto &context = state->context_;
@@ -1508,6 +1511,9 @@ void PinyinEngine::updateFilter(InputContext *inputContext) {
         aux.append(_("[Stroke Filtering]"));
         aux.append(pinyinhelper()->call<IPinyinHelper::prettyStrokeString>(
             state->strokeBuffer_.userInput()));
+    } else if (state->mode_ == PinyinMode::AuxCodeFilter) {
+        aux.append(_("[Aux Code Filtering]"));
+        aux.append(state->auxCodeBuffer_.userInput());
     }
     inputPanel.setAuxUp(aux);
     inputPanel.setAuxDown(Text());
@@ -1517,7 +1523,7 @@ void PinyinEngine::updateFilter(InputContext *inputContext) {
     if (candidateList) {
         auto *pinyinTabbed = dynamic_cast<PinyinTabbedCandidateList *>(
             candidateList->toTabbed());
-        if (state->strokeBuffer_.empty() &&
+        if ((state->strokeBuffer_.empty() && state->auxCodeBuffer_.empty()) &&
             (!pinyinTabbed || !pinyinTabbed->checked())) {
             candidateList->clearFilter();
         } else {
@@ -1552,6 +1558,11 @@ void PinyinEngine::updateFilter(InputContext *inputContext) {
                         }
                     }
                     return false;
+                }
+                if (!state->auxCodeBuffer_.empty()) {
+                    auto str = candidate.text().toStringForCommit();
+                    return pinyinhelper()->call<IPinyinHelper::matchAuxCode>(
+                        str, state->auxCodeBuffer_.userInput());
                 }
                 return true;
             });
@@ -1610,6 +1621,14 @@ void PinyinEngine::resetStroke(InputContext *inputContext) const {
     auto *state = inputContext->propertyFor(&factory_);
     state->strokeBuffer_.clear();
     if (state->mode_ == PinyinMode::StrokeFilter) {
+        state->mode_ = PinyinMode::Normal;
+    }
+}
+
+void PinyinEngine::resetAuxCode(InputContext *inputContext) const {
+    auto *state = inputContext->propertyFor(&factory_);
+    state->auxCodeBuffer_.clear();
+    if (state->mode_ == PinyinMode::AuxCodeFilter) {
         state->mode_ = PinyinMode::Normal;
     }
 }
@@ -1781,6 +1800,70 @@ bool PinyinEngine::handleStrokeFilter(
             state->strokeBuffer_.type(iter->second);
             updateFilter(inputContext);
         }
+    }
+
+    return true;
+}
+
+bool PinyinEngine::handleAuxCodeFilter(
+    KeyEvent &event, const std::shared_future<uint32_t> &keyChr) {
+    auto *inputContext = event.inputContext();
+    auto candidateList = inputContext->inputPanel().candidateList();
+    auto *state = inputContext->propertyFor(&factory_);
+    if (state->mode_ == PinyinMode::Normal) {
+        if (candidateList && !candidateList->empty() &&
+            candidateList->toBulk() && !config_.auxCodeTable->empty() &&
+            event.key().check(*config_.auxCodeTriggerKey) && pinyinhelper()) {
+            pinyinhelper()->call<IPinyinHelper::loadAuxCode>(
+                *config_.auxCodeTable);
+            resetAuxCode(inputContext);
+            state->mode_ = PinyinMode::AuxCodeFilter;
+            updateFilter(inputContext);
+
+            event.filterAndAccept();
+            return true;
+        }
+        return false;
+    }
+
+    if (state->mode_ != PinyinMode::AuxCodeFilter) {
+        return false;
+    }
+
+    event.filterAndAccept();
+
+    if (handleCandidateList(event, keyChr)) {
+        return true;
+    }
+    // Skip all key combination.
+    if (event.key().states().testAny(KeyState::SimpleMask)) {
+        return true;
+    }
+
+    if (event.key().check(FcitxKey_Escape)) {
+        resetAuxCode(inputContext);
+        updateUI(inputContext);
+        return true;
+    }
+    if (event.key().check(FcitxKey_BackSpace)) {
+        if (!state->auxCodeBuffer_.empty()) {
+            state->auxCodeBuffer_.backspace();
+            updateFilter(inputContext);
+        } else {
+            resetAuxCode(inputContext);
+            updateUI(inputContext);
+        }
+        return true;
+    }
+    // if it gonna commit something
+    auto c = keyChr.get();
+    if (!c) {
+        return true;
+    }
+
+    if (event.key().isLAZ() || event.key().isUAZ()) {
+        state->auxCodeBuffer_.type(Key::keySymToUTF8(event.key().sym()));
+        updateFilter(inputContext);
     }
 
     return true;
@@ -2040,6 +2123,10 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
     state->lastIsPunc_ = false;
 
     if (handleStrokeFilter(event, keyChr)) {
+        return;
+    }
+
+    if (handleAuxCodeFilter(event, keyChr)) {
         return;
     }
 
