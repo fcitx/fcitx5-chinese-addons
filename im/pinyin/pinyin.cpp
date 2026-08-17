@@ -430,13 +430,13 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
     if (state->mode_ == PinyinMode::StrokeFilter) {
         resetStroke(inputContext);
     }
-    if (state->mode_ == PinyinMode::AuxCodeFilter) {
-        resetAuxCode(inputContext);
-    }
     inputContext->inputPanel().reset();
     // Use const ref to avoid accidentally change anything.
     const auto &context = state->context_;
     if (context.selected()) {
+        if (state->mode_ == PinyinMode::AuxCodeFilter) {
+            resetAuxCode(inputContext);
+        }
         auto sentence = context.sentence();
         if (!inputContext->capabilityFlags().testAny(
                 CapabilityFlag::PasswordOrSensitive)) {
@@ -452,6 +452,9 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
 
     do {
         if (context.userInput().empty()) {
+            if (state->mode_ == PinyinMode::AuxCodeFilter) {
+                resetAuxCode(inputContext);
+            }
             break;
         }
         // Update Preedit.
@@ -731,6 +734,14 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
     } while (0);
     inputContext->updatePreedit();
     inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
+
+    // After partial candidate selection, clear the old aux code buffer but
+    // keep the mode, so the user can type new codes to filter the remaining
+    // pinyin without re-entering aux code mode.
+    if (state->mode_ == PinyinMode::AuxCodeFilter) {
+        state->auxCodeBuffer_.clear();
+        updateFilter(inputContext);
+    }
 }
 
 std::string PinyinEngine::evaluateCustomPhrase(InputContext *inputContext,
