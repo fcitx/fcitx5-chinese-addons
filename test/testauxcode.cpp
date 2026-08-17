@@ -47,13 +47,15 @@ static void testLoadAndSingleCharMatch() {
     aux.loadFromFile(path);
     assert(aux.isLoaded());
 
-    // single char: inputLen must be <= 1
+    // single char: any code starts with input
     assert(aux.matchPhrase("时", "o"));
-    assert(!aux.matchPhrase("时", "oc"));
+    assert(aux.matchPhrase("时", "oc"));
     assert(!aux.matchPhrase("时", "m"));
+    assert(!aux.matchPhrase("时", "ocd"));
 
     assert(aux.matchPhrase("魔", "g"));
-    assert(!aux.matchPhrase("魔", "gg"));
+    assert(aux.matchPhrase("魔", "gg"));
+    assert(!aux.matchPhrase("魔", "ggo"));
 
     std::remove(path.c_str());
 }
@@ -83,10 +85,10 @@ static void testMultiCode() {
     AuxCode aux;
     aux.loadFromFile(path);
 
-    // single char: only one letter matches
+    // single char: any code starts with input
     assert(aux.matchPhrase("厑", "i"));
-    assert(!aux.matchPhrase("厑", "ib"));
-    assert(!aux.matchPhrase("厑", "ii"));
+    assert(aux.matchPhrase("厑", "ib"));
+    assert(aux.matchPhrase("厑", "ii"));
     assert(!aux.matchPhrase("厑", "x"));
 
     std::remove(path.c_str());
@@ -153,7 +155,8 @@ static void testStrokeKeyChars() {
     assert(aux.matchPhrase("丿", "p"));
     assert(aux.matchPhrase("㇏", "n"));
     assert(aux.matchPhrase("𠃍", "z"));
-    // single char: longer input rejected
+    // single char: prefix match
+    assert(aux.matchPhrase("一", "h"));
     assert(!aux.matchPhrase("一", "hx"));
 
     std::remove(path.c_str());

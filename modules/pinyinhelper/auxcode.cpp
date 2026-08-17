@@ -66,6 +66,26 @@ bool AuxCode::matchPhrase(const std::string &phrase,
 
     size_t inputLen = auxInput.size();
 
+    // Single character: check if any code starts with input
+    if (charCount == 1) {
+        std::string chr;
+        for (auto iter = std::begin(charRange); iter != std::end(charRange);
+             ++iter) {
+            chr.assign(iter.charRange().first, iter.charRange().second);
+        }
+        auto it = table_.find(chr);
+        if (it == table_.end()) {
+            return false;
+        }
+        for (const auto &code : it->second) {
+            if (code.starts_with(auxInput)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Phrase: input length must not exceed char count
     if (inputLen > static_cast<size_t>(charCount)) {
         return false;
     }
