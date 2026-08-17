@@ -32,7 +32,7 @@ public:
     std::string reverseLookupStroke(const std::string &input);
     std::string prettyStrokeString(const std::string &input);
     void loadStroke();
-    void loadAuxCode(const std::string &path);
+    void loadAuxCode(const std::string &profile);
     bool matchAuxCode(const std::string &text, const std::string &auxInput) const;
 
     FCITX_ADDON_EXPORT_FUNCTION(PinyinHelper, lookup);
