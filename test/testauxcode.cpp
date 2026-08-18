@@ -44,18 +44,18 @@ static void testSingleCharMatch() {
     aux.loadFromFile(path);
     FCITX_ASSERT(aux.isLoaded());
 
-    // single code: prefix match
+    // single character: prefix match
     FCITX_ASSERT(aux.matchPhrase("时", "o"));
     FCITX_ASSERT(aux.matchPhrase("时", "oc"));
     FCITX_ASSERT(!aux.matchPhrase("时", "m"));
     FCITX_ASSERT(!aux.matchPhrase("时", "ocd"));
 
-    // single code: exact match
+    // single character: boundary
     FCITX_ASSERT(aux.matchPhrase("魔", "g"));
     FCITX_ASSERT(aux.matchPhrase("魔", "gg"));
     FCITX_ASSERT(!aux.matchPhrase("魔", "ggo"));
 
-    // multiple codes: any code starts with input
+    // multiple codes per character: any code matches
     FCITX_ASSERT(aux.matchPhrase("厑", "i"));
     FCITX_ASSERT(aux.matchPhrase("厑", "ib"));
     FCITX_ASSERT(aux.matchPhrase("厑", "ii"));
