@@ -161,16 +161,6 @@ FCITX_CONFIGURATION(
                                             : CorrectionLayout::None};)
 
 FCITX_CONFIGURATION(
-    AuxCodeConfig,
-    Option<std::string> profile{this, "Profile", _("Aux Code Profile"), ""};
-    Option<Key, KeyConstrain> triggerKey{
-        this,
-        "TriggerKey",
-        _("Key to trigger aux code mode"),
-        Key(),
-        {KeyConstrainFlag::AllowModifierLess}};)
-
-FCITX_CONFIGURATION(
     PinyinEngineConfig,
     OptionWithAnnotation<
         ShuangpinProfileEnum,
@@ -329,8 +319,14 @@ FCITX_CONFIGURATION(
         _("Filter by stroke"),
         {Key("grave")},
         KeyListConstrain({KeyConstrainFlag::AllowModifierLess})};
-    Option<AuxCodeConfig> filterByAuxCode{
-        this, "FilterByAuxCode", _("Filter by Aux Code")};
+    Option<std::string> auxCodeProfile{
+        this, "AuxCodeProfile", _("Aux Code Profile"), ""};
+    Option<Key, KeyConstrain> auxCodeTriggerKey{
+        this,
+        "AuxCodeTriggerKey",
+        _("Key to trigger aux code mode"),
+        Key(),
+        {KeyConstrainFlag::AllowModifierLess}};
     Option<int, IntConstrain> nbest{this, "Number of sentence",
                                     _("Number of Sentences"), 2,
                                     IntConstrain(1, 3)};

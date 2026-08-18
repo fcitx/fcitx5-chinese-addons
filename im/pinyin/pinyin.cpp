@@ -1824,11 +1824,11 @@ bool PinyinEngine::handleAuxCodeFilter(
     if (state->mode_ == PinyinMode::Normal) {
         if (candidateList && !candidateList->empty() &&
             candidateList->toBulk() &&
-            !config_.filterByAuxCode->profile->empty() &&
-            event.key().check(*config_.filterByAuxCode->triggerKey) &&
+            !config_.auxCodeProfile->empty() &&
+            event.key().check(*config_.auxCodeTriggerKey) &&
             pinyinhelper()) {
             pinyinhelper()->call<IPinyinHelper::loadAuxCode>(
-                *config_.filterByAuxCode->profile);
+                *config_.auxCodeProfile);
             resetAuxCode(inputContext);
             state->mode_ = PinyinMode::AuxCodeFilter;
             updateFilter(inputContext);
