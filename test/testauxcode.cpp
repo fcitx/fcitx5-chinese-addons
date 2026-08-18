@@ -5,8 +5,8 @@
  *
  */
 #include "auxcode.h"
-#include <fcitx-utils/log.h>
 #include <cstdio>
+#include <fcitx-utils/log.h>
 #include <fstream>
 #include <string>
 #include <unistd.h>
@@ -17,7 +17,8 @@ static std::string tempPath(const char *suffix) {
     return "/tmp/fcitx_test_aux_" + std::to_string(getpid()) + "_" + suffix;
 }
 
-static void writeTestTable(const std::string &path, const std::string &content) {
+static void writeTestTable(const std::string &path,
+                           const std::string &content) {
     std::ofstream f(path);
     f << content;
     f.close();
@@ -77,7 +78,8 @@ static void testMultipleCodes() {
     std::remove(path.c_str());
 }
 
-// Phrase matching: prefix, exact, mismatch, unmatched char, empty input, mixed content
+// Phrase matching: prefix, exact, mismatch, unmatched char, empty input, mixed
+// content
 static void testMatchPhrase() {
     auto path = tempPath("phrase");
     writeTestTable(path, R"(时=oc
