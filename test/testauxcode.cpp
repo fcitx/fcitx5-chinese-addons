@@ -36,7 +36,29 @@ static void testSingleCharMatch() {
     auto path = tempPath("single");
     writeTestTable(path, R"(时=oc
 魔=gg
-厑=ib
+)");
+
+    AuxCode aux;
+    aux.loadFromFile(path);
+    FCITX_ASSERT(aux.isLoaded());
+
+    // prefix match
+    FCITX_ASSERT(aux.matchPhrase("时", "o"));
+    FCITX_ASSERT(aux.matchPhrase("时", "oc"));
+    FCITX_ASSERT(!aux.matchPhrase("时", "m"));
+    FCITX_ASSERT(!aux.matchPhrase("时", "ocd"));
+
+    // boundary
+    FCITX_ASSERT(aux.matchPhrase("魔", "g"));
+    FCITX_ASSERT(aux.matchPhrase("魔", "gg"));
+    FCITX_ASSERT(!aux.matchPhrase("魔", "ggo"));
+
+    std::remove(path.c_str());
+}
+
+static void testMultipleCodes() {
+    auto path = tempPath("multi");
+    writeTestTable(path, R"(厑=ib
 厑=ii
 )");
 
@@ -44,18 +66,7 @@ static void testSingleCharMatch() {
     aux.loadFromFile(path);
     FCITX_ASSERT(aux.isLoaded());
 
-    // single character: prefix match
-    FCITX_ASSERT(aux.matchPhrase("时", "o"));
-    FCITX_ASSERT(aux.matchPhrase("时", "oc"));
-    FCITX_ASSERT(!aux.matchPhrase("时", "m"));
-    FCITX_ASSERT(!aux.matchPhrase("时", "ocd"));
-
-    // single character: boundary
-    FCITX_ASSERT(aux.matchPhrase("魔", "g"));
-    FCITX_ASSERT(aux.matchPhrase("魔", "gg"));
-    FCITX_ASSERT(!aux.matchPhrase("魔", "ggo"));
-
-    // multiple codes per character: any code matches
+    // any code matches
     FCITX_ASSERT(aux.matchPhrase("厑", "i"));
     FCITX_ASSERT(aux.matchPhrase("厑", "ib"));
     FCITX_ASSERT(aux.matchPhrase("厑", "ii"));
@@ -146,6 +157,7 @@ static void testEmptyContent() {
 int main() {
     testEmptyTable();
     testSingleCharMatch();
+    testMultipleCodes();
     testGetFirstCode();
     testMatchPhrase();
     testEmptyContent();
