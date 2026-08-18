@@ -23,6 +23,7 @@ static void writeTestTable(const std::string &path, const std::string &content) 
     f.close();
 }
 
+// File not found: isLoaded=false, matchPhrase passes through
 static void testEmptyTable() {
     AuxCode aux;
     FCITX_ASSERT(!aux.isLoaded());
@@ -32,6 +33,7 @@ static void testEmptyTable() {
     FCITX_ASSERT(aux.matchPhrase("时间", "om"));
 }
 
+// Single character: prefix match and boundary
 static void testSingleCharMatch() {
     auto path = tempPath("single");
     writeTestTable(path, R"(时=oc
@@ -56,6 +58,7 @@ static void testSingleCharMatch() {
     std::remove(path.c_str());
 }
 
+// One character with multiple codes: any code matches
 static void testMultipleCodes() {
     auto path = tempPath("multi");
     writeTestTable(path, R"(厑=ib
@@ -75,6 +78,7 @@ static void testMultipleCodes() {
     std::remove(path.c_str());
 }
 
+// getFirstCode returns first code for character
 static void testGetFirstCode() {
     auto path = tempPath("first");
     writeTestTable(path, R"(时=oc
@@ -90,6 +94,7 @@ static void testGetFirstCode() {
     std::remove(path.c_str());
 }
 
+// Phrase matching: prefix, exact, mismatch, unmatched char, empty input, mixed content
 static void testMatchPhrase() {
     auto path = tempPath("phrase");
     writeTestTable(path, R"(时=oc
@@ -140,6 +145,7 @@ A=a
     std::remove(path.c_str());
 }
 
+// File opened but no valid entries
 static void testEmptyContent() {
     auto path = tempPath("empty");
     writeTestTable(path, "# comment\n\n");
