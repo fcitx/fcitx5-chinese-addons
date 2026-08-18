@@ -19,6 +19,7 @@ public:
 
     void loadProfile(const std::string &profile);
     void loadFromFile(const std::string &path);
+    void loadFromStream(std::istream &in);
     bool isLoaded() const { return loaded_; }
 
     bool matchPhrase(const std::string &phrase,

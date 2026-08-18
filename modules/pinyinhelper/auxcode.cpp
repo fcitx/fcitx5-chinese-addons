@@ -44,6 +44,13 @@ void AuxCode::loadFromFile(const std::string &path) {
     loaded_ = true;
 }
 
+void AuxCode::loadFromStream(std::istream &in) {
+    table_.clear();
+    loaded_ = false;
+    parseStream(in);
+    loaded_ = true;
+}
+
 void AuxCode::parseStream(std::istream &in) {
     std::string buf;
     while (std::getline(in, buf)) {
