@@ -5,43 +5,27 @@
  *
  */
 #include "auxcode.h"
-#include <cstdio>
 #include <fcitx-utils/log.h>
-#include <fstream>
+#include <sstream>
 #include <string>
-#include <unistd.h>
 
 using namespace fcitx;
 
-static std::string tempPath(const char *suffix) {
-    return "/tmp/fcitx_test_aux_" + std::to_string(getpid()) + "_" + suffix;
-}
-
-static void writeTestTable(const std::string &path,
-                           const std::string &content) {
-    std::ofstream f(path);
-    f << content;
-    f.close();
-}
-
-// File not found: isLoaded=false, matchPhrase passes through
+// Unloaded table: matchPhrase passes through
 static void testEmptyTable() {
     AuxCode aux;
-    FCITX_ASSERT(!aux.isLoaded());
-    aux.loadFromFile("/nonexistent/path.txt");
     FCITX_ASSERT(!aux.isLoaded());
     FCITX_ASSERT(aux.matchPhrase("时间", "om"));
 }
 
 // Single character: prefix match and boundary
 static void testSingleCharMatch() {
-    auto path = tempPath("single");
-    writeTestTable(path, R"(时=oc
+    std::istringstream iss(R"(时=oc
 魔=gg
 )");
 
     AuxCode aux;
-    aux.loadFromFile(path);
+    aux.loadFromStream(iss);
     FCITX_ASSERT(aux.isLoaded());
 
     // prefix match
@@ -54,19 +38,16 @@ static void testSingleCharMatch() {
     FCITX_ASSERT(aux.matchPhrase("魔", "g"));
     FCITX_ASSERT(aux.matchPhrase("魔", "gg"));
     FCITX_ASSERT(!aux.matchPhrase("魔", "ggo"));
-
-    std::remove(path.c_str());
 }
 
 // One character with multiple codes: any code matches
 static void testMultipleCodes() {
-    auto path = tempPath("multi");
-    writeTestTable(path, R"(厑=ib
+    std::istringstream iss(R"(厑=ib
 厑=ii
 )");
 
     AuxCode aux;
-    aux.loadFromFile(path);
+    aux.loadFromStream(iss);
     FCITX_ASSERT(aux.isLoaded());
 
     // any code matches
@@ -74,15 +55,12 @@ static void testMultipleCodes() {
     FCITX_ASSERT(aux.matchPhrase("厑", "ib"));
     FCITX_ASSERT(aux.matchPhrase("厑", "ii"));
     FCITX_ASSERT(!aux.matchPhrase("厑", "x"));
-
-    std::remove(path.c_str());
 }
 
 // Phrase matching: prefix, exact, mismatch, unmatched char, empty input, mixed
 // content
 static void testMatchPhrase() {
-    auto path = tempPath("phrase");
-    writeTestTable(path, R"(时=oc
+    std::istringstream iss(R"(时=oc
 间=mo
 实=bd
 践=jc
@@ -99,7 +77,7 @@ A=a
 )");
 
     AuxCode aux;
-    aux.loadFromFile(path);
+    aux.loadFromStream(iss);
 
     // prefix match
     FCITX_ASSERT(aux.matchPhrase("魔法少女", "g"));
@@ -126,23 +104,18 @@ A=a
     FCITX_ASSERT(aux.matchPhrase("多啦A梦", "dka"));
     FCITX_ASSERT(aux.matchPhrase("多啦A梦", "dkam"));
     FCITX_ASSERT(!aux.matchPhrase("多啦A梦", "dkamx"));
-
-    std::remove(path.c_str());
 }
 
-// File opened but no valid entries
+// Loaded table with no valid entries
 static void testEmptyContent() {
-    auto path = tempPath("empty");
-    writeTestTable(path, "# comment\n\n");
+    std::istringstream iss("# comment\n\n");
 
     AuxCode aux;
-    aux.loadFromFile(path);
+    aux.loadFromStream(iss);
     FCITX_ASSERT(aux.isLoaded());
-    // file opened but no entries -> matching logic runs, characters not found
+    // table loaded but no entries -> matching logic runs, characters not found
     FCITX_ASSERT(!aux.matchPhrase("时间", "o"));
     FCITX_ASSERT(aux.matchPhrase("时间", ""));
-
-    std::remove(path.c_str());
 }
 
 int main() {
