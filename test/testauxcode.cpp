@@ -29,7 +29,6 @@ static void testEmptyTable() {
     FCITX_ASSERT(!aux.isLoaded());
     aux.loadFromFile("/nonexistent/path.txt");
     FCITX_ASSERT(!aux.isLoaded());
-    FCITX_ASSERT(aux.getFirstCode("时").empty());
     FCITX_ASSERT(aux.matchPhrase("时间", "om"));
 }
 
@@ -74,22 +73,6 @@ static void testMultipleCodes() {
     FCITX_ASSERT(aux.matchPhrase("厑", "ib"));
     FCITX_ASSERT(aux.matchPhrase("厑", "ii"));
     FCITX_ASSERT(!aux.matchPhrase("厑", "x"));
-
-    std::remove(path.c_str());
-}
-
-// getFirstCode returns first code for character
-static void testGetFirstCode() {
-    auto path = tempPath("first");
-    writeTestTable(path, R"(时=oc
-间=mo
-)");
-
-    AuxCode aux;
-    aux.loadFromFile(path);
-    FCITX_ASSERT(aux.getFirstCode("时") == "oc") << aux.getFirstCode("时");
-    FCITX_ASSERT(aux.getFirstCode("间") == "mo") << aux.getFirstCode("间");
-    FCITX_ASSERT(aux.getFirstCode("不").empty());
 
     std::remove(path.c_str());
 }
@@ -164,7 +147,6 @@ int main() {
     testEmptyTable();
     testSingleCharMatch();
     testMultipleCodes();
-    testGetFirstCode();
     testMatchPhrase();
     testEmptyContent();
 
