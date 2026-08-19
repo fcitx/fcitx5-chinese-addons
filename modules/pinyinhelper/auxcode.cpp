@@ -18,13 +18,13 @@ void AuxCode::loadProfile(const std::string &profile) {
     if (profile == loadedProfile_ && loaded_) {
         return;
     }
+    table_.clear();
+    loaded_ = false;
     auto path = stringutils::concat("pinyin/auxcode/", profile);
     auto file = StandardPaths::global().open(StandardPathsType::PkgData, path);
     if (!file.isValid()) {
         return;
     }
-    table_.clear();
-    loaded_ = false;
     IFDStreamBuf buffer(file.fd());
     std::istream in(&buffer);
     parseStream(in);
