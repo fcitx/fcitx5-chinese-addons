@@ -1,0 +1,39 @@
+/*
+ * SPDX-FileCopyrightText: 2026
+ *
+ * SPDX-License-Identifier: LGPL-2.1-or-later
+ *
+ */
+#ifndef _PINYINHELPER_AUXCODE_H_
+#define _PINYINHELPER_AUXCODE_H_
+
+#include <string>
+#include <unordered_map>
+#include <vector>
+
+namespace fcitx {
+
+class AuxCode {
+public:
+    AuxCode() = default;
+
+    void loadProfile(const std::string &profile);
+    void loadFromFile(const std::string &path);
+    void loadFromStream(std::istream &in);
+    bool isLoaded() const { return loaded_; }
+
+    bool matchPhrase(const std::string &phrase,
+                     const std::string &auxInput) const;
+
+private:
+    std::string getFirstCode(const std::string &character) const;
+    void parseStream(std::istream &in);
+
+    std::unordered_map<std::string, std::vector<std::string>> table_;
+    std::string loadedProfile_;
+    bool loaded_ = false;
+};
+
+} // namespace fcitx
+
+#endif // _PINYINHELPER_AUXCODE_H_

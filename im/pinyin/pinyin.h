@@ -319,6 +319,14 @@ FCITX_CONFIGURATION(
         _("Filter by stroke"),
         {Key("grave")},
         KeyListConstrain({KeyConstrainFlag::AllowModifierLess})};
+    Option<std::string> auxCodeProfile{
+        this, "AuxCodeProfile", _("Aux Code Profile"), ""};
+    Option<Key, KeyConstrain> auxCodeTriggerKey{
+        this,
+        "AuxCodeTriggerKey",
+        _("Key to trigger aux code mode"),
+        Key(),
+        {KeyConstrainFlag::AllowModifierLess}};
     Option<int, IntConstrain> nbest{this, "Number of sentence",
                                     _("Number of Sentences"), 2,
                                     IntConstrain(1, 3)};
@@ -373,7 +381,7 @@ struct EventSourceTime;
 class CandidateList;
 class PinyinEngine;
 
-enum class PinyinMode { Normal, StrokeFilter, ForgetCandidate, Punctuation };
+enum class PinyinMode { Normal, StrokeFilter, AuxCodeFilter, ForgetCandidate, Punctuation };
 
 class PinyinState : public InputContextProperty {
 public:
@@ -386,6 +394,9 @@ public:
 
     // Stroke filter
     InputBuffer strokeBuffer_;
+
+    // Aux code filter (ASCII only)
+    InputBuffer auxCodeBuffer_{InputBufferOption::AsciiOnly};
 
     // Forget candidate
     std::shared_ptr<CandidateList> forgetCandidateList_;
@@ -445,6 +456,7 @@ public:
     void updateFilter(InputContext *inputContext);
 
     void resetStroke(InputContext *inputContext) const;
+    void resetAuxCode(InputContext *inputContext) const;
     void resetForgetCandidate(InputContext *inputContext) const;
     void forgetCandidate(InputContext *inputContext, size_t index);
     void pinCustomPhrase(InputContext *inputContext,
@@ -468,6 +480,8 @@ private:
     bool handleNextPage(KeyEvent &event) const;
     bool handleStrokeFilter(KeyEvent &event,
                             const std::shared_future<uint32_t> &keyChr);
+    bool handleAuxCodeFilter(KeyEvent &event,
+                             const std::shared_future<uint32_t> &keyChr);
     bool handleForgetCandidate(KeyEvent &event);
     bool handlePunc(KeyEvent &event,
                     const std::shared_future<uint32_t> &keyChr);

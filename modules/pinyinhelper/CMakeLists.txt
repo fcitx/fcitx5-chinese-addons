@@ -2,6 +2,7 @@ set(PINYINHELPER_SOURCES
     pinyinhelper.cpp
     pinyinlookup.cpp
     stroke.cpp
+    auxcode.cpp
 )
 add_fcitx5_addon(pinyinhelper ${PINYINHELPER_SOURCES})
 target_link_libraries(pinyinhelper 
