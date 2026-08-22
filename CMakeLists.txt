@@ -39,6 +39,8 @@ option(ENABLE_TOOLS "Build tools" On)
 
 if (ENABLE_OPENCC)
     find_package(OpenCC 1.0.1 REQUIRED)
+endif()
+if (ENABLE_OPENCC OR ENABLE_CLOUDPINYIN)
     find_package(nlohmann_json 3.2 REQUIRED)
 endif()
 

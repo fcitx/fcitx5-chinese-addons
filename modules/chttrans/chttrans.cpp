@@ -271,7 +271,7 @@ const Configuration *Chttrans::getConfig() const {
         try {
             std::ifstream in(file.second, std::ios::in | std::ios::binary);
             std::string strBuf(std::istreambuf_iterator<char>(in), {});
-            auto jv = nlohmann::json::parse(strBuf);
+            const auto jv = nlohmann::json::parse(strBuf);
             auto name = jv.at("name").get<std::string>();
             std::string description = file.first.stem();
             if (!name.empty()) {
