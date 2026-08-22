@@ -8,7 +8,6 @@ set(TABLE_SOURCES
 )
 add_fcitx5_addon(table ${TABLE_SOURCES})
 target_link_libraries(table Fcitx5::Core Fcitx5::Config LibIME::Table LibIME::Pinyin Fcitx5::Module::Punctuation Fcitx5::Module::QuickPhrase Fcitx5::Module::PinyinHelper)
-target_compile_definitions(table PRIVATE FCITX_STRINGUTILS_ENABLE_BOOST_STRING_VIEW)
 install(TARGETS table DESTINATION "${CMAKE_INSTALL_LIBDIR}/fcitx5")
 configure_file(table.conf.in.in table.conf.in)
 fcitx5_translate_desktop_file("${CMAKE_CURRENT_BINARY_DIR}/table.conf.in" table.conf)
