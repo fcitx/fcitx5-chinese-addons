@@ -24,6 +24,7 @@
 #include <fcitx/addonmanager.h>
 #include <fcntl.h>
 #include <memory>
+#include <nlohmann/json.hpp>
 #include <string>
 #include <string_view>
 #include <unistd.h>
@@ -55,16 +56,12 @@ public:
         const std::string_view result(queue->result().data(),
                                       queue->result().size());
         CLOUDPINYIN_DEBUG() << "Request result: " << result;
-        auto start = result.find("\",[\"");
-        std::string hanzi;
-        if (start != std::string_view::npos) {
-            start += strlen("\",[\"");
-            auto end = result.find('\"', start);
-            if (end != std::string_view::npos && end > start) {
-                hanzi = result.substr(start, end - start);
-            }
+        try {
+            auto jv = nlohmann::json::parse(result);
+            return jv[1][0][1][0].get<std::string>();
+        } catch (const std::exception &) {
+            return {};
         }
-        return hanzi;
     }
 
 private:
@@ -92,16 +89,12 @@ public:
         const std::string_view result(queue->result().data(),
                                       queue->result().size());
         CLOUDPINYIN_DEBUG() << "Request result: " << result;
-        auto start = result.find("[[\"");
-        std::string hanzi;
-        if (start != std::string::npos) {
-            start += strlen("[[\"");
-            auto end = result.find("\",", start);
-            if (end != std::string::npos && end > start) {
-                hanzi = result.substr(start, end - start);
-            }
+        try {
+            auto jv = nlohmann::json::parse(result);
+            return jv["result"][0][0][0].get<std::string>();
+        } catch (const std::exception &) {
+            return {};
         }
-        return hanzi;
     }
 };
 
