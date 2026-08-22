@@ -57,7 +57,7 @@ public:
                                       queue->result().size());
         CLOUDPINYIN_DEBUG() << "Request result: " << result;
         try {
-            auto jv = nlohmann::json::parse(result);
+            const auto jv = nlohmann::json::parse(result);
             return jv[1][0][1][0].get<std::string>();
         } catch (const std::exception &) {
             return {};
@@ -90,7 +90,7 @@ public:
                                       queue->result().size());
         CLOUDPINYIN_DEBUG() << "Request result: " << result;
         try {
-            auto jv = nlohmann::json::parse(result);
+            const auto jv = nlohmann::json::parse(result);
             return jv["result"][0][0][0].get<std::string>();
         } catch (const std::exception &) {
             return {};
