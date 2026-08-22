@@ -44,11 +44,7 @@
 
 #ifdef ENABLE_OPENCC
 #include "chttrans-opencc.h"
-#ifdef HAS_BOOST_JSON
-#include <boost/json/parse.hpp>
-#include <boost/json/src.hpp>
-#include <boost/json/value_to.hpp>
-#endif
+#include <nlohmann/json.hpp>
 #endif
 
 using namespace fcitx;
@@ -272,13 +268,11 @@ const Configuration *Chttrans::getConfig() const {
     profiles.reserve(files.size() + 1);
     // files is std::map, so file name is already sorted.
     for (const auto &file : files) {
-#ifdef HAS_BOOST_JSON
         try {
             std::ifstream in(file.second, std::ios::in | std::ios::binary);
             std::string strBuf(std::istreambuf_iterator<char>(in), {});
-            auto jv = boost::json::parse(strBuf);
-            const auto &obj = jv.as_object();
-            auto name = boost::json::value_to<std::string>(obj.at("name"));
+            auto jv = nlohmann::json::parse(strBuf);
+            auto name = jv.at("name").get<std::string>();
             std::string description = file.first.stem();
             if (!name.empty()) {
                 description = std::format("{0}: {1}", description,
@@ -289,9 +283,6 @@ const Configuration *Chttrans::getConfig() const {
             FCITX_WARN() << "Failed to parse " << file.first;
             profiles.emplace_back(file.first, file.first);
         }
-#else
-        profiles.emplace_back(file.first, file.first);
-#endif
     }
     config_.openCCS2TProfile.annotation().setProfiles(profiles);
     config_.openCCT2SProfile.annotation().setProfiles(std::move(profiles));
