@@ -52,13 +52,10 @@ public:
         return (curl_easy_setopt(queue->curl(), CURLOPT_URL, url.c_str()) ==
                 CURLE_OK);
     }
-    std::string parseResult(CurlQueue *queue) override {
-        const std::string_view result(queue->result().data(),
-                                      queue->result().size());
-        CLOUDPINYIN_DEBUG() << "Request result: " << result;
+    std::string parseResult(std::string_view result) override {
         try {
             const auto jv = nlohmann::json::parse(result);
-            return jv[1][0][1][0].get<std::string>();
+            return jv.at(1).at(0).at(1).at(0).get<std::string>();
         } catch (const std::exception &) {
             return {};
         }
@@ -85,13 +82,13 @@ public:
                 CURLE_OK);
     }
 
-    std::string parseResult(CurlQueue *queue) override {
-        const std::string_view result(queue->result().data(),
-                                      queue->result().size());
-        CLOUDPINYIN_DEBUG() << "Request result: " << result;
+    std::string parseResult(std::string_view result) override {
         try {
             const auto jv = nlohmann::json::parse(result);
-            return jv["result"][0][0][0].get<std::string>();
+            if (jv.at("status") != "T" || jv.at("errno") != "0") {
+                return {};
+            }
+            return jv.at("result").at(0).at(0).at(0).get<std::string>();
         } catch (const std::exception &) {
             return {};
         }
@@ -199,7 +196,10 @@ void CloudPinyin::notifyFinished() {
 
             std::string hanzi;
             if (b) {
-                hanzi = b->parseResult(item);
+                const std::string_view result(item->result().data(),
+                                              item->result().size());
+                CLOUDPINYIN_DEBUG() << "Request result: " << result;
+                hanzi = b->parseResult(result);
             } else {
                 hanzi = "";
             }

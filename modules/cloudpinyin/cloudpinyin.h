@@ -20,6 +20,7 @@
 #include <fcitx/addonfactory.h>
 #include <fcitx/addoninstance.h>
 #include <fcitx/instance.h>
+#include <string_view>
 
 FCITX_CONFIG_ENUM(CloudPinyinBackend, Google, GoogleCN, Baidu);
 FCITX_CONFIGURATION(
@@ -48,7 +49,7 @@ class Backend {
 public:
     FCITX_NODISCARD virtual bool prepareRequest(CurlQueue *queue,
                                                 const std::string &pinyin) = 0;
-    virtual std::string parseResult(CurlQueue *queue) = 0;
+    virtual std::string parseResult(std::string_view result) = 0;
     virtual ~Backend() = default;
 };
 
