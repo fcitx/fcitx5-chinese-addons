@@ -4,9 +4,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later
  *
  */
-#include "cloudpinyin_public.h"
+#include "../modules/cloudpinyin/cloudpinyin.cpp"
 #include "testdir.h"
-#include <cassert>
 #include <fcitx-config/rawconfig.h>
 #include <fcitx-utils/event.h>
 #include <fcitx-utils/log.h>
@@ -17,7 +16,24 @@
 #include <fcitx/instance.h>
 #include <string>
 
+void testBaiduResult() {
+    BaiduBackend backend;
+
+    const auto normalResult = backend.parseResult(
+        R"({"status":"T","errno":"0","errmsg":"","result":[[["结果",6,{"pinyin":"jie'guo","type":"IMEDICT"}]]]})");
+    FCITX_ASSERT(normalResult == "结果");
+
+    const auto errorResult = backend.parseResult(
+        R"({"status":"F","errno":"3","errmsg":"","result":[]})");
+    FCITX_ASSERT(errorResult.empty());
+
+    const auto invalidResult = backend.parseResult("invalid json");
+    FCITX_ASSERT(invalidResult.empty());
+}
+
 int main() {
+    testBaiduResult();
+
     fcitx::setupTestingEnvironment(TESTING_BINARY_DIR, {"bin"},
                                    {"test", TESTING_SOURCE_DIR "/modules"});
     fcitx::Log::setLogRule("*=5");
