@@ -2478,10 +2478,15 @@ void PinyinEngine::cloudPinyinSelected(InputContext *inputContext,
     auto *state = inputContext->propertyFor(&factory_);
     const bool learn = shouldLearn(inputContext);
     auto words = state->context_.selectedWordsWithPinyin();
-    // This ensure us to convert pinyin to the right one.
-    auto preedit = state->context_.preedit(libime::PinyinPreeditMode::RawText);
-    // preedit is "selected sentence" + Pinyin.
     do {
+        if (!learn && !*config_.keepCurrentContext &&
+            !*config_.predictionEnabled) {
+            break;
+        }
+        // This ensure us to convert pinyin to the right one.
+        auto preedit =
+            state->context_.preedit(libime::PinyinPreeditMode::RawText);
+        // preedit is "selected sentence" + Pinyin.
         // Validate selected is still the same.
         if (!preedit.starts_with(selected)) {
             words.clear();
