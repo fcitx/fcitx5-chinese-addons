@@ -31,6 +31,8 @@
 #define MAX_HANDLE 100l
 #define MAX_BUFFER_SIZE 2048
 
+namespace fcitx::cloudpinyin {
+
 class CloudPinyin;
 
 class CurlQueue : public fcitx::IntrusiveListNode {
@@ -182,5 +184,7 @@ private:
     std::mutex pendingQueueLock;
     std::mutex finishQueueLock;
 };
+
+} // namespace fcitx::cloudpinyin
 
 #endif // _CLOUDPINYIN_FETCH_H_
