@@ -20,7 +20,7 @@
 #include <thread>
 #include <unistd.h>
 
-using namespace fcitx;
+namespace fcitx::cloudpinyin {
 
 FetchThread::FetchThread(CloudPinyin *cloudPinyin) : cloudPinyin_(cloudPinyin) {
     curlm_ = curl_multi_init();
@@ -247,3 +247,5 @@ void FetchThread::run() {
     events_.clear();
     loop_.reset();
 }
+
+} // namespace fcitx::cloudpinyin
