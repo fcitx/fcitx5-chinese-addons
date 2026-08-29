@@ -236,6 +236,7 @@ FCITX_CONFIGURATION(
         switchInputMethodBehavior{this, "SwitchInputMethodBehavior",
                                   _("Action when switching input method"),
                                   SwitchInputMethodBehavior::CommitPreedit};
+    Option<bool> learning{this, "Learning", _("Learning"), true};
     KeyListOption forgetWord{this,
                              "ForgetWord",
                              _("Forget word"),
@@ -457,6 +458,8 @@ public:
     const auto &selectionKeys() const { return selectionKeys_; }
 
 private:
+    bool shouldLearn(const InputContext *inputContext) const;
+
     void cloudPinyinSelected(InputContext *inputContext,
                              const std::string &selected,
                              const std::string &word);
