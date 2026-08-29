@@ -1,4 +1,5 @@
 set(CLOUDPINYIN_SOURCES
+    backend.cpp
     cloudpinyin.cpp
     fetch.cpp
 )

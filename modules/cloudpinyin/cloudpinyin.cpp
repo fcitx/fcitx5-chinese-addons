@@ -6,10 +6,10 @@
  */
 
 #include "cloudpinyin.h"
+#include "backend.h"
 #include "cloudpinyin_public.h"
 #include "fetch.h"
 #include <cstdint>
-#include <cstring>
 #include <curl/curl.h>
 #include <fcitx-config/iniparser.h>
 #include <fcitx-utils/eventloopinterface.h>
@@ -24,76 +24,16 @@
 #include <fcitx/addonmanager.h>
 #include <fcntl.h>
 #include <memory>
-#include <nlohmann/json.hpp>
 #include <string>
 #include <string_view>
 #include <unistd.h>
-#include <utility>
 
-using namespace fcitx;
+namespace fcitx::cloudpinyin {
 
 namespace {
 
 #define CLOUDPINYIN_DEBUG() FCITX_LOGC(cloudpinyin, Debug)
 FCITX_DEFINE_LOG_CATEGORY(cloudpinyin, "cloudpinyin");
-
-class GoogleBackend : public Backend {
-public:
-    GoogleBackend(std::string url) : url_(std::move(url)) {}
-
-    bool prepareRequest(CurlQueue *queue, const std::string &pinyin) override {
-        const UniqueCPtr<char, curl_free> escaped(
-            curl_escape(pinyin.c_str(), static_cast<int>(pinyin.size())));
-        if (!escaped) {
-            return false;
-        }
-        const std::string url = stringutils::concat(url_, escaped.get());
-        CLOUDPINYIN_DEBUG() << "Request URL: " << url;
-        return (curl_easy_setopt(queue->curl(), CURLOPT_URL, url.c_str()) ==
-                CURLE_OK);
-    }
-    std::string parseResult(std::string_view result) override {
-        try {
-            const auto jv = nlohmann::json::parse(result);
-            return jv.at(1).at(0).at(1).at(0).get<std::string>();
-        } catch (const std::exception &) {
-            return {};
-        }
-    }
-
-private:
-    const std::string url_;
-};
-
-class BaiduBackend : public Backend {
-public:
-    bool prepareRequest(CurlQueue *queue, const std::string &pinyin) override {
-        const UniqueCPtr<char, &curl_free> escaped(
-            curl_escape(pinyin.c_str(), static_cast<int>(pinyin.size())));
-        if (!escaped) {
-            return false;
-        }
-        const std::string url =
-            std::format("https://olimenew.baidu.com/"
-                        "py?input={}&inputtype=py&resultcoding=utf-8",
-                        escaped.get());
-        CLOUDPINYIN_DEBUG() << "Request URL: " << url;
-        return (curl_easy_setopt(queue->curl(), CURLOPT_URL, url.c_str()) ==
-                CURLE_OK);
-    }
-
-    std::string parseResult(std::string_view result) override {
-        try {
-            const auto jv = nlohmann::json::parse(result);
-            if (jv.at("status") != "T" || jv.at("errno") != "0") {
-                return {};
-            }
-            return jv.at("result").at(0).at(0).at(0).get<std::string>();
-        } catch (const std::exception &) {
-            return {};
-        }
-    }
-};
 
 constexpr int MAX_ERROR = 10;
 constexpr uint64_t minInUs = 60000000;
@@ -105,16 +45,12 @@ CloudPinyin::CloudPinyin(fcitx::AddonManager *manager)
       dispatcher_(manager->instance()->eventDispatcher()) {
     curl_global_init(CURL_GLOBAL_ALL);
 
-    backends_.emplace(
-        CloudPinyinBackend::Google,
-        std::make_unique<GoogleBackend>(
-            "https://www.google.com/inputtools/request?ime=pinyin&text="));
-    backends_.emplace(
-        CloudPinyinBackend::GoogleCN,
-        std::make_unique<GoogleBackend>(
-            "https://www.google.cn/inputtools/request?ime=pinyin&text="));
+    backends_.emplace(CloudPinyinBackend::Google,
+                      createBackend(CloudPinyinBackend::Google));
+    backends_.emplace(CloudPinyinBackend::GoogleCN,
+                      createBackend(CloudPinyinBackend::GoogleCN));
     backends_.emplace(CloudPinyinBackend::Baidu,
-                      std::make_unique<BaiduBackend>());
+                      createBackend(CloudPinyinBackend::Baidu));
 
     resetError_ =
         eventLoop_->addTimeEvent(CLOCK_MONOTONIC, now(CLOCK_MONOTONIC), minInUs,
@@ -154,7 +90,13 @@ void CloudPinyin::request(const std::string &pinyin,
         auto *b = iter->second.get();
         if (!thread_->addRequest([proxy = *config_.proxy, b, &pinyin,
                                   &callback](CurlQueue *queue) {
-                if (!b->prepareRequest(queue, pinyin)) {
+                const auto url = b->prepareRequest(pinyin);
+                if (url.empty()) {
+                    return false;
+                }
+                CLOUDPINYIN_DEBUG() << "Request URL: " << url;
+                if (curl_easy_setopt(queue->curl(), CURLOPT_URL, url.c_str()) !=
+                    CURLE_OK) {
                     return false;
                 }
                 if (curl_easy_setopt(
@@ -214,3 +156,5 @@ void CloudPinyin::notifyFinished() {
 }
 
 FCITX_ADDON_FACTORY_V2(cloudpinyin, CloudPinyinFactory);
+
+} // namespace fcitx::cloudpinyin

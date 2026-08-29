@@ -7,22 +7,30 @@
 #ifndef _CLOUDPINYIN_CLOUDPINYIN_H_
 #define _CLOUDPINYIN_CLOUDPINYIN_H_
 
+#include "backend.h"
 #include "cloudpinyin_public.h"
 #include "fetch.h"
 #include "lrucache.h"
 #include <fcitx-config/configuration.h>
 #include <fcitx-config/enum.h>
 #include <fcitx-config/iniparser.h>
+#include <fcitx-config/option.h>
+#include <fcitx-config/rawconfig.h>
 #include <fcitx-utils/eventdispatcher.h>
+#include <fcitx-utils/eventloopinterface.h>
 #include <fcitx-utils/i18n.h>
+#include <fcitx-utils/key.h>
 #include <fcitx-utils/misc.h>
 #include <fcitx-utils/trackableobject.h>
 #include <fcitx/addonfactory.h>
 #include <fcitx/addoninstance.h>
 #include <fcitx/instance.h>
-#include <string_view>
+#include <memory>
+#include <string>
+#include <unordered_map>
 
-FCITX_CONFIG_ENUM(CloudPinyinBackend, Google, GoogleCN, Baidu);
+namespace fcitx::cloudpinyin {
+
 FCITX_CONFIGURATION(
     CloudPinyinConfig,
     fcitx::Option<fcitx::KeyList> toggleKey{
@@ -44,14 +52,6 @@ FCITX_CONFIGURATION(
         {_("The proxy format must be the one that is supported by cURL. "
            "Usually it is in the format of [scheme]://[host]:[port], e.g. "
            "http://localhost:1080.")}};);
-
-class Backend {
-public:
-    FCITX_NODISCARD virtual bool prepareRequest(CurlQueue *queue,
-                                                const std::string &pinyin) = 0;
-    virtual std::string parseResult(std::string_view result) = 0;
-    virtual ~Backend() = default;
-};
 
 class CloudPinyin : public fcitx::AddonInstance,
                     public fcitx::TrackableObject<CloudPinyin> {
@@ -100,5 +100,7 @@ public:
         return new CloudPinyin(manager);
     }
 };
+
+} // namespace fcitx::cloudpinyin
 
 #endif // _CLOUDPINYIN_CLOUDPINYIN_H_

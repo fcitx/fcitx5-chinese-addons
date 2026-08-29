@@ -7,13 +7,15 @@ add_dependencies(testpunctuation punctuation punctuation.conf.in-fmt)
 add_test(NAME testpunctuation COMMAND testpunctuation)
 
 if (ENABLE_CLOUDPINYIN)
-add_executable(testcloudpinyin testcloudpinyin.cpp
-                              ../modules/cloudpinyin/fetch.cpp)
+add_executable(testcloudpinyinbackend testcloudpinyinbackend.cpp ../modules/cloudpinyin/backend.cpp)
+target_include_directories(testcloudpinyinbackend PRIVATE ${PROJECT_SOURCE_DIR}/modules/cloudpinyin PkgConfig::Curl)
+target_link_libraries(testcloudpinyinbackend Fcitx5::Core nlohmann_json::nlohmann_json PkgConfig::Curl)
+add_test(NAME testcloudpinyinbackend COMMAND testcloudpinyinbackend)
+
+add_executable(testcloudpinyin testcloudpinyin.cpp)
 target_link_libraries(testcloudpinyin
-    Fcitx5::Core Fcitx5::Config Fcitx5::Module::CloudPinyin PkgConfig::Curl
-    Pthread::Pthread nlohmann_json::nlohmann_json)
+    Fcitx5::Core Fcitx5::Config Fcitx5::Module::CloudPinyin)
 add_dependencies(testcloudpinyin cloudpinyin copy-addon-cloudpinyin)
-add_test(NAME testcloudpinyin COMMAND testcloudpinyin)
 endif()
 
 add_executable(testpinyinhelper testpinyinhelper.cpp)
