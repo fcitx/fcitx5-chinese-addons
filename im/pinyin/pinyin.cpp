@@ -291,12 +291,12 @@ matchCloudPinyin(const libime::PinyinContext &context,
                            << segment->word();
             const auto *pinyinNode =
                 static_cast<const libime::PinyinLatticeNode *>(segment);
-            words.push_back(libime::HistoryBigram::WordWithCode{
-                segment->word(), pinyinNode->encodedPinyin()});
             auto pinyinSize = pinyinNode->encodedPinyin().size() / 2;
             if (pinyinSize && static_cast<size_t>(std::distance(
                                   pinyinsIter, pinyinsEnd)) >= pinyinSize) {
                 pinyinsIter += pinyinSize;
+                words.push_back(libime::HistoryBigram::WordWithCode{
+                    segment->word(), pinyinNode->encodedPinyin()});
             } else {
                 break;
             }
