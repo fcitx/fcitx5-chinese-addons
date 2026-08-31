@@ -2585,8 +2585,10 @@ void PinyinEngine::cloudPinyinSelected(InputContext *inputContext,
                     std::string(encodedPinyin.data(), encodedPinyin.size())});
             }
             if (shouldLearn(inputContext)) {
-                ime_->dict()->addWord(libime::PinyinDictionary::UserDict,
-                                      result->fullPinyin, result->word);
+                if (!result->word.empty() && !result->fullPinyin.empty()) {
+                    ime_->dict()->addWord(libime::PinyinDictionary::UserDict,
+                                          result->fullPinyin, result->word);
+                }
                 ime_->model()->history().addWithCode(result->context);
             }
         } catch (const std::exception &e) {
