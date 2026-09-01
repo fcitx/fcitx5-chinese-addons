@@ -305,7 +305,7 @@ public:
 
 private:
     void triggerStrokeAction(PinyinState *state, int id);
-    void triggerMainAction(PinyinState *state, int id);
+    void triggerMainAction(int id);
 
     std::optional<int> idToActionIndex(int id) const;
 
