@@ -37,7 +37,6 @@
 #include <fcitx/inputmethodengine.h>
 #include <fcitx/instance.h>
 #include <fcitx/text.h>
-#include <filesystem>
 #include <future>
 #include <libime/core/historybigram.h>
 #include <libime/pinyin/pinyincontext.h>
@@ -49,7 +48,6 @@
 #include <regex>
 #include <string>
 #include <string_view>
-#include <unordered_set>
 #include <utility>
 #include <vector>
 
@@ -374,7 +372,7 @@ struct EventSourceTime;
 class CandidateList;
 class PinyinEngine;
 
-enum class PinyinMode { Normal, StrokeFilter, ForgetCandidate, Punctuation };
+enum class PinyinMode { Normal, ForgetCandidate, Punctuation };
 
 class PinyinState : public InputContextProperty {
 public:
@@ -384,9 +382,6 @@ public:
     bool lastIsPunc_ = false;
 
     PinyinMode mode_ = PinyinMode::Normal;
-
-    // Stroke filter
-    InputBuffer strokeBuffer_;
 
     // Forget candidate
     std::shared_ptr<CandidateList> forgetCandidateList_;
@@ -445,7 +440,6 @@ public:
     void updateUI(InputContext *inputContext);
     void updateFilter(InputContext *inputContext);
 
-    void resetStroke(InputContext *inputContext) const;
     void resetForgetCandidate(InputContext *inputContext) const;
     void forgetCandidate(InputContext *inputContext, size_t index);
     void pinCustomPhrase(InputContext *inputContext,
@@ -454,6 +448,7 @@ public:
                             const std::string &customPhrase);
 
     FCITX_ADDON_DEPENDENCY_LOADER(cloudpinyin, instance_->addonManager());
+    FCITX_ADDON_DEPENDENCY_LOADER(pinyinhelper, instance_->addonManager());
 
     const auto &selectionKeys() const { return selectionKeys_; }
 
@@ -530,7 +525,6 @@ private:
     FCITX_ADDON_DEPENDENCY_LOADER(chttrans, instance_->addonManager());
     FCITX_ADDON_DEPENDENCY_LOADER(punctuation, instance_->addonManager());
     FCITX_ADDON_DEPENDENCY_LOADER(notifications, instance_->addonManager());
-    FCITX_ADDON_DEPENDENCY_LOADER(pinyinhelper, instance_->addonManager());
     FCITX_ADDON_DEPENDENCY_LOADER(spell, instance_->addonManager());
     FCITX_ADDON_DEPENDENCY_LOADER(imeapi, instance_->addonManager());
 

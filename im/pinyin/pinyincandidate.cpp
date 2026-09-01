@@ -8,6 +8,7 @@
 #include "pinyincandidate.h"
 #include "../../modules/cloudpinyin/cloudpinyin_public.h"
 #include "pinyin.h"
+#include "pinyinhelper_public.h"
 #include <algorithm>
 #include <boost/container_hash/hash.hpp>
 #include <cassert>
@@ -18,6 +19,7 @@
 #include <fcitx-utils/eventloopinterface.h>
 #include <fcitx-utils/i18n.h>
 #include <fcitx-utils/log.h>
+#include <fcitx-utils/utf8.h>
 #include <fcitx/candidateaction.h>
 #include <fcitx/candidatelist.h>
 #include <fcitx/inputcontext.h>
@@ -485,8 +487,7 @@ PinyinTabbedCandidateList::PinyinTabbedCandidateList(
       candidateList_(candidateList) {}
 
 std::span<const CandidateAction> PinyinTabbedCandidateList::tabActions() {
-    auto *state = inputContext_->propertyFor(&engine_->factory());
-    if (state->mode_ == PinyinMode::StrokeFilter) {
+    if (inStrokeFilterMode()) {
         return strokeActions_;
     }
     if (!actions_) {
@@ -633,17 +634,15 @@ void PinyinTabbedCandidateList::triggerTabAction(int id) {
         return;
     }
 
-    auto *state = inputContext_->propertyFor(&engine_->factory());
-    if (state->mode_ == PinyinMode::StrokeFilter) {
-        triggerStrokeAction(state, id);
+    if (inStrokeFilterMode()) {
+        triggerStrokeAction(id);
     } else {
-        triggerMainAction(state, id);
+        triggerMainAction(id);
     }
 }
 
-void PinyinTabbedCandidateList::triggerStrokeAction(PinyinState *state,
-                                                    int id) {
-    assert(state->mode_ == PinyinMode::StrokeFilter);
+void PinyinTabbedCandidateList::triggerStrokeAction(int id) {
+    assert(inStrokeFilterMode());
 
     switch (id) {
     case STROKE_SUB_ACTION_H:
@@ -651,15 +650,27 @@ void PinyinTabbedCandidateList::triggerStrokeAction(PinyinState *state,
     case STROKE_SUB_ACTION_P:
     case STROKE_SUB_ACTION_N:
     case STROKE_SUB_ACTION_Z:
-        state->strokeBuffer_.type(STROKE_SUB_ACTION_H - id + '1');
+        pushStroke(STROKE_SUB_ACTION_H - id + '1');
         break;
     case STROKE_SUB_ACTION_RETURN:
-        engine_->resetStroke(inputContext_);
+        resetStrokeFilterMode();
         break;
     default:
         return;
     }
+}
+
+void PinyinTabbedCandidateList::pushStroke(char stroke) {
+    strokeBuffer_.type(stroke);
     engine_->updateFilter(inputContext_);
+}
+
+bool PinyinTabbedCandidateList::popStroke() {
+    if (strokeBuffer_.backspace()) {
+        engine_->updateFilter(inputContext_);
+        return true;
+    }
+    return false;
 }
 
 std::optional<int> PinyinTabbedCandidateList::idToActionIndex(int id) const {
@@ -674,14 +685,14 @@ std::optional<int> PinyinTabbedCandidateList::idToActionIndex(int id) const {
     return std::nullopt;
 }
 
-void PinyinTabbedCandidateList::triggerMainAction(PinyinState *state, int id) {
+void PinyinTabbedCandidateList::triggerMainAction(int id) {
     if (!actions_) {
         return;
     }
     std::optional<int> checkableActionIndex;
     // negative id is special action.
     if (id == STROKE_ACTION) {
-        state->mode_ = PinyinMode::StrokeFilter;
+        setStrokeFilterMode();
     } else if (checkableActionIndex = idToActionIndex(id);
                !checkableActionIndex) {
         return;
@@ -712,7 +723,8 @@ void PinyinTabbedCandidateList::triggerMainAction(PinyinState *state, int id) {
     engine_->updateFilter(inputContext_);
 }
 
-bool PinyinTabbedCandidateList::filter(const CandidateWord &candidate) const {
+bool PinyinTabbedCandidateList::filterByCheckedAction(
+    const CandidateWord &candidate) const {
     if (!checked()) {
         return true;
     }
@@ -743,6 +755,53 @@ bool PinyinTabbedCandidateList::filter(const CandidateWord &candidate) const {
     }
 
     return true;
+}
+
+bool PinyinTabbedCandidateList::filterByStroke(
+    const CandidateWord &candidate) const {
+    if (!engine_->pinyinhelper()) {
+        return true;
+    }
+
+    if (!inStrokeFilterMode() || strokeBuffer_.empty()) {
+        return true;
+    }
+
+    // For stroke candidates, skip if we are doing stroke filter.
+    if (dynamic_cast<const StrokeCandidateWord *>(&candidate)) {
+        return false;
+    }
+
+    auto str = candidate.text().toStringForCommit();
+    if (auto length = utf8::lengthValidated(str);
+        length != utf8::INVALID_LENGTH && length >= 1) {
+        auto charRange = utf8::MakeUTF8CharRange(str);
+        for (auto iter = std::begin(charRange), end = std::end(charRange);
+             iter != end; ++iter) {
+            std::string chr(iter.charRange().first, iter.charRange().second);
+            auto stroke = engine_->pinyinhelper()
+                              ->call<IPinyinHelper::reverseLookupStroke>(chr);
+            if (stroke.starts_with(strokeBuffer_.userInput())) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool PinyinTabbedCandidateList::filter(const CandidateWord &candidate) const {
+    return filterByCheckedAction(candidate) && filterByStroke(candidate);
+}
+
+void PinyinTabbedCandidateList::setStrokeFilterMode() {
+    strokeBuffer_.clear();
+    strokeFilterMode_ = true;
+}
+
+void PinyinTabbedCandidateList::resetStrokeFilterMode() {
+    strokeBuffer_.clear();
+    strokeFilterMode_ = false;
+    engine_->updateFilter(inputContext_);
 }
 
 } // namespace fcitx
