@@ -1714,13 +1714,17 @@ bool PinyinEngine::isStrokeFilterActive(InputContext *inputContext) const {
 }
 
 bool PinyinEngine::startStrokeFilter(InputContext *inputContext) {
+    auto *state = inputContext->propertyFor(&factory_);
+    if (state->predictWords_) {
+        return false;
+    }
+
     auto candidateList = inputContext->inputPanel().candidateList();
     if (!candidateList || candidateList->empty() || !candidateList->toBulk() ||
         !pinyinhelper()) {
         return false;
     }
 
-    auto *state = inputContext->propertyFor(&factory_);
     resetStroke(inputContext);
     state->strokeCandidateList_ = candidateList;
     updateFilter(inputContext);

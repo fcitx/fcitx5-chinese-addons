@@ -309,6 +309,39 @@ void testActionInStrokeFilter(Instance *instance) {
     });
 }
 
+void testStrokeFilterOnPrediction(Instance *instance) {
+    instance->eventDispatcher().schedule([instance]() {
+        auto *pinyin = instance->addonManager().addon("pinyin");
+        FCITX_ASSERT(pinyin);
+        RawConfig config;
+        config.setValueByPath("Prediction", "True");
+        pinyin->setConfig(config);
+
+        auto *testfrontend = instance->addonManager().addon("testfrontend");
+        auto uuid =
+            testfrontend->call<ITestFrontend::createInputContext>("testapp");
+        auto *ic = instance->inputContextManager().findByUUID(uuid);
+        FCITX_ASSERT(ic);
+        instance->setCurrentInputMethod(ic, "pinyin", true);
+
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("你");
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("n"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("i"), false);
+        findAndSelectCandidate(ic, "你");
+
+        auto predictionCandidateList = ic->inputPanel().candidateList();
+        FCITX_ASSERT(predictionCandidateList);
+        FCITX_ASSERT(!predictionCandidateList->empty());
+
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("grave"), false);
+        FCITX_ASSERT(ic->inputPanel().candidateList() !=
+                     predictionCandidateList);
+
+        config.setValueByPath("Prediction", "False");
+        pinyin->setConfig(config);
+    });
+}
+
 void testPinyinTabFilter(Instance *instance) {
     instance->eventDispatcher().schedule([instance]() {
         auto *pinyin = instance->addonManager().addon("pinyin");
@@ -673,6 +706,7 @@ int main() {
     testSelectByChar(&instance);
     testUppercase(&instance);
     testForget(&instance);
+    testStrokeFilterOnPrediction(&instance);
     testActionInStrokeFilter(&instance);
     testPinyinTabFilter(&instance);
     testPinyinTabFilterWithSeparator(&instance);
