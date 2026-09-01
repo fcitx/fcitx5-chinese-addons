@@ -192,6 +192,14 @@ bool isStroke(const std::string &input) {
                        [](char c) { return py.count(c); });
 }
 
+PinyinTabbedCandidateList *currentPinyinTabbed(InputContext *inputContext) {
+    auto candidateList = inputContext->inputPanel().candidateList();
+    if (!candidateList) {
+        return nullptr;
+    }
+    return dynamic_cast<PinyinTabbedCandidateList *>(candidateList->toTabbed());
+}
+
 std::string getEncodedPinyin(const libime::SentenceResult &result) {
     std::string encodedPinyin;
     bool validPinyin = std::all_of(
@@ -519,9 +527,6 @@ void PinyinEngine::updatePuncCandidate(
 
 void PinyinEngine::updateUI(InputContext *inputContext) {
     auto *state = inputContext->propertyFor(&factory_);
-    if (state->mode_ == PinyinMode::StrokeFilter) {
-        resetStroke(inputContext);
-    }
     inputContext->inputPanel().reset();
     // Use const ref to avoid accidentally change anything.
     const auto &context = state->context_;
@@ -1595,15 +1600,15 @@ bool PinyinEngine::handleNextPage(KeyEvent &event) const {
 }
 
 void PinyinEngine::updateFilter(InputContext *inputContext) {
-    auto *state = inputContext->propertyFor(&factory_);
     auto &inputPanel = inputContext->inputPanel();
+    auto *pinyinTabbed = currentPinyinTabbed(inputContext);
 
     updatePreedit(inputContext);
     Text aux;
-    if (state->mode_ == PinyinMode::StrokeFilter) {
+    if (pinyinTabbed && pinyinTabbed->inStrokeFilterMode() && pinyinhelper()) {
         aux.append(_("[Stroke Filtering]"));
         aux.append(pinyinhelper()->call<IPinyinHelper::prettyStrokeString>(
-            state->strokeBuffer_.userInput()));
+            pinyinTabbed->strokeBuffer()));
     }
     inputPanel.setAuxUp(aux);
     inputPanel.setAuxDown(Text());
@@ -1611,46 +1616,13 @@ void PinyinEngine::updateFilter(InputContext *inputContext) {
     auto *candidateList =
         dynamic_cast<CommonCandidateList *>(inputPanel.candidateList().get());
     if (candidateList) {
-        auto *pinyinTabbed = dynamic_cast<PinyinTabbedCandidateList *>(
-            candidateList->toTabbed());
-        if (state->strokeBuffer_.empty() &&
-            (!pinyinTabbed || !pinyinTabbed->checked())) {
+        if (!pinyinTabbed || !pinyinTabbed->hasFilter()) {
             candidateList->clearFilter();
         } else {
-            candidateList->setFilter([this, pinyinTabbed,
-                                      state](const CandidateWord &candidate)
-                                         -> bool {
-                if (pinyinTabbed && !pinyinTabbed->filter(candidate)) {
-                    return false;
-                }
-                if (!state->strokeBuffer_.empty()) {
-                    // For stroke candidate, skip if we are doing stroke filter.
-                    if (dynamic_cast<const StrokeCandidateWord *>(&candidate)) {
-                        return false;
-                    }
-                    auto str = candidate.text().toStringForCommit();
-                    if (auto length = utf8::lengthValidated(str);
-                        length != utf8::INVALID_LENGTH && length >= 1) {
-                        auto charRange = utf8::MakeUTF8CharRange(str);
-                        for (auto iter = std::begin(charRange),
-                                  end = std::end(charRange);
-                             iter != end; ++iter) {
-                            std::string chr(iter.charRange().first,
-                                            iter.charRange().second);
-                            auto stroke =
-                                pinyinhelper()
-                                    ->call<IPinyinHelper::reverseLookupStroke>(
-                                        chr);
-                            if (stroke.starts_with(
-                                    state->strokeBuffer_.userInput())) {
-                                return true;
-                            }
-                        }
-                    }
-                    return false;
-                }
-                return true;
-            });
+            candidateList->setFilter(
+                [pinyinTabbed](const CandidateWord &candidate) -> bool {
+                    return pinyinTabbed->filter(candidate);
+                });
         }
 
         if (candidateList->totalPages() > 0) {
@@ -1700,14 +1672,6 @@ void PinyinEngine::updateForgetCandidate(InputContext *inputContext) {
     inputContext->inputPanel().setCandidateList(std::move(candidateList));
     inputContext->updatePreedit();
     inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
-}
-
-void PinyinEngine::resetStroke(InputContext *inputContext) const {
-    auto *state = inputContext->propertyFor(&factory_);
-    state->strokeBuffer_.clear();
-    if (state->mode_ == PinyinMode::StrokeFilter) {
-        state->mode_ = PinyinMode::Normal;
-    }
 }
 
 void PinyinEngine::resetForgetCandidate(InputContext *inputContext) const {
@@ -1772,7 +1736,6 @@ void PinyinEngine::pinCustomPhrase(InputContext *inputContext,
     const auto py = context.userInput().substr(selectedLength, pyLength);
     customPhrase_.pinPhrase(py, customPhrase);
 
-    resetStroke(inputContext);
     updateUI(inputContext);
     saveCustomPhrase();
 }
@@ -1789,7 +1752,6 @@ void PinyinEngine::deleteCustomPhrase(InputContext *inputContext,
     const auto py = context.userInput().substr(selectedLength, pyLength);
     customPhrase_.removePhrase(py, customPhrase);
 
-    resetStroke(inputContext);
     updateUI(inputContext);
     saveCustomPhrase();
 }
@@ -1799,13 +1761,29 @@ bool PinyinEngine::handleStrokeFilter(
     auto *inputContext = event.inputContext();
     auto candidateList = inputContext->inputPanel().candidateList();
     auto *state = inputContext->propertyFor(&factory_);
-    if (state->mode_ == PinyinMode::Normal) {
-        if (candidateList && !candidateList->empty() &&
-            candidateList->toBulk() &&
-            event.key().checkKeyList(*config_.selectByStroke) &&
-            pinyinhelper()) {
-            resetStroke(inputContext);
-            state->mode_ = PinyinMode::StrokeFilter;
+    auto *pinyinTabbed = currentPinyinTabbed(inputContext);
+
+    // Any candidate list without PinyinTabbedCandidateList will not be able to
+    // enter stroke filter mode.
+    if (!pinyinTabbed) {
+        return false;
+    }
+
+    // Stroke relies on PinyinHelper.
+    if (!pinyinhelper()) {
+        return false;
+    }
+
+    // Only available in normal mode.
+    if (state->mode_ != PinyinMode::Normal) {
+        return false;
+    }
+
+    if (!pinyinTabbed->inStrokeFilterMode()) {
+        assert(candidateList);
+        if (!candidateList->empty() && candidateList->toBulk() &&
+            event.key().checkKeyList(*config_.selectByStroke)) {
+            pinyinTabbed->setStrokeFilterMode();
             updateFilter(inputContext);
             handleNextPage(event);
 
@@ -1815,19 +1793,19 @@ bool PinyinEngine::handleStrokeFilter(
         return false;
     }
 
-    if (state->mode_ != PinyinMode::StrokeFilter) {
+    // If we are still not in stroke filter mode, return.
+    if (!pinyinTabbed->inStrokeFilterMode()) {
         return false;
     }
 
     event.filterAndAccept();
     // A special case that allow prev page to quit stroke filtering.
-    if ((state->strokeBuffer_.empty() &&
+    if ((pinyinTabbed->strokeBuffer().empty() &&
          event.key().checkKeyList(*config_.prevPage))) {
         auto candidateList = inputContext->inputPanel().candidateList();
         if (candidateList && candidateList->toPageable() &&
             candidateList->toPageable()->currentPage() <= 1) {
-            resetStroke(inputContext);
-            updateUI(inputContext);
+            pinyinTabbed->resetStrokeFilterMode();
             return true;
         }
     }
@@ -1841,18 +1819,13 @@ bool PinyinEngine::handleStrokeFilter(
     }
 
     if (event.key().check(FcitxKey_Escape)) {
-        resetStroke(inputContext);
-        updateUI(inputContext);
+        pinyinTabbed->resetStrokeFilterMode();
         return true;
     }
     if (event.key().check(FcitxKey_BackSpace)) {
         // Do backspace is stroke is not empty.
-        if (!state->strokeBuffer_.empty()) {
-            state->strokeBuffer_.backspace();
-            updateFilter(inputContext);
-        } else {
+        if (!pinyinTabbed->popStroke()) {
             // Exit stroke mode when stroke buffer is empty.
-            resetStroke(inputContext);
             updateUI(inputContext);
         }
         return true;
@@ -1874,8 +1847,7 @@ bool PinyinEngine::handleStrokeFilter(
             {FcitxKey_z, '5'}};
         if (auto iter = strokeMap.find(event.key().sym());
             iter != strokeMap.end()) {
-            state->strokeBuffer_.type(iter->second);
-            updateFilter(inputContext);
+            pinyinTabbed->pushStroke(iter->second);
         }
     }
 
@@ -2423,7 +2395,6 @@ void PinyinEngine::reset(const InputMethodEntry & /*entry*/,
 
 void PinyinEngine::doReset(InputContext *inputContext) const {
     auto *state = inputContext->propertyFor(&factory_);
-    resetStroke(inputContext);
     resetForgetCandidate(inputContext);
     state->mode_ = PinyinMode::Normal;
     state->context_.clear();
