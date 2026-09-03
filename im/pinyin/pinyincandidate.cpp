@@ -351,13 +351,16 @@ void PinyinCandidateWord::setPinyinInComment() {
 }
 
 CustomCloudPinyinCandidateWord::CustomCloudPinyinCandidateWord(
-    PinyinEngine *engine, const std::string &pinyin,
-    const std::string &selectedSentence, InputContext *inputContext,
-    CloudPinyinSelectedCallback callback, CandidateOrder order)
-    : CloudPinyinCandidateWord(engine->cloudpinyin(), pinyin, selectedSentence,
+    PinyinEngine *engine, const std::string &queryPinyin,
+    const std::string &fullPinyin, const std::string &input,
+    const std::string &selectedSentence, const std::string &first,
+    InputContext *inputContext, CloudPinyinSelectedCallback callback,
+    CandidateOrder order)
+    : CloudPinyinCandidateWord(engine->cloudpinyin(), queryPinyin, fullPinyin,
+                               input, selectedSentence,
                                *engine->config().keepCloudPinyinPlaceHolder,
-                               inputContext, std::move(callback)),
-      PinyinAbstractCandidateWord(pinyin.size(), order) {
+                               first, inputContext, std::move(callback)),
+      PinyinAbstractCandidateWord(input.size(), order) {
     if (filled() || !*engine->config().cloudPinyinAnimation) {
         return;
     }

@@ -42,6 +42,10 @@ FCITX_CONFIGURATION(
                                      _("Minimum Pinyin Length"), 4};
     fcitx::Option<CloudPinyinBackend> backend{this, "Backend", _("Backend"),
                                               CloudPinyinBackend::GoogleCN};
+#ifdef FCITX_HAS_LUA
+    fcitx::Option<std::string> luaProvider{this, "LuaProvider",
+                                           _("Lua Provider"), ""};
+#endif
     fcitx::OptionWithAnnotation<std::string, fcitx::ToolTipAnnotation> proxy{
         this,
         "Proxy",
@@ -61,12 +65,16 @@ public:
 
     void reloadConfig() override;
     const fcitx::Configuration *getConfig() const override { return &config_; }
-    void setConfig(const fcitx::RawConfig &config) override {
-        config_.load(config, true);
-        fcitx::safeSaveAsIni(config_, "conf/cloudpinyin.conf");
-    }
+    void setConfig(const fcitx::RawConfig &config) override;
 
     void request(const std::string &pinyin, CloudPinyinCallback callback);
+    void requestWithContext(fcitx::InputContext *inputContext,
+                            const std::string &queryPinyin,
+                            const std::string &fullPinyin,
+                            const std::string &input,
+                            const std::string &selected,
+                            const std::string &first,
+                            CloudPinyinResultCallback callback);
     const fcitx::KeyList &toggleKey() const {
         return config_.toggleKey.value();
     }
@@ -78,7 +86,13 @@ public:
     void notifyFinished();
 
 private:
+#ifdef FCITX_HAS_LUA
+    void updateLuaBackend();
+#endif
+    void requestImpl(const CloudPinyinRequestContext &context,
+                     CloudPinyinResultCallback callback);
     FCITX_ADDON_EXPORT_FUNCTION(CloudPinyin, request);
+    FCITX_ADDON_EXPORT_FUNCTION(CloudPinyin, requestWithContext);
     FCITX_ADDON_EXPORT_FUNCTION(CloudPinyin, toggleKey);
     FCITX_ADDON_EXPORT_FUNCTION(CloudPinyin, resetError);
     std::unique_ptr<FetchThread> thread_;
@@ -86,10 +100,11 @@ private:
     fcitx::EventDispatcher &dispatcher_;
     std::unique_ptr<fcitx::EventSourceIO> event_;
     std::unique_ptr<fcitx::EventSourceTime> resetError_;
-    LRUCache<std::string, std::string> cache_{2048};
-    std::unordered_map<CloudPinyinBackend, std::unique_ptr<Backend>,
+    LRUCache<std::string, CloudPinyinResult> cache_{2048};
+    std::unordered_map<CloudPinyinBackend, std::shared_ptr<Backend>,
                        fcitx::EnumHash>
         backends_;
+    fcitx::AddonManager *manager_;
     CloudPinyinConfig config_;
     int errorCount_ = 0;
 };

@@ -608,22 +608,26 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
                 CapabilityFlag::PasswordOrSensitive) &&
             fullResult) {
             using namespace std::placeholders;
-            auto fullPinyin = context.useShuangpin()
-                                  ? context.candidateFullPinyin(0)
-                                  : context.userInput().substr(selectedLength);
-            auto cand = std::make_unique<CustomCloudPinyinCandidateWord>(
-                this, fullPinyin, selectedSentence, inputContext,
-                [this](InputContext *ic, const std::string &selected,
-                       const std::string &word) {
-                    cloudPinyinSelected(ic, selected, word);
-                },
-                CandidateOrder{*config_.cloudPinyinIndex - 1,
-                               customCandidateMap.size()});
-            if (!cand->filled() ||
-                (!cand->word().empty() &&
-                 !customCandidateMap.contains(cand->word()) &&
-                 !context.candidatesToCursorSet().contains(cand->word()))) {
-                customCandidateMap.emplace(cand->word(), std::move(cand));
+            auto fullPinyin = context.candidateFullPinyin(0);
+            if (!fullPinyin.empty()) {
+                const auto &queryPinyin =
+                    context.useShuangpin() ? fullPinyin : pyBeforeCursor;
+                auto cand = std::make_unique<CustomCloudPinyinCandidateWord>(
+                    this, queryPinyin, fullPinyin, pyBeforeCursor,
+                    selectedSentence, pinyinCandidates.front().toString(),
+                    inputContext,
+                    [this](InputContext *ic, const std::string &selected,
+                           const std::string &word) {
+                        cloudPinyinSelected(ic, selected, word);
+                    },
+                    CandidateOrder{*config_.cloudPinyinIndex - 1,
+                                   customCandidateMap.size()});
+                if (!cand->filled() ||
+                    (!cand->word().empty() &&
+                     !customCandidateMap.contains(cand->word()) &&
+                     !context.candidatesToCursorSet().contains(cand->word()))) {
+                    customCandidateMap.emplace(cand->word(), std::move(cand));
+                }
             }
         }
         /// }}}
