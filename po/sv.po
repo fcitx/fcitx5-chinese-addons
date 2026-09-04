@@ -1,0 +1,1518 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the fcitx5-chinese-addons package.
+#
+# Translators:
+# Daniel Nylander <po@danielnylander.se>, 2026
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: fcitx5-chinese-addons\n"
+"Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
+"POT-Creation-Date: 2026-09-04 20:24+0000\n"
+"PO-Revision-Date: 2017-11-23 04:30+0000\n"
+"Last-Translator: Daniel Nylander <po@danielnylander.se>, 2026\n"
+"Language-Team: Swedish (https://app.transifex.com/fcitx/teams/12005/sv/)\n"
+"Language: sv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: im/table/state.cpp:632
+msgid "Please use this functionality after typing some text."
+msgstr "Använd den här funktionen efter att du har skrivit text."
+
+#: im/table/state.cpp:638
+msgid "Use Left and Right to select character: "
+msgstr "Använd vänster och höger för att välja tecken: "
+
+#: im/table/state.cpp:656
+msgctxt "Pinyin lookup delimeter"
+msgid ", "
+msgstr ", "
+
+#: im/table/state.cpp:676
+#, c++-format
+msgctxt "Pinyin & Shuangpin"
+msgid "{0} ({1})"
+msgstr "{0} ({1})"
+
+#: im/table/state.cpp:683
+msgid "Could not find pinyin."
+msgstr "Det gick inte att hitta pinyin."
+
+#: im/table/state.cpp:686
+msgid "Use Left and Right to select text. "
+msgstr "Använd vänster och höger för att välja text. "
+
+#: im/table/state.cpp:692 im/table/state.cpp:715
+#, c++-format
+msgid "{0}: {1}"
+msgstr "{0}: {1}"
+
+#: im/table/state.cpp:698
+msgid "Press space or enter to insert."
+msgstr "Tryck på blanksteg eller Retur för att infoga."
+
+#: im/table/state.cpp:701
+msgid "Press Backspace to forget."
+msgstr "Tryck på backsteg för att glömma."
+
+#: im/table/state.cpp:704
+msgid "Press Delete to remove."
+msgstr "Tryck på Delete för att ta bort."
+
+#: im/table/state.cpp:708
+#, c++-format
+msgid "{0}: No corresponding code."
+msgstr "{0}: Ingen motsvarande kod."
+
+#: im/table/state.cpp:717
+#, c++-format
+msgid "{0} is not in table."
+msgstr "{0} finns inte i tabellen."
+
+#: im/table/state.cpp:1063
+msgid " for "
+msgstr " för "
+
+#: im/table/state.cpp:1066
+msgid " Return for "
+msgstr " Returnera för "
+
+#: im/table/state.cpp:1384
+msgid "Select candidate to be removed from history:"
+msgstr "Välj kandidaten som ska tas bort från historiken:"
+
+#: im/table/ime.h:35 im/pinyin/pinyin.cpp:1131
+msgid "No"
+msgstr "Nej"
+
+#: im/table/ime.h:35
+msgid "Freq"
+msgstr "Frekv."
+
+#: im/table/ime.h:35
+msgid "Fast"
+msgstr "Snabb"
+
+#: im/table/ime.h:36
+msgid "Not set"
+msgstr "Inte angivet"
+
+#: im/table/ime.h:37
+msgid "Vertical"
+msgstr "Lodrät"
+
+#: im/table/ime.h:37
+msgid "Horizontal"
+msgstr "Vågrät"
+
+#: im/table/ime.h:49
+msgid "File"
+msgstr "Fil"
+
+#: im/table/ime.h:53
+msgid "Previous page"
+msgstr "Föregående sida"
+
+#: im/table/ime.h:59
+msgid "Next page"
+msgstr "Nästa sida"
+
+#: im/table/ime.h:65 im/pinyin/pinyin.h:262
+msgid "Previous Candidate"
+msgstr "Föregående kandidat"
+
+#: im/table/ime.h:71 im/pinyin/pinyin.h:268
+msgid "Next Candidate"
+msgstr "Nästa kandidat"
+
+#: im/table/ime.h:77 im/pinyin/pinyin.h:274
+msgid "Select Current Candidate"
+msgstr "Välj aktuell kandidat"
+
+#: im/table/ime.h:83 im/pinyin/pinyin.h:288
+msgid "Select Second Candidate"
+msgstr "Välj andra kandidaten"
+
+#: im/table/ime.h:90 im/pinyin/pinyin.h:295
+msgid "Select Third Candidate"
+msgstr "Välj tredje kandidaten"
+
+#: im/table/ime.h:97
+msgid "Selection"
+msgstr "Urval"
+
+#: im/table/ime.h:106 im/pinyin/pinyin.h:173
+msgid "Candidates Per Page"
+msgstr "Kandidater per sida"
+
+#: im/table/ime.h:110
+msgid ""
+"0 means no candidate will be displayed and a special compose table mode will "
+"be enabled. This means you will not be able to manually select candidate. "
+"This may be suitable for table that only relies on auto selection. It will "
+"also implicitly disable many standard key handling, Enter to commit code, "
+"Tab to select candidate, cursor moving key (e.g. Arrow, Page Up/Down) to "
+"trigger auto select and forward cursor moving key to client, in order to "
+"simulate a more compose table like experience."
+msgstr ""
+"0 innebär att inga kandidater visas och att ett särskilt läge för "
+"sammansättningstabeller aktiveras. Då kan du inte välja kandidat manuellt. "
+"Detta kan passa tabeller som endast bygger på automatiskt urval. Det "
+"inaktiverar även implicit många vanliga tangentfunktioner: Retur för att "
+"bekräfta kod, Tab för att välja kandidat samt markörflyttningstangenter "
+"(t.ex. piltangenter, Page Up/Down) för automatiskt urval och vidarebefordrar "
+"markörflyttningstangenter till klienten, för att efterlikna en upplevelse "
+"som liknar en sammansättningstabell."
+
+#: im/table/ime.h:120
+msgid "Table Global Options"
+msgstr "Globala tabellalternativ"
+
+#: im/table/ime.h:124
+msgid "Commit after auto select candidates"
+msgstr "Bekräfta efter automatiskt kandidatval"
+
+#: im/table/ime.h:128
+msgid "Commit buffer when deactivating input method"
+msgstr "Bekräfta bufferten när inmatningsmetoden inaktiveras"
+
+#: im/table/ime.h:132
+msgid "Commit Invalid Segment"
+msgstr "Bekräfta ogiltigt segment"
+
+#: im/table/ime.h:137
+msgid ""
+"Commit the segment that does not exist in the table. This option is useful "
+"for some latin/compose based table."
+msgstr ""
+"Bekräfta segmentet som inte finns i tabellen. Alternativet är användbart för "
+"vissa latin-/sammansättningsbaserade tabeller."
+
+#: im/table/ime.h:139
+msgid "Use full width"
+msgstr "Använd fullbredd"
+
+#: im/table/ime.h:141
+msgid "Ignore built in punctuation"
+msgstr "Ignorera inbyggd interpunktion"
+
+#: im/table/ime.h:143
+msgid "First candidate as Preedit"
+msgstr "Första kandidaten som förredigering"
+
+#: im/table/ime.h:147 im/pinyin/pinyin.h:210
+msgid "Fix embedded preedit cursor at the beginning of the preedit"
+msgstr "Lås den inbäddade förredigeringsmarkören i början av förredigeringen"
+
+#: im/table/ime.h:152 im/pinyin/pinyin.h:352
+msgid "Key to trigger quickphrase"
+msgstr "Tangent för att utlösa snabbfras"
+
+#: im/table/ime.h:158
+msgid "Text to trigger quickphrase"
+msgstr "Text som utlöser snabbfras"
+
+#: im/table/ime.h:162
+msgid ""
+"When a new character is typed, if it matches any character in this string, "
+"all the existing text will be put into quickphrase buffer."
+msgstr ""
+"När ett nytt tecken skrivs och det matchar något tecken i den här strängen "
+"placeras all befintlig text i snabbfrasbufferten."
+
+#: im/table/ime.h:165
+msgid "Icon"
+msgstr "Ikon"
+
+#: im/table/ime.h:167
+msgid "Don't sort word shorter than"
+msgstr "Sortera inte ord kortare än"
+
+#: im/table/ime.h:169
+msgid "Sort candidate by code length"
+msgstr "Sortera kandidater efter kodlängd"
+
+#: im/table/ime.h:171
+msgid "Order policy"
+msgstr "Ordningsprincip"
+
+#: im/table/ime.h:175
+msgid "Use system language model"
+msgstr "Använd systemets språkmodell"
+
+#: im/table/ime.h:179
+msgid ""
+"When available, system language model will be loaded for given language and "
+"provide ability to give better context based order."
+msgstr ""
+"När en systemspråkmodell är tillgänglig läses den in för det aktuella "
+"språket och kan ge en mer kontextbaserad ordning."
+
+#: im/table/ime.h:185
+msgid "Sort candidates based on current context"
+msgstr "Sortera kandidater utifrån aktuell kontext"
+
+#: im/table/ime.h:190
+msgid ""
+"Order the candidate based on the word you already typed. You may want to "
+"disable this option if you want the candidate order to be stable regardless "
+"of the history."
+msgstr ""
+"Ordna kandidaterna utifrån ordet som du redan har skrivit. Du kan vilja "
+"inaktivera alternativet om kandidatordningen ska vara stabil oavsett "
+"historiken."
+
+#: im/table/ime.h:196
+msgid "Wildcard matching Key"
+msgstr "Tangent för jokerteckenmatchning"
+
+#: im/table/ime.h:201
+msgid "Prefix key to trigger Pinyin"
+msgstr "Prefixnyckel för att utlösa pinyin"
+
+#: im/table/ime.h:205
+msgid "Auto select candidate"
+msgstr "Välj kandidat automatiskt"
+
+#: im/table/ime.h:209
+msgid "Length limit of selecting the only candidate"
+msgstr "Längdgräns för val av enda kandidat"
+
+#: im/table/ime.h:214
+msgid ""
+"When current input length is greater than or equal to the limit and there is "
+"only one candidate available, automatically select this candidate. -1 Means "
+"the maximum code length of the table. 0 means this behavior is disabled."
+msgstr ""
+"När den aktuella inmatningslängden är större än eller lika med gränsen och "
+"endast en kandidat är tillgänglig väljs kandidaten automatiskt. -1 betyder "
+"tabellens maximala kodlängd. 0 innebär att beteendet är inaktiverat."
+
+#: im/table/ime.h:223
+msgid "Regular expression for selecting the only candidate"
+msgstr "Reguljärt uttryck för val av enda kandidat"
+
+#: im/table/ime.h:226
+msgid ""
+"When current input matches the regular expression and there is only one "
+"candidate available, automatically select this candidate."
+msgstr ""
+"När aktuell inmatning matchar det reguljära uttrycket och endast en kandidat "
+"är tillgänglig väljs kandidaten automatiskt."
+
+#: im/table/ime.h:233
+msgid "Auto select when no match is found"
+msgstr "Välj automatiskt när ingen träff hittas"
+
+#: im/table/ime.h:238
+msgid ""
+"When typing a new character, if the current input length is greater than or "
+"equal to the limit, and the existing segment with the new character does not "
+"have any matched entries in the table, select the current candidate and then "
+"type in the new character. -1 means the maximum code length of the table. 0 "
+"means this behavior is disabled."
+msgstr ""
+"När du skriver ett nytt tecken och aktuell inmatningslängd är större än "
+"eller lika med gränsen, och det befintliga segmentet med det nya tecknet "
+"saknar matchande poster i tabellen, väljs den aktuella kandidaten och sedan "
+"skrivs det nya tecknet. -1 betyder tabellens maximala kodlängd. 0 innebär "
+"att beteendet är inaktiverat."
+
+#: im/table/ime.h:249
+msgid "Regular expression for auto select when no match is found"
+msgstr "Reguljärt uttryck för automatiskt val när ingen träff hittas"
+
+#: im/table/ime.h:252
+msgid ""
+"When typing a new character, if the current input matches the regular "
+"expression and the existing segment with the new character does not have any "
+"matched entries in the table, select the current candidate and then type in "
+"the new character."
+msgstr ""
+"När du skriver ett nytt tecken och aktuell inmatning matchar det reguljära "
+"uttrycket, och det befintliga segmentet med det nya tecknet saknar matchande "
+"poster i tabellen, väljs den aktuella kandidaten och sedan skrivs det nya "
+"tecknet."
+
+#: im/table/ime.h:258
+msgid "End key"
+msgstr "End-tangent"
+
+#: im/table/ime.h:262
+msgid "Auto phrase length"
+msgstr "Längd på automatisk fras"
+
+#: im/table/ime.h:267
+msgid ""
+"After committing every character, learn the new phrase based on the input "
+"history. If certain word is seen for multiple times or selected by user "
+"once, it will be added as user phrase. -1 means the maximum code length of "
+"the table. 0 means disable this feature. "
+msgstr ""
+"Efter att varje tecken har bekräftats lärs en ny fras in utifrån "
+"inmatningshistoriken. Om ett visst ord förekommer flera gånger eller väljs "
+"av användaren en gång läggs det till som användarfras. -1 betyder tabellens "
+"maximala kodlängd. 0 inaktiverar funktionen. "
+
+#: im/table/ime.h:275
+msgid "Learn auto phrase with phrase"
+msgstr "Lär in automatisk fras med fraser"
+
+#: im/table/ime.h:279
+msgid ""
+"Whether to learn new phrase from other phrases or just single characters."
+msgstr ""
+"Om nya fraser ska läras in från andra fraser eller endast från enstaka "
+"tecken."
+
+#: im/table/ime.h:283
+msgid "Marker for auto phrase in the candidates"
+msgstr "Markör för automatisk fras bland kandidaterna"
+
+#: im/table/ime.h:287
+msgid "Save auto phrase after being typed for ... times"
+msgstr "Spara automatisk fras efter att den har skrivits … gånger"
+
+#: im/table/ime.h:292
+msgid ""
+"If the value less than 0, means this feature is disabled. If auto phrase is "
+"enabled, selecting auto phrase candidate explicitly will still add the word "
+"as a new user phrase."
+msgstr ""
+"Ett värde under 0 innebär att funktionen är inaktiverad. Om automatisk fras "
+"är aktiverad läggs ordet ändå till som ny användarfras när kandidaten för "
+"automatisk fras väljs uttryckligen."
+
+#: im/table/ime.h:295
+msgid "Exact Match"
+msgstr "Exakt matchning"
+
+#: im/table/ime.h:296 im/pinyin/pinyin.h:239
+msgid "Learning"
+msgstr "Inlärning"
+
+#: im/table/ime.h:297
+msgid "Display Hint for word"
+msgstr "Visa ledtråd för ord"
+
+#: im/table/ime.h:299
+msgid "Display custom hint"
+msgstr "Visa egen ledtråd"
+
+#: im/table/ime.h:301
+msgid "Separator text between hint and candidate"
+msgstr "Avgränsningstext mellan ledtråd och kandidat"
+
+#: im/table/ime.h:305
+msgid "Show space between candidate and hint text"
+msgstr "Visa blanksteg mellan kandidat och ledtrådstext"
+
+#: im/table/ime.h:310
+msgid "Candidate List orientation"
+msgstr "Kandidatlistans orientering"
+
+#: im/table/ime.h:313
+msgid "Allow use keypad key as table input"
+msgstr "Tillåt siffertangenter som tabellindata"
+
+#: im/table/ime.h:315
+msgid "Auto rule set"
+msgstr "Automatisk regeluppsättning"
+
+#: im/table/engine.h:53
+msgid "Do not display"
+msgstr "Visa inte"
+
+#: im/table/engine.h:53 im/pinyin/pinyin.h:102 im/table/zrm.conf.in.in:2
+msgid "Ziranma"
+msgstr "Ziranma"
+
+#: im/table/engine.h:53 im/pinyin/pinyin.h:102
+msgid "MS"
+msgstr "MS"
+
+#: im/table/engine.h:54 im/pinyin/pinyin.h:103
+msgid "Ziguang"
+msgstr "Ziguang"
+
+#: im/table/engine.h:54 im/pinyin/pinyin.h:103
+msgid "ABC"
+msgstr "ABC"
+
+#: im/table/engine.h:55 im/pinyin/pinyin.h:104
+msgid "Zhongwenzhixing"
+msgstr "Zhongwenzhixing"
+
+#: im/table/engine.h:55 im/pinyin/pinyin.h:104
+msgid "PinyinJiajia"
+msgstr "PinyinJiajia"
+
+#: im/table/engine.h:56 im/pinyin/pinyin.h:105
+msgid "Xiaohe"
+msgstr "Xiaohe"
+
+#: im/table/engine.h:56 im/pinyin/pinyin.h:105
+msgid "Custom"
+msgstr "Anpassad"
+
+#: im/table/engine.h:61
+msgid "Modify dictionary"
+msgstr "Ändra ordbok"
+
+#: im/table/engine.h:66 im/table/candidate.cpp:118 im/pinyin/pinyin.h:242
+msgid "Forget word"
+msgstr "Glöm ord"
+
+#: im/table/engine.h:71
+msgid "Look up pinyin"
+msgstr "Slå upp pinyin"
+
+#: im/table/engine.h:77
+msgid "Display Shuangpin when looking up pinyin"
+msgstr "Visa Shuangpin när pinyin slås upp"
+
+#: im/table/engine.h:80 im/pinyin/pinyin.h:214
+msgid "Enable Prediction"
+msgstr "Aktivera förutsägelse"
+
+#: im/table/engine.h:83
+msgid "Prediction Size"
+msgstr "Förutsägelsestorlek"
+
+#: im/table/candidate.cpp:84 im/pinyin/pinyincandidate.cpp:224
+msgid "(Half)"
+msgstr "(Halv)"
+
+#: im/table/engine.cpp:91 im/table/engine.cpp:99 im/pinyin/pinyin.cpp:935
+#: im/pinyin/pinyin.cpp:945
+msgid "Prediction Enabled"
+msgstr "Förutsägelse aktiverad"
+
+#: im/table/engine.cpp:92 im/table/engine.cpp:100 im/pinyin/pinyin.cpp:936
+#: im/pinyin/pinyin.cpp:946
+msgid "Prediction Disabled"
+msgstr "Förutsägelse inaktiverad"
+
+#: im/table/engine.cpp:93 im/pinyin/pinyin.cpp:937
+msgid "Show prediction words"
+msgstr "Visa förutsagda ord"
+
+#: im/table/engine.cpp:229
+msgid "Not available"
+msgstr "Inte tillgänglig"
+
+#: im/pinyin/pinyin.h:86
+msgid "Clear"
+msgstr "Rensa"
+
+#: im/pinyin/pinyin.h:87
+msgid "Commit current preedit"
+msgstr "Bekräfta aktuell förredigering"
+
+#: im/pinyin/pinyin.h:88
+msgid "Commit default selection"
+msgstr "Bekräfta standardval"
+
+#: im/pinyin/pinyin.h:105
+msgid "GB Standard"
+msgstr "GB-standard"
+
+#: im/pinyin/pinyin.h:109
+msgid "Do not show"
+msgstr "Visa inte"
+
+#: im/pinyin/pinyin.h:110
+msgid "Composing pinyin"
+msgstr "Komponerar pinyin"
+
+#: im/pinyin/pinyin.h:110
+msgid "Commit preview"
+msgstr "Bekräftelseförhandsvisning"
+
+#: im/pinyin/pinyin.h:119
+msgid "Only Clear candidates"
+msgstr "Rensa endast kandidater"
+
+#: im/pinyin/pinyin.h:120
+msgid "Clear candidates & backspace"
+msgstr "Rensa kandidater och backsteg"
+
+#: im/pinyin/pinyin.h:121
+msgid "Backspace when not using on-screen keyboard"
+msgstr "Backsteg när skärmtangentbordet inte används"
+
+#: im/pinyin/pinyin.h:128
+msgid "None"
+msgstr "Ingen"
+
+#: im/pinyin/pinyin.h:128
+msgid "QWERTY"
+msgstr "QWERTY"
+
+#: im/pinyin/pinyin.h:131
+msgid "ue -> ve"
+msgstr "ue → ve"
+
+#: im/pinyin/pinyin.h:132
+msgid "Common Typo"
+msgstr "Vanligt skrivfel"
+
+#: im/pinyin/pinyin.h:134
+msgid "Match Letter in lower case"
+msgstr "Matcha gemen bokstav"
+
+#: im/pinyin/pinyin.h:135
+msgid "Inner Segment (xian -> xi'an)"
+msgstr "Inre segment (xian → xi'an)"
+
+#: im/pinyin/pinyin.h:137
+msgid "Inner Segment for Short Pinyin (qie -> qi'e)"
+msgstr "Inre segment för kort pinyin (qie → qi'e)"
+
+#: im/pinyin/pinyin.h:140
+msgid "Match partial finals (e -> en, eng, ei)"
+msgstr "Matcha delvisa slutljud (e → en, eng, ei)"
+
+#: im/pinyin/pinyin.h:144
+msgid "Match partial shuangpin if input length is longer than 4"
+msgstr "Matcha delvis shuangpin om inmatningslängden är längre än 4"
+
+#: im/pinyin/pinyin.h:145
+msgid "u <-> v"
+msgstr "u ↔ v"
+
+#: im/pinyin/pinyin.h:146
+msgid "an <-> ang"
+msgstr "an ↔ ang"
+
+#: im/pinyin/pinyin.h:147
+msgid "en <-> eng"
+msgstr "en ↔ eng"
+
+#: im/pinyin/pinyin.h:148
+msgid "ian <-> iang"
+msgstr "ian ↔ iang"
+
+#: im/pinyin/pinyin.h:149
+msgid "in <-> ing"
+msgstr "in ↔ ing"
+
+#: im/pinyin/pinyin.h:150
+msgid "u <-> ou"
+msgstr "u ↔ ou"
+
+#: im/pinyin/pinyin.h:151
+msgid "uan <-> uang"
+msgstr "uan ↔ uang"
+
+#: im/pinyin/pinyin.h:152
+msgid "c <-> ch"
+msgstr "c ↔ ch"
+
+#: im/pinyin/pinyin.h:153
+msgid "f <-> h"
+msgstr "f ↔ h"
+
+#: im/pinyin/pinyin.h:154
+msgid "l <-> n"
+msgstr "l ↔ n"
+
+#: im/pinyin/pinyin.h:155
+msgid "l <-> r"
+msgstr "l ↔ r"
+
+#: im/pinyin/pinyin.h:156
+msgid "s <-> sh"
+msgstr "s ↔ sh"
+
+#: im/pinyin/pinyin.h:157
+msgid "z <-> zh"
+msgstr "z ↔ zh"
+
+#: im/pinyin/pinyin.h:159
+msgid "Correction Layout"
+msgstr "Korrigeringslayout"
+
+#: im/pinyin/pinyin.h:168
+msgid "Shuangpin Profile"
+msgstr "Shuangpin-profil"
+
+#: im/pinyin/pinyin.h:171
+msgid "Show current shuangpin mode"
+msgstr "Visa aktuellt shuangpin-läge"
+
+#: im/pinyin/pinyin.h:175
+msgid "Show English Candidates"
+msgstr "Visa engelska kandidater"
+
+#: im/pinyin/pinyin.h:177
+msgid "Show symbol candidates"
+msgstr "Visa symbolkandidater"
+
+#: im/pinyin/pinyin.h:179
+msgid "Show Chaizi candidates"
+msgstr "Visa Chaizi-kandidater"
+
+#: im/pinyin/pinyin.h:182
+msgid "Enable more Characters after Unicode CJK Extension B"
+msgstr "Aktivera fler tecken efter Unicode CJK-utökning B"
+
+#: im/pinyin/pinyin.h:186
+msgid ""
+"Show stroke candidates when typing with h(一), s(丨), p(丿), n(㇏), z(𠃍)"
+msgstr ""
+"Visa slagkandidater när du skriver med h(一), s(丨), p(丿), n(㇏), z(𠃍)"
+
+#: im/pinyin/pinyin.h:190
+msgid "Enable Cloud Pinyin"
+msgstr "Aktivera moln-pinyin"
+
+#: im/pinyin/pinyin.h:192
+msgid "Configure Cloud Pinyin"
+msgstr "Konfigurera moln-pinyin"
+
+#: im/pinyin/pinyin.h:196
+msgid "Cloud Pinyin Candidate Order"
+msgstr "Kandidatordning för moln-pinyin"
+
+#: im/pinyin/pinyin.h:200
+msgid "Show animation when Cloud Pinyin is loading"
+msgstr "Visa animering medan moln-pinyin läses in"
+
+#: im/pinyin/pinyin.h:203
+msgid "Always show Cloud Pinyin place holder"
+msgstr "Visa alltid platshållare för moln-pinyin"
+
+#: im/pinyin/pinyin.h:206
+msgid "Preedit Mode"
+msgstr "Förredigeringsläge"
+
+#: im/pinyin/pinyin.h:213
+msgid "Show complete pinyin in preedit"
+msgstr "Visa fullständig pinyin i förredigeringen"
+
+#: im/pinyin/pinyin.h:219
+msgid "Keep the current typed text for next input prediction"
+msgstr "Behåll den aktuella skrivna texten för nästa inmatningsförutsägelse"
+
+#: im/pinyin/pinyin.h:223
+msgid "Keep the current typed text for future prediction."
+msgstr "Behåll den aktuella skrivna texten för framtida förutsägelser."
+
+#: im/pinyin/pinyin.h:225
+msgid "Number of Predictions"
+msgstr "Antal förutsägelser"
+
+#: im/pinyin/pinyin.h:231
+msgid "Backspace behavior on prediction"
+msgstr "Backstegsbeteende vid förutsägelse"
+
+#: im/pinyin/pinyin.h:237
+msgid "Action when switching input method"
+msgstr "Åtgärd vid byte av inmatningsmetod"
+
+#: im/pinyin/pinyin.h:248
+msgid "Previous Page"
+msgstr "Föregående sida"
+
+#: im/pinyin/pinyin.h:255
+msgid "Next Page"
+msgstr "Nästa sida"
+
+#: im/pinyin/pinyin.h:280
+msgid "Commit Raw Input"
+msgstr "Bekräfta råindata"
+
+#: im/pinyin/pinyin.h:300
+msgid "Use Keypad as Selection key"
+msgstr "Använd siffertangenter som valtangenter"
+
+#: im/pinyin/pinyin.h:304
+msgid "Choose Character from Phrase"
+msgstr "Välj tecken från fras"
+
+#: im/pinyin/pinyin.h:308
+msgid ""
+"N-th key in the option will select the N-th character in the current "
+"candidate."
+msgstr ""
+"Den N:e tangenten i alternativet väljer det N:e tecknet i den aktuella "
+"kandidaten."
+
+#: im/pinyin/pinyin.h:312
+msgid "Choose Last Character from Phrase"
+msgstr "Välj sista tecknet från frasen"
+
+#: im/pinyin/pinyin.h:315
+msgid "Use BackSpace to cancel the selection"
+msgstr "Använd Backspace för att avbryta valet"
+
+#: im/pinyin/pinyin.h:320
+msgid "Filter by stroke"
+msgstr "Filtrera efter slag"
+
+#: im/pinyin/pinyin.h:324
+msgid "Number of Sentences"
+msgstr "Antal meningar"
+
+#: im/pinyin/pinyin.h:329
+msgid "Number of Phrase Candidates"
+msgstr "Antal fraskandidater"
+
+#: im/pinyin/pinyin.h:333
+msgid "Set to 0 will show all candidates."
+msgstr "Om värdet sätts till 0 visas alla kandidater."
+
+#: im/pinyin/pinyin.h:336
+msgid "Prompt long word length when input length over (0 for disable)"
+msgstr ""
+"Visa lång ordlängd när inmatningslängden överstiger (0 för att inaktivera)"
+
+#: im/pinyin/pinyin.h:338
+msgid "Manage Dictionaries"
+msgstr "Hantera ordböcker"
+
+#: im/pinyin/pinyin.h:340
+msgid "Manage Custom Phrase"
+msgstr "Hantera egna fraser"
+
+#: im/pinyin/pinyin.h:343 modules/punctuation/punctuation.cpp:267
+#: modules/punctuation/punctuation.cpp:269
+#: modules/punctuation/punctuation.conf.in.in:2
+msgid "Punctuation"
+msgstr "Interpunktion"
+
+#: im/pinyin/pinyin.h:347
+msgid "Configure Simplified/Traditional Chinese Conversion"
+msgstr "Konfigurera konvertering mellan förenklad och traditionell kinesiska"
+
+#: im/pinyin/pinyin.h:356
+msgid "Use V to trigger quickphrase"
+msgstr "Använd V för att utlösa snabbfras"
+
+#: im/pinyin/pinyin.h:357
+msgid "Quick Phrase"
+msgstr "Snabbfras"
+
+#: im/pinyin/pinyin.h:364
+msgid "Regular expression to trigger quick phrase"
+msgstr "Reguljärt uttryck för att utlösa snabbfras"
+
+#: im/pinyin/pinyin.h:367
+msgid ""
+"Enter quickphrase mode when current input matches any regular expression "
+"from the list."
+msgstr ""
+"Öppna snabbfrasläget när aktuell inmatning matchar något reguljärt uttryck i "
+"listan."
+
+#: im/pinyin/pinyin.h:370
+msgid "Fuzzy Pinyin"
+msgstr "Fuzzy-pinyin"
+
+#: im/pinyin/pinyincandidate.cpp:417
+msgid "Forget candidate"
+msgstr "Glöm kandidat"
+
+#: im/pinyin/pinyincandidate.cpp:428
+msgid "Pin to top as custom phrase"
+msgstr "Fäst överst som egen fras"
+
+#: im/pinyin/pinyincandidate.cpp:434
+msgid "Delete from custom phrase"
+msgstr "Ta bort från egen fras"
+
+#: im/pinyin/pinyin.cpp:1120
+msgid ""
+"Do you want to enable cloudpinyin now for better prediction? You can always "
+"toggle it later in configuration."
+msgstr ""
+"Vill du aktivera moln-pinyin nu för bättre förutsägelser? Du kan alltid "
+"ändra detta senare i konfigurationen."
+
+#: im/pinyin/pinyin.cpp:1125
+#, c++-format
+msgid ""
+"Do you want to enable cloudpinyin now for better prediction? You can always "
+"toggle it later in configuration or by pressing {}."
+msgstr ""
+"Vill du aktivera moln-pinyin nu för bättre förutsägelser? Du kan alltid "
+"ändra detta senare i konfigurationen eller genom att trycka på {}."
+
+#: im/pinyin/pinyin.cpp:1130
+msgid "Yes"
+msgstr "Ja"
+
+#: im/pinyin/pinyin.cpp:1134 im/pinyin/pinyin.cpp:1418
+#: im/pinyin/pinyin-addon.conf.in.in:2 im/pinyin/pinyin.conf.in:2
+msgid "Pinyin"
+msgstr "Pinyin"
+
+#: im/pinyin/pinyin.cpp:1134
+msgid "Enable Cloudpinyin"
+msgstr "Aktivera moln-pinyin"
+
+#: im/pinyin/pinyin.cpp:1419
+msgid "Cloud Pinyin Status"
+msgstr "Status för moln-pinyin"
+
+#: im/pinyin/pinyin.cpp:1420
+msgid "Cloud Pinyin is enabled."
+msgstr "Moln-pinyin är aktiverat."
+
+#: im/pinyin/pinyin.cpp:1421
+msgid "Cloud Pinyin is disabled."
+msgstr "Moln-pinyin är inaktiverat."
+
+#: im/pinyin/pinyin.cpp:1604
+msgid "[Stroke Filtering]"
+msgstr "[Slagfiltrering]"
+
+#: im/pinyin/pinyin.cpp:1670
+msgid "[Select the word to remove from history]"
+msgstr "[Välj ordet som ska tas bort från historiken]"
+
+#: im/pinyin/pinyin.cpp:1991
+#, c++-format
+msgid "Press {} for {} and Return for {}"
+msgstr "Tryck på {} för {} och Retur för {}"
+
+#: im/pinyin/pinyin.cpp:1994
+#, c++-format
+msgid "Press {} for {}"
+msgstr "Tryck på {} för {}"
+
+#: gui/customphraseeditor/customphrasemodel.cpp:36
+msgctxt "Please ensure the line width is around 80 character width"
+msgid ""
+"The line should be in format key,order=value\n"
+"If value is multiline, you may either write is as\n"
+"key,order=\n"
+"line1\n"
+"line2\n"
+"...\n"
+"lineN\n"
+"Or, write it as key,order=\"line1\\nline2...\\nlineN\"\n"
+"The comment line is started with # or ;.\n"
+msgstr ""
+"Raden ska ha formatet key,order=value\n"
+"Om värdet är flerradigt kan du antingen skriva det som\n"
+"key,order=\n"
+"line1\n"
+"line2\n"
+"...\n"
+"lineN\n"
+"Eller skriva det som key,order=\"line1\\nline2...\\nlineN\"\n"
+"Kommentarrader börjar med # eller ;.\n"
+
+#: gui/customphraseeditor/customphrasemodel.cpp:49
+msgctxt "Please ensure the line width is around 80 character width"
+msgid ""
+"If you want to produce dynamic content, you may set the phrase to\n"
+"start with symbol \"#\". The phrase may contain variable name like\n"
+"$name or ${name}. For example, you can write: sj,2=#$fullhour:$minute\n"
+"to produce current 24-hour time with sj.\n"
+"Built-in functions include:\n"
+"$year Current year, e.g. 1990, 2003.\n"
+"$year_yy Current year in two-digit, e.g. 90, 03.\n"
+"$month Current month, e.g. 1, 2, 3..., 12.\n"
+"$month_mm Current month in two digit, e.g. 01, 02, ... 12.\n"
+"$day Current day of month, e.g. 1, 2, 3..., 31.\n"
+"$day_dd Current day of month in two digit, e.g. 01, 02, ... 31.\n"
+"$weekday Current weekday, e.g. 1, 2, 3, ... 7.\n"
+"$fullhour Current 24-hour, e.g. 00, 01, 02, ..., 23.\n"
+"$halfhour Current 12-hour, 01, 02, 03, ..., 12.\n"
+"$ampm Current AM or PM.\n"
+"$minute Current minute, e.g. 00, 01, ..., 59\n"
+"$second Current second, e.g. 00, 01, ..., 59\n"
+"$year_cn Current year in Chinese, e.g. 一九九零, 二零零三.\n"
+"$year_yy_cn Current year in two digit Chinese, e.g. 九零, 零三.\n"
+"$month_cn Current month in Chinese, e.g. 一月, 二月, ... 十二月.\n"
+"$day_cn Current day in Chinese, e.g. 一, 二, ... 三十一.\n"
+"$fullhour_cn Current 24-hour in Chinese, e.g. 零, 一, 二, ... 二十三.\n"
+"$halfhour_cn Current 12-hour in Chinese, e.g. 一, 二, ... 十二.\n"
+"$ampm_cn Current AM, PM in Chinese, 上午 or 下午.\n"
+"$minute_cn Current minute in Chinese, 零, 一, 二, ... 五十九.\n"
+"$second_cn Current second in Chinese, 零, 一, 二, ... 五十九.\n"
+"\n"
+"If lua is installed, the function defined in imeapi can be invoked \n"
+"with ${lua:function_name}.\n"
+msgstr ""
+"Om du vill skapa dynamiskt innehåll kan du låta frasen\n"
+"börja med symbolen \"#\". Frasen kan innehålla variabelnamn som\n"
+"$name eller ${name}. Du kan till exempel skriva: sj,2=#$fullhour:$minute\n"
+"för att skapa aktuell 24-timmarstid med sj.\n"
+"Inbyggda funktioner är:\n"
+"$year Aktuellt år, t.ex. 1990, 2003.\n"
+"$year_yy Aktuellt år med två siffror, t.ex. 90, 03.\n"
+"$month Aktuell månad, t.ex. 1, 2, 3..., 12.\n"
+"$month_mm Aktuell månad med två siffror, t.ex. 01, 02, ... 12.\n"
+"$day Aktuell dag i månaden, t.ex. 1, 2, 3..., 31.\n"
+"$day_dd Aktuell dag i månaden med två siffror, t.ex. 01, 02, ... 31.\n"
+"$weekday Aktuell veckodag, t.ex. 1, 2, 3, ... 7.\n"
+"$fullhour Aktuell 24-timmarstid, t.ex. 00, 01, 02, ..., 23.\n"
+"$halfhour Aktuell 12-timmarstid, 01, 02, 03, ..., 12.\n"
+"$ampm Aktuell AM eller PM.\n"
+"$minute Aktuell minut, t.ex. 00, 01, ..., 59\n"
+"$second Aktuell sekund, t.ex. 00, 01, ..., 59\n"
+"$year_cn Aktuellt år på kinesiska, t.ex. 一九九零, 二零零三.\n"
+"$year_yy_cn Aktuellt år med två siffror på kinesiska, t.ex. 九零, 零三.\n"
+"$month_cn Aktuell månad på kinesiska, t.ex. 一月, 二月, ... 十二月.\n"
+"$day_cn Aktuell dag på kinesiska, t.ex. 一, 二, ... 三十一.\n"
+"$fullhour_cn Aktuell 24-timmarstid på kinesiska, t.ex. 零, 一, 二, ... 二十"
+"三.\n"
+"$halfhour_cn Aktuell 12-timmarstid på kinesiska, t.ex. 一, 二, ... 十二.\n"
+"$ampm_cn Aktuell AM eller PM på kinesiska, 上午 eller 下午.\n"
+"$minute_cn Aktuell minut på kinesiska, 零, 一, 二, ... 五十九.\n"
+"$second_cn Aktuell sekund på kinesiska, 零, 一, 二, ... 五十九.\n"
+"\n"
+"Om Lua är installerat kan funktionen som definieras i imeapi anropas\n"
+"med ${lua:function_name}.\n"
+
+#: gui/customphraseeditor/customphrasemodel.cpp:96
+msgid "Key"
+msgstr "Tangent"
+
+#: gui/customphraseeditor/customphrasemodel.cpp:99
+msgid "Phrase"
+msgstr "Fras"
+
+#: gui/customphraseeditor/customphrasemodel.cpp:102
+msgid "Order"
+msgstr "Ordning"
+
+#: gui/customphraseeditor/customphraseeditor.cpp:138
+msgid "Usage"
+msgstr "Användning"
+
+#: gui/customphraseeditor/customphraseeditor.cpp:175
+msgid "Custom Phrase Editor"
+msgstr "Redigerare för egna fraser"
+
+#: gui/customphraseeditor/customphraseeditor.cpp:218
+msgid "File updated"
+msgstr "Filen uppdaterades"
+
+#: gui/customphraseeditor/customphraseeditor.cpp:219
+msgid "Do you want to reload custom phrase from disk?"
+msgstr "Vill du läsa in egna fraser från disken igen?"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:49
+msgid "From &File"
+msgstr "Från &fil"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:50
+msgid "From &Sogou Cell Dictionary File"
+msgstr "Från &Sogou Cell-ordlistefil"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:52
+msgid "&Browse Sogou Cell Dictionary Online"
+msgstr "&Bläddra bland Sogou Cell-ordlistor på nätet"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:59
+msgid "&Clear User Data"
+msgstr "&Rensa användardata"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:60
+msgid "Clear &All Data"
+msgstr "Rensa &alla data"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:107
+msgid "Pinyin dictionary manager"
+msgstr "Pinyin-ordlistehanterare"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:114
+msgid "Input Dictionary Name"
+msgstr "Indataordlistans namn"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:114
+msgid "New Dictionary Name:"
+msgstr "Nytt ordlistenamn:"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:127
+msgid "Failed to create directory"
+msgstr "Det gick inte att skapa katalogen"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:128
+#: gui/pinyindictmanager/pinyindictmanager.cpp:239
+#: gui/pinyindictmanager/pinyindictmanager.cpp:297
+msgid "Create directory failed. Please check the permission or disk space."
+msgstr ""
+"Det gick inte att skapa katalogen. Kontrollera behörighet eller diskutrymme."
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:138
+msgid "Failed to create temp file"
+msgstr "Det gick inte att skapa en temporär fil"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:139
+msgid "Creating temp file failed. Please check the permission or disk space."
+msgstr ""
+"Det gick inte att skapa en temporär fil. Kontrollera behörighet eller "
+"diskutrymme."
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:154
+msgid "Dictionary already exists"
+msgstr "Ordlistan finns redan"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:155
+msgid "%1 already exists, do you want to overwrite this dictionary?"
+msgstr "%1 finns redan. Vill du skriva över den här ordlistan?"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:174
+msgid "Select Dictionary File"
+msgstr "Välj ordlistefil"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:215
+msgid "Select scel file"
+msgstr "Välj scel-fil"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:215
+msgid "Scel file (*.scel)"
+msgstr "Scel-fil (*.scel)"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:238
+#: gui/pinyindictmanager/pinyindictmanager.cpp:296
+msgid "Failed to get runtime directory"
+msgstr "Det gick inte att hämta körningskatalogen"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:345
+#: gui/pinyindictmanager/pinyindictmanager.cpp:377
+msgid "Confirm deletion"
+msgstr "Bekräfta borttagning"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:346
+msgid "Are you sure to delete all dictionaries?"
+msgstr "Är du säker på att du vill ta bort alla ordlistor?"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:378
+msgid "Are you sure to delete %1?"
+msgstr "Är du säker på att du vill ta bort %1?"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:385
+msgid "File Operation Failed"
+msgstr "Filåtgärden misslyckades"
+
+#: gui/pinyindictmanager/pinyindictmanager.cpp:386
+msgid "Error while deleting %1."
+msgstr "Fel vid borttagning av %1."
+
+#: gui/pinyindictmanager/filedownloader.cpp:26
+msgid "Create temporary file failed."
+msgstr "Det gick inte att skapa temporär fil."
+
+#: gui/pinyindictmanager/filedownloader.cpp:30
+msgid "Temporary file created."
+msgstr "Temporär fil skapades."
+
+#: gui/pinyindictmanager/filedownloader.cpp:39
+msgid "Failed to create request."
+msgstr "Det gick inte att skapa begäran."
+
+#: gui/pinyindictmanager/filedownloader.cpp:43
+msgid "Download started."
+msgstr "Hämtningen startade."
+
+#: gui/pinyindictmanager/filedownloader.cpp:74
+msgid "%1% Downloaded."
+msgstr "%1 % hämtat."
+
+#: gui/pinyindictmanager/filedownloader.cpp:81
+msgid "Download Finished"
+msgstr "Hämtningen är klar"
+
+#: gui/pinyindictmanager/processrunner.cpp:44
+#: gui/pinyindictmanager/renamefile.cpp:34
+msgid "Converter crashed."
+msgstr "Konverteraren kraschade."
+
+#: gui/pinyindictmanager/processrunner.cpp:50
+msgid "Convert failed."
+msgstr "Konverteringen misslyckades."
+
+#: gui/pinyindictmanager/browserdialog.cpp:54
+msgid "Browse Sogou Cell Dict repository"
+msgstr "Bläddra i Sogou Cell-ordlistearkivet"
+
+#: gui/pinyindictmanager/browserdialog.cpp:99
+msgid "Wrong Link"
+msgstr "Fel länk"
+
+#: gui/pinyindictmanager/browserdialog.cpp:100
+msgid "No browsing outside pinyin.sogou.com, now redirect to home page."
+msgstr ""
+"Det går inte att bläddra utanför pinyin.sogou.com. Omdirigerar nu till "
+"startsidan."
+
+#: modules/fullwidth/fullwidth.cpp:70 modules/fullwidth/fullwidth.conf.in.in:2
+msgid "Full width character"
+msgstr "Fullbreddstecken"
+
+#: modules/fullwidth/fullwidth.cpp:73 modules/fullwidth/fullwidth.h:29
+msgid "Full width Character"
+msgstr "Fullbreddstecken"
+
+#: modules/fullwidth/fullwidth.cpp:74
+msgid "Full width Character is enabled."
+msgstr "Fullbreddstecken är aktiverade."
+
+#: modules/fullwidth/fullwidth.cpp:75
+msgid "Full width Character is disabled."
+msgstr "Fullbreddstecken är inaktiverade."
+
+#: modules/fullwidth/fullwidth.h:19 modules/chttrans/chttrans.h:53
+#: modules/punctuation/punctuation.h:39
+msgid "Toggle key"
+msgstr "Växlingstangent"
+
+#: modules/fullwidth/fullwidth.h:30
+msgid "Half width Character"
+msgstr "Halvbreddstecken"
+
+#: modules/pinyinhelper/pinyinhelper.cpp:79
+#, c++-format
+msgid "{0} ({1})"
+msgstr "{0} ({1})"
+
+#: modules/chttrans/opencc-profile-name.cpp:5
+msgctxt "OpenCC Profile"
+msgid "Traditional Chinese (Taiwan standard) to Simplified Chinese"
+msgstr "Traditionell kinesiska (Taiwanstandard) till förenklad kinesiska"
+
+#: modules/chttrans/opencc-profile-name.cpp:6
+msgctxt "OpenCC Profile"
+msgid "Traditional Chinese (Taiwan standard) to Traditional Chinese"
+msgstr "Traditionell kinesiska (Taiwanstandard) till traditionell kinesiska"
+
+#: modules/chttrans/opencc-profile-name.cpp:7
+msgctxt "OpenCC Profile"
+msgid ""
+"Traditional Chinese (Taiwan standard) to Simplified Chinese (with phrases)"
+msgstr ""
+"Traditionell kinesiska (Taiwanstandard) till förenklad kinesiska (med fraser)"
+
+#: modules/chttrans/opencc-profile-name.cpp:8
+msgctxt "OpenCC Profile"
+msgid "Traditional Chinese to Traditional Chinese (Taiwan standard)"
+msgstr "Traditionell kinesiska till traditionell kinesiska (Taiwanstandard)"
+
+#: modules/chttrans/opencc-profile-name.cpp:9
+msgctxt "OpenCC Profile"
+msgid ""
+"Simplified Chinese to Traditional Chinese (Taiwan standard, with phrases)"
+msgstr ""
+"Förenklad kinesiska till traditionell kinesiska (Taiwanstandard, med fraser)"
+
+#: modules/chttrans/opencc-profile-name.cpp:10
+msgctxt "OpenCC Profile"
+msgid "Simplified Chinese to Traditional Chinese (Taiwan standard)"
+msgstr "Förenklad kinesiska till traditionell kinesiska (Taiwanstandard)"
+
+#: modules/chttrans/opencc-profile-name.cpp:11
+msgctxt "OpenCC Profile"
+msgid "Simplified Chinese to Traditional Chinese"
+msgstr "Förenklad kinesiska till traditionell kinesiska"
+
+#: modules/chttrans/opencc-profile-name.cpp:12
+msgctxt "OpenCC Profile"
+msgid "Traditional Chinese (Hong Kong variant) to Simplified Chinese"
+msgstr "Traditionell kinesiska (Hongkongvariant) till förenklad kinesiska"
+
+#: modules/chttrans/opencc-profile-name.cpp:13
+msgctxt "OpenCC Profile"
+msgid ""
+"New Japanese Kanji (Shinjitai) to Traditional Chinese Characters (Kyūjitai)"
+msgstr ""
+"Nya japanska kanji (Shinjitai) till traditionella kinesiska tecken (Kyūjitai)"
+
+#: modules/chttrans/opencc-profile-name.cpp:14
+msgctxt "OpenCC Profile"
+msgid "Traditional Chinese to Simplified Chinese"
+msgstr "Traditionell kinesiska till förenklad kinesiska"
+
+#: modules/chttrans/opencc-profile-name.cpp:15
+msgctxt "OpenCC Profile"
+msgid ""
+"Traditional Chinese Characters (Kyūjitai) to New Japanese Kanji (Shinjitai)"
+msgstr ""
+"Traditionella kinesiska tecken (Kyūjitai) till nya japanska kanji (Shinjitai)"
+
+#: modules/chttrans/opencc-profile-name.cpp:16
+msgctxt "OpenCC Profile"
+msgid "Traditional Chinese (Hong Kong variant) to Traditional Chinese"
+msgstr "Traditionell kinesiska (Hongkongvariant) till traditionell kinesiska"
+
+#: modules/chttrans/opencc-profile-name.cpp:17
+msgctxt "OpenCC Profile"
+msgid "Traditional Chinese to Traditional Chinese (Hong Kong variant)"
+msgstr "Traditionell kinesiska till traditionell kinesiska (Hongkongvariant)"
+
+#: modules/chttrans/opencc-profile-name.cpp:18
+msgctxt "OpenCC Profile"
+msgid "Simplified Chinese to Traditional Chinese (Hong Kong variant)"
+msgstr "Förenklad kinesiska till traditionell kinesiska (Hongkongvariant)"
+
+#: modules/chttrans/chttrans.h:49
+msgid "Translate engine"
+msgstr "Översättningsmotor"
+
+#: modules/chttrans/chttrans.h:55
+msgid "Enabled Input Methods"
+msgstr "Aktiverade inmatningsmetoder"
+
+#: modules/chttrans/chttrans.h:60
+msgid "OpenCC profile for Simplified to Traditional"
+msgstr "OpenCC-profil för förenklad till traditionell kinesiska"
+
+#: modules/chttrans/chttrans.h:65
+msgid "OpenCC profile for Traditional to Simplified"
+msgstr "OpenCC-profil för traditionell till förenklad kinesiska"
+
+#: modules/chttrans/chttrans.h:103
+msgid "Traditional Chinese"
+msgstr "Traditionell kinesiska"
+
+#: modules/chttrans/chttrans.h:104
+msgid "Simplified Chinese"
+msgstr "Förenklad kinesiska"
+
+#: modules/chttrans/chttrans.cpp:116 modules/chttrans/chttrans.conf.in.in:2
+msgid "Simplified and Traditional Chinese Translation"
+msgstr "Översättning mellan förenklad och traditionell kinesiska"
+
+#: modules/chttrans/chttrans.cpp:119
+msgid "Switch to Traditional Chinese"
+msgstr "Växla till traditionell kinesiska"
+
+#: modules/chttrans/chttrans.cpp:120
+msgid "Switch to Simplified Chinese"
+msgstr "Växla till förenklad kinesiska"
+
+#: modules/chttrans/chttrans.cpp:121
+msgid "Traditional Chinese is enabled."
+msgstr "Traditionell kinesiska är aktiverad."
+
+#: modules/chttrans/chttrans.cpp:122
+msgid "Simplified Chinese is enabled."
+msgstr "Förenklad kinesiska är aktiverad."
+
+#: modules/chttrans/chttrans.cpp:263
+msgid "Default"
+msgstr "Standard"
+
+#: modules/cloudpinyin/cloudpinyin.h:39
+msgid "Toggle Key"
+msgstr "Växlingstangent"
+
+#: modules/cloudpinyin/cloudpinyin.h:42
+msgid "Minimum Pinyin Length"
+msgstr "Minsta Pinyin-längd"
+
+#: modules/cloudpinyin/cloudpinyin.h:43
+msgid "Backend"
+msgstr "Bakände"
+
+#: modules/cloudpinyin/cloudpinyin.h:48
+msgid "Proxy"
+msgstr "Proxy"
+
+#: modules/cloudpinyin/cloudpinyin.h:52
+msgid ""
+"The proxy format must be the one that is supported by cURL. Usually it is in "
+"the format of [scheme]://[host]:[port], e.g. http://localhost:1080."
+msgstr ""
+"Proxyformatet måste stödjas av cURL. Vanligtvis är formatet [schema]://"
+"[värd]:[port], t.ex. http://localhost:1080."
+
+#: modules/punctuation/punctuation.h:42
+msgid "Half width punctuation after latin letter or number"
+msgstr "Halvbreddsinterpunktion efter latinsk bokstav eller siffra"
+
+#: modules/punctuation/punctuation.h:45
+msgid "Type paired punctuations together (e.g. Quote)"
+msgstr "Skriv parvisa skiljetecken tillsammans (t.ex. citattecken)"
+
+#: modules/punctuation/punctuation.h:51
+msgctxt "Key of the punctuation, e.g. comma"
+msgid "Key"
+msgstr "Tangent"
+
+#: modules/punctuation/punctuation.h:52
+msgid "Mapping"
+msgstr "Mappning"
+
+#: modules/punctuation/punctuation.h:54
+msgid "Alternative Mapping"
+msgstr "Alternativ mappning"
+
+#: modules/punctuation/punctuation.h:62
+msgid "Entries"
+msgstr "Poster"
+
+#: modules/punctuation/punctuation.h:104
+msgid "Full width punctuation"
+msgstr "Fullbreddsinterpunktion"
+
+#: modules/punctuation/punctuation.h:105
+msgid "Half width punctuation"
+msgstr "Halvbreddsinterpunktion"
+
+#: modules/punctuation/punctuation.cpp:270
+msgid "Full width punctuation is enabled."
+msgstr "Fullbreddsinterpunktion är aktiverad."
+
+#: modules/punctuation/punctuation.cpp:271
+msgid "Full width punctuation is disabled."
+msgstr "Fullbreddsinterpunktion är inaktiverad."
+
+#. i18n: file: gui/customphraseeditor/editordialog.ui:14
+#. i18n: ectx: property (windowTitle), widget (QDialog, EditorDialog)
+#: rc.cpp:3
+#, kde-format
+msgid "Add Phrase"
+msgstr "Lägg till fras"
+
+#. i18n: file: gui/customphraseeditor/editordialog.ui:55
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:6
+#, kde-format
+msgid "Order:"
+msgstr "Ordning:"
+
+#. i18n: file: gui/customphraseeditor/customphraseeditor.ui:41
+#. i18n: ectx: property (text), widget (QPushButton, addButton_)
+#: rc.cpp:9
+#, kde-format
+msgid "&Add"
+msgstr "&Lägg till"
+
+#. i18n: file: gui/customphraseeditor/customphraseeditor.ui:52
+#. i18n: ectx: property (text), widget (QPushButton, removeButton_)
+#. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:33
+#. i18n: ectx: property (text), widget (QPushButton, removeButton_)
+#: rc.cpp:12 rc.cpp:33
+#, kde-format
+msgid "&Remove"
+msgstr "&Ta bort"
+
+#. i18n: file: gui/customphraseeditor/customphraseeditor.ui:63
+#. i18n: ectx: property (text), widget (QPushButton, helpButton_)
+#: rc.cpp:15
+#, kde-format
+msgid "&Usage"
+msgstr "&Användning"
+
+#. i18n: file: gui/customphraseeditor/customphraseeditor.ui:73
+#. i18n: ectx: property (text), widget (QPushButton, externalEditor_)
+#: rc.cpp:18
+#, kde-format
+msgid "&External Editor"
+msgstr "&Extern redigerare"
+
+#. i18n: file: gui/customphraseeditor/customphraseeditor.ui:84
+#. i18n: ectx: property (text), widget (QPushButton, clearButton_)
+#: rc.cpp:21
+#, kde-format
+msgid "&Clear"
+msgstr "&Rensa"
+
+#. i18n: file: gui/pinyindictmanager/browserdialog.ui:14
+#. i18n: ectx: property (windowTitle), widget (QDialog, BrowserDialog)
+#: rc.cpp:24
+#, kde-format
+msgid "Dialog"
+msgstr "Dialogruta"
+
+#. i18n: file: gui/pinyindictmanager/browserdialog.ui:21
+#. i18n: ectx: property (url), widget (QWebEngineView, webView_)
+#: rc.cpp:27
+#, kde-format
+msgid "about:blank"
+msgstr "about:blank"
+
+#. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:22
+#. i18n: ectx: property (text), widget (QPushButton, importButton_)
+#: rc.cpp:30
+#, kde-format
+msgid "&Import"
+msgstr "&Importera"
+
+#. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:44
+#. i18n: ectx: property (text), widget (QPushButton, removeAllButton_)
+#: rc.cpp:36
+#, kde-format
+msgid "Remove &All"
+msgstr "Ta bort &alla"
+
+#. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:55
+#. i18n: ectx: property (text), widget (QPushButton, clearDictButton_)
+#: rc.cpp:39
+#, kde-format
+msgid "&Clear Dictionary"
+msgstr "&Rensa ordlista"
+
+#. i18n: file: gui/pinyindictmanager/pinyindictmanager.ui:66
+#. i18n: ectx: property (text), widget (QPushButton, openDirectoryButton_)
+#: rc.cpp:42
+#, kde-format
+msgid "&Open User Data Directory"
+msgstr "&Öppna användardatakatalog"
+
+#: im/table/cangjie.conf.in.in:2
+msgid "Cangjie (Simplified Chinese)"
+msgstr "Cangjie (förenklad kinesiska)"
+
+#: im/table/erbi.conf.in.in:2
+msgid "Erbi"
+msgstr "Erbi"
+
+#: im/table/db.conf.in.in:2
+msgid "Dianbaoma"
+msgstr "Dianbaoma"
+
+#: im/table/wbpy.conf.in.in:2
+msgid "Wubi Pinyin"
+msgstr "Wubi Pinyin"
+
+#: im/table/table.conf.in.in:2
+msgid "Table"
+msgstr "Tabell"
+
+#: im/table/qxm.conf.in.in:2
+msgid "Bingchan"
+msgstr "Bingchan"
+
+#: im/table/wanfeng.conf.in.in:2
+msgid "Wanfeng"
+msgstr "Wanfeng"
+
+#: im/table/wbx.conf.in.in:2
+msgid "Wubi"
+msgstr "Wubi"
+
+#: im/pinyin/shuangpin.conf.in:2
+msgid "Shuangpin"
+msgstr "Shuangpin"
+
+#: modules/pinyinhelper/pinyinhelper.conf.in.in:2
+msgid "Extra Pinyin functionality"
+msgstr "Extra Pinyin-funktioner"
+
+#: modules/cloudpinyin/cloudpinyin.conf.in.in:2
+msgid "Cloud Pinyin"
+msgstr "Moln-pinyin"
+
+#: org.fcitx.Fcitx5.Addon.ChineseAddons.metainfo.xml.in:7
+msgid "Chinese Addons"
+msgstr "Kinesiska tillägg"
+
+#: org.fcitx.Fcitx5.Addon.ChineseAddons.metainfo.xml.in:8
+msgid ""
+"Add support for Pinyin, Table and many other Chinese related functionality "
+"to Fcitx"
+msgstr ""
+"Lägg till stöd för Pinyin, tabeller och många andra kinesiskrelaterade "
+"funktioner i Fcitx"
