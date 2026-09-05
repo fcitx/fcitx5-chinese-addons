@@ -38,11 +38,22 @@ FCITX_DEFINE_LOG_CATEGORY(cloudpinyin, "cloudpinyin");
 constexpr int MAX_ERROR = 10;
 constexpr uint64_t minInUs = 60000000;
 
+std::string sessionID(const fcitx::ICUUID &uuid) {
+    constexpr char hex[] = "0123456789abcdef";
+    std::string result;
+    result.reserve(uuid.size() * 2);
+    for (const auto byte : uuid) {
+        result.push_back(hex[byte >> 4]);
+        result.push_back(hex[byte & 0xf]);
+    }
+    return result;
+}
+
 } // namespace
 
 CloudPinyin::CloudPinyin(fcitx::AddonManager *manager)
     : eventLoop_(manager->eventLoop()),
-      dispatcher_(manager->instance()->eventDispatcher()) {
+      dispatcher_(manager->instance()->eventDispatcher()), manager_(manager) {
     curl_global_init(CURL_GLOBAL_ALL);
 
     backends_.emplace(CloudPinyinBackend::Google,
@@ -70,62 +81,106 @@ CloudPinyin::~CloudPinyin() {}
 
 void CloudPinyin::reloadConfig() {
     readAsIni(config_, "conf/cloudpinyin.conf");
+#ifdef FCITX_HAS_LUA
+    updateLuaBackend();
+#endif
 }
+
+void CloudPinyin::setConfig(const fcitx::RawConfig &config) {
+    config_.load(config, true);
+    fcitx::safeSaveAsIni(config_, "conf/cloudpinyin.conf");
+#ifdef FCITX_HAS_LUA
+    updateLuaBackend();
+#endif
+}
+
+#ifdef FCITX_HAS_LUA
+void CloudPinyin::updateLuaBackend() {
+    backends_[CloudPinyinBackend::Lua] = createBackend(
+        CloudPinyinBackend::Lua, manager_, config_.luaProvider.value());
+}
+#endif
 
 void CloudPinyin::request(const std::string &pinyin,
                           CloudPinyinCallback callback) {
-    if (static_cast<int>(pinyin.size()) < config_.minimumLength.value()) {
-        callback(pinyin, "");
+    requestWithContext(
+        nullptr, pinyin, pinyin, "", "", "",
+        [callback = std::move(callback)](const std::string &requestPinyin,
+                                         const CloudPinyinResult &result) {
+            callback(requestPinyin, result.text);
+        });
+}
+
+void CloudPinyin::requestWithContext(fcitx::InputContext *inputContext,
+                                     const std::string &queryPinyin,
+                                     const std::string &fullPinyin,
+                                     const std::string &input,
+                                     const std::string &selected,
+                                     const std::string &first,
+                                     CloudPinyinResultCallback callback) {
+    CloudPinyinRequestContext context{.queryPinyin = queryPinyin,
+                                      .fullPinyin = fullPinyin,
+                                      .input = input,
+                                      .selected = selected,
+                                      .first = first};
+    if (inputContext) {
+        context.program = inputContext->program();
+        context.session = sessionID(inputContext->uuid());
+        const auto &surrounding = inputContext->surroundingText();
+        if (surrounding.isValid()) {
+            const auto &text = surrounding.text();
+            const auto cursor =
+                utf8::ncharByteLength(text.begin(), surrounding.cursor());
+            context.before = text.substr(0, cursor);
+            context.after = text.substr(cursor);
+        }
+    }
+    requestImpl(context, std::move(callback));
+}
+
+void CloudPinyin::requestImpl(const CloudPinyinRequestContext &context,
+                              CloudPinyinResultCallback callback) {
+    if (static_cast<int>(context.queryPinyin.size()) <
+        config_.minimumLength.value()) {
+        callback(context.queryPinyin, {});
         return;
     }
-    if (auto *value = cache_.find(pinyin)) {
-        callback(pinyin, *value);
-    } else {
-        auto backend = config_.backend.value();
-        auto iter = backends_.find(backend);
-        if (iter == backends_.end() || errorCount_ >= MAX_ERROR) {
-            callback(pinyin, "");
+    auto backend = config_.backend.value();
+    auto iter = backends_.find(backend);
+    if (iter == backends_.end() || !iter->second || errorCount_ >= MAX_ERROR) {
+        callback(context.queryPinyin, {});
+        return;
+    }
+    auto b = iter->second;
+    if (const auto cacheKey = b->cacheKey(context)) {
+        if (auto *value = cache_.find(*cacheKey)) {
+            callback(context.queryPinyin, *value);
             return;
         }
-        auto *b = iter->second.get();
-        if (!thread_->addRequest([proxy = *config_.proxy, b, &pinyin,
-                                  &callback](CurlQueue *queue) {
-                const auto url = b->prepareRequest(pinyin);
-                if (url.empty()) {
+    }
+    if (!thread_->addRequest(
+            [proxy = *config_.proxy, b, &context, &callback](CurlQueue *queue) {
+                const auto request = b->prepareRequest(context);
+                if (!request || !queue->setupRequest(*request, proxy)) {
+                    queue->release();
                     return false;
                 }
-                CLOUDPINYIN_DEBUG() << "Request URL: " << url;
-                if (curl_easy_setopt(queue->curl(), CURLOPT_URL, url.c_str()) !=
-                    CURLE_OK) {
-                    return false;
-                }
-                if (curl_easy_setopt(
-                        queue->curl(), CURLOPT_PROXY,
-                        (proxy.empty() ? nullptr : proxy.data())) != CURLE_OK) {
-                    return false;
-                }
-                queue->setPinyin(pinyin);
+                queue->setContext(context);
+                queue->setBackend(b);
                 queue->setBusy();
                 queue->setCallback(callback);
                 return true;
             })) {
-            callback(pinyin, "");
-        }
+        callback(context.queryPinyin, {});
     }
 }
 
 void CloudPinyin::notifyFinished() {
     dispatcher_.scheduleWithContext(this->watch(), [this]() {
         CurlQueue *item;
-        auto backend = config_.backend.value();
-        auto iter = backends_.find(backend);
-        Backend *b = nullptr;
-        if (iter != backends_.end()) {
-            b = iter->second.get();
-        }
 
         while ((item = thread_->popFinished())) {
-            if (item->httpCode() != 200) {
+            if (!item->succeeded() || item->httpCode() != 200) {
                 errorCount_ += 1;
 
                 if (errorCount_ == MAX_ERROR && resetError_) {
@@ -136,18 +191,23 @@ void CloudPinyin::notifyFinished() {
                 }
             }
 
-            std::string hanzi;
-            if (b) {
-                const std::string_view result(item->result().data(),
-                                              item->result().size());
-                CLOUDPINYIN_DEBUG() << "Request result: " << result;
-                hanzi = b->parseResult(result);
-            } else {
-                hanzi = "";
+            CloudPinyinResult result;
+            const auto backend = item->backend();
+            if (backend) {
+                const HTTPResponse response{
+                    item->httpCode(),
+                    std::string_view(item->result().data(),
+                                     item->result().size()),
+                    item->headers()};
+                CLOUDPINYIN_DEBUG()
+                    << "Request response status: " << response.status;
+                result = backend->parseResult(item->context(), response);
             }
-            item->callback()(item->pinyin(), hanzi);
-            if (!hanzi.empty()) {
-                cache_.insert(item->pinyin(), hanzi);
+            item->callback()(item->context().queryPinyin, result);
+            if (!result.text.empty()) {
+                if (const auto cacheKey = backend->cacheKey(item->context())) {
+                    cache_.insert(*cacheKey, result);
+                }
             }
             item->release();
         }

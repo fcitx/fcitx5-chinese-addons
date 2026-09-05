@@ -225,12 +225,12 @@ class CustomCloudPinyinCandidateWord
       public PinyinAbstractCandidateWord,
       public InsertableAsCustomPhraseInterface {
 public:
-    CustomCloudPinyinCandidateWord(PinyinEngine *engine,
-                                   const std::string &pinyin,
-                                   const std::string &selectedSentence,
-                                   InputContext *inputContext,
-                                   CloudPinyinSelectedCallback callback,
-                                   CandidateOrder order);
+    CustomCloudPinyinCandidateWord(
+        PinyinEngine *engine, const std::string &queryPinyin,
+        const std::string &fullPinyin, const std::string &input,
+        const std::string &selectedSentence, const std::string &first,
+        InputContext *inputContext, CloudPinyinSelectedCallback callback,
+        CandidateOrder order);
 
     void select(InputContext *inputContext) const override;
 

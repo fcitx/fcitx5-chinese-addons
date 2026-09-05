@@ -7,6 +7,7 @@
 #ifndef _CLOUDPINYIN_FETCH_H_
 #define _CLOUDPINYIN_FETCH_H_
 
+#include "backend.h"
 #include "cloudpinyin_public.h"
 #include <algorithm>
 #include <cstddef>
@@ -18,6 +19,7 @@
 #include <fcitx-utils/eventdispatcher.h>
 #include <fcitx-utils/eventloopinterface.h>
 #include <fcitx-utils/intrusivelist.h>
+#include <fcitx-utils/misc.h>
 #include <functional>
 #include <iterator>
 #include <memory>
@@ -49,6 +51,9 @@ public:
             (curl_easy_setopt(curl_, CURLOPT_WRITEDATA, this) == CURLE_OK) &&
             (curl_easy_setopt(curl_, CURLOPT_WRITEFUNCTION,
                               &CurlQueue::curlWriteFunction) == CURLE_OK) &&
+            (curl_easy_setopt(curl_, CURLOPT_HEADERDATA, this) == CURLE_OK) &&
+            (curl_easy_setopt(curl_, CURLOPT_HEADERFUNCTION,
+                              &CurlQueue::curlHeaderFunction) == CURLE_OK) &&
             (curl_easy_setopt(curl_, CURLOPT_TIMEOUT, 10L) == CURLE_OK) &&
             (curl_easy_setopt(curl_, CURLOPT_NOSIGNAL, 1L) == CURLE_OK);
         if (!result) {
@@ -56,19 +61,36 @@ public:
         }
     }
 
-    ~CurlQueue() override { curl_easy_cleanup(curl_); }
+    ~CurlQueue() override {
+        release();
+        curl_easy_cleanup(curl_);
+    }
 
     void release() {
         busy_ = false;
         data_.clear();
-        pinyin_.clear();
+        headers_.clear();
+        headerSize_ = 0;
+        context_ = {};
+        requestBody_.clear();
         // make sure lambda is free'd
-        callback_ = CloudPinyinCallback();
+        callback_ = CloudPinyinResultCallback();
+        backend_.reset();
         httpCode_ = 0;
+        curlResult_ = CURLE_OK;
+        curl_easy_setopt(curl_, CURLOPT_HTTPHEADER, nullptr);
+        curl_easy_setopt(curl_, CURLOPT_CUSTOMREQUEST, nullptr);
+        curl_easy_setopt(curl_, CURLOPT_POST, 0L);
+        curl_easy_setopt(curl_, CURLOPT_POSTFIELDS, nullptr);
+        curl_easy_setopt(curl_, CURLOPT_POSTFIELDSIZE, 0L);
+        curl_easy_setopt(curl_, CURLOPT_PROXY, nullptr);
+        requestHeaders_.reset();
     }
 
-    const auto &pinyin() const { return pinyin_; }
-    void setPinyin(std::string pinyin) { pinyin_ = std::move(pinyin); }
+    const auto &context() const { return context_; }
+    void setContext(CloudPinyinRequestContext context) {
+        context_ = std::move(context);
+    }
 
     auto curl() { return curl_; }
     void finish(CURLcode result) {
@@ -79,20 +101,78 @@ public:
     bool busy() const { return busy_; }
     void setBusy() { busy_ = true; }
 
-    const std::vector<char> &result() { return data_; }
+    const std::vector<char> &result() const { return data_; }
+    const HTTPHeaders &headers() const { return headers_; }
 
-    CloudPinyinCallback callback() { return callback_; }
-    void setCallback(CloudPinyinCallback callback) {
+    CloudPinyinResultCallback callback() { return callback_; }
+    void setCallback(CloudPinyinResultCallback callback) {
         callback_ = std::move(callback);
     }
 
     auto httpCode() const { return httpCode_; }
+    bool succeeded() const { return curlResult_ == CURLE_OK; }
+
+    bool setupRequest(const HTTPRequest &request, const std::string &proxy) {
+        if (request.method == "GET" && !request.body.empty()) {
+            return false;
+        }
+        UniqueCPtr<curl_slist, curl_slist_free_all> requestHeaders;
+        for (const auto &[name, value] : request.headers) {
+            auto *oldHeaders = requestHeaders.release();
+            auto *headers =
+                curl_slist_append(oldHeaders, (name + ": " + value).c_str());
+            if (!headers) {
+                requestHeaders.reset(oldHeaders);
+                return false;
+            }
+            requestHeaders.reset(headers);
+        }
+        requestHeaders_ = std::move(requestHeaders);
+        requestBody_ = request.body;
+        const bool hasBody = !requestBody_.empty();
+        const bool isPost = request.method == "POST";
+        const bool needsPostFields = hasBody || isPost;
+        return curl_easy_setopt(curl_, CURLOPT_URL, request.url.c_str()) ==
+                   CURLE_OK &&
+               curl_easy_setopt(curl_, CURLOPT_PROXY,
+                                proxy.empty() ? nullptr : proxy.c_str()) ==
+                   CURLE_OK &&
+               curl_easy_setopt(curl_, CURLOPT_TIMEOUT, request.timeout) ==
+                   CURLE_OK &&
+               curl_easy_setopt(curl_, CURLOPT_HTTPHEADER,
+                                requestHeaders_.get()) == CURLE_OK &&
+               curl_easy_setopt(curl_, CURLOPT_CUSTOMREQUEST,
+                                request.method == "GET"
+                                    ? nullptr
+                                    : request.method.c_str()) == CURLE_OK &&
+               curl_easy_setopt(curl_, CURLOPT_HTTPGET,
+                                !isPost && !hasBody ? 1L : 0L) == CURLE_OK &&
+               (!isPost ||
+                curl_easy_setopt(curl_, CURLOPT_POST, 1L) == CURLE_OK) &&
+               (!needsPostFields ||
+                (curl_easy_setopt(curl_, CURLOPT_POSTFIELDS,
+                                  requestBody_.c_str()) == CURLE_OK &&
+                 curl_easy_setopt(curl_, CURLOPT_POSTFIELDSIZE,
+                                  static_cast<long>(requestBody_.size())) ==
+                     CURLE_OK));
+    }
+
+    void setBackend(std::shared_ptr<Backend> backend) {
+        backend_ = std::move(backend);
+    }
+    const std::shared_ptr<Backend> &backend() const { return backend_; }
 
 private:
     static size_t curlWriteFunction(char *ptr, size_t size, size_t nmemb,
                                     void *userdata) {
         auto *self = static_cast<CurlQueue *>(userdata);
         return self->curlWrite(ptr, size, nmemb);
+    }
+
+    static size_t curlHeaderFunction(char *ptr, size_t size, size_t nmemb,
+                                     void *userdata) {
+        auto *self = static_cast<CurlQueue *>(userdata);
+        return self->curlHeader(ptr, size, nmemb);
     }
 
     size_t curlWrite(char *ptr, size_t size, size_t nmemb) {
@@ -121,13 +201,40 @@ private:
         return realsize;
     }
 
+    size_t curlHeader(char *ptr, size_t size, size_t nmemb) {
+        const size_t realSize = size * nmemb;
+        if (realSize > MAX_BUFFER_SIZE ||
+            headerSize_ > MAX_BUFFER_SIZE - realSize) {
+            return 0;
+        }
+        headerSize_ += realSize;
+        std::string_view header(ptr, realSize);
+        const auto colon = header.find(':');
+        if (colon != std::string_view::npos) {
+            const auto valueStart = header.find_first_not_of(" \t", colon + 1);
+            const auto valueEnd = header.find_last_not_of("\r\n");
+            if (valueStart != std::string_view::npos &&
+                valueEnd != std::string_view::npos && valueStart <= valueEnd) {
+                headers_.emplace_back(
+                    header.substr(0, colon),
+                    header.substr(valueStart, valueEnd - valueStart + 1));
+            }
+        }
+        return realSize;
+    }
+
     bool busy_ = false;
     CURL *curl_ = nullptr;
     CURLcode curlResult_ = CURLE_OK;
     long httpCode_ = 0;
     std::vector<char> data_;
-    std::string pinyin_;
-    CloudPinyinCallback callback_;
+    HTTPHeaders headers_;
+    size_t headerSize_ = 0;
+    CloudPinyinRequestContext context_;
+    std::string requestBody_;
+    UniqueCPtr<curl_slist, curl_slist_free_all> requestHeaders_;
+    CloudPinyinResultCallback callback_;
+    std::shared_ptr<Backend> backend_;
 };
 
 using SetupRequestCallback = std::function<bool(CurlQueue *)>;
