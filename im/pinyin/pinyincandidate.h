@@ -14,6 +14,7 @@
 #include <ctime>
 #include <fcitx-utils/event.h>
 #include <fcitx-utils/eventloopinterface.h>
+#include <fcitx-utils/inputbuffer.h>
 #include <fcitx/candidateaction.h>
 #include <fcitx/candidatelist.h>
 #include <fcitx/inputcontext.h>
@@ -24,7 +25,6 @@
 #include <span>
 #include <string>
 #include <string_view>
-#include <unordered_map>
 #include <unordered_set>
 #include <utility>
 #include <vector>
@@ -32,7 +32,6 @@
 namespace fcitx {
 
 class PinyinEngine;
-class PinyinState;
 
 class PinyinPredictCandidateWord : public CandidateWord {
 public:
@@ -297,6 +296,17 @@ public:
     std::span<const CandidateAction> tabActions() override;
 
     void triggerTabAction(int id) override;
+    bool inStrokeFilterMode() const { return strokeFilterMode_; }
+    bool hasFilter() const { return checked() || !strokeBuffer_.empty(); }
+    const std::string &strokeBuffer() const {
+        return strokeBuffer_.userInput();
+    }
+    void setStrokeFilterMode();
+    void resetStrokeFilterMode();
+    void pushStroke(char stroke);
+    // Return whether pop is successful.
+    bool popStroke();
+
     bool checked() const {
         return checkedPinyinActionId_.has_value() || checkedSingleAction_;
     }
@@ -304,8 +314,10 @@ public:
     bool filter(const CandidateWord &candidate) const;
 
 private:
-    void triggerStrokeAction(PinyinState *state, int id);
-    void triggerMainAction(PinyinState *state, int id);
+    void triggerStrokeAction(int id);
+    void triggerMainAction(int id);
+    bool filterByCheckedAction(const CandidateWord &candidate) const;
+    bool filterByStroke(const CandidateWord &candidate) const;
 
     std::optional<int> idToActionIndex(int id) const;
 
@@ -332,6 +344,8 @@ private:
     std::vector<CandidateAction> strokeActions_;
     std::optional<int> checkedPinyinActionId_ = std::nullopt;
     bool checkedSingleAction_ = false;
+    bool strokeFilterMode_ = false;
+    InputBuffer strokeBuffer_;
     std::vector<std::unordered_set<int>> actionIdToCandidates_;
 };
 
