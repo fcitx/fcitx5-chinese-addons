@@ -374,7 +374,7 @@ struct EventSourceTime;
 class CandidateList;
 class PinyinEngine;
 
-enum class PinyinMode { Normal, StrokeFilter, ForgetCandidate, Punctuation };
+enum class PinyinMode { Normal, ForgetCandidate, Punctuation };
 
 class PinyinState : public InputContextProperty {
 public:
@@ -385,7 +385,8 @@ public:
 
     PinyinMode mode_ = PinyinMode::Normal;
 
-    // Stroke filter
+    // Stroke filter is only active while its target candidate list is current.
+    std::weak_ptr<CandidateList> strokeCandidateList_;
     InputBuffer strokeBuffer_;
 
     // Forget candidate
@@ -445,6 +446,8 @@ public:
     void updateUI(InputContext *inputContext);
     void updateFilter(InputContext *inputContext);
 
+    bool startStrokeFilter(InputContext *inputContext);
+    bool isStrokeFilterActive(InputContext *inputContext) const;
     void resetStroke(InputContext *inputContext) const;
     void resetForgetCandidate(InputContext *inputContext) const;
     void forgetCandidate(InputContext *inputContext, size_t index);

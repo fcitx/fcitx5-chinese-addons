@@ -485,8 +485,7 @@ PinyinTabbedCandidateList::PinyinTabbedCandidateList(
       candidateList_(candidateList) {}
 
 std::span<const CandidateAction> PinyinTabbedCandidateList::tabActions() {
-    auto *state = inputContext_->propertyFor(&engine_->factory());
-    if (state->mode_ == PinyinMode::StrokeFilter) {
+    if (engine_->isStrokeFilterActive(inputContext_)) {
         return strokeActions_;
     }
     if (!actions_) {
@@ -634,16 +633,16 @@ void PinyinTabbedCandidateList::triggerTabAction(int id) {
     }
 
     auto *state = inputContext_->propertyFor(&engine_->factory());
-    if (state->mode_ == PinyinMode::StrokeFilter) {
+    if (engine_->isStrokeFilterActive(inputContext_)) {
         triggerStrokeAction(state, id);
     } else {
-        triggerMainAction(state, id);
+        triggerMainAction(id);
     }
 }
 
 void PinyinTabbedCandidateList::triggerStrokeAction(PinyinState *state,
                                                     int id) {
-    assert(state->mode_ == PinyinMode::StrokeFilter);
+    assert(engine_->isStrokeFilterActive(inputContext_));
 
     switch (id) {
     case STROKE_SUB_ACTION_H:
@@ -674,14 +673,15 @@ std::optional<int> PinyinTabbedCandidateList::idToActionIndex(int id) const {
     return std::nullopt;
 }
 
-void PinyinTabbedCandidateList::triggerMainAction(PinyinState *state, int id) {
+void PinyinTabbedCandidateList::triggerMainAction(int id) {
     if (!actions_) {
         return;
     }
     std::optional<int> checkableActionIndex;
     // negative id is special action.
     if (id == STROKE_ACTION) {
-        state->mode_ = PinyinMode::StrokeFilter;
+        engine_->startStrokeFilter(inputContext_);
+        return;
     } else if (checkableActionIndex = idToActionIndex(id);
                !checkableActionIndex) {
         return;
