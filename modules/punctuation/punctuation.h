@@ -33,13 +33,19 @@
 #include <utility>
 #include <vector>
 
+enum class HalfWidthPuncAfterType { None, Latin, Number, LatinOrNumber };
+
+FCITX_CONFIG_ENUM_NAME_WITH_I18N(HalfWidthPuncAfterType, N_("None"),
+                                 N_("Latin"), N_("Number"),
+                                 N_("Latin or Number"))
+
 FCITX_CONFIGURATION(
     PunctuationConfig,
     fcitx::Option<fcitx::KeyList> hotkey{
         this, "Hotkey", _("Toggle key"), {fcitx::Key("Control+period")}};
-    fcitx::Option<bool> halfWidthPuncAfterLatinOrNumber{
-        this, "HalfWidthPuncAfterLetterOrNumber",
-        _("Half width punctuation after latin letter or number"), true};
+    fcitx::Option<HalfWidthPuncAfterType> halfWidthPuncAfterType{
+        this, "HalfWidthPuncAfterType", _("Use half width punctuation after"),
+        HalfWidthPuncAfterType::LatinOrNumber};
     fcitx::Option<bool> typePairedPunctuationTogether{
         this, "TypePairedPunctuationsTogether",
         _("Type paired punctuations together (e.g. Quote)"), false};
