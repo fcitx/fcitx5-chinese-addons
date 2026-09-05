@@ -712,11 +712,16 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
         std::unordered_map<std::string, std::vector<PinyinCandidateWord *>>
             candidateSet;
 
+        candidates.reserve(customCandidateMap.size() + pinyinCandidates.size());
+        // Reserve the space for custom candidate and start to lay them out.
+        candidates.resize(customCandidateMap.size());
+
         for (size_t idx = 0; idx < pinyinCandidates.size(); ++idx) {
             const auto &candidate = pinyinCandidates[idx];
             auto candidateString = candidate.toString();
             auto iter = customCandidateMap.find(candidateString);
-            CandidateOrder order{idx, customCandidateMap.size()};
+            CandidateOrder order{candidates.size() - customCandidateMap.size(),
+                                 customCandidateMap.size()};
             if (iter != customCandidateMap.end()) {
                 if (iter->second->selectLength() !=
                     candidate.sentence().back()->to()->index()) {
@@ -744,14 +749,38 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
                 candidate->setPinyinInComment();
             }
         }
-        size_t middle = candidates.size();
+        // Put the custom candidate in the first half.
+        size_t middle = 0;
         for (auto &[_, candidate] : customCandidateMap) {
-            candidates.push_back(std::move(candidate));
+            candidates[middle++] = std::move(candidate);
         }
-        // We expect stable sort here.
-        // Real pinyin candidate is always in order, so we have small N here.
-        std::stable_sort(std::ranges::next(candidates.begin(), middle),
-                         candidates.end(), candidateCompare);
+        // Sort the custom candidate half.
+        std::sort(candidates.begin(),
+                  std::ranges::next(candidates.begin(), middle),
+                  candidateCompare);
+
+        // Normalize the order
+        // E.g. we have sort order 1, 1, 3, 6.
+        // Since we would try to fit custom candidate as close as possible to
+        // the position, In the final result would be like (x is pinyin
+        // candidate)
+        //
+        // {x0, 1, 1, 3, x1, x2, 6, x3, x4, x5, ...}
+        //
+        // To achieve this, we'd re-number the order to be like
+        //
+        // {x0, 1, 1, 1, x1, x2, 3, x3, x4, x5, ...}
+        //
+        // the new number is number of "x" before it.
+        std::optional<size_t> currentSegement = std::nullopt;
+        for (size_t i = 0; i < middle; ++i) {
+            const CandidateOrder current = candidates[i]->sortOrder();
+            if (!currentSegement || current.first > *currentSegement + i) {
+                currentSegement = current.first - i;
+            }
+            candidates[i]->setSortOrder({*currentSegement, i});
+        }
+
         std::ranges::inplace_merge(
             candidates, std::ranges::next(candidates.begin(), middle),
             candidateCompare);
