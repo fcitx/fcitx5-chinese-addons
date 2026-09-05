@@ -11,7 +11,7 @@
 #include <fcitx-config/iniparser.h>
 #include <fcitx-utils/event.h>
 #include <fcitx-utils/i18n.h>
-#include <fcitx-utils/standardpaths.h>
+#include <fcitx-utils/stringutils.h>
 #include <fcitx-utils/utf8.h>
 #include <fcitx/addonfactory.h>
 #include <fcitx/inputcontext.h>
@@ -151,6 +151,15 @@ std::string PinyinHelper::prettyStrokeString(const std::string &input) {
         return {};
     }
     return stroke_.prettyString(input);
+}
+
+void PinyinHelper::loadAuxCode(const std::string &profile) {
+    auxCode_.loadProfile(profile);
+}
+
+bool PinyinHelper::matchAuxCode(const std::string &text,
+                                const std::string &auxInput) const {
+    return auxCode_.matchPhrase(text, auxInput);
 }
 
 class PinyinHelperModuleFactory : public AddonFactory {
