@@ -81,9 +81,11 @@ public:
     virtual bool isPinyinCandidate() const { return false; }
     virtual bool isCustomPhrase() const { return false; }
 
+    void setSortOrder(CandidateOrder order) { order_ = order; }
+
 protected:
     const size_t selectLength_;
-    const CandidateOrder order_;
+    CandidateOrder order_;
 };
 
 class StrokeCandidateWord : public PinyinAbstractCandidateWord {
