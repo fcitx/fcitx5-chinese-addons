@@ -602,6 +602,9 @@ void testPunctuationWithCursorAtBeginning(Instance *instance) {
         FCITX_ASSERT(ic->surroundingText().isValid());
         // Cursor zero has no preceding character.
         ic->updateSurroundingText();
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("。");
+        FCITX_ASSERT(testfrontend->call<ITestFrontend::sendKeyEvent>(
+            uuid, Key("."), false));
     });
 }
 
