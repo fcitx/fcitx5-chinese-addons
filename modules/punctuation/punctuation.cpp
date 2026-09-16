@@ -326,7 +326,7 @@ Punctuation::Punctuation(Instance *instance)
             if (length == utf8::INVALID_LENGTH) {
                 return;
             }
-            if (cursor <= 0 && cursor > length) {
+            if (cursor <= 0 || cursor > length) {
                 return;
             }
             uint32_t lastCharBeforeCursor;

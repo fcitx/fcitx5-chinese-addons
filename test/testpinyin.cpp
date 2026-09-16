@@ -587,6 +587,24 @@ void testVQuickPhraseTrigger(Instance *instance) {
     });
 }
 
+void testPunctuationWithCursorAtBeginning(Instance *instance) {
+    instance->eventDispatcher().schedule([instance]() {
+        auto *testfrontend = instance->addonManager().addon("testfrontend");
+        auto uuid =
+            testfrontend->call<ITestFrontend::createInputContext>("testapp");
+        auto *ic = instance->inputContextManager().findByUUID(uuid);
+        FCITX_ASSERT(ic);
+        ic->setCapabilityFlags(CapabilityFlag::SurroundingText);
+        instance->setCurrentInputMethod(ic, "pinyin", true);
+
+        ic->reset();
+        ic->surroundingText().setText("text", 0, 0);
+        FCITX_ASSERT(ic->surroundingText().isValid());
+        // Cursor zero has no preceding character.
+        ic->updateSurroundingText();
+    });
+}
+
 void testPunctuation(Instance *instance) {
     instance->eventDispatcher().schedule([instance]() {
         auto *testfrontend = instance->addonManager().addon("testfrontend");
@@ -679,6 +697,7 @@ int main() {
     testPin(&instance);
     testQuickPhraseTrigger(&instance);
     testVQuickPhraseTrigger(&instance);
+    testPunctuationWithCursorAtBeginning(&instance);
     testPunctuation(&instance);
     instance.exec();
     endTestEvent.reset();
