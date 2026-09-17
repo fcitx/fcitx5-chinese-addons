@@ -52,3 +52,7 @@ add_test(NAME testcustomphrase COMMAND testcustomphrase)
 add_executable(testsymboldictionary testsymboldictionary.cpp ../im/pinyin/symboldictionary.cpp)
 target_link_libraries(testsymboldictionary Fcitx5::Utils LibIME::Core)
 add_test(NAME testsymboldictionary COMMAND testsymboldictionary)
+
+add_executable(testworkerthread testworkerthread.cpp ../im/pinyin/workerthread.cpp)
+target_link_libraries(testworkerthread Fcitx5::Utils)
+add_test(NAME testworkerthread COMMAND testworkerthread)

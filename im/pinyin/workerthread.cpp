@@ -5,14 +5,16 @@
  *
  */
 #include "workerthread.h"
+#include <chrono>
 #include <condition_variable>
 #include <fcitx-utils/eventdispatcher.h>
 #include <memory>
 #include <mutex>
 #include <thread>
 
-WorkerThread::WorkerThread(fcitx::EventDispatcher &dispatcher)
-    : dispatcher_(dispatcher), thread_(&WorkerThread::runThread, this) {}
+WorkerThread::WorkerThread(fcitx::EventDispatcher &dispatcher,
+                           std::chrono::milliseconds idleTimeout)
+    : dispatcher_(dispatcher), idleTimeout_(idleTimeout) {}
 
 WorkerThread::~WorkerThread() {
     // Unlike other thread, there is no need to use a event loop  since there is
@@ -27,6 +29,17 @@ WorkerThread::~WorkerThread() {
     }
 }
 
+void WorkerThread::startThread() {
+    if (running_) {
+        return;
+    }
+    if (thread_.joinable()) {
+        thread_.join();
+    }
+    thread_ = std::thread(&WorkerThread::runThread, this);
+    running_ = true;
+}
+
 std::unique_ptr<TaskToken>
 WorkerThread::addTaskImpl(std::function<void()> task,
                           std::function<void()> onDone) {
@@ -34,6 +47,7 @@ WorkerThread::addTaskImpl(std::function<void()> task,
     // by simply delete TaskToken.
     auto token = std::make_unique<TaskToken>();
     std::lock_guard<std::mutex> lock(mutex_);
+    startThread();
     queue_.push({.task = std::move(task),
                  .callback = std::move(onDone),
                  .context = token->watch()});
@@ -46,7 +60,14 @@ void WorkerThread::run() {
         Task task;
         {
             std::unique_lock lock(mutex_);
-            condition_.wait(lock, [this] { return exit_ || !queue_.empty(); });
+            if (!condition_.wait_for(lock, idleTimeout_, [this] {
+                    return exit_ || !queue_.empty();
+                })) {
+                // Nothing to do for a while, stop the thread. It will be
+                // started again when a new task comes in.
+                running_ = false;
+                break;
+            }
             if (exit_) {
                 break;
             }
