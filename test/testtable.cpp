@@ -15,12 +15,14 @@
 #include <fcitx-utils/standardpaths.h>
 #include <fcitx-utils/testing.h>
 #include <fcitx/addonmanager.h>
+#include <fcitx/candidatelist.h>
 #include <fcitx/inputmethodengine.h>
 #include <fcitx/inputmethodgroup.h>
 #include <fcitx/inputmethodmanager.h>
 #include <fcitx/inputpanel.h>
 #include <fcitx/instance.h>
 #include <fcitx/userinterface.h>
+#include <memory>
 #include <utility>
 
 using namespace fcitx;
@@ -35,6 +37,27 @@ int findCandidateOrDie(InputContext *ic, std::string_view word) {
     }
     FCITX_ASSERT(false) << "Failed to find candidate: " << word;
     return -1;
+}
+
+void testEmptyCandidateList(Instance *instance) {
+    instance->eventDispatcher().schedule([instance]() {
+        auto *testfrontend = instance->addonManager().addon("testfrontend");
+        auto uuid =
+            testfrontend->call<ITestFrontend::createInputContext>("testapp");
+        auto *ic = instance->inputContextManager().findByUUID(uuid);
+        FCITX_ASSERT(ic);
+        instance->setCurrentInputMethod(ic, "wbx", true);
+
+        // An empty candidate list is a valid panel state, e.g. one left by the
+        // previous input method. A regular key must not crash the table engine.
+        auto candidateList = std::make_unique<CommonCandidateList>();
+        auto *emptyCandidateList = candidateList.get();
+        ic->inputPanel().setCandidateList(std::move(candidateList));
+
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
+        FCITX_ASSERT(ic->inputPanel().candidateList().get() !=
+                     emptyCandidateList);
+    });
 }
 
 void scheduleEvent(Instance *instance) {
@@ -182,6 +205,7 @@ void scheduleEvent(Instance *instance) {
         ic->updateUserInterface(fcitx::UserInterfaceComponent::InputPanel,
                                 true);
     });
+    testEmptyCandidateList(instance);
     instance->eventDispatcher().schedule([instance]() { instance->exit(); });
 }
 
