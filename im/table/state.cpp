@@ -804,9 +804,10 @@ void TableState::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
     }
 
     // Non candidate key for predict candidate should clear it.
-    if (inputContext->inputPanel().candidateList() &&
+    if (auto candidateList = inputContext->inputPanel().candidateList();
+        candidateList && !candidateList->empty() &&
         dynamic_cast<const TablePredictCandidateWord *>(
-            &inputContext->inputPanel().candidateList()->candidate(0))) {
+            &candidateList->candidate(0))) {
         inputContext->inputPanel().setCandidateList(nullptr);
         needUpdate = true;
     }
