@@ -51,12 +51,13 @@ void testEmptyCandidateList(Instance *instance) {
         // An empty candidate list is a valid panel state, e.g. one left by the
         // previous input method. A regular key must not crash the table engine.
         auto candidateList = std::make_unique<CommonCandidateList>();
-        auto *emptyCandidateList = candidateList.get();
         ic->inputPanel().setCandidateList(std::move(candidateList));
+        std::shared_ptr<CandidateList> emptyCandidateList =
+            ic->inputPanel().candidateList();
 
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
         FCITX_ASSERT(ic->inputPanel().candidateList().get() !=
-                     emptyCandidateList);
+                     emptyCandidateList.get());
     });
 }
 
