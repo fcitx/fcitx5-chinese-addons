@@ -7,6 +7,8 @@
 #ifndef _PINYIN_WORKERTHREAD_H_
 #define _PINYIN_WORKERTHREAD_H_
 
+#include <atomic>
+#include <chrono>
 #include <condition_variable>
 #include <fcitx-utils/eventdispatcher.h>
 #include <fcitx-utils/macros.h>
@@ -17,13 +19,19 @@
 #include <memory>
 #include <mutex>
 #include <queue>
+#include <thread>
 
 class TaskToken : public fcitx::TrackableObject<TaskToken> {};
 
 class WorkerThread {
 public:
-    WorkerThread(fcitx::EventDispatcher &dispatcher);
+    explicit WorkerThread(
+        fcitx::EventDispatcher &dispatcher,
+        std::chrono::milliseconds idleTimeout = std::chrono::seconds(10));
     ~WorkerThread();
+
+    // Whether the worker thread is currently running.
+    bool running() const { return running_.load(); }
 
     template <typename Ret, typename OnDone>
     FCITX_NODISCARD std::unique_ptr<TaskToken>
@@ -48,6 +56,9 @@ private:
                                            std::function<void()> onDone);
     static void runThread(WorkerThread *self) { self->run(); }
     void run();
+    // Start the worker thread if it is not running. Must be called with
+    // mutex_ held.
+    void startThread();
 
     struct Task {
         std::function<void()> task;
@@ -56,13 +67,16 @@ private:
     };
 
     fcitx::EventDispatcher &dispatcher_;
+    const std::chrono::milliseconds idleTimeout_;
     std::mutex mutex_;
     std::queue<Task, std::list<Task>> queue_;
     bool exit_ = false;
+    std::atomic<bool> running_ = false;
     std::condition_variable condition_;
 
     // Must be the last member, since we did not use a smart pointer to wrap it.
-    // The thread will be started right away at the end of constructor.
+    // The thread is started on demand when a task is added, and stopped once
+    // it stays idle for a while.
     std::thread thread_;
 };
 
