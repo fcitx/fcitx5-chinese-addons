@@ -360,7 +360,7 @@ FCITX_CONFIGURATION(
             {.parent = this,
              .path = "QuickPhraseTriggerRegex",
              .description = _("Regular expression to trigger quick phrase"),
-             .defaultValue = {".(/|@)$", "^(www|bbs|forum|mail|bbs)\\.",
+             .defaultValue = {".(/|@)$", "^(www|bbs|forum|mail)\\.",
                               "^(http|https|ftp|telnet|mailto):"},
              .annotation = {_("Enter quickphrase mode when current input "
                               "matches any regular "
