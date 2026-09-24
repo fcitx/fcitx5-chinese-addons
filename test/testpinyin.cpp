@@ -102,7 +102,7 @@ void testBasic(Instance *instance) {
         auto *testfrontend = instance->addonManager().addon("testfrontend");
         auto uuid =
             testfrontend->call<ITestFrontend::createInputContext>("testapp");
-        testfrontend->call<ITestFrontend::pushCommitExpectation>("俺");
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("呵");
         testfrontend->call<ITestFrontend::pushCommitExpectation>("ni");
         testfrontend->call<ITestFrontend::pushCommitExpectation>("ni");
         testfrontend->call<ITestFrontend::pushCommitExpectation>("你hao");
@@ -115,11 +115,11 @@ void testBasic(Instance *instance) {
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("n"), false);
         testfrontend->call<ITestFrontend::keyEvent>(
             uuid, Key(FcitxKey_BackSpace), false);
-        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("p"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("s"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("z"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("h"), false);
-        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("p"), false);
-        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("n"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("h"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("s"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("1"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("n"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("i"), false);
@@ -686,7 +686,7 @@ int main() {
     char arg2[] = "--enable=testim,testfrontend,pinyin,punctuation,"
                   "pinyinhelper,spell,quickphrase";
     char *argv[] = {arg0, arg1, arg2};
-    fcitx::Log::setLogRule("default=5,pinyin=5");
+    fcitx::Log::setLogRule("default=5,pinyin=5,*=5");
     Instance instance(FCITX_ARRAY_SIZE(argv), argv);
     instance.addonManager().registerDefaultLoader(nullptr);
     setup(&instance);
