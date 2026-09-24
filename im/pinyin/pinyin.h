@@ -136,7 +136,7 @@ FCITX_CONFIGURATION(
                             true};
     Option<bool> partialFinal{this, "PartialFinal",
                               _("Match partial finals (e -> en, eng, ei)"),
-                              true};
+                              false};
     OptionWithAnnotation<bool, OptionalHideInDescription> partialSp{
         this, "PartialSp",
         _("Match partial shuangpin if input length is longer than 4"), false};
