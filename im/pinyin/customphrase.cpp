@@ -376,7 +376,7 @@ std::string CustomPhrase::builtinEvaluator(std::string_view key) {
                  return toChineseTwoDigitNumber(currentSecond(),
                                                 /*leadingZero=*/true);
              }},
-        };
+    };
 
     auto iter = table.find(key);
     if (iter != table.end()) {
