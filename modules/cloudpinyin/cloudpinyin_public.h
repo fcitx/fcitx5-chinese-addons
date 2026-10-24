@@ -25,6 +25,14 @@
 using CloudPinyinCallback =
     std::function<void(const std::string &pinyin, const std::string &hanzi)>;
 
+struct CloudPinyinResult {
+    std::string text{};
+    std::string comment{};
+};
+
+using CloudPinyinResultCallback = std::function<void(
+    const std::string &pinyin, const CloudPinyinResult &result)>;
+
 using CloudPinyinSelectedCallback =
     std::function<void(fcitx::InputContext *inputContext,
                        const std::string &selected, const std::string &word)>;
@@ -32,6 +40,12 @@ using CloudPinyinSelectedCallback =
 FCITX_ADDON_DECLARE_FUNCTION(CloudPinyin, request,
                              void(const std::string &pinyin,
                                   CloudPinyinCallback));
+FCITX_ADDON_DECLARE_FUNCTION(
+    CloudPinyin, requestWithContext,
+    void(fcitx::InputContext *inputContext, const std::string &queryPinyin,
+         const std::string &fullPinyin, const std::string &input,
+         const std::string &selected, const std::string &first,
+         CloudPinyinResultCallback));
 FCITX_ADDON_DECLARE_FUNCTION(CloudPinyin, toggleKey, const fcitx::KeyList &());
 FCITX_ADDON_DECLARE_FUNCTION(CloudPinyin, resetError, void());
 
@@ -39,23 +53,25 @@ class CloudPinyinCandidateWord
     : virtual public fcitx::CandidateWord,
       public fcitx::TrackableObject<CloudPinyinCandidateWord> {
 public:
-    CloudPinyinCandidateWord(fcitx::AddonInstance *cloudpinyin_,
-                             const std::string &pinyin,
-                             std::string selectedSentence, bool keep,
-                             fcitx::InputContext *inputContext,
-                             CloudPinyinSelectedCallback callback)
+    CloudPinyinCandidateWord(
+        fcitx::AddonInstance *cloudpinyin_, const std::string &queryPinyin,
+        const std::string &fullPinyin, const std::string &input,
+        std::string selectedSentence, bool keep, const std::string &first,
+        fcitx::InputContext *inputContext, CloudPinyinSelectedCallback callback)
         : selectedSentence_(std::move(selectedSentence)),
           inputContext_(inputContext), callback_(std::move(callback)),
           keep_(keep) {
         // use cloud unicode char
         setText(fcitx::Text("\xe2\x98\x81"));
-        cloudpinyin_->call<fcitx::ICloudPinyin::request>(
-            pinyin, [ref = watch()](const std::string &pinyin,
-                                    const std::string &hanzi) {
+        cloudpinyin_->call<fcitx::ICloudPinyin::requestWithContext>(
+            inputContext_, queryPinyin, fullPinyin, input, selectedSentence_,
+            first,
+            [ref = watch()](const std::string &pinyin,
+                            const CloudPinyinResult &result) {
                 FCITX_UNUSED(pinyin);
                 auto *self = ref.get();
                 if (self) {
-                    self->fill(hanzi);
+                    self->fill(result);
                 }
             });
         constructor_ = false;
@@ -76,9 +92,12 @@ public:
 private:
     static constexpr long int LOADING_TIME_QUICK_THRESHOLD = 1000;
 
-    void fill(const std::string &hanzi) {
-        setText(fcitx::Text(hanzi));
-        word_ = hanzi;
+    void fill(const CloudPinyinResult &result) {
+        setText(fcitx::Text(result.text));
+        if (!result.comment.empty()) {
+            setComment(fcitx::Text(result.comment));
+        }
+        word_ = result.text;
         filled_ = true;
         if (!constructor_) {
             update();

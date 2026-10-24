@@ -7,6 +7,10 @@ set(CLOUDPINYIN_SOURCES
 if (ENABLE_CLOUDPINYIN)
 add_fcitx5_addon(cloudpinyin ${CLOUDPINYIN_SOURCES})
 target_link_libraries(cloudpinyin Fcitx5::Core Fcitx5::Config PkgConfig::Curl Pthread::Pthread nlohmann_json::nlohmann_json)
+if (TARGET Fcitx5::Module::LuaAddonLoader)
+target_compile_definitions(cloudpinyin PRIVATE -DFCITX_HAS_LUA)
+target_link_libraries(cloudpinyin Fcitx5::Module::LuaAddonLoader)
+endif()
 install(TARGETS cloudpinyin DESTINATION "${CMAKE_INSTALL_LIBDIR}/fcitx5")
 configure_file(cloudpinyin.conf.in.in cloudpinyin.conf.in)
 fcitx5_translate_desktop_file("${CMAKE_CURRENT_BINARY_DIR}/cloudpinyin.conf.in" cloudpinyin.conf)
@@ -15,4 +19,3 @@ install(FILES "${CMAKE_CURRENT_BINARY_DIR}/cloudpinyin.conf" DESTINATION "${FCIT
 
 fcitx5_export_module(CloudPinyin TARGET cloudpinyin BUILD_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}" HEADERS cloudpinyin_public.h INSTALL)
 endif()
-
