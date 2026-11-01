@@ -527,6 +527,13 @@ void PinyinEngine::updatePuncCandidate(
 
 void PinyinEngine::updateUI(InputContext *inputContext) {
     auto *state = inputContext->propertyFor(&factory_);
+    if (!*config_.continuousPinyinSelection &&
+        !state->context_.pinyinFixes().empty()) {
+        // Turning the switch off during a composition should also drop any
+        // fixes applied while it was on, so the regular tab filtering comes
+        // back immediately.
+        state->context_.setPinyinFixes({});
+    }
     inputContext->inputPanel().reset();
     // Use const ref to avoid accidentally change anything.
     const auto &context = state->context_;
@@ -853,6 +860,25 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
     } while (0);
     inputContext->updatePreedit();
     inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
+}
+
+void PinyinEngine::applyPinyinFix(InputContext *inputContext,
+                                  libime::PinyinSegmentFix fix) {
+    auto *state = inputContext->propertyFor(&factory_);
+    auto &context = state->context_;
+    const auto selectedLength = context.selectedLength();
+    assert(fix.start_ < fix.end_);
+    assert(fix.start_ >= selectedLength);
+    auto fixes = context.pinyinFixes();
+    // Fixes must never overlap
+    assert(std::ranges::none_of(fixes, [&](const auto &existing) {
+        return existing.start_ < fix.end_ && fix.start_ < existing.end_;
+    }));
+    auto pos = std::ranges::lower_bound(fixes, fix.start_, {},
+                                        &libime::PinyinSegmentFix::start_);
+    fixes.insert(pos, fix);
+    context.setPinyinFixes(std::move(fixes));
+    updateUI(inputContext);
 }
 
 bool PinyinEngine::shouldLearn(const InputContext *inputContext) const {
