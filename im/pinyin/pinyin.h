@@ -312,6 +312,15 @@ FCITX_CONFIGURATION(
     Option<bool> useBackSpaceToUnselect{
         this, "BackSpaceToUnselect", _("Use BackSpace to cancel the selection"),
         true};
+    OptionWithAnnotation<bool, ToolTipAnnotation> continuousPinyinSelection{
+        this,
+        "ContinuousPinyinSelection",
+        _("Continuous syllable selection"),
+        false,
+        {},
+        {},
+        {_("Clicking a pinyin tab fixes the syllable and refreshes candidates "
+           "instead of filtering the current list.")}};
     KeyListOption selectByStroke{
         this,
         "FilterByStroke",
@@ -439,6 +448,9 @@ public:
 
     void updateUI(InputContext *inputContext);
     void updateFilter(InputContext *inputContext);
+
+    void applyPinyinFix(InputContext *inputContext,
+                        libime::PinyinSegmentFix fix);
 
     void resetForgetCandidate(InputContext *inputContext) const;
     void forgetCandidate(InputContext *inputContext, size_t index);

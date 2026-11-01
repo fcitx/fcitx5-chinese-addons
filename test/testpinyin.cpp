@@ -65,6 +65,47 @@ void findAndSelectCandidate(InputContext *ic, std::string_view word) {
     candList->candidate(findCandidateOrDie(ic, word)).select(ic);
 }
 
+std::vector<CandidateAction> tabActions(InputContext *ic) {
+    auto candidateList = ic->inputPanel().candidateList();
+    FCITX_ASSERT(candidateList);
+    auto *tabbed = candidateList->toTabbed();
+    FCITX_ASSERT(tabbed);
+    auto span = tabbed->tabActions();
+    return {span.begin(), span.end()};
+}
+
+bool hasTab(InputContext *ic, std::string_view text) {
+    auto actions = tabActions(ic);
+    return std::ranges::find(actions, text, &CandidateAction::text) !=
+           actions.end();
+}
+
+bool hasCheckedTab(InputContext *ic) {
+    auto actions = tabActions(ic);
+    return std::ranges::any_of(actions, [](const auto &action) {
+        return action.id() >= 0 && action.isChecked();
+    });
+}
+
+void clickTab(InputContext *ic, std::string_view text) {
+    auto candidateList = ic->inputPanel().candidateList();
+    FCITX_ASSERT(candidateList);
+    auto *tabbed = candidateList->toTabbed();
+    FCITX_ASSERT(tabbed);
+    auto actions = tabbed->tabActions();
+    auto it = std::ranges::find(actions, text, &CandidateAction::text);
+    FCITX_ASSERT(it != actions.end()) << "Tab " << text << " not found";
+    tabbed->triggerTabAction(it->id());
+}
+
+void typeString(AddonInstance *testfrontend, const ICUUID &uuid,
+                std::string_view text) {
+    for (char c : text) {
+        testfrontend->call<ITestFrontend::keyEvent>(
+            uuid, Key(std::string(1, c)), false);
+    }
+}
+
 void sendControlSpace(AddonInstance *testfrontend, InputContext *ic) {
     for (int i = 0; i < 2; i++) {
         testfrontend->call<ITestFrontend::keyEvent>(ic->uuid(),
@@ -672,6 +713,141 @@ void testPunctuationPart2(Instance *instance) {
     });
 }
 
+void testPinyinContinuousSelection(Instance *instance) {
+    instance->eventDispatcher().schedule([instance]() {
+        auto *pinyin = instance->addonManager().addon("pinyin");
+        FCITX_ASSERT(pinyin);
+        auto *testfrontend = instance->addonManager().addon("testfrontend");
+        auto uuid =
+            testfrontend->call<ITestFrontend::createInputContext>("testapp");
+        auto *ic = instance->inputContextManager().findByUUID(uuid);
+        FCITX_ASSERT(ic);
+        instance->setCurrentInputMethod(ic, "pinyin", true);
+
+        RawConfig config;
+        config.setValueByPath("Fuzzy/Correction", "QWERTY");
+        config.setValueByPath("ContinuousPinyinSelection", "True");
+        pinyin->setConfig(config);
+
+        typeString(testfrontend, uuid, "nuhaoxian");
+        FCITX_ASSERT(hasTab(ic, "nu"));
+        FCITX_ASSERT(hasTab(ic, "ni"));
+        FCITX_ASSERT(ic->inputPanel().preedit().toString() == "nu hao xian");
+
+        // The fuzzy-corrected syllable is fixed without touching the
+        // frontend filter state, and candidates are rebuilt by libime.
+        clickTab(ic, "ni");
+        FCITX_ASSERT(!hasCheckedTab(ic));
+        FCITX_ASSERT(!hasTab(ic, "nu"));
+        FCITX_ASSERT(hasTab(ic, "hao"));
+        FCITX_ASSERT(findCandidate(ic, "你好") >= 0);
+        FCITX_ASSERT(findCandidate(ic, "怒") < 0);
+        // The fixed syllable is displayed as the corrected pinyin.
+        FCITX_ASSERT(ic->inputPanel().preedit().toString() == "ni hao xian");
+
+        clickTab(ic, "hao");
+        FCITX_ASSERT(!hasCheckedTab(ic));
+        FCITX_ASSERT(!hasTab(ic, "hao"));
+        // Every legal split of the remaining "xian" is offered, not only the
+        // reading used by the current candidates.
+        FCITX_ASSERT(hasTab(ic, "xian"));
+        FCITX_ASSERT(hasTab(ic, "xi"));
+        FCITX_ASSERT(findCandidate(ic, "你好先") >= 0);
+        FCITX_ASSERT(ic->inputPanel().preedit().toString() == "ni hao xian");
+
+        // The extra split can also be fixed through libime.
+        clickTab(ic, "xi");
+        FCITX_ASSERT(!hasTab(ic, "xi"));
+        FCITX_ASSERT(hasTab(ic, "an"));
+        FCITX_ASSERT(findCandidate(ic, "你好西安") >= 0);
+        FCITX_ASSERT(ic->inputPanel().preedit().toString() == "ni hao xi an")
+            << ic->inputPanel().preedit().toString();
+
+        // Apostrophes do not consume a syllable. A fix on both sides of one
+        // must not make the second syllable available again.
+        ic->reset();
+        typeString(testfrontend, uuid, "xi'an");
+        FCITX_ASSERT(hasTab(ic, "xi"));
+        FCITX_ASSERT(!hasTab(ic, "an"));
+        clickTab(ic, "xi");
+        FCITX_ASSERT(hasTab(ic, "an"));
+        clickTab(ic, "an");
+        FCITX_ASSERT(!hasTab(ic, "an"));
+
+        // Moving the cursor to the start of the composition cancels the fixes
+        // from the cursor to the end, so the tab page goes back to the first
+        // syllable.
+        ic->reset();
+        typeString(testfrontend, uuid, "nuhaoxian");
+        clickTab(ic, "ni");
+        FCITX_ASSERT(!hasTab(ic, "nu"));
+        FCITX_ASSERT(hasTab(ic, "hao"));
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Home"), false);
+        FCITX_ASSERT(hasTab(ic, "nu"));
+        FCITX_ASSERT(!hasTab(ic, "hao"));
+
+        // Moving to the end keeps the fix because it ends before the cursor.
+        clickTab(ic, "ni");
+        FCITX_ASSERT(!hasTab(ic, "nu"));
+        FCITX_ASSERT(hasTab(ic, "hao"));
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("End"), false);
+        FCITX_ASSERT(!hasTab(ic, "nu"));
+        FCITX_ASSERT(hasTab(ic, "hao"));
+        clickTab(ic, "hao");
+        FCITX_ASSERT(hasTab(ic, "xian"));
+
+        // An incomplete syllable is also a fix. It keeps the initial and
+        // leaves the final unrestricted, so "h" no longer becomes a
+        // frontend filter.
+        ic->reset();
+        typeString(testfrontend, uuid, "hhh");
+        FCITX_ASSERT(hasTab(ic, "h"));
+        FCITX_ASSERT(hasTab(ic, "H"));
+        FCITX_ASSERT(ic->inputPanel().preedit().toString() == "h h h");
+        clickTab(ic, "h");
+        FCITX_ASSERT(!hasCheckedTab(ic));
+        FCITX_ASSERT(ic->inputPanel().preedit().toString() == "h h h")
+            << ic->inputPanel().preedit().toString();
+        // The next "h" is still available.
+        FCITX_ASSERT(hasTab(ic, "h"));
+        clickTab(ic, "h");
+        FCITX_ASSERT(!hasCheckedTab(ic));
+
+        // The uppercase letter reading is still a separate fix.
+        ic->reset();
+        typeString(testfrontend, uuid, "hhh");
+        clickTab(ic, "H");
+        FCITX_ASSERT(!hasCheckedTab(ic));
+        FCITX_ASSERT(ic->inputPanel().preedit().toString() == "H h h")
+            << ic->inputPanel().preedit().toString();
+
+        // Turning the switch off restores the checked + frontend filter
+        // behavior. Start a fresh composition so the fixes above are gone.
+        // Note: changing the addon config resets active input contexts in the
+        // test harness, so there is no live composition left to inspect here.
+        config.setValueByPath("ContinuousPinyinSelection", "False");
+        pinyin->setConfig(config);
+        ic->reset();
+        typeString(testfrontend, uuid, "xian");
+        auto actions = tabActions(ic);
+        auto it = std::ranges::find(actions, "xian", &CandidateAction::text);
+        FCITX_ASSERT(it != actions.end());
+        const int xianId = it->id();
+        auto candidateList = ic->inputPanel().candidateList();
+        auto *tabbed = candidateList->toTabbed();
+        tabbed->triggerTabAction(xianId);
+        FCITX_ASSERT(std::ranges::any_of(
+            tabbed->tabActions(), [xianId](const auto &action) {
+                return action.id() == xianId && action.isChecked();
+            }));
+        FCITX_ASSERT(findCandidate(ic, "西安") < 0);
+
+        config.setValueByPath("Fuzzy/Correction", "None");
+        config.setValueByPath("ContinuousPinyinSelection", "False");
+        pinyin->setConfig(config);
+    });
+}
+
 } // namespace
 
 int main() {
@@ -697,6 +873,7 @@ int main() {
     testActionInStrokeFilter(&instance);
     testPinyinTabFilter(&instance);
     testPinyinTabFilterWithSeparator(&instance);
+    testPinyinContinuousSelection(&instance);
     testPin(&instance);
     testQuickPhraseTrigger(&instance);
     testVQuickPhraseTrigger(&instance);
