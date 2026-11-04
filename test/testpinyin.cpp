@@ -74,6 +74,16 @@ std::vector<CandidateAction> tabActions(InputContext *ic) {
     return {span.begin(), span.end()};
 }
 
+std::vector<std::string> tabTexts(InputContext *ic) {
+    std::vector<std::string> result;
+    for (const auto &action : tabActions(ic)) {
+        if (action.id() >= 0) {
+            result.push_back(action.text());
+        }
+    }
+    return result;
+}
+
 bool hasTab(InputContext *ic, std::string_view text) {
     auto actions = tabActions(ic);
     return std::ranges::find(actions, text, &CandidateAction::text) !=
@@ -774,6 +784,26 @@ void testPinyinContinuousSelection(Instance *instance) {
         clickTab(ic, "an");
         FCITX_ASSERT(!hasTab(ic, "an"));
 
+        // Tabs are ordered by how closely they match the typed input. These
+        // are intentional exact-order snapshots of the ranking.
+        ic->reset();
+        typeString(testfrontend, uuid, "xian");
+        FCITX_ASSERT(tabTexts(ic) ==
+                     std::vector<std::string>{"xian", "xia", "xi", "xuan", "zi",
+                                              "xu", "ci"});
+
+        ic->reset();
+        typeString(testfrontend, uuid, "tian");
+        FCITX_ASSERT(tabTexts(ic) ==
+                     std::vector<std::string>{"tian", "ti", "tuan", "yi", "tu",
+                                              "ri"});
+
+        ic->reset();
+        typeString(testfrontend, uuid, "fangan");
+        FCITX_ASSERT(tabTexts(ic) == std::vector<std::string>{
+                                         "fang", "fan", "fa", "gang", "dang",
+                                         "dan", "gan", "da", "ga"});
+
         // Moving the cursor to the start of the composition cancels the fixes
         // from the cursor to the end, so the tab page goes back to the first
         // syllable.
@@ -848,6 +878,37 @@ void testPinyinContinuousSelection(Instance *instance) {
     });
 }
 
+void testPinyinContinuousShuangpin(Instance *instance) {
+    instance->eventDispatcher().schedule([instance]() {
+        auto *pinyin = instance->addonManager().addon("pinyin");
+        FCITX_ASSERT(pinyin);
+        auto *testfrontend = instance->addonManager().addon("testfrontend");
+        auto uuid =
+            testfrontend->call<ITestFrontend::createInputContext>("testapp");
+        auto *ic = instance->inputContextManager().findByUUID(uuid);
+        FCITX_ASSERT(ic);
+        instance->setCurrentInputMethod(ic, "shuangpin", true);
+
+        RawConfig config;
+        config.setValueByPath("ContinuousPinyinSelection", "True");
+        config.setValueByPath("ShuangpinProfile", "Ziranma");
+        pinyin->setConfig(config);
+
+        // Ziranma: ni = "ni", hao = "hk".
+        typeString(testfrontend, uuid, "nihk");
+        FCITX_ASSERT(hasTab(ic, "ni"));
+        clickTab(ic, "ni");
+        FCITX_ASSERT(!hasTab(ic, "ni"));
+        FCITX_ASSERT(hasTab(ic, "hao"));
+        clickTab(ic, "hao");
+        FCITX_ASSERT(!hasTab(ic, "hao"));
+
+        config.setValueByPath("ContinuousPinyinSelection", "False");
+        pinyin->setConfig(config);
+        instance->setCurrentInputMethod(ic, "pinyin", true);
+    });
+}
+
 } // namespace
 
 int main() {
@@ -874,6 +935,7 @@ int main() {
     testPinyinTabFilter(&instance);
     testPinyinTabFilterWithSeparator(&instance);
     testPinyinContinuousSelection(&instance);
+    testPinyinContinuousShuangpin(&instance);
     testPin(&instance);
     testQuickPhraseTrigger(&instance);
     testVQuickPhraseTrigger(&instance);
