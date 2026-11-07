@@ -90,6 +90,11 @@ bool hasTab(InputContext *ic, std::string_view text) {
            actions.end();
 }
 
+size_t countTab(InputContext *ic, std::string_view text) {
+    auto actions = tabActions(ic);
+    return std::ranges::count(actions, text, &CandidateAction::text);
+}
+
 bool hasCheckedTab(InputContext *ic) {
     auto actions = tabActions(ic);
     return std::ranges::any_of(actions, [](const auto &action) {
@@ -789,20 +794,74 @@ void testPinyinContinuousSelection(Instance *instance) {
         ic->reset();
         typeString(testfrontend, uuid, "xian");
         FCITX_ASSERT(tabTexts(ic) ==
-                     std::vector<std::string>{"xian", "xia", "xi", "xuan", "zi",
-                                              "xu", "ci"});
+                     std::vector<std::string>{"xian", "xia", "xi", "x", "xuan",
+                                              "zi", "xu", "ci", "X"});
 
         ic->reset();
         typeString(testfrontend, uuid, "tian");
         FCITX_ASSERT(tabTexts(ic) ==
-                     std::vector<std::string>{"tian", "ti", "tuan", "yi", "tu",
-                                              "ri"});
+                     std::vector<std::string>{"tian", "ti", "t", "tuan", "yi",
+                                              "tu", "ri", "r", "T"});
 
         ic->reset();
         typeString(testfrontend, uuid, "fangan");
-        FCITX_ASSERT(tabTexts(ic) == std::vector<std::string>{
-                                         "fang", "fan", "fa", "gang", "dang",
-                                         "dan", "gan", "da", "ga"});
+        FCITX_ASSERT(tabTexts(ic) ==
+                     std::vector<std::string>{"fang", "fan", "fa", "f", "gang",
+                                              "dang", "dan", "gan", "da", "ga",
+                                              "F"});
+
+        // "sh" is parsed as a single incomplete syllable by libime, so its
+        // regular segment graph has no node between "s" and "h". Fixing both
+        // halves must still work and produce Chinese candidates.
+        ic->reset();
+        typeString(testfrontend, uuid, "sh");
+        FCITX_ASSERT(hasTab(ic, "s"));
+        clickTab(ic, "s");
+        FCITX_ASSERT(!hasCheckedTab(ic));
+        FCITX_ASSERT(hasTab(ic, "h"));
+        FCITX_ASSERT(findCandidate(ic, "似乎") >= 0);
+        FCITX_ASSERT(ic->inputPanel().preedit().toString() == "s h")
+            << ic->inputPanel().preedit().toString();
+        clickTab(ic, "h");
+        FCITX_ASSERT(!hasTab(ic, "h"));
+        FCITX_ASSERT(!hasCheckedTab(ic));
+        FCITX_ASSERT(findCandidate(ic, "似乎") >= 0);
+        FCITX_ASSERT(ic->inputPanel().preedit().toString() == "s h")
+            << ic->inputPanel().preedit().toString();
+        FCITX_ASSERT(!ic->inputPanel().candidateList()->empty());
+
+        // addNext in buildContinuousTabActions force-adds single-letter
+        // initials so pinyin like "ga" (g + a) can be fixed. libime's
+        // parseUserPinyin doesn't produce those splits by itself.
+        ic->reset();
+        typeString(testfrontend, uuid, "ga");
+        FCITX_ASSERT(hasTab(ic, "g"));
+        FCITX_ASSERT(hasTab(ic, "ga"));
+        clickTab(ic, "g");
+        FCITX_ASSERT(!hasCheckedTab(ic));
+        FCITX_ASSERT(!hasTab(ic, "g"));
+        FCITX_ASSERT(hasTab(ic, "a"));
+        FCITX_ASSERT(!ic->inputPanel().candidateList()->empty());
+        FCITX_ASSERT(ic->inputPanel().preedit().toString() == "g a")
+            << ic->inputPanel().preedit().toString();
+
+        // zh/ch/sh initials also get the 0->2 split, so "sha" now exposes
+        // both "s" (single-letter) and "sh" (two-letter) initial fixes.
+        ic->reset();
+        typeString(testfrontend, uuid, "sha");
+        FCITX_ASSERT(hasTab(ic, "s"));
+        FCITX_ASSERT(hasTab(ic, "sh"));
+        FCITX_ASSERT(hasTab(ic, "sha"));
+        // The fuzzy "sh" reading of the single-letter "s" split and the real
+        // "sh" split both render as "sh". Only the exact split must remain.
+        FCITX_ASSERT(countTab(ic, "sh") == 1);
+        clickTab(ic, "sh");
+        FCITX_ASSERT(!hasCheckedTab(ic));
+        FCITX_ASSERT(!hasTab(ic, "sh"));
+        FCITX_ASSERT(hasTab(ic, "a"));
+        FCITX_ASSERT(!ic->inputPanel().candidateList()->empty());
+        FCITX_ASSERT(ic->inputPanel().preedit().toString() == "sh a")
+            << ic->inputPanel().preedit().toString();
 
         // Moving the cursor to the start of the composition cancels the fixes
         // from the cursor to the end, so the tab page goes back to the first
