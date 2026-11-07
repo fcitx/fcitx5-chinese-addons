@@ -314,6 +314,16 @@ buildContinuousSelectionTabs(libime::PinyinContext &context) {
                   std::move(remaining),
                   context.ime()->correctionProfile().get(),
                   context.ime()->fuzzyFlags());
+    // Force split points that parseUserPinyin won't produce
+    // e.g. "g" in "ga" and "sh" in "sha"
+    graph.addNext(0, 1);
+    if (graph.data().size() >= 2) {
+        const auto initial =
+            libime::PinyinEncoder::stringToInitial(graph.data().substr(0, 2));
+        if (initial != libime::PinyinInitial::Invalid) {
+            graph.addNext(0, 2);
+        }
+    }
 
     struct TabSortEntry {
         libime::PinyinSyllable reading;
@@ -384,15 +394,27 @@ buildContinuousSelectionTabs(libime::PinyinContext &context) {
         std::ranges::sort(entries, {}, &TabSortEntry::key);
     }
 
-    std::vector<CandidateAction> actions(entries.size());
+    std::vector<CandidateAction> actions;
+    actions.reserve(entries.size());
     FixTabState fixes;
     fixes.reserve(entries.size());
-    for (size_t i = 0; i < entries.size(); ++i) {
-        auto &entry = entries[i];
-        auto &action = actions[i];
-        action.setId(static_cast<int>(i));
-        action.setText(libime::PinyinEncoder::initialFinalToPinyinString(
-            entry.reading.initial(), entry.reading.final()));
+    std::unordered_set<std::string> seenTexts;
+    for (auto &entry : entries) {
+        auto text = libime::PinyinEncoder::initialFinalToPinyinString(
+            entry.reading.initial(), entry.reading.final());
+        if (!seenTexts.insert(text).second) {
+            // Different fixes may render as the same tab text (e.g. the fuzzy
+            // "sh" reading of "s" and the actual "sh" split both show "sh").
+            // Keep the first one in sorted order: distance is the primary key,
+            // and distance 0 means raw == text, so an exact match always comes
+            // before the other duplicates.
+            continue;
+        }
+
+        const auto id = actions.size();
+        auto &action = actions.emplace_back();
+        action.setId(static_cast<int>(id));
+        action.setText(std::move(text));
         action.setCheckable(true);
         action.setChecked(false);
 
