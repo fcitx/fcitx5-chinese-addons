@@ -51,6 +51,8 @@
 #include <utility>
 #include <vector>
 
+#include "pinyin_public.h"
+
 namespace fcitx {
 
 template <typename Base = NoAnnotation>
@@ -430,6 +432,9 @@ public:
 
     void setSubConfig(const std::string &path,
                       const fcitx::RawConfig &config) override;
+
+    std::vector<std::string> shuangpinKeyHints() const;
+    FCITX_ADDON_EXPORT_FUNCTION(PinyinEngine, shuangpinKeyHints);
 
     libime::PinyinIME *ime() { return ime_.get(); }
     const auto &config() const { return config_; }
