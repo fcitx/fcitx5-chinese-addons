@@ -18,6 +18,7 @@
 #include <fcitx-utils/macros.h>
 #include <fcitx-utils/standardpaths.h>
 #include <fcitx-utils/testing.h>
+#include <fcitx-utils/textformatflags.h>
 #include <fcitx/addoninstance.h>
 #include <fcitx/addonmanager.h>
 #include <fcitx/candidateaction.h>
@@ -119,6 +120,17 @@ void typeString(AddonInstance *testfrontend, const ICUUID &uuid,
         testfrontend->call<ITestFrontend::keyEvent>(
             uuid, Key(std::string(1, c)), false);
     }
+}
+
+TextFormatFlags formatAtByte(const Text &text, size_t offset) {
+    size_t pos = 0;
+    for (size_t i = 0; i < text.size(); i++) {
+        pos += text.stringAt(i).size();
+        if (offset < pos) {
+            return text.formatAt(i);
+        }
+    }
+    return TextFormatFlag::NoFlag;
 }
 
 void sendControlSpace(AddonInstance *testfrontend, InputContext *ic) {
@@ -748,6 +760,8 @@ void testPinyinContinuousSelection(Instance *instance) {
         FCITX_ASSERT(hasTab(ic, "nu"));
         FCITX_ASSERT(hasTab(ic, "ni"));
         FCITX_ASSERT(ic->inputPanel().preedit().toString() == "nu hao xian");
+        FCITX_ASSERT(!formatAtByte(ic->inputPanel().preedit(), 0)
+                          .test(TextFormatFlag::HighLight));
 
         // The fuzzy-corrected syllable is fixed without touching the
         // frontend filter state, and candidates are rebuilt by libime.
@@ -757,8 +771,15 @@ void testPinyinContinuousSelection(Instance *instance) {
         FCITX_ASSERT(hasTab(ic, "hao"));
         FCITX_ASSERT(findCandidate(ic, "你好") >= 0);
         FCITX_ASSERT(findCandidate(ic, "怒") < 0);
-        // The fixed syllable is displayed as the corrected pinyin.
+        // The fixed syllable is displayed as the corrected pinyin and
+        // highlighted.
         FCITX_ASSERT(ic->inputPanel().preedit().toString() == "ni hao xian");
+        FCITX_ASSERT(formatAtByte(ic->inputPanel().preedit(), 0)
+                         .test(TextFormatFlag::HighLight));
+        FCITX_ASSERT(!formatAtByte(ic->inputPanel().preedit(), 2)
+                          .test(TextFormatFlag::HighLight));
+        FCITX_ASSERT(!formatAtByte(ic->inputPanel().preedit(), 3)
+                          .test(TextFormatFlag::HighLight));
 
         clickTab(ic, "hao");
         FCITX_ASSERT(!hasCheckedTab(ic));
@@ -769,6 +790,12 @@ void testPinyinContinuousSelection(Instance *instance) {
         FCITX_ASSERT(hasTab(ic, "xi"));
         FCITX_ASSERT(findCandidate(ic, "你好先") >= 0);
         FCITX_ASSERT(ic->inputPanel().preedit().toString() == "ni hao xian");
+        FCITX_ASSERT(formatAtByte(ic->inputPanel().preedit(), 0)
+                         .test(TextFormatFlag::HighLight));
+        FCITX_ASSERT(formatAtByte(ic->inputPanel().preedit(), 3)
+                         .test(TextFormatFlag::HighLight));
+        FCITX_ASSERT(!formatAtByte(ic->inputPanel().preedit(), 6)
+                          .test(TextFormatFlag::HighLight));
 
         // The extra split can also be fixed through libime.
         clickTab(ic, "xi");
@@ -777,6 +804,18 @@ void testPinyinContinuousSelection(Instance *instance) {
         FCITX_ASSERT(findCandidate(ic, "你好西安") >= 0);
         FCITX_ASSERT(ic->inputPanel().preedit().toString() == "ni hao xi an")
             << ic->inputPanel().preedit().toString();
+        FCITX_ASSERT(formatAtByte(ic->inputPanel().preedit(), 0)
+                         .test(TextFormatFlag::HighLight));
+        FCITX_ASSERT(formatAtByte(ic->inputPanel().preedit(), 3)
+                         .test(TextFormatFlag::HighLight));
+        FCITX_ASSERT(formatAtByte(ic->inputPanel().preedit(), 7)
+                         .test(TextFormatFlag::HighLight));
+        FCITX_ASSERT(!formatAtByte(ic->inputPanel().preedit(), 2)
+                          .test(TextFormatFlag::HighLight));
+        FCITX_ASSERT(!formatAtByte(ic->inputPanel().preedit(), 6)
+                          .test(TextFormatFlag::HighLight));
+        FCITX_ASSERT(!formatAtByte(ic->inputPanel().preedit(), 9)
+                          .test(TextFormatFlag::HighLight));
 
         // Apostrophes do not consume a syllable. A fix on both sides of one
         // must not make the second syllable available again.
@@ -897,10 +936,16 @@ void testPinyinContinuousSelection(Instance *instance) {
         FCITX_ASSERT(!hasCheckedTab(ic));
         FCITX_ASSERT(ic->inputPanel().preedit().toString() == "h h h")
             << ic->inputPanel().preedit().toString();
+        FCITX_ASSERT(formatAtByte(ic->inputPanel().preedit(), 0)
+                         .test(TextFormatFlag::HighLight));
         // The next "h" is still available.
         FCITX_ASSERT(hasTab(ic, "h"));
         clickTab(ic, "h");
         FCITX_ASSERT(!hasCheckedTab(ic));
+        FCITX_ASSERT(formatAtByte(ic->inputPanel().preedit(), 0)
+                         .test(TextFormatFlag::HighLight));
+        FCITX_ASSERT(formatAtByte(ic->inputPanel().preedit(), 2)
+                         .test(TextFormatFlag::HighLight));
 
         // The uppercase letter reading is still a separate fix.
         ic->reset();
@@ -909,6 +954,8 @@ void testPinyinContinuousSelection(Instance *instance) {
         FCITX_ASSERT(!hasCheckedTab(ic));
         FCITX_ASSERT(ic->inputPanel().preedit().toString() == "H h h")
             << ic->inputPanel().preedit().toString();
+        FCITX_ASSERT(formatAtByte(ic->inputPanel().preedit(), 0)
+                         .test(TextFormatFlag::HighLight));
 
         // Turning the switch off restores the checked + frontend filter
         // behavior. Start a fresh composition so the fixes above are gone.
@@ -968,6 +1015,70 @@ void testPinyinContinuousShuangpin(Instance *instance) {
     });
 }
 
+void testPinyinFixedClientPreedit(Instance *instance) {
+    instance->eventDispatcher().schedule([instance]() {
+        auto *pinyin = instance->addonManager().addon("pinyin");
+        FCITX_ASSERT(pinyin);
+        auto *testfrontend = instance->addonManager().addon("testfrontend");
+        auto uuid =
+            testfrontend->call<ITestFrontend::createInputContext>("testapp");
+        auto *ic = instance->inputContextManager().findByUUID(uuid);
+        FCITX_ASSERT(ic);
+        instance->setCurrentInputMethod(ic, "pinyin", true);
+        ic->setCapabilityFlags(CapabilityFlag::Preedit);
+
+        RawConfig config;
+        config.setValueByPath("Fuzzy/Correction", "QWERTY");
+        config.setValueByPath("ContinuousPinyinSelection", "True");
+
+        // ComposingPinyin puts the fixed pinyin into the client preedit.
+        config.setValueByPath("PreeditMode", "Composing pinyin");
+        config.setValueByPath("PreeditCursorPositionAtBeginning", "False");
+        pinyin->setConfig(config);
+        typeString(testfrontend, uuid, "nuhaoxian");
+        clickTab(ic, "ni");
+        auto clientPreedit = ic->inputPanel().clientPreedit();
+        FCITX_ASSERT(clientPreedit.toString() == "ni hao xian")
+            << clientPreedit.toString();
+        FCITX_ASSERT(
+            formatAtByte(clientPreedit, 0).test(TextFormatFlag::HighLight));
+        FCITX_ASSERT(
+            formatAtByte(clientPreedit, 0).test(TextFormatFlag::Underline));
+        FCITX_ASSERT(
+            !formatAtByte(clientPreedit, 2).test(TextFormatFlag::HighLight));
+        FCITX_ASSERT(
+            !formatAtByte(clientPreedit, 3).test(TextFormatFlag::HighLight));
+        // The input-window preedit stays empty in this mode.
+        FCITX_ASSERT(ic->inputPanel().preedit().toString().empty());
+
+        // CommitPreview shows hanzi in the client preedit. It must not be
+        // replaced or highlighted. The fixed pinyin is highlighted in the
+        // input-window preedit.
+        ic->reset();
+        config.setValueByPath("PreeditMode", "Commit preview");
+        pinyin->setConfig(config);
+        typeString(testfrontend, uuid, "nuhaoxian");
+        clickTab(ic, "ni");
+        clientPreedit = ic->inputPanel().clientPreedit();
+        FCITX_ASSERT(!clientPreedit.toString().empty());
+        for (size_t i = 0; i < clientPreedit.size(); i++) {
+            FCITX_ASSERT(
+                !clientPreedit.formatAt(i).test(TextFormatFlag::HighLight))
+                << clientPreedit.toString();
+        }
+        FCITX_ASSERT(ic->inputPanel().preedit().toString() == "ni hao xian")
+            << ic->inputPanel().preedit().toString();
+        FCITX_ASSERT(formatAtByte(ic->inputPanel().preedit(), 0)
+                         .test(TextFormatFlag::HighLight));
+
+        config.setValueByPath("PreeditCursorPositionAtBeginning", "True");
+        config.setValueByPath("PreeditMode", "Composing pinyin");
+        config.setValueByPath("Fuzzy/Correction", "None");
+        config.setValueByPath("ContinuousPinyinSelection", "False");
+        pinyin->setConfig(config);
+    });
+}
+
 } // namespace
 
 int main() {
@@ -995,6 +1106,7 @@ int main() {
     testPinyinTabFilterWithSeparator(&instance);
     testPinyinContinuousSelection(&instance);
     testPinyinContinuousShuangpin(&instance);
+    testPinyinFixedClientPreedit(&instance);
     testPin(&instance);
     testQuickPhraseTrigger(&instance);
     testVQuickPhraseTrigger(&instance);
