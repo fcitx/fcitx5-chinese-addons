@@ -16,6 +16,7 @@
 #include "pinyincandidate.h"
 #include "pinyinhelper_public.h"
 #include "punctuation_public.h"
+#include "shuangpinkeyhints.h"
 #include "spell_public.h"
 #include "workerthread.h"
 #include <algorithm>
@@ -85,6 +86,7 @@
 #include <quickphrase_public.h>
 #include <ranges>
 #include <regex>
+#include <sstream>
 #include <stdexcept>
 #include <string>
 #include <string_view>
@@ -1022,8 +1024,7 @@ PinyinEngine::PinyinEngine(Instance *instance)
 PinyinEngine::~PinyinEngine() {}
 
 std::vector<std::string> PinyinEngine::shuangpinKeyHints() const {
-    const auto profile = ime_->shuangpinProfile();
-    return profile ? profile->keyHints() : std::vector<std::string>{};
+    return shuangpinKeyHints_;
 }
 
 void PinyinEngine::loadSymbols(const UnixFD &file) {
@@ -1248,9 +1249,16 @@ void PinyinEngine::populateConfig() {
             try {
                 IFDStreamBuf buffer(file.fd());
                 std::istream in(&buffer);
-                ime_->setShuangpinProfile(
-                    std::make_shared<libime::ShuangpinProfile>(
-                        in, ime_->correctionProfile().get()));
+                const std::string contents{std::istreambuf_iterator<char>(in),
+                                           std::istreambuf_iterator<char>()};
+                std::istringstream profileInput(contents);
+                auto profile = std::make_shared<libime::ShuangpinProfile>(
+                    profileInput, ime_->correctionProfile().get());
+                std::istringstream hintInput(contents);
+                auto hints =
+                    buildShuangpinKeyHints(hintInput, profile->validInput());
+                ime_->setShuangpinProfile(std::move(profile));
+                shuangpinKeyHints_ = std::move(hints);
             } catch (const std::exception &e) {
                 PINYIN_ERROR() << e.what();
             }
@@ -1276,15 +1284,22 @@ void PinyinEngine::populateConfig() {
             profile = libime::ShuangpinBuiltinProfile::Ziranma;
             break;
         }
-        ime_->setShuangpinProfile(std::make_shared<libime::ShuangpinProfile>(
-            profile, ime_->correctionProfile().get()));
+        auto loaded = std::make_shared<libime::ShuangpinProfile>(
+            profile, ime_->correctionProfile().get());
+        auto hints = buildShuangpinKeyHints(profile, loaded->validInput());
+        ime_->setShuangpinProfile(std::move(loaded));
+        shuangpinKeyHints_ = std::move(hints);
     }
 
     // Always set a profile to avoid crash.
     if (!ime_->shuangpinProfile()) {
-        ime_->setShuangpinProfile(std::make_shared<libime::ShuangpinProfile>(
+        auto profile = std::make_shared<libime::ShuangpinProfile>(
             libime::ShuangpinBuiltinProfile::Ziranma,
-            ime_->correctionProfile().get()));
+            ime_->correctionProfile().get());
+        auto hints = buildShuangpinKeyHints(
+            libime::ShuangpinBuiltinProfile::Ziranma, profile->validInput());
+        ime_->setShuangpinProfile(std::move(profile));
+        shuangpinKeyHints_ = std::move(hints);
     }
 
     quickphraseTriggerRegex_.clear();

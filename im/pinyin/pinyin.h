@@ -510,6 +510,7 @@ private:
     PinyinEngineConfig config_;
     PinyinEngineConfig pyConfig_;
     std::unique_ptr<libime::PinyinIME> ime_;
+    std::vector<std::string> shuangpinKeyHints_;
     std::vector<std::regex> quickphraseTriggerRegex_;
     KeyList selectionKeys_;
     KeyList numpadSelectionKeys_;

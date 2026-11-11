@@ -2,6 +2,7 @@ set(PINYIN_SOURCES
     pinyin.cpp
     customphrase.cpp
     symboldictionary.cpp
+    shuangpinkeyhints.cpp
     workerthread.cpp
     pinyincandidate.cpp
     pinyinenginefactory.cpp

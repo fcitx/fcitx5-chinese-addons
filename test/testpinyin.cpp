@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later
  *
  */
+#include "../im/pinyin/pinyin_public.h"
 #include "testdir.h"
 #include "testfrontend_public.h"
 #include <algorithm>
@@ -93,6 +94,35 @@ void setup(Instance *instance) {
             InputMethodGroupItem("shuangpin"));
         defaultGroup.setDefaultInputMethod("");
         instance->inputMethodManager().setGroup(std::move(defaultGroup));
+    });
+}
+
+void testShuangpinHints(Instance *instance) {
+    instance->eventDispatcher().schedule([instance]() {
+        auto *pinyin = instance->addonManager().addon("pinyin");
+        FCITX_ASSERT(pinyin);
+        const auto field = [](const std::vector<std::string> &hints,
+                              const std::string &key, size_t part) {
+            for (size_t i = 0; i + 2 < hints.size(); i += 3) {
+                if (hints[i] == key) {
+                    return hints[i + part];
+                }
+            }
+            return std::string{};
+        };
+        RawConfig config;
+        config.setValueByPath("ShuangpinProfile", "Xiaohe");
+        pinyin->setConfig(config);
+        const auto xiaohe = pinyin->call<IPinyinEngine::shuangpinKeyHints>();
+        FCITX_ASSERT(field(xiaohe, "l", 2) == "iang/uang");
+        config.setValueByPath("ShuangpinProfile", "MS");
+        pinyin->setConfig(config);
+        const auto ms = pinyin->call<IPinyinEngine::shuangpinKeyHints>();
+        FCITX_ASSERT(field(ms, ";", 2) == "ing");
+        config.setValueByPath("ShuangpinProfile", "Ziranma");
+        pinyin->setConfig(config);
+        const auto ziranma = pinyin->call<IPinyinEngine::shuangpinKeyHints>();
+        FCITX_ASSERT(field(ziranma, "y", 2) == "ing");
     });
 }
 
@@ -690,6 +720,7 @@ int main() {
     Instance instance(FCITX_ARRAY_SIZE(argv), argv);
     instance.addonManager().registerDefaultLoader(nullptr);
     setup(&instance);
+    testShuangpinHints(&instance);
     testBasic(&instance);
     testSelectByChar(&instance);
     testUppercase(&instance);
