@@ -1021,6 +1021,15 @@ PinyinEngine::PinyinEngine(Instance *instance)
 
 PinyinEngine::~PinyinEngine() {}
 
+std::string PinyinEngine::shuangpinInputKeys() const {
+    const auto profile = ime_->shuangpinProfile();
+    if (!profile) {
+        return {};
+    }
+    const auto &keys = profile->validInput();
+    return std::string(keys.begin(), keys.end());
+}
+
 void PinyinEngine::loadSymbols(const UnixFD &file) {
     if (!file.isValid()) {
         return;

@@ -17,6 +17,10 @@ if (TARGET Fcitx5::Module::LuaAddonLoader)
             COMPONENT config)
 endif()
 
+fcitx5_export_module(Pinyin TARGET pinyin
+    BUILD_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}"
+    HEADERS pinyin_public.h INSTALL)
+
 install(TARGETS pinyin DESTINATION "${CMAKE_INSTALL_LIBDIR}/fcitx5")
 fcitx5_translate_desktop_file(pinyin.conf.in pinyin.conf)
 fcitx5_translate_desktop_file(shuangpin.conf.in shuangpin.conf)
