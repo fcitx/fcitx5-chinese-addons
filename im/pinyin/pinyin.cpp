@@ -85,6 +85,7 @@
 #include <quickphrase_public.h>
 #include <ranges>
 #include <regex>
+#include <span>
 #include <stdexcept>
 #include <string>
 #include <string_view>
@@ -415,6 +416,32 @@ PinyinEngine::luaCandidateTrigger(InputContext *ic,
 }
 #endif
 
+namespace {
+
+void appendPreeditText(Text &out, std::string_view text,
+                       std::span<const std::pair<size_t, size_t>> fixRanges,
+                       TextFormatFlags format, size_t begin = 0,
+                       size_t end = std::string_view::npos) {
+    end = std::min(end, text.size());
+    auto append = [&](size_t from, size_t to, TextFormatFlags flag) {
+        if (from < to) {
+            out.append(std::string(text.substr(from, to - from)), flag);
+        }
+    };
+    // fixRanges are sorted and do not overlap, so each one only needs to be
+    // clamped into [begin, end).
+    for (const auto &[fixBegin, fixEnd] : fixRanges) {
+        const size_t from = std::clamp(fixBegin, begin, end);
+        const size_t to = std::clamp(fixEnd, begin, end);
+        append(begin, from, format);
+        append(from, to, format | TextFormatFlag::HighLight);
+        begin = to;
+    }
+    append(begin, end, format);
+}
+
+} // namespace
+
 std::pair<Text, Text> PinyinEngine::preedit(InputContext *inputContext) const {
     auto *state = inputContext->propertyFor(&factory_);
     PreeditMode mode =
@@ -423,24 +450,25 @@ std::pair<Text, Text> PinyinEngine::preedit(InputContext *inputContext) const {
             : PreeditMode::No;
     // Use const ref to avoid accidentally change anything.
     const auto &context = state->context_;
-    auto preeditWithCursor = context.preeditWithCursor();
+    auto [preeditString, preeditCursor, fixRanges] =
+        context.preeditWithCursorHighlight();
     // client preedit can be empty/pinyin/preview depends on config
     Text clientPreedit;
     Text preedit;
     switch (mode) {
     case PreeditMode::ComposingPinyin:
         if (*config_.preeditCursorPositionAtBeginning) {
-            clientPreedit.append(
-                preeditWithCursor.first.substr(0, preeditWithCursor.second),
-                {TextFormatFlag::HighLight, TextFormatFlag::Underline});
-            clientPreedit.append(
-                preeditWithCursor.first.substr(preeditWithCursor.second),
-                TextFormatFlag::Underline);
+            appendPreeditText(
+                clientPreedit, preeditString, fixRanges,
+                {TextFormatFlag::HighLight, TextFormatFlag::Underline}, 0,
+                preeditCursor);
+            appendPreeditText(clientPreedit, preeditString, fixRanges,
+                              TextFormatFlag::Underline, preeditCursor);
             clientPreedit.setCursor(0);
         } else {
-            clientPreedit.append(preeditWithCursor.first,
-                                 TextFormatFlag::Underline);
-            clientPreedit.setCursor(preeditWithCursor.second);
+            appendPreeditText(clientPreedit, preeditString, fixRanges,
+                              TextFormatFlag::Underline);
+            clientPreedit.setCursor(preeditCursor);
         }
         break;
     case PreeditMode::CommitPreview:
@@ -452,8 +480,9 @@ std::pair<Text, Text> PinyinEngine::preedit(InputContext *inputContext) const {
         }
         [[fallthrough]];
     case PreeditMode::No:
-        preedit.append(preeditWithCursor.first);
-        preedit.setCursor(preeditWithCursor.second);
+        appendPreeditText(preedit, preeditString, fixRanges,
+                          TextFormatFlag::NoFlag);
+        preedit.setCursor(preeditCursor);
         break;
     }
     return {std::move(clientPreedit), std::move(preedit)};
