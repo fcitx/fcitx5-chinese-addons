@@ -55,17 +55,28 @@ TablePinyinCandidateWord::TablePinyinCandidateWord(
     std::string hintSeparator, bool spaceBeforeHint)
     : engine_(engine), word_(std::move(word)) {
     setText(Text(word_));
-    if (utf8::lengthValidated(word_) == 1) {
-        if (auto code = dict.reverseLookup(word_); !code.empty()) {
-            Text comment;
-            comment.append(hintSeparator);
-            if (customHint) {
-                comment.append(dict.hint(code));
-            } else {
-                comment.append(std::move(code));
-            }
-            setComment(std::move(comment));
+    std::string code = dict.reverseLookup(word_);
+    // Multi-character words have no reverse lookup trie in libime yet. Fall
+    // back to the table rule so that z-pinyin lookup can also show the code
+    // of a phrase, e.g. 我们 -> trwu.
+    if (code.empty()) {
+        dict.generate(word_, code);
+        // The generated code is only meaningful if the table actually maps
+        // it back to this word.
+        if (!code.empty() &&
+            dict.wordExists(code, word_) == libime::PhraseFlag::Invalid) {
+            code.clear();
         }
+    }
+    if (!code.empty()) {
+        Text comment;
+        comment.append(hintSeparator);
+        if (customHint) {
+            comment.append(dict.hint(code));
+        } else {
+            comment.append(std::move(code));
+        }
+        setComment(std::move(comment));
     }
     setSpaceBetweenComment(spaceBeforeHint);
 }
