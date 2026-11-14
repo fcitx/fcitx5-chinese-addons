@@ -403,6 +403,24 @@ public:
     int keyReleased_ = -1;
     int keyReleasedIndex_ = -2;
     uint64_t lastKeyPressedTime_ = 0;
+
+    // undoStack_ helpers
+    void recordTypedCharacter(size_t sizeBefore);
+    void recordUpdateUI();
+    void recordFix();
+    void clearUndoHistory();
+    bool undoLastAction();
+
+private:
+    // History of the continuous selection:
+    // a positive value is a run of that many typed characters, 0 is a single
+    // selection and a negative value is a run of -value fixes. The fixes and
+    // the selection themselves are read back from the context, so the undo
+    // order is the exact reverse of the recorded history.
+    std::vector<int> undoStack_;
+    // selectedLength() at the previous updateUI, used to detect a new
+    // selection.
+    size_t lastSelectedLength_ = 0;
 };
 
 class PinyinEngine final : public InputMethodEngineV3,

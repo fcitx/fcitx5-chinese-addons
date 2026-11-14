@@ -1015,6 +1015,301 @@ void testPinyinContinuousShuangpin(Instance *instance) {
     });
 }
 
+void testPinyinContinuousBackspace(Instance *instance) {
+    instance->eventDispatcher().schedule([instance]() {
+        auto *pinyin = instance->addonManager().addon("pinyin");
+        FCITX_ASSERT(pinyin);
+        auto *testfrontend = instance->addonManager().addon("testfrontend");
+        auto uuid =
+            testfrontend->call<ITestFrontend::createInputContext>("testapp");
+        auto *ic = instance->inputContextManager().findByUUID(uuid);
+        FCITX_ASSERT(ic);
+        instance->setCurrentInputMethod(ic, "pinyin", true);
+
+        RawConfig config;
+        config.setValueByPath("Fuzzy/Correction", "QWERTY");
+        config.setValueByPath("ContinuousPinyinSelection", "True");
+        config.setValueByPath("BackSpaceToUnselect", "True");
+        pinyin->setConfig(config);
+
+        auto backspace = [&]() {
+            testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("BackSpace"),
+                                                        false);
+        };
+
+        // Undo the fix actions in reverse order.
+        typeString(testfrontend, uuid, "nuhaoxian");
+        clickTab(ic, "ni");
+        clickTab(ic, "hao");
+        FCITX_ASSERT(hasTab(ic, "xian"));
+
+        backspace();
+        FCITX_ASSERT(hasTab(ic, "hao"));
+        FCITX_ASSERT(!hasTab(ic, "xian"));
+
+        backspace();
+        FCITX_ASSERT(hasTab(ic, "ni"));
+        FCITX_ASSERT(!hasTab(ic, "hao"));
+
+        // With no fixes left, undo removes the last typed character.
+        backspace();
+        FCITX_ASSERT(ic->inputPanel().preedit().toString() == "nu hao xia");
+
+        // A character typed after a fix is undone before the fix itself.
+        ic->reset();
+        typeString(testfrontend, uuid, "nuhaoxian");
+        clickTab(ic, "ni");
+        FCITX_ASSERT(hasTab(ic, "hao"));
+        typeString(testfrontend, uuid, "g");
+        FCITX_ASSERT(ic->inputPanel().preedit().toString() == "ni hao xiang");
+        backspace();
+        FCITX_ASSERT(ic->inputPanel().preedit().toString() == "ni hao xian");
+        FCITX_ASSERT(hasTab(ic, "hao"));
+        backspace();
+        FCITX_ASSERT(hasTab(ic, "ni"));
+        FCITX_ASSERT(!hasTab(ic, "hao"));
+
+        // Undo a selection first; the dormant fixes become active again.
+        ic->reset();
+        typeString(testfrontend, uuid, "nuhaoxian");
+        clickTab(ic, "ni");
+        clickTab(ic, "hao");
+        findAndSelectCandidate(ic, "你好");
+        FCITX_ASSERT(ic->inputPanel().preedit().toString() == "你好xian");
+        // The fixes are dormant under the selection, so nothing is fixed in
+        // the preedit.
+        FCITX_ASSERT(!formatAtByte(ic->inputPanel().preedit(), 0)
+                          .test(TextFormatFlag::HighLight));
+        FCITX_ASSERT(hasTab(ic, "xi"));
+
+        backspace();
+        FCITX_ASSERT(ic->inputPanel().preedit().toString() == "ni hao xian");
+        FCITX_ASSERT(formatAtByte(ic->inputPanel().preedit(), 0)
+                         .test(TextFormatFlag::HighLight));
+        FCITX_ASSERT(formatAtByte(ic->inputPanel().preedit(), 3)
+                         .test(TextFormatFlag::HighLight));
+        // Continuous mode lists every legal split, so both readings of the
+        // remaining "xian" are available.
+        FCITX_ASSERT(hasTab(ic, "xian"));
+        FCITX_ASSERT(hasTab(ic, "xi"));
+
+        backspace();
+        FCITX_ASSERT(hasTab(ic, "hao"));
+        backspace();
+        FCITX_ASSERT(hasTab(ic, "ni"));
+        FCITX_ASSERT(!hasTab(ic, "hao"));
+
+        config.setValueByPath("Fuzzy/Correction", "None");
+        config.setValueByPath("ContinuousPinyinSelection", "False");
+        config.setValueByPath("BackSpaceToUnselect", "True");
+        pinyin->setConfig(config);
+    });
+}
+
+void testPinyinContinuousUndoOrder(Instance *instance) {
+    instance->eventDispatcher().schedule([instance]() {
+        auto *pinyin = instance->addonManager().addon("pinyin");
+        FCITX_ASSERT(pinyin);
+        auto *testfrontend = instance->addonManager().addon("testfrontend");
+        auto uuid =
+            testfrontend->call<ITestFrontend::createInputContext>("testapp");
+        auto *ic = instance->inputContextManager().findByUUID(uuid);
+        FCITX_ASSERT(ic);
+        instance->setCurrentInputMethod(ic, "pinyin", true);
+
+        RawConfig config;
+        config.setValueByPath("Fuzzy/Correction", "QWERTY");
+        config.setValueByPath("ContinuousPinyinSelection", "True");
+        config.setValueByPath("BackSpaceToUnselect", "True");
+        pinyin->setConfig(config);
+
+        auto preedit = [ic]() { return ic->inputPanel().preedit().toString(); };
+        auto highlighted = [ic](size_t offset) {
+            return formatAtByte(ic->inputPanel().preedit(), offset)
+                .test(TextFormatFlag::HighLight);
+        };
+        auto backspace = [&]() {
+            testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("BackSpace"),
+                                                        false);
+        };
+        // Select by text across all pages; the candidate may not be on the
+        // first page.
+        auto selectCandidate = [&](std::string_view word) {
+            auto candidateList = ic->inputPanel().candidateList();
+            FCITX_ASSERT(candidateList);
+            auto *bulk = candidateList->toBulk();
+            FCITX_ASSERT(bulk);
+            for (int i = 0; i < bulk->totalSize(); i++) {
+                const auto &candidate = bulk->candidateFromAll(i);
+                if (candidate.text().toString() == word) {
+                    candidate.select(ic);
+                    return;
+                }
+            }
+            FCITX_ASSERT(false) << "Failed to find candidate " << word;
+        };
+
+        // Interleave every kind of action:
+        //   T T      "nu"
+        //   F        fix "ni"
+        //   T T T    "hao"
+        //   F        fix "hao"
+        //   T T T T  "xian"
+        //   S        select 你
+        //   F        fix "xi"
+        //   S        select 好
+        //   S        select 西
+        // BackSpace must replay it exactly backwards, including the fix
+        // applied on top of the first selection and the two selections that
+        // follow it.
+        typeString(testfrontend, uuid, "nu");
+        clickTab(ic, "ni");
+        typeString(testfrontend, uuid, "hao");
+        clickTab(ic, "hao");
+        typeString(testfrontend, uuid, "xian");
+        selectCandidate("你");
+        clickTab(ic, "xi");
+        selectCandidate("好");
+        selectCandidate("西");
+        FCITX_ASSERT(preedit() == "你好西an") << preedit();
+        FCITX_ASSERT(!highlighted(0));
+
+        // S: cancel the 西 selection.
+        backspace();
+        FCITX_ASSERT(preedit() == "你好xi an") << preedit();
+        FCITX_ASSERT(highlighted(6));
+
+        // S: cancel the 好 selection, its dormant fix becomes active again.
+        backspace();
+        FCITX_ASSERT(preedit() == "你hao xi an") << preedit();
+        FCITX_ASSERT(highlighted(3));
+        FCITX_ASSERT(highlighted(7));
+
+        // F: remove the "xi" fix, "xian" is one syllable again.
+        backspace();
+        FCITX_ASSERT(preedit() == "你hao xian") << preedit();
+        FCITX_ASSERT(highlighted(3));
+        FCITX_ASSERT(!highlighted(7));
+
+        // S: cancel the 你 selection.
+        backspace();
+        FCITX_ASSERT(preedit() == "ni hao xian") << preedit();
+        FCITX_ASSERT(highlighted(0));
+        FCITX_ASSERT(highlighted(3));
+
+        // T x4: the characters typed after the "hao" fix.
+        backspace();
+        FCITX_ASSERT(preedit() == "ni hao xia") << preedit();
+        backspace();
+        FCITX_ASSERT(preedit() == "ni hao xi") << preedit();
+        backspace();
+        FCITX_ASSERT(preedit() == "ni hao x") << preedit();
+        backspace();
+        FCITX_ASSERT(preedit() == "ni hao") << preedit();
+        FCITX_ASSERT(!hasTab(ic, "hao"));
+
+        // F: remove the "hao" fix, the tab page moves back to it.
+        backspace();
+        FCITX_ASSERT(preedit() == "ni hao") << preedit();
+        FCITX_ASSERT(hasTab(ic, "hao"));
+        FCITX_ASSERT(highlighted(0));
+
+        // T x3: the characters typed before the "hao" fix.
+        backspace();
+        FCITX_ASSERT(preedit() == "ni ha") << preedit();
+        backspace();
+        FCITX_ASSERT(preedit() == "ni h") << preedit();
+        backspace();
+        FCITX_ASSERT(preedit() == "ni") << preedit();
+        FCITX_ASSERT(highlighted(0));
+
+        // F: remove the "ni" fix, back to the raw input.
+        backspace();
+        FCITX_ASSERT(preedit() == "nu") << preedit();
+        FCITX_ASSERT(hasTab(ic, "nu"));
+        FCITX_ASSERT(!highlighted(0));
+
+        // T x2: the characters typed before the "ni" fix.
+        backspace();
+        FCITX_ASSERT(preedit() == "n") << preedit();
+        backspace();
+        FCITX_ASSERT(preedit().empty()) << preedit();
+
+        config.setValueByPath("Fuzzy/Correction", "None");
+        config.setValueByPath("ContinuousPinyinSelection", "False");
+        config.setValueByPath("BackSpaceToUnselect", "True");
+        pinyin->setConfig(config);
+    });
+}
+
+void testPinyinContinuousBackspaceDeleteMode(Instance *instance) {
+    instance->eventDispatcher().schedule([instance]() {
+        auto *pinyin = instance->addonManager().addon("pinyin");
+        FCITX_ASSERT(pinyin);
+        auto *testfrontend = instance->addonManager().addon("testfrontend");
+        auto uuid =
+            testfrontend->call<ITestFrontend::createInputContext>("testapp");
+        auto *ic = instance->inputContextManager().findByUUID(uuid);
+        FCITX_ASSERT(ic);
+        instance->setCurrentInputMethod(ic, "pinyin", true);
+
+        RawConfig config;
+        config.setValueByPath("Fuzzy/Correction", "QWERTY");
+        config.setValueByPath("ContinuousPinyinSelection", "True");
+        config.setValueByPath("BackSpaceToUnselect", "False");
+        pinyin->setConfig(config);
+
+        auto backspace = [&]() {
+            testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("BackSpace"),
+                                                        false);
+        };
+
+        typeString(testfrontend, uuid, "nuhaoxian");
+        clickTab(ic, "ni");
+        clickTab(ic, "hao");
+        FCITX_ASSERT(hasTab(ic, "xian"));
+
+        // Deletions after the last fix only remove characters.
+        backspace();
+        FCITX_ASSERT(ic->inputPanel().preedit().toString() == "ni hao xia");
+        FCITX_ASSERT(hasTab(ic, "xia"));
+        backspace();
+        FCITX_ASSERT(ic->inputPanel().preedit().toString() == "ni hao xi");
+        FCITX_ASSERT(hasTab(ic, "xi"));
+        backspace();
+        FCITX_ASSERT(ic->inputPanel().preedit().toString() == "ni hao x");
+        FCITX_ASSERT(!hasTab(ic, "xi"));
+        FCITX_ASSERT(!hasTab(ic, "xia"));
+
+        // from == fix.end_: the fix is kept, but the syllable is incomplete.
+        backspace();
+        FCITX_ASSERT(ic->inputPanel().preedit().toString() == "ni hao");
+        FCITX_ASSERT(!hasTab(ic, "hao"));
+
+        // from enters [2,5): libime drops the hao fix on this same keypress.
+        backspace();
+        FCITX_ASSERT(ic->inputPanel().preedit().toString() == "ni ha");
+        FCITX_ASSERT(hasTab(ic, "ha"));
+        FCITX_ASSERT(!hasTab(ic, "hao"));
+
+        // The earlier ni fix is only dropped once deletion enters [0,2).
+        backspace();
+        FCITX_ASSERT(ic->inputPanel().preedit().toString() == "ni h");
+        backspace();
+        FCITX_ASSERT(ic->inputPanel().preedit().toString() == "ni");
+        FCITX_ASSERT(!hasTab(ic, "ni"));
+        backspace();
+        FCITX_ASSERT(ic->inputPanel().preedit().toString() == "n");
+        backspace();
+        FCITX_ASSERT(ic->inputPanel().preedit().toString().empty());
+
+        config.setValueByPath("Fuzzy/Correction", "None");
+        config.setValueByPath("ContinuousPinyinSelection", "False");
+        config.setValueByPath("BackSpaceToUnselect", "True");
+        pinyin->setConfig(config);
+    });
+}
+
 void testPinyinFixedClientPreedit(Instance *instance) {
     instance->eventDispatcher().schedule([instance]() {
         auto *pinyin = instance->addonManager().addon("pinyin");
@@ -1106,6 +1401,9 @@ int main() {
     testPinyinTabFilterWithSeparator(&instance);
     testPinyinContinuousSelection(&instance);
     testPinyinContinuousShuangpin(&instance);
+    testPinyinContinuousBackspace(&instance);
+    testPinyinContinuousUndoOrder(&instance);
+    testPinyinContinuousBackspaceDeleteMode(&instance);
     testPinyinFixedClientPreedit(&instance);
     testPin(&instance);
     testQuickPhraseTrigger(&instance);
