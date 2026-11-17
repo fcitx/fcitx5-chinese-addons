@@ -22,6 +22,7 @@
 #include <fcitx/addoninstance.h>
 #include <fcitx/addonmanager.h>
 #include <fcitx/candidateaction.h>
+#include <fcitx/event.h>
 #include <fcitx/inputcontext.h>
 #include <fcitx/inputmethodgroup.h>
 #include <fcitx/inputmethodmanager.h>
@@ -112,6 +113,12 @@ void clickTab(InputContext *ic, std::string_view text) {
     auto it = std::ranges::find(actions, text, &CandidateAction::text);
     FCITX_ASSERT(it != actions.end()) << "Tab " << text << " not found";
     tabbed->triggerTabAction(it->id());
+}
+
+void clickPreedit(InputContext *ic, int cursor) {
+    InvokeActionEvent event(InvokeActionEvent::Action::LeftClick, cursor, ic);
+    ic->invokeAction(event);
+    FCITX_ASSERT(event.filtered());
 }
 
 void typeString(AddonInstance *testfrontend, const ICUUID &uuid,
@@ -1374,6 +1381,114 @@ void testPinyinFixedClientPreedit(Instance *instance) {
     });
 }
 
+void testPinyinPreeditClick(Instance *instance) {
+    instance->eventDispatcher().schedule([instance]() {
+        auto *pinyin = instance->addonManager().addon("pinyin");
+        FCITX_ASSERT(pinyin);
+        auto *testfrontend = instance->addonManager().addon("testfrontend");
+        auto uuid =
+            testfrontend->call<ITestFrontend::createInputContext>("testapp");
+        auto *ic = instance->inputContextManager().findByUUID(uuid);
+        FCITX_ASSERT(ic);
+        instance->setCurrentInputMethod(ic, "pinyin", true);
+        ic->setCapabilityFlags(CapabilityFlag::Preedit);
+
+        RawConfig config;
+        config.setValueByPath("Fuzzy/Correction", "QWERTY");
+        config.setValueByPath("ContinuousPinyinSelection", "True");
+        config.setValueByPath("PreeditMode", "Composing pinyin");
+        config.setValueByPath("PreeditCursorPositionAtBeginning", "False");
+        pinyin->setConfig(config);
+
+        auto preedit = [ic]() {
+            return ic->inputPanel().clientPreedit().toString();
+        };
+        auto highlighted = [ic](size_t offset) {
+            return formatAtByte(ic->inputPanel().clientPreedit(), offset)
+                .test(TextFormatFlag::HighLight);
+        };
+        auto prepare = [&]() {
+            ic->reset();
+            typeString(testfrontend, uuid, "nuhaoxian");
+            clickTab(ic, "ni");
+            clickTab(ic, "hao");
+            clickTab(ic, "xi");
+            FCITX_ASSERT(preedit() == "ni hao xi an") << preedit();
+        };
+
+        // Clicking at the end keeps every fix.
+        prepare();
+        clickPreedit(ic, 12);
+        FCITX_ASSERT(preedit() == "ni hao xi an") << preedit();
+        FCITX_ASSERT(highlighted(0));
+        FCITX_ASSERT(highlighted(3));
+        FCITX_ASSERT(highlighted(7));
+
+        // Clicking at the end of "hao" keeps "ni" and "hao" and drops "xi".
+        prepare();
+        clickPreedit(ic, 6);
+        FCITX_ASSERT(preedit() == "ni hao xian") << preedit();
+        FCITX_ASSERT(highlighted(0));
+        FCITX_ASSERT(highlighted(3));
+        FCITX_ASSERT(!highlighted(7));
+
+        // Clicking inside "hao" keeps only "ni".
+        prepare();
+        clickPreedit(ic, 4);
+        FCITX_ASSERT(preedit() == "ni hao xian") << preedit();
+        FCITX_ASSERT(highlighted(0));
+        FCITX_ASSERT(!highlighted(3));
+        FCITX_ASSERT(!highlighted(7));
+
+        // Clicking inside the first fix drops every fix.
+        prepare();
+        clickPreedit(ic, 1);
+        FCITX_ASSERT(preedit() == "nu hao xian") << preedit();
+        FCITX_ASSERT(!highlighted(0));
+        FCITX_ASSERT(!highlighted(3));
+        FCITX_ASSERT(!highlighted(7));
+
+        // Clicking at the end of "xi" keeps all three fixes.
+        prepare();
+        clickPreedit(ic, 9);
+        FCITX_ASSERT(preedit() == "ni hao xi an") << preedit();
+        FCITX_ASSERT(highlighted(0));
+        FCITX_ASSERT(highlighted(3));
+        FCITX_ASSERT(highlighted(7));
+
+        // Clicking inside "xi" keeps "ni" and "hao" and drops "xi".
+        prepare();
+        clickPreedit(ic, 8);
+        FCITX_ASSERT(preedit() == "ni hao xian") << preedit();
+        FCITX_ASSERT(highlighted(0));
+        FCITX_ASSERT(highlighted(3));
+        FCITX_ASSERT(!highlighted(7));
+
+        // Clicking at the end of "ni" keeps "ni" and drops the later fixes.
+        prepare();
+        clickPreedit(ic, 2);
+        FCITX_ASSERT(preedit() == "ni hao xian") << preedit();
+        FCITX_ASSERT(highlighted(0));
+        FCITX_ASSERT(!highlighted(3));
+        FCITX_ASSERT(!highlighted(7));
+
+        // Clicking inside a selected word cancels the selection and drops the
+        // fixes from the new edit point to the end.
+        ic->reset();
+        typeString(testfrontend, uuid, "nuhaoxian");
+        clickTab(ic, "ni");
+        findAndSelectCandidate(ic, "你好");
+        FCITX_ASSERT(preedit() == "你好xian") << preedit();
+        clickPreedit(ic, 1);
+        FCITX_ASSERT(preedit() == "nu hao xian") << preedit();
+        FCITX_ASSERT(!highlighted(0));
+
+        config.setValueByPath("Fuzzy/Correction", "None");
+        config.setValueByPath("ContinuousPinyinSelection", "False");
+        pinyin->setConfig(config);
+    });
+}
+
 } // namespace
 
 int main() {
@@ -1405,6 +1520,7 @@ int main() {
     testPinyinContinuousUndoOrder(&instance);
     testPinyinContinuousBackspaceDeleteMode(&instance);
     testPinyinFixedClientPreedit(&instance);
+    testPinyinPreeditClick(&instance);
     testPin(&instance);
     testQuickPhraseTrigger(&instance);
     testVQuickPhraseTrigger(&instance);

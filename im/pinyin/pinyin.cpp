@@ -2693,43 +2693,31 @@ void PinyinEngine::invokeActionImpl(const InputMethodEntry &entry,
 
     event.filter();
 
-    auto preeditWithCursor = context.preeditWithCursor();
     auto selectedSentence = context.selectedSentence();
     // The logic here need to match ::preedit()
     switch (*config_.preeditMode) {
     case PreeditMode::No:
         break;
-    case PreeditMode::ComposingPinyin:
+    case PreeditMode::ComposingPinyin: {
+        size_t target = context.selectedLength();
         if (utf8::length(selectedSentence) > cursor) {
             // If cursor is with in selected sentence range, cancel until cursor
             // is covered.
             do {
                 context.cancel();
             } while (utf8::length(context.selectedSentence()) > cursor);
-            context.setCursor(context.selectedLength());
+            target = context.selectedLength();
         } else {
-            // If cursor is with in the pinyin range, move to the left most and
-            // then move it around. This is a easy way to cover Shuangpin and
-            // Preedit Mode difference. setCursor should be cheap operation if
-            // it does not cancel any selection.
-            context.setCursor(context.selectedLength());
-            while (context.cursor() < context.size()) {
-                auto [preeditText, preeditCursor] = context.preeditWithCursor();
-                if (utf8::length(preeditText.begin(),
-                                 preeditText.begin() + preeditCursor) <
-                    cursor) {
-                    state->context_.setCursor(context.cursor() + 1);
-                } else {
-                    break;
-                }
-            }
-            auto [preeditText, preeditCursor] = context.preeditWithCursor();
-            if (utf8::length(preeditText.begin(),
-                             preeditText.begin() + preeditCursor) > cursor) {
-                state->context_.setCursor(context.cursor() - 1);
-            }
+            // If cursor is with in the pinyin range, map the preedit position
+            // back to the raw input cursor.
+            const auto preeditByteCursor = static_cast<size_t>(
+                utf8::ncharByteLength(preedit.begin(), cursor));
+            target = context.cursorForPreeditPosition(preeditByteCursor)
+                         .value_or(context.selectedLength());
         }
+        context.setCursor(target);
         break;
+    }
     case PreeditMode::CommitPreview:
         if (utf8::length(selectedSentence) > cursor) {
             do {
