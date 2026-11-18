@@ -400,7 +400,7 @@ void PinyinState::recordFix() {
 
 void PinyinState::clearUndoHistory() {
     undoStack_.clear();
-    lastSelectedLength_ = 0;
+    lastSelectedLength_ = context_.selectedLength();
 }
 
 // Undo one step of the continuous selection history. A positive entry is a
