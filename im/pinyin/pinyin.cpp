@@ -85,6 +85,7 @@
 #include <quickphrase_public.h>
 #include <ranges>
 #include <regex>
+#include <span>
 #include <stdexcept>
 #include <string>
 #include <string_view>
@@ -334,6 +335,108 @@ PinyinState::PinyinState(PinyinEngine *engine) : context_(engine->ime()) {
     context_.setMaxSentenceLength(35);
 }
 
+namespace {
+
+// Remove the newest fix that is not covered by the current selection.
+bool undoLastFix(libime::PinyinContext &context) {
+    const auto selectedLength = context.selectedLength();
+    auto fixes = context.pinyinFixes();
+    if (fixes.empty() || fixes.back().start_ < selectedLength) {
+        return false;
+    }
+    fixes.pop_back();
+    context.setPinyinFixes(std::move(fixes));
+    return true;
+}
+
+// Undo the newest fix or selection that is still in the context. Used when
+// the recorded history is empty, e.g. after a cursor move.
+bool undoNewestAction(libime::PinyinContext &context) {
+    if (undoLastFix(context)) {
+        return true;
+    }
+    if (context.selectedLength()) {
+        context.cancel();
+        return true;
+    }
+    return false;
+}
+
+} // namespace
+
+void PinyinState::recordTypedCharacter(size_t sizeBefore) {
+    if (context_.size() <= sizeBefore) {
+        return;
+    }
+    if (!undoStack_.empty() && undoStack_.back() > 0) {
+        ++undoStack_.back();
+    } else {
+        undoStack_.push_back(1);
+    }
+}
+
+void PinyinState::recordUpdateUI() {
+    const auto selectedLength = context_.selectedLength();
+    // A cleared composition or a cursor move off the end of the input makes
+    // the recorded runs meaningless. BackSpace then falls back to the fixes
+    // and the selection still in the context.
+    if (context_.empty() || context_.cursor() != context_.size()) {
+        undoStack_.clear();
+    } else if (selectedLength > lastSelectedLength_) {
+        // A new selection is a structural action, so it is undone before the
+        // characters typed so far.
+        undoStack_.push_back(0);
+    }
+    lastSelectedLength_ = selectedLength;
+}
+
+void PinyinState::recordFix() {
+    if (!undoStack_.empty() && undoStack_.back() < 0) {
+        --undoStack_.back();
+    } else {
+        undoStack_.push_back(-1);
+    }
+}
+
+void PinyinState::clearUndoHistory() {
+    undoStack_.clear();
+    lastSelectedLength_ = context_.selectedLength();
+}
+
+// Undo one step of the continuous selection history. A positive entry is a
+// run of typed characters, 0 is a selection and a negative entry is a run of
+// -entry fixes; the fixes and the selection themselves are read back from the
+// context.
+bool PinyinState::undoLastAction() {
+    while (!undoStack_.empty()) {
+        const int entry = undoStack_.back();
+        if (entry > 0) {
+            if (context_.backspace()) {
+                if (--undoStack_.back() == 0) {
+                    undoStack_.pop_back();
+                }
+                return true;
+            }
+        } else if (entry == 0) {
+            if (context_.selectedLength()) {
+                undoStack_.pop_back();
+                context_.cancel();
+                return true;
+            }
+        } else if (undoLastFix(context_)) {
+            if (++undoStack_.back() == 0) {
+                undoStack_.pop_back();
+            }
+            return true;
+        }
+        // The entry no longer matches the context, drop it and continue with
+        // the previous one so this key press still undoes something.
+        undoStack_.pop_back();
+    }
+
+    return undoNewestAction(context_) || context_.backspace();
+}
+
 void PinyinEngine::initPredict(InputContext *inputContext) {
     auto *state = inputContext->propertyFor(&factory_);
     // clear state no matter what.
@@ -415,6 +518,32 @@ PinyinEngine::luaCandidateTrigger(InputContext *ic,
 }
 #endif
 
+namespace {
+
+void appendPreeditText(Text &out, std::string_view text,
+                       std::span<const std::pair<size_t, size_t>> fixRanges,
+                       TextFormatFlags format, size_t begin = 0,
+                       size_t end = std::string_view::npos) {
+    end = std::min(end, text.size());
+    auto append = [&](size_t from, size_t to, TextFormatFlags flag) {
+        if (from < to) {
+            out.append(std::string(text.substr(from, to - from)), flag);
+        }
+    };
+    // fixRanges are sorted and do not overlap, so each one only needs to be
+    // clamped into [begin, end).
+    for (const auto &[fixBegin, fixEnd] : fixRanges) {
+        const size_t from = std::clamp(fixBegin, begin, end);
+        const size_t to = std::clamp(fixEnd, begin, end);
+        append(begin, from, format);
+        append(from, to, format | TextFormatFlag::HighLight);
+        begin = to;
+    }
+    append(begin, end, format);
+}
+
+} // namespace
+
 std::pair<Text, Text> PinyinEngine::preedit(InputContext *inputContext) const {
     auto *state = inputContext->propertyFor(&factory_);
     PreeditMode mode =
@@ -423,24 +552,25 @@ std::pair<Text, Text> PinyinEngine::preedit(InputContext *inputContext) const {
             : PreeditMode::No;
     // Use const ref to avoid accidentally change anything.
     const auto &context = state->context_;
-    auto preeditWithCursor = context.preeditWithCursor();
+    auto [preeditString, preeditCursor, fixRanges] =
+        context.preeditWithCursorHighlight();
     // client preedit can be empty/pinyin/preview depends on config
     Text clientPreedit;
     Text preedit;
     switch (mode) {
     case PreeditMode::ComposingPinyin:
         if (*config_.preeditCursorPositionAtBeginning) {
-            clientPreedit.append(
-                preeditWithCursor.first.substr(0, preeditWithCursor.second),
-                {TextFormatFlag::HighLight, TextFormatFlag::Underline});
-            clientPreedit.append(
-                preeditWithCursor.first.substr(preeditWithCursor.second),
-                TextFormatFlag::Underline);
+            appendPreeditText(
+                clientPreedit, preeditString, fixRanges,
+                {TextFormatFlag::HighLight, TextFormatFlag::Underline}, 0,
+                preeditCursor);
+            appendPreeditText(clientPreedit, preeditString, fixRanges,
+                              TextFormatFlag::Underline, preeditCursor);
             clientPreedit.setCursor(0);
         } else {
-            clientPreedit.append(preeditWithCursor.first,
-                                 TextFormatFlag::Underline);
-            clientPreedit.setCursor(preeditWithCursor.second);
+            appendPreeditText(clientPreedit, preeditString, fixRanges,
+                              TextFormatFlag::Underline);
+            clientPreedit.setCursor(preeditCursor);
         }
         break;
     case PreeditMode::CommitPreview:
@@ -452,8 +582,9 @@ std::pair<Text, Text> PinyinEngine::preedit(InputContext *inputContext) const {
         }
         [[fallthrough]];
     case PreeditMode::No:
-        preedit.append(preeditWithCursor.first);
-        preedit.setCursor(preeditWithCursor.second);
+        appendPreeditText(preedit, preeditString, fixRanges,
+                          TextFormatFlag::NoFlag);
+        preedit.setCursor(preeditCursor);
         break;
     }
     return {std::move(clientPreedit), std::move(preedit)};
@@ -527,6 +658,16 @@ void PinyinEngine::updatePuncCandidate(
 
 void PinyinEngine::updateUI(InputContext *inputContext) {
     auto *state = inputContext->propertyFor(&factory_);
+    if (*config_.continuousPinyinSelection) {
+        if (*config_.useBackSpaceToUnselect) {
+            state->recordUpdateUI();
+        } else {
+            state->clearUndoHistory();
+        }
+    } else {
+        state->clearUndoHistory();
+        state->context_.setPinyinFixes({});
+    }
     inputContext->inputPanel().reset();
     // Use const ref to avoid accidentally change anything.
     const auto &context = state->context_;
@@ -540,6 +681,7 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
         inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
         initPredict(inputContext);
         state->context_.clear();
+        state->clearUndoHistory();
         return;
     }
 
@@ -853,6 +995,29 @@ void PinyinEngine::updateUI(InputContext *inputContext) {
     } while (0);
     inputContext->updatePreedit();
     inputContext->updateUserInterface(UserInterfaceComponent::InputPanel);
+}
+
+void PinyinEngine::applyPinyinFix(InputContext *inputContext,
+                                  libime::PinyinSegmentFix fix) {
+    auto *state = inputContext->propertyFor(&factory_);
+    auto &context = state->context_;
+    const auto selectedLength = context.selectedLength();
+    assert(fix.start_ < fix.end_);
+    assert(fix.start_ >= selectedLength);
+    auto fixes = context.pinyinFixes();
+    // Fixes must never overlap
+    assert(std::ranges::none_of(fixes, [&](const auto &existing) {
+        return existing.start_ < fix.end_ && fix.start_ < existing.end_;
+    }));
+    auto pos = std::ranges::lower_bound(fixes, fix.start_, {},
+                                        &libime::PinyinSegmentFix::start_);
+    fixes.insert(pos, fix);
+    context.setPinyinFixes(std::move(fixes));
+
+    if (*config_.useBackSpaceToUnselect) {
+        state->recordFix();
+    }
+    updateUI(inputContext);
 }
 
 bool PinyinEngine::shouldLearn(const InputContext *inputContext) const {
@@ -2237,14 +2402,24 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
             }
         }
         event.filterAndAccept();
+        // type() also reports true when it only cancels a selection, so we
+        // need sizeBefore to make sure a character was actually added.
+        const auto sizeBefore = state->context_.size();
         if (!state->context_.type(keyStr.get())) {
             return;
+        }
+        if (*config_.continuousPinyinSelection &&
+            *config_.useBackSpaceToUnselect) {
+            state->recordTypedCharacter(sizeBefore);
         }
     } else if (!state->context_.empty()) {
         // key to handle when it is not empty.
         if (event.key().check(FcitxKey_BackSpace)) {
-            if (*config_.useBackSpaceToUnselect &&
-                state->context_.selectedLength()) {
+            if (*config_.continuousPinyinSelection &&
+                *config_.useBackSpaceToUnselect) {
+                state->undoLastAction();
+            } else if (*config_.useBackSpaceToUnselect &&
+                       state->context_.selectedLength()) {
                 state->context_.cancel();
             } else {
                 state->context_.backspace();
@@ -2261,6 +2436,7 @@ void PinyinEngine::keyEvent(const InputMethodEntry &entry, KeyEvent &event) {
             auto cursor = state->context_.pinyinBeforeCursor();
             if (cursor >= 0) {
                 state->context_.erase(cursor, state->context_.cursor());
+                state->clearUndoHistory();
             }
             event.filterAndAccept();
         } else if (event.key().check(FcitxKey_Delete, KeyState::Ctrl) ||
@@ -2428,6 +2604,7 @@ void PinyinEngine::doReset(InputContext *inputContext) const {
     state->mode_ = PinyinMode::Normal;
     state->context_.clear();
     state->context_.clearContextWords();
+    state->clearUndoHistory();
     state->predictWords_.reset();
     inputContext->inputPanel().reset();
     inputContext->updatePreedit();
@@ -2516,43 +2693,31 @@ void PinyinEngine::invokeActionImpl(const InputMethodEntry &entry,
 
     event.filter();
 
-    auto preeditWithCursor = context.preeditWithCursor();
     auto selectedSentence = context.selectedSentence();
     // The logic here need to match ::preedit()
     switch (*config_.preeditMode) {
     case PreeditMode::No:
         break;
-    case PreeditMode::ComposingPinyin:
+    case PreeditMode::ComposingPinyin: {
+        size_t target = context.selectedLength();
         if (utf8::length(selectedSentence) > cursor) {
             // If cursor is with in selected sentence range, cancel until cursor
             // is covered.
             do {
                 context.cancel();
             } while (utf8::length(context.selectedSentence()) > cursor);
-            context.setCursor(context.selectedLength());
+            target = context.selectedLength();
         } else {
-            // If cursor is with in the pinyin range, move to the left most and
-            // then move it around. This is a easy way to cover Shuangpin and
-            // Preedit Mode difference. setCursor should be cheap operation if
-            // it does not cancel any selection.
-            context.setCursor(context.selectedLength());
-            while (context.cursor() < context.size()) {
-                auto [preeditText, preeditCursor] = context.preeditWithCursor();
-                if (utf8::length(preeditText.begin(),
-                                 preeditText.begin() + preeditCursor) <
-                    cursor) {
-                    state->context_.setCursor(context.cursor() + 1);
-                } else {
-                    break;
-                }
-            }
-            auto [preeditText, preeditCursor] = context.preeditWithCursor();
-            if (utf8::length(preeditText.begin(),
-                             preeditText.begin() + preeditCursor) > cursor) {
-                state->context_.setCursor(context.cursor() - 1);
-            }
+            // If cursor is with in the pinyin range, map the preedit position
+            // back to the raw input cursor.
+            const auto preeditByteCursor = static_cast<size_t>(
+                utf8::ncharByteLength(preedit.begin(), cursor));
+            target = context.cursorForPreeditPosition(preeditByteCursor)
+                         .value_or(context.selectedLength());
         }
+        context.setCursor(target);
         break;
+    }
     case PreeditMode::CommitPreview:
         if (utf8::length(selectedSentence) > cursor) {
             do {
@@ -2597,6 +2762,7 @@ void PinyinEngine::cloudPinyinSelected(InputContext *inputContext,
         }
     }
     state->context_.clear();
+    state->clearUndoHistory();
     inputContext->commitString(selected + word);
     inputContext->inputPanel().reset();
     if (result.has_value()) {

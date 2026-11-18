@@ -20,6 +20,7 @@
 #include <fcitx/inputcontext.h>
 #include <fcitx/text.h>
 #include <libime/core/lattice.h>
+#include <libime/pinyin/pinyinencoder.h>
 #include <memory>
 #include <optional>
 #include <span>
@@ -27,6 +28,7 @@
 #include <string_view>
 #include <unordered_set>
 #include <utility>
+#include <variant>
 #include <vector>
 
 namespace fcitx {
@@ -310,7 +312,10 @@ public:
     bool popStroke();
 
     bool checked() const {
-        return checkedPinyinActionId_.has_value() || checkedSingleAction_;
+        if (const auto *state = std::get_if<FilterTabState>(&tabState_)) {
+            return state->second.has_value() || checkedSingleAction_;
+        }
+        return checkedSingleAction_;
     }
 
     bool filter(const CandidateWord &candidate) const;
@@ -322,6 +327,7 @@ private:
     bool filterByStroke(const CandidateWord &candidate) const;
 
     std::optional<int> idToActionIndex(int id) const;
+    size_t tabCount() const;
 
     void buildTabActions();
 
@@ -341,14 +347,18 @@ private:
     InputContext *inputContext_;
     CommonCandidateList *candidateList_;
 
+    using FilterTabState =
+        std::pair<std::vector<std::unordered_set<int>>, std::optional<int>>;
+    using FixTabState = std::vector<libime::PinyinSegmentFix>;
+    using TabState = std::variant<FilterTabState, FixTabState>;
+
     // Lazily initialized actions, since it requires scan all actions.
     std::optional<std::vector<CandidateAction>> actions_;
     std::vector<CandidateAction> strokeActions_;
-    std::optional<int> checkedPinyinActionId_ = std::nullopt;
     bool checkedSingleAction_ = false;
     bool strokeFilterMode_ = false;
     InputBuffer strokeBuffer_;
-    std::vector<std::unordered_set<int>> actionIdToCandidates_;
+    TabState tabState_;
 };
 
 } // namespace fcitx

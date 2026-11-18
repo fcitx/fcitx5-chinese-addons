@@ -10,6 +10,7 @@
 #include "pinyin.h"
 #include "pinyinhelper_public.h"
 #include <algorithm>
+#include <array>
 #include <boost/container_hash/hash.hpp>
 #include <cassert>
 #include <cstddef>
@@ -41,6 +42,7 @@
 #include <string_view>
 #include <tuple>
 #include <unordered_map>
+#include <unordered_set>
 #include <utility>
 #include <vector>
 
@@ -117,6 +119,70 @@ bestMatchPinyin(std::string_view pinyin, std::string_view candidatePinyin,
     return syl;
 }
 
+constexpr size_t pinyinMaxLength = 6;
+
+// Levenshtein distance for the fragments compared by the tab ordering, which
+// never exceed pinyinMaxLength. The fixed matrix keeps the computation
+// on the stack.
+constexpr size_t pinyinEditDistance(std::string_view lhs,
+                                    std::string_view rhs) {
+    assert(lhs.size() <= pinyinMaxLength && rhs.size() <= pinyinMaxLength);
+    std::array<std::array<size_t, pinyinMaxLength + 1>, pinyinMaxLength + 1>
+        dp{};
+
+    for (size_t i = 0; i <= lhs.size(); ++i) {
+        dp[i][0] = i;
+    }
+    for (size_t j = 0; j <= rhs.size(); ++j) {
+        dp[0][j] = j;
+    }
+    for (size_t i = 1; i <= lhs.size(); ++i) {
+        for (size_t j = 1; j <= rhs.size(); ++j) {
+            dp[i][j] = std::min(
+                {dp[i - 1][j] + 1, dp[i][j - 1] + 1,
+                 dp[i - 1][j - 1] + (lhs[i - 1] == rhs[j - 1] ? 0 : 1)});
+        }
+    }
+    return dp[lhs.size()][rhs.size()];
+}
+
+// Whether the input after a tab starts with a complete syllable. A split such
+// as "xi'an" counts as complete, while the Inner-only "xia'n" split does not.
+bool remainderStartsComplete(const libime::SegmentGraphBase &graph,
+                             size_t tabStart,
+                             const libime::PinyinSegmentFix &fix,
+                             const libime::PinyinContext &context) {
+    assert(!context.useShuangpin());
+    const size_t relEnd = fix.end_ - tabStart;
+    if (relEnd >= graph.size()) {
+        return true;
+    }
+
+    const auto &node = graph.node(relEnd);
+    for (const auto &next : node.nexts()) {
+        const auto segment = graph.segment(node, next);
+        if (segment.starts_with('\'')) {
+            return true;
+        }
+
+        const auto readings =
+            libime::PinyinEncoder::stringToSyllablesWithFuzzyFlags(
+                segment, context.ime()->correctionProfile().get(),
+                context.ime()->fuzzyFlags());
+        for (const auto &[initial, finals] : readings) {
+            for (const auto &[final, fuzzy] : finals) {
+                // Only a real final counts as a complete syllable.
+                // Exclude initial-only and letter-fallback readings.
+                if (final != libime::PinyinFinal::Invalid &&
+                    !libime::PinyinEncoder::isFinalLetter(final)) {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
 bool isSinglePinyin(const libime::PinyinContext &context, size_t idx) {
     if (idx >= context.candidatesToCursor().size()) {
         return false;
@@ -131,6 +197,230 @@ bool isSinglePinyin(const libime::PinyinContext &context, size_t idx) {
         }
     }
     return totalSize == 2;
+}
+
+using FilterTabState =
+    std::pair<std::vector<std::unordered_set<int>>, std::optional<int>>;
+using FixTabState = std::vector<libime::PinyinSegmentFix>;
+using TabState = std::variant<FilterTabState, FixTabState>;
+
+void buildCandidatesFilterTabs(const CommonCandidateList &candidateList,
+                               libime::PinyinContext &context,
+                               std::vector<CandidateAction> &actions,
+                               FilterTabState &state) {
+    const auto selectedLen = context.selectedLength();
+    const std::string_view fullInput = context.userInput();
+    std::map<std::tuple<std::string, std::optional<libime::PinyinSyllable>>,
+             int, std::less<>>
+        syllableToId;
+
+    PinyinCache cache;
+    for (size_t i = 0; i < candidateList.originSize(); i++) {
+        const auto *candidate = &candidateList.originCandidate(i);
+        const auto *pinyinCandidate =
+            dynamic_cast<const PinyinCandidateWord *>(candidate);
+        if (!pinyinCandidate || !pinyinCandidate->isPinyinCandidate()) {
+            continue;
+        }
+        if (static_cast<size_t>(pinyinCandidate->candidateIndex()) >=
+            context.candidatesToCursor().size()) {
+            continue;
+        }
+        const auto &result =
+            context.candidatesToCursor()[pinyinCandidate->candidateIndex()];
+        const auto &sentence = result.sentence();
+        if (sentence.empty()) {
+            continue;
+        }
+        const auto &path = sentence[0]->path();
+        if (path.size() < 2) {
+            continue;
+        }
+        std::string_view syllable;
+        for (size_t j = 1; j < path.size(); j++) {
+            const auto start = selectedLen + path[j - 1]->index();
+            const auto n = path[j]->index() - path[j - 1]->index();
+            const auto segment = fullInput.substr(start, n);
+            if (!segment.starts_with('\'')) {
+                syllable = segment;
+                break;
+            }
+        }
+        if (syllable.empty()) {
+            continue;
+        }
+        auto actualPinyin = bestMatchPinyin(
+            syllable,
+            std::string_view(
+                sentence[0]->as<libime::PinyinLatticeNode>().encodedPinyin())
+                .substr(0, 2),
+            context, cache);
+        auto it = syllableToId.find(std::tuple{syllable, actualPinyin});
+        if (it == syllableToId.end()) {
+            it = syllableToId
+                     .emplace(std::make_tuple(syllable, actualPinyin),
+                              actions.size())
+                     .first;
+            CandidateAction action;
+            action.setId(actions.size());
+            action.setText(
+                actualPinyin
+                    ? libime::PinyinEncoder::initialFinalToPinyinString(
+                          actualPinyin->initial(), actualPinyin->final())
+                    : std::string(syllable));
+            action.setCheckable(true);
+            action.setChecked(state.second == action.id());
+            actions.push_back(std::move(action));
+            state.first.emplace_back();
+        }
+        state.first[it->second].insert(pinyinCandidate->candidateIndex());
+    }
+}
+
+std::pair<std::vector<CandidateAction>, FixTabState>
+buildContinuousSelectionTabs(libime::PinyinContext &context) {
+    const std::string_view fullInput = context.userInput();
+    size_t tabStart = context.selectedLength();
+    const auto skipApostrophes = [&] {
+        while (tabStart < fullInput.size() && fullInput[tabStart] == '\'') {
+            ++tabStart;
+        }
+    };
+    for (const auto &fix : context.pinyinFixes()) {
+        skipApostrophes();
+
+        if (fix.start_ > tabStart) {
+            break;
+        }
+        if (fix.start_ == tabStart) {
+            tabStart = fix.end_;
+        }
+    }
+    skipApostrophes();
+    if (tabStart >= fullInput.size()) {
+        return {};
+    }
+
+    // One tab page never consumes more than a few syllables; cap the parse
+    // window so a long run of input still resolves to a bounded graph.
+    std::string remaining(fullInput.substr(
+        tabStart, std::min(fullInput.size() - tabStart, pinyinMaxLength)));
+    auto graph =
+        context.useShuangpin()
+            ? libime::PinyinEncoder::parseUserShuangpin(
+                  std::move(remaining), *context.ime()->shuangpinProfile(),
+                  context.ime()->fuzzyFlags())
+            : libime::PinyinEncoder::parseUserPinyin(
+                  std::move(remaining),
+                  context.ime()->correctionProfile().get(),
+                  context.ime()->fuzzyFlags());
+    // Force split points that parseUserPinyin won't produce
+    // e.g. "g" in "ga" and "sh" in "sha"
+    graph.addNext(0, 1);
+    if (graph.data().size() >= 2) {
+        const auto initial =
+            libime::PinyinEncoder::stringToInitial(graph.data().substr(0, 2));
+        if (initial != libime::PinyinInitial::Invalid) {
+            graph.addNext(0, 2);
+        }
+    }
+
+    struct TabSortEntry {
+        libime::PinyinSyllable reading;
+        libime::PinyinSegmentFix fix;
+        size_t distance = 0;
+        bool remainderComplete = true;
+        size_t order = 0;
+
+        auto key() const {
+            return std::tuple{distance,
+                              -static_cast<std::int64_t>(fix.end_ - fix.start_),
+                              !remainderComplete, order};
+        }
+    };
+
+    std::vector<TabSortEntry> entries;
+    const auto *start = &graph.node(0);
+    for (const auto &next : start->nexts()) {
+        const auto segment = graph.segment(*start, next);
+        const auto span =
+            std::pair{tabStart + start->index(), tabStart + next.index()};
+
+        const auto readings =
+            context.useShuangpin()
+                ? libime::PinyinEncoder::shuangpinToSyllablesWithFuzzyFlags(
+                      segment, *context.ime()->shuangpinProfile(),
+                      context.ime()->fuzzyFlags())
+                : libime::PinyinEncoder::stringToSyllablesWithFuzzyFlags(
+                      segment, context.ime()->correctionProfile().get(),
+                      context.ime()->fuzzyFlags());
+        for (const auto &[initial, finals] : readings) {
+            for (const auto &[final, fuzzy] : finals) {
+                const libime::PinyinSyllable reading{initial, final};
+                entries.push_back({.reading = reading,
+                                   .fix = {.start_ = span.first,
+                                           .end_ = span.second,
+                                           .fixed_ = reading},
+                                   .order = entries.size()});
+            }
+        }
+    }
+    // Order the tabs by how closely they match the input they consume. This
+    // keeps the exact reading first and ranks keyboard corrections and
+    // different splits after it. Shuangpin is left in graph order for now.
+    if (!context.useShuangpin() && entries.size() > 1) {
+        std::optional<size_t> lastEnd;
+        bool lastRemainderComplete = true;
+        for (auto &entry : entries) {
+            const auto &fix = entry.fix;
+            const auto raw =
+                fullInput.substr(fix.start_, fix.end_ - fix.start_);
+
+            // Tabs of the same span are appended contiguously by the loop
+            // above, so reuse the previous result.
+            if (lastEnd && *lastEnd == fix.end_) {
+                entry.remainderComplete = lastRemainderComplete;
+            } else {
+                entry.remainderComplete =
+                    remainderStartsComplete(graph, tabStart, fix, context);
+                lastEnd = fix.end_;
+                lastRemainderComplete = entry.remainderComplete;
+            }
+
+            const auto text = libime::PinyinEncoder::initialFinalToPinyinString(
+                entry.reading.initial(), entry.reading.final());
+            entry.distance = pinyinEditDistance(raw, text);
+        }
+        std::ranges::sort(entries, {}, &TabSortEntry::key);
+    }
+
+    std::vector<CandidateAction> actions;
+    actions.reserve(entries.size());
+    FixTabState fixes;
+    fixes.reserve(entries.size());
+    std::unordered_set<std::string> seenTexts;
+    for (auto &entry : entries) {
+        auto text = libime::PinyinEncoder::initialFinalToPinyinString(
+            entry.reading.initial(), entry.reading.final());
+        if (!seenTexts.insert(text).second) {
+            // Different fixes may render as the same tab text (e.g. the fuzzy
+            // "sh" reading of "s" and the actual "sh" split both show "sh").
+            // Keep the first one in sorted order: distance is the primary key,
+            // and distance 0 means raw == text, so an exact match always comes
+            // before the other duplicates.
+            continue;
+        }
+
+        const auto id = actions.size();
+        auto &action = actions.emplace_back();
+        action.setId(static_cast<int>(id));
+        action.setText(std::move(text));
+        action.setCheckable(true);
+        action.setChecked(false);
+
+        fixes.push_back(std::move(entry.fix));
+    }
+    return {std::move(actions), std::move(fixes)};
 }
 
 } // namespace
@@ -501,85 +791,22 @@ void PinyinTabbedCandidateList::buildTabActions() {
         return;
     }
     std::vector<CandidateAction> actions;
-    actionIdToCandidates_.clear();
-
-    auto *state = inputContext_->propertyFor(&engine_->factory());
-    auto &context = state->context_;
-    auto selectedLen = context.selectedLength();
-    std::string_view fullInput = context.userInput();
-
-    std::map<std::tuple<std::string, std::optional<libime::PinyinSyllable>>,
-             int, std::less<>>
-        syllableToId;
 
     if (!candidateList_) {
         actions_ = std::move(actions);
         return;
     }
 
-    PinyinCache cache;
-
-    for (size_t i = 0; i < candidateList_->originSize(); i++) {
-        const auto *candidate = &candidateList_->originCandidate(i);
-        const auto *pinyinCandidate =
-            dynamic_cast<const PinyinCandidateWord *>(candidate);
-        if (!pinyinCandidate || !pinyinCandidate->isPinyinCandidate()) {
-            continue;
-        }
-        if (static_cast<size_t>(pinyinCandidate->candidateIndex()) >=
-            context.candidatesToCursor().size()) {
-            continue;
-        }
-        const auto &result =
-            context.candidatesToCursor()[pinyinCandidate->candidateIndex()];
-        const auto &sentence = result.sentence();
-        if (sentence.empty()) {
-            continue;
-        }
-        const auto &path = sentence[0]->path();
-        if (path.size() < 2) {
-            continue;
-        }
-        std::string_view syllable;
-        for (size_t i = 1; i < path.size(); i++) {
-            auto start = selectedLen + path[i - 1]->index();
-            auto n = path[i]->index() - path[i - 1]->index();
-            auto segment = fullInput.substr(start, n);
-            if (!segment.starts_with('\'')) {
-                syllable = segment;
-                break;
-            }
-        }
-        if (syllable.empty()) {
-            continue;
-        }
-        auto actualPinyin = bestMatchPinyin(
-            syllable,
-            std::string_view(
-                sentence[0]->as<libime::PinyinLatticeNode>().encodedPinyin())
-                .substr(0, 2),
-            context, cache);
-
-        auto it = syllableToId.find(std::tuple{syllable, actualPinyin});
-        if (it == syllableToId.end()) {
-            it = syllableToId
-                     .emplace(std::make_tuple(syllable, actualPinyin),
-                              actions.size())
-                     .first;
-            CandidateAction action;
-            action.setId(actions.size());
-            action.setText(
-                actualPinyin
-                    ? libime::PinyinEncoder::initialFinalToPinyinString(
-                          actualPinyin->initial(), actualPinyin->final())
-                    : std::string(syllable));
-            action.setCheckable(true);
-            action.setChecked(checkedPinyinActionId_ == action.id());
-            actions.push_back(std::move(action));
-            actionIdToCandidates_.emplace_back();
-        }
-        actionIdToCandidates_[it->second].insert(
-            pinyinCandidate->candidateIndex());
+    auto *state = inputContext_->propertyFor(&engine_->factory());
+    auto &context = state->context_;
+    if (*engine_->config().continuousPinyinSelection) {
+        auto [continuousActions, fixes] = buildContinuousSelectionTabs(context);
+        actions = std::move(continuousActions);
+        tabState_.emplace<FixTabState>(std::move(fixes));
+    } else {
+        tabState_.emplace<FilterTabState>();
+        buildCandidatesFilterTabs(*candidateList_, context, actions,
+                                  std::get<FilterTabState>(tabState_));
     }
 
     CandidateAction separator;
@@ -673,13 +900,20 @@ bool PinyinTabbedCandidateList::popStroke() {
     return false;
 }
 
+size_t PinyinTabbedCandidateList::tabCount() const {
+    if (const auto *state = std::get_if<FilterTabState>(&tabState_)) {
+        return state->first.size();
+    }
+    return std::get<FixTabState>(tabState_).size();
+}
+
 std::optional<int> PinyinTabbedCandidateList::idToActionIndex(int id) const {
     assert(actions_.has_value() && actions_->size() >= 2);
     if (id < 0) {
         if (id == SINGLE_ACTION) {
-            return actionIdToCandidates_.size() + 1;
+            return static_cast<int>(tabCount()) + 1;
         }
-    } else if (id >= 0 && id < static_cast<int>(actionIdToCandidates_.size())) {
+    } else if (id < static_cast<int>(tabCount())) {
         return id;
     }
     return std::nullopt;
@@ -704,20 +938,26 @@ void PinyinTabbedCandidateList::triggerMainAction(int id) {
         if (id == SINGLE_ACTION) {
             checkedSingleAction_ = !checkedSingleAction_;
             (*actions_)[*checkableActionIndex].setChecked(checkedSingleAction_);
-        } else {
-            if (checkedPinyinActionId_) {
-                if (auto oldIndex = idToActionIndex(*checkedPinyinActionId_)) {
+        } else if (auto *filter = std::get_if<FilterTabState>(&tabState_)) {
+            auto &checkedPinyinActionId = filter->second;
+            if (checkedPinyinActionId) {
+                if (auto oldIndex = idToActionIndex(*checkedPinyinActionId)) {
                     (*actions_)[*oldIndex].setChecked(false);
                 }
             }
 
-            if (checkedPinyinActionId_ == id) {
+            if (checkedPinyinActionId == id) {
                 // If the same action is triggered, uncheck it.
-                checkedPinyinActionId_.reset();
+                checkedPinyinActionId.reset();
             } else {
-                checkedPinyinActionId_ = id;
+                checkedPinyinActionId = id;
                 (*actions_)[*checkableActionIndex].setChecked(true);
             }
+        } else if (const auto *fixes = std::get_if<FixTabState>(&tabState_)) {
+            engine_->applyPinyinFix(inputContext_, (*fixes)[id]);
+            // continuousPinyinSelection mode, candidate list has been rebuilt
+            // do not update filter
+            return;
         }
     }
     engine_->updateFilter(inputContext_);
@@ -743,14 +983,16 @@ bool PinyinTabbedCandidateList::filterByCheckedAction(
         }
     }
 
-    if (checkedPinyinActionId_) {
-        const auto id = checkedPinyinActionId_.value();
-        if (id < 0 || id >= static_cast<int>(actionIdToCandidates_.size())) {
-            return false;
-        }
-        const auto &candidateSet = actionIdToCandidates_[id];
-        if (!candidateSet.contains(pinyinCandidate->candidateIndex())) {
-            return false;
+    if (const auto *filter = std::get_if<FilterTabState>(&tabState_)) {
+        if (const auto &checkedPinyinActionId = filter->second) {
+            const auto id = *checkedPinyinActionId;
+            if (id < 0 || id >= static_cast<int>(filter->first.size())) {
+                return false;
+            }
+            const auto &candidateSet = filter->first[id];
+            if (!candidateSet.contains(pinyinCandidate->candidateIndex())) {
+                return false;
+            }
         }
     }
 
